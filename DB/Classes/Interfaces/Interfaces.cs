@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using DB;
 using DB.LINAATableAdapters;
 
 namespace DB.Interfaces

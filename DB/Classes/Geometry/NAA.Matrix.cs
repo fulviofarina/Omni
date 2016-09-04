@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Rsx;
+using DB;
 
 namespace DB
 {
     public partial class LINAA
     {
+        public partial class CompositionsRow
+        {
+
+        }
         public partial class CompositionsDataTable
         {
             /// <summary>
@@ -15,7 +20,7 @@ namespace DB
             /// </summary>
             /// <param name="aux">MatrixRow as input</param>
             /// <returns>the IList of Compositions Rows</returns>
-            public IList<LINAA.CompositionsRow> AddCompositionRow(ref MatrixRow aux)
+            public IList<DB.LINAA.CompositionsRow> AddCompositionRow(ref MatrixRow aux)
             {
                 IList<string[]> ls = aux.StripComposition();
                 IList<LINAA.CompositionsRow> added = new List<LINAA.CompositionsRow>();
@@ -169,8 +174,10 @@ namespace DB
                         Dumb.CheckNull(e.Column, e.Row);
                         if (m.Renew)
                         {
-                            if (m.Renew) linaa.TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-
+                            if (m.Renew)
+                            {
+                                linaa.TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
+                            }
                             PopulateXCom();
                             m.Renew = false;
                         }

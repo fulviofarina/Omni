@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Speech;
 
 namespace DB
 {
     public partial class LINAA : DB.Interfaces.IReport
     {
-        protected SpeechLib.SpVoice lorito;
+
+
+        protected System.Speech.Synthesis.SpeechSynthesizer lorito;
+     //   protected SpeechLib.SpVoice lorito;
 
         public void Speak(string text)
         {
-            if (lorito == null) this.lorito = new SpeechLib.SpVoice();
-            System.ComponentModel.BackgroundWorker worker3 = new System.ComponentModel.BackgroundWorker();
+            if (lorito == null)
+            {
+                this.lorito = new System.Speech.Synthesis.SpeechSynthesizer();
+
+            //    this.lorito = new SpeechLib.SpVoice();
+            }
+                System.ComponentModel.BackgroundWorker worker3 = new System.ComponentModel.BackgroundWorker();
             worker3.DoWork += new System.ComponentModel.DoWorkEventHandler(speaker_DoWork);
             worker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(speaker_RunWorkerCompleted);
             worker3.RunWorkerAsync(text);

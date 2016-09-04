@@ -45,7 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Emailer.cs" />
+    <Compile Include="Emailer\Emailer.Clients.cs" />
+    <Compile Include="Emailer\Emailer.QueryMsg.cs" />
+    <Compile Include="Emailer\Emailer.Send.cs" />
+    <Compile Include="Gmail\Gmail.Message.cs" />
+    <Compile Include="Gmail\Gmail.AtomFeed.cs" />
+    <Compile Include="Gmail\Gmail.Main.cs" />
+    <Compile Include="Emailer\Emailer.Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

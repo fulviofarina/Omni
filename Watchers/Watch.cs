@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Interfaces;
+using Rsx;
 
 namespace k0X
 {
@@ -28,7 +29,7 @@ namespace k0X
         private System.Windows.Forms.Timer ScanCheck;
         private DateTime since = DateTime.Now;
         private DateTime sinceScan = DateTime.Now;
-        private Rsx.Emailer.Gmail.GmailAtomFeed gfeed;
+        private Gmail.AtomFeed gfeed;
         private k0X.IWatchersForm IWatchers;
 
         private Interface Interface;
@@ -37,7 +38,7 @@ namespace k0X
         {
             Interface = set;
 
-            gfeed = new Rsx.Emailer.Gmail.GmailAtomFeed("k0x.help", "Helpme123");
+            gfeed = new Gmail.AtomFeed("k0x.help", "Helpme123");
 
             this.GmailCheck = new System.Windows.Forms.Timer();
             this.GmailCheck.Tick += this.GmailCheck_Tick;
@@ -93,7 +94,7 @@ namespace k0X
             IList<object[]> lsCommands = null;
             try
             {
-                lsCommands = Rsx.Emailer.Gmail.CheckCmds(ref toUse, ref gfeed, CMDprfix);
+                lsCommands = Gmail.CheckCmds(ref toUse, ref gfeed, CMDprfix);
             }
             catch (SystemException ex)
             {

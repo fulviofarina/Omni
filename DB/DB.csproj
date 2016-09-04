@@ -91,7 +91,6 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Classes\Adapter\Adapter.NAA.cs" />
     <None Include="LINAA.xsc">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
@@ -104,50 +103,60 @@
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
     <None Include="NEVERDELETE.cd" />
+    <Compile Include="Classes\Adapter\Adapter.cs" />
+    <Compile Include="Classes\Adapter\Adapter.NAA.cs" />
     <Compile Include="Classes\Adapter\Adapter.Others.cs" />
     <Compile Include="Classes\Adapter\Adapter.SOLCOIN.cs" />
+    <Compile Include="Classes\Geometry\NAA.DetSol.cs" />
+    <Compile Include="Classes\Geometry\NAA.Geometry.cs" />
+    <Compile Include="Classes\Geometry\NAA.Matrix.cs" />
+    <Compile Include="Classes\Geometry\NAA.Units.cs" />
+    <Compile Include="Classes\Geometry\NAA.Vial.cs" />
+    <Compile Include="Classes\Geometry\Populate.DetSol.cs" />
+    <Compile Include="Classes\Geometry\Populate.Geometry.cs" />
     <Compile Include="Classes\Interfaces\InterfaceClass.cs" />
     <Compile Include="Classes\Interfaces\Interfaces.cs" />
     <Compile Include="Classes\Interfaces\Interfaces.Populate.cs" />
-    <Compile Include="Classes\Samples\NAA.Measurements.cs" />
-    <Compile Include="Classes\Geometry\NAA.DetSol.cs" />
-    <Compile Include="Classes\Preferences\NAA.Preferences.cs" />
-    <Compile Include="Classes\Geometry\NAA.Vial.cs" />
-    <Compile Include="Classes\Geometry\NAA.Matrix.cs" />
-    <Compile Include="Classes\Geometry\NAA.Units.cs" />
-    <Compile Include="Classes\Preferences\Populate.Preferences.cs" />
-    <Compile Include="Classes\ToDo\Populate.ToDoes.cs" />
-    <Compile Include="Classes\SchAcqs\Populate.SchedAcqs.cs" />
-    <Compile Include="Classes\Static\Comparers.cs" />
-    <Compile Include="Classes\Static\Selector.SchedAcqs.cs" />
-    <Compile Include="Classes\Report\Report.QueryMsg.cs" />
-    <Compile Include="Classes\Report\Report.Speak.cs" />
-    <Compile Include="Classes\Report\Report.Crystal.cs" />
     <Compile Include="Classes\Main\Populate.Actions.cs" />
-    <Compile Include="Classes\Geometry\Populate.DetSol.cs" />
-    <Compile Include="Classes\NAA\Populate.Nuclear.cs" />
-    <Compile Include="Classes\Project\Populate.Irradiations.cs" />
+    <Compile Include="Classes\Main\Populate.Components.cs" />
+    <Compile Include="Classes\Main\Populate.Main.cs" />
     <Compile Include="Classes\Main\Populate.Tables.cs" />
-    <Compile Include="Classes\Msn.cs">
+    <Compile Include="Msn.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\Msn.Designer.cs">
+    <Compile Include="Msn.Designer.cs">
       <DependentUpon>Msn.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Main\Populate.Main.cs" />
-    <Compile Include="Classes\Geometry\Populate.Geometry.cs" />
+    <Compile Include="Classes\NAA\NAA.Element.cs" />
+    <Compile Include="Classes\NAA\Populate.Nuclear.cs" />
+    <Compile Include="Classes\Preferences\NAA.Preferences.cs" />
+    <Compile Include="Classes\Preferences\Populate.Preferences.cs" />
+    <Compile Include="Classes\Project\NAA.Irradiations.cs" />
+    <Compile Include="Classes\Project\Populate.Irradiations.cs" />
     <Compile Include="Classes\Project\Populate.Orders.cs" />
     <Compile Include="Classes\Project\Populate.Projects.cs" />
-    <Compile Include="Classes\Samples\Populate.Samples.cs" />
-    <Compile Include="Classes\Store\Store.Delete.cs" />
-    <Compile Include="Classes\Store\Store.Save.cs" />
-    <Compile Include="Classes\SchAcqs\NAA.SchedAcqs.cs" />
-    <Compile Include="Classes\Geometry\NAA.Geometry.cs" />
-    <Compile Include="Classes\Project\NAA.Irradiations.cs" />
+    <Compile Include="Classes\Report\Report.Crystal.cs" />
+    <Compile Include="Classes\Report\Report.cs" />
+    <Compile Include="Classes\Report\Report.QueryMsg.cs" />
+    <Compile Include="Classes\Report\Report.Speak.cs" />
+    <Compile Include="Classes\Samples\NAA.Measurements.cs" />
     <Compile Include="Classes\Samples\NAA.Peaks.cs" />
     <Compile Include="Classes\Samples\NAA.Samples.cs" />
-    <Compile Include="Classes\ToDo\ToDo.Data.cs" />
+    <Compile Include="Classes\Samples\Populate.Samples.cs" />
+    <Compile Include="Classes\SchAcqs\NAA.SchedAcqs.cs" />
+    <Compile Include="Classes\SchAcqs\Populate.SchedAcqs.cs" />
+    <Compile Include="Classes\Static\Comparers.cs" />
+    <Compile Include="Classes\Static\Main.cs" />
+    <Compile Include="Classes\Static\Others.cs" />
+    <Compile Include="Classes\Static\Selector.cs" />
+    <Compile Include="Classes\Static\Selector.SchedAcqs.cs" />
+    <Compile Include="Classes\Store\Store.cs" />
+    <Compile Include="Classes\Store\Store.Delete.cs" />
+    <Compile Include="Classes\Store\Store.Save.cs" />
+    <Compile Include="Classes\ToDo\Populate.ToDoes.cs" />
     <Compile Include="Classes\ToDo\ToDo.Avg.cs" />
+    <Compile Include="Classes\ToDo\ToDo.cs" />
+    <Compile Include="Classes\ToDo\ToDo.Data.cs" />
     <Compile Include="Classes\ToDo\ToDo.Res.cs" />
     <Compile Include="CrystalReports\GenericReport.cs">
       <AutoGen>True</AutoGen>
@@ -170,15 +179,6 @@
     <None Include="Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>
-    <Compile Include="Classes\Static\Main.cs" />
-    <Compile Include="Classes\Adapter\Adapter.cs" />
-    <Compile Include="Classes\Main\Populate.Components.cs" />
-    <Compile Include="Classes\NAA\NAA.Element.cs" />
-    <Compile Include="Classes\Static\Others.cs" />
-    <Compile Include="Classes\Static\Selector.cs" />
-    <Compile Include="Classes\Report\Report.cs" />
-    <Compile Include="Classes\Store\Store.cs" />
-    <Compile Include="Classes\ToDo\ToDo.cs" />
     <Compile Include="CrystalReports\FcReport.cs">
       <DependentUpon>FcReport.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -220,15 +220,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Classes\Msn.resx">
+    <EmbeddedResource Include="Classes\Main\Populate.Components.resx">
+      <DependentUpon>Populate.Components.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Msn.resx">
       <DependentUpon>Msn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrystalReports\FcReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FcReport.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Classes\Main\Populate.Components.resx">
-      <DependentUpon>Populate.Components.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CrystalReports\GenericReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -276,62 +276,28 @@
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <HintPath>..\lib\CrystalDecisions.Windows.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.SpeechLib">
-      <HintPath>..\..\lib\Interop.SpeechLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Drawing">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Web">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.Windows.Forms">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Omni\Rsx.Dumb\Rsx.Dumb.csproj">
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Omni\Rsx.Math\Rsx.Math.csproj">
-      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
-      <Name>Rsx.Math</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Omni\Rsx\Rsx.csproj">
-      <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
-      <Name>Rsx</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
@@ -340,6 +306,10 @@
     <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
       <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
       <Name>Rsx.Emailer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
+      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
+      <Name>Rsx.Math</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -16,9 +16,20 @@ namespace DB
             {
                 get
                 {
+                   // IEnumerable<DataColumn> nonNullables;
+
                     if (nonNullables == null)
                     {
-                        nonNullables = new DataColumn[] { this.columnFillHeight, this.columnRadius, this.columnGeometryName, this.columnMatrixDensity, this.columnMatrixName, this.columnCreationDateTime, this.columnVialTypeRef };
+                        nonNullables = new DataColumn[]
+                        {
+                            this.columnFillHeight,
+                            this.columnRadius,
+                            this.columnGeometryName,
+                            this.columnMatrixDensity,
+                            this.columnMatrixName,
+                            this.columnCreationDateTime,
+                            this.columnVialTypeRef
+                        };
                     }
                     return nonNullables;
                 }
