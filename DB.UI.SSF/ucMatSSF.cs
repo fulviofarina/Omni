@@ -796,7 +796,7 @@ namespace DB.UI
                 {
                     if (this.MatrixBS.Count == 0) return;
                     LINAA.MatrixRow m = Dumb.Cast<LINAA.MatrixRow>(r);
-                    MatSSF.UNIT.SetMatrix(ref m);
+                     MatSSF.UNIT.SetMatrix(ref m);
                 }
                 else
                 {

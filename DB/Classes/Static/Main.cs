@@ -99,29 +99,6 @@ namespace DB
             return ls;
         }
 
-        public static IList<string[]> StripComposition(ref MatrixRow Matrix)
-        {
-            System.Collections.Generic.List<string[]> ls = null;
-            if (Rsx.Dumb.IsNuDelDetch(Matrix)) return ls;
-            if (Matrix.IsMatrixCompositionNull()) return ls;
-
-            string matCompo = Matrix.MatrixComposition;
-            string[] strArray = null;
-            if (matCompo.Contains(',')) strArray = matCompo.Split(',');    ///
-            else strArray = new string[] { matCompo };
-
-            ls = new System.Collections.Generic.List<string[]>();
-            for (int index = 0; index < strArray.Length; index++)
-            {
-                string[] strArray2 = strArray[index].Trim().Split('(');
-                string formula = strArray2[0].Replace("#", null).Trim();
-                string composition = strArray2[1].Replace("%", null).Trim();
-                composition = composition.Replace(")", null).Trim();
-                string[] formCompo = new string[] { formula, composition };
-                ls.Add(formCompo);
-            }
-
-            return ls;
-        }
+       
     }
 }

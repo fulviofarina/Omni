@@ -122,7 +122,9 @@ namespace DB.UI
                     {
                         m.SetColumnError(this.Linaa.Matrix.XCOMColumn, null);   //nullifies the error in XCOM column
 
-                        if (!m.HasErrors && ((m.XCOM || !XcomCalled) || force.Checked))
+                        bool goIn = ((m.XCOM || !XcomCalled) || force.Checked);
+                        goIn = !m.HasErrors && goIn;
+                        if (goIn)
                         {
                             string responde = string.Empty;
                             if (XcomCalled)

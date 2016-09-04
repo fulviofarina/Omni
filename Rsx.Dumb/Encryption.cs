@@ -1,8 +1,8 @@
 ﻿/*
- * This work (Modern Encryption of a String C#, by James Tuley), 
+ * This work (Modern Encryption of a String C#, by James Tuley),
  * identified by James Tuley, is free of known copyright restrictions.
  * https://gist.github.com/4336842
- * http://creativecommons.org/publicdomain/mark/1.0/ 
+ * http://creativecommons.org/publicdomain/mark/1.0/
  */
 
 using System;
@@ -18,10 +18,12 @@ namespace Rsx.Encryption
 
         //Preconfigured Encryption Parameters
         public static readonly int BlockBitSize = 128;
+
         public static readonly int KeyBitSize = 256;
 
         //Preconfigured Password Key Derivation Parameters
         public static readonly int SaltBitSize = 64;
+
         public static readonly int Iterations = 10000;
         public static readonly int MinPasswordLength = 12;
 
@@ -111,7 +113,7 @@ namespace Rsx.Encryption
 
         /// <summary>
         /// Simple Authentication (HMAC) and then Descryption (AES) of a UTF8 Message
-        /// using keys derived from a password (PBKDF2). 
+        /// using keys derived from a password (PBKDF2).
         /// </summary>
         /// <param name="encryptedMessage">The encrypted message.</param>
         /// <param name="password">The password.</param>
@@ -160,7 +162,6 @@ namespace Rsx.Encryption
                 Padding = PaddingMode.PKCS7
             })
             {
-
                 //Use random IV
                 aes.GenerateIV();
                 iv = aes.IV;
@@ -177,7 +178,6 @@ namespace Rsx.Encryption
 
                     cipherText = cipherStream.ToArray();
                 }
-
             }
 
             //Assemble encrypted message and add authentication
@@ -201,12 +201,10 @@ namespace Rsx.Encryption
                 }
                 return encryptedStream.ToArray();
             }
-
         }
 
         public static byte[] SimpleDecrypt(byte[] encryptedMessage, byte[] cryptKey, byte[] authKey, int nonSecretPayloadLength = 0)
         {
-
             //Basic Usage Error Checks
             if (cryptKey == null || cryptKey.Length != KeyBitSize / 8)
                 throw new ArgumentException(String.Format("CryptKey needs to be {0} bit!", KeyBitSize), "cryptKey");
@@ -248,7 +246,6 @@ namespace Rsx.Encryption
                     Padding = PaddingMode.PKCS7
                 })
                 {
-
                     //Grab IV from message
                     var iv = new byte[ivLength];
                     Array.Copy(encryptedMessage, nonSecretPayloadLength, iv, 0, iv.Length);
@@ -304,7 +301,7 @@ namespace Rsx.Encryption
                 payloadIndex += salt.Length;
             }
 
-            //Deriving separate key, might be less efficient than using HKDF, 
+            //Deriving separate key, might be less efficient than using HKDF,
             //but now compatible with RNEncryptor which had a very similar wireformat and requires less code than HKDF.
             using (var generator = new Rfc2898DeriveBytes(password, SaltBitSize / 8, Iterations))
             {
