@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4EEE1204-D241-4FEF-8188-0F6CA5A1A4C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DB.UI</RootNamespace>
+    <AssemblyName>DB.UI.LIMS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Auxiliar\Auxiliar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Auxiliar\Auxiliar.designer.cs">
+      <DependentUpon>Auxiliar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Auxiliar\IPicker.cs" />
+    <Compile Include="Auxiliar\PickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Auxiliar\PickerForm.designer.cs">
+      <DependentUpon>PickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Geometries\ucGeometry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Geometries\ucGeometry.Designer.cs">
+      <DependentUpon>ucGeometry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Geometries\ucMatrix.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Geometries\ucMatrix.Designer.cs">
+      <DependentUpon>ucMatrix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Geometries\ucVialType.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Geometries\ucVialType.Designer.cs">
+      <DependentUpon>ucVialType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\LIMS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIMS\LIMS.Designer.cs">
+      <DependentUpon>LIMS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Projects\ucChannels.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Projects\ucChannels.Designer.cs">
+      <DependentUpon>ucChannels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Projects\ucIrradiationsRequests.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Projects\ucIrradiationsRequests.Designer.cs">
+      <DependentUpon>ucIrradiationsRequests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Projects\ucOrders.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Projects\ucOrders.Designer.cs">
+      <DependentUpon>ucOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucMonitors.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucMonitors.Designer.cs">
+      <DependentUpon>ucMonitors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucMonitorsFlags.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucMonitorsFlags.Designer.cs">
+      <DependentUpon>ucMonitorsFlags.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucSamples.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucSamples.Designer.cs">
+      <DependentUpon>ucSamples.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucStandards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucStandards.Designer.cs">
+      <DependentUpon>ucStandards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucSubSamples.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\Samples\ucSubSamples.Designer.cs">
+      <DependentUpon>ucSubSamples.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\ucDetectors.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LIMS\ucDetectors.Designer.cs">
+      <DependentUpon>ucDetectors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Res.Designer.cs">
+      <DependentUpon>Res.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ucPredict.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucPredict.Designer.cs">
+      <DependentUpon>ucPredict.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucSolcoi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucSolcoi.designer.cs">
+      <DependentUpon>ucSolcoi.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Auxiliar\Auxiliar.resx">
+      <DependentUpon>Auxiliar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Auxiliar\PickerForm.resx">
+      <DependentUpon>PickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Geometries\ucGeometry.resx">
+      <DependentUpon>ucGeometry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Geometries\ucMatrix.resx">
+      <DependentUpon>ucMatrix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Geometries\ucVialType.resx">
+      <DependentUpon>ucVialType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\LIMS.resx">
+      <DependentUpon>LIMS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Projects\ucChannels.resx">
+      <DependentUpon>ucChannels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Projects\ucIrradiationsRequests.resx">
+      <DependentUpon>ucIrradiationsRequests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Projects\ucOrders.resx">
+      <DependentUpon>ucOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Samples\ucMonitors.resx">
+      <DependentUpon>ucMonitors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Samples\ucMonitorsFlags.resx">
+      <DependentUpon>ucMonitorsFlags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Samples\ucSamples.resx">
+      <DependentUpon>ucSamples.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Samples\ucStandards.resx">
+      <DependentUpon>ucStandards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\Samples\ucSubSamples.resx">
+      <DependentUpon>ucSubSamples.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIMS\ucDetectors.resx">
+      <DependentUpon>ucDetectors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Res.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucPredict.resx">
+      <DependentUpon>ucPredict.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucSolcoi.resx">
+      <DependentUpon>ucSolcoi.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
+      <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
+      <Name>DB.Tools.SOLCOI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.XCOM\DB.Tools.XCOM.csproj">
+      <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
+      <Name>DB.Tools.XCOM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
+      <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
+      <Name>DB.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
+      <Name>DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.DGV\Rsx.DGV.csproj">
+      <Project>{79f588d7-7be3-4882-a9c0-37810c5281ab}</Project>
+      <Name>Rsx.DGV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.Dumb\Rsx.Dumb.csproj">
+      <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
+      <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx\Rsx.csproj">
+      <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
+      <Name>Rsx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools\VTools.csproj">
+      <Project>{1476f4ef-beec-4997-9fc3-2d1692f53811}</Project>
+      <Name>VTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

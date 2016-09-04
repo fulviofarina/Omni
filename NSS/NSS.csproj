@@ -143,9 +143,9 @@
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LIMS\DB.UI.csproj">
+    <ProjectReference Include="..\LIMS\DB.UI.SSF.csproj">
       <Project>{23b5ea4d-b073-46aa-8e66-a4baad1626f1}</Project>
-      <Name>DB.UI</Name>
+      <Name>DB.UI.SSF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

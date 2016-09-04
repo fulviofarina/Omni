@@ -151,6 +151,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
+      <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
+      <Name>DB.Tools.SOLCOI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
       <Name>Rsx.CAM</Name>
@@ -170,6 +174,10 @@
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6AC9265B-3286-4C63-A924-5FA14FF1CBEA}</Project>
       <Name>DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
+      <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
+      <Name>Rsx.Emailer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx\Rsx.csproj">
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>

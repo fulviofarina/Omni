@@ -45,7 +45,7 @@
             this.box.FormattingEnabled = true;
             this.box.Location = new System.Drawing.Point(282, 3);
             this.box.Name = "box";
-            this.box.Size = new System.Drawing.Size(449, 28);
+            this.box.Size = new System.Drawing.Size(449, 26);
             this.box.TabIndex = 0;
             this.box.TextChanged += new System.EventHandler(this.box_TextChanged);
             this.box.KeyDown += new System.Windows.Forms.KeyEventHandler(this.box_KeyDown);
@@ -80,7 +80,7 @@
             this.fieldbox.FormattingEnabled = true;
             this.fieldbox.Location = new System.Drawing.Point(3, 3);
             this.fieldbox.Name = "fieldbox";
-            this.fieldbox.Size = new System.Drawing.Size(204, 28);
+            this.fieldbox.Size = new System.Drawing.Size(204, 26);
             this.fieldbox.TabIndex = 1;
             this.fieldbox.TextChanged += new System.EventHandler(this.fieldbox_TextChanged);
             this.fieldbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.box_KeyDown);

@@ -70,25 +70,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MatSSF\MatSSF.Main.cs" />
-    <Compile Include="Solcoi\SolCoi.cs" />
-    <Compile Include="ToDo\ToDo.Interface.cs" />
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
     <Compile Include="WC\Workers.cs" />
     <Compile Include="WC\Static\Efficiency.cs" />
     <Compile Include="Creator.cs" />
     <Compile Include="WC\Static\NAA.cs" />
-    <Compile Include="MatSSF\MatSSF.Parsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToDo\ToDo.cs" />
-    <Compile Include="ToDo\ToDo.Static.cs" />
     <Compile Include="WC\Public.cs" />
     <Compile Include="WC\SolcoiEngine.cs" />
-    <Compile Include="NuDat.cs" />
-    <Compile Include="XCOM.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Omin\DB.Tools.SSF\DB.Tools.SSF.csproj">
+      <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
+      <Name>DB.Tools.SSF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Omni\Rsx.DGV\Rsx.DGV.csproj">
       <Project>{79f588d7-7be3-4882-a9c0-37810c5281ab}</Project>
       <Name>Rsx.DGV</Name>
@@ -101,6 +97,10 @@
       <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
       <Name>Rsx.Math</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
+      <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
+      <Name>DB.Tools.SOLCOI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6AC9265B-3286-4C63-A924-5FA14FF1CBEA}</Project>
       <Name>DB</Name>
@@ -112,9 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WC\Static\Populate.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ToDo\ToDoDiag.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,55 +5,52 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9F9E4341-5FF3-47F6-876F-A7B9C4E4FAED}</ProjectGuid>
+    <ProjectGuid>{23B5EA4D-B073-46AA-8E66-A4BAAD1626F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rsx</RootNamespace>
-    <AssemblyName>Rsx</AssemblyName>
+    <RootNamespace>DB.UI</RootNamespace>
+    <AssemblyName>DB.UI.SSF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -64,50 +61,60 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tim.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Properties\Res.Designer.cs">
+      <DependentUpon>Res.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Loader.cs">
-      <SubType>Component</SubType>
+    <Compile Include="ucMatSSF.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WD.cs" />
-    <None Include="MakeDB.cs" />
+    <Compile Include="ucMatSSF.Designer.cs">
+      <DependentUpon>ucMatSSF.cs</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <EmbeddedResource Include="Properties\Res.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucMatSSF.resx">
+      <DependentUpon>ucMatSSF.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp">
+    <ProjectReference Include="..\..\Omin\DB.Tools.SSF\DB.Tools.SSF.csproj">
+      <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
+      <Name>DB.Tools.SSF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Omni\Rsx.Dumb\Rsx.Dumb.csproj">
+      <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
+      <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
+      <Project>{02E06753-ECD3-402A-84B0-D3D146C835EF}</Project>
+      <Name>DB.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{6AC9265B-3286-4C63-A924-5FA14FF1CBEA}</Project>
+      <Name>DB</Name>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="System">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Messaging">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <Private>False</Private>
-    </Reference>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

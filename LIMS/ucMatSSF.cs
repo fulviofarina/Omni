@@ -538,8 +538,8 @@ namespace DB.UI
 
             MatSSF.StartupPath = dir;
 
-            Auxiliar form = new Auxiliar();
-            form.Populate(this);
+            Form form = new Form();
+            form.Controls.Add(this);// Populate(this);
             form.Text = "MATSSF Panel";
             form.Show();
 

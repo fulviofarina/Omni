@@ -337,6 +337,10 @@
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
       <Name>Rsx.CAM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
+      <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
+      <Name>Rsx.Emailer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
