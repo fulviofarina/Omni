@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Rsx
 {
- 
     /// <summary>
     /// This is a System.ComponentModel.BackgroundWorker
     /// For be used by another class?
@@ -84,7 +81,4 @@ namespace Rsx
         private Action callback;
         private Reporter report;
     }
-
-    
-  
 }

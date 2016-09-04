@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using NPlot;
 using Rsx;
 using Rsx.Math;
-using NPlot;
 
 namespace k0X
 {

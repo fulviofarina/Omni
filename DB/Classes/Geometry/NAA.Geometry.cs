@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Rsx;
-using Rsx.Math;
 
 namespace DB
 {
-  
     public partial class LINAA
     {
-       
-
         partial class GeometryDataTable
         {
             private IEnumerable<DataColumn> nonNullables;
@@ -96,9 +92,5 @@ namespace DB
                 }
             }
         }
-
-      
-
-
     }
 }

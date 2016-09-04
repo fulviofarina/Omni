@@ -4,10 +4,10 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using DB.Interfaces;
 using DB.Tools;
 using Rsx;
 using VTools;
-using DB.Interfaces;
 
 namespace k0X
 {
@@ -56,7 +56,7 @@ namespace k0X
         public LINAA.ProjectsRow ProjectsRow;
         protected IEnumerable<LINAA.SubSamplesRow> samples = null;
 
-        protected  Interface Interface= null;
+        protected Interface Interface = null;
         protected IPeriodicTable pTable;
 
         public bool IsClone
@@ -511,7 +511,7 @@ namespace k0X
                     {
                         LINAA.MeasurementsRow aux = m;
                         TreeNode MeasNode = MakeMeasurementNode(ref aux);
-                        SetAMeasurementNode(ref  MeasNode);
+                        SetAMeasurementNode(ref MeasNode);
                         if (!old.Nodes.Contains(MeasNode))
                         {
                             MeasNode.Collapse();
@@ -734,7 +734,7 @@ namespace k0X
                     if (samsToAddSpec != null)
                     {
                         samsToAddSpec = new HashSet<string>(samsToAddSpec);
-                        int added = Interface.IPopulate.ISamples.AddSamples(project, ref	samsToAddSpec);
+                        int added = Interface.IPopulate.ISamples.AddSamples(project, ref samsToAddSpec);
                         samsToAddSpec = null;
                     }
                 }

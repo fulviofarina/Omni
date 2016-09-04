@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using Rsx;
-using Rsx.Math;
 
 namespace DB
 {
-  
     public partial class LINAA
     {
-       
-
-
         partial class DetectorsAbsorbersDataTable
         {
             private void Data_ColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
@@ -29,6 +21,5 @@ namespace DB
                 }
             }
         }
-
     }
 }

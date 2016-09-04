@@ -1105,11 +1105,5 @@ namespace DB.Tools
                 p.SetColumnError(table.EfficiencyColumn, olderror + error);
             }
         }
-
-
-
-
-
-
     }
 }

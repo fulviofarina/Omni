@@ -196,7 +196,7 @@ namespace k0X
                             }
                             break;
 
-                        #endregion Del (Delete)
+                            #endregion Del (Delete)
                     }
 
                     if (!Dumb.IsNuDelDetch(newRow))

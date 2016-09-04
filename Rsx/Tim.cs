@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Rsx
 {
-    public class Tim : System.Windows.Forms.Timer
+    public class Tim : Timer
     {
         public Tim(int seg, Action toDo)
         {
@@ -33,5 +32,4 @@ namespace Rsx
     /// A Worker made for multiple methods
     /// </summary>
     ///
-
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using DB;
 using DB.Interfaces;
 
 namespace k0X
@@ -34,7 +33,7 @@ namespace k0X
 
         private Interface Interface;
 
-        public Watch(ref  Interface set)
+        public Watch(ref Interface set)
         {
             Interface = set;
 
@@ -111,8 +110,8 @@ namespace k0X
                         string summary = (string)arr[2];
                         DateTime received = (DateTime)arr[3];
 
-                        if (scan) DetScan(ref email, ref  summary, ref received);
-                        else CheckAFeed(ref subject, ref email, ref  summary, ref  received);
+                        if (scan) DetScan(ref email, ref summary, ref received);
+                        else CheckAFeed(ref subject, ref email, ref summary, ref received);
                     }
                     catch (SystemException ex)
                     {

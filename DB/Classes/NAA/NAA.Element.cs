@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-
-namespace DB
+﻿namespace DB
 {
     public partial class LINAA
     {
-       
         public partial class ElementsRow
         {
             // string url = string.Empty;
@@ -20,8 +14,5 @@ namespace DB
                 set { uccontrol = value; }
             }
         }
-
-    
-      
     }
 }

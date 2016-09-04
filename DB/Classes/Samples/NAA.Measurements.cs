@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using Rsx;
-using Rsx.Math;
 using Rsx.CAM;
 
 namespace DB
 {
-  
     public partial class LINAA
     {
-
-
-
         public partial class MeasurementsRow
         {
             public bool IsAcquiring = false;
@@ -134,7 +127,5 @@ namespace DB
                 return meas;
             }
         }
-
-
     }
 }

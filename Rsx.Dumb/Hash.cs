@@ -34,7 +34,6 @@ namespace Rsx
             return content;
         }
 
-
         /// <summary>
         ///  Creates a non-repeated list of items (HashSet) from values in a given DataTable's Column
         /// </summary>

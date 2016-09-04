@@ -20,7 +20,6 @@ namespace DB
             return populatorArray;
         }
 
-       
         public IEnumerable<Action> PMThree()
         {
             Action[] populatorOther = null;
@@ -32,11 +31,10 @@ namespace DB
 
             IEnumerable<Action> populatorArray = null;
             populatorArray = populatorOther;
-           // populatorArray.Union(PMNAA());
+            // populatorArray.Union(PMNAA());
 
             return populatorArray;
         }
-
 
         public IEnumerable<Action> PMZero()
         {

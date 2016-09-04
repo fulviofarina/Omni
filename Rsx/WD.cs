@@ -4,8 +4,6 @@ using System.ComponentModel;
 
 namespace Rsx
 {
- 
-
     /// <summary>
     /// A class for any worker (in principle)
     /// </summary>
@@ -21,7 +19,7 @@ namespace Rsx
         bool CancelAsync { set; }
     }
 
-    public class WD : Rsx.IWD
+    public class WD : IWD
     {
         private object[] args;
 
@@ -70,7 +68,7 @@ namespace Rsx
             set { reportMethod = value; }
         }
 
-        private System.ComponentModel.BackgroundWorker worker;
+        private BackgroundWorker worker;
 
         public void Async()
         {
@@ -90,9 +88,9 @@ namespace Rsx
             worker.RunWorkerAsync(args);
         }
 
-        private void worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+            BackgroundWorker worker = sender as BackgroundWorker;
 
             object[] args = e.Argument as object[];
             bool inform = (bool)args[2];

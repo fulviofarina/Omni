@@ -9,8 +9,6 @@ namespace Rsx
 {
     public partial class Dumb
     {
-
-
         public static void CleanColumnExpressions(DataTable table)
         {
             IEnumerable<DataColumn> columns = table.Columns.OfType<DataColumn>().Where(c => c.Expression.CompareTo(string.Empty) != 0).ToArray();
@@ -153,7 +151,6 @@ namespace Rsx
             //    auxiliar = null;
         }
 
-
         public static byte[] MakeDTBytes<T, T2>(ref IEnumerable<T> answ, ref T2 adt, string afile)
         {
             IEnumerable<DataRow> rows = answ as IEnumerable<DataRow>;
@@ -167,8 +164,6 @@ namespace Rsx
             System.IO.File.Delete(afile);
             return arr;
         }
-
-
 
         public static DataTable DGVToTable(DataGridView dgv)
         {
@@ -230,6 +225,7 @@ namespace Rsx
         {
             return a.Remove(0, a.Length - 1).CompareTo(b.Remove(0, b.Length - 1));
         };
+
         public static T First<T>(string fieldToCompare, object valueToCompare, IEnumerable<T> rows)
         {
             Func<T, bool> compare = (i) =>
@@ -299,6 +295,7 @@ namespace Rsx
 
             return results;
         }
+
         public static bool MergeTable<T, T2>(ref T dt, ref T2 dataset)
         {
             object o = dt;
@@ -329,9 +326,5 @@ namespace Rsx
         {
             return set.Tables.OfType<T>().FirstOrDefault();
         }
-
-
-
-
     }
 }

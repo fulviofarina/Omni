@@ -8,9 +8,6 @@ namespace Rsx
 {
     public partial class Dumb
     {
-
-
-
         public static void AcceptChanges<T>(ref IEnumerable<T> rows)
         {
             if (rows == null || rows.Count() == 0) return;
@@ -19,7 +16,7 @@ namespace Rsx
             foreach (DataRow r in rows2) r.AcceptChanges();
             rows2 = null;
         }
-      
+
         public static bool HasChanges(IEnumerable<DataRow> array)
         {
             if (array == null) return false;
@@ -80,6 +77,5 @@ namespace Rsx
             if (!curr.Equals(org)) return true;
             else return false;
         }
-
     }
 }

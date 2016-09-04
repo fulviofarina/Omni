@@ -7,6 +7,7 @@ namespace DB
     public partial class LINAA : IToDoes
     {
         protected internal IList<string> toDoesList;
+
         public IList<string> ToDoesList
         {
             get

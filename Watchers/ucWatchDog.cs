@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DB;
-using Rsx;
-using Rsx.DGV;
 using Rsx.CAM;
+using Rsx.DGV;
 
 namespace k0X
 {

@@ -2,9 +2,9 @@
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using DB.Interfaces;
 using DB.Tools;
 using Rsx;
-using DB.Interfaces;
 
 /*
 
@@ -511,28 +511,24 @@ namespace DB.UI
 {
     public partial class ucMatSSF : UserControl
     {
-     
+        //  private string input = "MATSSF_INP.TXT";
+        //  private string output = "MATSSF_LST.TXT";
 
-      //  private string input = "MATSSF_INP.TXT";
-      //  private string output = "MATSSF_LST.TXT";
-
-      //  private String DirectoryPath = ;
+        //  private String DirectoryPath = ;
 
         //    private LINAA Aux = null;
         private bool Offline = false;
 
         private string mf;
-    
+
         ///cant remember what is this
         private Interface Interface = null;
 
-     
         public ucMatSSF(ref LINAA Linaa, bool offline)
         {
             InitializeComponent();
             object db = Linaa;
             Interface = new Interface(ref db);
-
 
             string dir = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + DB.Properties.Resources.MatSSFFolder;
 
@@ -550,10 +546,7 @@ namespace DB.UI
             LoadDatabase();
 
             setBindings();
-
         }
-
-
 
         /// <summary>
         /// Adds a new row of type VialType or Channels, which is either a Rabbit/Vial or a Channel configuration
@@ -571,11 +564,8 @@ namespace DB.UI
             {
                 if (sender.Equals(this.AddUnitBn))
                 {
-
-                 
                     double kepi = getControlAs<double>(ref kepiB);
                     double kth = getControlAs<double>(ref kthB);
-
 
                     LINAA.UnitRow u = this.lINAA.Unit.NewUnitRow();
                     u.Name = "New Unit";
@@ -584,25 +574,20 @@ namespace DB.UI
                     u.RowError = string.Empty;
                     //  u.ChCfg = getControlAs<string>(ref cfgB);
                     this.lINAA.Unit.AddUnitRow(u);
-                 
-                    MatSSF.UNIT = u;
 
+                    MatSSF.UNIT = u;
 
                     colName = this.lINAA.Unit.UnitIDColumn.ColumnName;
                     bs = this.unitBS;
                     idnumber = MatSSF.UNIT.UnitID;
-
                 }
                 else
                 {
-                    
                     bool isRabbit = !sender.Equals(this.bnVialAddItem);
 
                     LINAA.VialTypeRow v = this.lINAA.VialType.NewVialTypeRow();
                     v.IsRabbit = isRabbit;
                     this.lINAA.VialType.AddVialTypeRow(v);
-
-
 
                     colName = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
 
@@ -620,28 +605,21 @@ namespace DB.UI
             //IS A CHANNEL
             else
             {
-              
-              //  {
-                 
-                    LINAA.ChannelsRow ch = this.lINAA.Channels.NewChannelsRow();
-                    this.lINAA.Channels.AddChannelsRow(ch);
+                //  {
+                LINAA.ChannelsRow ch = this.lINAA.Channels.NewChannelsRow();
+                this.lINAA.Channels.AddChannelsRow(ch);
 
-
-                    colName = this.lINAA.Channels.ChannelsIDColumn.ColumnName;
-                    bs = this.ChannelBS;
-                    idnumber = ch.ChannelsID;
-             //   }
-                    //  newIndex = this.ChannelBS.Find(colName, ch.ChannelsID);
-               // this.ChannelBS.Position = newIndex;
+                colName = this.lINAA.Channels.ChannelsIDColumn.ColumnName;
+                bs = this.ChannelBS;
+                idnumber = ch.ChannelsID;
+                //   }
+                //  newIndex = this.ChannelBS.Find(colName, ch.ChannelsID);
+                // this.ChannelBS.Position = newIndex;
             }
 
             int newIndex = bs.Find(colName, idnumber);
             bs.Position = newIndex;
-
-
         }
-      
-
 
         /// <summary>
         /// sets the bindings only once
@@ -653,7 +631,6 @@ namespace DB.UI
             try
             {
                 string text = "Text";
-
 
                 Dumb.LinkBS(ref this.ChannelBS, this.lINAA.Channels);
 
@@ -671,10 +648,6 @@ namespace DB.UI
                 //  ChCfg.Items.AddRange(MatSSF.Types);
 
                 this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
-
-
-
-
 
                 DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
                 LINAA.UnitDataTable Unit = this.lINAA.Unit;
@@ -717,18 +690,13 @@ namespace DB.UI
 
                 this.nameB.ComboBox.DataBindings.Add(name);
 
-
                 Dumb.LinkBS(ref this.unitBS, this.lINAA.Unit);
-
-
 
                 MouseEventArgs m = null;
                 m = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
                 DataGridViewCellMouseEventArgs args = null;
                 args = new DataGridViewCellMouseEventArgs(-1, 0, 0, 0, m);
                 this.dgvItemSelected(this.unitDGV, args);
-
-
 
                 //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(this.unitBS.Current);
 
@@ -739,8 +707,6 @@ namespace DB.UI
                 errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
         }
-
-
 
         /// <summary>
         /// when a DGV-item is selected, take the necessary rows to compose the unit
@@ -764,15 +730,12 @@ namespace DB.UI
                 if (!dgv.Equals(this.unitDGV))
                 {
                     setUnit();
-
                 }
-
-
 
                 if (dgv.Equals(this.unitDGV))
                 {
                     if (this.unitBS.Count == 0) return;
-                    MatSSF.UNIT  = Dumb.Cast<LINAA.UnitRow>(r);
+                    MatSSF.UNIT = Dumb.Cast<LINAA.UnitRow>(r);
                     MatSSF.ReadXML();
 
                     string column = this.lINAA.MatSSF.UnitIDColumn.ColumnName;
@@ -780,63 +743,46 @@ namespace DB.UI
                     string unitID = MatSSF.UNIT.UnitID.ToString();
 
                     //  MatSSF.UNIT = u;
-                   
 
                     Dumb.LinkBS(ref this.MATSSFBS, this.lINAA.MatSSF, column + " is " + unitID, sortCol);
-
                 }
                 else if (dgv.Equals(this.ChannelDGV))
                 {
                     if (this.ChannelBS.Count == 0) return;
                     LINAA.ChannelsRow c = Dumb.Cast<LINAA.ChannelsRow>(r);
-                     MatSSF.UNIT.SetChannel(ref c);
-
+                    MatSSF.UNIT.SetChannel(ref c);
                 }
                 else if (dgv.Equals(this.matrixDGV))
                 {
                     if (this.MatrixBS.Count == 0) return;
                     LINAA.MatrixRow m = Dumb.Cast<LINAA.MatrixRow>(r);
-                     MatSSF.UNIT.SetMatrix(ref m);
+                    MatSSF.UNIT.SetMatrix(ref m);
                 }
                 else
                 {
-
                     if (dgv.Equals(vialDGV))
                     {
                         if (this.VialBS.Count == 0) return;
-                      
                     }
                     else
                     {
                         if (this.ContainerBS.Count == 0) return;
-
-                       
                     }
 
                     LINAA.VialTypeRow v = Dumb.Cast<LINAA.VialTypeRow>(r);
 
                     MatSSF.UNIT.SetVialContainer(ref v);
-
-
-
                 }
-
-
 
                 DataRow row = Dumb.Cast<DataRow>(r);
 
                 if (row != null) errorB.Text = row.RowError;
-
-
             }
             catch (System.Exception ex)
             {
-
                 errorB.Text = ex.Message + "\n";
             }
         }
-
-     
 
         /// <summary>
         /// Sets the new UnitRow if current is null
@@ -844,16 +790,13 @@ namespace DB.UI
         /// <returns></returns>
         private bool setUnit()
         {
-
             LINAA.UnitRow u = MatSSF.UNIT;
 
             if (u == null)
             {
-
                 addNewVialChannel_Click(this.AddUnitBn, EventArgs.Empty);
-
             }
-           
+
             //should check for errors differently, inside DB namespace
             //fix this
             if (string.IsNullOrWhiteSpace(matrixB.Text))
@@ -864,14 +807,9 @@ namespace DB.UI
             return true;
         }
 
-
-      
-
-
         //
         //
         //
-
 
         /// <summary>
         /// Gets ToolStripTextBox control content as T-type
@@ -915,39 +853,29 @@ namespace DB.UI
             return mass;
         }
 
-
         private void validateBS()
         {
-
             this.MatrixBS.EndEdit();
             this.VialBS.EndEdit();
             this.unitBS.EndEdit();
             this.ChannelBS.EndEdit();
             this.ContainerBS.EndEdit();
-
         }
-
-
 
         private void LoadDatabase()
         {
-           // errorB.Clear();
+            // errorB.Clear();
 
             try
             {
-              
-
                 if (!Offline)
                 {
                     this.lINAA.Dispose();
                     this.lINAA = null;
 
                     this.lINAA = (LINAA)Interface.Get();
-                  
-                    Interface.IPopulate.IGeometry.PopulateUnits();
 
-                    
-                   
+                    Interface.IPopulate.IGeometry.PopulateUnits();
                 }
                 else
                 {
@@ -969,19 +897,15 @@ namespace DB.UI
             catch (System.Exception ex)
             {
                 Interface.IReport.Msg("Error", ex.Message + "\n" + ex.Source + "\n");
-              //  errorB.Text += ex.Message + "\n" + ex.Source + "\n";
+                //  errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
         }
 
-
-
         private void SaveItem_Click(object sender, EventArgs e)
         {
-
-           // this.currentUnit.LastChanged = DateTime.Now;
+            // this.currentUnit.LastChanged = DateTime.Now;
 
             this.Validate();
-
 
             validateBS();
             //  setUnit();
@@ -1004,7 +928,6 @@ namespace DB.UI
 
         private void Calculate_Click(object sender, EventArgs e)
         {
-
             this.progress.Value = 0;
 
             //Validate Binding sources
@@ -1012,7 +935,6 @@ namespace DB.UI
 
             errorB.Clear();
 
-          
             //Go to Calculations/ Units Tab
             this.Tab.SelectedTab = this.CalcTab;
 
@@ -1029,16 +951,12 @@ namespace DB.UI
 
             try
             {
-            
-            
-              //  MatSSF.UNIT = currentUnit;
-              //  MatSSF.Table = this.lINAA.MatSSF;
+                //  MatSSF.UNIT = currentUnit;
+                //  MatSSF.Table = this.lINAA.MatSSF;
                 MatSSF.INPUT();
                 //2
                 this.progress.PerformStep();
                 Application.DoEvents();
-
-
 
                 //arreglar esto
                 string file = MatSSF.StartupPath + MatSSF.InputFile;
@@ -1047,40 +965,33 @@ namespace DB.UI
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-
-
                 bool runOk = DB.Tools.MatSSF.RUN(hide);
                 //4
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-
                 if (runOk)
                 {
                     DB.Tools.MatSSF.OUTPUT();
-                   
+
                     if (MatSSF.Table.Count == 0)
                     {
                         throw new SystemException("Problems Reading MATSSF Output\n");
                     }
-
                 }
                 else
                 {
                     throw new SystemException("MATSSF is still calculating stuff...\n");
                     // errorB.Text += "MATSSF is still calculating stuff...\n";
-
                 }
                 //5
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-
                 MatSSF.CHILEAN();
                 //6
                 this.progress.PerformStep();
                 Application.DoEvents();
-
 
                 //  else errorB.Text += "Matrix Composition is empty\n";
             }
@@ -1091,16 +1002,12 @@ namespace DB.UI
                 errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
 
-     
-
             MatSSF.WriteXML();
             SaveItem_Click(sender, e);
             Dumb.LinkBS(ref this.MATSSFBS, this.lINAA.MatSSF);
             //7
             this.progress.PerformStep();
             Application.DoEvents();
-
-
         }
 
         /*
@@ -1147,7 +1054,6 @@ namespace DB.UI
         //     LINAA.MatSSFDataTable sf = SSF as LINAA.MatSSFDataTable;
         //  sf.GtColumn.Expression = Gtbox.Text;
         //    sf.pColumn.Expression = densitybox2.Text;
-
 
         //    Aux.MatSSF.WriteXml(DirectoryPath + "export.xml");
 
@@ -1201,7 +1107,6 @@ namespace DB.UI
                 //    LoadInputBox();
 
                  System.IO.File.Delete(DirectoryPath + "export.xml");
-
             }
             catch (System.Exception ex)
             {
@@ -1211,7 +1116,6 @@ namespace DB.UI
             //  fillCfgList();
         }
         */
-
 
         /*
         private void viewOutputToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1242,7 +1146,5 @@ namespace DB.UI
             this.chlenB.Text = chs[2];
             this.cfgB.Text = chs[0];
         }
-
-     
     }
 }

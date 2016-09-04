@@ -14,7 +14,6 @@ namespace Rsx
             return array.Where(o => !IsNuDelDetch(o) && o.Field<object>(Field) != null);
         }
 
-
         public static bool HasErrors<T>(IEnumerable<T> rows)
         {
             if (GetRowsInError<T>(rows).Count() != 0) return true;
@@ -202,6 +201,5 @@ namespace Rsx
             {
             }
         }
-
     }
 }

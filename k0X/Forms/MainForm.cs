@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using DB.Interfaces;
 using DB.UI;
 using Rsx;
-using DB.Interfaces;
-using Rsx.CAM;
 
 namespace k0X
 {
@@ -59,7 +58,7 @@ namespace k0X
             closeArgs = new FormClosingEventArgs(CloseReason.UserClosing, false);
 
             this.notify.Icon = this.Icon;
-         
+
             LIMS.UserControls = Program.UserControls;
 
             DisableUntil();
@@ -642,7 +641,7 @@ namespace k0X
 
                 Interface interf = LIMS.Interface;
 
-                ucSamples = new ucSamples(ref  interf);
+                ucSamples = new ucSamples(ref interf);
                 ucSamples.ISS = ISS;
                 Program.UserControls.Add(ucSamples);
                 newForm = true;

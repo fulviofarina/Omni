@@ -336,7 +336,7 @@ namespace Rsx.DGV
                     }
                     break;
 
-                #endregion OTHERS
+                    #endregion OTHERS
             }
 
             if (doRest)

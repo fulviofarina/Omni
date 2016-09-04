@@ -10,7 +10,6 @@ namespace k0X
 {
     public partial class ucSamples
     {
-      
         private void TV_DragDrop(object sender, DragEventArgs e)
         {
             ucSamples s2ToAadd = (ucSamples)e.Data.GetData(typeof(ucSamples));
@@ -277,7 +276,5 @@ namespace k0X
                 e.Node.ToolTipText = text;
             }
         }
-
-        
     }
 }

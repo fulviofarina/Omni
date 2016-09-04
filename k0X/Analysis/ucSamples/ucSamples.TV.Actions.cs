@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -132,7 +131,7 @@ namespace k0X
             return SampleNode;
         }
 
-        protected static void SetAMeasurementNode(ref  TreeNode MeasNode)
+        protected static void SetAMeasurementNode(ref TreeNode MeasNode)
         {
             if (IsBadNode(ref MeasNode)) return;
             LINAA.MeasurementsRow m = MeasNode.Tag as LINAA.MeasurementsRow;
@@ -197,7 +196,6 @@ namespace k0X
             }
         }
 
-     
         protected TreeNode[] Clon;
     }
 }

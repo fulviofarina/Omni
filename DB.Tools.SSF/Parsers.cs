@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rsx;
 
 namespace DB.Tools
 {
     public partial class MatSSF
     {
-     
         private static char[] ch = new char[] { ',', '(', '#', ')' };
         public static string[] Types = new string[] { "0 = Isotropic", "1 = Wire flat", "2 = Foil/wire ch. axis" };
 
@@ -81,7 +79,6 @@ namespace DB.Tools
             return System.IO.File.Exists(fileInput);
         }
 
-
         private static void fillUnit(ref IEnumerable<string> array)
         {
             string aux = string.Empty;
@@ -107,12 +104,10 @@ namespace DB.Tools
             setField(ref PXS, ref array, aux, invcmUnit);
 
             UNIT.FillWith(Mdens, Gt, EXS, MCL, PXS);
-
         }
+
         private static void fillTable(IList<string> list)
         {
-
-
             string[] content = null;
 
             string separator = "------------------------------------------------------------------------";
@@ -145,12 +140,9 @@ namespace DB.Tools
 
                         setMatSSFRow(ref Sample, content, ZEl);
                     }
-
                 }
                 catch (SystemException ex)
                 {
-
-
                 }
             }
         }
@@ -166,7 +158,6 @@ namespace DB.Tools
 
             foreach (string s in re2.Split(formula)) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
         }
-    
 
         private static void setMatSSFRow(ref LINAA.SubSamplesRow sample, string[] content, string[] ZEl)
         {

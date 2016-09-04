@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Rsx;
-using Rsx.Math;
 
 namespace DB
 {
-  
     public partial class LINAA
     {
         public partial class CompositionsDataTable
@@ -90,7 +88,7 @@ namespace DB
                 set { renew = value; }
             }
 
-            public  IList<string[]> StripComposition()
+            public IList<string[]> StripComposition()
             {
                 System.Collections.Generic.List<string[]> ls = null;
                 if (Rsx.Dumb.IsNuDelDetch(this)) return ls;
@@ -127,17 +125,14 @@ namespace DB
 
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
-              
-                    MatrixRow m = (MatrixRow)e.Row;
-                    int col = e.Column.Ordinal;
-                    object propo = e.ProposedValue; //new value
-                    object val = e.Row[e.Column]; //old value
-                    if (propo == null) return; //if null go away
-                    if (val == null) return; //idem
+                MatrixRow m = (MatrixRow)e.Row;
+                int col = e.Column.Ordinal;
+                object propo = e.ProposedValue; //new value
+                object val = e.Row[e.Column]; //old value
+                if (propo == null) return; //if null go away
+                if (val == null) return; //idem
                 try
                 {
-
-
                     if (col == this.columnMatrixDensity.Ordinal)
                     {
                         double density = (double)propo;
@@ -163,7 +158,6 @@ namespace DB
 
                 try
                 {
-
                     LINAA.MatrixRow m = e.Row as LINAA.MatrixRow;
 
                     if (e.Column == this.columnMatrixName)
@@ -232,6 +226,5 @@ namespace DB
                 }
             }
         }
-
     }
 }

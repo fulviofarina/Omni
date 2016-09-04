@@ -11,7 +11,6 @@ namespace NSS
         [STAThread]
         private static void Main()
         {
-          
             try
             {
                 Application.EnableVisualStyles();
@@ -19,18 +18,14 @@ namespace NSS
                 Form toload = null;
 
                 toload = MakeForm();
-               
-              //  toload.WindowState = FormWindowState.Maximized;
+
+                //  toload.WindowState = FormWindowState.Maximized;
                 Application.Run(toload);
             }
             catch (SystemException ex)
             {
                 MessageBox.Show("Program Error: " + ex.Message);
             }
-
-          
-
-
         }
 
         /// <summary>
@@ -39,7 +34,6 @@ namespace NSS
         /// <returns>the ParentForm of the ucControl</returns>
         private static Form MakeForm()
         {
-
             DB.LINAA db = null;
             DB.Msn msn = new DB.Msn();
             NotifyIcon con = null;
@@ -55,15 +49,11 @@ namespace NSS
             }
             else DB.Tools.Creator.Load(ref db, 0);
 
-           
-
             DB.UI.ucMatSSF uc = new DB.UI.ucMatSSF(ref db, false);
 
             //   DB.UI.Auxiliar aux = new DB.UI.Auxiliar();
 
             return uc.ParentForm;
         }
-
-      
     }
 }

@@ -91,19 +91,14 @@ namespace DB
         {
             public void SetChannel(ref LINAA.ChannelsRow c)
             {
-
-
                 this.kth = c.kth;
                 this.kepi = c.kepi;
                 this.ChCfg = c.FluxType;
                 this.ChannelID = c.ChannelsID;
-
             }
+
             public void SetVialContainer(ref LINAA.VialTypeRow v)
             {
-
-
-
                 string rad = "Assign a ";
                 if (v.IsRabbit) rad += "source ";
                 string len = rad;
@@ -150,13 +145,10 @@ namespace DB
                         //   chlenB.Text = leng.ToString();
                     }
                 }
-
-
             }
 
             public void SetMatrix(ref LINAA.MatrixRow m)
             {
-
                 m.RowError = string.Empty;
                 if (m.IsMatrixCompositionNull())
                 {
@@ -177,10 +169,8 @@ namespace DB
                 }
             }
 
-
             public void FillWith(string Mdens, string Gt, string EXS, string MCL, string PXS)
             {
-
                 double aux2 = 0;
 
                 if (!Mdens.Equals(string.Empty))
@@ -196,15 +186,12 @@ namespace DB
                     }
 
                     this.Density = dens1;
-
                 }
                 if (!Gt.Equals(string.Empty))
                 {
                     aux2 = Dumb.Parse(Gt, 1);
 
                     this.Gt = Math.Abs(aux2);
-
-
                 }
                 if (!EXS.Equals(string.Empty))
                 {
@@ -226,13 +213,7 @@ namespace DB
                 }
 
                 this.LastCalc = DateTime.Now;
-
             }
-
-
         }
-
-
     }
-
 }

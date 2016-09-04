@@ -179,10 +179,10 @@ namespace k0X
                 }
                 string window = abox.Text + ";" + bbox.Text + ";" + bkgchbox.Text + ";" + highDT.Text;
                 string[] array = new string[]
-			  {
-				probox.Text, samplebox.Text,posbox.Text,
-				elements,location,stopafterbox.Text,usrbox.Text,repeatsbox.Text,window
-			  };
+              {
+                probox.Text, samplebox.Text,posbox.Text,
+                elements,location,stopafterbox.Text,usrbox.Text,repeatsbox.Text,window
+              };
 
                 if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                 System.IO.File.WriteAllLines(path, array);
@@ -1134,12 +1134,12 @@ namespace k0X
 
                 DB.Tools.SolCoin Solcoin = new DB.Tools.SolCoin(ref this.Linaa);
                 string[] posgeodetfillrad = new string[] {
-				  this.currentMeas.Position.ToString(),
-				  this.currentSample.GeometryName,
-				  this.currentMeas.Detector,
-				  this.currentSample.FillHeight.ToString(),
-				  this.currentSample.Radius.ToString(),
-				  this.currentSample.SubSampleName };
+                  this.currentMeas.Position.ToString(),
+                  this.currentSample.GeometryName,
+                  this.currentMeas.Detector,
+                  this.currentSample.FillHeight.ToString(),
+                  this.currentSample.Radius.ToString(),
+                  this.currentSample.SubSampleName };
 
                 main.Speak("Calculating efficiencies and COI factors...");
 

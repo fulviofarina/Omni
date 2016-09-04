@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Rsx;
-using Rsx.Math;
 
 namespace DB
 {
-  
     public partial class LINAA
     {
         partial class VialTypeDataTable
@@ -46,6 +44,5 @@ namespace DB
                 }
             }
         }
-
     }
 }

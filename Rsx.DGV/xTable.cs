@@ -10,7 +10,7 @@ namespace Rsx.DGV
 {
     public class xTable
     {
-        public static Comparison<string> stringsorter = delegate(string a, string b)
+        public static Comparison<string> stringsorter = delegate (string a, string b)
         {
             return a.Remove(0, a.Length - 1).CompareTo(b.Remove(0, b.Length - 1));
         };
@@ -622,7 +622,7 @@ namespace Rsx.DGV
             }
         }
 
-        public static void New(int ZColumns, ref  DataView view, String fieldX, String fieldY, ref DataGridView dgv)
+        public static void New(int ZColumns, ref DataView view, String fieldX, String fieldY, ref DataGridView dgv)
         {
             Clean(ref dgv);
 

@@ -98,7 +98,5 @@ namespace DB
             ls.TrimExcess();
             return ls;
         }
-
-       
     }
 }

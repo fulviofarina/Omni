@@ -1041,7 +1041,7 @@ namespace Rsx
             return message;
         }
 
-        public static void Dispose(ref SmtpClient client, ref  System.Net.Mail.MailMessage message)
+        public static void Dispose(ref SmtpClient client, ref System.Net.Mail.MailMessage message)
         {
             if (message != null)
             {

@@ -12,10 +12,6 @@ namespace DB.Tools
         private static string inputFile = "MATSSF_INP.TXT";
         private static string outputFile = "MATSSF_LST.TXT";
 
-
-
-
-
         public static string StartupPath
         {
             get { return startupPath; }
@@ -35,11 +31,9 @@ namespace DB.Tools
             }
         }
 
-
         public static LINAA.UnitRow UNIT = null;
         public static LINAA.MatSSFDataTable Table = null;
         public static LINAA.SubSamplesRow Sample = null;
-
 
         public static bool WriteXML()
         {
@@ -47,19 +41,19 @@ namespace DB.Tools
             System.IO.File.Delete(file);
             Table.WriteXml(file);
 
-            byte[] bites =   Dumb.ReadFileBytes(file);
+            byte[] bites = Dumb.ReadFileBytes(file);
 
             UNIT.SSFTable = bites;
 
             System.IO.File.Delete(file);
 
-            return true; 
+            return true;
         }
+
         public static bool ReadXML()
         {
-
             //   System.IO.File.Delete(file);
-            // 
+            //
             Table.Clear();
 
             if (UNIT.IsSSFTableNull()) return false;
@@ -98,6 +92,7 @@ namespace DB.Tools
 
             return success;
         }
+
         public static void CHILEAN()
         {
             //sample geometry dependant values// why recalculate each time? leave them here
@@ -158,6 +153,7 @@ namespace DB.Tools
             abs.Clear();
             elements.Clear();
         }
+
         public static String OUTPUT()
         {
             string File = startupPath + outputFile;
@@ -169,11 +165,8 @@ namespace DB.Tools
             array = array.Where(o => !o.Equals("\r"));
             array = array.Select(o => o.Trim(null)).AsEnumerable();
 
-
-          
-
             fillUnit(ref array);
-         
+
             fillTable(array.ToList());
 
             array = null;
@@ -187,6 +180,7 @@ namespace DB.Tools
 
             return File;
         }
+
         public static bool RUN(bool Hide)
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -197,7 +191,5 @@ namespace DB.Tools
 
             return process.HasExited;
         }
-
-
     }
 }

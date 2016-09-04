@@ -81,8 +81,6 @@ namespace DB.Tools
 
         private static object dataset = null;
 
-      
-
         private static void EndUI()
         {
             LINAA Linaa = dataset as LINAA;
@@ -90,7 +88,7 @@ namespace DB.Tools
             Application.DoEvents();
             Linaa.ReportFinished();
             toPopulate++;
-         
+
             Load(ref Linaa, toPopulate);
         }
 

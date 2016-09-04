@@ -70,7 +70,6 @@ namespace Rsx
             return c.ToString();
         }
 
-      
         public static void FD<T>(ref T objeto)
         {
             object o = objeto;
@@ -156,11 +155,6 @@ namespace Rsx
             return new TimeSpan(days, h, m, s);
         }
 
-      
-      
-       
-      
-      
         /// <returns>a HashSet</returns>
     }
 }

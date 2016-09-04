@@ -47,8 +47,6 @@ namespace DB
             }
         }
 
-     
-
         partial class ExceptionsDataTable
         {
             public void RemoveDuplicates()

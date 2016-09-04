@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DB;
 using DB.Interfaces;
 using Rsx;
+
 //using Rsx.CAM;
 
 namespace k0X
@@ -16,9 +17,11 @@ namespace k0X
         private LINAA.MeasurementsRow picked;
         private LINAA.PeaksHLRow peak;
         private DB.Tools.SolCoin solcoin;
-      //  private CamFileReader reader;
-      //  private DetectorX preader;
+
+        //  private CamFileReader reader;
+        //  private DetectorX preader;
         public MainForm MainForm;
+
         private DB.LINAATableAdapters.PeaksHLTableAdapter HLTA;
 
         public ucHyperLab()
@@ -26,7 +29,7 @@ namespace k0X
             InitializeComponent();
 
             this.Linaa.InitializeComponent();
-             object  aux = this.Linaa;
+            object aux = this.Linaa;
             this.Interface = new Interface(ref aux);
 
             Interface.ITables.PopulateColumnExpresions();

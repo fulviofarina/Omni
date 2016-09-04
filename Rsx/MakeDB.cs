@@ -13,7 +13,7 @@ namespace Rsx
 {
 public class XSD2SQL
 {
-    private readonly Server _server;
+    private readonly  Server _server;
     private readonly SqlConnection _connection;
     private Database _db;
     private DataSet _source;
