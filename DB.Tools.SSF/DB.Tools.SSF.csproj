@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3EB831A5-895B-4561-9C3D-ACC87A9CCAB0}</ProjectGuid>
+    <ProjectGuid>{9DBD5B78-587B-404A-AFD1-ADD1DE1D8F7A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DB.UI</RootNamespace>
-    <AssemblyName>DB.UI.Auxiliar</AssemblyName>
+    <RootNamespace>DB.Tools</RootNamespace>
+    <AssemblyName>DB.Tools.SSF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -30,11 +30,27 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,37 +59,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auxiliar\Auxiliar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Auxiliar\Auxiliar.designer.cs">
-      <DependentUpon>Auxiliar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Auxiliar\IPicker.cs" />
-    <Compile Include="Auxiliar\PickerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Auxiliar\PickerForm.designer.cs">
-      <DependentUpon>PickerForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="Parsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Auxiliar\Auxiliar.resx">
-      <DependentUpon>Auxiliar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Auxiliar\PickerForm.resx">
-      <DependentUpon>PickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DB\DB.csproj">
+    <ProjectReference Include="..\..\Omni\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx.Dumb\Rsx.Dumb.csproj">
+    <ProjectReference Include="..\..\Omni\Rsx.Dumb\Rsx.Dumb.csproj">
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Omni\Rsx\Rsx.csproj">
+      <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
+      <Name>Rsx</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

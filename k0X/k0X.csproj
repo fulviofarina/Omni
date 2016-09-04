@@ -691,7 +691,7 @@
       <Project>{4eee1204-d241-4fef-8188-0f6ca5a1a4c0}</Project>
       <Name>DB.UI.LIMS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LIMS\DB.UI.SSF.csproj">
+    <ProjectReference Include="..\DB.UI.SSF\DB.UI.SSF.csproj">
       <Project>{23b5ea4d-b073-46aa-8e66-a4baad1626f1}</Project>
       <Name>DB.UI.SSF</Name>
     </ProjectReference>

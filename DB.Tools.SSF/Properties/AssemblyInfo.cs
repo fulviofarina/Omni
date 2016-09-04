@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DB.UI.Auxiliar")]
+[assembly: AssemblyTitle("DB.Tools.SSF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DB.UI.Auxiliar")]
+[assembly: AssemblyProduct("DB.Tools.SSF")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3eb831a5-895b-4561-9c3d-acc87a9ccab0")]
+[assembly: Guid("9dbd5b78-587b-404a-afd1-add1de1d8f7a")]
 
 // Version information for an assembly consists of the following four values:
 //

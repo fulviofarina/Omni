@@ -98,7 +98,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Omin\DB.Tools.SSF\DB.Tools.SSF.csproj">
+    <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
       <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
       <Name>DB.Tools.SSF</Name>
     </ProjectReference>
