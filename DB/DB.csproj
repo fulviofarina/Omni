@@ -103,64 +103,69 @@
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
     <None Include="NEVERDELETE.cd" />
-    <Compile Include="Classes\Adapter\Adapter.cs" />
-    <Compile Include="Classes\Adapter\Adapter.NAA.cs" />
-    <Compile Include="Classes\Adapter\Adapter.Others.cs" />
-    <Compile Include="Classes\Adapter\Adapter.SOLCOIN.cs" />
-    <Compile Include="Classes\Geometry\NAA.DetSol.cs" />
-    <Compile Include="Classes\Geometry\NAA.Geometry.cs" />
-    <Compile Include="Classes\Geometry\NAA.Matrix.cs" />
-    <Compile Include="Classes\Geometry\NAA.Units.cs" />
-    <Compile Include="Classes\Geometry\NAA.Vial.cs" />
-    <Compile Include="Classes\Geometry\Populate.DetSol.cs" />
-    <Compile Include="Classes\Geometry\Populate.Geometry.cs" />
-    <Compile Include="Classes\Interfaces\InterfaceClass.cs" />
-    <Compile Include="Classes\Interfaces\Interfaces.cs" />
-    <Compile Include="Classes\Interfaces\Interfaces.Populate.cs" />
-    <Compile Include="Classes\Main\Populate.Actions.cs" />
-    <Compile Include="Classes\Main\Populate.Components.cs" />
-    <Compile Include="Classes\Main\Populate.Main.cs" />
-    <Compile Include="Classes\Main\Populate.Tables.cs" />
-    <Compile Include="Classes\Project\NAA.Orders.cs" />
-    <Compile Include="Classes\Project\NAA.Channels.cs" />
-    <Compile Include="Classes\Project\NAA.Projects.cs" />
+    <Compile Include="Adapter\Adapter.cs" />
+    <Compile Include="Adapter\Adapter.NAA.cs" />
+    <Compile Include="Adapter\Adapter.Others.cs" />
+    <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
+    <Compile Include="LIMS\Geometry\NAA.DetSol.cs" />
+    <Compile Include="LIMS\Geometry\NAA.Geometry.cs" />
+    <Compile Include="LIMS\Geometry\NAA.Matrix.cs" />
+    <Compile Include="LIMS\Geometry\NAA.Units.cs" />
+    <Compile Include="LIMS\Geometry\NAA.Vial.cs" />
+    <Compile Include="LIMS\Geometry\Populate.DetSol.cs" />
+    <Compile Include="LIMS\Geometry\Populate.Geometry.cs" />
+    <Compile Include="Interfaces\InterfaceClass.cs" />
+    <Compile Include="Interfaces\Interfaces.cs" />
+    <Compile Include="Interfaces\Interfaces.Populate.cs" />
+    <Compile Include="LINAA.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Populate.Actions.cs" />
+    <Compile Include="Main\Populate.Components.cs" />
+    <Compile Include="Main\Populate.Main.cs" />
+    <Compile Include="Main\Populate.Tables.cs" />
+    <Compile Include="LIMS\Project\NAA.Orders.cs" />
+    <Compile Include="LIMS\Project\NAA.Channels.cs" />
+    <Compile Include="LIMS\Project\NAA.Projects.cs" />
     <Compile Include="Msn.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Msn.Designer.cs">
       <DependentUpon>Msn.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\NAA\NAA.Element.cs" />
-    <Compile Include="Classes\NAA\Populate.Nuclear.cs" />
-    <Compile Include="Classes\Preferences\NAA.Preferences.cs" />
-    <Compile Include="Classes\Preferences\Populate.Preferences.cs" />
-    <Compile Include="Classes\Project\NAA.Irradiations.cs" />
-    <Compile Include="Classes\Project\Populate.Irradiations.cs" />
-    <Compile Include="Classes\Project\Populate.Orders.cs" />
-    <Compile Include="Classes\Project\Populate.Projects.cs" />
-    <Compile Include="Classes\Report\Report.Crystal.cs" />
-    <Compile Include="Classes\Report\Report.cs" />
-    <Compile Include="Classes\Report\Report.QueryMsg.cs" />
-    <Compile Include="Classes\Report\Report.Speak.cs" />
-    <Compile Include="Classes\Samples\NAA.Measurements.cs" />
-    <Compile Include="Classes\Samples\NAA.Peaks.cs" />
-    <Compile Include="Classes\Samples\NAA.Samples.cs" />
-    <Compile Include="Classes\Samples\Populate.Samples.cs" />
-    <Compile Include="Classes\SchAcqs\NAA.SchedAcqs.cs" />
-    <Compile Include="Classes\SchAcqs\Populate.SchedAcqs.cs" />
-    <Compile Include="Classes\Static\Comparers.cs" />
-    <Compile Include="Classes\Static\Main.cs" />
-    <Compile Include="Classes\Static\Others.cs" />
-    <Compile Include="Classes\Static\Selector.cs" />
-    <Compile Include="Classes\Static\Selector.SchedAcqs.cs" />
-    <Compile Include="Classes\Store\Store.cs" />
-    <Compile Include="Classes\Store\Store.Delete.cs" />
-    <Compile Include="Classes\Store\Store.Save.cs" />
-    <Compile Include="Classes\ToDo\Populate.ToDoes.cs" />
-    <Compile Include="Classes\ToDo\ToDo.Avg.cs" />
-    <Compile Include="Classes\ToDo\ToDo.cs" />
-    <Compile Include="Classes\ToDo\ToDo.Data.cs" />
-    <Compile Include="Classes\ToDo\ToDo.Res.cs" />
+    <Compile Include="LIMS\Nuclear\NAA.Element.cs" />
+    <Compile Include="LIMS\Nuclear\Populate.Nuclear.cs" />
+    <Compile Include="LIMS\Preferences\NAA.Preferences.cs" />
+    <Compile Include="LIMS\Preferences\Populate.Preferences.cs" />
+    <Compile Include="LIMS\Project\NAA.Irradiations.cs" />
+    <Compile Include="LIMS\Project\Populate.Irradiations.cs" />
+    <Compile Include="LIMS\Project\Populate.Orders.cs" />
+    <Compile Include="LIMS\Project\Populate.Projects.cs" />
+    <Compile Include="Report\Report.Crystal.cs" />
+    <Compile Include="Report\Report.cs" />
+    <Compile Include="Report\Report.QueryMsg.cs" />
+    <Compile Include="Report\Report.Speak.cs" />
+    <Compile Include="LIMS\Samples\NAA.Measurements.cs" />
+    <Compile Include="LIMS\Samples\NAA.Peaks.cs" />
+    <Compile Include="LIMS\Samples\NAA.Samples.cs" />
+    <Compile Include="LIMS\Samples\Populate.Samples.cs" />
+    <Compile Include="LIMS\SchAcqs\NAA.SchedAcqs.cs" />
+    <Compile Include="LIMS\SchAcqs\Populate.SchedAcqs.cs" />
+    <Compile Include="Static\Comparers.cs" />
+    <Compile Include="Static\Main.cs" />
+    <Compile Include="Static\Others.cs" />
+    <Compile Include="Static\Selector.cs" />
+    <Compile Include="Static\Selector.SchedAcqs.cs" />
+    <Compile Include="Store\Store.cs" />
+    <Compile Include="Store\Store.Delete.cs" />
+    <Compile Include="Store\Store.Save.cs" />
+    <Compile Include="LIMS\ToDo\Populate.ToDoes.cs" />
+    <Compile Include="LIMS\ToDo\ToDo.Avg.cs" />
+    <Compile Include="LIMS\ToDo\ToDo.cs" />
+    <Compile Include="LIMS\ToDo\ToDo.Data.cs" />
+    <Compile Include="LIMS\ToDo\ToDo.Res.cs" />
     <Compile Include="CrystalReports\GenericReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -187,11 +192,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="LINAA.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Misc.Designer.cs">
@@ -223,7 +223,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Classes\Main\Populate.Components.resx">
+    <EmbeddedResource Include="Main\Populate.Components.resx">
       <DependentUpon>Populate.Components.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Msn.resx">
@@ -342,6 +342,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

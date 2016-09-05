@@ -8,11 +8,7 @@ namespace DB
 {
     public partial class LINAA
     {
-        public IEnumerable<DataTable> GetTablesWithChanges()
-        {
-            return this.Tables.OfType<System.Data.DataTable>().Where(r => Dumb.GetRowsWithChanges(r.AsEnumerable()).Count() != 0);
-        }
-
+      
             
         partial class IrradiationRequestsDataTable
         {
