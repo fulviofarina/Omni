@@ -28,7 +28,8 @@ namespace DB
             dTWithHandlers.Add(this.Tables.IndexOf(Standards));
             handlers.Add(Monitors.DataColumnChanged);
             dTWithHandlers.Add(this.Tables.IndexOf(Monitors));
-
+            handlers.Add(DetectorsAbsorbers.DataColumnChanged);
+            dTWithHandlers.Add(this.Tables.IndexOf(DetectorsAbsorbers));
             handlers.Add(Unit.DataColumnChanged);
             dTWithHandlers.Add(this.Tables.IndexOf(Unit));
 

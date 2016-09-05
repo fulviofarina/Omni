@@ -8,7 +8,9 @@ namespace DB
 {
     public partial class LINAA
     {
-        partial class VialTypeDataTable
+      
+
+        partial class ChannelsDataTable
         {
             private IEnumerable<DataColumn> nonNullables;
 
@@ -18,35 +20,37 @@ namespace DB
                 {
                     if (nonNullables == null)
                     {
-                        nonNullables = new DataColumn[] { this.columnMatrixDensity, this.columnMatrixName, this.columnVialTypeRef };
+                        nonNullables = new DataColumn[] { this.columnAlpha, this.columnf, this.columnReactor, this.columnkth, this.columnkepi };
                     }
                     return nonNullables;
                 }
             }
 
-            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
+            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-              
-                DataColumn col = e.Column;
-                VialTypeRow subs = e.Row as VialTypeRow;
                 try
                 {
-                  
-                    if (NonNullables.Contains(col))
+                    if (NonNullables.Contains(e.Column))
                     {
                         bool nu = Dumb.CheckNull(e.Column, e.Row);
-                        if (col == this.columnVialTypeRef && nu) subs.VialTypeRef = "No Name";
+                        if (e.Column == this.columnChannelName && nu)
+                        {
+                            ChannelsRow ch = e.Row as ChannelsRow;
+                            ch.ChannelName = "New Channel";
+                        }
                         return;
                     }
                 }
                 catch (SystemException ex)
                 {
-                    LINAA linaa = this.DataSet as LINAA;
-                    e.Row.SetColumnError(col,ex.Message);
-                   // Dumb.SetRowError(e.Row, e.Column, ex);
-                    linaa.AddException(ex);
+                    e.Row.SetColumnError(e.Column, ex.Message);
                 }
             }
         }
+
+     
+
+
+    
     }
 }

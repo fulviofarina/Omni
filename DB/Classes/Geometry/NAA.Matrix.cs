@@ -123,7 +123,24 @@ namespace DB
         partial class MatrixDataTable
         {
             public Action PopulateXCom;
+            private IEnumerable<DataColumn> nonNullables;
 
+            public IEnumerable<DataColumn> NonNullables
+            {
+                get
+                {
+                    if (nonNullables == null)
+                    {
+                        nonNullables = new DataColumn[] 
+                        {
+                            this.columnMatrixDensity,
+                            this.columnMatrixName,
+                            this.columnMatrixComposition
+                        };
+                    }
+                    return nonNullables;
+                }
+            }
             /// <summary>
             /// Gets a non-repeated list of matrices IDs from wich their mass attenuation coefficients were stored in the database
             /// </summary>
@@ -159,19 +176,24 @@ namespace DB
 
             public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
             {
+                DataColumn col = e.Column;
+
+                if (!NonNullables.Contains(col)) return;
+
+
                 LINAA linaa = this.DataSet as LINAA;
+
+                LINAA.MatrixRow m = e.Row as LINAA.MatrixRow;
+           
 
                 try
                 {
-                    LINAA.MatrixRow m = e.Row as LINAA.MatrixRow;
 
-                    if (e.Column == this.columnMatrixName)
+                    Dumb.CheckNull(col, e.Row);
+
+                    if (col == this.columnMatrixDensity)
                     {
-                        Dumb.CheckNull(e.Column, e.Row);
-                    }
-                    else if (e.Column == this.columnMatrixDensity)
-                    {
-                        Dumb.CheckNull(e.Column, e.Row);
+                       
                         if (m.Renew)
                         {
                             if (m.Renew)
@@ -199,9 +221,9 @@ namespace DB
                                                 }
                                              */
                     }
-                    else if (e.Column == this.columnMatrixComposition)
+                    else if (col == this.columnMatrixComposition)
                     {
-                        Dumb.CheckNull(e.Column, e.Row);
+                       // Dumb.CheckNull(col, e.Row);
                         IEnumerable<LINAA.CompositionsRow> compos = m.GetCompositionsRows();
                         if (compos.Count() != 0)
                         {
@@ -229,7 +251,9 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(e.Row, e.Column, ex);
+                    e.Row.SetColumnError(col, ex.Message);
+                    linaa.AddException(ex);
+
                 }
             }
         }

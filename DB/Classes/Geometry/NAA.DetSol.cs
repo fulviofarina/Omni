@@ -5,18 +5,20 @@ namespace DB
 {
     public partial class LINAA
     {
-        partial class DetectorsAbsorbersDataTable
+        public partial class DetectorsAbsorbersDataTable
         {
-            private void Data_ColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
+            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
             {
-                LINAA linaa = this.DataSet as LINAA;
+              
                 try
                 {
                     Dumb.CheckNull(e.Column, e.Row);
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(e.Row, e.Column, ex);
+                    LINAA linaa = this.DataSet as LINAA;
+                    e.Row.SetColumnError(e.Column, ex.Message);
+                 //   Dumb.SetRowError(e.Row, e.Column, ex);
                     linaa.AddException(ex);
                 }
             }

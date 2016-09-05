@@ -538,7 +538,10 @@ namespace DB.UI
             form.AutoSize = true;
 
             form.Controls.Add(this);// Populate(this);
-            form.Text = "MATSSF Panel";
+            form.Text = "SSF Panel";
+            IntPtr Hicon = DB.UI.Properties.Res.Logo.GetHicon();
+            System.Drawing.Icon myIcon = System.Drawing.Icon.FromHandle(Hicon);
+            form.Icon = myIcon;
             form.Show();
 
             Offline = offline;

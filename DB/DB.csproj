@@ -121,6 +121,9 @@
     <Compile Include="Classes\Main\Populate.Components.cs" />
     <Compile Include="Classes\Main\Populate.Main.cs" />
     <Compile Include="Classes\Main\Populate.Tables.cs" />
+    <Compile Include="Classes\Project\NAA.Orders.cs" />
+    <Compile Include="Classes\Project\NAA.Channels.cs" />
+    <Compile Include="Classes\Project\NAA.Projects.cs" />
     <Compile Include="Msn.cs">
       <SubType>Form</SubType>
     </Compile>

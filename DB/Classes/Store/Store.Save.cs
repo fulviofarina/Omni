@@ -239,11 +239,13 @@ namespace DB
                     else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.MatSSFTableAdapter.Update(schs);
                     else if (t.Equals(typeof(UnitRow)))
                     {
+                        /*
                         foreach (DataRow r in schs)
                         {
                             UnitRow u = (UnitRow)r;
                             u.LastChanged = DateTime.Now;
                         }
+                        */
                         this.tAM.UnitTableAdapter.Update(schs);
                     }
                     else if (t.Equals(typeof(MeasurementsRow)))

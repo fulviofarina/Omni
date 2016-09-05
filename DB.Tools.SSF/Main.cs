@@ -165,7 +165,7 @@ namespace DB.Tools
             array = array.Where(o => !o.Equals("\r"));
             array = array.Select(o => o.Trim(null)).AsEnumerable();
 
-            fillUnit(ref array);
+            UNIT.FillWith(ref array);
 
             fillTable(array.ToList());
 

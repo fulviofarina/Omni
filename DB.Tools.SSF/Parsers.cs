@@ -59,16 +59,7 @@ namespace DB.Tools
             return buffer;
         }
 
-        private static void setField(ref string MCL, ref IEnumerable<string> array, string aux, string units)
-        {
-            string x = array.FirstOrDefault(o => o.Contains(aux));
-
-            if (string.IsNullOrEmpty(x)) return;
-
-            x = x.Replace(aux, null);
-            if (!string.IsNullOrEmpty(units)) x = x.Replace(units, null);
-            MCL = x.Trim(null);
-        }
+       
 
         private static bool writeFile(string buffer, string fileInput)
         {
@@ -79,32 +70,7 @@ namespace DB.Tools
             return System.IO.File.Exists(fileInput);
         }
 
-        private static void fillUnit(ref IEnumerable<string> array)
-        {
-            string aux = string.Empty;
-            string Gt = string.Empty;
-            string Mdens = string.Empty;
-            string MCL = string.Empty;
-            string EXS = string.Empty;
-            string PXS = string.Empty;
-
-            string densityUnit = "[g/cm3]";
-            string cmUnit = "[cm]";
-            string invcmUnit = "[1/cm]";
-
-            aux = "Material density";
-            setField(ref Mdens, ref array, aux, densityUnit);
-            aux = "G-thermal";
-            setField(ref Gt, ref array, aux, string.Empty);
-            aux = "Mean chord length";
-            setField(ref MCL, ref array, aux, cmUnit);
-            aux = "Escape x.sect.";
-            setField(ref EXS, ref array, aux, invcmUnit);
-            aux = "Potential x.sect.";
-            setField(ref PXS, ref array, aux, invcmUnit);
-
-            UNIT.FillWith(Mdens, Gt, EXS, MCL, PXS);
-        }
+      
 
         private static void fillTable(IList<string> list)
         {

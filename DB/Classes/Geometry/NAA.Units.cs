@@ -35,6 +35,8 @@ namespace DB
                             this.columnDensity,
                             this.columnDiameter,
                             this.columnLenght,
+                            this.columnLastChanged,
+                            
                             this.columnMass };
                     }
                     return nonNullables;
@@ -43,14 +45,21 @@ namespace DB
 
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
+                DataColumn c = e.Column;
+
+                if (!NonNullables.Contains(c)) return;
+
+             
+                UnitRow r = e.Row as UnitRow;
+              
+
                 try
                 {
-                    UnitRow r = e.Row as UnitRow;
-                    DataColumn c = e.Column;
-                    if (NonNullables.Contains(e.Column))
-                    {
-                        bool nu = Dumb.CheckNull(c, e.Row);
-                        bool densityNull = nu && c == this.columnDensity;
+
+                                     
+                   
+                        bool nullo = Dumb.CheckNull(c, e.Row);
+                        bool densityNull = nullo && c == this.columnDensity;
 
                         if (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity)
                         {
@@ -63,12 +72,14 @@ namespace DB
                                     double mass = Vol * r.Density;
                                     if (mass != r.Mass) r.Mass = mass;
                                 }
-                                return;
+                             //   return;
                                 //    massB.Text = Decimal.Round(Convert.ToDecimal(mass), 5).ToString();
                             }
-                            else densityNull = true;
+                           // else densityNull = true;
                         }
-                        if (e.Column == this.columnMass || densityNull)
+
+
+                        if (c == this.columnMass || densityNull)
                         {
                             double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
 
@@ -78,17 +89,25 @@ namespace DB
                             //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
                         }
                         //
-                    }
+                   
+
+
                 }
                 catch (SystemException ex)
                 {
-                    e.Row.SetColumnError(e.Column, ex.Message);
+                    LINAA linaa = this.DataSet as LINAA;
+                    e.Row.SetColumnError(c, ex.Message);
+                    linaa.AddException(ex);
                 }
             }
         }
 
         partial class UnitRow
         {
+            /// <summary>
+            /// Sets the channel data
+            /// </summary>
+            /// <param name="c"></param>
             public void SetChannel(ref LINAA.ChannelsRow c)
             {
                 this.kth = c.kth;
@@ -97,6 +116,10 @@ namespace DB
                 this.ChannelID = c.ChannelsID;
             }
 
+            /// <summary>
+            /// sets the vial container data
+            /// </summary>
+            /// <param name="v"></param>
             public void SetVialContainer(ref LINAA.VialTypeRow v)
             {
                 string rad = "Assign a ";
@@ -147,6 +170,10 @@ namespace DB
                 }
             }
 
+            /// <summary>
+            /// Sets the matrix data
+            /// </summary>
+            /// <param name="m"></param>
             public void SetMatrix(ref LINAA.MatrixRow m)
             {
                 m.RowError = string.Empty;
@@ -169,8 +196,69 @@ namespace DB
                 }
             }
 
+            /// <summary>
+            /// Fills the UnitRow with data from an array extracted from the OUTPUT MatSSF File
+            /// </summary>
+            /// <param name="array">Output file extracted array</param>
+            public void FillWith(ref IEnumerable<string> array)
+            {
+                string aux = string.Empty;
+                string Gt = string.Empty;
+                string Mdens = string.Empty;
+                string MCL = string.Empty;
+                string EXS = string.Empty;
+                string PXS = string.Empty;
+
+                try
+                {
+                  
+                    string densityUnit = "[g/cm3]";
+                    string cmUnit = "[cm]";
+                    string invcmUnit = "[1/cm]";
+
+                    aux = "Material density";
+                    Dumb.SetField(ref Mdens, ref array, aux, densityUnit);
+                    aux = "G-thermal";
+                    Dumb.SetField(ref Gt, ref array, aux, string.Empty);
+                    aux = "Mean chord length";
+                    Dumb.SetField(ref MCL, ref array, aux, cmUnit);
+                    aux = "Escape x.sect.";
+                    Dumb.SetField(ref EXS, ref array, aux, invcmUnit);
+                    aux = "Potential x.sect.";
+                    Dumb.SetField(ref PXS, ref array, aux, invcmUnit);
+
+             
+
+                }
+                catch (SystemException ex)
+                {
+                    LINAA linaa = this.Table.DataSet as LINAA;
+                    linaa.AddException(ex);
+                    this.RowError = ex.Message;
+                }
+
+
+
+                this.FillWith(Mdens, Gt, EXS, MCL, PXS);
+
+
+            }
+
+            /// <summary>
+            /// Fills the UnitRow with the given physical parameters
+            /// </summary>
+            /// <param name="Mdens">density matrix</param>
+            /// <param name="Gt">thermal SSF</param>
+            /// <param name="EXS">Escape X section</param>
+            /// <param name="MCL">Mean Chord Lenght</param>
+            /// <param name="PXS">Potential X section</param>
             public void FillWith(string Mdens, string Gt, string EXS, string MCL, string PXS)
             {
+
+              
+                try
+                { 
+
                 double aux2 = 0;
 
                 if (!Mdens.Equals(string.Empty))
@@ -213,6 +301,18 @@ namespace DB
                 }
 
                 this.LastCalc = DateTime.Now;
+
+                }
+
+                catch (SystemException ex)
+                {
+                    LINAA linaa = this.Table.DataSet as LINAA;
+                    linaa.AddException(ex);
+                    this.RowError = ex.Message;
+                }
+
+
+
             }
         }
     }

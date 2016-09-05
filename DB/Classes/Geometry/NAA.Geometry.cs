@@ -37,23 +37,26 @@ namespace DB
 
             public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
             {
-                LINAA linaa = this.DataSet as LINAA;
+                DataColumn col = e.Column;
+
+                if (!NonNullables.Contains(col)) return;
+
+              //  LINAA linaa = this.DataSet as LINAA;
+                LINAA.GeometryRow g = e.Row as LINAA.GeometryRow;
 
                 try
                 {
-                    LINAA.GeometryRow g = e.Row as LINAA.GeometryRow;
-                    if (NonNullables.Contains(e.Column))
-                    {
-                        bool nu = Dumb.CheckNull(e.Column, e.Row);
-                        if (e.Column == this.columnGeometryName && nu)
+                      
+                        bool nu = Dumb.CheckNull(col, e.Row);
+                        if (col == this.columnGeometryName && nu)
                         {
                             g.GeometryName = "No Name";
                         }
-                        else if (nu && e.Column == this.columnFillHeight || e.Column == this.columnRadius)
+                        else if (nu && col == this.columnFillHeight || col == this.columnRadius)
                         {
                             VialTypeRow v = g.VialTypeRow;
                             if (v == null) return;
-                            if (e.Column == this.columnFillHeight)
+                            if (col == this.columnFillHeight)
                             {
                                 if (v.IsMaxFillHeightNull()) return;
                                 if (v.MaxFillHeight == 0) return;
@@ -61,18 +64,19 @@ namespace DB
                             }
                             else
                             {
-                                if (!Dumb.CheckNull(e.Column, e.Row)) return;
+                                if (!Dumb.CheckNull(col, e.Row)) return;
                                 if (v.IsInnerRadiusNull()) return;
                                 if (v.InnerRadius == 0) return;
                                 g.Radius = v.InnerRadius;
                             }
                         }
                         return;
-                    }
+                    
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(e.Row, e.Column, ex);
+                    LINAA linaa = this.DataSet as LINAA;
+                    Dumb.SetRowError(e.Row, col, ex);
                     linaa.AddException(ex);
                 }
             }
