@@ -2,72 +2,92 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
+using DB.Interfaces;
 
 namespace DB
 {
-    public partial class LINAA : DB.Interfaces.IReport
+
+
+    public partial class LINAA 
     {
-        public void ReportProgress(int percentage)
+        /// <summary>
+        //SHITTY
+        ///SHITTY
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private static string[] findGreeting(ref string user)
         {
-            System.Drawing.Font seg = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
+            string text;
+            string title;
+            int hours = DateTime.Now.TimeOfDay.Hours;
+            if (hours < 12) text = "Good morning " + user;
+            else if ((hours < 16) && (hours >= 12)) text = "Good afternoon... " + user;
+            else text = "Good evening... " + user;
 
-            this.msn.iconic.Image = Rsx.Notifier.MakeBitMap(percentage.ToString() + "%", seg, System.Drawing.Color.White);
-            //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
+            text += "\nPlease type in the name of the project";
+            title = "Which project to look for?";
 
-            Application.DoEvents();
+            return new string[] { title, text };
+        }
 
-            string msg = "Loading... ";
-            string title = "Please wait...";
-            if (percentage == 100)
+        //SHITTY
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="pref"></param>
+        /// <returns></returns>
+        private string findHellos(ref string user, ref LINAA.PreferencesRow pref)
+        {
+            IEnumerable<LINAA.HelloWorldRow> hellos = pref.GetHelloWorldRows();
+
+            int count = hellos.Count();
+            if (this.HelloWorld.Rows.Count != count)
             {
-                msg = "Loaded ";
-                this.msn.iconic.Image = Rsx.Notifier.MakeBitMap("OK", seg, System.Drawing.Color.White);
-                title = "Ready to go...";
+                IEnumerable<LINAA.HelloWorldRow> toremove = this.HelloWorld.Except(hellos);
+                this.Delete(ref toremove);
             }
 
-            Msg(title, msg);
+            string comment = String.Empty;
 
-            if (percentage == 100) this.msn.iconic.Image = Rsx.Notifier.MakeBitMap(":)", seg, System.Drawing.Color.White);
+            if (count != 0 && count < 20)
+            {
+                Random random = new Random();
+                int index = random.Next(0, count);
+                comment = hellos.ElementAt(index).Comment;
+                // user = hellos.ElementAt(index).k0User;
+            }
+
+            return comment;
         }
+
+    }
+    public partial class LINAA : IReport
+    {
+       
 
         public void ReportFinished()
         {
+
+            if (Exceptions.Count != 0)
+            {
+                Speak("Loading finished! However... some errors were found");
+            }
+            else Speak("Loading finished!");
+
             try
             {
-                if (Exceptions.Count != 0)
-                {
-                    Speak("Loading finished! However... some errors were found");
-                }
-                else Speak("Loading finished!");
-                string comment = String.Empty;
                 string user = this.currentPref.WindowsUser;
+                LINAA.PreferencesRow p = this.currentPref;
 
-                IEnumerable<LINAA.HelloWorldRow> hellos = this.currentPref.GetHelloWorldRows();
-                int count = hellos.Count();
-                if (this.HelloWorld.Rows.Count != count)
-                {
-                    IEnumerable<LINAA.HelloWorldRow> toremove = this.HelloWorld.Except(hellos);
-                    this.Delete(ref toremove);
-                }
-                if (count != 0 && count < 20)
-                {
-                    Random random = new Random();
-                    int index = random.Next(0, count);
-                    comment = hellos.ElementAt(index).Comment;
-                    user = hellos.ElementAt(index).k0User;
-                }
-                this.notify.Icon = mainIcon;
+                string comment = findHellos(ref user, ref p);
 
-                int hours = DateTime.Now.TimeOfDay.Hours;
-                string text;
-                if (hours < 12) text = "Good morning " + user;
-                else if ((hours < 16) && (hours >= 12)) text = "Good afternoon... " + user;
-                else text = "Good evening... " + user;
+                string[] txtTitle = findGreeting(ref user);
 
-                text += "\nPlease type in the name of the project";
-                string title = "Which project to look for?";
+                Msg(txtTitle[0], txtTitle[1]);
 
-                Msg(text, title);
             }
             catch (SystemException ex)
             {
@@ -75,34 +95,35 @@ namespace DB
             }
         }
 
+      
         public bool IsSpectraPathOk
         {
             get
             {
-                if (string.IsNullOrEmpty(currentPref.Spectra)) return false;
-                else return System.IO.Directory.Exists(currentPref.Spectra);
+                string spec = currentPref.Spectra;
+                if (string.IsNullOrEmpty(spec)) return false;
+                else return Directory.Exists(spec);
             }
         }
 
-        private System.Drawing.Icon mainIcon = null;
+      //  private System.Drawing.Icon mainIcon = null;
 
-        private System.Windows.Forms.NotifyIcon notify;
+        private NotifyIcon notify=null;
 
-        public System.Windows.Forms.NotifyIcon Notify
+        public NotifyIcon Notify
         {
             get { return notify; }
             set
             {
-                if (value == null) return;
+             //   if (value == null) return;
                 notify = value;
 
-                if (notify.Icon == null) return;
-                if (mainIcon == null) mainIcon = notify.Icon;
+          //      if (notify.Icon == null) return;
+              //  if (mainIcon == null) mainIcon = notify.Icon;
             }
         }
 
-        private Msn msn;
-
+        private Msn msn=null;
         public Msn Msn
         {
             get { return msn; }
@@ -111,17 +132,7 @@ namespace DB
 
         public void Msg(string msg, string title, bool ok)
         {
-            string pre = string.Empty;
-            System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
-            if (ok)
-            {
-                pre = "OK - ";
-                icon = System.Windows.Forms.ToolTipIcon.Info;
-            }
-            else pre = "FAILED - ";
-            pre += title;
-
-            Msg(msg, pre, icon);
+            this.msn.Msg(msg, title, ok);
         }
 
         /// <summary>
@@ -131,22 +142,17 @@ namespace DB
         /// <param name="title">title of the message</param>
         public void Msg(string msg, string title)
         {
-            System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Info;
-            Msg(msg, title, icon);
+            this.msn.Msg(msg, title,true);
         }
-
-        public void Msg(string msg, string title, System.Windows.Forms.ToolTipIcon icon)
+        public void Speak(string text)
         {
-            //   this.notify.BalloonTipTitle = title;
-            // this.notify.BalloonTipText = msg;
-            //       this.notify.BalloonTipIcon = icon;
-
-            //******** this.notify.ShowBalloonTip(5000, title, msg, icon);
-
-            msn.Msg(msg, title);
-            msn.Show();
-
-            System.Windows.Forms.Application.DoEvents();
+            this.msn.Speak(text);
         }
+
+        public void ReportProgress(int percentage)
+        {
+            this.msn.ReportProgress(percentage);
+        }
+
     }
 }

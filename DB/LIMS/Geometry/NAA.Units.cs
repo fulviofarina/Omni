@@ -51,47 +51,81 @@ namespace DB
 
              
                 UnitRow r = e.Row as UnitRow;
-              
+
 
                 try
                 {
 
-                                     
-                   
-                        bool nullo = Dumb.CheckNull(c, e.Row);
-                        bool densityNull = nullo && c == this.columnDensity;
-
-                        if (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity)
-                        {
-                            if (!densityNull)
-                            {
-                                double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
-
-                                if (Vol != 0)
-                                {
-                                    double mass = Vol * r.Density;
-                                    if (mass != r.Mass) r.Mass = mass;
-                                }
-                             //   return;
-                                //    massB.Text = Decimal.Round(Convert.ToDecimal(mass), 5).ToString();
-                            }
-                           // else densityNull = true;
-                        }
 
 
-                        if (c == this.columnMass || densityNull)
+
+
+                    if (c == this.columnName)
+                    {
+                        if (r.IsNameNull()) r.Name = "New Unit";
+                    }
+
+                    bool nullo = Dumb.CheckNull(c, e.Row);
+                    bool densityNull = nullo && c == this.columnDensity;
+                    int round = 4;
+
+                    bool diamLengDens = (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity);
+                    if (diamLengDens)
+                    {
+                        if (!densityNull)
                         {
                             double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
 
-                            double density = MyMath.GetDensity(r.Mass, Vol);
-                            if (density != r.Density) r.Density = density;
+                            if (Vol != 0)
+                            {
 
-                            //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
+                                Decimal mass = Convert.ToDecimal(Vol * r.Density);
+                                mass = Decimal.Round(mass, round);
+                                Decimal currentMass = Convert.ToDecimal(r.Mass);
+                                currentMass = Decimal.Round(currentMass, round);
+
+                                if (mass != currentMass)
+
+                                {
+                                    r.Mass = (double)mass;
+                                }
+
+                            }
+                            return;
+                            //    massB.Text = Decimal.Round(Convert.ToDecimal(mass), 5).ToString();
                         }
-                        //
-                   
+
+                        r.LastChanged = DateTime.Now; //update the time
+
+                        // else densityNull = true;
+                    }
+                    if (c == this.columnMass || densityNull)
+                    {
+
+                        double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
+
+                        // double density = 
+                        if (Vol != 0)
+                        {
+                            Decimal density = Convert.ToDecimal(r.Mass/ Vol);
+                            density = Decimal.Round(density, round);
+                            Decimal currentdens = Convert.ToDecimal(r.Mass);
+                            currentdens = Decimal.Round(currentdens, round);
+
+                            if (density != currentdens)
+                            {
+                                r.Density = (double)density;
 
 
+                                r.LastChanged = DateTime.Now; //update the time
+                                                              //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
+                            }
+                            //
+                        }
+
+
+
+                    }
                 }
                 catch (SystemException ex)
                 {
@@ -137,7 +171,8 @@ namespace DB
                 if (v.IsInnerRadiusNull() || v.InnerRadius == 0) v.RowError = rad;
                 else
                 {
-                    diameter = Decimal.Round(Convert.ToDecimal((v.InnerRadius * 2.0)), 4);
+                    diameter = Convert.ToDecimal((v.InnerRadius * 2.0));
+                    diameter = Decimal.Round(diameter, 4);
                     if (!v.IsRabbit)
                     {
                         this.Diameter = Convert.ToDouble(diameter);
@@ -153,17 +188,18 @@ namespace DB
                 if (v.IsMaxFillHeightNull() || v.MaxFillHeight == 0) v.RowError += len;
                 else
                 {
-                    leng = Decimal.Round(Convert.ToDecimal(v.MaxFillHeight), 4);
-
+                    leng = Convert.ToDecimal(v.MaxFillHeight);
+                    leng = Decimal.Round(leng, 4);
+                  
                     if (!v.IsRabbit)
                     {
                         // lenghtbox.Text = leng;
-                        this.Lenght = Convert.ToDouble(leng);
+                        this.Lenght = (double)leng;
                         this.VialTypeID = v.VialTypeID;
                     }
                     else
                     {
-                        this.ChLenght = Convert.ToDouble(leng);
+                        this.ChLenght = (double)leng;
                         this.ContainerID = v.VialTypeID;
                         //   chlenB.Text = leng.ToString();
                     }

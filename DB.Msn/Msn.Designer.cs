@@ -100,19 +100,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(512, 113);
-            this.ControlBox = false;
+        
             this.Controls.Add(this.tableLayoutPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Location = new System.Drawing.Point(1200, 450);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+         
             this.Name = "Msn";
-            this.Opacity = 0.7D;
+           
             this.Padding = new System.Windows.Forms.Padding(9);
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.TopMost = true;
+           
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconic)).EndInit();

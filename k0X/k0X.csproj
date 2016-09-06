@@ -675,6 +675,10 @@
       <Name>DB</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Msn\DB.Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>DB.Msn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.NuDat\DB.Tools.NuDat.csproj">
       <Project>{f7c2d211-65d8-4fda-ba14-4e39a7e8c036}</Project>
       <Name>DB.Tools.NuDat</Name>

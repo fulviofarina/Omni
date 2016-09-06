@@ -129,12 +129,6 @@
     <Compile Include="LIMS\Project\NAA.Orders.cs" />
     <Compile Include="LIMS\Project\NAA.Channels.cs" />
     <Compile Include="LIMS\Project\NAA.Projects.cs" />
-    <Compile Include="Msn.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Msn.Designer.cs">
-      <DependentUpon>Msn.cs</DependentUpon>
-    </Compile>
     <Compile Include="LIMS\Nuclear\NAA.Element.cs" />
     <Compile Include="LIMS\Nuclear\Populate.Nuclear.cs" />
     <Compile Include="LIMS\Preferences\NAA.Preferences.cs" />
@@ -146,7 +140,6 @@
     <Compile Include="Report\Report.Crystal.cs" />
     <Compile Include="Report\Report.cs" />
     <Compile Include="Report\Report.QueryMsg.cs" />
-    <Compile Include="Report\Report.Speak.cs" />
     <Compile Include="LIMS\Samples\NAA.Measurements.cs" />
     <Compile Include="LIMS\Samples\NAA.Peaks.cs" />
     <Compile Include="LIMS\Samples\NAA.Samples.cs" />
@@ -226,9 +219,6 @@
     <EmbeddedResource Include="Main\Populate.Components.resx">
       <DependentUpon>Populate.Components.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Msn.resx">
-      <DependentUpon>Msn.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CrystalReports\FcReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FcReport.cs</LastGenOutput>
@@ -293,7 +283,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -301,6 +290,10 @@
     <ProjectReference Include="..\..\Omni\Rsx.Dumb\Rsx.Dumb.csproj">
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Msn\DB.Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>DB.Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>

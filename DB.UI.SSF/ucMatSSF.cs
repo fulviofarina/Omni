@@ -6,6 +6,42 @@ using DB.Interfaces;
 using DB.Tools;
 using Rsx;
 
+
+
+
+
+namespace DB.UI
+{
+    public partial class ucMatSSF
+    {
+        public static Form Start()
+        {
+            DB.LINAA db = null;
+            DB.Msn msn = new DB.Msn();
+            NotifyIcon con = null;
+            string result = Creator.Build(ref db, ref con, ref msn);
+
+            //   DB.Tools.Creator.CallBack = this.CallBack;
+            //  DB.Tools.Creator.LastCallBack = this.LastCallBack;
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                //    MessageBox.Show(result, "Could not connect to LIMS DataBase", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //   Connections_Click(null, EventArgs.Empty);
+            }
+            else DB.Tools.Creator.Load(ref db, 0);
+
+            DB.UI.ucMatSSF uc = new DB.UI.ucMatSSF(ref db, false);
+
+
+            //   DB.UI.Auxiliar aux = new DB.UI.Auxiliar();
+
+            return uc.ParentForm;
+        }
+    }
+}
+
+
 /*
 
 namespace DB.UI
@@ -521,12 +557,18 @@ namespace DB.UI
 
         private string mf;
 
+
+       // private Msn msn = null;
         ///cant remember what is this
         private Interface Interface = null;
 
         public ucMatSSF(ref LINAA Linaa, bool offline)
         {
             InitializeComponent();
+
+
+            //   this.unitTLP.Controls.Remove(this.msn);
+            
             object db = Linaa;
             Interface = new Interface(ref db);
 
@@ -534,15 +576,7 @@ namespace DB.UI
 
             MatSSF.StartupPath = dir;
 
-            Form form = new Form();
-            form.AutoSize = true;
-
-            form.Controls.Add(this);// Populate(this);
-            form.Text = "SSF Panel";
-            IntPtr Hicon = DB.UI.Properties.Res.Logo.GetHicon();
-            System.Drawing.Icon myIcon = System.Drawing.Icon.FromHandle(Hicon);
-            form.Icon = myIcon;
-            form.Show();
+            MakeForm();
 
             Offline = offline;
 
@@ -550,7 +584,40 @@ namespace DB.UI
 
             LoadDatabase();
 
-            setBindings();
+        
+          
+        }
+
+        private void makeMsn()
+        {
+            Msn msn = this.unitTLP.Controls.OfType<Msn>().FirstOrDefault();
+
+            if (msn!=null)
+            {
+                this.unitTLP.Controls.Remove(msn);
+            }
+            msn = ((LINAA)Interface.Get()).Msn;
+           // this.msn = this.lINAA.Msn;
+            this.unitTLP.Controls.Add(msn, 0, 1);
+            msn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            msn.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            msn.Location = new System.Drawing.Point(3, 32);
+            msn.Name = "msn";
+            msn.Padding = new System.Windows.Forms.Padding(9);
+            msn.Size = new System.Drawing.Size(512, 113);
+            msn.TabIndex = 6;
+        }
+
+        public void MakeForm()
+        {
+            Form form = new Form();
+            form.AutoSize = true;
+            form.Controls.Add(this);// Populate(this);
+            form.Text = "SSF Panel";
+            IntPtr Hicon = DB.UI.Properties.Res.Logo.GetHicon();
+            System.Drawing.Icon myIcon = System.Drawing.Icon.FromHandle(Hicon);
+            form.Icon = myIcon;
+            form.Show();
         }
 
         /// <summary>
@@ -573,7 +640,7 @@ namespace DB.UI
                     double kth = getControlAs<double>(ref kthB);
 
                     LINAA.UnitRow u = this.lINAA.Unit.NewUnitRow();
-                    u.Name = "New Unit";
+                  
                     u.kepi = kepi;
                     u.kth = kth;
                     u.RowError = string.Empty;
@@ -631,10 +698,12 @@ namespace DB.UI
         /// </summary>
         private void setBindings()
         {
-            errorB.Clear();
+         //   errorB.Clear();
 
-            try
-            {
+         
+
+                MatSSF.Table = this.lINAA.MatSSF;
+
                 string text = "Text";
 
                 Dumb.LinkBS(ref this.ChannelBS, this.lINAA.Channels);
@@ -657,9 +726,11 @@ namespace DB.UI
                 DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
                 LINAA.UnitDataTable Unit = this.lINAA.Unit;
                 BindingSource bs = this.unitBS;
-                column = Unit.DiameterColumn.ColumnName;
                 bool t = true;
 
+
+
+                column = Unit.DiameterColumn.ColumnName;
                 Binding diam = new Binding(text, bs, column, t, mo);
                 column = Unit.LenghtColumn.ColumnName;
                 Binding leng = new Binding(text, bs, column, t, mo);
@@ -681,6 +752,17 @@ namespace DB.UI
                 Binding kepi = new Binding(text, bs, column, t, mo);
                 column = Unit.kthColumn.ColumnName;
                 Binding kth = new Binding(text, bs, column, t, mo);
+
+
+                column = Unit.LastCalcColumn.ColumnName;
+                Binding lastcalbs = new Binding(text, bs, column, t, mo);
+                column = Unit.LastChangedColumn.ColumnName;
+                Binding lastchgbs = new Binding(text, bs, column, t, mo);
+
+
+                this.lastCal.TextBox.DataBindings.Add(lastcalbs);
+                this.lastChg.TextBox.DataBindings.Add(lastchgbs);
+
 
                 this.lenghtbox.TextBox.DataBindings.Add(leng);
                 this.diameterbox.TextBox.DataBindings.Add(diam);
@@ -706,11 +788,7 @@ namespace DB.UI
                 //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(this.unitBS.Current);
 
                 //   loadBoxesfromUnit();
-            }
-            catch (System.Exception ex)
-            {
-                errorB.Text += ex.Message + "\n" + ex.Source + "\n";
-            }
+         
         }
 
         /// <summary>
@@ -728,7 +806,7 @@ namespace DB.UI
 
             DataGridViewRow r = dgv.Rows[e.RowIndex];
 
-            errorB.Clear();
+           // errorB.Clear();
 
             try
             {
@@ -781,11 +859,11 @@ namespace DB.UI
 
                 DataRow row = Dumb.Cast<DataRow>(r);
 
-                if (row != null) errorB.Text = row.RowError;
+               // if (row != null) errorB.Text = row.RowError;
             }
             catch (System.Exception ex)
             {
-                errorB.Text = ex.Message + "\n";
+               // errorB.Text = ex.Message + "\n";
             }
         }
 
@@ -853,7 +931,7 @@ namespace DB.UI
             }
             catch (SystemException ex)
             {
-                errorB.Text += ex.Message.ToString() + "\n";
+                //errorB.Text += ex.Message.ToString() + "\n";
             }
             return mass;
         }
@@ -881,8 +959,10 @@ namespace DB.UI
                     this.lINAA = (LINAA)Interface.Get();
 
                     Interface.IPopulate.IGeometry.PopulateUnits();
+
+
                 }
-                else
+                else //fix this
                 {
                     this.lINAA = new LINAA();
 
@@ -890,9 +970,13 @@ namespace DB.UI
                     {
                         this.lINAA.ReadXml(mf, XmlReadMode.InferTypedSchema);
                     }
+
+
                 }
 
-                MatSSF.Table = this.lINAA.MatSSF;
+          
+                makeMsn();
+                setBindings();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
                 //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(bs.Current);
@@ -901,8 +985,8 @@ namespace DB.UI
             }
             catch (System.Exception ex)
             {
-                Interface.IReport.Msg("Error", ex.Message + "\n" + ex.Source + "\n");
-                //  errorB.Text += ex.Message + "\n" + ex.Source + "\n";
+                Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
+                //    errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
         }
 
@@ -938,7 +1022,7 @@ namespace DB.UI
             //Validate Binding sources
             this.validateBS();
 
-            errorB.Clear();
+           // errorB.Clear();
 
             //Go to Calculations/ Units Tab
             this.Tab.SelectedTab = this.CalcTab;
@@ -1004,7 +1088,7 @@ namespace DB.UI
             {
                 this.lINAA.AddException(ex);
 
-                errorB.Text += ex.Message + "\n" + ex.Source + "\n";
+            //    errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
 
             MatSSF.WriteXML();

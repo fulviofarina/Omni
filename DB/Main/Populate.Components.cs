@@ -30,11 +30,10 @@ namespace DB
         /// </summary>
         public LINAATableAdapters.QTA QTA;
 
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer cRV;
-
+      
         public void InitializeComponent()
         {
-            this.cRV = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            
             this.tAM = new DB.LINAATableAdapters.TableAdapterManager();
             this.QTA = new DB.LINAATableAdapters.QTA();
 
@@ -42,13 +41,7 @@ namespace DB
             //
             // cRV
             //
-            this.cRV.ActiveViewIndex = 0;
-            this.cRV.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cRV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cRV.Location = new System.Drawing.Point(0, 0);
-            this.cRV.Name = "cRV";
-            this.cRV.Size = new System.Drawing.Size(150, 150);
-            this.cRV.TabIndex = 0;
+          
             //
             // tAM
             //

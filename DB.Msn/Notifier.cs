@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 
 ///FULVIO
-namespace Rsx
+namespace DB
 {
     public partial class Notifier
     {
