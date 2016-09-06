@@ -30,11 +30,14 @@ namespace DB.Interfaces
 
         void ReportProgress(int percentage);
 
-        void LoadACrystalReport(String Title, LINAA.ReporTypes type);
-
+     
         bool IsSpectraPathOk { get; }
     }
+    public interface ICReport
+    {
+        void LoadACrystalReport(String Title, LINAA.ReporTypes type);
 
+    }
     public interface ITables
     {
         void PopulateColumnExpresions();

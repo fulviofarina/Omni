@@ -18,7 +18,12 @@ namespace DB
                 {
                     if (nonNullables == null)
                     {
-                        nonNullables = new DataColumn[] { this.columnMatrixDensity, this.columnMatrixName, this.columnVialTypeRef };
+                        nonNullables = new DataColumn[] {
+                            this.columnMatrixDensity,
+                            this.columnMatrixName,
+                            this.columnVialTypeRef ,
+                        this.columnMaxFillHeight,
+                        this.InnerRadiusColumn};
                     }
                     return nonNullables;
                 }
@@ -36,7 +41,7 @@ namespace DB
                     {
                         bool nu = Dumb.CheckNull(e.Column, e.Row);
                         if (col == this.columnVialTypeRef && nu) subs.VialTypeRef = "No Name";
-                        return;
+                        
                     }
                 }
                 catch (SystemException ex)

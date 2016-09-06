@@ -1,14 +1,78 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using DB.Interfaces;
 using Rsx;
 
 namespace k0X
 {
     public partial class ucSamples
     {
+        protected void CheckNode(ref LINAA.SubSamplesRow s)
+        {
+            //so it does not run on populating...
+            Populating = true;
+
+            try
+            {
+                TreeNode old = MakeSampleNode(ref s);
+                LINAA.MeasurementsRow[] measurements = s.GetMeasurementsRows();
+                //old.Nodes.Clear();
+                foreach (LINAA.MeasurementsRow m in measurements)
+                {
+                    try
+                    {
+                        LINAA.MeasurementsRow aux = m;
+                        TreeNode MeasNode = MakeMeasurementNode(ref aux);
+                        SetAMeasurementNode(ref MeasNode);
+                        if (!old.Nodes.Contains(MeasNode))
+                        {
+                            MeasNode.Collapse();
+                            old.Nodes.Add(MeasNode);	  //add childrens already
+                        }
+                    }
+                    catch (SystemException ex)
+                    {
+                        Interface.IReport.AddException(ex);
+                    }
+                }
+                SetASampleNode(this.sampleDescription.Checked, ref old);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IReport.AddException(ex);
+            }
+
+            Populating = false;
+        }
+
+        protected void CleanNodes()
+        {
+            if (samples == null) return;
+            foreach (LINAA.SubSamplesRow s in samples)
+            {
+                TreeNode n = (TreeNode)s.Tag;
+                if (n != null)
+                {
+                    try
+                    {
+                        if (n.TreeView != null)
+                        {
+                            IntPtr a = n.TreeView.Handle;
+                        }
+                        else s.Tag = null;
+                    }
+                    catch (ObjectDisposedException ex)
+                    {
+                        s.Tag = null;
+                    }
+                }
+            }
+        }
+
         public T GetNodeDataRow<T>()
         {
             object o = null;

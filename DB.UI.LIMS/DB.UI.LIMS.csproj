@@ -239,9 +239,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB.Msn\DB.Msn.csproj">
+    <ProjectReference Include="..\DB.Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>DB.Msn</Name>
+      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
       <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>

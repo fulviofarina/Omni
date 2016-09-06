@@ -6,6 +6,7 @@ using DB;
 using DB.Interfaces;
 using DB.UI;
 using Rsx;
+using Msn;
 
 namespace k0X
 {
@@ -144,7 +145,7 @@ namespace k0X
             // GiveMeOST();
         }
 
-        private DB.Msn msn = null;
+        private Pop msn = null;
         /// <summary>
         /// Start loading everything
         /// </summary>
@@ -157,7 +158,7 @@ namespace k0X
             {
                 DisableUntil();
 
-                msn = new Msn();
+                msn = new Pop();
 
                 string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn);
 
@@ -377,7 +378,7 @@ namespace k0X
         {
             Cursor.Current = Cursors.WaitCursor;
             bool offlinew = false;
-            ucMatSSF matssf = new ucMatSSF(ref LIMS.Linaa, offlinew);
+            ucSSF matssf = new ucSSF(ref LIMS.Linaa, offlinew);
             Program.UserControls.Add(matssf);
             Cursor.Current = Cursors.Default;
         }

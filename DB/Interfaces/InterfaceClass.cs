@@ -13,7 +13,9 @@
             IStore = (IStore)aux;
             IReport = (IReport)aux;
             IToDoes = (IToDoes)aux;
-            IPreferences = (IPreferences)aux;
+             ICReport =(ICReport)aux;
+
+        IPreferences = (IPreferences)aux;
         }
 
         public object Get()
@@ -24,6 +26,8 @@
         public IAdapter IAdapter;
         public IStore IStore;
         public IReport IReport;
+        public ICReport ICReport;
+
         public ITables ITables;
         public IToDoes IToDoes;
         public IPreferences IPreferences;

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using Msn;
 
 namespace DB.Tools
 {
@@ -175,7 +176,7 @@ namespace DB.Tools
         /// <param name="Linaa">referenced database to build (can be a null reference)</param>
         /// <param name="notify">referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition </param>
-        public static string Build(ref LINAA Linaa, ref System.Windows.Forms.NotifyIcon notify, ref Msn msn)
+        public static string Build(ref LINAA Linaa, ref System.Windows.Forms.NotifyIcon notify, ref Pop msn)
         {
             //restarting = false;
 

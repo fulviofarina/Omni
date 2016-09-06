@@ -17,7 +17,7 @@ namespace NSS
                 Application.SetCompatibleTextRenderingDefault(false);
                 Form toload = null;
 
-                toload = DB.UI.ucMatSSF.Start();
+                toload = DB.UI.ucSSF.Start();
 
                 //  toload.WindowState = FormWindowState.Maximized;
                 Application.Run(toload);

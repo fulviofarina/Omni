@@ -35,8 +35,9 @@ namespace DB
                             this.columnDensity,
                             this.columnDiameter,
                             this.columnLenght,
+                            this.columnLastCalc,
                             this.columnLastChanged,
-                            
+                            this.columnContent,
                             this.columnMass };
                     }
                     return nonNullables;
@@ -49,38 +50,46 @@ namespace DB
 
                 if (!NonNullables.Contains(c)) return;
 
-             
-                UnitRow r = e.Row as UnitRow;
+                     
+                DataRow row = e.Row;
 
+               
+
+               // if (e.ProposedValue == current) return;
+
+
+                UnitRow r = row as UnitRow;
 
                 try
-                {
+                { 
 
-
-
-
-
-                    if (c == this.columnName)
-                    {
-                        if (r.IsNameNull()) r.Name = "New Unit";
-                    }
-
-                    bool nullo = Dumb.CheckNull(c, e.Row);
+                    bool nullo = Dumb.CheckNull(c, row);
                     bool densityNull = nullo && c == this.columnDensity;
-                    int round = 4;
-
                     bool diamLengDens = (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity);
+
+
+
+
+                   
+                   
+                
+                
+
                     if (diamLengDens)
                     {
+                       // int round = 4;
+
                         if (!densityNull)
                         {
                             double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
 
                             if (Vol != 0)
                             {
+                                int round = 4;
 
                                 Decimal mass = Convert.ToDecimal(Vol * r.Density);
                                 mass = Decimal.Round(mass, round);
+
                                 Decimal currentMass = Convert.ToDecimal(r.Mass);
                                 currentMass = Decimal.Round(currentMass, round);
 
@@ -88,18 +97,19 @@ namespace DB
 
                                 {
                                     r.Mass = (double)mass;
+                                    r.LastChanged = DateTime.Now; //update the time
                                 }
 
                             }
-                            return;
+                          //  return;
                             //    massB.Text = Decimal.Round(Convert.ToDecimal(mass), 5).ToString();
                         }
 
-                        r.LastChanged = DateTime.Now; //update the time
+                       
 
                         // else densityNull = true;
                     }
-                    if (c == this.columnMass || densityNull)
+                    else if (c == this.columnMass || densityNull)
                     {
 
                         double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
@@ -107,15 +117,17 @@ namespace DB
                         // double density = 
                         if (Vol != 0)
                         {
+                            int round = 4;
+
                             Decimal density = Convert.ToDecimal(r.Mass/ Vol);
                             density = Decimal.Round(density, round);
-                            Decimal currentdens = Convert.ToDecimal(r.Mass);
+
+                            Decimal currentdens = Convert.ToDecimal(r.Density);
                             currentdens = Decimal.Round(currentdens, round);
 
                             if (density != currentdens)
                             {
                                 r.Density = (double)density;
-
 
                                 r.LastChanged = DateTime.Now; //update the time
                                                               //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
@@ -126,6 +138,41 @@ namespace DB
 
 
                     }
+
+                    else if (c == this.columnLastCalc || c == this.columnLastChanged)
+                    {
+                        //negative if calculated after it has changed (which is good)
+                        double tot = r.LastChanged.Subtract(r.LastCalc).TotalSeconds;
+                        //positive means needs to be calculated
+                        if (tot > 1)
+                        {
+                            r.ToDo = true;
+
+                        }
+                        else if (tot != 0) //negative has been calculated
+                        {
+                            r.ToDo = false;
+                            r.LastChanged = r.LastCalc;
+                        }
+                    }
+                    else if (c == this.columnContent)
+                    {
+
+
+                        if (r.IsToDoNull() || !r.ToDo)
+                        {
+                            r.LastChanged = DateTime.Now; //update the time
+                        }
+
+                    }
+
+                    if (r.IsNameNull() || string.IsNullOrEmpty(r.Name))
+                    {
+                        r.Name = "Unit";
+
+
+                    }
+
                 }
                 catch (SystemException ex)
                 {
@@ -142,8 +189,9 @@ namespace DB
             /// Sets the channel data
             /// </summary>
             /// <param name="c"></param>
-            public void SetChannel(ref LINAA.ChannelsRow c)
+            public void SetChannel( )
             {
+                LINAA.ChannelsRow c = this.ChannelsRow;
                 this.kth = c.kth;
                 this.kepi = c.kepi;
                 this.ChCfg = c.FluxType;
@@ -156,21 +204,13 @@ namespace DB
             /// <param name="v"></param>
             public void SetVialContainer(ref LINAA.VialTypeRow v)
             {
-                string rad = "Assign a ";
-                if (v.IsRabbit) rad += "source ";
-                string len = rad;
-                rad += "radius ";
-
-                rad += "lenght ";
-                rad += "in mm.";
-                len += "in mm.";
-
+               // LINAA.VialTypeRow v = null;
+                if (!v.IsRabbit)  this.VialTypeRow = v;
+                else this.ContainerRow = v;
+                                
                 decimal diameter;
                 decimal leng;
-                v.RowError = string.Empty;
-                if (v.IsInnerRadiusNull() || v.InnerRadius == 0) v.RowError = rad;
-                else
-                {
+          
                     diameter = Convert.ToDecimal((v.InnerRadius * 2.0));
                     diameter = Decimal.Round(diameter, 4);
                     if (!v.IsRabbit)
@@ -184,52 +224,38 @@ namespace DB
 
                         //   chdiamB.Text = diameter.ToString();
                     }
-                }
-                if (v.IsMaxFillHeightNull() || v.MaxFillHeight == 0) v.RowError += len;
-                else
-                {
+           
                     leng = Convert.ToDecimal(v.MaxFillHeight);
                     leng = Decimal.Round(leng, 4);
-                  
+
                     if (!v.IsRabbit)
                     {
                         // lenghtbox.Text = leng;
                         this.Lenght = (double)leng;
-                        this.VialTypeID = v.VialTypeID;
+                        // this.VialTypeID = v.VialTypeID;
                     }
                     else
                     {
                         this.ChLenght = (double)leng;
-                        this.ContainerID = v.VialTypeID;
+                        //  this.ContainerID = v.VialTypeID;
                         //   chlenB.Text = leng.ToString();
                     }
-                }
+                
             }
 
             /// <summary>
             /// Sets the matrix data
             /// </summary>
             /// <param name="m"></param>
-            public void SetMatrix(ref LINAA.MatrixRow m)
+            public void SetMatrix()
             {
-                m.RowError = string.Empty;
-                if (m.IsMatrixCompositionNull())
-                {
-                    m.RowError = "Assign a matrix composition (compulsory).";
-                }
-                else
-                {
+                    LINAA.MatrixRow m = this.MatrixRow;
+               
                     this.Content = m.MatrixComposition;
                     this.MatrixID = m.MatrixID;
                     this.Density = m.MatrixDensity;
-                    //  double density = m.MatrixDensity;
-                    if (this.Density == 0)
-                    {
-                        m.RowError += "Optionally, assign a density to this matrix.";
-                    }
-
-                    //this.currentUnit.Density = density;
-                }
+              
+                
             }
 
             /// <summary>

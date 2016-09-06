@@ -109,6 +109,9 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Compile Include="Analysis\ucSamples\ucSamples.Clicks.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Analysis\ucSamples\ucSamples.TV.Actions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +120,9 @@
     </Compile>
     <Compile Include="Forms\AuxiliarForm.designer.cs">
       <DependentUpon>AuxiliarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\ucSamples\ucSamples.QM.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <None Include="Resources\resources.designer.cs" />
     <None Include="Resources\resources.resx" />
@@ -675,9 +681,9 @@
       <Name>DB</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\DB.Msn\DB.Msn.csproj">
+    <ProjectReference Include="..\DB.Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>DB.Msn</Name>
+      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.NuDat\DB.Tools.NuDat.csproj">
       <Project>{f7c2d211-65d8-4fda-ba14-4e39a7e8c036}</Project>

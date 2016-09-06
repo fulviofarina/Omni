@@ -291,9 +291,9 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DB.Msn\DB.Msn.csproj">
+    <ProjectReference Include="..\DB.Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>DB.Msn</Name>
+      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>

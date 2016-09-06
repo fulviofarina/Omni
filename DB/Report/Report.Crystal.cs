@@ -6,7 +6,7 @@ using DB.Reports;
 
 namespace DB
 {
-    public partial class LINAA : IReport
+    public partial class LINAA : ICReport
     {
         private void crystalReport_FormClosing(object sender, FormClosingEventArgs e)
         {

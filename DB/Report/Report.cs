@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using DB.Interfaces;
+using Msn;
 
 namespace DB
 {
@@ -123,8 +124,8 @@ namespace DB
             }
         }
 
-        private Msn msn=null;
-        public Msn Msn
+        private Pop msn=null;
+        public Pop Msn
         {
             get { return msn; }
             set { msn = value; }

@@ -74,33 +74,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Res.Designer.cs">
-      <DependentUpon>Res.resx</DependentUpon>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ucMatSSF.cs">
+    <Compile Include="ucSSF.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucMatSSF.Designer.cs">
-      <DependentUpon>ucMatSSF.cs</DependentUpon>
+    <Compile Include="ucSSF.Designer.cs">
+      <DependentUpon>ucSSF.cs</DependentUpon>
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Res.resx">
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucMatSSF.resx">
-      <DependentUpon>ucMatSSF.cs</DependentUpon>
+    <EmbeddedResource Include="ucSSF.resx">
+      <DependentUpon>ucSSF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB.Msn\DB.Msn.csproj">
+    <ProjectReference Include="..\DB.Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>DB.Msn</Name>
+      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
       <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>

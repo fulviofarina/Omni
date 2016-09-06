@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB.UI.SSF", "DB.UI.SSF\DB.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsx.Emailer", "Rsx.Emailer\Rsx.Emailer.csproj", "{501D60DC-64D8-490A-8AC8-0AD16BB627D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB.Msn", "DB.Msn\DB.Msn.csproj", "{6C0291F8-1CAC-40E4-B628-556D718D9B22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,6 +295,18 @@ Global
 		{501D60DC-64D8-490A-8AC8-0AD16BB627D2}.Release|x64.Build.0 = Release|Any CPU
 		{501D60DC-64D8-490A-8AC8-0AD16BB627D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{501D60DC-64D8-490A-8AC8-0AD16BB627D2}.Release|x86.Build.0 = Release|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Debug|x86.ActiveCfg = Debug|x86
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Debug|x86.Build.0 = Debug|x86
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Release|x64.Build.0 = Release|Any CPU
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Release|x86.ActiveCfg = Release|x86
+		{6C0291F8-1CAC-40E4-B628-556D718D9B22}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
