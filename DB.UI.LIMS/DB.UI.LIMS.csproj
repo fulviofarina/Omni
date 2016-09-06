@@ -239,6 +239,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Reports\DB.Reports.csproj">
+      <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
+      <Name>DB.Reports</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>

@@ -4,13 +4,15 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
-using DB.Interfaces;
+using DB.Reports;
 using VTools;
 
 namespace k0X
 {
     public partial class ucSamples
     {
+
+        private CReport Irepo = null;
         private void Import_Click(object sender, EventArgs e)
         {
             //When Importing --> MatSSF, Load Peaks (with re-transfer), Solang and recalculate (NAA)
@@ -60,7 +62,9 @@ namespace k0X
         {
             string Title = "Fc's Report - " + this.Name;
 
-            Interface.ICReport.LoadACrystalReport(Title, LINAA.ReporTypes.FcReport);
+            if (Irepo == null) Irepo = new CReport(Interface.Get() as DataSet);
+
+            Irepo.LoadACrystalReport(Title, CReport.ReporTypes.FcReport);
         }
 
         private void AnyNodeCMS_Click(object sender, EventArgs e)

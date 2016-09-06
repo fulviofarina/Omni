@@ -1,4 +1,4 @@
-﻿namespace DB.Interfaces
+﻿namespace DB
 {
     public partial class Interface
     {
@@ -13,9 +13,9 @@
             IStore = (IStore)aux;
             IReport = (IReport)aux;
             IToDoes = (IToDoes)aux;
-             ICReport =(ICReport)aux;
+            //   ICReport =(ICReport)aux;
 
-        IPreferences = (IPreferences)aux;
+            IPreferences = (IPreferences)aux;
         }
 
         public object Get()
@@ -26,7 +26,7 @@
         public IAdapter IAdapter;
         public IStore IStore;
         public IReport IReport;
-        public ICReport ICReport;
+        //  public ICReport ICReport;
 
         public ITables ITables;
         public IToDoes IToDoes;

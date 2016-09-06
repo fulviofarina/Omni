@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using DB;
 
-using DB.Interfaces;
 
 namespace k0X
 {

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx;
+using DB.Reports;
 
 namespace DB.UI
 {
@@ -42,8 +43,10 @@ namespace DB.UI
         void Predict(object sender, EventArgs e);
     }
 
-    public partial class ucSubSamples : UserControl, DB.UI.ISubSamples
+    public partial class ucSubSamples : UserControl, ISubSamples
     {
+
+        private CReport Icrepo = null;
         public ucSubSamples()
         {
             offline = false;
@@ -59,6 +62,10 @@ namespace DB.UI
             projectbox.Items.AddRange(this.Linaa.ProjectsList.ToArray());
             this.projectbox.TextChanged -= this.projectbox_Click;
             this.projectbox.TextChanged += this.projectbox_Click;
+
+
+          
+
         }
 
         private object daddy;
@@ -276,7 +283,8 @@ namespace DB.UI
 
         private void reportBtton_Click(object sender, EventArgs e)
         {
-            this.Linaa.LoadACrystalReport(this.projectbox.Text, LINAA.ReporTypes.ProjectReport);
+            if (Icrepo == null) Icrepo = new CReport(this.Linaa as DataSet);
+            Icrepo.LoadACrystalReport(this.projectbox.Text, CReport.ReporTypes.ProjectReport);
         }
 
         public void RowAdded(ref DataRow row)

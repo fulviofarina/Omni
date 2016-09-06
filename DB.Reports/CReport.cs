@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
 using CrystalDecisions.CrystalReports.Engine;
-using DB.Interfaces;
-using DB.Reports;
 
-namespace DB
+namespace DB.Reports
 {
-    public partial class LINAA : ICReport
+    public partial class CReport
     {
+        private object set = null;
+
+        public CReport(object db)
+        {
+            set = db;
+        }
+
         private void crystalReport_FormClosing(object sender, FormClosingEventArgs e)
         {
             Form form = sender as Form;
@@ -29,8 +34,7 @@ namespace DB
         private GenericReport genreport;
         */
         private CrystalDecisions.Windows.Forms.CrystalReportViewer cRV;
-        private  ReportDocument report = null;
-
+        private ReportDocument report = null;
 
         /// <summary>
         /// Much better
@@ -41,12 +45,10 @@ namespace DB
         {
             Cursor.Current = Cursors.WaitCursor;
 
-
             bool ok = false;
-          
+
             try
             {
-
                 if (this.cRV == null)
                 {
                     this.cRV = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
@@ -59,56 +61,55 @@ namespace DB
                     this.cRV.TabIndex = 0;
                 }
 
-
                 if (type == ReporTypes.FcReport)
                 {
-                //    this.fcreport = new DB.Reports.FcReport();
-                    report = (ReportDocument)new DB.Reports.FcReport();
+                    report = (ReportDocument)new FcReport();
                 }
                 else if (type == ReporTypes.MeasReport)
                 {
-                 //   this.measreport = new DB.Reports.MeasReport();
-                    report = (ReportDocument)new DB.Reports.MeasReport();
+                    report = (ReportDocument)new MeasReport();
                 }
                 else if (type == ReporTypes.ProjectReport)
                 {
-                   // this.projectreport = new Reports.ProjectReport();
-                    report = (ReportDocument)new Reports.ProjectReport();
+                    report = (ReportDocument)new ProjectReport();
                 }
                 else if (type == ReporTypes.GenReport)
                 {
-                  //  this.genreport = new Reports.GenericReport();
-                    report = (ReportDocument)new Reports.GenericReport();
+                    report = (ReportDocument)new GenericReport();
                 }
-                else throw new SystemException("LoadCrystalReport not Implemented");
+                else throw new SystemException("CrystalReport Type not Implemented");
 
-                if (!report.IsLoaded) report.SetDataSource(this);
-
+                if (!report.IsLoaded)
+                {
+                    report.SetDataSource(set);
+                }
                 cRV.ReportSource = report;
 
                 ok = true;
             }
             catch (SystemException ex)
             {
-                this.AddException(ex);
+                MessageBox.Show(ex.Source, ex.Message, MessageBoxButtons.OK);
+
+                //  this.AddException(ex);
             }
 
             if (!ok)
             {
                 string sendToMe = "Please send a Bug Report to Fulvio (right-click the notifier)";
 
-                Msg(sendToMe, "Error when loading: " + Title, ok);
-            }
+                MessageBox.Show(sendToMe, "Error when loading: " + Title, MessageBoxButtons.OK);
 
+                // Msg(sendToMe, "Error when loading: " + Title, ok);
+            }
             else
             {
-                Msg("Report is being loaded", "Loading... " + Title, ok);
+                //  Msg("Report is being loaded", "Loading... " + Title, ok);
 
-                string loaded = "Loaded";
+                string loaded = "Loaded ";
 
                 if (cRV != null)
                 {
-
                     if (cRV.ParentForm == null)
                     {
                         Form form = null;
@@ -127,10 +128,12 @@ namespace DB
                 else
                 {
                     ok = false;
-                    loaded = "Not Loaded";
+                    loaded = "Not Loaded ";
+                    MessageBox.Show("Report was " + loaded, loaded + Title, MessageBoxButtons.OK);
+
                 }
 
-                Msg("Report was " + loaded, loaded + "... " + Title, ok);
+             
             }
 
             Cursor.Current = Cursors.Default;

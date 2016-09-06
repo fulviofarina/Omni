@@ -151,6 +151,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Reports\DB.Reports.csproj">
+      <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
+      <Name>DB.Reports</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
       <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
       <Name>DB.Tools.SOLCOI</Name>

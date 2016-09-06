@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Interfaces;
+using DB;
+//using DB.Interfaces;
 using Rsx;
 
 namespace k0X

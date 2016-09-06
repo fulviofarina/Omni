@@ -5,7 +5,7 @@ using System.Data;
 /// <summary>
 /// DB (LINAA) interfaces
 /// </summary>
-namespace DB.Interfaces
+namespace DB
 {
     public interface IMain
     {

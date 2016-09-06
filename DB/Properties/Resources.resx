@@ -121,7 +121,7 @@
     <value>mcnpx.exe</value>
   </data>
   <data name="MCNPXFolder" xml:space="preserve">
-    <value>c:\mcnpx\</value>
+    <value>a:\mcnpx\</value>
   </data>
   <data name="EffTranFolder" xml:space="preserve">
     <value>\k0-X\EffTran\</value>

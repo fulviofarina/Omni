@@ -137,7 +137,6 @@
     <Compile Include="LIMS\Project\Populate.Irradiations.cs" />
     <Compile Include="LIMS\Project\Populate.Orders.cs" />
     <Compile Include="LIMS\Project\Populate.Projects.cs" />
-    <Compile Include="Report\Report.Crystal.cs" />
     <Compile Include="Report\Report.cs" />
     <Compile Include="Report\Report.QueryMsg.cs" />
     <Compile Include="LIMS\Samples\NAA.Measurements.cs" />
@@ -159,33 +158,9 @@
     <Compile Include="LIMS\ToDo\ToDo.cs" />
     <Compile Include="LIMS\ToDo\ToDo.Data.cs" />
     <Compile Include="LIMS\ToDo\ToDo.Res.cs" />
-    <Compile Include="CrystalReports\GenericReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GenericReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CrystalReports\MeasReport.cs">
-      <DependentUpon>MeasReport.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="CrystalReports\ProjectReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <None Include="Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>
-    <Compile Include="CrystalReports\FcReport.cs">
-      <DependentUpon>FcReport.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Misc.Designer.cs">
       <DependentUpon>Misc.resx</DependentUpon>
@@ -219,18 +194,6 @@
     <EmbeddedResource Include="Main\Populate.Components.resx">
       <DependentUpon>Populate.Components.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\FcReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>FcReport.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\GenericReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>GenericReport.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\MeasReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>MeasReport.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Misc.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Misc.Designer.cs</LastGenOutput>
@@ -246,10 +209,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\ProjectReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ProjectReport.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
@@ -257,18 +216,6 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\lib\CrystalDecisions.ReportSource.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\lib\CrystalDecisions.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\lib\CrystalDecisions.Windows.Forms.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>False</Private>
     </Reference>

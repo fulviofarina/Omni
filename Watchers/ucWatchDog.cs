@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DB;
+using DB.Reports;
 using Rsx.CAM;
 using Rsx.DGV;
 
@@ -154,14 +155,20 @@ namespace k0X
             if (XtableDGV.Tag != null) xTable.Clean(ref XtableDGV);
         }
 
+
+        private CReport Irepo=null;
         public void Report()
         {
-            this.Linaa.LoadACrystalReport("Measurements Report - " + project, LINAA.ReporTypes.MeasReport);
+            if (Irepo == null) Irepo = new CReport(this.Linaa as DataSet);
+            Irepo.LoadACrystalReport("Measurements Report - " + project, CReport.ReporTypes.MeasReport);
         }
 
         public void xTableReport()
         {
-            this.Linaa.LoadACrystalReport("Measurements XTable Report - " + project, LINAA.ReporTypes.GenReport);
+
+            if (Irepo == null) Irepo = new CReport(this.Linaa as DataSet);
+
+            Irepo.LoadACrystalReport("Measurements XTable Report - " + project, CReport.ReporTypes.GenReport);
         }
 
         private string SampleFilter = string.Empty;

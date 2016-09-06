@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DB;
 using DB.LINAATableAdapters;
 
-namespace DB.Interfaces
+namespace DB
 {
     public interface IPreferences
     {
@@ -30,14 +29,9 @@ namespace DB.Interfaces
 
         void ReportProgress(int percentage);
 
-     
         bool IsSpectraPathOk { get; }
     }
-    public interface ICReport
-    {
-        void LoadACrystalReport(String Title, LINAA.ReporTypes type);
 
-    }
     public interface ITables
     {
         void PopulateColumnExpresions();

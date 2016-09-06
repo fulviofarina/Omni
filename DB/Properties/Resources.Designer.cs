@@ -169,7 +169,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to c:\mcnpx\.
+        ///   Looks up a localized string similar to a:\mcnpx\.
         /// </summary>
         public static string MCNPXFolder {
             get {
