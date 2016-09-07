@@ -45,7 +45,25 @@ namespace DB
 
             return saved;
         }
+        public bool Save(string file)
+        {
 
+
+            bool saved = false;
+
+            try
+            {
+
+                this.WriteXml(file, XmlWriteMode.WriteSchema);
+                saved = true;
+            }
+            catch (SystemException ex)
+            {
+
+            }
+
+            return saved;
+        }
         /*
         public bool SaveOLD<T>(ref IEnumerable<T> rows)
         {

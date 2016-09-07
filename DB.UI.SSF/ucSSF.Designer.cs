@@ -30,37 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucSSF));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
             this.ucUnit = new DB.UI.ucUnit();
             this.MatrixTab = new System.Windows.Forms.TabPage();
-            this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
-            this.contentTS = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.matrixTS = new System.Windows.Forms.ToolStrip();
-            this.matrixNameToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.MatrixBN = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-            this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
-            this.lINAA = new DB.LINAA();
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.matrixDGV = new System.Windows.Forms.DataGridView();
-            this.MatrixNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MatrixDensity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixRTB = new System.Windows.Forms.RichTextBox();
+            this.ucMS = new DB.UI.ucMatrixSimple();
             this.ShapeTab = new System.Windows.Forms.TabPage();
             this.ucVcc = new DB.UI.ucVCC();
             this.FileTab = new System.Windows.Forms.TabPage();
@@ -159,18 +134,6 @@
             this.Tab.SuspendLayout();
             this.CalcTab.SuspendLayout();
             this.MatrixTab.SuspendLayout();
-            this.TLPMatrix.SuspendLayout();
-            this.contentTS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.matrixTS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).BeginInit();
-            this.MatrixBN.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lINAA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             this.ShapeTab.SuspendLayout();
             this.FileTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftSC)).BeginInit();
@@ -263,7 +226,7 @@
             // 
             // MatrixTab
             // 
-            this.MatrixTab.Controls.Add(this.TLPMatrix);
+            this.MatrixTab.Controls.Add(this.ucMS);
             this.MatrixTab.Location = new System.Drawing.Point(4, 37);
             this.MatrixTab.Name = "MatrixTab";
             this.MatrixTab.Padding = new System.Windows.Forms.Padding(3);
@@ -272,280 +235,15 @@
             this.MatrixTab.Text = "Matrix";
             this.MatrixTab.UseVisualStyleBackColor = true;
             // 
-            // TLPMatrix
+            // ucMS
             // 
-            this.TLPMatrix.ColumnCount = 2;
-            this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TLPMatrix.Controls.Add(this.contentTS, 1, 0);
-            this.TLPMatrix.Controls.Add(this.splitContainer1, 0, 0);
-            this.TLPMatrix.Controls.Add(this.matrixDGV, 0, 1);
-            this.TLPMatrix.Controls.Add(this.matrixRTB, 1, 1);
-            this.TLPMatrix.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TLPMatrix.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TLPMatrix.Location = new System.Drawing.Point(3, 3);
-            this.TLPMatrix.Margin = new System.Windows.Forms.Padding(2);
-            this.TLPMatrix.Name = "TLPMatrix";
-            this.TLPMatrix.RowCount = 2;
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.32184F));
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.67816F));
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.TLPMatrix.Size = new System.Drawing.Size(679, 781);
-            this.TLPMatrix.TabIndex = 6;
-            // 
-            // contentTS
-            // 
-            this.contentTS.BackColor = System.Drawing.SystemColors.Menu;
-            this.contentTS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.contentTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel5});
-            this.contentTS.Location = new System.Drawing.Point(339, 0);
-            this.contentTS.Name = "contentTS";
-            this.contentTS.Size = new System.Drawing.Size(340, 49);
-            this.contentTS.TabIndex = 5;
-            this.contentTS.Text = "toolStrip8";
-            // 
-            // toolStripLabel5
-            // 
-            this.toolStripLabel5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel5.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(71, 46);
-            this.toolStripLabel5.Text = "Content";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.BackColor = System.Drawing.SystemColors.Menu;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.matrixTS);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.MatrixBN);
-            this.splitContainer1.Size = new System.Drawing.Size(333, 43);
-            this.splitContainer1.SplitterDistance = 76;
-            this.splitContainer1.TabIndex = 7;
-            // 
-            // matrixTS
-            // 
-            this.matrixTS.BackColor = System.Drawing.SystemColors.Menu;
-            this.matrixTS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.matrixTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.matrixTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.matrixNameToolStripLabel});
-            this.matrixTS.Location = new System.Drawing.Point(0, 0);
-            this.matrixTS.Name = "matrixTS";
-            this.matrixTS.Size = new System.Drawing.Size(76, 43);
-            this.matrixTS.TabIndex = 2;
-            this.matrixTS.Text = "fillToolStrip";
-            // 
-            // matrixNameToolStripLabel
-            // 
-            this.matrixNameToolStripLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.matrixNameToolStripLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.matrixNameToolStripLabel.Name = "matrixNameToolStripLabel";
-            this.matrixNameToolStripLabel.Size = new System.Drawing.Size(60, 40);
-            this.matrixNameToolStripLabel.Text = "Matrix";
-            // 
-            // MatrixBN
-            // 
-            this.MatrixBN.AddNewItem = this.bindingNavigatorAddNewItem;
-            this.MatrixBN.BackColor = System.Drawing.SystemColors.Menu;
-            this.MatrixBN.BindingSource = this.MatrixBS;
-            this.MatrixBN.CountItem = this.bindingNavigatorCountItem;
-            this.MatrixBN.DeleteItem = this.bindingNavigatorDeleteItem;
-            this.MatrixBN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MatrixBN.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MatrixBN.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.MatrixBN.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2,
-            this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem});
-            this.MatrixBN.Location = new System.Drawing.Point(0, 0);
-            this.MatrixBN.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-            this.MatrixBN.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.MatrixBN.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.MatrixBN.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-            this.MatrixBN.Name = "MatrixBN";
-            this.MatrixBN.PositionItem = this.bindingNavigatorPositionItem;
-            this.MatrixBN.Size = new System.Drawing.Size(253, 43);
-            this.MatrixBN.TabIndex = 1;
-            this.MatrixBN.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 40);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
-            // 
-            // MatrixBS
-            // 
-            this.MatrixBS.DataMember = "Matrix";
-            this.MatrixBS.DataSource = this.lINAA;
-            // 
-            // lINAA
-            // 
-            this.lINAA.CurrentPref = null;
-            this.lINAA.DataSetName = "LINAA";
-            this.lINAA.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("lINAA.DetectorsList")));
-            this.lINAA.EnforceConstraints = false;
-            this.lINAA.FolderPath = null;
-            this.lINAA.Locale = new System.Globalization.CultureInfo("");
-            this.lINAA.Msn = null;
-            this.lINAA.Notify = null;
-            this.lINAA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            this.lINAA.TAM = null;
-            // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 40);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            // 
-            // bindingNavigatorDeleteItem
-            // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 40);
-            this.bindingNavigatorDeleteItem.Text = "Delete";
-            // 
-            // bindingNavigatorMoveFirstItem
-            // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 40);
-            this.bindingNavigatorMoveFirstItem.Text = "Move first";
-            // 
-            // bindingNavigatorMovePreviousItem
-            // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 40);
-            this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-            // 
-            // bindingNavigatorSeparator
-            // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 43);
-            // 
-            // bindingNavigatorPositionItem
-            // 
-            this.bindingNavigatorPositionItem.AccessibleName = "Position";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(38, 23);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-            // 
-            // bindingNavigatorSeparator1
-            // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 43);
-            // 
-            // bindingNavigatorMoveNextItem
-            // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 40);
-            this.bindingNavigatorMoveNextItem.Text = "Move next";
-            // 
-            // bindingNavigatorMoveLastItem
-            // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 40);
-            this.bindingNavigatorMoveLastItem.Text = "Move last";
-            // 
-            // bindingNavigatorSeparator2
-            // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 43);
-            // 
-            // matrixDGV
-            // 
-            this.matrixDGV.AllowUserToAddRows = false;
-            this.matrixDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.matrixDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.matrixDGV.AutoGenerateColumns = false;
-            this.matrixDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.matrixDGV.BackgroundColor = System.Drawing.Color.Linen;
-            this.matrixDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.matrixDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.MatrixNameColumn,
-            this.MatrixDensity});
-            this.matrixDGV.DataSource = this.MatrixBS;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.matrixDGV.DefaultCellStyle = dataGridViewCellStyle2;
-            this.matrixDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.matrixDGV.Location = new System.Drawing.Point(2, 51);
-            this.matrixDGV.Margin = new System.Windows.Forms.Padding(2);
-            this.matrixDGV.Name = "matrixDGV";
-            this.matrixDGV.RowTemplate.Height = 24;
-            this.matrixDGV.Size = new System.Drawing.Size(335, 728);
-            this.matrixDGV.TabIndex = 0;
-            this.matrixDGV.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMatrixSelected);
-            // 
-            // MatrixNameColumn
-            // 
-            this.MatrixNameColumn.DataPropertyName = "MatrixName";
-            this.MatrixNameColumn.HeaderText = "Name";
-            this.MatrixNameColumn.Name = "MatrixNameColumn";
-            this.MatrixNameColumn.Width = 77;
-            // 
-            // MatrixDensity
-            // 
-            this.MatrixDensity.DataPropertyName = "MatrixDensity";
-            this.MatrixDensity.HeaderText = "Density";
-            this.MatrixDensity.Name = "MatrixDensity";
-            this.MatrixDensity.ToolTipText = "in gm/cm3";
-            this.MatrixDensity.Width = 87;
-            // 
-            // matrixRTB
-            // 
-            this.matrixRTB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.matrixRTB.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.matrixRTB.Location = new System.Drawing.Point(342, 52);
-            this.matrixRTB.Name = "matrixRTB";
-            this.matrixRTB.Size = new System.Drawing.Size(334, 726);
-            this.matrixRTB.TabIndex = 4;
-            this.matrixRTB.Text = "";
+            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucMS.Location = new System.Drawing.Point(3, 3);
+            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMS.Name = "ucMS";
+            this.ucMS.Size = new System.Drawing.Size(679, 781);
+            this.ucMS.TabIndex = 0;
             // 
             // ShapeTab
             // 
@@ -1434,24 +1132,6 @@
             this.CalcTab.ResumeLayout(false);
             this.CalcTab.PerformLayout();
             this.MatrixTab.ResumeLayout(false);
-            this.TLPMatrix.ResumeLayout(false);
-            this.TLPMatrix.PerformLayout();
-            this.contentTS.ResumeLayout(false);
-            this.contentTS.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.matrixTS.ResumeLayout(false);
-            this.matrixTS.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).EndInit();
-            this.MatrixBN.ResumeLayout(false);
-            this.MatrixBN.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lINAA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).EndInit();
             this.ShapeTab.ResumeLayout(false);
             this.FileTab.ResumeLayout(false);
             this.leftSC.Panel1.ResumeLayout(false);
@@ -1511,9 +1191,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel TLP;
-        private DB.LINAA lINAA;
-        private System.Windows.Forms.BindingSource MatrixBS;
-        private System.Windows.Forms.TableLayoutPanel TLPMatrix;
         private System.Windows.Forms.OpenFileDialog OFD;
         private System.Windows.Forms.SaveFileDialog SFD;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
@@ -1541,21 +1218,6 @@
         private System.Windows.Forms.ToolStripLabel chlenghtlabel;
         private System.Windows.Forms.ToolStripTextBox chlenB;
         private System.Windows.Forms.RichTextBox compositionsbox;
-        private System.Windows.Forms.DataGridView matrixDGV;
-        private System.Windows.Forms.ToolStrip matrixTS;
-        private System.Windows.Forms.ToolStripLabel matrixNameToolStripLabel;
-        private System.Windows.Forms.BindingNavigator MatrixBN;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
-        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
-        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
@@ -1569,9 +1231,6 @@
         private System.Windows.Forms.TabPage MatrixTab;
         private System.Windows.Forms.TabPage CalcTab;
         private System.Windows.Forms.SplitContainer leftSC;
-        private System.Windows.Forms.RichTextBox matrixRTB;
-        private System.Windows.Forms.ToolStrip contentTS;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel5;
         private System.Windows.Forms.ToolStripMenuItem export;
         private System.Windows.Forms.RichTextBox matrixB;
         private System.Windows.Forms.TabPage FileTab;
@@ -1620,9 +1279,6 @@
         private System.Windows.Forms.ToolStripTextBox kthB;
         private System.Windows.Forms.ToolStripLabel toolStripLabel7;
         private System.Windows.Forms.ToolStripTextBox kepiB;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MatrixNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MatrixDensity;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel16;
         private System.Windows.Forms.ToolStripProgressBar progress;
         private System.Windows.Forms.ToolStripDropDownButton OptionsBtn;
@@ -1634,5 +1290,6 @@
         private System.Windows.Forms.ToolStripMenuItem autocalculateDensityToolStripMenuItem;
         private ucUnit ucUnit;
         private ucVCC ucVcc;
+        private ucMatrixSimple ucMS;
     }
 }

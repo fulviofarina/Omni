@@ -91,6 +91,9 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Adapter.cd" />
+    <None Include="Interfaces.Populate.cd" />
+    <None Include="Interfaces.cd" />
     <None Include="LINAA.xsc">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
@@ -102,12 +105,10 @@
     <None Include="LINAA.xss">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
-    <None Include="NEVERDELETE.cd" />
     <Compile Include="Adapter\Adapter.cs" />
     <Compile Include="Adapter\Adapter.NAA.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
-    <Compile Include="Interfaces\Interfaces.DB.cs" />
     <Compile Include="LIMS\Geometry\NAA.DetSol.cs" />
     <Compile Include="LIMS\Geometry\NAA.Geometry.cs" />
     <Compile Include="LIMS\Geometry\NAA.Matrix.cs" />

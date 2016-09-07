@@ -528,7 +528,7 @@ namespace k0X
 
                     LIMS.Linaa.Msg("I'm loading it", "Found... " + ProjectOrOrder);
 
-                    if (fromFile) LIMS.Linaa.ReadLinaa(possiblefile);
+                    if (fromFile) LIMS.Linaa.Read(possiblefile);
 
                     Application.DoEvents();
 

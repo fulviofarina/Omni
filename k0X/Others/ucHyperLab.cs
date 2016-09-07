@@ -31,7 +31,7 @@ namespace k0X
             object aux = this.Linaa;
             this.Interface = new Interface(ref aux);
 
-            Interface.ITables.PopulateColumnExpresions();
+            Interface.IPopulate.IMain.PopulateColumnExpresions();
             Interface.IAdapter.InitializeAdapters();
 
             Interface.IPopulate.IDetSol.PopulateDetectorDimensions();

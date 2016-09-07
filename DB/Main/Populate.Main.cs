@@ -9,6 +9,35 @@ namespace DB
 {
     public partial class LINAA : IMain
     {
+
+        /*
+     public bool Read(string file)
+
+     {
+         bool read = false;
+
+         try
+         {
+             this.Clear();
+
+             if (System.IO.File.Exists(file))
+             {
+                 this.ReadXml(file, XmlReadMode.InferTypedSchema);
+             }
+             read = true;
+         }
+         catch (SystemException ex)
+         {
+             this.AddException(ex);
+         }
+
+         return read;
+
+     }
+     */
+
+
+
         protected internal string folderPath;
 
         public string FolderPath
@@ -149,7 +178,7 @@ namespace DB
  }
   */
 
-        public void ReadLinaa(string filepath)
+        public void Read(string filepath)
         {
             LINAA file = null;
             PreferencesDataTable prefe = null;

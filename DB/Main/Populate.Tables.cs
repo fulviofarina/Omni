@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System;
 //using DB.Interfaces;
 
 namespace DB
 {
-    public partial class LINAA : ITables
+    public partial class LINAA : IDB
     {
-        public void PopulateColumnExpresions()
+     
+
+   public void PopulateColumnExpresions()
         {
             handlers = new List<DataColumnChangeEventHandler>();
             dTWithHandlers = new List<int>();

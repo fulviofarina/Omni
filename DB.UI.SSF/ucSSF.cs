@@ -21,8 +21,8 @@ namespace DB.UI
         private static string preFolder = Environment.GetFolderPath(folder);
         private Interface Interface = null;
 
-      
 
+       //private ucMatrixSimple ucMS = null;
 
 
 
@@ -70,9 +70,7 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            this.lINAA.Dispose();
-            this.lINAA = null;
-            this.lINAA = Linaa;
+         
 
             object db = Linaa;
             Interface = new Interface(ref db);
@@ -82,7 +80,7 @@ namespace DB.UI
             System.Windows.Forms.Form form = null;
 
             Pop msn = null;
-            msn = this.lINAA.Msn;
+            msn = Linaa.Msn;
             form = msn.ParentForm;
             // this.msn = this.lINAA.Msn;
             this.unitTLP.Controls.Add(msn, 0, 1);
@@ -239,7 +237,7 @@ namespace DB.UI
                 this.ucVcc.RefreshVCC();
 
 
-                this.RefreshMatrix();
+                this.ucMS.RefreshMatrix();
 
 
 
@@ -265,13 +263,15 @@ namespace DB.UI
             double kepi = getControlAs<double>(ref kepiB);
             double kth = getControlAs<double>(ref kthB);
 
-            LINAA.UnitRow u = this.lINAA.Unit.NewUnitRow();
+
+            LINAA.UnitDataTable dt = Interface.IDB.Unit;
+            LINAA.UnitRow u = dt.NewUnitRow();
 
             u.kepi = kepi;
             u.kth = kth;
             u.RowError = string.Empty;
             //  u.ChCfg = getControlAs<string>(ref cfgB);
-            this.lINAA.Unit.AddUnitRow(u);
+            dt.AddUnitRow(u);
 
             MatSSF.UNIT = u;
 
@@ -282,16 +282,6 @@ namespace DB.UI
 
 
 
-        }
-
-        public void RefreshMatrix()
-        {
-            LINAA.UnitRow u = MatSSF.UNIT;
-
-            int id = u.MatrixID;
-            string column = this.lINAA.Matrix.MatrixIDColumn.ColumnName;
-
-            this.MatrixBS.Position = this.MatrixBS.Find(column, id);
         }
         private void dgvMatrixSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -326,8 +316,9 @@ namespace DB.UI
                 {
                     ///is not a matrix row so exit and report
 
+                    LINAA.MatrixDataTable dt = Interface.IDB.Matrix;
 
-                    string colError = row.GetColumnError(this.lINAA.Matrix.MatrixCompositionColumn);
+                    string colError = row.GetColumnError(dt.MatrixCompositionColumn);
                     if (!string.IsNullOrEmpty(colError)) ///matrix content has error, exit and report
 
                     {
@@ -338,7 +329,7 @@ namespace DB.UI
 
                     }
 
-                    colError = row.GetColumnError(this.lINAA.Matrix.MatrixDensityColumn);
+                    colError = row.GetColumnError(dt.MatrixDensityColumn);
                     if (string.IsNullOrEmpty(colError)) ///should use density to massCalculate
                     {
                         ///do not exit, use preference auto-mass calculate
@@ -380,25 +371,34 @@ namespace DB.UI
 
             this.ucUnit.UnitBS.EndEdit();
 
-            this.MatrixBS.EndEdit();
+            this.ucMS.MatrixBS.EndEdit();
 
 
             this.ucVcc.EndEdit();
 
             //  setUnit();
 
-            if (!Offline)
+            try
             {
-                Interface.IStore.Save<LINAA.MatrixDataTable>();
-                Interface.IStore.Save<LINAA.VialTypeDataTable>();
-                Interface.IStore.Save<LINAA.UnitDataTable>();
-                Interface.IStore.Save<LINAA.ChannelsDataTable>();
-            }
-            else
-            {
-                System.IO.File.Delete(mf);
+                if (!Offline)
+                {
+                    Interface.IStore.Save<LINAA.MatrixDataTable>();
+                    Interface.IStore.Save<LINAA.VialTypeDataTable>();
+                    Interface.IStore.Save<LINAA.UnitDataTable>();
+                    Interface.IStore.Save<LINAA.ChannelsDataTable>();
+                }
+                else
+                {
+                    //writes the xml file (Offline)
+                    System.IO.File.Delete(mf);
 
-                this.lINAA.WriteXml(mf, XmlWriteMode.WriteSchema);
+
+                    Interface.IStore.Save(mf);
+                }
+            }
+            catch (SystemException ex)
+            {
+                Interface.IReport.Msg(ex.StackTrace, ex.Message);
             }
             Interface.IReport.Msg("Database", "Database updated!");
         }
@@ -409,7 +409,7 @@ namespace DB.UI
             //Validate Binding sources
             this.ucUnit.UnitBS.EndEdit();
 
-            this.MatrixBS.EndEdit();
+            this.ucMS.MatrixBS.EndEdit();
 
 
             this.ucVcc.EndEdit();
@@ -485,8 +485,8 @@ namespace DB.UI
             }
             catch (SystemException ex)
             {
-                this.lINAA.AddException(ex);
-
+                //  Interface.IReport.Msg("Database", "Database updated!");
+                Interface.IReport.Msg(ex.StackTrace, ex.Message);
                 //    errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
 
@@ -499,8 +499,10 @@ namespace DB.UI
             //7
             this.progress.PerformStep();
             Application.DoEvents();
-        }
 
+            Interface.IReport.Msg("Calculations", "Calculations completed!");
+
+        }
 
 
         private void setBindings()
@@ -509,35 +511,20 @@ namespace DB.UI
 
 
 
-         
-
-
-            //  BindingSource unitbs = this.unitBS;
-            //  BindingSource ssfbs = this.MATSSFBS;
-
             ucVcc.Set(ref Interface);
             ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
 
-            //  ucUnit unit = new ucUnit();
+          
             ucUnit.Set(ref Interface);
             ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
 
-
-
-         
-
-
-            // this.dgvUnitSelected(null, args);
-
-            //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(this.unitBS.Current);
-
-            //   loadBoxesfromUnit();
+            
+            this.ucMS.Set(ref Interface);
+            this.ucMS.RowHeaderMouseClick = this.dgvMatrixSelected;
 
 
 
-        
-
-            LINAA.UnitDataTable Unit = this.lINAA.Unit;
+            LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
 
 
@@ -574,8 +561,6 @@ namespace DB.UI
             Binding kth = new Binding(text, bs, column, t, mo);
 
 
-
-
             this.lenghtbox.TextBox.DataBindings.Add(leng);
             this.diameterbox.TextBox.DataBindings.Add(diam);
             this.chdiamB.TextBox.DataBindings.Add(chdiam);
@@ -590,41 +575,10 @@ namespace DB.UI
 
             this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
 
-
-
-
-            this.SetMatrix();
-
-
-
-
-         
+                     
         }
 
-        public void SetMatrix()
-        {
-
-            BindingSource bs = this.MatrixBS;
-
-            Dumb.LinkBS(ref bs, this.lINAA.Matrix);
-
-            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
-            bool t = true;
-            string text = "Text";
-            string column;
-
-            column = this.lINAA.Matrix.MatrixCompositionColumn.ColumnName;
-            Binding mcompoBin = new Binding(text, bs, column, t, mo);
-
-            this.matrixRTB.DataBindings.Add(mcompoBin);
-
-
-
-
-        }
-
-
-
+      
         /// <summary>
         /// Gets ToolStripTextBox control content as T-type
         /// </summary>
@@ -662,9 +616,7 @@ namespace DB.UI
             return mass;
         }
 
-
-
-
+                
         private void loadDatabase()
         {
             // errorB.Clear();
@@ -677,12 +629,8 @@ namespace DB.UI
                 }
                 else //fix this
                 {
-                    this.lINAA.Clear();
-
-                    if (System.IO.File.Exists(mf))
-                    {
-                        this.lINAA.ReadXml(mf, XmlReadMode.InferTypedSchema);
-                    }
+                    Interface.IPopulate.IMain.Read(mf);
+                       
                 }
 
                 setBindings();

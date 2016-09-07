@@ -30,7 +30,7 @@
         //  public ICReport ICReport;
         public IDB IDB;
 
-        public ITables ITables;
+      //  public ITables ITables;
         public IToDoes IToDoes;
         public IPreferences IPreferences;
 

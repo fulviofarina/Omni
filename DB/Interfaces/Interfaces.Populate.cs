@@ -7,13 +7,15 @@ using System.Data;
 /// </summary>
 namespace DB
 {
+
     public interface IMain
     {
+        void PopulateColumnExpresions();
         void PopulateUserDirectories();
 
         bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref DB.LINAA.TAMDeleteMethod remover);
 
-        void ReadLinaa(string filepath);
+        void Read(string filepath);
 
         void Help();
     }

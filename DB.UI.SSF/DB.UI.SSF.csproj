@@ -79,6 +79,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ucMatrixSimple.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucMatrixSimple.Designer.cs">
+      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucVCC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -104,6 +110,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucMatrixSimple.resx">
+      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucVCC.resx">
       <DependentUpon>ucVCC.cs</DependentUpon>
