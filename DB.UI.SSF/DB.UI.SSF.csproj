@@ -98,10 +98,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB.Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
       <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
       <Name>DB.Tools.SSF</Name>
@@ -118,6 +114,10 @@
       <Project>{6AC9265B-3286-4C63-A924-5FA14FF1CBEA}</Project>
       <Name>DB</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Msn\Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>Msn</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

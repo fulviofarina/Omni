@@ -664,10 +664,6 @@
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
       <Name>Rsx</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Omni\VTools\VTools.csproj">
-      <Project>{1476f4ef-beec-4997-9fc3-2d1692f53811}</Project>
-      <Name>VTools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Omni\Watchers\Watchers.csproj">
       <Project>{3ffdfa74-1dce-4bde-921d-f0d785ed88d7}</Project>
       <Name>Watchers</Name>
@@ -684,10 +680,6 @@
     <ProjectReference Include="..\DB.Reports\DB.Reports.csproj">
       <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
       <Name>DB.Reports</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DB.Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.NuDat\DB.Tools.NuDat.csproj">
       <Project>{f7c2d211-65d8-4fda-ba14-4e39a7e8c036}</Project>
@@ -709,6 +701,10 @@
       <Project>{23b5ea4d-b073-46aa-8e66-a4baad1626f1}</Project>
       <Name>DB.UI.SSF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Msn\Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>Msn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
       <Name>Rsx.CAM</Name>
@@ -716,6 +712,18 @@
     <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
       <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
       <Name>Rsx.Emailer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Emailer\VTools.Emailer.csproj">
+      <Project>{eaae3cd4-5462-4e43-a738-c76456e8404c}</Project>
+      <Name>VTools.Emailer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Logger\VTools.Logger.csproj">
+      <Project>{1a49fe52-db41-43a4-9213-071c5a00c7d1}</Project>
+      <Name>VTools.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.TreeView\VTools.TreeView.csproj">
+      <Project>{5e5cd6b3-e66f-4a73-b2bc-1350d3143192}</Project>
+      <Name>VTools.TreeView</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
