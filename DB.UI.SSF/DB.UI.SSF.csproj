@@ -79,6 +79,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ucVCC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucVCC.Designer.cs">
+      <DependentUpon>ucVCC.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucSSF.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +104,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucVCC.resx">
+      <DependentUpon>ucVCC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucSSF.resx">
       <DependentUpon>ucSSF.cs</DependentUpon>
@@ -128,11 +137,6 @@
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ucSSF.Tables.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

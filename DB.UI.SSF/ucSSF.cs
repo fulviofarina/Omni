@@ -12,81 +12,8 @@ namespace DB.UI
     {
 
 
-        private void dgvUnitSelected(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
 
-            DataGridView dgv = sender as DataGridView;
-            //  DataGridViewRow r = dgv.Rows[e.RowIndex];
-            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
-
-            LINAA lina = (LINAA)Interface.Get();
-
-
-
-            try
-            {
-
-                ///check if table has no rows
-                if (row == null)
-                {
-                    Interface.IReport.Msg(noTemplate, Error); //report
-                                                              //  row.RowError = noTemplate;
-                    return;
-                }
-
-                ///has errors
-                if (row.HasErrors)
-                {
-                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-                //    return;
-                }
-
-
-                // if (this.unitBS.Count == 0) return;
-                MatSSF.UNIT = row as LINAA.UnitRow;
-                MatSSF.ReadXML();
-
-
-                LINAA.UnitRow u = MatSSF.UNIT;
-                string column = lina.MatSSF.UnitIDColumn.ColumnName;
-                string sortCol = lina.MatSSF.TargetIsotopeColumn.ColumnName;
-                string unitID = u.UnitID.ToString();
-
-                Dumb.LinkBS(ref this.MATSSFBS, lina.MatSSF, column + " is " + unitID, sortCol);
-
-
-
-                column = lina.VialType.VialTypeIDColumn.ColumnName;
-                int id = u.VialTypeID;
-                this.VialBS.Position = this.VialBS.Find(column, id);
-                id = u.ContainerID;
-                this.ContainerBS.Position = this.ContainerBS.Find(column, id);
-                column = lina.Matrix.MatrixIDColumn.ColumnName;
-                id = u.MatrixID;
-                this.MatrixBS.Position = this.MatrixBS.Find(column, id);
-                column = lina.Channels.ChannelsIDColumn.ColumnName;
-                id = u.ChannelID;
-                this.ChannelBS.Position = this.ChannelBS.Find(column, id);
-                if (u.HasErrors)
-                {
-                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-
-                }
-
-
-            }
-            catch (System.Exception ex)
-            {
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
-            }
-
-
-        }
-
-
-
-        #region variables
+      
         private bool Offline = false;
         private static string mf = preFolder + matssfFolder + "lims.xml";
         private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
@@ -94,12 +21,9 @@ namespace DB.UI
         private static string preFolder = Environment.GetFolderPath(folder);
         private Interface Interface = null;
 
-        private static string rowWithError = "The selected row has some incomplete cells or cells with errors.\nPlease fix before selecting";
-        private static string noTemplate = "No rows found. Add one";
-        private static string Error = "Warning";
+      
 
 
-#endregion
 
 
         /// <summary>
@@ -178,9 +102,6 @@ namespace DB.UI
 
             loadDatabase();
 
-
-
-
              
             /*
             form = new System.Windows.Forms.Form();
@@ -202,85 +123,7 @@ namespace DB.UI
         /// <param name="sender">The Add button that was clicked</param>
         /// <param name="e"></param>
         /// 
-        private void addNewVialChannel_Click(object sender, EventArgs e)
-        {
-            BindingSource bs = null;
-            string colName = string.Empty;
-            object idnumber = null;
-            DataRow row = null;
-            //IS A VIAL OR CONTAINER
-            if (!sender.Equals(this.addChParBn))
-            {
-                if (sender.Equals(this.AddUnitBn))
-                {
-                    double kepi = getControlAs<double>(ref kepiB);
-                    double kth = getControlAs<double>(ref kthB);
-
-                    LINAA.UnitRow u = this.lINAA.Unit.NewUnitRow();
-
-                    u.kepi = kepi;
-                    u.kth = kth;
-                    u.RowError = string.Empty;
-                    //  u.ChCfg = getControlAs<string>(ref cfgB);
-                    this.lINAA.Unit.AddUnitRow(u);
-
-                    MatSSF.UNIT = u;
-
-                    colName = this.lINAA.Unit.UnitIDColumn.ColumnName;
-                    bs = this.unitBS;
-                    idnumber = MatSSF.UNIT.UnitID;
-
-                    row = u;
-                }
-                else
-                {
-                    bool isRabbit = !sender.Equals(this.bnVialAddItem);
-
-                    LINAA.VialTypeRow v = this.lINAA.VialType.NewVialTypeRow();
-                    v.IsRabbit = isRabbit;
-                    this.lINAA.VialType.AddVialTypeRow(v);
-
-                    colName = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
-
-                    if (isRabbit)
-                    {
-                        bs = this.ContainerBS;
-                    }
-                    else
-                    {
-                        bs = this.VialBS;
-                    }
-                    idnumber = v.VialTypeID;
-
-                    row = v;
-                }
-            }
-            //IS A CHANNEL
-            else
-            {
-                //  {
-                LINAA.ChannelsRow ch = this.lINAA.Channels.NewChannelsRow();
-                this.lINAA.Channels.AddChannelsRow(ch);
-
-                colName = this.lINAA.Channels.ChannelsIDColumn.ColumnName;
-                bs = this.ChannelBS;
-                idnumber = ch.ChannelsID;
-
-                row = ch;
-                //   }
-                //  newIndex = this.ChannelBS.Find(colName, ch.ChannelsID);
-                // this.ChannelBS.Position = newIndex;
-            }
-
-            if (row.HasErrors)
-            {
-                Interface.IReport.Msg(rowWithError, Error);
-            }
-
-            int newIndex = bs.Find(colName, idnumber);
-            bs.Position = newIndex;
-        }
-
+     
 
         /// <summary>
         /// when a DGV-item is selected, take the necessary rows to compose the unit
@@ -294,7 +137,11 @@ namespace DB.UI
             DataGridView dgv = sender as DataGridView;
           
             DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
-          
+
+            string rowWithError = DB.UI.Properties.Resources.rowWithError;
+            string noTemplate = DB.UI.Properties.Resources.noTemplate;
+            string Error = DB.UI.Properties.Resources.Error;
+
 
             try
             {
@@ -309,51 +156,23 @@ namespace DB.UI
 
 
                 ///find which dgv called it
-                bool isChannel = dgv.Equals(this.ChannelDGV);
-                bool isMatrix = dgv.Equals(this.matrixDGV);
-
+                bool isChannel = row.GetType().Equals(typeof(LINAA.ChannelsRow));
+             
                 ///has errors
                 if (row.HasErrors)
                 {
                     ///is not a matrix row so exit and report
-                    if (!isMatrix)
-                    {
+                 
                         Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
                     
                         return;
-                    }
-                    else ///it is a matrix row, so check if only density has error
-                    {
-
-                        string colError = row.GetColumnError(this.lINAA.Matrix.MatrixCompositionColumn);
-                        if (!string.IsNullOrEmpty(colError)) ///matrix content has error, exit and report
-
-                        {
-
-                            Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-                       
-                            return;
-
-                        }
-
-                        colError = row.GetColumnError(this.lINAA.Matrix.MatrixDensityColumn);
-                        if (string.IsNullOrEmpty(colError)) ///should use density to massCalculate
-                        {
-                            ///do not exit, use preference auto-mass calculate
-                        }
-                        else ///density is null, should calculate density
-                        {
-                            ///do not exit, use calculate density from mass and dimensions
-
-                        }
-
-                    }
+                   
                 }
 
             
                     if (MatSSF.UNIT == null)
                     {
-                        addNewVialChannel_Click(this.AddUnitBn, EventArgs.Empty);
+                        this.AddUnitBn_Click(null, EventArgs.Empty);
                     }
 
                 if (isChannel)
@@ -363,13 +182,7 @@ namespace DB.UI
                     MatSSF.UNIT.ChannelsRow = c;
                     MatSSF.UNIT.SetChannel();
                 }
-                else if (isMatrix)
-                {
-                   
-                    LINAA.MatrixRow m = row as LINAA.MatrixRow;
-                    MatSSF.UNIT.MatrixRow = m;
-                    MatSSF.UNIT.SetMatrix();
-                }
+             
                 else
                 {
                     LINAA.VialTypeRow v = row as LINAA.VialTypeRow;
@@ -384,7 +197,179 @@ namespace DB.UI
 
 
         }
+        private void dgvUnitSelected(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
 
+            DataGridView dgv = sender as DataGridView;
+            //  DataGridViewRow r = dgv.Rows[e.RowIndex];
+            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
+
+            //     LINAA lina = (LINAA)Interface.Get();
+
+            string rowWithError = DB.UI.Properties.Resources.rowWithError; 
+            string noTemplate = DB.UI.Properties.Resources.noTemplate; 
+            string Error = DB.UI.Properties.Resources.Error;
+
+
+            try
+            {
+
+                ///check if table has no rows
+                if (row == null)
+                {
+                    Interface.IReport.Msg(noTemplate, Error); //report
+                                                              //  row.RowError = noTemplate;
+                    return;
+                }
+
+                ///has errors
+                if (row.HasErrors)
+                {
+                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
+                //    return;
+                }
+
+
+                MatSSF.UNIT = row as LINAA.UnitRow;
+                this.ucUnit.RefreshSSF();
+
+
+
+                this.ucVcc.RefreshVCC();
+
+
+                this.RefreshMatrix();
+
+
+
+                if (row.HasErrors)
+                {
+                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
+
+                }
+
+
+            }
+            catch (System.Exception ex)
+            {
+                Interface.IReport.Msg(ex.StackTrace, ex.Message);
+            }
+
+
+        }
+        private void AddUnitBn_Click(object sender, EventArgs e)
+        {
+          
+
+            double kepi = getControlAs<double>(ref kepiB);
+            double kth = getControlAs<double>(ref kthB);
+
+            LINAA.UnitRow u = this.lINAA.Unit.NewUnitRow();
+
+            u.kepi = kepi;
+            u.kth = kth;
+            u.RowError = string.Empty;
+            //  u.ChCfg = getControlAs<string>(ref cfgB);
+            this.lINAA.Unit.AddUnitRow(u);
+
+            MatSSF.UNIT = u;
+
+
+            this.ucUnit.RefreshSSF();
+
+           // row = u;
+
+
+
+        }
+
+        public void RefreshMatrix()
+        {
+            LINAA.UnitRow u = MatSSF.UNIT;
+
+            int id = u.MatrixID;
+            string column = this.lINAA.Matrix.MatrixIDColumn.ColumnName;
+
+            this.MatrixBS.Position = this.MatrixBS.Find(column, id);
+        }
+        private void dgvMatrixSelected(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridView dgv = sender as DataGridView;
+
+            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
+            string rowWithError = DB.UI.Properties.Resources.rowWithError;
+            string noTemplate = DB.UI.Properties.Resources.noTemplate;
+            string Error = DB.UI.Properties.Resources.Error;
+
+
+            try
+            {
+
+                ///check if table has no rows
+                if (row == null)
+                {
+                    Interface.IReport.Msg(noTemplate, Error); //report
+                                                              //  row.RowError = noTemplate;
+                    return;
+                }
+
+
+                ///find which dgv called it
+                //  bool isChannel = dgv.Equals(this.ChannelDGV);
+                //  bool isMatrix = dgv.Equals(this.matrixDGV);
+
+                ///has errors
+                if (row.HasErrors)
+                {
+                    ///is not a matrix row so exit and report
+
+
+                    string colError = row.GetColumnError(this.lINAA.Matrix.MatrixCompositionColumn);
+                    if (!string.IsNullOrEmpty(colError)) ///matrix content has error, exit and report
+
+                    {
+
+                        Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
+
+                        return;
+
+                    }
+
+                    colError = row.GetColumnError(this.lINAA.Matrix.MatrixDensityColumn);
+                    if (string.IsNullOrEmpty(colError)) ///should use density to massCalculate
+                    {
+                        ///do not exit, use preference auto-mass calculate
+                    }
+                    else ///density is null, should calculate density
+                    {
+                        ///do not exit, use calculate density from mass and dimensions
+
+                    }
+
+
+                }
+
+
+                if (MatSSF.UNIT == null)
+                {
+                    this.AddUnitBn_Click(null, EventArgs.Empty);
+                }
+
+
+                LINAA.MatrixRow m = row as LINAA.MatrixRow;
+                MatSSF.UNIT.MatrixRow = m;
+                MatSSF.UNIT.SetMatrix();
+
+            }
+            catch (System.Exception ex)
+            {
+                Interface.IReport.Msg(ex.StackTrace, ex.Message);
+            }
+
+        }
 
 
         private void SaveItem_Click(object sender, EventArgs e)
@@ -393,7 +378,13 @@ namespace DB.UI
 
             this.Validate();
 
-            validateBS();
+            this.ucUnit.UnitBS.EndEdit();
+
+            this.MatrixBS.EndEdit();
+
+
+            this.ucVcc.EndEdit();
+
             //  setUnit();
 
             if (!Offline)
@@ -414,10 +405,17 @@ namespace DB.UI
 
         private void Calculate_Click(object sender, EventArgs e)
         {
-            this.progress.Value = 0;
 
             //Validate Binding sources
-            this.validateBS();
+            this.ucUnit.UnitBS.EndEdit();
+
+            this.MatrixBS.EndEdit();
+
+
+            this.ucVcc.EndEdit();
+
+            this.ucUnit.DeLink();
+
 
             // errorB.Clear();
 
@@ -427,8 +425,12 @@ namespace DB.UI
             //Clear InputFile RTF Control
             compositionsbox.Clear();
 
+
+            this.progress.Value = 0;
+
+
             //Delink BS for SSF
-            Dumb.DeLinkBS(ref this.MATSSFBS);
+         
             //1
             this.progress.PerformStep();
             Application.DoEvents();
@@ -489,14 +491,213 @@ namespace DB.UI
             }
 
             MatSSF.WriteXML();
+
             SaveItem_Click(sender, e);
-            Dumb.LinkBS(ref this.MATSSFBS, this.lINAA.MatSSF);
+
+            this.ucUnit.RefreshSSF();
+
             //7
             this.progress.PerformStep();
             Application.DoEvents();
         }
 
 
+
+        private void setBindings()
+        {
+
+
+
+
+         
+
+
+            //  BindingSource unitbs = this.unitBS;
+            //  BindingSource ssfbs = this.MATSSFBS;
+
+            ucVcc.Set(ref Interface);
+            ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
+
+            //  ucUnit unit = new ucUnit();
+            ucUnit.Set(ref Interface);
+            ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
+
+
+
+         
+
+
+            // this.dgvUnitSelected(null, args);
+
+            //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(this.unitBS.Current);
+
+            //   loadBoxesfromUnit();
+
+
+
+        
+
+            LINAA.UnitDataTable Unit = this.lINAA.Unit;
+            BindingSource bs = this.ucUnit.UnitBS;
+
+
+            this.unitBN.BindingSource = bs;
+
+
+            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
+            bool t = true;
+            string text = "Text";
+            string column;
+
+
+            column = Unit.DiameterColumn.ColumnName;
+            Binding diam = new Binding(text, bs, column, t, mo);
+            column = Unit.LenghtColumn.ColumnName;
+            Binding leng = new Binding(text, bs, column, t, mo);
+            column = Unit.ChDiameterColumn.ColumnName;
+            Binding chdiam = new Binding(text, bs, column, t, mo);
+            column = Unit.ChLenghtColumn.ColumnName;
+            Binding chleng = new Binding(text, bs, column, t, mo);
+            column = Unit.MassColumn.ColumnName;
+            Binding mass = new Binding(text, bs, column, t, mo);
+            column = Unit.DensityColumn.ColumnName;
+            Binding density = new Binding(text, bs, column, t, mo);
+            column = Unit.ChCfgColumn.ColumnName;
+            Binding cfg = new Binding(text, bs, column, t, mo);
+            column = Unit.ContentColumn.ColumnName;
+            Binding matrix = new Binding(text, bs, column, t, mo);
+            column = Unit.NameColumn.ColumnName;
+            Binding name = new Binding(text, bs, column, t, mo);
+            column = Unit.kepiColumn.ColumnName;
+            Binding kepi = new Binding(text, bs, column, t, mo);
+            column = Unit.kthColumn.ColumnName;
+            Binding kth = new Binding(text, bs, column, t, mo);
+
+
+
+
+            this.lenghtbox.TextBox.DataBindings.Add(leng);
+            this.diameterbox.TextBox.DataBindings.Add(diam);
+            this.chdiamB.TextBox.DataBindings.Add(chdiam);
+            this.chlenB.TextBox.DataBindings.Add(chleng);
+            this.massB.TextBox.DataBindings.Add(mass);
+            this.densityB.TextBox.DataBindings.Add(density);
+            this.cfgB.ComboBox.DataBindings.Add(cfg);
+            this.matrixB.DataBindings.Add(matrix);
+            this.kepiB.TextBox.DataBindings.Add(kepi);
+            this.kthB.TextBox.DataBindings.Add(kth);
+            this.nameB.ComboBox.DataBindings.Add(name);
+
+            this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
+
+
+
+
+            this.SetMatrix();
+
+
+
+
+         
+        }
+
+        public void SetMatrix()
+        {
+
+            BindingSource bs = this.MatrixBS;
+
+            Dumb.LinkBS(ref bs, this.lINAA.Matrix);
+
+            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
+            bool t = true;
+            string text = "Text";
+            string column;
+
+            column = this.lINAA.Matrix.MatrixCompositionColumn.ColumnName;
+            Binding mcompoBin = new Binding(text, bs, column, t, mo);
+
+            this.matrixRTB.DataBindings.Add(mcompoBin);
+
+
+
+
+        }
+
+
+
+        /// <summary>
+        /// Gets ToolStripTextBox control content as T-type
+        /// </summary>
+        /// <typeparam name="T">the type that you want to obtain from the control box Text Property</typeparam>
+        /// <param name="mbox">the box</param>
+        /// <returns></returns>
+        public T getControlAs<T>(ref ToolStripTextBox mbox)
+        {
+            //   ToolStripTextBox mbox = (ToolStripTextBox)control;
+
+            T mass = default(T);
+            Type tipo = typeof(T);
+
+            bool m = string.IsNullOrWhiteSpace(mbox.Text);
+
+            //  if (m) error.SetError(mbox.TextBox, "Null or empty");
+            //   else
+            //   {
+            //  error.SetError(mbox.TextBox, null);
+            //  }
+
+            if (tipo.Equals(typeof(double)))
+            {
+                double massAux = Convert.ToDouble(mbox.Text);
+
+                mass = (T)Convert.ChangeType(massAux, typeof(T));
+            }
+            else if (tipo.Equals(typeof(string)))
+            {
+                string massAux = mbox.Text.ToString();
+
+                mass = (T)Convert.ChangeType(massAux, typeof(T));
+            }
+
+            return mass;
+        }
+
+
+
+
+        private void loadDatabase()
+        {
+            // errorB.Clear();
+
+            try
+            {
+                if (!Offline)
+                {
+                    Interface.IPopulate.IGeometry.PopulateUnits();
+                }
+                else //fix this
+                {
+                    this.lINAA.Clear();
+
+                    if (System.IO.File.Exists(mf))
+                    {
+                        this.lINAA.ReadXml(mf, XmlReadMode.InferTypedSchema);
+                    }
+                }
+
+                setBindings();
+
+                Interface.IReport.Msg("Database", "Units were loaded!");
+                //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(bs.Current);
+
+                //   loadBoxesfromUnit();
+            }
+            catch (System.Exception ex)
+            {
+                Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
+                //    errorB.Text += ex.Message + "\n" + ex.Source + "\n";
+            }
+        }
 
     }
 }

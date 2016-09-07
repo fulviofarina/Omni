@@ -56,14 +56,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.unitBS = new System.Windows.Forms.BindingSource(this.components);
+            this.UnitBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.SSFBS = new System.Windows.Forms.BindingSource(this.components);
-            this.OFD = new System.Windows.Forms.OpenFileDialog();
-            this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -125,7 +123,7 @@
             this.SigB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.unitBS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UnitBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).BeginInit();
             this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SSFBS)).BeginInit();
@@ -145,10 +143,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.SSFDGV)).BeginInit();
             this.SuspendLayout();
             // 
-            // unitBS
+            // UnitBS
             // 
-            this.unitBS.DataMember = "Unit";
-            this.unitBS.DataSource = this.lINAA;
+            this.UnitBS.DataMember = "Unit";
+            this.UnitBS.DataSource = this.lINAA;
             // 
             // lINAA
             // 
@@ -424,7 +422,7 @@
             this.dataGridViewTextBoxColumn26,
             this.dataGridViewTextBoxColumn27,
             this.Done});
-            this.unitDGV.DataSource = this.unitBS;
+            this.unitDGV.DataSource = this.UnitBS;
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -808,7 +806,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ucUnit";
             this.Size = new System.Drawing.Size(707, 527);
-            ((System.ComponentModel.ISupportInitialize)(this.unitBS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UnitBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).EndInit();
             this.dgvCMS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SSFBS)).EndInit();
@@ -835,8 +833,6 @@
         #endregion
         private DB.LINAA lINAA;
         private System.Windows.Forms.BindingSource SSFBS;
-        private System.Windows.Forms.OpenFileDialog OFD;
-        private System.Windows.Forms.SaveFileDialog SFD;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
@@ -858,7 +854,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.SplitContainer splitContainer5;
-        private System.Windows.Forms.BindingSource unitBS;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.TableLayoutPanel unitTabTLP;
         private System.Windows.Forms.ToolStrip datesTS;
@@ -903,5 +898,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SigB;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChEpi;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitID;
+        public System.Windows.Forms.BindingSource UnitBS;
     }
 }
