@@ -13,7 +13,8 @@
             IStore = (IStore)aux;
             IReport = (IReport)aux;
             IToDoes = (IToDoes)aux;
-            //   ICReport =(ICReport)aux;
+            IDB = (IDB)aux;
+         
 
             IPreferences = (IPreferences)aux;
         }
@@ -27,6 +28,7 @@
         public IStore IStore;
         public IReport IReport;
         //  public ICReport ICReport;
+        public IDB IDB;
 
         public ITables ITables;
         public IToDoes IToDoes;

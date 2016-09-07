@@ -4,6 +4,9 @@ using DB.LINAATableAdapters;
 
 namespace DB
 {
+
+
+
     public interface IPreferences
     {
         void PopulatePreferences();

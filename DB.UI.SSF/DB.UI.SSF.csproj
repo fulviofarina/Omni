@@ -85,6 +85,12 @@
     <Compile Include="ucSSF.Designer.cs">
       <DependentUpon>ucSSF.cs</DependentUpon>
     </Compile>
+    <Compile Include="ucUnit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucUnit.Designer.cs">
+      <DependentUpon>ucUnit.cs</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ucSSF.resx">
       <DependentUpon>ucSSF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucUnit.resx">
+      <DependentUpon>ucUnit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +128,11 @@
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ucSSF.Tables.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

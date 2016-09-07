@@ -107,6 +107,7 @@
     <Compile Include="Adapter\Adapter.NAA.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
+    <Compile Include="Interfaces\Interfaces.DB.cs" />
     <Compile Include="LIMS\Geometry\NAA.DetSol.cs" />
     <Compile Include="LIMS\Geometry\NAA.Geometry.cs" />
     <Compile Include="LIMS\Geometry\NAA.Matrix.cs" />
@@ -117,6 +118,9 @@
     <Compile Include="Interfaces\InterfaceClass.cs" />
     <Compile Include="Interfaces\Interfaces.cs" />
     <Compile Include="Interfaces\Interfaces.Populate.cs" />
+    <Compile Include="LINAA.cs">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
