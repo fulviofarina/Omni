@@ -5,7 +5,8 @@ using DB.Tools;
 using System.Data;
 using Rsx;
 using Msn;
-
+using System.Collections;
+using System.Collections.Generic;
 namespace DB.UI
 {
     public partial class ucSSF : UserControl
@@ -260,20 +261,13 @@ namespace DB.UI
         {
           
 
-            double kepi = getControlAs<double>(ref kepiB);
-            double kth = getControlAs<double>(ref kthB);
+            double kepi = Dumb.GetControlAs<double>(kepiB);
+            double kth = Dumb.GetControlAs<double>( kthB);
+            string chfg =  cfgB.Text;
 
+         //   LINAA.UnitDataTable dt = Interface.IDB.Unit;
 
-            LINAA.UnitDataTable dt = Interface.IDB.Unit;
-            LINAA.UnitRow u = dt.NewUnitRow();
-
-            u.kepi = kepi;
-            u.kth = kth;
-            u.RowError = string.Empty;
-            //  u.ChCfg = getControlAs<string>(ref cfgB);
-            dt.AddUnitRow(u);
-
-            MatSSF.UNIT = u;
+            MatSSF.UNIT = Interface.IDB.Unit.NewUnitRow(kepi, kth, chfg);
 
 
             this.ucUnit.RefreshSSF();
@@ -346,7 +340,9 @@ namespace DB.UI
 
                 if (MatSSF.UNIT == null)
                 {
-                    this.AddUnitBn_Click(null, EventArgs.Empty);
+
+                    AddUnitBn_Click(null, EventArgs.Empty);
+
                 }
 
 
@@ -361,6 +357,8 @@ namespace DB.UI
             }
 
         }
+
+
 
 
         private void SaveItem_Click(object sender, EventArgs e)
@@ -378,29 +376,10 @@ namespace DB.UI
 
             //  setUnit();
 
-            try
-            {
-                if (!Offline)
-                {
-                    Interface.IStore.Save<LINAA.MatrixDataTable>();
-                    Interface.IStore.Save<LINAA.VialTypeDataTable>();
-                    Interface.IStore.Save<LINAA.UnitDataTable>();
-                    Interface.IStore.Save<LINAA.ChannelsDataTable>();
-                }
-                else
-                {
-                    //writes the xml file (Offline)
-                    System.IO.File.Delete(mf);
+            Interface.IStore.SaveSSF(Offline, mf);
 
 
-                    Interface.IStore.Save(mf);
-                }
-            }
-            catch (SystemException ex)
-            {
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
-            }
-            Interface.IReport.Msg("Database", "Database updated!");
+       
         }
 
         private void Calculate_Click(object sender, EventArgs e)
@@ -505,118 +484,45 @@ namespace DB.UI
         }
 
 
-        private void setBindings()
+      
+
+        private void setUnitBindings()
         {
-
-
-
-
-            ucVcc.Set(ref Interface);
-            ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
-
-          
-            ucUnit.Set(ref Interface);
-            ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
-
-            
-            this.ucMS.Set(ref Interface);
-            this.ucMS.RowHeaderMouseClick = this.dgvMatrixSelected;
-
-
-
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
 
-
             this.unitBN.BindingSource = bs;
 
+            Hashtable bindings = Dumb.ArrayOfBindings(ref bs);
 
-            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
-            bool t = true;
-            string text = "Text";
             string column;
 
-
             column = Unit.DiameterColumn.ColumnName;
-            Binding diam = new Binding(text, bs, column, t, mo);
+            this.diameterbox.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.LenghtColumn.ColumnName;
-            Binding leng = new Binding(text, bs, column, t, mo);
+            this.lenghtbox.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChDiameterColumn.ColumnName;
-            Binding chdiam = new Binding(text, bs, column, t, mo);
+            this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChLenghtColumn.ColumnName;
-            Binding chleng = new Binding(text, bs, column, t, mo);
+            this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.MassColumn.ColumnName;
-            Binding mass = new Binding(text, bs, column, t, mo);
+            this.massB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.DensityColumn.ColumnName;
-            Binding density = new Binding(text, bs, column, t, mo);
+            this.densityB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChCfgColumn.ColumnName;
-            Binding cfg = new Binding(text, bs, column, t, mo);
+            this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ContentColumn.ColumnName;
-            Binding matrix = new Binding(text, bs, column, t, mo);
-            column = Unit.NameColumn.ColumnName;
-            Binding name = new Binding(text, bs, column, t, mo);
+            this.matrixB.DataBindings.Add(bindings[column] as Binding);
             column = Unit.kepiColumn.ColumnName;
-            Binding kepi = new Binding(text, bs, column, t, mo);
+            this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.kthColumn.ColumnName;
-            Binding kth = new Binding(text, bs, column, t, mo);
+            this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
+            column = Unit.NameColumn.ColumnName;
+            this.nameB.ComboBox.DataBindings.Add(bindings[column] as Binding);
 
-
-            this.lenghtbox.TextBox.DataBindings.Add(leng);
-            this.diameterbox.TextBox.DataBindings.Add(diam);
-            this.chdiamB.TextBox.DataBindings.Add(chdiam);
-            this.chlenB.TextBox.DataBindings.Add(chleng);
-            this.massB.TextBox.DataBindings.Add(mass);
-            this.densityB.TextBox.DataBindings.Add(density);
-            this.cfgB.ComboBox.DataBindings.Add(cfg);
-            this.matrixB.DataBindings.Add(matrix);
-            this.kepiB.TextBox.DataBindings.Add(kepi);
-            this.kthB.TextBox.DataBindings.Add(kth);
-            this.nameB.ComboBox.DataBindings.Add(name);
-
-            this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
-
-                     
         }
 
-      
-        /// <summary>
-        /// Gets ToolStripTextBox control content as T-type
-        /// </summary>
-        /// <typeparam name="T">the type that you want to obtain from the control box Text Property</typeparam>
-        /// <param name="mbox">the box</param>
-        /// <returns></returns>
-        public T getControlAs<T>(ref ToolStripTextBox mbox)
-        {
-            //   ToolStripTextBox mbox = (ToolStripTextBox)control;
 
-            T mass = default(T);
-            Type tipo = typeof(T);
-
-            bool m = string.IsNullOrWhiteSpace(mbox.Text);
-
-            //  if (m) error.SetError(mbox.TextBox, "Null or empty");
-            //   else
-            //   {
-            //  error.SetError(mbox.TextBox, null);
-            //  }
-
-            if (tipo.Equals(typeof(double)))
-            {
-                double massAux = Convert.ToDouble(mbox.Text);
-
-                mass = (T)Convert.ChangeType(massAux, typeof(T));
-            }
-            else if (tipo.Equals(typeof(string)))
-            {
-                string massAux = mbox.Text.ToString();
-
-                mass = (T)Convert.ChangeType(massAux, typeof(T));
-            }
-
-            return mass;
-        }
-
-                
         private void loadDatabase()
         {
             // errorB.Clear();
@@ -633,7 +539,19 @@ namespace DB.UI
                        
                 }
 
-                setBindings();
+                ucVcc.Set(ref Interface);
+                ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
+
+                ucUnit.Set(ref Interface);
+                ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
+
+                ucMS.Set(ref Interface);
+                ucMS.RowHeaderMouseClick = this.dgvMatrixSelected;
+
+                setUnitBindings();
+
+                this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
+
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
                 //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(bs.Current);

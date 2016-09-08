@@ -22,6 +22,19 @@ namespace DB
 
         partial class UnitDataTable
         {
+            public LINAA.UnitRow NewUnitRow(double kepi, double kth, string chfg)
+            {
+                LINAA.UnitRow u = this.NewUnitRow();
+
+                u.kepi = kepi;
+                u.kth = kth;
+              //  u.RowError = string.Empty;
+                  u.ChCfg =  chfg;
+                this.AddUnitRow(u);
+
+                return u;
+            }
+
             private IEnumerable<DataColumn> nonNullables;
 
             public IEnumerable<DataColumn> NonNullables

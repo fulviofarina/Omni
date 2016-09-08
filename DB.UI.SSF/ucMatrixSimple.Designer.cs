@@ -120,7 +120,7 @@
             this.TLPMatrix.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TLPMatrix.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TLPMatrix.Location = new System.Drawing.Point(0, 0);
-            this.TLPMatrix.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TLPMatrix.Margin = new System.Windows.Forms.Padding(4);
             this.TLPMatrix.Name = "TLPMatrix";
             this.TLPMatrix.RowCount = 2;
             this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.548708F));
@@ -156,7 +156,7 @@
             this.splitContainer1.BackColor = System.Drawing.SystemColors.Menu;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(6, 6);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -356,7 +356,7 @@
             this.matrixDGV.DefaultCellStyle = dataGridViewCellStyle2;
             this.matrixDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.matrixDGV.Location = new System.Drawing.Point(4, 47);
-            this.matrixDGV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.matrixDGV.Margin = new System.Windows.Forms.Padding(4);
             this.matrixDGV.Name = "matrixDGV";
             this.matrixDGV.RowTemplate.Height = 24;
             this.matrixDGV.Size = new System.Drawing.Size(385, 452);
@@ -382,7 +382,7 @@
             this.matrixRTB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.matrixRTB.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.matrixRTB.Location = new System.Drawing.Point(399, 49);
-            this.matrixRTB.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.matrixRTB.Margin = new System.Windows.Forms.Padding(6);
             this.matrixRTB.Name = "matrixRTB";
             this.matrixRTB.Size = new System.Drawing.Size(382, 448);
             this.matrixRTB.TabIndex = 4;
@@ -584,7 +584,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TLPMatrix);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ucMatrixSimple";
             this.Size = new System.Drawing.Size(787, 503);
             this.TLPMatrix.ResumeLayout(false);

@@ -13,8 +13,7 @@ namespace DB
 
         // void PopulateColumnExpresions();
 
-        void PopulateSelectedExpression(bool setexpression);
-
+      
 
         ICollection<string> ActiveProjectsList { get; }
         LINAA.PreferencesRow CurrentPref { get; set; }
@@ -115,6 +114,10 @@ namespace DB
 
     public interface IStore
     {
+        void SaveSSF();
+
+        bool SaveSSF(bool offline, string file);
+
         // void AddException(Exception ex);
         void Delete<T>(ref IEnumerable<T> rows);
 

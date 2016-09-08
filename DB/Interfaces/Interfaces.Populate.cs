@@ -10,6 +10,8 @@ namespace DB
 
     public interface IMain
     {
+        void PopulateSelectedExpression(bool setexpression);
+
         void PopulateColumnExpresions();
         void PopulateUserDirectories();
 

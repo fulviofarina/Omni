@@ -9,6 +9,45 @@ namespace DB
 {
     public partial class LINAA : IStore
     {
+
+
+        public void SaveSSF()
+        {
+            try
+            {
+                Save<LINAA.MatrixDataTable>();
+                Save<LINAA.VialTypeDataTable>();
+                Save<LINAA.UnitDataTable>();
+                Save<LINAA.ChannelsDataTable>();
+            }
+            catch (SystemException ex)
+            {
+                Msg(ex.StackTrace, ex.Message);
+                this.AddException(ex);
+            }
+
+        }
+
+        public bool SaveSSF(bool offline, string file)
+        {
+            bool save = false;
+
+            if (!offline)
+            {
+                 SaveSSF();
+            }
+            else
+            {
+                //writes the xml file (Offline)
+                Save(file);
+            }
+
+              
+            save = true;
+          
+            return save;
+        }
+
         private bool Usehandlers = false;
 
         public void UpdateIrradiationDates()
@@ -53,13 +92,15 @@ namespace DB
 
             try
             {
-
+                System.IO.File.Delete(file);
                 this.WriteXml(file, XmlWriteMode.WriteSchema);
                 saved = true;
+                Msg("Database has been updated to a file!\n\n"+ file, "Saved");
             }
             catch (SystemException ex)
             {
-
+                Msg(ex.StackTrace, ex.Message);
+                AddException(ex);
             }
 
             return saved;

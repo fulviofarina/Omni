@@ -11,9 +11,7 @@ namespace DB.UI
     public partial class ucMatrixSimple: UserControl
     {
 
-
-
-    
+      
         private Interface Interface = null;
 
       
