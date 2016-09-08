@@ -57,7 +57,7 @@ namespace DB
 
             loadCurrentPreferences<PreferencesRow>();
 
-
+            
             //keep this this way, works fine
              dt = this.SSFPref;
             string pathSSFPref = folderPath + Resources.SSFPreferences;
@@ -71,7 +71,7 @@ namespace DB
             }
 
             loadCurrentPreferences<SSFPrefRow>();
-
+            
 
             //find the current preference
 

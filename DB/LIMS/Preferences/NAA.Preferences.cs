@@ -155,22 +155,23 @@ namespace DB
 
             public void Check()
             {
-                DoSolang = false;
-                DoMatSSF = false;//fix
 
-                if (IswindowANull()) windowA = 1.5;
-                if (IswindowBNull()) windowB = 0.001;
-                if (IsminAreaNull()) minArea = 500;
-                if (IsmaxUncNull()) maxUnc = 50;
-                if (IsAutoLoadNull()) AutoLoad = true;
-                if (IsShowSolangNull()) ShowSolang = false;
-                if (IsShowMatSSFNull()) ShowMatSSF = false;
-                if (IsAAFillHeightNull()) AAFillHeight = false;
-                if (IsAARadiusNull()) AARadius = true;
-                if (IsShowSampleDescriptionNull()) ShowSampleDescription = true;
+
+                // if (IswindowANull()) windowA = 1.5;
+                // if (IswindowBNull()) windowB = 0.001;
+                // if (IsminAreaNull()) minArea = 500;
+                // if (IsmaxUncNull()) maxUnc = 50;
+                //    if (IsAutoLoadNull()) AutoLoad = true;
+                //    if (IsShowSolangNull()) ShowSolang = false;
+                // if (IsShowMatSSFNull()) ShowMatSSF = false;
+                //if (IsAAFillHeightNull()) AAFillHeight = false;
+                //if (IsAARadiusNull()) AARadius = true;
+                //   if (IsShowSampleDescriptionNull()) ShowSampleDescription = true;
+                this.LastAccessDate = DateTime.Now;
+                if (IsLastToDoNull()) LastToDo = string.Empty;
                 if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
-                if (IsFillByHLNull()) FillByHL = true;
-                if (IsFillBySpectraNull()) FillBySpectra = true;
+              //  if (IsFillByHLNull()) FillByHL = true;
+               // if (IsFillBySpectraNull()) FillBySpectra = true;
                 if (IsHLNull()) HL = DB.Properties.Settings.Default.HLSNMNAAConnectionString;
                 else DB.Properties.Settings.Default["HLSNMNAAConnectionString"] = HL;
                 if (IsLIMSNull()) LIMS = DB.Properties.Settings.Default.NAAConnectionString;
@@ -179,6 +180,7 @@ namespace DB
                 else DB.Properties.Settings.Default["SpectraFolder"] = Spectra;
                 if (IsSpectraSvrNull()) SpectraSvr = DB.Properties.Settings.Default.SpectraServer;
                 else DB.Properties.Settings.Default["SpectraServer"] = SpectraSvr;
+
                 DB.Properties.Settings.Default.Save();
             }
         }

@@ -33,8 +33,11 @@
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
+            this.ucUnit = new DB.UI.ucUnit();
             this.MatrixTab = new System.Windows.Forms.TabPage();
+            this.ucMS = new DB.UI.ucMatrixSimple();
             this.ShapeTab = new System.Windows.Forms.TabPage();
+            this.ucVcc = new DB.UI.ucVCC();
             this.FileTab = new System.Windows.Forms.TabPage();
             this.compositionsbox = new System.Windows.Forms.RichTextBox();
             this.leftSC = new System.Windows.Forms.SplitContainer();
@@ -44,8 +47,20 @@
             this.Calculate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
-            this.autoCalcDensity = new System.Windows.Forms.ToolStripMenuItem();
+            this.calcDensity = new System.Windows.Forms.ToolStripMenuItem();
             this.loop = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.doCK = new System.Windows.Forms.ToolStripMenuItem();
+            this.doMatSSF = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.showMatSSF = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoLoad = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.FolderPath = new System.Windows.Forms.ToolStripTextBox();
+            this.SQL = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.showOther = new System.Windows.Forms.ToolStripMenuItem();
+            this.workOffline = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.export = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
@@ -128,10 +143,6 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.ucUnit = new DB.UI.ucUnit();
-            this.ucMS = new DB.UI.ucMatrixSimple();
-            this.ucVcc = new DB.UI.ucVCC();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TLP.SuspendLayout();
             this.Tab.SuspendLayout();
             this.CalcTab.SuspendLayout();
@@ -215,6 +226,17 @@
             this.CalcTab.Text = "Units";
             this.CalcTab.UseVisualStyleBackColor = true;
             // 
+            // ucUnit
+            // 
+            this.ucUnit.AutoSize = true;
+            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUnit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucUnit.Location = new System.Drawing.Point(3, 3);
+            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
+            this.ucUnit.Name = "ucUnit";
+            this.ucUnit.Size = new System.Drawing.Size(679, 781);
+            this.ucUnit.TabIndex = 0;
+            // 
             // MatrixTab
             // 
             this.MatrixTab.Controls.Add(this.ucMS);
@@ -226,6 +248,16 @@
             this.MatrixTab.Text = "Matrix";
             this.MatrixTab.UseVisualStyleBackColor = true;
             // 
+            // ucMS
+            // 
+            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucMS.Location = new System.Drawing.Point(3, 3);
+            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMS.Name = "ucMS";
+            this.ucMS.Size = new System.Drawing.Size(679, 781);
+            this.ucMS.TabIndex = 0;
+            // 
             // ShapeTab
             // 
             this.ShapeTab.Controls.Add(this.ucVcc);
@@ -236,6 +268,16 @@
             this.ShapeTab.TabIndex = 3;
             this.ShapeTab.Text = "Sample/Source";
             this.ShapeTab.UseVisualStyleBackColor = true;
+            // 
+            // ucVcc
+            // 
+            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucVcc.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucVcc.Location = new System.Drawing.Point(3, 3);
+            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
+            this.ucVcc.Name = "ucVcc";
+            this.ucVcc.Size = new System.Drawing.Size(679, 781);
+            this.ucVcc.TabIndex = 0;
             // 
             // FileTab
             // 
@@ -357,9 +399,20 @@
             // 
             this.OptionsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.OptionsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.autoCalcDensity,
+            this.calcDensity,
             this.loop,
-            this.newToolStripMenuItem});
+            this.toolStripSeparator6,
+            this.doCK,
+            this.doMatSSF,
+            this.toolStripSeparator3,
+            this.showMatSSF,
+            this.AutoLoad,
+            this.toolStripSeparator9,
+            this.FolderPath,
+            this.SQL,
+            this.toolStripSeparator7,
+            this.showOther,
+            this.workOffline});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptionsBtn.ForeColor = System.Drawing.Color.DarkOrange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
@@ -368,23 +421,111 @@
             this.OptionsBtn.Size = new System.Drawing.Size(108, 27);
             this.OptionsBtn.Text = "OPTIONS";
             // 
-            // autoCalcDensity
+            // calcDensity
             // 
-            this.autoCalcDensity.Checked = true;
-            this.autoCalcDensity.CheckOnClick = true;
-            this.autoCalcDensity.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoCalcDensity.Name = "autoCalcDensity";
-            this.autoCalcDensity.Size = new System.Drawing.Size(282, 30);
-            this.autoCalcDensity.Text = "Auto-calculate density";
-            this.autoCalcDensity.CheckedChanged += new System.EventHandler(this.checkedChanged);
+            this.calcDensity.Checked = true;
+            this.calcDensity.CheckOnClick = true;
+            this.calcDensity.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.calcDensity.Name = "calcDensity";
+            this.calcDensity.Size = new System.Drawing.Size(293, 30);
+            this.calcDensity.Text = "Calculate density";
             // 
             // loop
             // 
+            this.loop.Checked = true;
             this.loop.CheckOnClick = true;
+            this.loop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.loop.Name = "loop";
-            this.loop.Size = new System.Drawing.Size(282, 30);
+            this.loop.Size = new System.Drawing.Size(293, 30);
             this.loop.Text = "Loop";
-            this.loop.CheckedChanged += new System.EventHandler(this.checkedChanged);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(290, 6);
+            // 
+            // doCK
+            // 
+            this.doCK.Checked = true;
+            this.doCK.CheckOnClick = true;
+            this.doCK.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.doCK.Name = "doCK";
+            this.doCK.Size = new System.Drawing.Size(293, 30);
+            this.doCK.Text = "Do CK";
+            // 
+            // doMatSSF
+            // 
+            this.doMatSSF.Checked = true;
+            this.doMatSSF.CheckOnClick = true;
+            this.doMatSSF.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.doMatSSF.Name = "doMatSSF";
+            this.doMatSSF.Size = new System.Drawing.Size(293, 30);
+            this.doMatSSF.Text = "Do MatSSF";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(290, 6);
+            // 
+            // showMatSSF
+            // 
+            this.showMatSSF.Checked = true;
+            this.showMatSSF.CheckOnClick = true;
+            this.showMatSSF.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showMatSSF.Name = "showMatSSF";
+            this.showMatSSF.Size = new System.Drawing.Size(293, 30);
+            this.showMatSSF.Text = "Show MatSSF";
+            // 
+            // AutoLoad
+            // 
+            this.AutoLoad.Checked = true;
+            this.AutoLoad.CheckOnClick = true;
+            this.AutoLoad.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoLoad.Name = "AutoLoad";
+            this.AutoLoad.Size = new System.Drawing.Size(293, 30);
+            this.AutoLoad.Text = "AutoLoad";
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(290, 6);
+            // 
+            // FolderPath
+            // 
+            this.FolderPath.BackColor = System.Drawing.Color.Bisque;
+            this.FolderPath.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FolderPath.Name = "FolderPath";
+            this.FolderPath.Size = new System.Drawing.Size(233, 33);
+            this.FolderPath.Text = "Folder";
+            // 
+            // SQL
+            // 
+            this.SQL.Name = "SQL";
+            this.SQL.Size = new System.Drawing.Size(293, 30);
+            this.SQL.Text = "SQL";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(290, 6);
+            // 
+            // showOther
+            // 
+            this.showOther.Checked = true;
+            this.showOther.CheckOnClick = true;
+            this.showOther.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showOther.Name = "showOther";
+            this.showOther.Size = new System.Drawing.Size(293, 30);
+            this.showOther.Text = "Show Other";
+            // 
+            // workOffline
+            // 
+            this.workOffline.Checked = true;
+            this.workOffline.CheckOnClick = true;
+            this.workOffline.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.workOffline.Name = "workOffline";
+            this.workOffline.Size = new System.Drawing.Size(293, 30);
+            this.workOffline.Text = "Work Offline";
             // 
             // toolStripSeparator13
             // 
@@ -1101,43 +1242,6 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
-            // ucUnit
-            // 
-            this.ucUnit.AutoSize = true;
-            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUnit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucUnit.Location = new System.Drawing.Point(3, 3);
-            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
-            this.ucUnit.Name = "ucUnit";
-            this.ucUnit.Size = new System.Drawing.Size(679, 781);
-            this.ucUnit.TabIndex = 0;
-            // 
-            // ucMS
-            // 
-            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucMS.Location = new System.Drawing.Point(3, 3);
-            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMS.Name = "ucMS";
-            this.ucMS.Size = new System.Drawing.Size(679, 781);
-            this.ucMS.TabIndex = 0;
-            // 
-            // ucVcc
-            // 
-            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucVcc.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucVcc.Location = new System.Drawing.Point(3, 3);
-            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
-            this.ucVcc.Name = "ucVcc";
-            this.ucVcc.Size = new System.Drawing.Size(679, 781);
-            this.ucVcc.TabIndex = 0;
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(282, 30);
-            this.newToolStripMenuItem.Text = "New";
-            // 
             // ucSSF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1307,11 +1411,22 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem autoCalcDensity;
+        private System.Windows.Forms.ToolStripMenuItem calcDensity;
         private ucUnit ucUnit;
         private ucVCC ucVcc;
         private ucMatrixSimple ucMS;
         private System.Windows.Forms.ToolStripMenuItem loop;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doCK;
+        private System.Windows.Forms.ToolStripMenuItem doMatSSF;
+        private System.Windows.Forms.ToolStripMenuItem showMatSSF;
+        private System.Windows.Forms.ToolStripMenuItem AutoLoad;
+        private System.Windows.Forms.ToolStripMenuItem SQL;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripTextBox FolderPath;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem showOther;
+        private System.Windows.Forms.ToolStripMenuItem workOffline;
     }
 }

@@ -77,6 +77,16 @@
       <Name>Rsx</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MATSSF.CFG" />
+    <None Include="MATSSF.DAT" />
+    <None Include="matssf.for" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MATSSF_INP.TXT" />
+    <Content Include="MATSSF_LST.TXT" />
+    <Content Include="MATSSF_XSR.TXT" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

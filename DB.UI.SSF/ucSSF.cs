@@ -7,6 +7,8 @@ using Rsx;
 using Msn;
 using System.Collections;
 using System.Collections.Generic;
+using DB.Properties;
+
 namespace DB.UI
 {
     public partial class ucSSF : UserControl
@@ -15,10 +17,10 @@ namespace DB.UI
 
 
       
-        private bool Offline = false;
+       // private bool Offline = false;
         private static string mf = preFolder + matssfFolder + "lims.xml";
         private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
-        private static string matssfFolder = DB.Properties.Resources.MatSSFFolder;
+        private static string matssfFolder = Resources.MatSSFFolder;
         private static string preFolder = Environment.GetFolderPath(folder);
         private Interface Interface = null;
 
@@ -60,14 +62,14 @@ namespace DB.UI
 
             // this.msn = this.lINAA.Msn;
 
-            ucSSF uc = new ucSSF(ref db, false);
+            ucSSF uc = new ucSSF(ref db);
 
             //   DB.UI.Auxiliar aux = new DB.UI.Auxiliar();
 
             return uc.ParentForm;
         }
 
-        public ucSSF(ref LINAA Linaa, bool offline)
+        public ucSSF(ref LINAA Linaa)
         {
             InitializeComponent();
 
@@ -76,7 +78,7 @@ namespace DB.UI
             object db = Linaa;
             Interface = new Interface(ref db);
 
-            Offline = offline;
+            
 
             System.Windows.Forms.Form form = null;
 
@@ -101,7 +103,7 @@ namespace DB.UI
 
             loadDatabase();
 
-             
+
             /*
             form = new System.Windows.Forms.Form();
             form.AutoSize = true;
@@ -113,6 +115,36 @@ namespace DB.UI
             form.Show();
             */
 
+            this.loop.CheckedChanged += this.checkedChanged;
+            this.calcDensity.CheckedChanged += this.checkedChanged;
+            this.showMatSSF.CheckedChanged += this.checkedChanged;
+            this.showOther.CheckedChanged += this.checkedChanged;
+
+            this.workOffline.CheckedChanged += this.checkedChanged;
+
+            this.doMatSSF.CheckedChanged += this.checkedChanged;
+
+            this.doCK.CheckedChanged += this.checkedChanged;
+
+            this.AutoLoad.CheckedChanged += this.checkedChanged;
+
+
+            //  Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
+
+            //  Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
+
+
+            // Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
+//Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
+           // Interface.IPreferences.CurrentPref.DoCK = this.doCK.Checked;
+        //    Interface.IPreferences.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
+           // Interface.IPreferences.CurrentPref.ShowMatSSF = this.showMatSSF.Checked;
+          //  Interface.IPreferences.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
+            // this.SQL.Checked = Interface.IPreferences.CurrentSSFPref.SQL;
+          //  Interface.IPreferences.CurrentSSFPref.Folder = this.FolderPath.Text;
+           // Interface.IPreferences.CurrentSSFPref.ShowOther = this.showOther.Checked;
+         //   Interface.IPreferences.CurrentPref.Offline = this.workOffline.Checked;
+
 
         }
 
@@ -122,7 +154,7 @@ namespace DB.UI
         /// <param name="sender">The Add button that was clicked</param>
         /// <param name="e"></param>
         /// 
-     
+
 
         /// <summary>
         /// when a DGV-item is selected, take the necessary rows to compose the unit
@@ -376,11 +408,11 @@ namespace DB.UI
             this.ucVcc.EndEdit();
 
             //  setUnit();
+            bool off = Interface.IPreferences.CurrentPref.Offline;
+            Interface.IStore.SaveSSF(off, mf);
 
-            Interface.IStore.SaveSSF(Offline, mf);
+          
 
-
-       
         }
 
         private void Calculate_Click(object sender, EventArgs e)
@@ -493,12 +525,18 @@ namespace DB.UI
 
             //SET THE PREFERENCES
 
+            IPreferences ip = Interface.IPreferences;
 
-            this.loop.Checked = Interface.IPreferences.CurrentSSFPref.Loop;
-            this.autoCalcDensity.Checked = Interface.IPreferences.CurrentSSFPref.CalcDensity;
-
-
-
+            this.loop.Checked = ip.CurrentSSFPref.Loop;
+            this.calcDensity.Checked = ip.CurrentSSFPref.CalcDensity;
+            this.doCK.Checked = ip.CurrentPref.DoCK;
+            this.doMatSSF.Checked = ip.CurrentPref.DoMatSSF;
+            this.showMatSSF.Checked = ip.CurrentPref.ShowMatSSF;
+            this.AutoLoad.Checked = ip.CurrentSSFPref.AutoLoad;
+            // this.SQL.Checked = ip.CurrentSSFPref.SQL;
+            this.FolderPath.Text = ip.CurrentSSFPref.Folder;
+            this.showOther.Checked = ip.CurrentSSFPref.ShowOther;
+            this.workOffline.Checked = ip.CurrentPref.Offline;
 
 
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
@@ -557,7 +595,7 @@ namespace DB.UI
 
             try
             {
-                if (!Offline)
+                if (!Interface.IPreferences.CurrentPref.Offline)
                 {
                     Interface.IPopulate.IGeometry.PopulateUnits();
                 }
@@ -597,11 +635,30 @@ namespace DB.UI
         {
 
 
-            Interface.IPreferences.CurrentSSFPref.CalcDensity = this.autoCalcDensity.Checked;
+            IPreferences ip = Interface.IPreferences;
 
-            Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
+            ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
+
+            ip.CurrentSSFPref.Loop = this.loop.Checked;
+
+
+            ip.CurrentSSFPref.Loop = this.loop.Checked;
+            ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
+         ip.CurrentPref.DoCK =this.doCK.Checked;
+            ip.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
+         ip.CurrentPref.ShowMatSSF= this.showMatSSF.Checked;
+            ip.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
+            // this.SQL.Checked = ip.CurrentSSFPref.SQL;
+            ip.CurrentSSFPref.Folder = this.FolderPath.Text;
+            ip.CurrentSSFPref.ShowOther = this.showOther.Checked;
+            ip.CurrentPref.Offline = this.workOffline.Checked;
+
 
             Interface.IStore.SavePreferences();
+
+
+
+
         }
     }
 }

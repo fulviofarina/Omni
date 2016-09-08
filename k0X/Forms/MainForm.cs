@@ -377,8 +377,8 @@ namespace k0X
         protected internal void MatSSFPanel_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            bool offlinew = false;
-            ucSSF matssf = new ucSSF(ref LIMS.Linaa, offlinew);
+          
+            ucSSF matssf = new ucSSF(ref LIMS.Linaa);
             Program.UserControls.Add(matssf);
             Cursor.Current = Cursors.Default;
         }
