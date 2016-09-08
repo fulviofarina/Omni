@@ -3,14 +3,38 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-
+using System.IO;
 ///FULVIO
 namespace Rsx
 {
     public partial class Dumb
     {
 
-        public static void SetField(ref string MCL, ref IEnumerable<string> arrayTxtFile, string fieldTitle, string units)
+
+        public static bool ReadTable(string path, ref DataTable dt)
+        {
+            //keep this this way, works fine
+            if (File.Exists(path)) //user preferences found...
+            {
+                dt.BeginLoadData();
+                FileInfo info = new FileInfo(path);
+                if (info.Length < 204800)
+                {
+                    dt.ReadXml(path);
+                }
+                else File.Delete(path);
+
+
+                return true;
+                //cleaning
+
+            }
+            else return false;
+
+
+        }
+
+    public static void SetField(ref string MCL, ref IEnumerable<string> arrayTxtFile, string fieldTitle, string units)
         {
             string x = arrayTxtFile.FirstOrDefault(o => o.Contains(fieldTitle));
 

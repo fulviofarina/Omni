@@ -4,6 +4,8 @@ using System.Data;
 using System.Linq;
 //using DB.Interfaces;
 using Rsx;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace DB
 {
@@ -180,80 +182,57 @@ namespace DB
 
         public void Read(string filepath)
         {
-            LINAA file = null;
+            LINAA dt = null;
             PreferencesDataTable prefe = null;
+            SSFPrefDataTable ssfPrefe = null;
+
             //  file.EnforceConstraints = false;
-            System.Xml.XmlReader reader = null;
+           XmlReader reader = null;
             try
             {
-                System.Xml.XmlReaderSettings set = new System.Xml.XmlReaderSettings();
+
+                XmlReaderSettings set = new XmlReaderSettings();
                 set.CheckCharacters = false;
-                set.ConformanceLevel = System.Xml.ConformanceLevel.Auto;
-                set.DtdProcessing = System.Xml.DtdProcessing.Ignore;
+                set.ConformanceLevel = ConformanceLevel.Auto;
+                set.DtdProcessing = DtdProcessing.Ignore;
                 set.IgnoreWhitespace = true;
-                set.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
-                set.ValidationType = System.Xml.ValidationType.None;
-                reader = System.Xml.XmlReader.Create(filepath, set);
+                set.ValidationFlags = XmlSchemaValidationFlags.None;
+                set.ValidationType = ValidationType.None;
+                reader = XmlReader.Create(filepath, set);
 
-                file = new LINAA();
-                /*
-                Type[] arrayToPreserve = new Type[]{
-                        typeof(IrradiationRequestsDataTable)
-                     typeof(CapsulesDataTable),
-                    typeof(SubSamplesDataTable),
-                      typeof(MeasurementsDataTable),
-                        typeof(PeaksDataTable),
-                          typeof(IPeakAveragesDataTable),
-                                      typeof(IRequestsAveragesDataTable)};
-
-                Dumb.Preserve(file, arrayToPreserve);
-                 * */
-                file.ReadXml(reader, XmlReadMode.IgnoreSchema);
-                //   this.Peaks.Clear();
-                //  this.IPeakAverages.Clear();
-                //  this.IRequestsAverages.Clear();
+                dt = new LINAA();
+         
+                dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
+           
 
                 prefe = new PreferencesDataTable(this.Preferences);
 
-                this.Merge(file, false, MissingSchemaAction.AddWithKey);
-                this.Preferences.Clear();
-                this.Preferences.Merge(prefe, false, MissingSchemaAction.AddWithKey);
+                ssfPrefe = new SSFPrefDataTable(this.SSFPref);
+
+
+                mergePreferences(ref prefe);
+
+                mergePreferences(ref ssfPrefe);
+
                 this.SavePreferences();
                 this.PopulatePreferences();
-                this.AcceptChanges();
 
-                /*
-               ucSamples s = new ucSamples(this.Linaa);
-               s.MBox = this.Main.Box;
-               this.Main.userControls.Add(s);
-               this.Main.userControls.Add(s.ucSS);
-               s.ucSS.Offline = true;
-               s.ucSS.Samples = this.Linaa.SubSamples.AsEnumerable();
-               s.Populate(true,OFD.SafeFileName.Replace(".xml",string.Empty));
-               s.ucSS.Offline = false;
-               s.TV.BackColor = System.Drawing.Color.Honeydew;
-               s.NewForm();
-                  */
-                //	  this.Main.Analysis_Click(sender, e);
+
             }
             catch (Exception ex)
             {
                 this.AddException(ex);
             }
 
-            if (prefe != null)
-            {
-                prefe.Clear();
-                prefe.Dispose();
-                prefe = null;
-            }
-            if (file != null)
-            {
-                file.Clear();
-                file.Dispose();
-                file = null;
-            }
+            Dumb.FD<PreferencesDataTable>(ref prefe);
+
+            Dumb.FD<SSFPrefDataTable>(ref ssfPrefe);
+
+            Dumb.FD<LINAA>(ref dt);
+
+          
         }
+
 
         public void Help()
         {

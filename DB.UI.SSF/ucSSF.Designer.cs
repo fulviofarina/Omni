@@ -47,7 +47,8 @@
             this.Calculate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
-            this.autocalculateDensityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoCalcDensity = new System.Windows.Forms.ToolStripMenuItem();
+            this.loop = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.export = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
@@ -386,7 +387,8 @@
             // 
             this.OptionsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.OptionsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.autocalculateDensityToolStripMenuItem});
+            this.autoCalcDensity,
+            this.loop});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptionsBtn.ForeColor = System.Drawing.Color.DarkOrange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
@@ -395,13 +397,23 @@
             this.OptionsBtn.Size = new System.Drawing.Size(108, 27);
             this.OptionsBtn.Text = "OPTIONS";
             // 
-            // autocalculateDensityToolStripMenuItem
+            // autoCalcDensity
             // 
-            this.autocalculateDensityToolStripMenuItem.Checked = true;
-            this.autocalculateDensityToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autocalculateDensityToolStripMenuItem.Name = "autocalculateDensityToolStripMenuItem";
-            this.autocalculateDensityToolStripMenuItem.Size = new System.Drawing.Size(282, 30);
-            this.autocalculateDensityToolStripMenuItem.Text = "Auto-calculate density";
+            this.autoCalcDensity.Checked = true;
+            this.autoCalcDensity.CheckOnClick = true;
+            this.autoCalcDensity.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autoCalcDensity.Name = "autoCalcDensity";
+            this.autoCalcDensity.Size = new System.Drawing.Size(282, 30);
+            this.autoCalcDensity.Text = "Auto-calculate density";
+            this.autoCalcDensity.CheckedChanged += new System.EventHandler(this.checkedChanged);
+            // 
+            // loop
+            // 
+            this.loop.CheckOnClick = true;
+            this.loop.Name = "loop";
+            this.loop.Size = new System.Drawing.Size(282, 30);
+            this.loop.Text = "Loop";
+            this.loop.CheckedChanged += new System.EventHandler(this.checkedChanged);
             // 
             // toolStripSeparator13
             // 
@@ -1287,9 +1299,10 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem autocalculateDensityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoCalcDensity;
         private ucUnit ucUnit;
         private ucVCC ucVcc;
         private ucMatrixSimple ucMS;
+        private System.Windows.Forms.ToolStripMenuItem loop;
     }
 }

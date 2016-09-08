@@ -23,8 +23,9 @@ namespace DB.UI
         public ucVCC()
         {
             InitializeComponent();
-            this.lINAA.Dispose();
-            this.lINAA = null;
+
+            Dumb.FD<LINAA>(ref this.lINAA);
+
 
 
             System.EventHandler addNew = this.addNewVialChannel_Click;

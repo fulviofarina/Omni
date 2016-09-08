@@ -277,6 +277,7 @@ namespace DB.UI
 
 
         }
+
         private void dgvMatrixSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -488,6 +489,18 @@ namespace DB.UI
 
         private void setUnitBindings()
         {
+
+
+            //SET THE PREFERENCES
+
+
+            this.loop.Checked = Interface.IPreferences.CurrentSSFPref.Loop;
+            this.autoCalcDensity.Checked = Interface.IPreferences.CurrentSSFPref.CalcDensity;
+
+
+
+
+
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
 
@@ -520,6 +533,21 @@ namespace DB.UI
             column = Unit.NameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(bindings[column] as Binding);
 
+/*
+            
+            column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
+
+            Binding b1 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
+
+         
+            column = Interface.IDB.SSFPref.LoopColumn.ColumnName;
+
+            Binding b2 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
+
+            */
+
+
+           // this.autoCalcDensity.bin
         }
 
 
@@ -565,5 +593,15 @@ namespace DB.UI
             }
         }
 
+        private void checkedChanged(object sender, EventArgs e)
+        {
+
+
+            Interface.IPreferences.CurrentSSFPref.CalcDensity = this.autoCalcDensity.Checked;
+
+            Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
+
+            Interface.IStore.SavePreferences();
+        }
     }
 }

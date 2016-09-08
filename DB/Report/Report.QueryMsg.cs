@@ -3,6 +3,7 @@ using System.Linq;
 using Rsx;
 using System.Messaging;
 using System.Collections;
+using DB.Properties;
 
 namespace DB
 {
@@ -15,7 +16,7 @@ namespace DB
                 //send path as the body of the QMsg
                 //put a extended body to the email please
 
-                MessageQueue qm = Rsx.Emailer.CreateMQ(DB.Properties.Resources.QMAcquisitions + "." + module + "." + email, this.qMsg_ReceiveCompleted);
+                MessageQueue qm = Rsx.Emailer.CreateMQ(QM.QMAcquisitions + "." + module + "." + email, this.qMsg_ReceiveCompleted);
 
                 Message m = Rsx.Emailer.CreateQMsg(path, labelReport + " - " + module, extra);
 
@@ -41,7 +42,7 @@ namespace DB
 
                 if (bugQM == null)
                 {
-                    bugQM = Emailer.CreateMQ(Properties.Resources.QMExceptions, this.qMsg_ReceiveCompleted);
+                    bugQM = Emailer.CreateMQ(QM.QMExceptions, this.qMsg_ReceiveCompleted);
                 }
                 if (bugQM == null)
                 {
@@ -215,7 +216,7 @@ namespace DB
             else EmailTitle = " was sent";
 
             // postprocessing...
-            if (DB.Properties.Resources.QMExceptions.Equals(qMsg1.Path))
+            if (QM.QMExceptions.Equals(qMsg1.Path))
             {
                 EmailTitle = "Bug Report" + EmailTitle;
                 if (sent && w.Body.GetType().Equals(typeof(string)))

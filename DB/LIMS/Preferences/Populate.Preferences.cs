@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-//using DB.Interfaces;
 
+//using DB.Interfaces;
+using System.IO;
+using Rsx;
+using System.Data;
+using System.Data.Linq;
+using DB.Properties;
 namespace DB
 {
     public partial class LINAA : IPreferences
     {
-        protected internal LINAA.PreferencesRow currentPref;
+        private PreferencesRow currentPref;
 
-        public LINAA.PreferencesRow CurrentPref
+        public PreferencesRow CurrentPref
         {
             get
             {
@@ -16,36 +21,61 @@ namespace DB
             }
             set { currentPref = value; }
         }
+        private SSFPrefRow currentSSFPref;
+
+        public SSFPrefRow CurrentSSFPref
+        {
+            get
+            {
+                return currentSSFPref;
+            }
+            set { currentSSFPref = value; }
+        }
+
+
+     
+
 
         public void PopulatePreferences()
         {
-            string path = folderPath + Properties.Resources.Preferences;
+
+            
+          //  string prefFolder=   Resources.Preferences;
+            string path = folderPath + Resources.Preferences;
+           
+            DataTable dt = this.Preferences;
+            //keep this this way, works fine
+
+            //load
+            bool ok = Dumb.ReadTable(path, ref dt);
+
+            if (ok)
+            {
+                //cleaning
+                cleanPreferences<PreferencesDataTable>();    //important
+            }
+
+            loadCurrentPreferences<PreferencesRow>();
+
 
             //keep this this way, works fine
-            if (System.IO.File.Exists(path)) //user preferences found...
+             dt = this.SSFPref;
+            string pathSSFPref = folderPath + Resources.SSFPreferences;
+            //load
+            ok = Dumb.ReadTable(pathSSFPref, ref dt);
+
+            //cleaning
+            if (ok)
             {
-                this.Preferences.BeginLoadData();
-                System.IO.FileInfo info = new System.IO.FileInfo(path);
-                if (info.Length < 204800)
-                {
-                    this.Preferences.ReadXml(folderPath + Properties.Resources.Preferences);
-                }
-                else System.IO.File.Delete(path);
-                IEnumerable<PreferencesRow> prefes = this.tablePreferences.Where(o => string.IsNullOrEmpty(o.WindowsUser));
-                this.Delete(ref prefes);
-                this.Preferences.EndLoadData();
-                this.Preferences.AcceptChanges();       //important
+                cleanPreferences<SSFPrefDataTable>();
             }
 
-            string windowsUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToUpper();
-            this.currentPref = tablePreferences.FirstOrDefault(p => p.WindowsUser.CompareTo(windowsUser) == 0);
-            if (this.currentPref == null)
-            {
-                this.currentPref = this.Preferences.NewPreferencesRow();
-                this.Preferences.AddPreferencesRow(this.currentPref);
-                this.currentPref.WindowsUser = windowsUser;
-            }
-            this.currentPref.Check();
+            loadCurrentPreferences<SSFPrefRow>();
+
+
+            //find the current preference
+
+
         }
     }
 }

@@ -6,7 +6,7 @@ namespace DB
 {
     public partial class LINAA : IGeometry
     {
-        public LINAA.GeometryRow DefaultGeometry
+        public GeometryRow DefaultGeometry
         {
             get
             {

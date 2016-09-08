@@ -14,6 +14,7 @@ namespace DB
                        PopulateColumnExpresions,
                 PopulateUserDirectories,
                 PopulatePreferences,
+                //PopulateSSFPreferences,
                 SavePreferences
               };
 

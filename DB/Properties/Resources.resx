@@ -167,10 +167,6 @@
   <data name="XCOMEnergies" xml:space="preserve">
     <value>\k0-X\XCOMEnergies.txt</value>
   </data>
-  <data name="QMExceptions" xml:space="preserve">
-    <value>.\private$\k0X.Exceptions</value>
-    <comment>Queue Messaging Exceptions Folder</comment>
-  </data>
   <data name="ResourcesOverrider" xml:space="preserve">
     <value>\Overrider</value>
     <comment>if file present then Resources should be reinstalled</comment>
@@ -178,28 +174,13 @@
   <data name="ResourcesPath" xml:space="preserve">
     <value>\k0XResources\</value>
   </data>
-  <data name="QMAcquisitions" xml:space="preserve">
-    <value>.\private$\k0X.Acquisitions</value>
-    <comment>Queue Messaging Acquisitions Folder</comment>
-  </data>
-  <data name="QMBackups" xml:space="preserve">
-    <value>.\private$\k0X.Backups</value>
-    <comment>Backup of any Queue Message read...</comment>
-  </data>
   <data name="Restarting" xml:space="preserve">
     <value>\Restarting</value>
   </data>
   <data name="Features" xml:space="preserve">
     <value>\Features.txt</value>
   </data>
-  <data name="QMWorks" xml:space="preserve">
-    <value>.\private$\k0X.Works</value>
-  </data>
-  <data name="Error404" xml:space="preserve">
-    <value>Please check the k0X Database connection.\nThe Server might be down, not installed, misconfigured or just offline.\nRight click the notifier --&gt; Databases\n\nError message:\n\n</value>
-    <comment>Can't connect</comment>
-  </data>
-  <data name="Error404Header" xml:space="preserve">
-    <value>Error when connecting to the k0X Database</value>
+  <data name="SSFPreferences" xml:space="preserve">
+    <value>\k0-X\SSFPreferences.xml</value>
   </data>
 </root>

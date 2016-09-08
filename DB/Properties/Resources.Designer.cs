@@ -88,24 +88,6 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please check the k0X Database connection.\nThe Server might be down, not installed, misconfigured or just offline.\nRight click the notifier --&gt; Databases\n\nError message:\n\n.
-        /// </summary>
-        public static string Error404 {
-            get {
-                return ResourceManager.GetString("Error404", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error when connecting to the k0X Database.
-        /// </summary>
-        public static string Error404Header {
-            get {
-                return ResourceManager.GetString("Error404Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to \k0-X\Exceptions\.
         /// </summary>
         public static string Exceptions {
@@ -196,42 +178,6 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .\private$\k0X.Acquisitions.
-        /// </summary>
-        public static string QMAcquisitions {
-            get {
-                return ResourceManager.GetString("QMAcquisitions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .\private$\k0X.Backups.
-        /// </summary>
-        public static string QMBackups {
-            get {
-                return ResourceManager.GetString("QMBackups", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .\private$\k0X.Exceptions.
-        /// </summary>
-        public static string QMExceptions {
-            get {
-                return ResourceManager.GetString("QMExceptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .\private$\k0X.Works.
-        /// </summary>
-        public static string QMWorks {
-            get {
-                return ResourceManager.GetString("QMWorks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to \Overrider.
         /// </summary>
         public static string ResourcesOverrider {
@@ -264,6 +210,15 @@ namespace DB.Properties {
         public static string SolCoiFolder {
             get {
                 return ResourceManager.GetString("SolCoiFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \k0-X\SSFPreferences.xml.
+        /// </summary>
+        public static string SSFPreferences {
+            get {
+                return ResourceManager.GetString("SSFPreferences", resourceCulture);
             }
         }
         

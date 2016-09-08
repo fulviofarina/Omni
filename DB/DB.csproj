@@ -102,13 +102,15 @@
       <SubType>Designer</SubType>
       <LastGenOutput>LINAA.Designer.cs</LastGenOutput>
     </None>
-    <None Include="LINAA.xss">
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </None>
     <Compile Include="Adapter\Adapter.cs" />
     <Compile Include="Adapter\Adapter.NAA.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
+    <Compile Include="Properties\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
     <Compile Include="LIMS\Geometry\NAA.DetSol.cs" />
     <Compile Include="LIMS\Geometry\NAA.Geometry.cs" />
     <Compile Include="LIMS\Geometry\NAA.Matrix.cs" />
@@ -119,9 +121,6 @@
     <Compile Include="Interfaces\InterfaceClass.cs" />
     <Compile Include="Interfaces\Interfaces.cs" />
     <Compile Include="Interfaces\Interfaces.Populate.cs" />
-    <Compile Include="LINAA.cs">
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </Compile>
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -142,6 +141,11 @@
     <Compile Include="LIMS\Project\Populate.Irradiations.cs" />
     <Compile Include="LIMS\Project\Populate.Orders.cs" />
     <Compile Include="LIMS\Project\Populate.Projects.cs" />
+    <Compile Include="Properties\QM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QM.resx</DependentUpon>
+    </Compile>
     <Compile Include="Report\Report.cs" />
     <Compile Include="Report\Report.QueryMsg.cs" />
     <Compile Include="LIMS\Samples\NAA.Measurements.cs" />
@@ -187,6 +191,9 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="LINAA.xss">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -196,6 +203,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Errors.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\Populate.Components.resx">
       <DependentUpon>Populate.Components.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,6 +224,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\QM.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QM.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

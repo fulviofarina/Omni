@@ -24,7 +24,7 @@ namespace NSS
             }
             catch (SystemException ex)
             {
-                MessageBox.Show("Program Error: " + ex.Message);
+                MessageBox.Show("Program Error: " + ex.Message + "\n\n"+  ex.StackTrace);
             }
         }
 

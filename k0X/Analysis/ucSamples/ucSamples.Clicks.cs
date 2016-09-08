@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using DB;
 using DB.Reports;
 using VTools;
+using DB.Properties;
 
 namespace k0X
 {
@@ -34,7 +35,7 @@ namespace k0X
 
             if (MQ == null)
             {
-                MQ = Rsx.Emailer.CreateMQ(DB.Properties.Resources.QMWorks + "." + pathCode, null);
+                MQ = Rsx.Emailer.CreateMQ(QM.QMWorks + "." + pathCode, null);
             }
             if (MQ == null)
             {

@@ -14,8 +14,8 @@ namespace DB
         // void PopulateColumnExpresions();
 
       
-
-        ICollection<string> ActiveProjectsList { get; }
+LINAA.SSFPrefDataTable SSFPref { get; }
+            ICollection<string> ActiveProjectsList { get; }
         LINAA.PreferencesRow CurrentPref { get; set; }
         LINAA.GeometryRow DefaultGeometry { get; }
         string Exception { get; }
@@ -87,6 +87,11 @@ namespace DB
         void PopulatePreferences();
 
         LINAA.PreferencesRow CurrentPref { get; set; }
+
+        LINAA.SSFPrefRow CurrentSSFPref { get; set; }
+
+       // void PopulateSSFPreferences();
+
     }
 
     public interface IReport

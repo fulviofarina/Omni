@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB;
 using Msn;
+using DB.Properties;
 
 namespace DB.Tools
 {
@@ -211,7 +212,7 @@ namespace DB.Tools
                 Linaa.InitializeAdapters();
             }
 
-            string cmd = Application.StartupPath + DB.Properties.Resources.Restarting;
+            string cmd = Application.StartupPath + Resources.Restarting;
             if (System.IO.File.Exists(cmd))
             {
                 //  restarting = true;
@@ -222,7 +223,8 @@ namespace DB.Tools
 
             if (!Linaa.IsMainConnectionOk)
             {
-                string title = Properties.Resources.Error404;
+                
+                string title = DB.Properties.Errors.Error404;
                 title += Linaa.Exception;
                 result = title;
             }

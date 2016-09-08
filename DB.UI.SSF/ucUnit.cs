@@ -21,8 +21,9 @@ namespace DB.UI
         {
 
             InitializeComponent();
-            this.lINAA.Dispose();
-            this.lINAA = null;
+
+            Dumb.FD<LINAA>(ref this.lINAA);
+          
 
         }
         public void DeLink()

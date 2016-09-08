@@ -585,23 +585,18 @@ namespace DB
             ta = null;
         }
 
+
+
         public void SavePreferences()
         {
-            try
-            {
-                // if (this.Preferences.Columns.Contains(this.Preferences.DoSolangColumn.ColumnName)) this.Preferences.Columns.Remove(this.Preferences.DoSolangColumn);
-                //  if (this.Preferences.Columns.Contains(this.Preferences.DoMatSSFColumn.ColumnName)) this.Preferences.Columns.Remove(this.Preferences.DoMatSSFColumn);
-                this.Preferences.EndLoadData();
-                this.Preferences.AcceptChanges();
-                string path = this.folderPath + Properties.Resources.Preferences;
-                System.IO.File.Delete(path);
-                this.Preferences.WriteXml(path, System.Data.XmlWriteMode.WriteSchema, true);
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
+
+        
+            savePreferences<PreferencesDataTable>();
+         
+            savePreferences<SSFPrefDataTable>();
+
         }
+      
 
         public string SaveExceptions()
         {

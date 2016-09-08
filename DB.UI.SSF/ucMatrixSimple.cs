@@ -16,20 +16,15 @@ namespace DB.UI
 
       
 
-        /// <summary>
-        /// Function meant to Create a LINAA database datatables and load itto store and display data
-        /// </summary>
-        /// <returns>Form created with the respective ucSSF inner control</returns>
-     
 
         public ucMatrixSimple()
         {
             InitializeComponent();
 
-            this.lINAA.Dispose();
-            this.lINAA = null;
+            Dumb.FD<LINAA>(ref this.lINAA);
 
-          
+
+
 
 
         }
