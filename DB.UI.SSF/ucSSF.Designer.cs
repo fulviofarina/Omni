@@ -33,11 +33,8 @@
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
-            this.ucUnit = new DB.UI.ucUnit();
             this.MatrixTab = new System.Windows.Forms.TabPage();
-            this.ucMS = new DB.UI.ucMatrixSimple();
             this.ShapeTab = new System.Windows.Forms.TabPage();
-            this.ucVcc = new DB.UI.ucVCC();
             this.FileTab = new System.Windows.Forms.TabPage();
             this.compositionsbox = new System.Windows.Forms.RichTextBox();
             this.leftSC = new System.Windows.Forms.SplitContainer();
@@ -131,6 +128,10 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.ucUnit = new DB.UI.ucUnit();
+            this.ucMS = new DB.UI.ucMatrixSimple();
+            this.ucVcc = new DB.UI.ucVCC();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TLP.SuspendLayout();
             this.Tab.SuspendLayout();
             this.CalcTab.SuspendLayout();
@@ -214,17 +215,6 @@
             this.CalcTab.Text = "Units";
             this.CalcTab.UseVisualStyleBackColor = true;
             // 
-            // ucUnit
-            // 
-            this.ucUnit.AutoSize = true;
-            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUnit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucUnit.Location = new System.Drawing.Point(3, 3);
-            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
-            this.ucUnit.Name = "ucUnit";
-            this.ucUnit.Size = new System.Drawing.Size(679, 781);
-            this.ucUnit.TabIndex = 0;
-            // 
             // MatrixTab
             // 
             this.MatrixTab.Controls.Add(this.ucMS);
@@ -236,16 +226,6 @@
             this.MatrixTab.Text = "Matrix";
             this.MatrixTab.UseVisualStyleBackColor = true;
             // 
-            // ucMS
-            // 
-            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucMS.Location = new System.Drawing.Point(3, 3);
-            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMS.Name = "ucMS";
-            this.ucMS.Size = new System.Drawing.Size(679, 781);
-            this.ucMS.TabIndex = 0;
-            // 
             // ShapeTab
             // 
             this.ShapeTab.Controls.Add(this.ucVcc);
@@ -256,16 +236,6 @@
             this.ShapeTab.TabIndex = 3;
             this.ShapeTab.Text = "Sample/Source";
             this.ShapeTab.UseVisualStyleBackColor = true;
-            // 
-            // ucVcc
-            // 
-            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucVcc.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucVcc.Location = new System.Drawing.Point(3, 3);
-            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
-            this.ucVcc.Name = "ucVcc";
-            this.ucVcc.Size = new System.Drawing.Size(679, 781);
-            this.ucVcc.TabIndex = 0;
             // 
             // FileTab
             // 
@@ -388,7 +358,8 @@
             this.OptionsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.OptionsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autoCalcDensity,
-            this.loop});
+            this.loop,
+            this.newToolStripMenuItem});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptionsBtn.ForeColor = System.Drawing.Color.DarkOrange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
@@ -1130,6 +1101,43 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // ucUnit
+            // 
+            this.ucUnit.AutoSize = true;
+            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUnit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucUnit.Location = new System.Drawing.Point(3, 3);
+            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
+            this.ucUnit.Name = "ucUnit";
+            this.ucUnit.Size = new System.Drawing.Size(679, 781);
+            this.ucUnit.TabIndex = 0;
+            // 
+            // ucMS
+            // 
+            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucMS.Location = new System.Drawing.Point(3, 3);
+            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMS.Name = "ucMS";
+            this.ucMS.Size = new System.Drawing.Size(679, 781);
+            this.ucMS.TabIndex = 0;
+            // 
+            // ucVcc
+            // 
+            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucVcc.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucVcc.Location = new System.Drawing.Point(3, 3);
+            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
+            this.ucVcc.Name = "ucVcc";
+            this.ucVcc.Size = new System.Drawing.Size(679, 781);
+            this.ucVcc.TabIndex = 0;
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(282, 30);
+            this.newToolStripMenuItem.Text = "New";
+            // 
             // ucSSF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1304,5 +1312,6 @@
         private ucVCC ucVcc;
         private ucMatrixSimple ucMS;
         private System.Windows.Forms.ToolStripMenuItem loop;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
     }
 }
