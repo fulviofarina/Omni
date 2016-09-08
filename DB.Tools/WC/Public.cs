@@ -528,7 +528,7 @@ namespace DB.Tools
             get { return selectedSamples; }
             set
             {
-                selectedSamples = value.Where(o => !Dumb.IsNuDelDetch(o)).ToList();
+                selectedSamples = value.Where(o => !EC.IsNuDelDetch(o)).ToList();
             }
         }
 

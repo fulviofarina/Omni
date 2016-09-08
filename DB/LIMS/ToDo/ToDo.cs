@@ -42,13 +42,13 @@ namespace DB
                 LINAA.IRequestsAveragesRow IRef = null;
 
                 //if Referen 1 fails...
-                if (!Dumb.IsNuDelDetch(this.IRAvgRow))
+                if (!EC.IsNuDelDetch(this.IRAvgRow))
                 {
                     //take Reference2!!!
                     IRef = this.IRAvgRow;
                     refeS = IRef.GetIPeakAveragesRows();
                 }
-                if (!Dumb.IsNuDelDetch(this.IRAvgRow2))
+                if (!EC.IsNuDelDetch(this.IRAvgRow2))
                 {
                     IRef = this.IRAvgRow2;
                     refeS = refeS.Union(IRef.GetIPeakAveragesRows()).ToList();
@@ -68,16 +68,16 @@ namespace DB
                 LINAA.IRequestsAveragesRow IRef = null;
 
                 //if Referen 1 fails...
-                if (Dumb.IsNuDelDetch(this.IRAvgRow) || Dumb.IsNuDelDetch(this.IRAvgRow.SubSamplesRow) || this.IRAvgRow.SubSamplesRow.ENAA)
+                if (EC.IsNuDelDetch(this.IRAvgRow) || EC.IsNuDelDetch(this.IRAvgRow.SubSamplesRow) || this.IRAvgRow.SubSamplesRow.ENAA)
                 {
                     //take Reference2!!!
-                    if (Dumb.IsNuDelDetch(this.IRAvgRow2))
+                    if (EC.IsNuDelDetch(this.IRAvgRow2))
                     {
                         this.RowError = "Isotope 1 failed and alternative Isotope 2 has no data loaded. Please load their data first!";
                         return;
                     }
                     IRef = this.IRAvgRow2;
-                    if (Dumb.IsNuDelDetch(IRef.SubSamplesRow))
+                    if (EC.IsNuDelDetch(IRef.SubSamplesRow))
                     {
                         this.RowError = "Isotope 1 failed and alternative Isotope 2 lacks sample data. Please load their data first!";
                         return;
@@ -105,16 +105,16 @@ namespace DB
             {
                 LINAA.IRequestsAveragesRow IRef = null;
                 //if Referen 1 fails...
-                if (Dumb.IsNuDelDetch(this.IRAvgRow) || Dumb.IsNuDelDetch(this.IRAvgRow.SubSamplesRow) || !this.IRAvgRow.SubSamplesRow.ENAA)
+                if (EC.IsNuDelDetch(this.IRAvgRow) || EC.IsNuDelDetch(this.IRAvgRow.SubSamplesRow) || !this.IRAvgRow.SubSamplesRow.ENAA)
                 {
                     //take Reference2!!!
-                    if (Dumb.IsNuDelDetch(this.IRAvgRow2))
+                    if (EC.IsNuDelDetch(this.IRAvgRow2))
                     {
                         this.RowError = "Isotope 1 failed and alternative Isotope 2 has no data loaded. Please load their data first!";
                         return;
                     }
                     IRef = this.IRAvgRow2;
-                    if (Dumb.IsNuDelDetch(IRef.SubSamplesRow))
+                    if (EC.IsNuDelDetch(IRef.SubSamplesRow))
                     {
                         this.RowError = "Isotope 1 failed and alternative Isotope 2 lacks sample data. Please load their data first!";
                         return;
@@ -139,14 +139,14 @@ namespace DB
             {
                 IRequestsAveragesRow Imon = null;
 
-                if (Dumb.IsNuDelDetch(this.IRAvgRow) || Dumb.IsNuDelDetch(this.IRAvgRow.SubSamplesRow)) //no peaks data, Isotope 2 is fucked
+                if (EC.IsNuDelDetch(this.IRAvgRow) || EC.IsNuDelDetch(this.IRAvgRow.SubSamplesRow)) //no peaks data, Isotope 2 is fucked
                 {
                     this.RowError = "Data not found for Isotope 1. Please load their irradiation project first";
                     return;
                 }
                 else Imon = this.IRAvgRow;
                 IRequestsAveragesRow Iref = null;
-                if (Dumb.IsNuDelDetch(this.IRAvgRow2) || Dumb.IsNuDelDetch(this.IRAvgRow2.SubSamplesRow)) //no peaks data, Isotope 2 is fucked
+                if (EC.IsNuDelDetch(this.IRAvgRow2) || EC.IsNuDelDetch(this.IRAvgRow2.SubSamplesRow)) //no peaks data, Isotope 2 is fucked
                 {
                     this.RowError = "Data not found for Isotope 2. Please load their irradiation project first";
                     return;

@@ -39,7 +39,7 @@ namespace DB
                   
                     if (NonNullables.Contains(col))
                     {
-                        bool nu = Dumb.CheckNull(e.Column, e.Row);
+                        bool nu = EC.CheckNull(e.Column, e.Row);
                         if (col == this.columnVialTypeRef && nu) subs.VialTypeRef = "No Name";
                         
                     }
@@ -48,10 +48,12 @@ namespace DB
                 {
                     LINAA linaa = this.DataSet as LINAA;
                     e.Row.SetColumnError(col,ex.Message);
-                   // Dumb.SetRowError(e.Row, e.Column, ex);
+                   // EC.SetRowError(e.Row, e.Column, ex);
                     linaa.AddException(ex);
                 }
             }
         }
     }
 }
+
+

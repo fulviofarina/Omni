@@ -7,7 +7,7 @@ using System.IO;
 ///FULVIO
 namespace Rsx
 {
-    public partial class Dumb
+    public static  partial class Dumb
     {
 
 
@@ -34,7 +34,7 @@ namespace Rsx
 
         }
 
-    public static void SetField(ref string MCL, ref IEnumerable<string> arrayTxtFile, string fieldTitle, string units)
+        public static void SetField(ref string MCL, ref IEnumerable<string> arrayTxtFile, string fieldTitle, string units)
         {
             string x = arrayTxtFile.FirstOrDefault(o => o.Contains(fieldTitle));
 
@@ -267,7 +267,7 @@ namespace Rsx
             Func<T, bool> compare = (i) =>
             {
                 DataRow r = i as DataRow;
-                if (Dumb.IsNuDelDetch(r)) return false;
+                if (EC.IsNuDelDetch(r)) return false;
                 else
                 {
                     if (!r.IsNull(fieldToCompare) && r.Field<object>(fieldToCompare).Equals(valueToCompare)) return true;

@@ -236,7 +236,7 @@ namespace DB.UI
             }
             else if (FromRowList.Count != 0 && (FromRowList.Count == ToRowList.Count))
             {
-                if (Dumb.HasErrors<DataRow>(FromRowList.ToArray()))
+                if (EC.HasErrors<DataRow>(FromRowList.ToArray()))
                 {
                     MessageBox.Show("The items you selected have errors:\n\nThe items are missing critical data for stablishing the proper relationships.\n\nThis software depends strongly on the completeness of the provided data due to the nature of its data-linking structure\n\n", "Sorry but I cannot take that!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     cancel = true;

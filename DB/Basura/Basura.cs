@@ -165,7 +165,7 @@ namespace DB
 				   if (coins2.Count() != 0)
 				   {
 					   LINAA.COINRow c = coins2.FirstOrDefault(coinpeakFinder);
-					   if (!Dumb.IsNuDelDetch(c)) coi = (double?)c.COI;
+					   if (!EC.IsNuDelDetch(c)) coi = (double?)c.COI;
 				   }
 				   else
 				   {
@@ -226,16 +226,16 @@ namespace DB
 					  };
 
 					  LINAA.SolangRow auxSol = solangsRefs.FirstOrDefault<LINAA.SolangRow>(solpeakFinder);//filtered by peak
-					  if (!Dumb.IsNuDelDetch(auxSol)) SolidAngleRef = (double?)auxSol.Solang;
+					  if (!EC.IsNuDelDetch(auxSol)) SolidAngleRef = (double?)auxSol.Solang;
 
 					  //take geometry at peak
 					  auxSol = solangs.FirstOrDefault<LINAA.SolangRow>(solpeakFinder);
-					  if (!Dumb.IsNuDelDetch(auxSol)) SolidAngle = (double?)auxSol.Solang;
+					  if (!EC.IsNuDelDetch(auxSol)) SolidAngle = (double?)auxSol.Solang;
 
 					  if (curves.Count() != 0)
 					  {
 						  DetectorsCurvesRow effiCurve = curves.FirstOrDefault(efficurveFinder);
-						  if (!Dumb.IsNuDelDetch(effiCurve))
+						  if (!EC.IsNuDelDetch(effiCurve))
 						  {
 							  Log10Effi = effiCurve.a0 * Math.Pow(Math.Log10(p.Energy), 0);
 							  Log10Effi += effiCurve.a1 * Math.Pow(Math.Log10(p.Energy), 1);
@@ -299,13 +299,13 @@ namespace DB
 	  {
 
 
-		 meas = Dumb.NotDeleted<MeasurementsRow>(meas);
+		 meas = EC.NotDeleted<MeasurementsRow>(meas);
 
 		 if (meas.Count() == 0) return;
 
 		 GeometryRow reference = this.tableGeometry.FirstOrDefault(LINAA.RefFinder("REF"));
 
-		 if (Dumb.IsNuDelDetch(reference)) return;
+		 if (EC.IsNuDelDetch(reference)) return;
 
 		 foreach (MeasurementsRow m in meas)
 		 {

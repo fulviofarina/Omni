@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx.DGV;
+using Rsx;
 
 using Rsx.Math;
 
@@ -587,7 +588,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(todo, ex);
+                        EC.SetRowError(todo, ex);
                         this.Linaa.AddException(ex);
                     }
                 }

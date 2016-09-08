@@ -79,7 +79,7 @@ namespace k0X
             IList<string> eles = null;
             IEnumerable<DataRow> rows = null;
             string field = this.Linaa.IRequestsAverages.ElementColumn.ColumnName;
-            if (Dumb.IsNuDelDetch(Sample))
+            if (EC.IsNuDelDetch(Sample))
             {
                 rows = this.Samples.SelectMany(o => o.GetIRequestsAveragesRows());
                 if (rows == null || rows.Count() == 0)
@@ -475,7 +475,7 @@ namespace k0X
         {
             string energyColName = this.Linaa.IPeakAverages.EnergyColumn.ColumnName;
 
-            if (Dumb.IsNuDelDetch(this.Sample)) return;
+            if (EC.IsNuDelDetch(this.Sample)) return;
 
             IEnumerable<LINAA.PeaksRow> Interpeaks = this.Sample.GetPeaksRows().ToList();
 

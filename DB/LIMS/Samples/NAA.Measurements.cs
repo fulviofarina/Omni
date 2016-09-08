@@ -90,13 +90,14 @@ namespace DB
 
         public partial class MeasurementsDataTable
         {
+
             public LINAA.MeasurementsRow FindByMeasurementName(string measName, bool addIfnull)
             {
                 LINAA.MeasurementsRow meas = null;
                 Func<MeasurementsRow, bool> currSel = null;
                 currSel = LINAA.SelectorByField<MeasurementsRow>(measName, this.MeasurementColumn.ColumnName);
                 meas = this.FirstOrDefault(currSel);
-                if (Rsx.Dumb.IsNuDelDetch(meas) && addIfnull) meas = this.AddMeasurementsRow(measName);
+                if (Rsx.EC.IsNuDelDetch(meas) && addIfnull) meas = this.AddMeasurementsRow(measName);
 
                 return meas;
             }
@@ -115,14 +116,14 @@ namespace DB
                     meas.Position = Convert.ToInt16(DPN.Substring(1, 1));
                     meas.Detector = DPN.Substring(0, 1);
                     meas.Project = string.Empty;
-                    if (!Rsx.Dumb.IsNuDelDetch(meas.SubSamplesRow))
+                    if (!Rsx.EC.IsNuDelDetch(meas.SubSamplesRow))
                     {
                         if (!meas.SubSamplesRow.IsIrradiationCodeNull()) meas.Project = meas.SubSamplesRow.IrradiationCode;
                     }
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(meas, ex);
+                    EC.SetRowError(meas, ex);
                 }
                 return meas;
             }

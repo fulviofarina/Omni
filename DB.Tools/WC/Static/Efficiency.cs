@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Rsx;
 namespace DB.Tools
 {
     public partial class WC
@@ -16,7 +16,7 @@ namespace DB.Tools
             IList<LINAA.MeasurementsRow> ls = null;
 
             IEnumerable<LINAA.MeasurementsRow> meas = s.GetMeasurementsRows();
-            meas = Rsx.Dumb.NotDeleted<LINAA.MeasurementsRow>(meas);
+            meas = EC.NotDeleted<LINAA.MeasurementsRow>(meas);
             if (meas.Count() == 0) return ls;
 
             LINAA.PeaksDataTable sol = new LINAA.PeaksDataTable(false);
@@ -93,7 +93,7 @@ namespace DB.Tools
                     if (curves.Count() != 0)
                     {
                         LINAA.DetectorsCurvesRow effiCurve = curves.FirstOrDefault(efficurveFinder);
-                        if (!Rsx.Dumb.IsNuDelDetch(effiCurve))
+                        if (!Rsx.EC.IsNuDelDetch(effiCurve))
                         {
                             Log10Effi = effiCurve.a0 * Math.Pow(Math.Log10(p.Energy), 0);
                             Log10Effi += effiCurve.a1 * Math.Pow(Math.Log10(p.Energy), 1);
@@ -123,7 +123,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(p, ex);
+                    EC.SetRowError(p, ex);
                     p.ID = -1 * Math.Abs(p.ID);
                 }
             }
@@ -242,7 +242,7 @@ namespace DB.Tools
         /// <param name="coin"></param>
         public static void ContingencySetCOINSolid(ref IEnumerable<LINAA.MeasurementsRow> meas, bool coin, ref LINAA.GeometryRow reference)
         {
-            meas = Rsx.Dumb.NotDeleted<LINAA.MeasurementsRow>(meas);
+            meas = EC.NotDeleted<LINAA.MeasurementsRow>(meas);
             if (meas.Count() == 0) return;
 
             foreach (LINAA.MeasurementsRow m in meas)
@@ -267,7 +267,7 @@ namespace DB.Tools
                 meas.RowError += "Cannot set peak efficiency when no peaks are found";
                 return;
             }
-            if (Rsx.Dumb.IsNuDelDetch(reference))
+            if (Rsx.EC.IsNuDelDetch(reference))
             {
                 meas.RowError += "Cannot set peak efficiency when a null reference geometry is linked to this measurement";
                 return;
@@ -328,16 +328,16 @@ namespace DB.Tools
                 };
 
                 LINAA.SolangRow auxSol = solangsRefs.FirstOrDefault<LINAA.SolangRow>(solpeakFinder);//filtered by peak
-                if (!Rsx.Dumb.IsNuDelDetch(auxSol)) SolidAngleRef = (double?)auxSol.Solang;
+                if (!Rsx.EC.IsNuDelDetch(auxSol)) SolidAngleRef = (double?)auxSol.Solang;
 
                 //take geometry at peak
                 auxSol = solangs.FirstOrDefault<LINAA.SolangRow>(solpeakFinder);
-                if (!Rsx.Dumb.IsNuDelDetch(auxSol)) SolidAngle = (double?)auxSol.Solang;
+                if (!Rsx.EC.IsNuDelDetch(auxSol)) SolidAngle = (double?)auxSol.Solang;
 
                 if (curves.Count() != 0)
                 {
                     LINAA.DetectorsCurvesRow effiCurve = curves.FirstOrDefault(efficurveFinder);
-                    if (!Rsx.Dumb.IsNuDelDetch(effiCurve))
+                    if (!Rsx.EC.IsNuDelDetch(effiCurve))
                     {
                         Log10Effi = effiCurve.a0 * Math.Pow(Math.Log10(p.Energy), 0);
                         Log10Effi += effiCurve.a1 * Math.Pow(Math.Log10(p.Energy), 1);
@@ -382,7 +382,7 @@ namespace DB.Tools
         public static void ContingencySetCOI(LINAA.MeasurementsRow meas)
         {
             LINAA.GeometryRow geo = meas.SubSamplesRow.GeometryRow;
-            if (Rsx.Dumb.IsNuDelDetch(geo))
+            if (Rsx.EC.IsNuDelDetch(geo))
             {
                 meas.RowError += "Cannot set peak COIS when a null geometry is linked to this measurement";
                 return;
@@ -457,14 +457,14 @@ namespace DB.Tools
 
                 LINAA.SubSamplesRow s = m.SubSamplesRow;
 
-                if (Rsx.Dumb.IsNuDelDetch(s))
+                if (Rsx.EC.IsNuDelDetch(s))
                 {
                     m.RowError += "No Sample is linked to this measurement. Cannot determine COIs";
                     continue;
                 }
 
                 LINAA.GeometryRow geo = m.SubSamplesRow.GeometryRow;
-                if (Rsx.Dumb.IsNuDelDetch(geo))
+                if (Rsx.EC.IsNuDelDetch(geo))
                 {
                     m.RowError += "No Geometry is linked to this measurement. Cannot determine COIs";
                     continue;

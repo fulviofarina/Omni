@@ -73,7 +73,7 @@ namespace k0X
             }
             else
             {
-                if (Dumb.IsNuDelDetch(row))
+                if (EC.IsNuDelDetch(row))
                 {
                     MessageBox.Show("The Node's linked DataRow was found in a deleted or detached state!", "Node problems with " + e.Node.Text);
                     //this.TV.Nodes.RemoveByKey(e.Node.Name);
@@ -147,7 +147,7 @@ namespace k0X
             }
             //datarow is null?
             System.Data.DataRow row = e.Node.Tag as System.Data.DataRow;
-            if (Dumb.IsNuDelDetch(row))
+            if (EC.IsNuDelDetch(row))
             {
                 e.Node.Remove();
                 return;
@@ -173,7 +173,7 @@ namespace k0X
                     if (!l.NeedsSSF)
                     {
                         ViewMatSSF.Enabled = true;
-                        if (!Dumb.HasErrors(l.GetMatSSFRows())) this.ViewMatSSF.Image = green;
+                        if (!EC.HasErrors(l.GetMatSSFRows())) this.ViewMatSSF.Image = green;
                     }
 
                     this.MeasurementsHyperLab.Enabled = false;
@@ -181,7 +181,7 @@ namespace k0X
                     if (!l.NeedsMeasurements)
                     {
                         this.MeasurementsHyperLab.Enabled = true;
-                        if (!Dumb.HasErrors(l.GetMeasurementsRows()))
+                        if (!EC.HasErrors(l.GetMeasurementsRows()))
                         {
                             this.MeasurementsHyperLab.Image = green;
                         }
@@ -234,7 +234,7 @@ namespace k0X
                 if (!m.NeedsPeaks)
                 {
                     Peaks.Enabled = true;
-                    if (!Dumb.HasErrors(m.GetPeaksRows()))
+                    if (!EC.HasErrors(m.GetPeaksRows()))
                     {
                         this.Peaks.Image = green;
                     }
@@ -258,7 +258,7 @@ namespace k0X
 
             DataRow row = e.Node.Tag as DataRow;
 
-            if (Dumb.IsNuDelDetch(row))
+            if (EC.IsNuDelDetch(row))
             {
                 e.Node.ForeColor = System.Drawing.Color.Red;
                 e.Node.Tag = null;

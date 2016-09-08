@@ -176,7 +176,7 @@ namespace DB.UI
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(m, this.Linaa.Matrix.XCOMColumn, ex);
+                    EC.SetRowError(m, this.Linaa.Matrix.XCOMColumn, ex);
                     this.Linaa.AddException(ex);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Rsx;
 
 namespace DB
 {
@@ -25,7 +26,7 @@ namespace DB
                 catch (SystemException ex)
                 {
                     p.use = false;
-                    Rsx.Dumb.SetRowError(p, ex);
+                    EC.SetRowError(p, ex);
                 }
 
                 return p;

@@ -53,7 +53,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(avi, ex);
+                    EC.SetRowError(avi, ex);
                 }
                 return avi;
             }
@@ -80,10 +80,12 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(res, ex);
+                    Rsx.EC.SetRowError(res, ex);
                 }
                 return res;
             }
         }
     }
 }
+
+

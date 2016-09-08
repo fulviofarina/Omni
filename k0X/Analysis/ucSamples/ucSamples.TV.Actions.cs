@@ -123,7 +123,7 @@ namespace k0X
             {
                 LINAA.SubSamplesRow aux = sample;
 
-                if (Dumb.IsNuDelDetch(aux)) continue;
+                if (EC.IsNuDelDetch(aux)) continue;
                 TreeNode SampleNode = MakeSampleNode(ref aux);
 
                 // SetASampleNode(DescriptionAsNodeTitle, ref SampleNode);
@@ -217,7 +217,7 @@ namespace k0X
 
             System.Data.DataRow row = checkme.Tag as System.Data.DataRow;
 
-            if (Dumb.IsNuDelDetch(row))
+            if (EC.IsNuDelDetch(row))
             {
                 checkme.Remove();
                 return true;

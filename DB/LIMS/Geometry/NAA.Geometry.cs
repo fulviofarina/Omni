@@ -47,7 +47,7 @@ namespace DB
                 try
                 {
                       
-                        bool nu = Dumb.CheckNull(col, e.Row);
+                        bool nu = EC.CheckNull(col, e.Row);
                         if (col == this.columnGeometryName && nu)
                         {
                             g.GeometryName = "No Name";
@@ -64,7 +64,7 @@ namespace DB
                             }
                             else
                             {
-                                if (!Dumb.CheckNull(col, e.Row)) return;
+                                if (!EC.CheckNull(col, e.Row)) return;
                                 if (v.IsInnerRadiusNull()) return;
                                 if (v.InnerRadius == 0) return;
                                 g.Radius = v.InnerRadius;
@@ -76,7 +76,7 @@ namespace DB
                 catch (SystemException ex)
                 {
                     LINAA linaa = this.DataSet as LINAA;
-                    Dumb.SetRowError(e.Row, col, ex);
+                    EC.SetRowError(e.Row, col, ex);
                     linaa.AddException(ex);
                 }
             }

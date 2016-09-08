@@ -18,7 +18,7 @@ namespace DB
                 DataRow op = rows2.ElementAt(i) as DataRow;
                 try
                 {
-                    if (!Dumb.IsNuDelDetch(op))
+                    if (!EC.IsNuDelDetch(op))
                     {
                         op.Delete();
                     }

@@ -327,7 +327,7 @@ namespace Rsx.DGV
                 {
                     DataRow tag = null;
                     tag = (DataRow)o.Tag;
-                    if (!Dumb.IsNuDelDetch(tag)) return true;
+                    if (!EC.IsNuDelDetch(tag)) return true;
                     else return false;
                 }
 
@@ -337,7 +337,7 @@ namespace Rsx.DGV
                       IEnumerable<DataRow> enums =  (o.Tag as IEnumerable<DataRow>);
                       int i = 0;
                       tag = enums.ElementAt(i);
-                      while (Dumb.IsNuDelDetch(tag))
+                      while (EC.IsNuDelDetch(tag))
                       {
                           i++;
                           if (i < enums.Count())

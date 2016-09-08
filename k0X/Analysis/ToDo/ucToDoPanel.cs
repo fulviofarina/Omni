@@ -140,10 +140,10 @@ namespace k0X
             {
                 LINAA.ToDoRow t = Dumb.Cast<LINAA.ToDoRow>(ucToDoData.ListBS.Current as System.Data.DataRowView);
 
-                if (Dumb.IsNuDelDetch(t.IRAvgRow)) return;
-                if (Dumb.IsNuDelDetch(t.IRAvgRow2)) return;
-                if (Dumb.IsNuDelDetch(t.IRAvgRow.SubSamplesRow)) return;
-                if (Dumb.IsNuDelDetch(t.IRAvgRow2.SubSamplesRow)) return;
+                if (EC.IsNuDelDetch(t.IRAvgRow)) return;
+                if (EC.IsNuDelDetch(t.IRAvgRow2)) return;
+                if (EC.IsNuDelDetch(t.IRAvgRow.SubSamplesRow)) return;
+                if (EC.IsNuDelDetch(t.IRAvgRow2.SubSamplesRow)) return;
 
                 string uno = t.IRAvgRow.SubSamplesRow.IrradiationCode.Replace(DB.Properties.Misc.Cd, null);
                 string dos = t.IRAvgRow2.SubSamplesRow.IrradiationCode.Replace(DB.Properties.Misc.Cd, null);

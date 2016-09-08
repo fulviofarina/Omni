@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-
+using Rsx;
 using Rsx.Math;
 
 namespace DB.Tools
@@ -53,7 +53,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -178,7 +178,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -600,7 +600,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -618,7 +618,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -688,7 +688,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -702,7 +702,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -715,7 +715,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.use = false;
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 
@@ -863,7 +863,7 @@ namespace DB.Tools
               catch (SystemException ex)
               {
                   p.use = false;
-                  Rsx.Dumb.SetRowError(p, ex);
+                  EC.SetRowError(p, ex);
               }
           }
            */
@@ -882,7 +882,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 t.use = false;
-                Rsx.Dumb.SetRowError(t, ex);
+                EC.SetRowError(t, ex);
             }
         }
 
@@ -939,7 +939,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 t.use = false;
-                Rsx.Dumb.SetRowError(t, ex);
+                EC.SetRowError(t, ex);
             }
         }
 
@@ -1071,7 +1071,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(res, ex);
+                        EC.SetRowError(res, ex);
                     }
                 }
             }
@@ -1141,7 +1141,7 @@ namespace DB.Tools
                 catch (SystemException ex)
                 {
                     t.use = false;
-                    Rsx.Dumb.SetRowError(t, ex);
+                    EC.SetRowError(t, ex);
                 }
             }
 
@@ -1197,7 +1197,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(t, ex);
+                        EC.SetRowError(t, ex);
                     }
                 }
                 double avgBi = 0;
@@ -1218,7 +1218,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(r, ex);
+                        EC.SetRowError(r, ex);
                     }
                 }
 
@@ -1248,7 +1248,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(t, ex);
+                        EC.SetRowError(t, ex);
                     }
                 }
 
@@ -1271,7 +1271,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(r, ex);
+                        EC.SetRowError(r, ex);
                     }
                 }
                 double avgWi = 0;
@@ -1346,7 +1346,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(r, ex);
+                    EC.SetRowError(r, ex);
                 }
             }
         }
@@ -1392,7 +1392,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(r, ex);
+                    EC.SetRowError(r, ex);
                 }
             }
         }
@@ -1446,7 +1446,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(r, ex);
+                    EC.SetRowError(r, ex);
                 }
             }
         }
@@ -1464,7 +1464,7 @@ namespace DB.Tools
                 catch (SystemException ex)
                 {
                     r.use = false;
-                    Rsx.Dumb.SetRowError(r, ex);
+                    EC.SetRowError(r, ex);
                 }
             }
 
@@ -1485,7 +1485,7 @@ namespace DB.Tools
                     foreach (DataColumn col in arrOfColToPush)
                     {
                         LINAA.ToDoAvgRow cl = clone.FirstOrDefault(c => c.ToDoNr == avg.ToDoNr);
-                        if (Rsx.Dumb.IsNuDelDetch(cl)) continue;
+                        if (Rsx.EC.IsNuDelDetch(cl)) continue;
                         object valueToPush = avg.Field<object>(col.ColumnName);
                         cl.SetField<object>(col.ColumnName + "." + newColBase, valueToPush);
                     }

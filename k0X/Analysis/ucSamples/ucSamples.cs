@@ -384,7 +384,7 @@ namespace k0X
                     Bwindowbox.Text = preferences.windowB.ToString();
                     sampleDescription.Checked = preferences.ShowSampleDescription;
 
-                    if (!Dumb.IsNuDelDetch(iSS.Irradiation))
+                    if (!EC.IsNuDelDetch(iSS.Irradiation))
                     {
                         fluxTypebox.Text = iSS.Irradiation.ChannelsRow.FluxType;
                     }
@@ -400,7 +400,7 @@ namespace k0X
                     preferences.ShowSampleDescription = sampleDescription.Checked;
                     preferences.LastAccessDate = DateTime.Now;
 
-                    if (!Dumb.IsNuDelDetch(iSS.Irradiation))
+                    if (!EC.IsNuDelDetch(iSS.Irradiation))
                     {
                         iSS.Irradiation.ChannelsRow.FluxType = fluxTypebox.Text;
                     }
@@ -551,7 +551,7 @@ namespace k0X
 
         protected void HasErrors()
         {
-            bool haserrors = Dumb.HasErrors<LINAA.SubSamplesRow>(this.samples);
+            bool haserrors = EC.HasErrors<LINAA.SubSamplesRow>(this.samples);
             if (haserrors)
             {
                 this.error.SetError(this.progress.Control, "Not all the necessary information was provided for Irradiation Project " + this.Name + " (or some of the sample's data requires your attention)\n\nClick at the right to check this");

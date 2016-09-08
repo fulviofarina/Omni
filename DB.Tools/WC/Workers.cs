@@ -158,7 +158,7 @@ namespace DB.Tools
                 catch (SystemException exc)
                 {
                     ex = exc;
-                    Dumb.SetRowError(iS, ex);
+                    EC.SetRowError(iS, ex);
                 }
 
                 worker.ReportProgress((int)R.SSFSave, iS);    //notify about calcs
@@ -399,7 +399,7 @@ namespace DB.Tools
                 if (!deleteOnly)
                 {
                     LINAA.MatrixRow mat = sample.MatrixRow;
-                    if (Dumb.IsNuDelDetch(mat)) sample.RowError = "Sample has no matrix assigned";
+                    if (EC.IsNuDelDetch(mat)) sample.RowError = "Sample has no matrix assigned";
                     else
                     {
                         //DO NOT USE FILTER ELEMENTS!!!!!

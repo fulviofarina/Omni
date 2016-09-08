@@ -409,7 +409,7 @@ namespace k0X
         {
             try
             {
-                if (Dumb.IsNuDelDetch(this.Sample)) return;
+                if (EC.IsNuDelDetch(this.Sample)) return;
                 ucToDoPanel uctodo = GetToDoPanel();
                 if (uctodo == null) return;
 
@@ -467,7 +467,7 @@ namespace k0X
 
             if (e.ColumnIndex == this.energyCol.Index)
             {
-                if (Dumb.IsNuDelDetch(ip.k0NAARow)) return;
+                if (EC.IsNuDelDetch(ip.k0NAARow)) return;
                 if (!ip.k0NAARow.IsCommentsNull())
                 {
                     r.Cells[e.ColumnIndex].ToolTipText = ip.k0NAARow.Comments;

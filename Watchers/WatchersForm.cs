@@ -244,7 +244,7 @@ namespace k0X
                     string content = string.Empty;
                     foreach (LINAA.SchAcqsRow sch in lasts)
                     {
-                        if (Rsx.Dumb.IsNuDelDetch(sch)) continue;
+                        if (Rsx.EC.IsNuDelDetch(sch)) continue;
                         LINAA.SchAcqsRow aux = sch;
                         int time2 = ResumeSchedule(ref aux);
                         if (time2 < time) time = time2;
@@ -423,7 +423,7 @@ namespace k0X
             }
 
             string stillMissing = string.Empty;
-            if (!Rsx.Dumb.IsNuDelDetch(row))
+            if (!Rsx.EC.IsNuDelDetch(row))
             {
                 if (row.IsRepeatsNull()) row.Repeats = 1;
                 row.Reset();

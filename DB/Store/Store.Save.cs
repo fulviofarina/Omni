@@ -396,7 +396,7 @@ namespace DB
                     catch (SystemException ex)
                     {
                         this.AddException(ex);
-                        Dumb.SetRowError(ip, ex);
+                        EC.SetRowError(ip, ex);
                     }
                 }
             }
@@ -444,7 +444,7 @@ namespace DB
                     catch (SystemException ex)
                     {
                         this.AddException(ex);
-                        Dumb.SetRowError(ip, ex);
+                        EC.SetRowError(ip, ex);
                     }
                 }
             }
@@ -525,7 +525,7 @@ namespace DB
                     catch (SystemException ex)
                     {
                         this.AddException(ex);
-                        Dumb.SetRowError(i, ex);
+                        EC.SetRowError(i, ex);
                     }
                 }
             }
@@ -572,7 +572,7 @@ namespace DB
                     catch (SystemException ex)
                     {
                         this.AddException(ex);
-                        Dumb.SetRowError(p, ex);
+                        EC.SetRowError(p, ex);
                     }
                 }
             }

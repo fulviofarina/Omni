@@ -142,7 +142,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(m, ex);
+                    EC.SetRowError(m, ex);
                 }
             }
 

@@ -131,7 +131,7 @@ namespace DB
                 //	ip.Radioisotope = iso;
                 //	ip.Element = sym;
                 //	ip.Energy = energy;
-                if (!Rsx.Dumb.IsNuDelDetch(s))
+                if (!Rsx.EC.IsNuDelDetch(s))
                 {
                     ip.Sample = s.SubSampleName;
                     //   if (  !s.IsIrradiationCodeNull())   ip.Project = s.IrradiationCode;
@@ -147,7 +147,7 @@ namespace DB
             public double AvgOfFCs(string irradiationCode)
             {
                 double FC = 0;
-                IEnumerable<IRequestsAveragesRow> comparators = this.Where(x => !Dumb.IsNuDelDetch(x));
+                IEnumerable<IRequestsAveragesRow> comparators = this.Where(x => !EC.IsNuDelDetch(x));
                 if (comparators.Count() != 0) comparators = comparators.Where(x => x.Project.CompareTo(irradiationCode) == 0);
                 if (comparators.Count() != 0) comparators = comparators.Where(x => x.Comparator);
                 if (comparators.Count() != 0) comparators = comparators.Where(x => x.SubSamplesRow.MonitorsRow != null);
@@ -163,7 +163,7 @@ namespace DB
                 irs.NAAID = NAAID;
                 //irs.Radioisotope = iso;
                 //	irs.Element = sym;
-                if (!Rsx.Dumb.IsNuDelDetch(s))
+                if (!Rsx.EC.IsNuDelDetch(s))
                 {
                     irs.Sample = s.SubSampleName;
                     //   irs.Project = s.IrradiationCode;
@@ -299,12 +299,12 @@ namespace DB
                 //	peak.Sym = sym;
                 //	peak.Iso = iso;
 
-                if (!Rsx.Dumb.IsNuDelDetch(s))
+                if (!Rsx.EC.IsNuDelDetch(s))
                 {
                     peak.IrradiationID = s.IrradiationRequestsID;
                     peak.SampleID = s.SubSamplesID;
                 }
-                if (!Rsx.Dumb.IsNuDelDetch(m))
+                if (!Rsx.EC.IsNuDelDetch(m))
                 {
                     peak.MeasurementID = m.MeasurementID;
                     //  peak.Measurement = m.Measurement;

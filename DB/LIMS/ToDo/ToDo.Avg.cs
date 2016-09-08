@@ -19,7 +19,7 @@ namespace DB
                 catch (SystemException ex)
                 {
                     t.use = false;
-                    Rsx.Dumb.SetRowError(t, ex);
+                    Rsx.EC.SetRowError(t, ex);
                 }
                 return t;
             }
@@ -57,7 +57,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(tu, ex);
+                    Rsx.EC.SetRowError(tu, ex);
                 }
                 return tu;
             }

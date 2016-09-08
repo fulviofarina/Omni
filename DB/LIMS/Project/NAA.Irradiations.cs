@@ -49,7 +49,7 @@ namespace DB
                     IrradiationRequestsRow r = e.Row as IrradiationRequestsRow;
                     if (NonNullables.Contains(e.Column))
                     {
-                        bool nu = Dumb.CheckNull(e.Column, e.Row);
+                        bool nu = EC.CheckNull(e.Column, e.Row);
                         if (e.Column == this.columnIrradiationCode && !nu)
                         {
                             r.Number = Convert.ToInt32(r.IrradiationCode.Substring(r.IrradiationCode.Length - 2));

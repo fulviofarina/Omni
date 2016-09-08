@@ -32,7 +32,7 @@ namespace DB
                 {
                     if (NonNullables.Contains(e.Column))
                     {
-                        bool nu = Dumb.CheckNull(e.Column, e.Row);
+                        bool nu = EC.CheckNull(e.Column, e.Row);
                         if (e.Column == this.columnChannelName && nu)
                         {
                             ChannelsRow ch = e.Row as ChannelsRow;

@@ -10,6 +10,7 @@ using DB;
 using DB.Reports;
 using Rsx.CAM;
 using Rsx.DGV;
+using Rsx;
 
 namespace k0X
 {
@@ -342,7 +343,7 @@ namespace k0X
                 }
                 else m.KW = string.Empty;
 
-                if (!Rsx.Dumb.IsNuDelDetch(m.SubSamplesRow))
+                if (!Rsx.EC.IsNuDelDetch(m.SubSamplesRow))
                 {
                     m.SubSamplesRow.Detector = m.Detector;
                     m.SubSamplesRow.Position = m.Position;
@@ -355,7 +356,7 @@ namespace k0X
                 if (!m.HL)
                 {
                     LINAA.MeasurementsRow old = meas.FirstOrDefault(d => d.Measurement.CompareTo(m.Measurement) == 0);
-                    if (!Rsx.Dumb.IsNuDelDetch(old)) m.HL = true;
+                    if (!Rsx.EC.IsNuDelDetch(old)) m.HL = true;
                     else
                     {
                         int? measID = (int?)this.Linaa.QTA.GetMeasurementID(m.Measurement);
@@ -543,7 +544,7 @@ namespace k0X
             if (meas.Count(o => o.IsAcquiring) != 0) style.BackColor = System.Drawing.Color.PapayaWhip;
             else
             {
-                if (Rsx.Dumb.HasErrors(meas)) style.BackColor = System.Drawing.Color.MistyRose;
+                if (EC.HasErrors(meas)) style.BackColor = System.Drawing.Color.MistyRose;
                 else style.BackColor = System.Drawing.Color.White;
             }
         }

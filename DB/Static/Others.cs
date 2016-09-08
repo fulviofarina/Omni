@@ -1,5 +1,6 @@
 ﻿using System;
 using Rsx.CAM;
+using Rsx;
 
 namespace DB
 {
@@ -22,7 +23,7 @@ namespace DB
             }
             catch (SystemException ex)
             {
-                Rsx.Dumb.SetRowError(p, ex);
+                EC.SetRowError(p, ex);
             }
         }
 

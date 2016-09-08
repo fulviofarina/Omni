@@ -7,7 +7,7 @@ using System.Windows.Forms;
 ///FULVIO
 namespace Rsx
 {
-    public partial class Dumb
+    public static partial class EC
     {
         public static IEnumerable<DataRow> NotNulls(IEnumerable<DataRow> array, String Field)
         {
@@ -160,7 +160,7 @@ namespace Rsx
                 if (currentRow.RowState == DataRowState.Unchanged) currentRow.SetModified();
                 args = new DataRowChangeEventArgs(currentRow, DataRowAction.Change);
 
-                Dumb.CheckRowColumn(args, columnChecker);
+                EC.CheckRowColumn(args, columnChecker);
                 currentRow.AcceptChanges();
             }
         }
@@ -175,7 +175,7 @@ namespace Rsx
                 args = new DataRowChangeEventArgs(currentRow, DataRowAction.Change);
 
                 if (currentRow.RowState == DataRowState.Unchanged) currentRow.SetModified();
-                Dumb.CheckRowColumn(args, columnChecker);
+                EC.CheckRowColumn(args, columnChecker);
                 currentRow.AcceptChanges();
             }
         }

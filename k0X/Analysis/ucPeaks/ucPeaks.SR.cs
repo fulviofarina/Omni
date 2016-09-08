@@ -199,10 +199,10 @@ namespace k0X
                             #endregion Del (Delete)
                     }
 
-                    if (!Dumb.IsNuDelDetch(newRow))
+                    if (!EC.IsNuDelDetch(newRow))
                     {
-                        if (Dumb.IsNuDelDetch(newRow.IPeakAveragesRowParent)) newRow.Delete();
-                        if (Dumb.IsNuDelDetch(newRow.IRequestsAveragesRowParent)) newRow.Delete();
+                        if (EC.IsNuDelDetch(newRow.IPeakAveragesRowParent)) newRow.Delete();
+                        if (EC.IsNuDelDetch(newRow.IRequestsAveragesRowParent)) newRow.Delete();
                         else irs.Add(newRow.IRequestsAveragesRowParent);
                     }
                 }

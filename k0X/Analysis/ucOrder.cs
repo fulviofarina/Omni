@@ -22,7 +22,7 @@ namespace k0X
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (!Rsx.Dumb.IsNuDelDetch(orderRow))
+                if (!Rsx.EC.IsNuDelDetch(orderRow))
                 {
                     orderRow.LabOrderRef = Box.Text;
                     this.ParentForm.Text = "Order - " + this.Box.Text;
@@ -43,7 +43,7 @@ namespace k0X
             {
                 orderRow = this.Linaa.Orders.FirstOrDefault(o => o.LabOrderRef.CompareTo(LabOrderRef) == 0);
 
-                if (Rsx.Dumb.IsNuDelDetch(orderRow))
+                if (Rsx.EC.IsNuDelDetch(orderRow))
                 {
                     orderRow = this.Linaa.Orders.NewOrdersRow();
                     orderRow.LabOrderRef = LabOrderRef;

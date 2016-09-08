@@ -122,7 +122,7 @@ namespace DB
                     //e.Row.SetColumnError(e.Column, null);
                     LINAA.SubSamplesRow subs = e.Row as LINAA.SubSamplesRow; //cast
 
-                    if (NonNullable.Contains(e.Column)) Dumb.CheckNull(e.Column, e.Row);
+                    if (NonNullable.Contains(e.Column)) EC.CheckNull(e.Column, e.Row);
                     else if (e.Column == this.DirectSolcoiColumn)
                     {
                         //not used aymore??
@@ -156,7 +156,7 @@ namespace DB
                     {
                         //  if (subs.IsSubSampleCreationDateNull()) subs.SubSampleCreationDate = DateTime.Now;
 
-                        if (Dumb.IsNuDelDetch(subs.IrradiationRequestsRow)) return;
+                        if (EC.IsNuDelDetch(subs.IrradiationRequestsRow)) return;
                         if (subs.IsIrradiationCodeNull())
                         {
                             subs.IrradiationCode = subs.IrradiationRequestsRow.IrradiationCode;
@@ -169,14 +169,14 @@ namespace DB
                     else if (e.Column == this.CapsulesIDColumn)
                     {
                         subs.SetColumnError(this.CapsuleNameColumn, null);
-                        if (Dumb.IsNuDelDetch(subs.VialTypeRow)) subs.SetColumnError(this.CapsuleNameColumn, "Assign an irradiation capsule");
+                        if (EC.IsNuDelDetch(subs.VialTypeRow)) subs.SetColumnError(this.CapsuleNameColumn, "Assign an irradiation capsule");
                     }
                     else if (e.Column == this.ENAAColumn) subs.CheckENAA();
                     else if (e.Column == this.columnf || e.Column == this.columnAlpha) subs.CheckfOrAlpha();
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(e.Row, e.Column, ex);
+                    EC.SetRowError(e.Row, e.Column, ex);
                 }
             }
 
@@ -227,8 +227,8 @@ namespace DB
 
             public void CheckfOrAlpha()
             {
-                if (Dumb.IsNuDelDetch(IrradiationRequestsRow)) return;
-                if (Dumb.IsNuDelDetch(IrradiationRequestsRow.ChannelsRow)) return;
+                if (EC.IsNuDelDetch(IrradiationRequestsRow)) return;
+                if (EC.IsNuDelDetch(IrradiationRequestsRow.ChannelsRow)) return;
                 if (IsfNull() || f < 0)
                 {
                     f = IrradiationRequestsRow.ChannelsRow.f;
@@ -242,8 +242,8 @@ namespace DB
 
             public bool CheckMass()
             {
-                bool one = Dumb.CheckNull(this.tableSubSamples.Gross1Column, this);
-                bool two = Dumb.CheckNull(this.tableSubSamples.Gross2Column, this);
+                bool one = EC.CheckNull(this.tableSubSamples.Gross1Column, this);
+                bool two = EC.CheckNull(this.tableSubSamples.Gross2Column, this);
 
                 DataColumn col = this.tableSubSamples.GrossAvgColumn;
                 SetColumnError(col, null);
@@ -271,7 +271,7 @@ namespace DB
 
             public void CheckMonitor()
             {
-                if (Dumb.IsNuDelDetch(MonitorsRow)) return;
+                if (EC.IsNuDelDetch(MonitorsRow)) return;
 
                 bool namenull = MonitorsRow.IsMonNameNull();
                 if (!namenull)
@@ -365,13 +365,13 @@ namespace DB
 
             public bool CheckStandard(ref StandardsRow std)
             {
-                if (Dumb.IsNuDelDetch(std)) return false;
+                if (EC.IsNuDelDetch(std)) return false;
 
                 Concentration = 1;
                 Comparator = true;
                 Elements = string.Empty;
-                if (Dumb.IsNuDelDetch(std.MatrixRow)) return false;
-                if (Dumb.IsNuDelDetch(MatrixRow) || MatrixID != std.MatrixRow.MatrixID)
+                if (EC.IsNuDelDetch(std.MatrixRow)) return false;
+                if (EC.IsNuDelDetch(MatrixRow) || MatrixID != std.MatrixRow.MatrixID)
                 {
                     MatrixRow = std.MatrixRow;
                 }
@@ -474,7 +474,7 @@ namespace DB
                     this.FillHeight = this.GeometryRow.FillHeight;
                     return false;
                 }
-                bool noradius = Dumb.CheckNull(this.tableSubSamples.RadiusColumn, this);
+                bool noradius = EC.CheckNull(this.tableSubSamples.RadiusColumn, this);
                 if (noradius && this.GeometryRow.Radius != 0)
                 {
                     this.Radius = this.GeometryRow.Radius;
@@ -539,9 +539,9 @@ namespace DB
             {
                 MatrixRow m = this.GeometryRow.MatrixRow;
                 //bool diffMat = (this.MatrixRow!=m ); //different matrix than the geometry... restore it?
-                if (Dumb.IsNuDelDetch(this.MatrixRow))
+                if (EC.IsNuDelDetch(this.MatrixRow))
                 {
-                    if (!Dumb.IsNuDelDetch(m))
+                    if (!EC.IsNuDelDetch(m))
                     {
                         this.MatrixID = this.GeometryRow.MatrixID;
                         return true;
@@ -559,7 +559,7 @@ namespace DB
             {
                 DataColumn geoCol = this.tableSubSamples.GeometryNameColumn;
                 this.SetColumnError(geoCol, null);
-                if (Dumb.IsNuDelDetch(GeometryRow))
+                if (EC.IsNuDelDetch(GeometryRow))
                 {
                     this.SetColumnError(geoCol, "Please assign a valid geometry to this sample");
                     return false;
@@ -571,7 +571,7 @@ namespace DB
             {
                 get
                 {
-                    return Dumb.CheckNull(this.tableSubSamples.RadiusColumn, this);
+                    return EC.CheckNull(this.tableSubSamples.RadiusColumn, this);
                 }
             }
 
@@ -579,7 +579,7 @@ namespace DB
             {
                 get
                 {
-                    return Dumb.CheckNull(this.tableSubSamples.MatrixDensityColumn, this);
+                    return EC.CheckNull(this.tableSubSamples.MatrixDensityColumn, this);
                 }
             }
 
@@ -587,7 +587,7 @@ namespace DB
             {
                 get
                 {
-                    return Dumb.CheckNull(this.tableSubSamples.FillHeightColumn, this);
+                    return EC.CheckNull(this.tableSubSamples.FillHeightColumn, this);
                 }
             }
 
@@ -740,8 +740,8 @@ namespace DB
 
                     if (e.Column == this.MonGrossMass1Column || e.Column == this.MonGrossMass2Column)
                     {
-                        bool one = Dumb.CheckNull(this.MonGrossMass1Column, e.Row);
-                        bool two = Dumb.CheckNull(this.MonGrossMass2Column, e.Row);
+                        bool one = EC.CheckNull(this.MonGrossMass1Column, e.Row);
+                        bool two = EC.CheckNull(this.MonGrossMass2Column, e.Row);
 
                         if (one || two) return;
 
@@ -763,7 +763,7 @@ namespace DB
                     }
                     else if (e.Column == this.MonNameColumn)
                     {
-                        if (Dumb.CheckNull(this.MonNameColumn, m)) return;
+                        if (EC.CheckNull(this.MonNameColumn, m)) return;
 
                         if (Dumb.IsLower(m.MonName.Substring(1)))
                         {
@@ -773,7 +773,7 @@ namespace DB
                     }
                     else if (e.Column == this.columnGeometryName)
                     {
-                        if (Dumb.CheckNull(e.Column, e.Row))
+                        if (EC.CheckNull(e.Column, e.Row))
                         {
                             if (!m.IsMonitorCodeNull()) m.GeometryName = m.MonitorCode.ToUpper();
                         }
@@ -795,7 +795,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(e.Row, e.Column, ex);
+                    EC.SetRowError(e.Row, e.Column, ex);
                 }
             }
         }
@@ -809,7 +809,7 @@ namespace DB
                     StandardsRow std = (StandardsRow)e.Row;
                     if (e.Column == this.MonitorCodeColumn)
                     {
-                        bool nulo = Dumb.CheckNull(e.Column, e.Row);
+                        bool nulo = EC.CheckNull(e.Column, e.Row);
 
                         if (nulo) return;
 
@@ -825,11 +825,11 @@ namespace DB
                             std.GeometryRow = g;
                         }
                     }
-                    else if (e.Column == this.stdNameColumn) Dumb.CheckNull(e.Column, e.Row);
-                    else if (e.Column == this.stdProducerColumn) Dumb.CheckNull(e.Column, e.Row);
-                    //  else if (e.Column == this.stdElementColumn) Dumb.CheckNull(e.Column, e.Row);
-                    else if (e.Column == this.MatrixNameColumn) Dumb.CheckNull(e.Column, e.Row);
-                    else if (e.Column == this.stdUncColumn) Dumb.CheckNull(e.Column, e.Row);
+                    else if (e.Column == this.stdNameColumn) EC.CheckNull(e.Column, e.Row);
+                    else if (e.Column == this.stdProducerColumn) EC.CheckNull(e.Column, e.Row);
+                    //  else if (e.Column == this.stdElementColumn) EC.CheckNull(e.Column, e.Row);
+                    else if (e.Column == this.MatrixNameColumn) EC.CheckNull(e.Column, e.Row);
+                    else if (e.Column == this.stdUncColumn) EC.CheckNull(e.Column, e.Row);
                 }
                 catch (SystemException ex)
                 {

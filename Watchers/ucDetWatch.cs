@@ -43,7 +43,7 @@ namespace k0X
 
             main = Application.OpenForms.OfType<WatchersForm>().FirstOrDefault();
             Linaa = set;
-            IsNDD = Rsx.Dumb.IsNuDelDetch;
+            IsNDD = Rsx.EC.IsNuDelDetch;
 
             this.detBox.Items.Clear();
             this.detBox.Items.AddRange(main.DetectorsList);
@@ -143,7 +143,7 @@ namespace k0X
 
             msg += "Exceution of command " + cmd + " completed\nUpdated information about the ";
             string extra = string.Empty;
-            if (Rsx.Dumb.IsNuDelDetch(LSchAcq))
+            if (Rsx.EC.IsNuDelDetch(LSchAcq))
             {
                 msg += "measurement:\n";
                 msg += GetCurrentCrashMeasString();
@@ -154,7 +154,7 @@ namespace k0X
                 msg += LSchAcq.GetReportString();
                 extra = " (" + LSchAcq.Progress + "%)";
             }
-            if (!Rsx.Dumb.IsNuDelDetch(NxtSchAcq))
+            if (!Rsx.EC.IsNuDelDetch(NxtSchAcq))
             {
                 msg += "Next scheduled measurement is:\n";
                 msg += NxtSchAcq.GetReportString();
@@ -1129,8 +1129,8 @@ namespace k0X
             {
                 if (!doSolcoi) return;
 
-                if (Rsx.Dumb.IsNuDelDetch(this.currentMeas)) return;
-                if (Rsx.Dumb.IsNuDelDetch(this.currentSample)) return;
+                if (Rsx.EC.IsNuDelDetch(this.currentMeas)) return;
+                if (Rsx.EC.IsNuDelDetch(this.currentSample)) return;
 
                 DB.Tools.SolCoin Solcoin = new DB.Tools.SolCoin(ref this.Linaa);
                 string[] posgeodetfillrad = new string[] {

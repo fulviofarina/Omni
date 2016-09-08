@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Rsx.Math;
+using Rsx;
 
 namespace DB.Tools
 {
@@ -213,7 +214,7 @@ namespace DB.Tools
 
         public static void Calculate(ref IEnumerable<LINAA.IRequestsAveragesRow> rows, bool matssf, bool chilean)
         {
-            rows = Rsx.Dumb.NotDeleted<LINAA.IRequestsAveragesRow>(rows);
+            rows = EC.NotDeleted<LINAA.IRequestsAveragesRow>(rows);
 
             if (rows.Count() == 0) return;
 
@@ -365,7 +366,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Rsx.Dumb.SetRowError(ir, table.R0Column, ex);
+                EC.SetRowError(ir, table.R0Column, ex);
             }
         }
 
@@ -818,7 +819,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(r, ex);
+                    EC.SetRowError(r, ex);
                 }
             }
         }
@@ -863,7 +864,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.Dumb.SetRowError(ir, ex);
+                    EC.SetRowError(ir, ex);
                 }
             }
             abs.Clear();
@@ -899,7 +900,7 @@ namespace DB.Tools
             if (tipo.Equals(typeof(LINAA.IRequestsAveragesRow)))
             {
                 IEnumerable<LINAA.IRequestsAveragesRow> rows = row as IEnumerable<LINAA.IRequestsAveragesRow>;
-                rows = Rsx.Dumb.NotDeleted<LINAA.IRequestsAveragesRow>(rows);
+                rows = EC.NotDeleted<LINAA.IRequestsAveragesRow>(rows);
 
                 if (rows.Count() == 0) return;
 
@@ -918,7 +919,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(r, ex);
+                        EC.SetRowError(r, ex);
                     }
                 }
 
@@ -927,7 +928,7 @@ namespace DB.Tools
             else if (tipo.Equals(typeof(LINAA.IPeakAveragesRow)))
             {
                 IEnumerable<LINAA.IPeakAveragesRow> ipavg = row as IEnumerable<LINAA.IPeakAveragesRow>;
-                ipavg = Rsx.Dumb.NotDeleted<LINAA.IPeakAveragesRow>(ipavg);
+                ipavg = EC.NotDeleted<LINAA.IPeakAveragesRow>(ipavg);
                 if (ipavg.Count() == 0) return;
                 //after restoring the computing expressions do the SD determination
                 foreach (LINAA.IPeakAveragesRow ip in ipavg)
@@ -942,7 +943,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(ip, ex);
+                        EC.SetRowError(ip, ex);
                     }
                 }
                 ipavg = null;
@@ -959,7 +960,7 @@ namespace DB.Tools
             else if (tipo.Equals(typeof(LINAA.PeaksRow)))
             {
                 IEnumerable<LINAA.PeaksRow> peaks = row as IEnumerable<LINAA.PeaksRow>;
-                peaks = Rsx.Dumb.NotDeleted<LINAA.PeaksRow>(peaks);
+                peaks = EC.NotDeleted<LINAA.PeaksRow>(peaks);
                 if (peaks.Count() == 0) return;
 
                 foreach (LINAA.PeaksRow p in peaks)
@@ -972,7 +973,7 @@ namespace DB.Tools
                     }
                     catch (SystemException ex)
                     {
-                        Rsx.Dumb.SetRowError(p, ex);
+                        EC.SetRowError(p, ex);
                     }
                 }
             }
@@ -1002,7 +1003,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Rsx.Dumb.SetRowError(ir, ex);
+                EC.SetRowError(ir, ex);
             }
         }
 
@@ -1025,7 +1026,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Rsx.Dumb.SetRowError(ir, ex);
+                EC.SetRowError(ir, ex);
             }
         }
 
@@ -1044,7 +1045,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.ID = -1 * Math.Abs(p.ID);
-                Rsx.Dumb.SetRowError(p, table.T0Column, ex);
+                EC.SetRowError(p, table.T0Column, ex);
             }
         }
 
@@ -1068,8 +1069,8 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 p.ID = -1 * Math.Abs(p.ID);
-                Rsx.Dumb.SetRowError(p, table.FcColumn, ex);
-                Rsx.Dumb.SetRowError(p, table.ppmColumn, ex);
+                EC.SetRowError(p, table.FcColumn, ex);
+                EC.SetRowError(p, table.ppmColumn, ex);
             }
         }
 

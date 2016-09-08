@@ -63,7 +63,7 @@ namespace DB
                         else s.SubSampleName = _projectNr + "0" + _lastSampleNr.ToString();
                     }
                     //  s.IrradiationCode = project;
-                    Dumb.CheckNull(this.SubSamples.SubSampleNameColumn, s);
+                    EC.CheckNull(this.SubSamples.SubSampleNameColumn, s);
                 }
             }
         }

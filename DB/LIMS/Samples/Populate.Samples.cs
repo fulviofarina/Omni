@@ -111,7 +111,7 @@ namespace DB
             {
                 LINAA.SubSamplesRow sample = this.tableSubSamples.FindBySample(s, true, id);
 
-                if (Rsx.Dumb.IsNuDelDetch(sample)) continue;
+                if (Rsx.EC.IsNuDelDetch(sample)) continue;
                 if (sample.RowState == DataRowState.Added) added++;
 
                 if (sample.MonitorsRow == null)

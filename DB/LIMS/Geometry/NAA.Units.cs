@@ -59,7 +59,9 @@ namespace DB
 
 
          
-
+            /// <summary>
+            /// NO ME GUSTA PERO QUE CONO
+            /// </summary>
             public bool CalcDensity
             {
 
@@ -89,7 +91,7 @@ namespace DB
                 try
                 { 
 
-                    bool nullo = Dumb.CheckNull(c, row);
+                    bool nullo = EC.CheckNull(c, row);
                     bool densityNull = nullo && c == this.columnDensity;
                     bool diamLengDens = (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity);
 
@@ -365,7 +367,7 @@ namespace DB
                     int factor = 10;
                     if (Math.Abs((dens1 / dens2) - 1) * 100 > factor)
                     {
-                        Dumb.SetRowError(this, new SystemException("Calculated density does not match input density by " + factor.ToString()));
+                        EC.SetRowError(this, new SystemException("Calculated density does not match input density by " + factor.ToString()));
                     }
 
                     this.Density = dens1;

@@ -1219,13 +1219,13 @@ namespace DB.Tools
                 exception = ex;
             }
 
-            if (Dumb.IsNuDelDetch(detectorDimension))
+            if (EC.IsNuDelDetch(detectorDimension))
             {
                 exception = new SystemException("Gather of DetDimension failed! - Gather Method", exception);
                 return false;
             }
             detectorAbsorber = detectorDimension.DetectorsAbsorbersRow;
-            if (Dumb.IsNuDelDetch(detectorAbsorber))
+            if (EC.IsNuDelDetch(detectorAbsorber))
             {
                 exception = new SystemException("Gather of Detector Absorbers failed! - Gather Method", exception);
                 return false;
@@ -1286,14 +1286,14 @@ namespace DB.Tools
                 exception = ex;
             }
 
-            if (Dumb.IsNuDelDetch(geom))
+            if (EC.IsNuDelDetch(geom))
             {
                 exception = new SystemException("Gather of Geometry failed! - Gather Method", exception);
                 return false;
             }
             LINAA.VialTypeRow vial = geom.VialTypeRow;
 
-            if (Dumb.IsNuDelDetch(vial))
+            if (EC.IsNuDelDetch(vial))
             {
                 exception = new SystemException("Gather of Geometry Vial failed! - Gather Method", exception);
                 return false;

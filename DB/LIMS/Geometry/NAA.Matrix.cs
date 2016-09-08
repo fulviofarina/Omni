@@ -51,7 +51,7 @@ namespace DB
                 CompositionsRow c = null;
                 try
                 {
-                    IEnumerable<CompositionsRow> pickeable = Dumb.NotDeleted<CompositionsRow>(this);
+                    IEnumerable<CompositionsRow> pickeable = EC.NotDeleted<CompositionsRow>(this);
                     bool add = false;
                     if (pickeable.Count() != 0)
                     {
@@ -75,7 +75,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(c, ex);
+                    EC.SetRowError(c, ex);
                 }
                 return c;
             }
@@ -96,7 +96,7 @@ namespace DB
             public IList<string[]> StripComposition()
             {
                 System.Collections.Generic.List<string[]> ls = null;
-                if (Rsx.Dumb.IsNuDelDetch(this)) return ls;
+                if (Rsx.EC.IsNuDelDetch(this)) return ls;
                 if (this.IsMatrixCompositionNull()) return ls;
 
                 string matCompo = this.MatrixComposition;
@@ -170,7 +170,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Dumb.SetRowError(e.Row, e.Column, ex);
+                    EC.SetRowError(e.Row, e.Column, ex);
                 }
             }
 
@@ -189,7 +189,7 @@ namespace DB
                 try
                 {
 
-                    Dumb.CheckNull(col, e.Row);
+                    EC.CheckNull(col, e.Row);
 
                     if (col == this.columnMatrixDensity)
                     {
@@ -223,14 +223,14 @@ namespace DB
                     }
                     else if (col == this.columnMatrixComposition)
                     {
-                       // Dumb.CheckNull(col, e.Row);
+                       // EC.CheckNull(col, e.Row);
                         IEnumerable<LINAA.CompositionsRow> compos = m.GetCompositionsRows();
                         if (compos.Count() != 0)
                         {
-                            if (Dumb.HasErrors(compos))
+                            if (EC.HasErrors(compos))
                             {
                                 throw new SystemException("The composition rows have errors");
-                                //Dumb.SetRowError(e.Row, e.Column, ex);
+                                //EC.SetRowError(e.Row, e.Column, ex);
                             }
                         }
                         if (m.HasErrors) return;
@@ -242,7 +242,7 @@ namespace DB
                                 linaa.Save(ref compos);
                                 linaa.TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
                                 PopulateXCom();
-                                // Dumb.AcceptChanges(ref compos);
+                                // EC.AcceptChanges(ref compos);
                             }
                             linaa.Compositions.AddCompositionRow(ref m);
                             m.Renew = false;

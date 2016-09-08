@@ -8,7 +8,7 @@ namespace Rsx
 {
    
 
-    public partial class Dumb
+    public static  partial class Dumb
     {
         public static string GetNextName(string prefix, IList<string> items, bool putCaps)
         {

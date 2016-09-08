@@ -74,7 +74,7 @@ namespace k0X
             object tag = this.TV.SelectedNode.Tag;
             if (tag == null) return;
             DataRow row = tag as DataRow;
-            if (Rsx.Dumb.IsNuDelDetch(row)) return;
+            if (Rsx.EC.IsNuDelDetch(row)) return;
 
             Logger log = null;
             object o = null;
