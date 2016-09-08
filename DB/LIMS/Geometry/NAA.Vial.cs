@@ -43,6 +43,10 @@ namespace DB
                         if (col == this.columnVialTypeRef && nu) subs.VialTypeRef = "No Name";
                         
                     }
+
+
+
+
                 }
                 catch (SystemException ex)
                 {

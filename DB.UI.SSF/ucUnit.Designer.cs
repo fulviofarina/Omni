@@ -31,7 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucUnit));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,18 +55,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.UnitBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -89,7 +88,19 @@
             this.lastCal = new System.Windows.Forms.ToolStripTextBox();
             this.cfgSC = new System.Windows.Forms.SplitContainer();
             this.unitDGV = new System.Windows.Forms.DataGridView();
+            this.SSFDGV = new System.Windows.Forms.DataGridView();
+            this.TargetIsotope = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RadioIsotope = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sSFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SSFCh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GFast = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ND = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SigB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ChEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ToDo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Vol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastChanged = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -106,23 +117,10 @@
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Done = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.SSFDGV = new System.Windows.Forms.DataGridView();
-            this.TargetIsotope = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RadioIsotope = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sSFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SSFCh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GFast = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ND = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SigB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ChEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.UnitBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).BeginInit();
             this.dgvCMS.SuspendLayout();
@@ -150,7 +148,9 @@
             // 
             // lINAA
             // 
+            this.lINAA.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
             this.lINAA.CurrentPref = null;
+            this.lINAA.CurrentSSFPref = null;
             this.lINAA.DataSetName = "LINAA";
             this.lINAA.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("lINAA.DetectorsList")));
             this.lINAA.EnforceConstraints = false;
@@ -341,10 +341,10 @@
             // 
             // lastChg
             // 
-            this.lastChg.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastChg.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lastChg.Name = "lastChg";
             this.lastChg.ReadOnly = true;
-            this.lastChg.Size = new System.Drawing.Size(200, 29);
+            this.lastChg.Size = new System.Drawing.Size(170, 29);
             this.lastChg.Text = "01/01/1983";
             this.lastChg.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -361,10 +361,10 @@
             // 
             // lastCal
             // 
-            this.lastCal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastCal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lastCal.Name = "lastCal";
             this.lastCal.ReadOnly = true;
-            this.lastCal.Size = new System.Drawing.Size(200, 29);
+            this.lastCal.Size = new System.Drawing.Size(170, 29);
             this.lastCal.Text = "01/01/1983";
             this.lastCal.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -400,6 +400,7 @@
             this.unitDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.unitDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ToDo,
+            this.Vol,
             this.dataGridViewTextBoxColumn10,
             this.kth,
             this.LastChanged,
@@ -416,21 +417,19 @@
             this.dataGridViewTextBoxColumn20,
             this.dataGridViewTextBoxColumn21,
             this.dataGridViewTextBoxColumn22,
-            this.dataGridViewTextBoxColumn23,
             this.dataGridViewTextBoxColumn24,
-            this.dataGridViewTextBoxColumn25,
             this.dataGridViewTextBoxColumn26,
             this.dataGridViewTextBoxColumn27,
             this.Done});
             this.unitDGV.DataSource = this.UnitBS;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.unitDGV.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.unitDGV.DefaultCellStyle = dataGridViewCellStyle14;
             this.unitDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.unitDGV.Location = new System.Drawing.Point(0, 0);
             this.unitDGV.Margin = new System.Windows.Forms.Padding(4);
@@ -440,6 +439,149 @@
             this.unitDGV.Size = new System.Drawing.Size(695, 193);
             this.unitDGV.TabIndex = 6;
             // 
+            // SSFDGV
+            // 
+            this.SSFDGV.AllowUserToAddRows = false;
+            this.SSFDGV.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.SSFDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle15;
+            this.SSFDGV.AutoGenerateColumns = false;
+            this.SSFDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.SSFDGV.BackgroundColor = System.Drawing.Color.Lavender;
+            this.SSFDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SSFDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            this.SSFDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SSFDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TargetIsotope,
+            this.RadioIsotope,
+            this.Weight,
+            this.sSFDataGridViewTextBoxColumn,
+            this.SSFCh,
+            this.GFast,
+            this.ND,
+            this.SigB,
+            this.ChEpi,
+            this.UnitID});
+            this.SSFDGV.ContextMenuStrip = this.dgvCMS;
+            this.SSFDGV.DataSource = this.SSFBS;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SSFDGV.DefaultCellStyle = dataGridViewCellStyle25;
+            this.SSFDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SSFDGV.Location = new System.Drawing.Point(0, 0);
+            this.SSFDGV.Margin = new System.Windows.Forms.Padding(4);
+            this.SSFDGV.Name = "SSFDGV";
+            this.SSFDGV.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SSFDGV.RowTemplate.Height = 24;
+            this.SSFDGV.Size = new System.Drawing.Size(695, 285);
+            this.SSFDGV.TabIndex = 3;
+            // 
+            // TargetIsotope
+            // 
+            this.TargetIsotope.DataPropertyName = "TargetIsotope";
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TargetIsotope.DefaultCellStyle = dataGridViewCellStyle17;
+            this.TargetIsotope.HeaderText = "Target";
+            this.TargetIsotope.Name = "TargetIsotope";
+            this.TargetIsotope.Width = 89;
+            // 
+            // RadioIsotope
+            // 
+            this.RadioIsotope.DataPropertyName = "RadioIsotope";
+            this.RadioIsotope.HeaderText = "RadioIsotope";
+            this.RadioIsotope.Name = "RadioIsotope";
+            this.RadioIsotope.Visible = false;
+            this.RadioIsotope.Width = 147;
+            // 
+            // Weight
+            // 
+            this.Weight.DataPropertyName = "Weight";
+            dataGridViewCellStyle18.Format = "n4";
+            this.Weight.DefaultCellStyle = dataGridViewCellStyle18;
+            this.Weight.HeaderText = "Weight";
+            this.Weight.Name = "Weight";
+            this.Weight.ToolTipText = "in %";
+            this.Weight.Width = 97;
+            // 
+            // sSFDataGridViewTextBoxColumn
+            // 
+            this.sSFDataGridViewTextBoxColumn.DataPropertyName = "SSF";
+            dataGridViewCellStyle19.Format = "N4";
+            dataGridViewCellStyle19.NullValue = null;
+            this.sSFDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
+            this.sSFDataGridViewTextBoxColumn.HeaderText = "SSF";
+            this.sSFDataGridViewTextBoxColumn.Name = "sSFDataGridViewTextBoxColumn";
+            this.sSFDataGridViewTextBoxColumn.Width = 66;
+            // 
+            // SSFCh
+            // 
+            this.SSFCh.DataPropertyName = "SSFCh";
+            dataGridViewCellStyle20.Format = "N4";
+            this.SSFCh.DefaultCellStyle = dataGridViewCellStyle20;
+            this.SSFCh.HeaderText = "SSFCh";
+            this.SSFCh.Name = "SSFCh";
+            this.SSFCh.Width = 89;
+            // 
+            // GFast
+            // 
+            this.GFast.DataPropertyName = "GFast";
+            dataGridViewCellStyle21.Format = "N4";
+            this.GFast.DefaultCellStyle = dataGridViewCellStyle21;
+            this.GFast.HeaderText = "GFast";
+            this.GFast.Name = "GFast";
+            this.GFast.Width = 82;
+            // 
+            // ND
+            // 
+            this.ND.DataPropertyName = "ND";
+            dataGridViewCellStyle22.Format = "E2";
+            dataGridViewCellStyle22.NullValue = null;
+            this.ND.DefaultCellStyle = dataGridViewCellStyle22;
+            this.ND.HeaderText = "ND";
+            this.ND.Name = "ND";
+            this.ND.ToolTipText = "x 1.E24 i/cm3";
+            this.ND.Width = 64;
+            // 
+            // SigB
+            // 
+            this.SigB.DataPropertyName = "SigB";
+            dataGridViewCellStyle23.Format = "E2";
+            dataGridViewCellStyle23.NullValue = null;
+            this.SigB.DefaultCellStyle = dataGridViewCellStyle23;
+            this.SigB.HeaderText = "SigB";
+            this.SigB.Name = "SigB";
+            this.SigB.ToolTipText = "in barns";
+            this.SigB.Width = 74;
+            // 
+            // ChEpi
+            // 
+            this.ChEpi.DataPropertyName = "ChEpi";
+            dataGridViewCellStyle24.Format = "E2";
+            this.ChEpi.DefaultCellStyle = dataGridViewCellStyle24;
+            this.ChEpi.HeaderText = "ChEpi";
+            this.ChEpi.Name = "ChEpi";
+            this.ChEpi.Width = 86;
+            // 
+            // UnitID
+            // 
+            this.UnitID.DataPropertyName = "UnitID";
+            this.UnitID.HeaderText = "UnitID";
+            this.UnitID.Name = "UnitID";
+            this.UnitID.Visible = false;
+            this.UnitID.Width = 90;
+            // 
             // ToDo
             // 
             this.ToDo.DataPropertyName = "ToDo";
@@ -447,11 +589,22 @@
             this.ToDo.Name = "ToDo";
             this.ToDo.Width = 51;
             // 
+            // Vol
+            // 
+            this.Vol.DataPropertyName = "Vol";
+            dataGridViewCellStyle2.Format = "N2";
+            this.Vol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Vol.HeaderText = "Vol";
+            this.Vol.Name = "Vol";
+            this.Vol.ReadOnly = true;
+            this.Vol.Visible = false;
+            this.Vol.Width = 64;
+            // 
             // dataGridViewTextBoxColumn10
             // 
             this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTextBoxColumn10.HeaderText = "Name";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.Width = 87;
@@ -499,9 +652,9 @@
             // dataGridViewTextBoxColumn11
             // 
             this.dataGridViewTextBoxColumn11.DataPropertyName = "Gt";
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle3.Format = "N4";
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle4.Format = "N4";
+            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTextBoxColumn11.HeaderText = "Gt";
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             this.dataGridViewTextBoxColumn11.ToolTipText = "Thermal Self-shielding according to MatSSF";
@@ -510,9 +663,9 @@
             // dataGridViewTextBoxColumn13
             // 
             this.dataGridViewTextBoxColumn13.DataPropertyName = "GtCh";
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle4.Format = "N4";
-            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle5.Format = "N4";
+            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn13.HeaderText = "GtCh";
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             this.dataGridViewTextBoxColumn13.ToolTipText = "Thermal Self-shielding according to Chilian";
@@ -521,8 +674,8 @@
             // dataGridViewTextBoxColumn14
             // 
             this.dataGridViewTextBoxColumn14.DataPropertyName = "MCL";
-            dataGridViewCellStyle5.Format = "N4";
-            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Format = "N4";
+            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn14.HeaderText = "MCL";
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             this.dataGridViewTextBoxColumn14.ToolTipText = "Mean Chord Lenght (in cm)";
@@ -531,8 +684,8 @@
             // dataGridViewTextBoxColumn15
             // 
             this.dataGridViewTextBoxColumn15.DataPropertyName = "EXS";
-            dataGridViewCellStyle6.Format = "N4";
-            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Format = "N4";
+            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn15.HeaderText = "EXS";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             this.dataGridViewTextBoxColumn15.ToolTipText = "Escape Cross-section (in 1/cm)";
@@ -541,8 +694,8 @@
             // dataGridViewTextBoxColumn16
             // 
             this.dataGridViewTextBoxColumn16.DataPropertyName = "PXS";
-            dataGridViewCellStyle7.Format = "N4";
-            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Format = "N4";
+            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn16.HeaderText = "PXS";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             this.dataGridViewTextBoxColumn16.ToolTipText = "Potential Cross-section (in 1/cm)";
@@ -551,8 +704,8 @@
             // dataGridViewTextBoxColumn17
             // 
             this.dataGridViewTextBoxColumn17.DataPropertyName = "Density";
-            dataGridViewCellStyle8.Format = "N4";
-            this.dataGridViewTextBoxColumn17.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Format = "N4";
+            this.dataGridViewTextBoxColumn17.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn17.HeaderText = "Density";
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
             this.dataGridViewTextBoxColumn17.ToolTipText = "Sample density (in g/cm3)";
@@ -562,8 +715,8 @@
             // dataGridViewTextBoxColumn18
             // 
             this.dataGridViewTextBoxColumn18.DataPropertyName = "ChTh";
-            dataGridViewCellStyle9.Format = "E2";
-            this.dataGridViewTextBoxColumn18.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Format = "E2";
+            this.dataGridViewTextBoxColumn18.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn18.HeaderText = "ChTh";
             this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
             this.dataGridViewTextBoxColumn18.Width = 81;
@@ -571,8 +724,8 @@
             // dataGridViewTextBoxColumn20
             // 
             this.dataGridViewTextBoxColumn20.DataPropertyName = "Mass";
-            dataGridViewCellStyle10.Format = "N2";
-            this.dataGridViewTextBoxColumn20.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle11.Format = "N2";
+            this.dataGridViewTextBoxColumn20.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewTextBoxColumn20.HeaderText = "Mass";
             this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
             this.dataGridViewTextBoxColumn20.ToolTipText = "Sample mass (in mg)";
@@ -591,22 +744,12 @@
             // dataGridViewTextBoxColumn22
             // 
             this.dataGridViewTextBoxColumn22.DataPropertyName = "Diameter";
-            dataGridViewCellStyle11.Format = "N2";
-            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle12.Format = "N2";
+            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridViewTextBoxColumn22.HeaderText = "Diameter";
             this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
             this.dataGridViewTextBoxColumn22.Visible = false;
             this.dataGridViewTextBoxColumn22.Width = 114;
-            // 
-            // dataGridViewTextBoxColumn23
-            // 
-            this.dataGridViewTextBoxColumn23.DataPropertyName = "Lenght";
-            dataGridViewCellStyle12.Format = "N2";
-            this.dataGridViewTextBoxColumn23.DefaultCellStyle = dataGridViewCellStyle12;
-            this.dataGridViewTextBoxColumn23.HeaderText = "Lenght";
-            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
-            this.dataGridViewTextBoxColumn23.Visible = false;
-            this.dataGridViewTextBoxColumn23.Width = 95;
             // 
             // dataGridViewTextBoxColumn24
             // 
@@ -618,16 +761,6 @@
             this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
             this.dataGridViewTextBoxColumn24.Visible = false;
             this.dataGridViewTextBoxColumn24.Width = 137;
-            // 
-            // dataGridViewTextBoxColumn25
-            // 
-            this.dataGridViewTextBoxColumn25.DataPropertyName = "ChLenght";
-            dataGridViewCellStyle14.Format = "N0";
-            this.dataGridViewTextBoxColumn25.DefaultCellStyle = dataGridViewCellStyle14;
-            this.dataGridViewTextBoxColumn25.HeaderText = "ChLenght";
-            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
-            this.dataGridViewTextBoxColumn25.Visible = false;
-            this.dataGridViewTextBoxColumn25.Width = 118;
             // 
             // dataGridViewTextBoxColumn26
             // 
@@ -652,149 +785,6 @@
             this.Done.Name = "Done";
             this.Done.Visible = false;
             this.Done.Width = 63;
-            // 
-            // SSFDGV
-            // 
-            this.SSFDGV.AllowUserToAddRows = false;
-            this.SSFDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.SSFDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
-            this.SSFDGV.AutoGenerateColumns = false;
-            this.SSFDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.SSFDGV.BackgroundColor = System.Drawing.Color.Lavender;
-            this.SSFDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SSFDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
-            this.SSFDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SSFDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TargetIsotope,
-            this.RadioIsotope,
-            this.Weight,
-            this.sSFDataGridViewTextBoxColumn,
-            this.SSFCh,
-            this.GFast,
-            this.ND,
-            this.SigB,
-            this.ChEpi,
-            this.UnitID});
-            this.SSFDGV.ContextMenuStrip = this.dgvCMS;
-            this.SSFDGV.DataSource = this.SSFBS;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.SSFDGV.DefaultCellStyle = dataGridViewCellStyle26;
-            this.SSFDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SSFDGV.Location = new System.Drawing.Point(0, 0);
-            this.SSFDGV.Margin = new System.Windows.Forms.Padding(4);
-            this.SSFDGV.Name = "SSFDGV";
-            this.SSFDGV.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SSFDGV.RowTemplate.Height = 24;
-            this.SSFDGV.Size = new System.Drawing.Size(695, 285);
-            this.SSFDGV.TabIndex = 3;
-            // 
-            // TargetIsotope
-            // 
-            this.TargetIsotope.DataPropertyName = "TargetIsotope";
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TargetIsotope.DefaultCellStyle = dataGridViewCellStyle18;
-            this.TargetIsotope.HeaderText = "Target";
-            this.TargetIsotope.Name = "TargetIsotope";
-            this.TargetIsotope.Width = 89;
-            // 
-            // RadioIsotope
-            // 
-            this.RadioIsotope.DataPropertyName = "RadioIsotope";
-            this.RadioIsotope.HeaderText = "RadioIsotope";
-            this.RadioIsotope.Name = "RadioIsotope";
-            this.RadioIsotope.Visible = false;
-            this.RadioIsotope.Width = 147;
-            // 
-            // Weight
-            // 
-            this.Weight.DataPropertyName = "Weight";
-            dataGridViewCellStyle19.Format = "n4";
-            this.Weight.DefaultCellStyle = dataGridViewCellStyle19;
-            this.Weight.HeaderText = "Weight";
-            this.Weight.Name = "Weight";
-            this.Weight.ToolTipText = "in %";
-            this.Weight.Width = 97;
-            // 
-            // sSFDataGridViewTextBoxColumn
-            // 
-            this.sSFDataGridViewTextBoxColumn.DataPropertyName = "SSF";
-            dataGridViewCellStyle20.Format = "N4";
-            dataGridViewCellStyle20.NullValue = null;
-            this.sSFDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle20;
-            this.sSFDataGridViewTextBoxColumn.HeaderText = "SSF";
-            this.sSFDataGridViewTextBoxColumn.Name = "sSFDataGridViewTextBoxColumn";
-            this.sSFDataGridViewTextBoxColumn.Width = 66;
-            // 
-            // SSFCh
-            // 
-            this.SSFCh.DataPropertyName = "SSFCh";
-            dataGridViewCellStyle21.Format = "N4";
-            this.SSFCh.DefaultCellStyle = dataGridViewCellStyle21;
-            this.SSFCh.HeaderText = "SSFCh";
-            this.SSFCh.Name = "SSFCh";
-            this.SSFCh.Width = 89;
-            // 
-            // GFast
-            // 
-            this.GFast.DataPropertyName = "GFast";
-            dataGridViewCellStyle22.Format = "N4";
-            this.GFast.DefaultCellStyle = dataGridViewCellStyle22;
-            this.GFast.HeaderText = "GFast";
-            this.GFast.Name = "GFast";
-            this.GFast.Width = 82;
-            // 
-            // ND
-            // 
-            this.ND.DataPropertyName = "ND";
-            dataGridViewCellStyle23.Format = "E2";
-            dataGridViewCellStyle23.NullValue = null;
-            this.ND.DefaultCellStyle = dataGridViewCellStyle23;
-            this.ND.HeaderText = "ND";
-            this.ND.Name = "ND";
-            this.ND.ToolTipText = "x 1.E24 i/cm3";
-            this.ND.Width = 64;
-            // 
-            // SigB
-            // 
-            this.SigB.DataPropertyName = "SigB";
-            dataGridViewCellStyle24.Format = "E2";
-            dataGridViewCellStyle24.NullValue = null;
-            this.SigB.DefaultCellStyle = dataGridViewCellStyle24;
-            this.SigB.HeaderText = "SigB";
-            this.SigB.Name = "SigB";
-            this.SigB.ToolTipText = "in barns";
-            this.SigB.Width = 74;
-            // 
-            // ChEpi
-            // 
-            this.ChEpi.DataPropertyName = "ChEpi";
-            dataGridViewCellStyle25.Format = "E2";
-            this.ChEpi.DefaultCellStyle = dataGridViewCellStyle25;
-            this.ChEpi.HeaderText = "ChEpi";
-            this.ChEpi.Name = "ChEpi";
-            this.ChEpi.Width = 86;
-            // 
-            // UnitID
-            // 
-            this.UnitID.DataPropertyName = "UnitID";
-            this.UnitID.HeaderText = "UnitID";
-            this.UnitID.Name = "UnitID";
-            this.UnitID.Visible = false;
-            this.UnitID.Width = 90;
             // 
             // ucUnit
             // 
@@ -864,7 +854,22 @@
         private System.Windows.Forms.ToolStripTextBox lastCal;
         private System.Windows.Forms.SplitContainer cfgSC;
         private System.Windows.Forms.DataGridView unitDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
+        private System.Windows.Forms.DataGridView SSFDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TargetIsotope;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RadioIsotope;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Weight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sSFDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SSFCh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GFast;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ND;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SigB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChEpi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UnitID;
+        public System.Windows.Forms.BindingSource UnitBS;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ToDo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Vol;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn kth;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastChanged;
@@ -881,23 +886,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Done;
-        private System.Windows.Forms.DataGridView SSFDGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TargetIsotope;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RadioIsotope;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Weight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sSFDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SSFCh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GFast;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ND;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SigB;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ChEpi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnitID;
-        public System.Windows.Forms.BindingSource UnitBS;
     }
 }

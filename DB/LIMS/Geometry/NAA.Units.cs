@@ -44,12 +44,13 @@ namespace DB
                     if (nonNullables == null)
                     {
                         nonNullables = new DataColumn[] {
-                            this.columnChDiameter, this.columnChLenght,
+                            this.columnChDiameter, this.columnChLength,
                             this.columnDensity,
                             this.columnDiameter,
-                            this.columnLenght,
+                            this.columnLength,
                             this.columnLastCalc,
                             this.columnLastChanged,
+                            this.columnToDo,
                             this.columnContent,
                             this.columnMass };
                     }
@@ -92,32 +93,32 @@ namespace DB
                 { 
 
                     bool nullo = EC.CheckNull(c, row);
-                    bool densityNull = nullo && c == this.columnDensity;
-                    bool diamLengDens = (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity);
+                    bool densityNull = nullo ;
+                    bool diamLeng = (c == this.columnDiameter || c == this.columnLength);
 
-
-                    //FIX THIS
-                    // IF density is not null (any other case) 
-                    //then Mass will be calculate always,
-                    //while I might want something differe
-                    if (diamLengDens)
+                    bool Dens = ( c == this.columnDensity) ;
+                  
+                    // diameter or lenght changed
+                    if (diamLeng)
                     {
-                        // int round = 4;
-                        if (!densityNull)
-                        {
-                            if (CalcDensity) r.FindDensity();
-                            else     r.FindMass();
-                        }
-                        else
-                        {
-                            r.FindDensity();
-                        }
+
+                        if (CalcDensity) r.FindMD(true);
+                        else if (!densityNull) r.FindMD(false);
+
 
                     }
-                    else if (c == this.columnMass || densityNull)
+                    else if (c == this.columnMass) // || densityNull
                     {
-                        r.FindDensity();
+                        r.FindMD(true);
 
+                    }
+                    else if (Dens)
+                    {
+                        if (densityNull) r.FindMD(true);
+                        else if (!CalcDensity)
+                        {
+                            r.FindMD(false);
+                        }
                     }
 
                     else if (c == this.columnLastCalc || c == this.columnLastChanged)
@@ -133,8 +134,12 @@ namespace DB
                         else if (tot != 0) //negative has been calculated
                         {
                             r.ToDo = false;
-                            r.LastChanged = r.LastCalc;
+                           
                         }
+                    }
+                    else if (c== this.ToDoColumn)
+                    {
+                        if (!r.ToDo) r.LastChanged = r.LastCalc;
                     }
                     else if (c == this.columnContent)
                     {
@@ -146,12 +151,13 @@ namespace DB
                         }
 
                     }
-
+                    
                     if (r.IsNameNull() || string.IsNullOrEmpty(r.Name))
                     {
-                        r.Name = "Unit";
-
-
+                        r.Name = "Unit @ ";
+                        EC.CheckNull(this.columnLastChanged, r);
+                        r.Name += r.LastChanged;
+            
                     }
 
                 }
@@ -169,56 +175,57 @@ namespace DB
 
         partial class UnitRow
         {
-            public void FindMass()
+            /// <summary>
+            /// Finds the mass or density
+            /// </summary>
+            /// <param name="density">forces density calculation</param>
+            public void FindMD(bool density)
             {
 
-                double Vol = MyMath.GetVolCylinder(Diameter, Lenght);
 
-                if (Vol != 0)
-                {
+
+                if (Vol == 0) return;
+             //   {
                     int round = 4;
+                  
+                    Decimal current = 0;
+                    double aux = 0;
+                    if (density)
+                    {
 
-                    Decimal mass = Convert.ToDecimal(Vol * Density);
-                    mass = Decimal.Round(mass, round);
+                        aux = this.Mass / this.Vol;
 
-                    Decimal currentMass = Convert.ToDecimal(Mass);
-                    currentMass = Decimal.Round(currentMass, round);
+                        current = Convert.ToDecimal(this.Density);
+                      
+                    }
+                    else
+                    {
+                        aux = Vol * Density;
+                     
+                   
+                        current = Convert.ToDecimal(this.Mass);
+                       
+                    }
 
-                    if (mass != currentMass)
+                current = Decimal.Round(current, round);
+
+                Decimal valor = 0;
+                valor = Convert.ToDecimal(aux);
+                valor = Decimal.Round(valor, round);
+
+                    if (valor != current)
 
                     {
-                        Mass = (double)mass;
+                        if (!density) Mass = (double)valor;
+                        else Density = (double)valor;
                         LastChanged = DateTime.Now; //update the time
                     }
 
-                }
+              //  }
             }
 
-            public void FindDensity()
-            {
-                double Vol = MyMath.GetVolCylinder(Diameter, Lenght);
-
-                // double density = 
-                if (Vol != 0)
-                {
-                    int round = 4;
-
-                    Decimal density = Convert.ToDecimal(Mass / Vol);
-                    density = Decimal.Round(density, round);
-
-                    Decimal currentdens = Convert.ToDecimal(Density);
-                    currentdens = Decimal.Round(currentdens, round);
-
-                    if (density != currentdens)
-                    {
-                        Density = (double)density;
-
-                        LastChanged = DateTime.Now; //update the time
-                                                    //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
-                    }
-                    //
-                }
-            }
+         
+       
 
             /// <summary>
             /// Sets the channel data
@@ -266,12 +273,12 @@ namespace DB
                     if (!v.IsRabbit)
                     {
                         // lenghtbox.Text = leng;
-                        this.Lenght = (double)leng;
+                        this.Length = (double)leng;
                         // this.VialTypeID = v.VialTypeID;
                     }
                     else
                     {
-                        this.ChLenght = (double)leng;
+                        this.ChLength = (double)leng;
                         //  this.ContainerID = v.VialTypeID;
                         //   chlenB.Text = leng.ToString();
                     }

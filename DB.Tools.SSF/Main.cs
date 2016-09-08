@@ -76,10 +76,10 @@ namespace DB.Tools
             string buffer = getDecomposedMatrix();
             string config = getChannelCfg();
 
-            if (UNIT.Diameter != 0 && UNIT.Lenght != 0 && !config.Equals(String.Empty))
+            if (UNIT.Diameter != 0 && UNIT.Length != 0 && !config.Equals(String.Empty))
             {
                 buffer += "\n";
-                buffer += UNIT.Mass + "\n" + UNIT.Diameter + "\n" + UNIT.Lenght + "\n" + config;
+                buffer += UNIT.Mass + "\n" + UNIT.Diameter + "\n" + UNIT.Length + "\n" + config;
                 buffer += "\n";
                 buffer += "\n";
             }
@@ -104,7 +104,7 @@ namespace DB.Tools
             IEnumerable<LINAA.MatSSFRow> rows = UNIT.GetMatSSFRows();
 
             UNIT.GtCh = 1;
-            double surf = (UNIT.Diameter / 2) * ((UNIT.Diameter / 2) + (UNIT.Lenght));
+            double surf = (UNIT.Diameter / 2) * ((UNIT.Diameter / 2) + (UNIT.Length));
             double SDensity = 6.0221415 * 10 * UNIT.Mass / surf;
             double Xi = 1e-12 * SDensity * UNIT.kepi;
             Int32 factor = 10000;

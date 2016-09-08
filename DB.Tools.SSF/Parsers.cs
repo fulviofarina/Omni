@@ -13,7 +13,7 @@ namespace DB.Tools
         {
             string chCfg = string.Empty;
 
-            chCfg = UNIT.ChCfg[0] + "," + UNIT.ChDiameter + "," + UNIT.ChLenght;
+            chCfg = UNIT.ChCfg[0] + "," + UNIT.ChDiameter + "," + UNIT.ChLength;
 
             return chCfg;
         }

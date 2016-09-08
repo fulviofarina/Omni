@@ -122,14 +122,14 @@ namespace DB.Tools
                     unitDT.AddUnitRow(u);
 
                     u.ChDiameter = (iS.VialTypeRow.InnerRadius * 2);
-                    u.ChLenght = iS.VialTypeRow.MaxFillHeight;
+                    u.ChLength = iS.VialTypeRow.MaxFillHeight;
                     u.ChCfg = fluxtypo.ToString();
                     u.Name = iS.SubSampleName;
 
                     u.Content = iS.MatrixRow.MatrixComposition;
                     u.Mass = iS.DryMass();
                     u.Diameter = (iS.Radius * 2);
-                    u.Lenght = iS.FillHeight;
+                    u.Length = iS.FillHeight;
 
                     MatSSF.StartupPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + this.Linaa.CurrentSSFPref.Folder;
 

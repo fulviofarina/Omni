@@ -365,18 +365,8 @@ namespace DB.UI
 
                     }
 
-                    colError = row.GetColumnError(dt.MatrixDensityColumn);
-                    if (string.IsNullOrEmpty(colError)) ///should use density to massCalculate
-                    {
-
-                        ///do not exit, use preference auto-mass calculate
-                    }
-                    else ///density is null, should calculate density
-                    {
-                        ///do not exit, use calculate density from mass and dimensions
-
-                    }
-
+                   // colError = row.GetColumnError(dt.MatrixDensityColumn);
+                  
 
                 }
 
@@ -439,28 +429,29 @@ namespace DB.UI
             this.ucUnit.DeLink();
 
 
-            // errorB.Clear();
-
             //Go to Calculations/ Units Tab
             this.Tab.SelectedTab = this.CalcTab;
 
             //Clear InputFile RTF Control
             compositionsbox.Clear();
 
-
             this.progress.Value = 0;
-
-
-            //Delink BS for SSF
-         
-            //1
-            this.progress.PerformStep();
-            Application.DoEvents();
-
-            bool hide = !showMatSSF.Checked;
 
             try
             {
+
+
+
+                bool hide = !(Interface.IPreferences.CurrentPref.ShowMatSSF);
+
+                bool doCk = (Interface.IPreferences.CurrentPref.DoCK);
+
+                bool doSSF = (Interface.IPreferences.CurrentPref.DoMatSSF);
+
+                this.progress.PerformStep();
+
+                Application.DoEvents();
+
                 //  MatSSF.UNIT = currentUnit;
                 //  MatSSF.Table = this.lINAA.MatSSF;
                 MatSSF.INPUT();
@@ -475,7 +466,10 @@ namespace DB.UI
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-                bool runOk = MatSSF.RUN(hide);
+                bool runOk = false;
+
+                if (doSSF) runOk = MatSSF.RUN(hide);
+              
                 //4
                 this.progress.PerformStep();
                 Application.DoEvents();
@@ -489,7 +483,7 @@ namespace DB.UI
                         throw new SystemException("Problems Reading MATSSF Output\n");
                     }
                 }
-                else
+                else if (doSSF)
                 {
                     throw new SystemException("MATSSF is still calculating stuff...\n");
                     // errorB.Text += "MATSSF is still calculating stuff...\n";
@@ -498,12 +492,18 @@ namespace DB.UI
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-                MatSSF.CHILEAN();
+               if (doCk)  MatSSF.CHILEAN();
+
+
                 //6
                 this.progress.PerformStep();
                 Application.DoEvents();
 
                 //  else errorB.Text += "Matrix Composition is empty\n";
+
+
+
+
             }
             catch (SystemException ex)
             {
@@ -546,11 +546,12 @@ namespace DB.UI
 
             column = Unit.DiameterColumn.ColumnName;
             this.diameterbox.TextBox.DataBindings.Add(bindings[column] as Binding);
-            column = Unit.LenghtColumn.ColumnName;
+          
+            column = Unit.LengthColumn.ColumnName;
             this.lenghtbox.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChDiameterColumn.ColumnName;
             this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
-            column = Unit.ChLenghtColumn.ColumnName;
+            column = Unit.ChLengthColumn.ColumnName;
             this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.MassColumn.ColumnName;
             this.massB.TextBox.DataBindings.Add(bindings[column] as Binding);
@@ -566,6 +567,16 @@ namespace DB.UI
             this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.NameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(bindings[column] as Binding);
+
+
+            column = Unit.VolColumn.ColumnName;
+            //     Hashtable bindings = Dumb.ArrayOfBindings(ref bs);
+            Binding b = bindings[column] as Binding;
+            Binding Vol = new Binding( b.PropertyName, b.DataSource, column, true, b.DataSourceUpdateMode, DBNull.Value, "N1");
+
+         
+            this.volLbl.TextBox.DataBindings.Add(Vol);
+
 
             /*
 
