@@ -131,7 +131,7 @@ namespace DB.Tools
                     u.Diameter = (iS.Radius * 2);
                     u.Lenght = iS.FillHeight;
 
-                    MatSSF.StartupPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + DB.Properties.Resources.MatSSFFolder;
+                    MatSSF.StartupPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + this.Linaa.CurrentSSFPref.Folder;
 
                     MatSSF.UNIT = u;
 

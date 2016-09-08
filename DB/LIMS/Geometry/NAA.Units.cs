@@ -57,6 +57,19 @@ namespace DB
                 }
             }
 
+
+         
+
+            public bool CalcDensity
+            {
+
+                get
+                {
+                    return (this.DataSet as LINAA).CurrentSSFPref.CalcDensity;
+                   
+                }
+            }
+
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
                 DataColumn c = e.Column;
@@ -81,74 +94,27 @@ namespace DB
                     bool diamLengDens = (c == this.columnDiameter || c == this.columnLenght || c == this.columnDensity);
 
 
-
-
-                   
-                   
-                
-                
-
+                    //FIX THIS
+                    // IF density is not null (any other case) 
+                    //then Mass will be calculate always,
+                    //while I might want something differe
                     if (diamLengDens)
                     {
-                       // int round = 4;
-
+                        // int round = 4;
                         if (!densityNull)
                         {
-                            double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
-
-                            if (Vol != 0)
-                            {
-                                int round = 4;
-
-                                Decimal mass = Convert.ToDecimal(Vol * r.Density);
-                                mass = Decimal.Round(mass, round);
-
-                                Decimal currentMass = Convert.ToDecimal(r.Mass);
-                                currentMass = Decimal.Round(currentMass, round);
-
-                                if (mass != currentMass)
-
-                                {
-                                    r.Mass = (double)mass;
-                                    r.LastChanged = DateTime.Now; //update the time
-                                }
-
-                            }
-                          //  return;
-                            //    massB.Text = Decimal.Round(Convert.ToDecimal(mass), 5).ToString();
+                            if (CalcDensity) r.FindDensity();
+                            else     r.FindMass();
+                        }
+                        else
+                        {
+                            r.FindDensity();
                         }
 
-                       
-
-                        // else densityNull = true;
                     }
                     else if (c == this.columnMass || densityNull)
                     {
-
-                        double Vol = MyMath.GetVolCylinder(r.Diameter, r.Lenght);
-
-                        // double density = 
-                        if (Vol != 0)
-                        {
-                            int round = 4;
-
-                            Decimal density = Convert.ToDecimal(r.Mass/ Vol);
-                            density = Decimal.Round(density, round);
-
-                            Decimal currentdens = Convert.ToDecimal(r.Density);
-                            currentdens = Decimal.Round(currentdens, round);
-
-                            if (density != currentdens)
-                            {
-                                r.Density = (double)density;
-
-                                r.LastChanged = DateTime.Now; //update the time
-                                                              //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
-                            }
-                            //
-                        }
-
-
+                        r.FindDensity();
 
                     }
 
@@ -194,10 +160,64 @@ namespace DB
                     linaa.AddException(ex);
                 }
             }
+
+        
+
         }
 
         partial class UnitRow
         {
+            public void FindMass()
+            {
+
+                double Vol = MyMath.GetVolCylinder(Diameter, Lenght);
+
+                if (Vol != 0)
+                {
+                    int round = 4;
+
+                    Decimal mass = Convert.ToDecimal(Vol * Density);
+                    mass = Decimal.Round(mass, round);
+
+                    Decimal currentMass = Convert.ToDecimal(Mass);
+                    currentMass = Decimal.Round(currentMass, round);
+
+                    if (mass != currentMass)
+
+                    {
+                        Mass = (double)mass;
+                        LastChanged = DateTime.Now; //update the time
+                    }
+
+                }
+            }
+
+            public void FindDensity()
+            {
+                double Vol = MyMath.GetVolCylinder(Diameter, Lenght);
+
+                // double density = 
+                if (Vol != 0)
+                {
+                    int round = 4;
+
+                    Decimal density = Convert.ToDecimal(Mass / Vol);
+                    density = Decimal.Round(density, round);
+
+                    Decimal currentdens = Convert.ToDecimal(Density);
+                    currentdens = Decimal.Round(currentdens, round);
+
+                    if (density != currentdens)
+                    {
+                        Density = (double)density;
+
+                        LastChanged = DateTime.Now; //update the time
+                                                    //      densityB.Text = Decimal.Round(Convert.ToDecimal(density), 2).ToString();
+                    }
+                    //
+                }
+            }
+
             /// <summary>
             /// Sets the channel data
             /// </summary>

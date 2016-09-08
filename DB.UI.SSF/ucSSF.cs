@@ -8,6 +8,8 @@ using Msn;
 using System.Collections;
 using System.Collections.Generic;
 using DB.Properties;
+using System.Drawing;
+
 
 namespace DB.UI
 {
@@ -18,9 +20,9 @@ namespace DB.UI
 
       
        // private bool Offline = false;
-        private static string mf = preFolder + matssfFolder + "lims.xml";
+        private static string mf = preFolder + "lims.xml";
         private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
-        private static string matssfFolder = Resources.MatSSFFolder;
+     //   private static string matssfFolder = Settings.Default.SSFFolder;
         private static string preFolder = Environment.GetFolderPath(folder);
         private Interface Interface = null;
 
@@ -80,7 +82,7 @@ namespace DB.UI
 
             
 
-            System.Windows.Forms.Form form = null;
+            Form form = null;
 
             Pop msn = null;
             msn = Linaa.Msn;
@@ -90,16 +92,18 @@ namespace DB.UI
             msn.Dock = DockStyle.Fill;
             form.Dispose();
 
-            form = new System.Windows.Forms.Form();
+            form = new Form();
             form.AutoSize = true;
             form.Text = "SSF Panel";
             IntPtr Hicon = DB.UI.Properties.Resources.Logo.GetHicon();
-            System.Drawing.Icon myIcon = System.Drawing.Icon.FromHandle(Hicon);
+            Icon myIcon = Icon.FromHandle(Hicon);
             form.Icon = myIcon;
             form.Controls.Add(this);// Populate(this);
-            form.Show();
+            form.Show();   
 
-            MatSSF.StartupPath = preFolder + matssfFolder;
+
+            string folder = Interface.IPreferences.CurrentSSFPref.Folder;
+            MatSSF.StartupPath = preFolder + folder;
 
             loadDatabase();
 
@@ -129,21 +133,26 @@ namespace DB.UI
             this.AutoLoad.CheckedChanged += this.checkedChanged;
 
 
+
+            Interface.IReport.Msg("Database", "Units were loaded!");
+
+
+            
             //  Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
 
             //  Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
 
 
             // Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
-//Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-           // Interface.IPreferences.CurrentPref.DoCK = this.doCK.Checked;
-        //    Interface.IPreferences.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
-           // Interface.IPreferences.CurrentPref.ShowMatSSF = this.showMatSSF.Checked;
-          //  Interface.IPreferences.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
+            //Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
+            // Interface.IPreferences.CurrentPref.DoCK = this.doCK.Checked;
+            //    Interface.IPreferences.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
+            // Interface.IPreferences.CurrentPref.ShowMatSSF = this.showMatSSF.Checked;
+            //  Interface.IPreferences.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
             // this.SQL.Checked = Interface.IPreferences.CurrentSSFPref.SQL;
-          //  Interface.IPreferences.CurrentSSFPref.Folder = this.FolderPath.Text;
-           // Interface.IPreferences.CurrentSSFPref.ShowOther = this.showOther.Checked;
-         //   Interface.IPreferences.CurrentPref.Offline = this.workOffline.Checked;
+            //  Interface.IPreferences.CurrentSSFPref.Folder = this.FolderPath.Text;
+            // Interface.IPreferences.CurrentSSFPref.ShowOther = this.showOther.Checked;
+            //   Interface.IPreferences.CurrentPref.Offline = this.workOffline.Checked;
 
 
         }
@@ -359,6 +368,7 @@ namespace DB.UI
                     colError = row.GetColumnError(dt.MatrixDensityColumn);
                     if (string.IsNullOrEmpty(colError)) ///should use density to massCalculate
                     {
+
                         ///do not exit, use preference auto-mass calculate
                     }
                     else ///density is null, should calculate density
@@ -447,7 +457,7 @@ namespace DB.UI
             this.progress.PerformStep();
             Application.DoEvents();
 
-            bool hide = false;
+            bool hide = !showMatSSF.Checked;
 
             try
             {
@@ -465,14 +475,14 @@ namespace DB.UI
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-                bool runOk = DB.Tools.MatSSF.RUN(hide);
+                bool runOk = MatSSF.RUN(hide);
                 //4
                 this.progress.PerformStep();
                 Application.DoEvents();
 
                 if (runOk)
                 {
-                    DB.Tools.MatSSF.OUTPUT();
+                    MatSSF.OUTPUT();
 
                     if (MatSSF.Table.Count == 0)
                     {
@@ -521,23 +531,9 @@ namespace DB.UI
 
         private void setUnitBindings()
         {
-
-
             //SET THE PREFERENCES
 
-            IPreferences ip = Interface.IPreferences;
-
-            this.loop.Checked = ip.CurrentSSFPref.Loop;
-            this.calcDensity.Checked = ip.CurrentSSFPref.CalcDensity;
-            this.doCK.Checked = ip.CurrentPref.DoCK;
-            this.doMatSSF.Checked = ip.CurrentPref.DoMatSSF;
-            this.showMatSSF.Checked = ip.CurrentPref.ShowMatSSF;
-            this.AutoLoad.Checked = ip.CurrentSSFPref.AutoLoad;
-            // this.SQL.Checked = ip.CurrentSSFPref.SQL;
-            this.FolderPath.Text = ip.CurrentSSFPref.Folder;
-            this.showOther.Checked = ip.CurrentSSFPref.ShowOther;
-            this.workOffline.Checked = ip.CurrentPref.Offline;
-
+          
 
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
@@ -571,23 +567,38 @@ namespace DB.UI
             column = Unit.NameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(bindings[column] as Binding);
 
-/*
-            
-            column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
+            /*
 
-            Binding b1 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
+                        column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
 
-         
-            column = Interface.IDB.SSFPref.LoopColumn.ColumnName;
-
-            Binding b2 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
-
-            */
+                        Binding b1 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
 
 
-           // this.autoCalcDensity.bin
+                        column = Interface.IDB.SSFPref.LoopColumn.ColumnName;
+
+                        Binding b2 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
+
+                        */
+
+
+            // this.autoCalcDensity.bin
         }
 
+        private void setPreferences()
+        {
+            IPreferences ip = Interface.IPreferences;
+
+            this.loop.Checked = ip.CurrentSSFPref.Loop;
+            this.calcDensity.Checked = ip.CurrentSSFPref.CalcDensity;
+            this.doCK.Checked = ip.CurrentPref.DoCK;
+            this.doMatSSF.Checked = ip.CurrentPref.DoMatSSF;
+            this.showMatSSF.Checked = ip.CurrentPref.ShowMatSSF;
+            this.AutoLoad.Checked = ip.CurrentSSFPref.AutoLoad;
+            // this.SQL.Checked = ip.CurrentSSFPref.SQL;
+            this.FolderPath.Text = ip.CurrentSSFPref.Folder;
+            this.showOther.Checked = ip.CurrentSSFPref.ShowOther;
+            this.workOffline.Checked = ip.CurrentPref.Offline;
+        }
 
         private void loadDatabase()
         {
@@ -614,7 +625,12 @@ namespace DB.UI
                 ucMS.Set(ref Interface);
                 ucMS.RowHeaderMouseClick = this.dgvMatrixSelected;
 
+                setPreferences();
+
                 setUnitBindings();
+
+
+
 
                 this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
 

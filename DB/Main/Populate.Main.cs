@@ -6,6 +6,9 @@ using System.Linq;
 using Rsx;
 using System.Xml;
 using System.Xml.Schema;
+using DB.Properties;
+using System.IO;
+using System.Windows.Forms;
 
 namespace DB
 {
@@ -38,7 +41,13 @@ namespace DB
      }
      */
 
+        protected internal string appPath = Application.StartupPath;
 
+        public string AppPath
+        {
+            get { return appPath; }
+            set { appPath = value; }
+        }
 
         protected internal string folderPath;
 
@@ -60,56 +69,64 @@ namespace DB
 
             bool created = false;
 
-            string path = folderPath + DB.Properties.Resources.k0XFolder;
-            if (!System.IO.Directory.Exists(path))
+            string path = folderPath + Resources.k0XFolder;
+            if (!Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
                 created = true;
             }
 
-            path = folderPath + DB.Properties.Resources.Exceptions;
-            if (!System.IO.Directory.Exists(path))
+            path = folderPath + Resources.Exceptions;
+            if (!Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
                 created = true;
             }
-            path = folderPath + DB.Properties.Resources.Backups;
-            if (!System.IO.Directory.Exists(path))
+            path = folderPath + Resources.Backups;
+            if (!Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
                 created = true;
             }
 
-            path = folderPath + Properties.Resources.Preferences;
-            string developerPath = System.Windows.Forms.Application.StartupPath + Properties.Resources.PreferencesDev;
+            path = folderPath + Resources.Preferences;
+            string developerPath = appPath + Resources.PreferencesDev;
             //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
-            if (System.IO.File.Exists(developerPath))
+            if (File.Exists(developerPath))
             {
-                System.IO.File.Copy(developerPath, path, true);
-                System.IO.File.Delete(developerPath);
+                File.Copy(developerPath, path, true);
+                File.Delete(developerPath);
             }
 
-            path = folderPath + DB.Properties.Resources.SolCoiFolder;
-            string overrider = System.Windows.Forms.Application.StartupPath + DB.Properties.Resources.ResourcesOverrider;
-            bool overriderFound = System.IO.File.Exists(path);
+            path = folderPath + Resources.SolCoiFolder;
+            string overrider = appPath + Resources.ResourcesOverrider;
+            bool overriderFound = File.Exists(path);
 
-            string features = System.Windows.Forms.Application.StartupPath + DB.Properties.Resources.Features;
-
-            if (System.IO.File.Exists(features))
+            string features = appPath + Resources.Features;
+            bool feats = File.Exists(features);
+            if (feats)
             {
-                System.IO.File.Copy(features, folderPath + DB.Properties.Resources.Features, true);
-                System.IO.File.Delete(features);
+
+                string currentpath = folderPath + Resources.Features;
+                File.Copy(features, currentpath, true);
+                File.Delete(features);
                 Help();
             }
 
-            string solcoi = folderPath + DB.Properties.Resources.SolCoiFolder;
-            string matssf = folderPath + DB.Properties.Resources.MatSSFFolder;
+            string solcoi = folderPath + Resources.SolCoiFolder;
+            string matssf = folderPath + Settings.Default.SSFFolder;
 
-            if (!System.IO.Directory.Exists(solcoi) || !System.IO.Directory.Exists(matssf) || overriderFound)
-            {
-                InstallResources();
-                if (overriderFound) System.IO.File.Delete(overrider);
-            }
+            bool nosolcoi = !Directory.Exists(solcoi);
+            bool nossf = !Directory.Exists(matssf);
+
+            if (nosolcoi || nossf ) InstallResources();
+        
+                if (overriderFound) File.Delete(overrider);
+       
+        
+
+
+
         }
 
         public bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)

@@ -172,16 +172,20 @@ namespace DB
                 if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
               //  if (IsFillByHLNull()) FillByHL = true;
                // if (IsFillBySpectraNull()) FillBySpectra = true;
-                if (IsHLNull()) HL = DB.Properties.Settings.Default.HLSNMNAAConnectionString;
-                else DB.Properties.Settings.Default["HLSNMNAAConnectionString"] = HL;
-                if (IsLIMSNull()) LIMS = DB.Properties.Settings.Default.NAAConnectionString;
-                else DB.Properties.Settings.Default["NAAConnectionString"] = LIMS;
-                if (IsSpectraNull()) Spectra = DB.Properties.Settings.Default.SpectraFolder;
-                else DB.Properties.Settings.Default["SpectraFolder"] = Spectra;
-                if (IsSpectraSvrNull()) SpectraSvr = DB.Properties.Settings.Default.SpectraServer;
-                else DB.Properties.Settings.Default["SpectraServer"] = SpectraSvr;
+                if (IsHLNull()) HL = Settings.Default.HLSNMNAAConnectionString;
+                else Settings.Default["HLSNMNAAConnectionString"] = HL;
+                if (IsLIMSNull()) LIMS = Settings.Default.NAAConnectionString;
+                else Settings.Default["NAAConnectionString"] = LIMS;
+                if (IsSpectraNull()) Spectra =Settings.Default.SpectraFolder;
+                else Settings.Default["SpectraFolder"] = Spectra;
+                if (IsSpectraSvrNull()) SpectraSvr =Settings.Default.SpectraServer;
+                else Settings.Default["SpectraServer"] = SpectraSvr;
 
-                DB.Properties.Settings.Default.Save();
+                if (IsSolCoiFolderNull()) SolCoiFolder = Settings.Default.SOLCOIFolder;
+                else Settings.Default["SOLCOIFolder"] = SolCoiFolder;
+
+
+                Settings.Default.Save();
             }
         }
 
@@ -191,16 +195,20 @@ namespace DB
 
             public void Check()
             {
-              //  DoSolang = false;
-              //  DoMatSSF = false;//fix
+                //  DoSolang = false;
+                //  DoMatSSF = false;//fix
 
-            
-              //  if (IsAutoLoadNull()) AutoLoad = true;
+
+                //  if (IsAutoLoadNull()) AutoLoad = true;
                 //  if (IsShowSolangNull()) ShowSolang = false;
                 //  if (IsShowMatSSFNull()) ShowMatSSF = false;
                 // if (IsAAFillHeightNull()) AAFillHeight = false;
                 //if (IsAARadiusNull()) AARadius = true;
-                //  if (IsShowSampleDescriptionNull()) ShowSampleDescription = true;
+                if (IsFolderNull()) Folder = Settings.Default.SSFFolder;
+                else Settings.Default["SSFFolder"] = Folder;
+
+
+                // ShowSampleDescription = true;
                 //   if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
                 //   if (IsFillByHLNull()) FillByHL = true;
                 //  if (IsFillBySpectraNull()) FillBySpectra = true;
@@ -214,7 +222,7 @@ namespace DB
                 //  if (IsSpectraSvrNull()) SpectraSvr = DB.Properties.Settings.Default.SpectraServer;
                 //  else DB.Properties.Settings.Default["SpectraServer"] = SpectraSvr;
 
-                DB.Properties.Settings.Default.Save();
+                Settings.Default.Save();
 
 
             }

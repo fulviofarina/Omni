@@ -80,5 +80,29 @@ namespace DB.Properties {
                 this["deployPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\k0-X\\MatSSF\\")]
+        public string SSFFolder {
+            get {
+                return ((string)(this["SSFFolder"]));
+            }
+            set {
+                this["SSFFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\k0-X\\SolCoi\\")]
+        public string SOLCOIFolder {
+            get {
+                return ((string)(this["SOLCOIFolder"]));
+            }
+            set {
+                this["SOLCOIFolder"] = value;
+            }
+        }
     }
 }

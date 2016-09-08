@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Rsx;
+using System.Diagnostics;
+using System.IO;
 
 namespace DB.Tools
 {
@@ -38,14 +40,14 @@ namespace DB.Tools
         public static bool WriteXML()
         {
             string file = startupPath + UNIT.Name;
-            System.IO.File.Delete(file);
+            File.Delete(file);
             Table.WriteXml(file);
 
             byte[] bites = Dumb.ReadFileBytes(file);
 
             UNIT.SSFTable = bites;
 
-            System.IO.File.Delete(file);
+            File.Delete(file);
 
             return true;
         }
@@ -63,7 +65,7 @@ namespace DB.Tools
             Dumb.WriteBytesFile(ref bites, file);
             Table.ReadXml(file);
             //  UNIT.SSFTable = bites;
-            System.IO.File.Delete(file);
+            File.Delete(file);
 
             return true;
         }
@@ -183,9 +185,9 @@ namespace DB.Tools
 
         public static bool RUN(bool Hide)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            Process process = new Process();
 
-            System.IO.File.Delete(startupPath + outputFile); //delete output
+            File.Delete(startupPath + outputFile); //delete output
 
             Dumb.Process(process, startupPath, exefile, String.Empty, Hide, true, 100000);
 

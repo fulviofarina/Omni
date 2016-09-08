@@ -27,5 +27,11 @@
     <Setting Name="deployPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">\\scksrv1\gkd\DOKUMENT\LRM\_Software_Ontwikkeling\ex_RNM_Archief\k0X\</Value>
     </Setting>
+    <Setting Name="SSFFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\k0-X\MatSSF\</Value>
+    </Setting>
+    <Setting Name="SOLCOIFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\k0-X\SolCoi\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

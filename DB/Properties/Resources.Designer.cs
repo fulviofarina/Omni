@@ -133,15 +133,6 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\MatSSF\.
-        /// </summary>
-        public static string MatSSFFolder {
-            get {
-                return ResourceManager.GetString("MatSSFFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to mcnpx.exe.
         /// </summary>
         public static string MCNPXExe {

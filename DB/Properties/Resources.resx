@@ -143,10 +143,6 @@
   <data name="LinaaChanges" xml:space="preserve">
     <value>\k0-X\Backups\LIMS.Changes.xml</value>
   </data>
-  <data name="MatSSFFolder" xml:space="preserve">
-    <value>\k0-X\MatSSF\</value>
-    <comment>\Resources\MatSSF\ in the past!!!</comment>
-  </data>
   <data name="Backups" xml:space="preserve">
     <value>\k0-X\Backups\</value>
   </data>
