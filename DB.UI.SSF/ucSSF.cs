@@ -572,7 +572,7 @@ namespace DB.UI
             column = Unit.VolColumn.ColumnName;
             //     Hashtable bindings = Dumb.ArrayOfBindings(ref bs);
             Binding b = bindings[column] as Binding;
-            Binding Vol = new Binding( b.PropertyName, b.DataSource, column, true, b.DataSourceUpdateMode, DBNull.Value, "N1");
+            Binding Vol = new Binding( b.PropertyName, b.DataSource, column, true, b.DataSourceUpdateMode, DBNull.Value, "N3");
 
          
             this.volLbl.TextBox.DataBindings.Add(Vol);

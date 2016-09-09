@@ -1,18 +1,18 @@
 ﻿namespace DB
 {
-    public partial class LINAA
+  public partial class LINAA
+  {
+    public partial class ElementsRow
     {
-        public partial class ElementsRow
-        {
-            // string url = string.Empty;
+      // string url = string.Empty;
 
-            private System.Windows.Forms.UserControl uccontrol;
+      private System.Windows.Forms.UserControl uccontrol;
 
-            public System.Windows.Forms.UserControl ucControl
-            {
-                get { return uccontrol; }
-                set { uccontrol = value; }
-            }
-        }
+      public System.Windows.Forms.UserControl ucControl
+      {
+        get { return uccontrol; }
+        set { uccontrol = value; }
+      }
     }
+  }
 }

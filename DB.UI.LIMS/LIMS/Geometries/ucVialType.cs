@@ -2,16 +2,16 @@
 
 namespace DB.UI
 {
-    public partial class ucVialType : UserControl
+  public partial class ucVialType : UserControl
+  {
+    public ucVialType()
     {
-        public ucVialType()
-        {
-            InitializeComponent();
-            this.Linaa.Dispose();
-            this.Linaa = null;
-            this.Linaa = LIMS.Linaa;
+      InitializeComponent();
+      this.Linaa.Dispose();
+      this.Linaa = null;
+      this.Linaa = LIMS.Linaa;
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.VialType);
-        }
+      Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.VialType);
     }
+  }
 }

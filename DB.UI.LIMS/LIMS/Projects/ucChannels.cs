@@ -2,16 +2,16 @@
 
 namespace DB.UI
 {
-    public partial class ucChannels : UserControl
+  public partial class ucChannels : UserControl
+  {
+    public ucChannels()
     {
-        public ucChannels()
-        {
-            InitializeComponent();
+      InitializeComponent();
 
-            this.Linaa.Dispose();
-            this.Linaa = null;
-            this.Linaa = LIMS.Linaa;
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Channels);
-        }
+      this.Linaa.Dispose();
+      this.Linaa = null;
+      this.Linaa = LIMS.Linaa;
+      Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Channels);
     }
+  }
 }

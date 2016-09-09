@@ -1,165 +1,157 @@
 ﻿using System;
 using System.Collections.Generic;
-using DB.LINAATableAdapters;
-
 using System.Data;
+using DB.LINAATableAdapters;
 
 namespace DB
 {
-    public interface IDB
-    {
+  public interface IDB
+  {
+    //bool Read(string file);
 
-        //bool Read(string file);
+    // void PopulateColumnExpresions();
 
-        // void PopulateColumnExpresions();
+    LINAA.SSFPrefDataTable SSFPref { get; }
+    ICollection<string> ActiveProjectsList { get; }
+    LINAA.PreferencesRow CurrentPref { get; set; }
+    LINAA.GeometryRow DefaultGeometry { get; }
+    string Exception { get; }
+    string FolderPath { get; set; }
+    bool IsMainConnectionOk { get; }
+    bool IsSpectraPathOk { get; }
+    ICollection<string> OrdersList { get; }
+    IList<string> ProjectsList { get; }
 
-      
-LINAA.SSFPrefDataTable SSFPref { get; }
-            ICollection<string> ActiveProjectsList { get; }
-        LINAA.PreferencesRow CurrentPref { get; set; }
-        LINAA.GeometryRow DefaultGeometry { get; }
-        string Exception { get; }
-        string FolderPath { get; set; }
-        bool IsMainConnectionOk { get; }
-        bool IsSpectraPathOk { get; }
-        ICollection<string> OrdersList { get; }
-        IList<string> ProjectsList { get; }
+    LINAA.AcquisitionsDataTable Acquisitions { get; }
+    LINAA.BlanksDataTable Blanks { get; }
+    LINAA.ChannelsDataTable Channels { get; }
+    LINAA.COINDataTable COIN { get; }
+    LINAA.CompositionsDataTable Compositions { get; }
+    LINAA.ContactPersonsDataTable ContactPersons { get; }
+    LINAA.CustomerDataTable Customer { get; }
+    LINAA.DetectorsAbsorbersDataTable DetectorsAbsorbers { get; }
+    LINAA.DetectorsCurvesDataTable DetectorsCurves { get; }
+    LINAA.DetectorsDimensionsDataTable DetectorsDimensions { get; }
+    ICollection<string> DetectorsList { get; set; }
+    LINAA.ElementsDataTable Elements { get; }
+    LINAA.ExceptionsDataTable Exceptions { get; }
+    LINAA.GammasDataTable Gammas { get; }
+    LINAA.GeometryDataTable Geometry { get; }
+    LINAA.HelloWorldDataTable HelloWorld { get; }
+    LINAA.HoldersDataTable Holders { get; }
+    LINAA.IrradiationRequestsDataTable IrradiationRequests { get; }
+    LINAA.k0NAADataTable k0NAA { get; }
+    LINAA.MatrixDataTable Matrix { get; }
+    LINAA.MatSSFDataTable MatSSF { get; }
+    LINAA.MeasurementsDataTable Measurements { get; }
+    LINAA.MonitorsDataTable Monitors { get; }
+    LINAA.MonitorsFlagsDataTable MonitorsFlags { get; }
+    LINAA.MUESDataTable MUES { get; }
+    LINAA.NAADataTable NAA { get; }
+    LINAA.OrdersDataTable Orders { get; }
+    LINAA.PeaksDataTable Peaks { get; }
+    LINAA.PeaksHLDataTable PeaksHL { get; }
+    LINAA.PreferencesDataTable Preferences { get; }
+    LINAA.ProjectsDataTable Projects { get; }
+    LINAA.pValuesDataTable pValues { get; }
+    LINAA.ReactionsDataTable Reactions { get; }
+    LINAA.RefMaterialsDataTable RefMaterials { get; }
+    DataRelationCollection Relations { get; }
+    LINAA.SamplesDataTable Samples { get; }
+    LINAA.SchAcqsDataTable SchAcqs { get; }
+    SchemaSerializationMode SchemaSerializationMode { get; set; }
+    LINAA.SigmasDataTable Sigmas { get; }
+    LINAA.SigmasSalDataTable SigmasSal { get; }
+    LINAA.SolangDataTable Solang { get; }
+    LINAA.StandardsDataTable Standards { get; }
+    LINAA.SubSamplesDataTable SubSamples { get; }
+    DataTableCollection Tables { get; }
+    LINAA.ToDoDataTable ToDo { get; }
+    LINAA.ToDoAvgDataTable ToDoAvg { get; }
+    LINAA.ToDoAvgUncDataTable ToDoAvgUnc { get; }
+    LINAA.ToDoDataDataTable ToDoData { get; }
+    IList<string> ToDoesList { get; }
+    LINAA.ToDoResDataTable ToDoRes { get; }
+    LINAA.ToDoResAvgDataTable ToDoResAvg { get; }
+    LINAA.UnitDataTable Unit { get; }
+    LINAA.VialTypeDataTable VialType { get; }
+    LINAA.YieldsDataTable Yields { get; }
+  }
 
-        LINAA.AcquisitionsDataTable Acquisitions { get; }
-        LINAA.BlanksDataTable Blanks { get; }
-        LINAA.ChannelsDataTable Channels { get; }
-        LINAA.COINDataTable COIN { get; }
-        LINAA.CompositionsDataTable Compositions { get; }
-        LINAA.ContactPersonsDataTable ContactPersons { get; }
-        LINAA.CustomerDataTable Customer { get; }
-        LINAA.DetectorsAbsorbersDataTable DetectorsAbsorbers { get; }
-        LINAA.DetectorsCurvesDataTable DetectorsCurves { get; }
-        LINAA.DetectorsDimensionsDataTable DetectorsDimensions { get; }
-        ICollection<string> DetectorsList { get; set; }
-        LINAA.ElementsDataTable Elements { get; }
-        LINAA.ExceptionsDataTable Exceptions { get; }
-        LINAA.GammasDataTable Gammas { get; }
-        LINAA.GeometryDataTable Geometry { get; }
-        LINAA.HelloWorldDataTable HelloWorld { get; }
-        LINAA.HoldersDataTable Holders { get; }
-        LINAA.IrradiationRequestsDataTable IrradiationRequests { get; }
-        LINAA.k0NAADataTable k0NAA { get; }
-        LINAA.MatrixDataTable Matrix { get; }
-        LINAA.MatSSFDataTable MatSSF { get; }
-        LINAA.MeasurementsDataTable Measurements { get; }
-        LINAA.MonitorsDataTable Monitors { get; }
-        LINAA.MonitorsFlagsDataTable MonitorsFlags { get; }
-        LINAA.MUESDataTable MUES { get; }
-        LINAA.NAADataTable NAA { get; }
-        LINAA.OrdersDataTable Orders { get; }
-        LINAA.PeaksDataTable Peaks { get; }
-        LINAA.PeaksHLDataTable PeaksHL { get; }
-        LINAA.PreferencesDataTable Preferences { get; }
-        LINAA.ProjectsDataTable Projects { get; }
-        LINAA.pValuesDataTable pValues { get; }
-        LINAA.ReactionsDataTable Reactions { get; }
-        LINAA.RefMaterialsDataTable RefMaterials { get; }
-        DataRelationCollection Relations { get; }
-        LINAA.SamplesDataTable Samples { get; }
-        LINAA.SchAcqsDataTable SchAcqs { get; }
-        SchemaSerializationMode SchemaSerializationMode { get; set; }
-        LINAA.SigmasDataTable Sigmas { get; }
-        LINAA.SigmasSalDataTable SigmasSal { get; }
-        LINAA.SolangDataTable Solang { get; }
-        LINAA.StandardsDataTable Standards { get; }
-        LINAA.SubSamplesDataTable SubSamples { get; }
-        DataTableCollection Tables { get; }
-        LINAA.ToDoDataTable ToDo { get; }
-        LINAA.ToDoAvgDataTable ToDoAvg { get; }
-        LINAA.ToDoAvgUncDataTable ToDoAvgUnc { get; }
-        LINAA.ToDoDataDataTable ToDoData { get; }
-        IList<string> ToDoesList { get; }
-        LINAA.ToDoResDataTable ToDoRes { get; }
-        LINAA.ToDoResAvgDataTable ToDoResAvg { get; }
-        LINAA.UnitDataTable Unit { get; }
-        LINAA.VialTypeDataTable VialType { get; }
-        LINAA.YieldsDataTable Yields { get; }
-    }
+  public interface IPreferences
+  {
+    void PopulatePreferences();
 
+    LINAA.PreferencesRow CurrentPref { get; set; }
 
-    public interface IPreferences
-    {
-        void PopulatePreferences();
+    LINAA.SSFPrefRow CurrentSSFPref { get; set; }
 
-        LINAA.PreferencesRow CurrentPref { get; set; }
+    // void PopulateSSFPreferences();
+  }
 
-        LINAA.SSFPrefRow CurrentSSFPref { get; set; }
+  public interface IReport
+  {
+    void GenerateReport(string labelReport, object path, string extra, string module, string email);
 
-       // void PopulateSSFPreferences();
+    void GenerateBugReport();
 
-    }
+    void Speak(string text);
 
-    public interface IReport
-    {
-        void GenerateReport(string labelReport, object path, string extra, string module, string email);
+    void Msg(string msg, string title, bool ok);
 
-        void GenerateBugReport();
+    void Msg(string msg, string title);
 
-        void Speak(string text);
+    void AddException(Exception ex);
 
-        void Msg(string msg, string title, bool ok);
+    LINAA.ExceptionsDataTable Exceptions { get; }
 
-        void Msg(string msg, string title);
+    void ReportProgress(int percentage);
 
-        void AddException(Exception ex);
+    bool IsSpectraPathOk { get; }
+  }
 
-        LINAA.ExceptionsDataTable Exceptions { get; }
+  public interface IStore
+  {
+    void SaveSSF();
 
-        void ReportProgress(int percentage);
+    bool SaveSSF(bool offline, string file);
 
-        bool IsSpectraPathOk { get; }
-    }
+    // void AddException(Exception ex);
+    void Delete<T>(ref IEnumerable<T> rows);
 
-   
+    bool DeletePeaks(int measID);
 
-    public interface IStore
-    {
-        void SaveSSF();
+    bool Save<T>(ref IEnumerable<T> rows);
 
-        bool SaveSSF(bool offline, string file);
+    bool Save<T>();
 
-        // void AddException(Exception ex);
-        void Delete<T>(ref IEnumerable<T> rows);
+    string SaveExceptions();
 
-        bool DeletePeaks(int measID);
+    void SavePreferences();
 
-        bool Save<T>(ref IEnumerable<T> rows);
+    //void LoadMonitorsFile(string file);
+    void UpdateIrradiationDates();
 
-        bool Save<T>();
+    void SetIrradiatioRequest(IEnumerable<LINAA.SubSamplesRow> samples, ref LINAA.IrradiationRequestsRow irRow);
 
-        string SaveExceptions();
+    void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
 
-        void SavePreferences();
+    bool Save(string file);
+  }
 
-        //void LoadMonitorsFile(string file);
-        void UpdateIrradiationDates();
+  public interface IAdapter
+  {
+    void DisposeAdapters();
 
-        void SetIrradiatioRequest(IEnumerable<LINAA.SubSamplesRow> samples, ref LINAA.IrradiationRequestsRow irRow);
+    void DisposeSolCoinAdapters();
 
-        void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
+    void InitializeAdapters();
 
+    void InitializeSolCoinAdapters();
 
-        bool Save(string file);
-    }
+    TableAdapterManager TAM { get; set; }
 
-    public interface IAdapter
-    {
-        void DisposeAdapters();
-
-        void DisposeSolCoinAdapters();
-
-        void InitializeAdapters();
-
-        void InitializeSolCoinAdapters();
-
-        TableAdapterManager TAM { get; set; }
-
-        bool IsMainConnectionOk { get; }
-        string Exception { get; }
-    }
+    bool IsMainConnectionOk { get; }
+    string Exception { get; }
+  }
 }

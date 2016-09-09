@@ -7,121 +7,121 @@ using System.Data;
 /// </summary>
 namespace DB
 {
+  public interface IMain
+  {
+    void PopulateSelectedExpression(bool setexpression);
 
-    public interface IMain
-    {
-        void PopulateSelectedExpression(bool setexpression);
+    void PopulateColumnExpresions();
 
-        void PopulateColumnExpresions();
-        void PopulateUserDirectories();
+    void PopulateUserDirectories();
 
-        bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref DB.LINAA.TAMDeleteMethod remover);
+    bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref DB.LINAA.TAMDeleteMethod remover);
 
-        void Read(string filepath);
+    void Read(string filepath);
 
-        void Help();
-    }
+    void Help();
+  }
 
-    public interface ISamples
-    {
-        void LoadSampleData(bool load);
+  public interface ISamples
+  {
+    void LoadSampleData(bool load);
 
-        void PopulateStandards();
+    void PopulateStandards();
 
-        void PopulateMonitorFlags();
+    void PopulateMonitorFlags();
 
-        void PopulateMonitors();
+    void PopulateMonitors();
 
-        int AddSamples(string project, ref ICollection<string> hsamples);
+    int AddSamples(string project, ref ICollection<string> hsamples);
 
-        void PopulateSubSamples(Int32 IrReqID);
+    void PopulateSubSamples(Int32 IrReqID);
 
-        void LoadMonitorsFile(string file);
-    }
+    void LoadMonitorsFile(string file);
+  }
 
-    public interface ISchedAcqs
-    {
-        void PopulateScheduledAcqs();
+  public interface ISchedAcqs
+  {
+    void PopulateScheduledAcqs();
 
-        void AddSchedule(string project, string sample, Int16 pos, string det, Int16 repeats, double preset, DateTime startOn, string useremail, bool cummu, bool Force);
+    void AddSchedule(string project, string sample, Int16 pos, string det, Int16 repeats, double preset, DateTime startOn, string useremail, bool cummu, bool Force);
 
-        IEnumerable<LINAA.SchAcqsRow> FindLastSchedules();
-    }
+    IEnumerable<LINAA.SchAcqsRow> FindLastSchedules();
+  }
 
-    public interface IDetSol
-    {
-        void PopulateCOIList();
+  public interface IDetSol
+  {
+    void PopulateCOIList();
 
-        void PopulateDetectorCurves();
+    void PopulateDetectorCurves();
 
-        void PopulateDetectorAbsorbers();
+    void PopulateDetectorAbsorbers();
 
-        void PopulateDetectorDimensions();
+    void PopulateDetectorDimensions();
 
-        void PopulateDetectorHolders();
-    }
+    void PopulateDetectorHolders();
+  }
 
-    public interface IGeometry
-    {
-        void PopulateXCOMList();
+  public interface IGeometry
+  {
+    void PopulateXCOMList();
 
-        LINAA.GeometryRow DefaultGeometry { get; }
+    LINAA.GeometryRow DefaultGeometry { get; }
 
-        LINAA.GeometryRow FindReferenceGeometry(string refName);
+    LINAA.GeometryRow FindReferenceGeometry(string refName);
 
-        void PopulateCompositions();
+    void PopulateCompositions();
 
-        void PopulateMatrix();
+    void PopulateMatrix();
 
-        void PopulateVials();
+    void PopulateVials();
 
-        void PopulateUnits();
+    void PopulateUnits();
 
-        void PopulateGeometry();
-    }
+    void PopulateGeometry();
+  }
 
-    public interface IIrradiations
-    {
-        void PopulateIrradiationRequests();
+  public interface IIrradiations
+  {
+    void PopulateIrradiationRequests();
 
-        void PopulateChannels();
+    void PopulateChannels();
 
-        Int32? FindIrrReqID(string project);
-    }
+    Int32? FindIrrReqID(string project);
+  }
 
-    public interface INuclear
-    {
-        void PopulateSigmas();
+  public interface INuclear
+  {
+    void PopulateSigmas();
 
-        void PopulatepValues();
+    void PopulatepValues();
 
-        void PopulateSigmasSal();
+    void PopulateSigmasSal();
 
-        void PopulateYields();
+    void PopulateYields();
 
-        void PopulateReactions();
+    void PopulateReactions();
 
-        void PopulateElements();
-    }
+    void PopulateElements();
+  }
 
-    public interface IOrders
-    {
-        void PopulateOrders();
+  public interface IOrders
+  {
+    void PopulateOrders();
 
-        Int32? FindOrderID(string LabOrdRef);
-    }
+    Int32? FindOrderID(string LabOrdRef);
+  }
 
-    public interface IProjects
-    {
-        IList<LINAA.SubSamplesRow> FindByProject(string project);
+  public interface IProjects
+  {
+    IList<LINAA.SubSamplesRow> FindByProject(string project);
 
-        void PopulateToDoes();
+    void PopulateToDoes();
 
-        void PopulateProjects();
-    }
+    void PopulateProjects();
+  }
 
-    public interface IToDoes
-    {
-        void PopulateToDoes();
-    }
+  public interface IToDoes
+  {
+    void PopulateToDoes();
+  }
 }

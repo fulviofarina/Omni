@@ -2,16 +2,16 @@
 
 namespace DB.UI
 {
-    public partial class ucOrders : UserControl
+  public partial class ucOrders : UserControl
+  {
+    public ucOrders()
     {
-        public ucOrders()
-        {
-            InitializeComponent();
-            this.Linaa.Dispose();
-            this.Linaa = null;
-            this.Linaa = LIMS.Linaa;
+      InitializeComponent();
+      this.Linaa.Dispose();
+      this.Linaa = null;
+      this.Linaa = LIMS.Linaa;
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Orders);
-        }
+      Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Orders);
     }
+  }
 }
