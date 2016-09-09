@@ -33,5 +33,8 @@
     <Setting Name="SOLCOIFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">\k0-X\SolCoi\</Value>
     </Setting>
+    <Setting Name="SSFSQL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=flux\sql14;Initial Catalog=SSF;Persist Security Info=True;User ID=sa;Password=naa;Connect Timeout=5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

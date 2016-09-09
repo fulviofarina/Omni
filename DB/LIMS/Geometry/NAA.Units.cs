@@ -68,6 +68,12 @@ namespace DB
         }
       }
 
+
+      /// <summary>
+      /// I think it is perfect like this, don't mess it up
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
       {
         DataColumn c = e.Column;
@@ -158,34 +164,34 @@ namespace DB
       {
         if (Vol == 0) return;
         //   {
-        int round = 4;
+      //  int round = 4;
 
-        Decimal current = 0;
+        double current = 0;
         double aux = 0;
         if (density)
         {
-          aux = this.Mass / this.Vol;
+          aux = this.Mass *0.001/ this.Vol; //in g/cm3 as Vol is in cm3
 
-          current = Convert.ToDecimal(this.Density);
+          current = this.Density;
         }
         else
         {
-          aux = Vol * Density;
+          aux = Vol * Density*1000; //= cm3 * g/ cm3 * 1000  = in mg
 
-          current = Convert.ToDecimal(this.Mass);
+          current = this.Mass;
         }
 
-        current = Decimal.Round(current, round);
+      //  current = Decimal.Round(current, round);
 
-        Decimal valor = 0;
-        valor = Convert.ToDecimal(aux);
-        valor = Decimal.Round(valor, round);
+      //  double valor = aux;
+     //   valor = Convert.ToDecimal(aux);
+      //  valor = Decimal.Round(valor, round);
 
-        if (valor != current)
+        if (aux != current)
 
         {
-          if (!density) Mass = (double)valor;
-          else Density = (double)valor;
+          if (!density) Mass = (double)aux;
+          else Density = (double)aux;
           LastChanged = DateTime.Now; //update the time
         }
 

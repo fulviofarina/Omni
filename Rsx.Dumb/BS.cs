@@ -8,12 +8,25 @@ namespace Rsx
 {
   public static partial class Dumb
   {
+    public static void ChangeBindingsFormat(string newFormat, ref Hashtable binds)
+    {
+      ICollection cools = binds.Values;
+      foreach (var item in cools)
+      {
+        Binding b = item as Binding;
+        b.FormatString = newFormat;
+
+      }
+
+
+    }
+
     /// <summary>
     /// Returns a HashTable with "Text" Bindings, where the key is the DataTableColumn.ColumnName of the bound member
     /// </summary>
     /// <param name="bs"></param>
     /// <returns></returns>
-    public static Hashtable ArrayOfBindings(ref BindingSource bs)
+    public static Hashtable ArrayOfBindings(ref BindingSource bs, string format)
     {
       Hashtable bslist = new Hashtable();
       DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
@@ -28,7 +41,7 @@ namespace Rsx
       {
         column = item.ColumnName;
         // column = Unit.DiameterColumn.ColumnName;
-        Binding b = new Binding(text, bs, column, t, mo);
+        Binding b = new Binding(text, bs, column, t, mo,DBNull.Value,format);
         bslist.Add(column, b);
       }
 

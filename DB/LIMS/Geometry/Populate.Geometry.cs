@@ -133,6 +133,8 @@ namespace DB
         this.TAM.UnitTableAdapter.Fill(this.tableUnit);
         this.tableUnit.AcceptChanges();
         this.tableUnit.EndLoadData();
+    //    Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
+
       }
       catch (SystemException ex)
       {

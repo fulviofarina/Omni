@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using DB.Tools;
 using System.Data;
 using Rsx;
-using Msn;
+
 using System.Collections;
 using System.Collections.Generic;
 using DB.Properties;
@@ -27,51 +27,14 @@ namespace DB.UI
         private Interface Interface = null;
 
 
-       //private ucMatrixSimple ucMS = null;
+    //private ucMatrixSimple ucMS = null;
 
+      public void AttachMsn(Control msn)
+    {
+      this.unitTLP.Controls.Add(msn, 0, 1);
+    }
 
-
-        /// <summary>
-        /// Function meant to Create a LINAA database datatables and load itto store and display data
-        /// </summary>
-        /// <returns>Form created with the respective ucSSF inner control</returns>
-        public static Form Start()
-        {
-            DB.LINAA db = null;
-            Msn.Pop msn = new Msn.Pop();
-
-            msn.ParentForm.StartPosition = FormStartPosition.CenterScreen;
-            //   msn.BackColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            msn.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            msn.Location = new System.Drawing.Point(3, 32);
-            msn.Name = "msn";
-            msn.Padding = new System.Windows.Forms.Padding(9);
-            msn.Size = new System.Drawing.Size(512, 113);
-            msn.TabIndex = 6;
-
-            NotifyIcon con = null;
-            string result = Creator.Build(ref db, ref con, ref msn);
-
-            //   DB.Tools.Creator.CallBack = this.CallBack;
-            //  DB.Tools.Creator.LastCallBack = this.LastCallBack;
-
-            if (!string.IsNullOrEmpty(result))
-            {
-                //    MessageBox.Show(result, "Could not connect to LIMS DataBase", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //   Connections_Click(null, EventArgs.Empty);
-            }
-            else DB.Tools.Creator.Load(ref db, 0);
-
-            // this.msn = this.lINAA.Msn;
-
-            ucSSF uc = new ucSSF(ref db);
-
-            //   DB.UI.Auxiliar aux = new DB.UI.Auxiliar();
-
-            return uc.ParentForm;
-        }
-
-        public ucSSF(ref LINAA Linaa)
+    public ucSSF(ref LINAA Linaa)
         {
             InitializeComponent();
 
@@ -82,17 +45,9 @@ namespace DB.UI
 
             
 
-            Form form = null;
+          
 
-            Pop msn = null;
-            msn = Linaa.Msn;
-            form = msn.ParentForm;
-            // this.msn = this.lINAA.Msn;
-            this.unitTLP.Controls.Add(msn, 0, 1);
-            msn.Dock = DockStyle.Fill;
-            form.Dispose();
-
-            form = new Form();
+            Form form = new Form();
             form.AutoSize = true;
             form.Text = "SSF Panel";
             IntPtr Hicon = DB.UI.Properties.Resources.Logo.GetHicon();
@@ -527,20 +482,27 @@ namespace DB.UI
         }
 
 
-      
+         private Hashtable bindings=null;
 
         private void setUnitBindings()
         {
-            //SET THE PREFERENCES
+      //SET THE PREFERENCES
+            string format = Interface.IPreferences.CurrentSSFPref.Rounding;
+             N4.TextBox.Text = format;
 
-          
 
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
 
             this.unitBN.BindingSource = bs;
 
-            Hashtable bindings = Dumb.ArrayOfBindings(ref bs);
+
+
+            bindings = Dumb.ArrayOfBindings(ref bs, Interface.IPreferences.CurrentSSFPref.Rounding);
+
+
+          //  Dumb.ChangeBindingsFormat("N2", ref bindings);
+        
 
             string column;
 
@@ -567,33 +529,19 @@ namespace DB.UI
             this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.NameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(bindings[column] as Binding);
-
-
             column = Unit.VolColumn.ColumnName;
-            //     Hashtable bindings = Dumb.ArrayOfBindings(ref bs);
-            Binding b = bindings[column] as Binding;
-            Binding Vol = new Binding( b.PropertyName, b.DataSource, column, true, b.DataSourceUpdateMode, DBNull.Value, "N3");
-
-         
-            this.volLbl.TextBox.DataBindings.Add(Vol);
+            this.volLbl.TextBox.DataBindings.Add(bindings[column] as Binding);
 
 
-            /*
-
-                        column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
-
-                        Binding b1 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
 
 
-                        column = Interface.IDB.SSFPref.LoopColumn.ColumnName;
 
-                        Binding b2 = new Binding("Checked", Interface.IPreferences.CurrentSSFPref, column);
-
-                        */
-
-
-            // this.autoCalcDensity.bin
+   
+          
         }
+
+
+  
 
         private void setPreferences()
         {
@@ -687,5 +635,27 @@ namespace DB.UI
 
 
         }
+
+    /// <summary>
+    /// ROUNDING FORMAT for bindings
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void N4_TextChanged(object sender, EventArgs e)
+    {
+     
+      try
+      {
+        string format = N4.TextBox.Text;
+        if (format.Length < 2) return;
+
+        Dumb.ChangeBindingsFormat(format, ref bindings);
+        Interface.IPreferences.CurrentSSFPref.Rounding = format;
+      }
+      catch (Exception ex)
+      {
+        Interface.IReport.AddException(ex);
+      }
     }
+  }
 }

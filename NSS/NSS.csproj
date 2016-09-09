@@ -12,20 +12,22 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>D:\Skydrive\NSS\</PublishUrl>
+    <PublishUrl>D:\FLOATING\SUBDESKTOP\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>1</ApplicationRevision>
+    <InstallUrl>http://localhost:8080/</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -59,7 +61,7 @@
     <ManifestKeyFile>NSS.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -98,6 +100,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -135,6 +139,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Linq\DB.Linq.csproj">
+      <Project>{4f5b1a09-8cfe-41ba-a1b1-5eeaecedd329}</Project>
+      <Name>DB.Linq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
+      <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
+      <Name>DB.Tools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.UI.SSF\DB.UI.SSF.csproj">
       <Project>{23b5ea4d-b073-46aa-8e66-a4baad1626f1}</Project>
       <Name>DB.UI.SSF</Name>
@@ -142,6 +154,10 @@
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Msn\Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>Msn</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

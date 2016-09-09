@@ -70,7 +70,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +102,7 @@
     <Compile Include="ucUnit.Designer.cs">
       <DependentUpon>ucUnit.cs</DependentUpon>
     </Compile>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -141,10 +141,6 @@
       <Project>{6AC9265B-3286-4C63-A924-5FA14FF1CBEA}</Project>
       <Name>DB</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

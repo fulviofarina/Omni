@@ -249,7 +249,7 @@
             this.lINAA.EnforceConstraints = false;
             this.lINAA.FolderPath = null;
             this.lINAA.Locale = new System.Globalization.CultureInfo("");
-            this.lINAA.Msn = null;
+           // this.lINAA.Msn = null;
             this.lINAA.Notify = null;
             this.lINAA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.lINAA.TAM = null;

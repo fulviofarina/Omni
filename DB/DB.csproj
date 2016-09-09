@@ -106,6 +106,9 @@
     <Compile Include="Adapter\Adapter.NAA.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
+    <Compile Include="LINAA.cs">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
