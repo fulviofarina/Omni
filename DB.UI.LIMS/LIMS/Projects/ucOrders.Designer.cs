@@ -77,7 +77,7 @@
             // 
             this.Linaa.CurrentPref = null;
             this.Linaa.DataSetName = "LINAA";
-            this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
+            this.Linaa.DetectorsList =null;
             this.Linaa.EnforceConstraints = false;
             this.Linaa.FolderPath = null;
           //  this.Linaa.IStore = this.Linaa;

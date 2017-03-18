@@ -2,9 +2,9 @@
 {
   public partial class Interface
   {
-    private object interf = null;
+    private LINAA interf = null;
 
-    public Interface(ref object aux)
+    public Interface(ref LINAA aux)
     {
       interf = aux;
 
@@ -18,7 +18,7 @@
       IPreferences = (IPreferences)aux;
     }
 
-    public object Get()
+    public LINAA Get()
     {
       return interf;
     }
@@ -39,7 +39,7 @@
 
     public class Populate
     {
-      public Populate(ref object aux)
+      public Populate(ref LINAA aux)
       {
         IMain = (IMain)aux;
         INuclear = (INuclear)aux;

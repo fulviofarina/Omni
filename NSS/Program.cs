@@ -48,7 +48,7 @@ namespace NSS
     public static Form Start()
     {
      
-      Msn.Pop msn = new Msn.Pop();
+      Msn.Pop msn = new Msn.Pop(true);
 
       msn.ParentForm.StartPosition = FormStartPosition.CenterScreen;
       //   msn.BackColor = System.Drawing.Color.FromArgb(64, 64, 64);
@@ -101,6 +101,7 @@ namespace NSS
 
        LinqDataContext destiny = new LinqDataContext(DB.Properties.Settings.Default.SSFSQL);
 
+    //  new LinqDataContext(Idb)
 
       if (destiny.DatabaseExists()) destiny.DeleteDatabase();
       //{
@@ -139,8 +140,16 @@ namespace NSS
       ita = destiny.GetTable(typeof(Channel));
       Insert(dt, ref ita);
 
-      dt = original.GetTable<MUE>();
-      ita = destiny.GetTable(typeof(MUE));
+      dt = original.GetTable<Geometry>();
+      ita = destiny.GetTable(typeof(Geometry));
+      Insert(dt, ref ita);
+
+      dt = original.GetTable<NAA>();
+      ita = destiny.GetTable(typeof(NAA));
+      Insert(dt, ref ita);
+
+      dt = original.GetTable<k0NAA>();
+      ita = destiny.GetTable(typeof(k0NAA));
       Insert(dt, ref ita);
 
       // Insert

@@ -61,18 +61,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auxiliar\Auxiliar.cs">
+    <Compile Include="Auxiliar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Auxiliar\Auxiliar.designer.cs">
+    <Compile Include="Auxiliar.designer.cs">
       <DependentUpon>Auxiliar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Auxiliar\IPicker.cs" />
-    <Compile Include="Auxiliar\PickerForm.cs">
+    <Compile Include="Picker\Picker.cs" />
+    <Compile Include="Picker\IPicker.cs" />
+    <Compile Include="Picker\PickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Auxiliar\PickerForm.designer.cs">
+    <Compile Include="Picker\PickerForm.designer.cs">
       <DependentUpon>PickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS.Static.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="LIMS\Geometries\ucGeometry.cs">
       <SubType>UserControl</SubType>
@@ -92,16 +96,16 @@
     <Compile Include="LIMS\Geometries\ucVialType.Designer.cs">
       <DependentUpon>ucVialType.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\LIMS.cs">
+    <Compile Include="LIMS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LIMS\LIMS.Designer.cs">
+    <Compile Include="LIMS.Designer.cs">
       <DependentUpon>LIMS.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Projects\ucChannels.cs">
+    <Compile Include="LIMS\Instruments\ucChannels.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Projects\ucChannels.Designer.cs">
+    <Compile Include="LIMS\Instruments\ucChannels.Designer.cs">
       <DependentUpon>ucChannels.cs</DependentUpon>
     </Compile>
     <Compile Include="LIMS\Projects\ucIrradiationsRequests.cs">
@@ -146,41 +150,42 @@
     <Compile Include="LIMS\Samples\ucSubSamples.Designer.cs">
       <DependentUpon>ucSubSamples.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\ucDetectors.cs">
+    <Compile Include="LIMS\Instruments\ucDetectors.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\ucDetectors.Designer.cs">
+    <Compile Include="LIMS\Instruments\ucDetectors.Designer.cs">
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Res.Designer.cs">
-      <DependentUpon>Res.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <Compile Include="ControlNames.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ucPredict.cs">
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\ucPredict.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucPredict.Designer.cs">
+    <Compile Include="LIMS\ucPredict.Designer.cs">
       <DependentUpon>ucPredict.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucSolcoi.cs">
+    <Compile Include="LIMS\ucSolcoi.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucSolcoi.designer.cs">
+    <Compile Include="LIMS\ucSolcoi.designer.cs">
       <DependentUpon>ucSolcoi.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Auxiliar\Auxiliar.resx">
+    <EmbeddedResource Include="Auxiliar.resx">
       <DependentUpon>Auxiliar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Auxiliar\PickerForm.resx">
+    <EmbeddedResource Include="Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIMS\Geometries\ucGeometry.resx">
@@ -192,10 +197,10 @@
     <EmbeddedResource Include="LIMS\Geometries\ucVialType.resx">
       <DependentUpon>ucVialType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\LIMS.resx">
+    <EmbeddedResource Include="LIMS.resx">
       <DependentUpon>LIMS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Projects\ucChannels.resx">
+    <EmbeddedResource Include="LIMS\Instruments\ucChannels.resx">
       <DependentUpon>ucChannels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIMS\Projects\ucIrradiationsRequests.resx">
@@ -219,22 +224,22 @@
     <EmbeddedResource Include="LIMS\Samples\ucSubSamples.resx">
       <DependentUpon>ucSubSamples.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\ucDetectors.resx">
+    <EmbeddedResource Include="LIMS\Instruments\ucDetectors.resx">
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Res.resx">
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="Properties\Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucPredict.resx">
+    <EmbeddedResource Include="LIMS\ucPredict.resx">
       <DependentUpon>ucPredict.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucSolcoi.resx">
+    <EmbeddedResource Include="LIMS\ucSolcoi.resx">
       <DependentUpon>ucSolcoi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

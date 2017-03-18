@@ -322,7 +322,7 @@
                   // 
                   // WCalc
                   // 
-                  this.WCalc.Image = global::DB.UI.Properties.Res.Atom;
+                  this.WCalc.Image = global::DB.UI.Properties.Resources.Atom;
                   this.WCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
                   this.WCalc.Name = "WCalc";
                   this.WCalc.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -337,7 +337,7 @@
                   // 
                   // GraphB
                   // 
-                  this.GraphB.Image = global::DB.UI.Properties.Res.Matrices;
+                  this.GraphB.Image = global::DB.UI.Properties.Resources.Matrices;
                   this.GraphB.ImageTransparentColor = System.Drawing.Color.Magenta;
                   this.GraphB.Name = "GraphB";
                   this.GraphB.Size = new System.Drawing.Size(69, 27);
@@ -378,7 +378,7 @@
             this.useLogScale});
                   this.XCOMOptions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                   this.XCOMOptions.ForeColor = System.Drawing.Color.Blue;
-                  this.XCOMOptions.Image = global::DB.UI.Properties.Res.Handpoint;
+                  this.XCOMOptions.Image = global::DB.UI.Properties.Resources.Handpoint;
                   this.XCOMOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
                   this.XCOMOptions.Name = "XCOMOptions";
                   this.XCOMOptions.Size = new System.Drawing.Size(77, 27);

@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
+    <Compile Include="WC\Properties.cs" />
     <Compile Include="WC\Workers.cs" />
     <Compile Include="WC\Static\Efficiency.cs" />
     <Compile Include="Creator.cs" />

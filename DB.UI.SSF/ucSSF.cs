@@ -10,42 +10,33 @@ using System.Collections.Generic;
 using DB.Properties;
 using System.Drawing;
 
-
 namespace DB.UI
 {
     public partial class ucSSF : UserControl
     {
-
-
-
-      
-       // private bool Offline = false;
+        // private bool Offline = false;
         private static string mf = preFolder + "lims.xml";
+
         private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
-     //   private static string matssfFolder = Settings.Default.SSFFolder;
+
+        //   private static string matssfFolder = Settings.Default.SSFFolder;
         private static string preFolder = Environment.GetFolderPath(folder);
+
         private Interface Interface = null;
 
+        //private ucMatrixSimple ucMS = null;
 
-    //private ucMatrixSimple ucMS = null;
+        public void AttachMsn(Control msn)
+        {
+            this.unitTLP.Controls.Add(msn, 0, 1);
+        }
 
-      public void AttachMsn(Control msn)
-    {
-      this.unitTLP.Controls.Add(msn, 0, 1);
-    }
-
-    public ucSSF(ref LINAA Linaa)
+        public ucSSF(ref LINAA Linaa)
         {
             InitializeComponent();
 
-         
-
-            object db = Linaa;
-            Interface = new Interface(ref db);
-
-            
-
-          
+            //  object db = Linaa;
+            Interface = new Interface(ref Linaa);
 
             Form form = new Form();
             form.AutoSize = true;
@@ -54,14 +45,12 @@ namespace DB.UI
             Icon myIcon = Icon.FromHandle(Hicon);
             form.Icon = myIcon;
             form.Controls.Add(this);// Populate(this);
-            form.Show();   
-
+            form.Show();
 
             string folder = Interface.IPreferences.CurrentSSFPref.Folder;
             MatSSF.StartupPath = preFolder + folder;
 
             loadDatabase();
-
 
             /*
             form = new System.Windows.Forms.Form();
@@ -87,16 +76,11 @@ namespace DB.UI
 
             this.AutoLoad.CheckedChanged += this.checkedChanged;
 
-
-
             Interface.IReport.Msg("Database", "Units were loaded!");
 
-
-            
             //  Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
 
             //  Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
-
 
             // Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
             //Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
@@ -108,8 +92,6 @@ namespace DB.UI
             //  Interface.IPreferences.CurrentSSFPref.Folder = this.FolderPath.Text;
             // Interface.IPreferences.CurrentSSFPref.ShowOther = this.showOther.Checked;
             //   Interface.IPreferences.CurrentPref.Offline = this.workOffline.Checked;
-
-
         }
 
         /// <summary>
@@ -117,8 +99,7 @@ namespace DB.UI
         /// </summary>
         /// <param name="sender">The Add button that was clicked</param>
         /// <param name="e"></param>
-        /// 
-
+        ///
 
         /// <summary>
         /// when a DGV-item is selected, take the necessary rows to compose the unit
@@ -130,17 +111,15 @@ namespace DB.UI
             if (e.RowIndex < 0) return;
 
             DataGridView dgv = sender as DataGridView;
-          
+
             DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
             string rowWithError = DB.UI.Properties.Resources.rowWithError;
             string noTemplate = DB.UI.Properties.Resources.noTemplate;
             string Error = DB.UI.Properties.Resources.Error;
 
-
             try
             {
-
                 ///check if table has no rows
                 if (row == null)
                 {
@@ -149,39 +128,34 @@ namespace DB.UI
                     return;
                 }
 
-
                 ///find which dgv called it
                 bool isChannel = row.GetType().Equals(typeof(LINAA.ChannelsRow));
-             
+
                 ///has errors
                 if (row.HasErrors)
                 {
                     ///is not a matrix row so exit and report
-                 
-                        Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-                    
-                        return;
-                   
+
+                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
+
+                    return;
                 }
 
-            
-                    if (MatSSF.UNIT == null)
-                    {
-                        this.AddUnitBn_Click(null, EventArgs.Empty);
-                    }
+                if (MatSSF.UNIT == null)
+                {
+                    this.AddUnitBn_Click(null, EventArgs.Empty);
+                }
 
                 if (isChannel)
                 {
-                   
                     LINAA.ChannelsRow c = row as LINAA.ChannelsRow;
                     MatSSF.UNIT.ChannelsRow = c;
                     MatSSF.UNIT.SetChannel();
                 }
-             
                 else
                 {
                     LINAA.VialTypeRow v = row as LINAA.VialTypeRow;
-                  
+
                     MatSSF.UNIT.SetVialContainer(ref v);
                 }
             }
@@ -189,9 +163,8 @@ namespace DB.UI
             {
                 Interface.IReport.Msg(ex.StackTrace, ex.Message);
             }
-
-
         }
+
         private void dgvUnitSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -202,14 +175,12 @@ namespace DB.UI
 
             //     LINAA lina = (LINAA)Interface.Get();
 
-            string rowWithError = DB.UI.Properties.Resources.rowWithError; 
-            string noTemplate = DB.UI.Properties.Resources.noTemplate; 
+            string rowWithError = DB.UI.Properties.Resources.rowWithError;
+            string noTemplate = DB.UI.Properties.Resources.noTemplate;
             string Error = DB.UI.Properties.Resources.Error;
-
 
             try
             {
-
                 ///check if table has no rows
                 if (row == null)
                 {
@@ -225,53 +196,38 @@ namespace DB.UI
                 //    return;
                 }
 
-
                 MatSSF.UNIT = row as LINAA.UnitRow;
                 this.ucUnit.RefreshSSF();
 
-
-
+                this.ucCC1.RefreshVCC();
                 this.ucVcc.RefreshVCC();
 
-
                 this.ucMS.RefreshMatrix();
-
-
 
                 if (row.HasErrors)
                 {
                     Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-
                 }
-
-
             }
             catch (System.Exception ex)
             {
                 Interface.IReport.Msg(ex.StackTrace, ex.Message);
             }
-
-
         }
+
         private void AddUnitBn_Click(object sender, EventArgs e)
         {
-          
-
             double kepi = Dumb.GetControlAs<double>(kepiB);
-            double kth = Dumb.GetControlAs<double>( kthB);
-            string chfg =  cfgB.Text;
+            double kth = Dumb.GetControlAs<double>(kthB);
+            string chfg = cfgB.Text;
 
-         //   LINAA.UnitDataTable dt = Interface.IDB.Unit;
+            //   LINAA.UnitDataTable dt = Interface.IDB.Unit;
 
             MatSSF.UNIT = Interface.IDB.Unit.NewUnitRow(kepi, kth, chfg);
 
-
             this.ucUnit.RefreshSSF();
 
-           // row = u;
-
-
-
+            // row = u;
         }
 
         private void dgvMatrixSelected(object sender, DataGridViewCellMouseEventArgs e)
@@ -285,10 +241,8 @@ namespace DB.UI
             string noTemplate = DB.UI.Properties.Resources.noTemplate;
             string Error = DB.UI.Properties.Resources.Error;
 
-
             try
             {
-
                 ///check if table has no rows
                 if (row == null)
                 {
@@ -296,7 +250,6 @@ namespace DB.UI
                                                               //  row.RowError = noTemplate;
                     return;
                 }
-
 
                 ///find which dgv called it
                 //  bool isChannel = dgv.Equals(this.ChannelDGV);
@@ -313,41 +266,28 @@ namespace DB.UI
                     if (!string.IsNullOrEmpty(colError)) ///matrix content has error, exit and report
 
                     {
-
                         Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
 
                         return;
-
                     }
 
-                   // colError = row.GetColumnError(dt.MatrixDensityColumn);
-                  
-
+                    // colError = row.GetColumnError(dt.MatrixDensityColumn);
                 }
-
 
                 if (MatSSF.UNIT == null)
                 {
-
                     AddUnitBn_Click(null, EventArgs.Empty);
-
                 }
-
 
                 LINAA.MatrixRow m = row as LINAA.MatrixRow;
                 MatSSF.UNIT.MatrixRow = m;
                 MatSSF.UNIT.SetMatrix();
-
             }
             catch (System.Exception ex)
             {
                 Interface.IReport.Msg(ex.StackTrace, ex.Message);
             }
-
         }
-
-
-
 
         private void SaveItem_Click(object sender, EventArgs e)
         {
@@ -359,30 +299,25 @@ namespace DB.UI
 
             this.ucMS.MatrixBS.EndEdit();
 
-
+            this.ucCC1.EndEdit();
             this.ucVcc.EndEdit();
 
             //  setUnit();
             bool off = Interface.IPreferences.CurrentPref.Offline;
             Interface.IStore.SaveSSF(off, mf);
-
-          
-
         }
 
         private void Calculate_Click(object sender, EventArgs e)
         {
-
             //Validate Binding sources
             this.ucUnit.UnitBS.EndEdit();
 
             this.ucMS.MatrixBS.EndEdit();
 
-
+            this.ucCC1.EndEdit();
             this.ucVcc.EndEdit();
 
             this.ucUnit.DeLink();
-
 
             //Go to Calculations/ Units Tab
             this.Tab.SelectedTab = this.CalcTab;
@@ -394,9 +329,6 @@ namespace DB.UI
 
             try
             {
-
-
-
                 bool hide = !(Interface.IPreferences.CurrentPref.ShowMatSSF);
 
                 bool doCk = (Interface.IPreferences.CurrentPref.DoCK);
@@ -424,7 +356,7 @@ namespace DB.UI
                 bool runOk = false;
 
                 if (doSSF) runOk = MatSSF.RUN(hide);
-              
+
                 //4
                 this.progress.PerformStep();
                 Application.DoEvents();
@@ -447,18 +379,13 @@ namespace DB.UI
                 this.progress.PerformStep();
                 Application.DoEvents();
 
-               if (doCk)  MatSSF.CHILEAN();
-
+                if (doCk) MatSSF.CHILEAN();
 
                 //6
                 this.progress.PerformStep();
                 Application.DoEvents();
 
                 //  else errorB.Text += "Matrix Composition is empty\n";
-
-
-
-
             }
             catch (SystemException ex)
             {
@@ -478,37 +405,30 @@ namespace DB.UI
             Application.DoEvents();
 
             Interface.IReport.Msg("Calculations", "Calculations completed!");
-
         }
 
-
-         private Hashtable bindings=null;
+        private Hashtable bindings = null;
 
         private void setUnitBindings()
         {
-      //SET THE PREFERENCES
+            //SET THE PREFERENCES
             string format = Interface.IPreferences.CurrentSSFPref.Rounding;
-             N4.TextBox.Text = format;
-
+            N4.TextBox.Text = format;
 
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
 
             this.unitBN.BindingSource = bs;
 
-
-
             bindings = Dumb.ArrayOfBindings(ref bs, Interface.IPreferences.CurrentSSFPref.Rounding);
 
-
-          //  Dumb.ChangeBindingsFormat("N2", ref bindings);
-        
+            //  Dumb.ChangeBindingsFormat("N2", ref bindings);
 
             string column;
 
             column = Unit.DiameterColumn.ColumnName;
             this.diameterbox.TextBox.DataBindings.Add(bindings[column] as Binding);
-          
+
             column = Unit.LengthColumn.ColumnName;
             this.lenghtbox.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChDiameterColumn.ColumnName;
@@ -531,17 +451,7 @@ namespace DB.UI
             this.nameB.ComboBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.VolColumn.ColumnName;
             this.volLbl.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-
-
-
-
-   
-          
         }
-
-
-  
 
         private void setPreferences()
         {
@@ -572,9 +482,10 @@ namespace DB.UI
                 else //fix this
                 {
                     Interface.IPopulate.IMain.Read(mf);
-                       
                 }
 
+                ucCC1.Set(ref Interface);
+                ucCC1.RowHeaderMouseClick = this.dgvItemSelected;
                 ucVcc.Set(ref Interface);
                 ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
 
@@ -588,11 +499,7 @@ namespace DB.UI
 
                 setUnitBindings();
 
-
-
-
                 this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
-
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
                 //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(bs.Current);
@@ -608,54 +515,45 @@ namespace DB.UI
 
         private void checkedChanged(object sender, EventArgs e)
         {
-
-
             IPreferences ip = Interface.IPreferences;
 
             ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
 
             ip.CurrentSSFPref.Loop = this.loop.Checked;
 
-
             ip.CurrentSSFPref.Loop = this.loop.Checked;
             ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-         ip.CurrentPref.DoCK =this.doCK.Checked;
+            ip.CurrentPref.DoCK = this.doCK.Checked;
             ip.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
-         ip.CurrentPref.ShowMatSSF= this.showMatSSF.Checked;
+            ip.CurrentPref.ShowMatSSF = this.showMatSSF.Checked;
             ip.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
             // this.SQL.Checked = ip.CurrentSSFPref.SQL;
             ip.CurrentSSFPref.Folder = this.FolderPath.Text;
             ip.CurrentSSFPref.ShowOther = this.showOther.Checked;
             ip.CurrentPref.Offline = this.workOffline.Checked;
 
-
             Interface.IStore.SavePreferences();
-
-
-
-
         }
 
-    /// <summary>
-    /// ROUNDING FORMAT for bindings
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void N4_TextChanged(object sender, EventArgs e)
-    {
-     
-      try
-      {
-        string format = N4.TextBox.Text;
-        if (format.Length < 2) return;
+        /// <summary>
+        /// ROUNDING FORMAT for bindings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void N4_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string format = N4.TextBox.Text;
+                if (format.Length < 2) return;
 
-        Dumb.ChangeBindingsFormat(format, ref bindings);
-        Interface.IPreferences.CurrentSSFPref.Rounding = format;
-      }
-      catch (Exception ex)
-      {
-        Interface.IReport.AddException(ex);
-      }
+                Dumb.ChangeBindingsFormat(format, ref bindings);
+                Interface.IPreferences.CurrentSSFPref.Rounding = format;
+            }
+            catch (Exception ex)
+            {
+                Interface.IReport.AddException(ex);
+            }
+        }
     }
-  }
 }

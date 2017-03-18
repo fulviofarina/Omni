@@ -35,9 +35,6 @@
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.contentTS = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.matrixTS = new System.Windows.Forms.ToolStrip();
-            this.matrixNameToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.MatrixBN = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
@@ -85,11 +82,6 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.TLPMatrix.SuspendLayout();
             this.contentTS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.matrixTS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).BeginInit();
             this.MatrixBN.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
@@ -111,21 +103,20 @@
             // TLPMatrix
             // 
             this.TLPMatrix.ColumnCount = 2;
-            this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.92503F));
+            this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.07497F));
             this.TLPMatrix.Controls.Add(this.contentTS, 1, 0);
-            this.TLPMatrix.Controls.Add(this.splitContainer1, 0, 0);
             this.TLPMatrix.Controls.Add(this.matrixDGV, 0, 1);
             this.TLPMatrix.Controls.Add(this.matrixRTB, 1, 1);
+            this.TLPMatrix.Controls.Add(this.MatrixBN, 0, 0);
             this.TLPMatrix.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TLPMatrix.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TLPMatrix.Location = new System.Drawing.Point(0, 0);
             this.TLPMatrix.Margin = new System.Windows.Forms.Padding(4);
             this.TLPMatrix.Name = "TLPMatrix";
             this.TLPMatrix.RowCount = 2;
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.548708F));
+            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.548709F));
             this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.45129F));
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.TLPMatrix.Size = new System.Drawing.Size(787, 503);
             this.TLPMatrix.TabIndex = 6;
             // 
@@ -136,10 +127,10 @@
             this.contentTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.contentTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel5});
-            this.contentTS.Location = new System.Drawing.Point(393, 0);
+            this.contentTS.Location = new System.Drawing.Point(447, 0);
             this.contentTS.Name = "contentTS";
             this.contentTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.contentTS.Size = new System.Drawing.Size(394, 43);
+            this.contentTS.Size = new System.Drawing.Size(340, 43);
             this.contentTS.TabIndex = 5;
             this.contentTS.Text = "toolStrip8";
             // 
@@ -148,50 +139,8 @@
             this.toolStripLabel5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel5.ForeColor = System.Drawing.Color.MidnightBlue;
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(71, 40);
-            this.toolStripLabel5.Text = "Content";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.BackColor = System.Drawing.SystemColors.Menu;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(6, 6);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.matrixTS);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.MatrixBN);
-            this.splitContainer1.Size = new System.Drawing.Size(381, 31);
-            this.splitContainer1.SplitterDistance = 86;
-            this.splitContainer1.SplitterWidth = 7;
-            this.splitContainer1.TabIndex = 7;
-            // 
-            // matrixTS
-            // 
-            this.matrixTS.BackColor = System.Drawing.SystemColors.Menu;
-            this.matrixTS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.matrixTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.matrixTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.matrixNameToolStripLabel});
-            this.matrixTS.Location = new System.Drawing.Point(0, 0);
-            this.matrixTS.Name = "matrixTS";
-            this.matrixTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.matrixTS.Size = new System.Drawing.Size(86, 31);
-            this.matrixTS.TabIndex = 2;
-            this.matrixTS.Text = "fillToolStrip";
-            // 
-            // matrixNameToolStripLabel
-            // 
-            this.matrixNameToolStripLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.matrixNameToolStripLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.matrixNameToolStripLabel.Name = "matrixNameToolStripLabel";
-            this.matrixNameToolStripLabel.Size = new System.Drawing.Size(60, 28);
-            this.matrixNameToolStripLabel.Text = "Matrix";
+            this.toolStripLabel5.Size = new System.Drawing.Size(125, 40);
+            this.toolStripLabel5.Text = "Matrix Content";
             // 
             // MatrixBN
             // 
@@ -223,7 +172,7 @@
             this.MatrixBN.Name = "MatrixBN";
             this.MatrixBN.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.MatrixBN.PositionItem = this.bindingNavigatorPositionItem;
-            this.MatrixBN.Size = new System.Drawing.Size(288, 31);
+            this.MatrixBN.Size = new System.Drawing.Size(447, 43);
             this.MatrixBN.TabIndex = 1;
             this.MatrixBN.Text = "bindingNavigator1";
             // 
@@ -233,7 +182,7 @@
             this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 40);
             this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
             // MatrixBS
@@ -243,13 +192,15 @@
             // 
             // lINAA
             // 
+            this.lINAA.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
             this.lINAA.CurrentPref = null;
+            this.lINAA.CurrentSSFPref = null;
             this.lINAA.DataSetName = "LINAA";
             this.lINAA.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("lINAA.DetectorsList")));
             this.lINAA.EnforceConstraints = false;
             this.lINAA.FolderPath = null;
             this.lINAA.Locale = new System.Globalization.CultureInfo("");
-           // this.lINAA.Msn = null;
+      //      this.lINAA.Msn = null;
             this.lINAA.Notify = null;
             this.lINAA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.lINAA.TAM = null;
@@ -258,7 +209,7 @@
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 28);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 40);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
             // 
@@ -268,7 +219,7 @@
             this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 40);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
             // bindingNavigatorMoveFirstItem
@@ -277,7 +228,7 @@
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 40);
             this.bindingNavigatorMoveFirstItem.Text = "Move first";
             // 
             // bindingNavigatorMovePreviousItem
@@ -286,13 +237,13 @@
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 40);
             this.bindingNavigatorMovePreviousItem.Text = "Move previous";
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 31);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 43);
             // 
             // bindingNavigatorPositionItem
             // 
@@ -307,7 +258,7 @@
             // bindingNavigatorSeparator1
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 43);
             // 
             // bindingNavigatorMoveNextItem
             // 
@@ -315,7 +266,7 @@
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 40);
             this.bindingNavigatorMoveNextItem.Text = "Move next";
             // 
             // bindingNavigatorMoveLastItem
@@ -324,13 +275,13 @@
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 40);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 31);
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 43);
             // 
             // matrixDGV
             // 
@@ -359,7 +310,7 @@
             this.matrixDGV.Margin = new System.Windows.Forms.Padding(4);
             this.matrixDGV.Name = "matrixDGV";
             this.matrixDGV.RowTemplate.Height = 24;
-            this.matrixDGV.Size = new System.Drawing.Size(385, 452);
+            this.matrixDGV.Size = new System.Drawing.Size(439, 452);
             this.matrixDGV.TabIndex = 0;
             // 
             // MatrixNameColumn
@@ -381,10 +332,10 @@
             // 
             this.matrixRTB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.matrixRTB.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.matrixRTB.Location = new System.Drawing.Point(399, 49);
+            this.matrixRTB.Location = new System.Drawing.Point(453, 49);
             this.matrixRTB.Margin = new System.Windows.Forms.Padding(6);
             this.matrixRTB.Name = "matrixRTB";
-            this.matrixRTB.Size = new System.Drawing.Size(382, 448);
+            this.matrixRTB.Size = new System.Drawing.Size(328, 448);
             this.matrixRTB.TabIndex = 4;
             this.matrixRTB.Text = "";
             // 
@@ -394,24 +345,24 @@
             this.toolStripMenuItem2,
             this.toolStripMenuItem3});
             this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(141, 48);
+            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
             this.toolStripMenuItem2.Text = "Export";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(140, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
             this.toolStripMenuItem3.Text = "View Output";
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(150, 22);
+            this.toolStripLabel3.Size = new System.Drawing.Size(199, 21);
             this.toolStripLabel3.Text = "Select &Irradiation Container";
             // 
             // toolStrip6
@@ -591,14 +542,6 @@
             this.TLPMatrix.PerformLayout();
             this.contentTS.ResumeLayout(false);
             this.contentTS.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.matrixTS.ResumeLayout(false);
-            this.matrixTS.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).EndInit();
             this.MatrixBN.ResumeLayout(false);
             this.MatrixBN.PerformLayout();
@@ -630,8 +573,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.DataGridView matrixDGV;
-        private System.Windows.Forms.ToolStrip matrixTS;
-        private System.Windows.Forms.ToolStripLabel matrixNameToolStripLabel;
         private System.Windows.Forms.BindingNavigator MatrixBN;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
@@ -674,7 +615,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel12;
         private System.Windows.Forms.DataGridViewTextBoxColumn MatrixNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MatrixDensity;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         public System.Windows.Forms.BindingSource MatrixBS;
     }

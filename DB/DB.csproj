@@ -91,7 +91,6 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Adapter.cd" />
     <None Include="Interfaces.Populate.cd" />
     <None Include="Interfaces.cd" />
     <None Include="LINAA.xsc">
@@ -103,7 +102,9 @@
       <LastGenOutput>LINAA.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Adapter\Adapter.cs" />
-    <Compile Include="Adapter\Adapter.NAA.cs" />
+    <Compile Include="Adapter\Adapter.NAA.Irradiations.cs" />
+    <Compile Include="Adapter\Adapter.NAA,Peaks.cs" />
+    <Compile Include="Adapter\Adapter.NAA.Sample.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="LINAA.cs">
@@ -114,13 +115,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Geometry\NAA.DetSol.cs" />
-    <Compile Include="LIMS\Geometry\NAA.Geometry.cs" />
-    <Compile Include="LIMS\Geometry\NAA.Matrix.cs" />
-    <Compile Include="LIMS\Geometry\NAA.Units.cs" />
-    <Compile Include="LIMS\Geometry\NAA.Vial.cs" />
-    <Compile Include="LIMS\Geometry\Populate.DetSol.cs" />
-    <Compile Include="LIMS\Geometry\Populate.Geometry.cs" />
+    <Compile Include="Tables\Geometry\NAA.DetSol.cs" />
+    <Compile Include="Tables\Geometry\NAA.Geometry.cs" />
+    <Compile Include="Tables\Geometry\NAA.Matrix.cs" />
+    <Compile Include="Tables\Geometry\NAA.Units.cs" />
+    <Compile Include="Tables\Geometry\NAA.Vial.cs" />
+    <Compile Include="Tables\Geometry\Populate.DetSol.cs" />
+    <Compile Include="Tables\Geometry\Populate.Geometry.cs" />
     <Compile Include="Interfaces\InterfaceClass.cs" />
     <Compile Include="Interfaces\Interfaces.cs" />
     <Compile Include="Interfaces\Interfaces.Populate.cs" />
@@ -133,17 +134,17 @@
     <Compile Include="Main\Populate.Components.cs" />
     <Compile Include="Main\Populate.Main.cs" />
     <Compile Include="Main\Populate.Tables.cs" />
-    <Compile Include="LIMS\Project\NAA.Orders.cs" />
-    <Compile Include="LIMS\Project\NAA.Channels.cs" />
-    <Compile Include="LIMS\Project\NAA.Projects.cs" />
-    <Compile Include="LIMS\Nuclear\NAA.Element.cs" />
-    <Compile Include="LIMS\Nuclear\Populate.Nuclear.cs" />
-    <Compile Include="LIMS\Preferences\NAA.Preferences.cs" />
-    <Compile Include="LIMS\Preferences\Populate.Preferences.cs" />
-    <Compile Include="LIMS\Project\NAA.Irradiations.cs" />
-    <Compile Include="LIMS\Project\Populate.Irradiations.cs" />
-    <Compile Include="LIMS\Project\Populate.Orders.cs" />
-    <Compile Include="LIMS\Project\Populate.Projects.cs" />
+    <Compile Include="Tables\Project\NAA.Orders.cs" />
+    <Compile Include="Tables\Project\NAA.Channels.cs" />
+    <Compile Include="Tables\Project\NAA.Projects.cs" />
+    <Compile Include="Tables\Nuclear\NAA.Element.cs" />
+    <Compile Include="Tables\Nuclear\Populate.Nuclear.cs" />
+    <Compile Include="Tables\Preferences\NAA.Preferences.cs" />
+    <Compile Include="Tables\Preferences\Populate.Preferences.cs" />
+    <Compile Include="Tables\Project\NAA.Irradiations.cs" />
+    <Compile Include="Tables\Project\Populate.Irradiations.cs" />
+    <Compile Include="Tables\Project\Populate.Orders.cs" />
+    <Compile Include="Tables\Project\Populate.Projects.cs" />
     <Compile Include="Properties\QM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -151,12 +152,12 @@
     </Compile>
     <Compile Include="Report\Report.cs" />
     <Compile Include="Report\Report.QueryMsg.cs" />
-    <Compile Include="LIMS\Samples\NAA.Measurements.cs" />
-    <Compile Include="LIMS\Samples\NAA.Peaks.cs" />
-    <Compile Include="LIMS\Samples\NAA.Samples.cs" />
-    <Compile Include="LIMS\Samples\Populate.Samples.cs" />
-    <Compile Include="LIMS\SchAcqs\NAA.SchedAcqs.cs" />
-    <Compile Include="LIMS\SchAcqs\Populate.SchedAcqs.cs" />
+    <Compile Include="Tables\Samples\NAA.Measurements.cs" />
+    <Compile Include="Tables\Samples\NAA.Peaks.cs" />
+    <Compile Include="Tables\Samples\NAA.Samples.cs" />
+    <Compile Include="Tables\Samples\Populate.Samples.cs" />
+    <Compile Include="Tables\SchAcqs\NAA.SchedAcqs.cs" />
+    <Compile Include="Tables\SchAcqs\Populate.SchedAcqs.cs" />
     <Compile Include="Static\Comparers.cs" />
     <Compile Include="Static\Main.cs" />
     <Compile Include="Static\Others.cs" />
@@ -165,11 +166,11 @@
     <Compile Include="Store\Store.cs" />
     <Compile Include="Store\Store.Delete.cs" />
     <Compile Include="Store\Store.Save.cs" />
-    <Compile Include="LIMS\ToDo\Populate.ToDoes.cs" />
-    <Compile Include="LIMS\ToDo\ToDo.Avg.cs" />
-    <Compile Include="LIMS\ToDo\ToDo.cs" />
-    <Compile Include="LIMS\ToDo\ToDo.Data.cs" />
-    <Compile Include="LIMS\ToDo\ToDo.Res.cs" />
+    <Compile Include="Tables\ToDo\Populate.ToDoes.cs" />
+    <Compile Include="Tables\ToDo\ToDo.Avg.cs" />
+    <Compile Include="Tables\ToDo\ToDo.cs" />
+    <Compile Include="Tables\ToDo\ToDo.Data.cs" />
+    <Compile Include="Tables\ToDo\ToDo.Res.cs" />
     <None Include="Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>

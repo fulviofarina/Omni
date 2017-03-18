@@ -26,7 +26,7 @@ namespace Msn
       Msg(msg, pre, icon);
       Show();
 
-      System.Windows.Forms.Application.DoEvents();
+      Application.DoEvents();
     }
 
     public void ReportProgress(int percentage)
@@ -91,10 +91,10 @@ namespace Msn
 
     public void MakeForm()
     {
-      System.Windows.Forms.Form f = this.ParentForm;
+      Form f = this.ParentForm;
       if (f == null)
       {
-        f = new System.Windows.Forms.Form();
+        f = new Form();
       }
       else
       {
@@ -115,7 +115,7 @@ namespace Msn
       f.Visible = true;
     }
 
-    public Pop()
+    public Pop(bool withForm)
     {
       InitializeComponent();
 
@@ -131,7 +131,10 @@ namespace Msn
 
       this.textBoxDescription.TextChanged += textBoxDescription_TextChanged;
 
-      MakeForm();
+            if (withForm)
+            {
+                MakeForm();
+            }
     }
 
     private void textBoxDescription_TextChanged(object sender, EventArgs e)

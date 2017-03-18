@@ -28,8 +28,8 @@ namespace k0X
       InitializeComponent();
 
       this.Linaa.InitializeComponent();
-      object aux = this.Linaa;
-      this.Interface = new Interface(ref aux);
+    //  object aux = this.Linaa;
+      this.Interface = new Interface(ref this.Linaa);
 
       Interface.IPopulate.IMain.PopulateColumnExpresions();
       Interface.IAdapter.InitializeAdapters();

@@ -112,6 +112,9 @@
     <Compile Include="Analysis\ucSamples\ucSamples.Clicks.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Analysis\ucSamples\ucSamples.Fields.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Analysis\ucSamples\ucSamples.TV.Actions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +130,9 @@
     <None Include="Resources\resources.designer.cs" />
     <None Include="Resources\resources.resx" />
     <None Include="Overrider" />
+    <Compile Include="Forms\MainForm.Notify.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\PT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -584,9 +590,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Features.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp">

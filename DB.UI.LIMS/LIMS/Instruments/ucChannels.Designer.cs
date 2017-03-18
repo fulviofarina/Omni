@@ -1,4 +1,6 @@
-﻿namespace DB.UI
+﻿using DB.UI.Properties;
+
+namespace DB.UI
 {
     partial class ucChannels
     {

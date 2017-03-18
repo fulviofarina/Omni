@@ -238,7 +238,7 @@ namespace Rsx
       hint.Clear();
     }
 
-    public static void CloneARow(DataTable Destiny, DataRow ToClone)
+    public static  DataRow CloneARow(DataTable Destiny, DataRow ToClone)
     {
       DataRow newr = Destiny.NewRow();
 
@@ -250,6 +250,7 @@ namespace Rsx
         }
       }
       Destiny.Rows.Add(newr);
+            return newr;
     }
 
     public static Comparison<string> stringsorter = delegate (string a, string b)

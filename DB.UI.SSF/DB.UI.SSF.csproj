@@ -84,6 +84,12 @@
     <Compile Include="ucMatrixSimple.Designer.cs">
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </Compile>
+    <Compile Include="ucCC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucCC.Designer.cs">
+      <DependentUpon>ucCC.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucVCC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ucMatrixSimple.resx">
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucCC.resx">
+      <DependentUpon>ucCC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucVCC.resx">
       <DependentUpon>ucVCC.cs</DependentUpon>

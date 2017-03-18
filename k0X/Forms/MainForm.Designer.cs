@@ -81,12 +81,12 @@
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 23);
+            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 29);
             // 
             // toolStripTextBox3
             // 
             this.toolStripTextBox3.Name = "toolStripTextBox3";
-            this.toolStripTextBox3.Size = new System.Drawing.Size(100, 23);
+            this.toolStripTextBox3.Size = new System.Drawing.Size(100, 29);
             // 
             // toolStripTextBox1
             // 
@@ -125,14 +125,14 @@
             this.About,
             this.quitToolStripMenuItem});
             this.CMS.Name = "CMS";
-            this.CMS.Size = new System.Drawing.Size(222, 264);
+            this.CMS.Size = new System.Drawing.Size(225, 264);
             // 
             // LoadWorkspace
             // 
             this.LoadWorkspace.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadWorkspace.ForeColor = System.Drawing.Color.Blue;
             this.LoadWorkspace.Name = "LoadWorkspace";
-            this.LoadWorkspace.Size = new System.Drawing.Size(221, 22);
+            this.LoadWorkspace.Size = new System.Drawing.Size(224, 22);
             this.LoadWorkspace.Text = "&Load Workspace";
             this.LoadWorkspace.Click += new System.EventHandler(this.LoadWorkspace_Click);
             // 
@@ -141,21 +141,21 @@
             this.SaveWorkspace.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveWorkspace.ForeColor = System.Drawing.Color.Fuchsia;
             this.SaveWorkspace.Name = "SaveWorkspace";
-            this.SaveWorkspace.Size = new System.Drawing.Size(221, 22);
+            this.SaveWorkspace.Size = new System.Drawing.Size(224, 22);
             this.SaveWorkspace.Text = "&Save Workspace";
             this.SaveWorkspace.Click += new System.EventHandler(this.SaveWorkspace_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
             // 
             // Release
             // 
             this.Release.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Release.Name = "Release";
             this.Release.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.Release.Size = new System.Drawing.Size(221, 22);
+            this.Release.Size = new System.Drawing.Size(224, 22);
             this.Release.Text = "&Release Memory";
             this.Release.Click += new System.EventHandler(this.releaseMemory_Click);
             // 
@@ -164,7 +164,7 @@
             this.BugReportMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BugReportMenu.Name = "BugReportMenu";
             this.BugReportMenu.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.BugReportMenu.Size = new System.Drawing.Size(221, 22);
+            this.BugReportMenu.Size = new System.Drawing.Size(224, 22);
             this.BugReportMenu.Text = "Send &Bug Report";
             this.BugReportMenu.Click += new System.EventHandler(this.BugReportMenu_Click);
             // 
@@ -173,14 +173,14 @@
             this.ClearLinaa.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearLinaa.Name = "ClearLinaa";
             this.ClearLinaa.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.ClearLinaa.Size = new System.Drawing.Size(221, 22);
+            this.ClearLinaa.Size = new System.Drawing.Size(224, 22);
             this.ClearLinaa.Text = "&Clear";
-            this.ClearLinaa.Click += new System.EventHandler(this.ClearLinaa_Click);
+            this.ClearLinaa.Click += new System.EventHandler(this.Quit_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
             // 
             // OtherMenu
             // 
@@ -195,7 +195,7 @@
             this.OtherMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OtherMenu.ForeColor = System.Drawing.Color.DodgerBlue;
             this.OtherMenu.Name = "OtherMenu";
-            this.OtherMenu.Size = new System.Drawing.Size(221, 22);
+            this.OtherMenu.Size = new System.Drawing.Size(224, 22);
             this.OtherMenu.Text = "&Other";
             this.OtherMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
@@ -262,7 +262,7 @@
             this.talkTSMI.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.talkTSMI.ForeColor = System.Drawing.Color.Navy;
             this.talkTSMI.Name = "talkTSMI";
-            this.talkTSMI.Size = new System.Drawing.Size(221, 22);
+            this.talkTSMI.Size = new System.Drawing.Size(224, 22);
             this.talkTSMI.Text = "Talk...";
             // 
             // Connections
@@ -271,21 +271,21 @@
             this.Connections.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.Connections.Name = "Connections";
             this.Connections.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.Connections.Size = new System.Drawing.Size(221, 22);
+            this.Connections.Size = new System.Drawing.Size(224, 22);
             this.Connections.Text = "&Database Connections...";
             this.Connections.Click += new System.EventHandler(this.Connections_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // Help
             // 
             this.Help.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Help.Name = "Help";
             this.Help.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.Help.Size = new System.Drawing.Size(221, 22);
+            this.Help.Size = new System.Drawing.Size(224, 22);
             this.Help.Text = "&Help";
             this.Help.Click += new System.EventHandler(this.Help_Click);
             // 
@@ -293,7 +293,7 @@
             // 
             this.About.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.About.Name = "About";
-            this.About.Size = new System.Drawing.Size(221, 22);
+            this.About.Size = new System.Drawing.Size(224, 22);
             this.About.Text = "&About";
             this.About.Click += new System.EventHandler(this.About_Click);
             // 
@@ -302,7 +302,7 @@
             this.quitToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             this.quitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.quitToolStripMenuItem.Text = "&Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.Quit_Click);
             // 
@@ -313,7 +313,7 @@
             this.MS.BackColor = System.Drawing.Color.Transparent;
             this.MS.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.MS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MS.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MS.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LIMSData,
             this.Detectors,
@@ -329,100 +329,94 @@
             this.MS.Name = "MS";
             this.MS.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
             this.MS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MS.Size = new System.Drawing.Size(309, 51);
+            this.MS.Size = new System.Drawing.Size(359, 67);
             this.MS.TabIndex = 23;
             this.MS.Text = "Menu";
             // 
             // LIMSData
             // 
-            this.LIMSData.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LIMSData.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LIMSData.ForeColor = System.Drawing.Color.Maroon;
             this.LIMSData.Name = "LIMSData";
             this.LIMSData.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
-            this.LIMSData.Size = new System.Drawing.Size(47, 19);
+            this.LIMSData.Size = new System.Drawing.Size(67, 29);
             this.LIMSData.Text = "&LIMS";
             this.LIMSData.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.LIMSData.Click += new System.EventHandler(this.LIMSData_Click);
+            this.LIMSData.Click += new System.EventHandler(this.Panel_Click);
             // 
             // Detectors
             // 
-            this.Detectors.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Detectors.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Detectors.ForeColor = System.Drawing.Color.DarkOrange;
             this.Detectors.Name = "Detectors";
-            this.Detectors.Size = new System.Drawing.Size(75, 19);
+            this.Detectors.Size = new System.Drawing.Size(107, 29);
             this.Detectors.Text = "&Detectors";
             // 
             // ExplorerMenu
             // 
-            this.ExplorerMenu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExplorerMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExplorerMenu.ForeColor = System.Drawing.Color.Magenta;
             this.ExplorerMenu.Name = "ExplorerMenu";
             this.ExplorerMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
             this.ExplorerMenu.ShowShortcutKeys = false;
-            this.ExplorerMenu.Size = new System.Drawing.Size(66, 19);
+            this.ExplorerMenu.Size = new System.Drawing.Size(95, 29);
             this.ExplorerMenu.Text = "Explorer";
-            this.ExplorerMenu.Click += new System.EventHandler(this.ExplorerMenu_Click);
+            this.ExplorerMenu.Click += new System.EventHandler(this.Panel_Click);
             // 
             // Analysis
             // 
-            this.Analysis.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Analysis.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Analysis.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.Analysis.Name = "Analysis";
             this.Analysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.Analysis.Size = new System.Drawing.Size(62, 19);
+            this.Analysis.Size = new System.Drawing.Size(94, 29);
             this.Analysis.Text = "&Analysis";
             this.Analysis.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.Analysis.Click += new System.EventHandler(this.Analysis_Click);
+            this.Analysis.Click += new System.EventHandler(this.Panel_Click);
             // 
             // HyperLabData
             // 
-            this.HyperLabData.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HyperLabData.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HyperLabData.ForeColor = System.Drawing.Color.SeaGreen;
             this.HyperLabData.Name = "HyperLabData";
             this.HyperLabData.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
-            this.HyperLabData.Size = new System.Drawing.Size(62, 19);
+            this.HyperLabData.Size = new System.Drawing.Size(88, 29);
             this.HyperLabData.Text = "&Spectra";
             this.HyperLabData.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.HyperLabData.Click += new System.EventHandler(this.HyperLabData_Click);
+            this.HyperLabData.Click += new System.EventHandler(this.Panel_Click);
             // 
             // ToDoPanel
             // 
-            this.ToDoPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ToDoPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ToDoPanel.ForeColor = System.Drawing.Color.Firebrick;
             this.ToDoPanel.Name = "ToDoPanel";
             this.ToDoPanel.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
-            this.ToDoPanel.Size = new System.Drawing.Size(48, 19);
+            this.ToDoPanel.Size = new System.Drawing.Size(68, 29);
             this.ToDoPanel.Text = "To&Do";
             this.ToDoPanel.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.ToDoPanel.Click += new System.EventHandler(this.ToDoPanel_Click);
+            this.ToDoPanel.Click += new System.EventHandler(this.Panel_Click);
             // 
             // SolCoiPanel
             // 
-            this.SolCoiPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SolCoiPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SolCoiPanel.ForeColor = System.Drawing.Color.BlueViolet;
             this.SolCoiPanel.Name = "SolCoiPanel";
             this.SolCoiPanel.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
-            this.SolCoiPanel.Size = new System.Drawing.Size(53, 19);
+            this.SolCoiPanel.Size = new System.Drawing.Size(78, 29);
             this.SolCoiPanel.Text = "Sol&Coi";
             this.SolCoiPanel.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.SolCoiPanel.Click += new System.EventHandler(this.SolCoiPanel_Click);
+            this.SolCoiPanel.Click += new System.EventHandler(this.Panel_Click);
             // 
             // MatSSFPanel
             // 
-            this.MatSSFPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MatSSFPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MatSSFPanel.ForeColor = System.Drawing.Color.SkyBlue;
             this.MatSSFPanel.Name = "MatSSFPanel";
             this.MatSSFPanel.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
-            this.MatSSFPanel.Size = new System.Drawing.Size(61, 19);
+            this.MatSSFPanel.Size = new System.Drawing.Size(89, 29);
             this.MatSSFPanel.Text = "&MatSSF";
             this.MatSSFPanel.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.MatSSFPanel.Click += new System.EventHandler(this.MatSSFPanel_Click);
-            // 
-            // timer
-            // 
-            this.timer.Enabled = true;
-            this.timer.Interval = 3600000;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            this.MatSSFPanel.Click += new System.EventHandler(this.Panel_Click);
             // 
             // SFD
             // 
@@ -459,8 +453,8 @@
             // SC.Panel2
             // 
             this.SC.Panel2.Controls.Add(this.MS);
-            this.SC.Size = new System.Drawing.Size(309, 98);
-            this.SC.SplitterDistance = 44;
+            this.SC.Size = new System.Drawing.Size(359, 122);
+            this.SC.SplitterDistance = 52;
             this.SC.SplitterWidth = 3;
             this.SC.TabIndex = 24;
             // 
@@ -475,7 +469,7 @@
             this.Box.Location = new System.Drawing.Point(0, 0);
             this.Box.Margin = new System.Windows.Forms.Padding(4);
             this.Box.Name = "Box";
-            this.Box.Size = new System.Drawing.Size(309, 33);
+            this.Box.Size = new System.Drawing.Size(359, 33);
             this.Box.Sorted = true;
             this.Box.TabIndex = 0;
             this.Box.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Box_KeyUp);
@@ -485,10 +479,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(309, 98);
+            this.ClientSize = new System.Drawing.Size(359, 122);
             this.ControlBox = false;
             this.Controls.Add(this.SC);
-            this.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Location = new System.Drawing.Point(1200, 450);
