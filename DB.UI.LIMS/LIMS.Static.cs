@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -7,6 +8,20 @@ namespace DB.UI
 {
     public partial class LIMS
     {
+        //  public static System.Collections.Generic.IList<object> UserControls;
+
+        public static T FindLastControl<T>(string name)
+        {
+            Func<T, bool> finder = o =>
+            {
+                bool found = false;
+                UserControl os = o as UserControl;
+                if (os.Name.ToUpper().CompareTo(name) == 0) found = true;
+                return found;
+            };
+            return UserControls.OfType<T>().LastOrDefault(finder);
+        }
+
         public static LIMS Form = null;
 
         public static Interface Interface = null;
@@ -23,6 +38,16 @@ namespace DB.UI
         public static UserControl CreateUI(string controlHeader)
         {
             return CreateUI(controlHeader, null);
+        }
+
+        public static void CreateForm(string title, ref UserControl control)
+        {
+            if (control == null) return;
+            Auxiliar form = new Auxiliar();
+            form.MaximizeBox = true;
+            form.Populate(control);
+            form.Text = title;
+            form.Show();
         }
 
         public static UserControl CreateUI(string controlHeader, object[] args)
@@ -44,19 +69,25 @@ namespace DB.UI
             {
                 case ControlNames.Geometries:
                     {
-                        control = (UserControl)new ucGeometry();
+                        ucGeometry ucGeometry = new ucGeometry();
+                        control = (UserControl)ucGeometry;
+                        ucGeometry.Set(ref LIMS.Interface);
+
                         refresher = Interface.IPopulate.IGeometry.PopulateGeometry;
                         break;
                     }
                 case ControlNames.Vials:
                     {
-                        control = (UserControl)new ucVialType();
+                        ucVialType ucVialType = new ucVialType();
+                        control = (UserControl)ucVialType;
+                        ucVialType.Set(ref LIMS.Interface);
                         refresher = Interface.IPopulate.IGeometry.PopulateVials;
                         break;
                     }
                 case ControlNames.Matrices:
                     {
-                        ucMatrix mat = new ucMatrix(ref LIMS.Linaa);
+                        ucMatrix mat = new ucMatrix();
+                        mat.Set(ref LIMS.Interface);
                         control = (UserControl)mat;
                         refresher = Interface.IPopulate.IGeometry.PopulateMatrix;
                         preRefresh = mat.PreRefresh;
@@ -65,12 +96,16 @@ namespace DB.UI
                     }
                 case ControlNames.Detectors:
                     {
-                        control = (UserControl)new ucDetectors();
+                        ucDetectors ucDetectors = new ucDetectors();
+                        ucDetectors.Set(ref LIMS.Interface);
+                        control = (UserControl)ucDetectors;
+
                         break;
                     }
                 case ControlNames.Monitors:
                     {
                         ucMonitors mon = new ucMonitors();
+                        mon.Set(ref LIMS.Interface);
                         control = (UserControl)mon;
                         refresher = Interface.IPopulate.ISamples.PopulateMonitors;
                         postRefresh = mon.PostRefresh;
@@ -83,51 +118,87 @@ namespace DB.UI
                     }
                 case ControlNames.Standards:
                     {
-                        control = (UserControl)new ucStandards();
+                        ucStandards ucStandards = new ucStandards();
+                        control = ucStandards as UserControl;
+                        ucStandards.Set(ref LIMS.Interface);
+
                         refresher = Interface.IPopulate.ISamples.PopulateStandards;
                         break;
                     }
                 case ControlNames.SubSamples:
                     {
-                        ISubSamples ucSS = new ucSubSamples();
+                        ucSubSamples ucSubSamples = new ucSubSamples();
 
-                        control = (UserControl)ucSS;
+                        ucSubSamples.ucContent = CreateUI(ControlNames.SubSamplesContent) as ucSSContent;
 
-                        refresher = ucSS.RefreshSubSamples;
-                        cellpainter = ucSS.PaintCells;
-                        shouldpaintCell = ucSS.ShouldPaint;
-                        addedRow = ucSS.RowAdded;
+                        ucSubSamples.Set(ref LIMS.Interface);
+                        //   ucSubSamples.ucContent.Set(ref LIMS.Interface);
+
+                        cellpainter = ucSubSamples.ucContent.PaintCells;
+                        shouldpaintCell = ucSubSamples.ucContent.ShouldPaint;
+                        refresher = ucSubSamples.projectbox.RefreshSubSamples;
+                        addedRow = ucSubSamples.RowAdded;
+
+                        control = (UserControl)ucSubSamples;
+
+                        break;
+                    }
+                case ControlNames.SubSamplesContent:
+                    {
+                        ucSSContent ucSSContent = new ucSSContent();
+
+                        //     ucSSContent.Set(ref LIMS.Interface);
+
+                        cellpainter = ucSSContent.PaintCells;
+                        shouldpaintCell = ucSSContent.ShouldPaint;
+                        //     refresher = ucSSContent.RefreshSubSamples;
+                        //   addedRow = ucSSContent.RowAdded;
+                        control = ucSSContent as UserControl;
                         break;
                     }
                 case ControlNames.MonitorsFlags:
                     {
-                        control = (UserControl)new ucMonitorsFlags();
+                        ucMonitorsFlags ucMonitorsFlags = new ucMonitorsFlags();
+                        control = ucMonitorsFlags as UserControl;
+                        ucMonitorsFlags.Set(ref LIMS.Interface);
+
                         refresher = Interface.IPopulate.ISamples.PopulateMonitorFlags;
 
                         break;
                     }
                 case ControlNames.Samples:
                     {
-                        control = (UserControl)new ucSamples();
+                        ucSamples ucSamples = new ucSamples();
+                        control = ucSamples as UserControl;
+                        ucSamples.Set(ref LIMS.Interface);
                         refresher = Interface.IPopulate.ISamples.PopulateStandards;
                         break;
                     }
                 case ControlNames.Irradiations:
                     {
-                        control = (UserControl)new ucIrradiationsRequests();
+                        ucIrradiationsRequests ucIrr = new ucIrradiationsRequests();
+                        ucIrr.Set(ref LIMS.Interface);
+                        control = (UserControl)ucIrr;
+
                         refresher = Interface.IPopulate.IIrradiations.PopulateIrradiationRequests;
                         break;
                     }
                 case ControlNames.Channels:
                     {
-                        control = (UserControl)new ucChannels();
+                        ucChannels ucChannels = new ucChannels();
+                        control = ucChannels as UserControl;
+                        ucChannels.Set(ref LIMS.Interface);
+
                         refresher = Interface.IPopulate.IIrradiations.PopulateChannels;
                         break;
                     }
 
                 case ControlNames.Orders:
                     {
-                        control = (UserControl)new ucOrders();
+                        ucOrders ucOrders = new ucOrders();
+                        control = ucOrders as UserControl;
+                        ucOrders.Set(ref LIMS.Interface);
+
                         refresher = Interface.IPopulate.IOrders.PopulateOrders;
                         break;
                     }
@@ -162,15 +233,12 @@ namespace DB.UI
 
             //create events
             cv.CreateEvents(ref dgvs);
-
             dgvs = null;
-
-            ToolStripButton[] items = Rsx.Dumb.GetChildControls<ToolStrip>(control).SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
+            ToolStripButton[] items = Rsx.Dumb.GetChildControls<ToolStrip>(control)
+                .SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
 
             cv.CreateEvents(ref items);
-
             items = null;
-
             control.Tag = cv;   //sets the CV as a TAG for the control
             cv.UsrControl = control; //set the control as a tag for the CV
 
@@ -223,28 +291,42 @@ namespace DB.UI
             }
         }
 
+        /// <summary>
+        /// For setting the item on the Picker Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void SetItem(object sender, System.EventArgs e)
         {
+            //get the dgv associated to the tsmi
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             ContextMenuStrip cms = tsmi.GetCurrentParent() as ContextMenuStrip;
             DataGridView dgv = cms.SourceControl as DataGridView;
+
             string controlHeader = string.Empty;
-            if (tsmi.Tag is System.Data.DataColumn)
+            //the tag is a column
+            if (tsmi.Tag is DataColumn)
             {
-                System.Data.DataColumn col = tsmi.Tag as System.Data.DataColumn;
+                DataColumn col = tsmi.Tag as DataColumn;
                 //     LINAA.DetectorsAbsorbersRow abs = ((LINAA.DetectorsAbsorbersRow)((System.Data.DataRowView)dgv.CurrentRow.DataBoundItem).Row);
-                DataGridViewColumn dgvcol = dgv.Columns.OfType<DataGridViewColumn>().FirstOrDefault(c => c.DataPropertyName.Equals(col.ColumnName));
+
+                //GET the DGV COLUMN
+                DataGridViewColumn dgvcol = dgv.Columns
+                    .OfType<DataGridViewColumn>()
+                    .FirstOrDefault(c => c.DataPropertyName.Equals(col.ColumnName));
+
                 dgv.CurrentCell = dgv[dgvcol.Index, dgv.CurrentRow.Index];
                 controlHeader = ControlNames.Matrices;
             }
-            else controlHeader = tsmi.Tag as string;
+            else controlHeader = tsmi.Tag as string; //the tag is a string
 
             UserControl control = LIMS.CreateUI(controlHeader);
 
             if (control == null) return;
 
-            Rsx.DGV.Control cv = (Rsx.DGV.Control)control.Tag;
-            DataGridView[] from = cv.DGVs;
+            //take the control Tag as the DGV.Control
+            DataGridView[] from = ((Rsx.DGV.Control)control.Tag).DGVs;
+            //has no dgvs to pick from?
             if (from == null || from.Count() == 0)
             {
                 control.Dispose();
@@ -252,10 +334,16 @@ namespace DB.UI
             }
 
             IPickerForm frm = new PickerForm();
+            //pick from the following from dgvs, to this dgv,
             frm.IPicker = new Picker(ref dgv, ref from, false);  //the picker algorithm class
             frm.Module = control;    //this will show the module to pick from
         }
 
+        /// <summary>
+        /// Destroys the ouput, and puts the input on the output
+        /// </summary>
+        /// <param name="inpu"></param>
+        /// <param name="output"></param>
         public static void SwapLinaa(ref LINAA inpu, ref LINAA output)
         {
             if (output != null)

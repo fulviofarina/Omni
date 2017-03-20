@@ -179,4 +179,7 @@
   <data name="SSFPreferences" xml:space="preserve">
     <value>\k0-X\SSFPreferences.xml</value>
   </data>
+  <data name="SSFFolder" xml:space="preserve">
+    <value>\k0-X\MatSSF\</value>
+  </data>
 </root>

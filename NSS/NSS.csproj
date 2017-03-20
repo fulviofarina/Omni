@@ -147,6 +147,10 @@
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.UI.LIMS\DB.UI.LIMS.csproj">
+      <Project>{4eee1204-d241-4fef-8188-0f6ca5a1a4c0}</Project>
+      <Name>DB.UI.LIMS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.UI.SSF\DB.UI.SSF.csproj">
       <Project>{23b5ea4d-b073-46aa-8e66-a4baad1626f1}</Project>
       <Name>DB.UI.SSF</Name>

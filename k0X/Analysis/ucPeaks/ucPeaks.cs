@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using DB.UI;
 using Rsx;
 using Rsx.DGV;
 
@@ -31,7 +32,7 @@ namespace k0X
 
             Link();
 
-            openControls = Program.UserControls.OfType<ucSamples>();
+            openControls = LIMS.UserControls.OfType<ucSamples>();
 
             this.ResumeLayout(false);
 
@@ -371,11 +372,11 @@ namespace k0X
             ucToDoPanel panel = null;
 
             MainForm main = Application.OpenForms.OfType<MainForm>().First();
-            panel = Program.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
+            panel = LIMS.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
             if (panel == null)
             {
                 main.Panel_Click(this, EventArgs.Empty);
-                panel = Program.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
+                panel = LIMS.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
                 ArenaSC.Panel2.Controls.Add(panel);
                 panel.Dock = DockStyle.Fill;
                 this.ArenaInternalSC.Panel2.Controls.Add(panel.ucToDoData);

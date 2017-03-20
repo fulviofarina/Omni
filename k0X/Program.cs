@@ -19,20 +19,6 @@ namespace k0X
             set { Program.isIdle = value; }
         }
 
-        public static System.Collections.Generic.IList<object> UserControls;
-
-        public static T FindLastControl<T>(string name)
-        {
-            Func<T, bool> finder = o =>
-            {
-                bool found = false;
-                UserControl os = o as UserControl;
-                if (os.Name.ToUpper().CompareTo(name) == 0) found = true;
-                return found;
-            };
-            return UserControls.OfType<T>().LastOrDefault(finder);
-        }
-
         private static System.Windows.Forms.Timer timer;
 
         public static System.Windows.Forms.Timer Timer
@@ -47,8 +33,6 @@ namespace k0X
         [STAThreadAttribute]
         public static void Main()
         {
-            UserControls = new System.Collections.Generic.List<object>();
-
             //  DB.Tools.NuDat.Query(string.Empty);
 
             Application.EnableVisualStyles();

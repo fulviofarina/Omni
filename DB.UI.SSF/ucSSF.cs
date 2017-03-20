@@ -31,37 +31,15 @@ namespace DB.UI
             this.unitTLP.Controls.Add(msn, 0, 1);
         }
 
-        public ucSSF(ref LINAA Linaa)
+        public ucSSF(ref Interface inter)
         {
             InitializeComponent();
 
             //  object db = Linaa;
-            Interface = new Interface(ref Linaa);
-
-            Form form = new Form();
-            form.AutoSize = true;
-            form.Text = "SSF Panel";
-            IntPtr Hicon = DB.UI.Properties.Resources.Logo.GetHicon();
-            Icon myIcon = Icon.FromHandle(Hicon);
-            form.Icon = myIcon;
-            form.Controls.Add(this);// Populate(this);
-            form.Show();
+            Interface = inter;
 
             string folder = Interface.IPreferences.CurrentSSFPref.Folder;
             MatSSF.StartupPath = preFolder + folder;
-
-            loadDatabase();
-
-            /*
-            form = new System.Windows.Forms.Form();
-            form.AutoSize = true;
-            form.Text = "SSF Panel";
-            Hicon = DB.UI.Properties.Resources.Logo.GetHicon();
-            myIcon = System.Drawing.Icon.FromHandle(Hicon);
-            form.Icon = myIcon;
-            form.Controls.Add(unit);// Populate(this);
-            form.Show();
-            */
 
             this.loop.CheckedChanged += this.checkedChanged;
             this.calcDensity.CheckedChanged += this.checkedChanged;
@@ -75,23 +53,6 @@ namespace DB.UI
             this.doCK.CheckedChanged += this.checkedChanged;
 
             this.AutoLoad.CheckedChanged += this.checkedChanged;
-
-            Interface.IReport.Msg("Database", "Units were loaded!");
-
-            //  Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-
-            //  Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
-
-            // Interface.IPreferences.CurrentSSFPref.Loop = this.loop.Checked;
-            //Interface.IPreferences.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-            // Interface.IPreferences.CurrentPref.DoCK = this.doCK.Checked;
-            //    Interface.IPreferences.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
-            // Interface.IPreferences.CurrentPref.ShowMatSSF = this.showMatSSF.Checked;
-            //  Interface.IPreferences.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
-            // this.SQL.Checked = Interface.IPreferences.CurrentSSFPref.SQL;
-            //  Interface.IPreferences.CurrentSSFPref.Folder = this.FolderPath.Text;
-            // Interface.IPreferences.CurrentSSFPref.ShowOther = this.showOther.Checked;
-            //   Interface.IPreferences.CurrentPref.Offline = this.workOffline.Checked;
         }
 
         /// <summary>
@@ -110,26 +71,22 @@ namespace DB.UI
         {
             if (e.RowIndex < 0) return;
 
-            DataGridView dgv = sender as DataGridView;
-
-            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
-
-            string rowWithError = DB.UI.Properties.Resources.rowWithError;
             string noTemplate = DB.UI.Properties.Resources.noTemplate;
             string Error = DB.UI.Properties.Resources.Error;
 
+            ///check if table has no rows
+            DataGridView dgv = sender as DataGridView;
+            if (dgv.RowCount == 0)
+            {
+                Interface.IReport.Msg(noTemplate, Error); //report
+
+                return;
+            }
+            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
+
             try
             {
-                ///check if table has no rows
-                if (row == null)
-                {
-                    Interface.IReport.Msg(noTemplate, Error); //report
-                                                              //  row.RowError = noTemplate;
-                    return;
-                }
-
-                ///find which dgv called it
-                bool isChannel = row.GetType().Equals(typeof(LINAA.ChannelsRow));
+                string rowWithError = DB.UI.Properties.Resources.rowWithError;
 
                 ///has errors
                 if (row.HasErrors)
@@ -141,22 +98,27 @@ namespace DB.UI
                     return;
                 }
 
+                //if (sender.Equals(this.ucUnit.Controls.c))
                 if (MatSSF.UNIT == null)
                 {
                     this.AddUnitBn_Click(null, EventArgs.Empty);
                 }
+                ///find which dgv called it
+                bool isChannel = row.GetType().Equals(typeof(LINAA.ChannelsRow));
 
                 if (isChannel)
                 {
                     LINAA.ChannelsRow c = row as LINAA.ChannelsRow;
-                    MatSSF.UNIT.ChannelsRow = c;
-                    MatSSF.UNIT.SetChannel();
+                    MatSSF.UNIT.SetChannel(ref c);
                 }
                 else
                 {
                     LINAA.VialTypeRow v = row as LINAA.VialTypeRow;
+                    if (!v.IsRabbit) MatSSF.UNIT.SubSamplesRow.VialTypeRow = v;
+                    else MatSSF.UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
+                    //       MatSSF.UNIT.SetVialContainer(ref v);
 
-                    MatSSF.UNIT.SetVialContainer(ref v);
+                    ///  MatSSF.UNIT.SubSamplesRow.find
                 }
             }
             catch (System.Exception ex)
@@ -171,23 +133,25 @@ namespace DB.UI
 
             DataGridView dgv = sender as DataGridView;
             //  DataGridViewRow r = dgv.Rows[e.RowIndex];
+
+            string noTemplate = DB.UI.Properties.Resources.noTemplate;
+            string Error = DB.UI.Properties.Resources.Error;
+
+            if (dgv.RowCount == 0)
+            {
+                Interface.IReport.Msg(noTemplate, Error); //report
+
+                return;
+            }
+
             DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
             //     LINAA lina = (LINAA)Interface.Get();
-
             string rowWithError = DB.UI.Properties.Resources.rowWithError;
-            string noTemplate = DB.UI.Properties.Resources.noTemplate;
-            string Error = DB.UI.Properties.Resources.Error;
 
             try
             {
                 ///check if table has no rows
-                if (row == null)
-                {
-                    Interface.IReport.Msg(noTemplate, Error); //report
-                                                              //  row.RowError = noTemplate;
-                    return;
-                }
 
                 ///has errors
                 if (row.HasErrors)
@@ -196,12 +160,17 @@ namespace DB.UI
                 //    return;
                 }
 
+                if (this.ucUnit.Controls.Contains(sender as Control))
+                {
+                }
+                else
+                {
+                }
+
                 MatSSF.UNIT = row as LINAA.UnitRow;
                 this.ucUnit.RefreshSSF();
-
-                this.ucCC1.RefreshVCC();
+                this.ucCC1.RefreshCC();
                 this.ucVcc.RefreshVCC();
-
                 this.ucMS.RefreshMatrix();
 
                 if (row.HasErrors)
@@ -221,13 +190,9 @@ namespace DB.UI
             double kth = Dumb.GetControlAs<double>(kthB);
             string chfg = cfgB.Text;
 
-            //   LINAA.UnitDataTable dt = Interface.IDB.Unit;
-
             MatSSF.UNIT = Interface.IDB.Unit.NewUnitRow(kepi, kth, chfg);
 
             this.ucUnit.RefreshSSF();
-
-            // row = u;
         }
 
         private void dgvMatrixSelected(object sender, DataGridViewCellMouseEventArgs e)
@@ -235,6 +200,8 @@ namespace DB.UI
             if (e.RowIndex < 0) return;
 
             DataGridView dgv = sender as DataGridView;
+
+            if (dgv.RowCount == 0) return;
 
             DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
             string rowWithError = DB.UI.Properties.Resources.rowWithError;
@@ -280,8 +247,7 @@ namespace DB.UI
                 }
 
                 LINAA.MatrixRow m = row as LINAA.MatrixRow;
-                MatSSF.UNIT.MatrixRow = m;
-                MatSSF.UNIT.SetMatrix();
+                MatSSF.UNIT.SubSamplesRow.MatrixID = m.MatrixID;
             }
             catch (System.Exception ex)
             {
@@ -408,6 +374,9 @@ namespace DB.UI
         }
 
         private Hashtable bindings = null;
+        private Hashtable samplebindings = null;
+
+        public ucSubSamples ParentUI;
 
         private void setUnitBindings()
         {
@@ -417,28 +386,33 @@ namespace DB.UI
 
             LINAA.UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = this.ucUnit.UnitBS;
-
+            LINAA.SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
+            BindingSource bsSample = this.ParentUI.BS;
             this.unitBN.BindingSource = bs;
 
+            //unit bindings
             bindings = Dumb.ArrayOfBindings(ref bs, Interface.IPreferences.CurrentSSFPref.Rounding);
-
+            samplebindings = Dumb.ArrayOfBindings(ref bsSample, Interface.IPreferences.CurrentSSFPref.Rounding);
             //  Dumb.ChangeBindingsFormat("N2", ref bindings);
 
             string column;
 
-            column = Unit.DiameterColumn.ColumnName;
-            this.diameterbox.TextBox.DataBindings.Add(bindings[column] as Binding);
+            column = SSamples.RadiusColumn.ColumnName;
+            this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
 
-            column = Unit.LengthColumn.ColumnName;
-            this.lenghtbox.TextBox.DataBindings.Add(bindings[column] as Binding);
+            column = SSamples.FillHeightColumn.ColumnName;
+            this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+
             column = Unit.ChDiameterColumn.ColumnName;
             this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChLengthColumn.ColumnName;
             this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.MassColumn.ColumnName;
             this.massB.TextBox.DataBindings.Add(bindings[column] as Binding);
+
             column = Unit.DensityColumn.ColumnName;
             this.densityB.TextBox.DataBindings.Add(bindings[column] as Binding);
+
             column = Unit.ChCfgColumn.ColumnName;
             this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ContentColumn.ColumnName;
@@ -469,15 +443,15 @@ namespace DB.UI
             this.workOffline.Checked = ip.CurrentPref.Offline;
         }
 
-        private void loadDatabase()
-        {
-            // errorB.Clear();
+        // public ucSubSamples ucSubSamples;
 
+        public void LoadDatabase()
+        {
             try
             {
                 if (!Interface.IPreferences.CurrentPref.Offline)
                 {
-                    Interface.IPopulate.IGeometry.PopulateUnits();
+                    // Interface.IPopulate.IGeometry.PopulateUnits();
                 }
                 else //fix this
                 {
@@ -491,7 +465,7 @@ namespace DB.UI
 
                 ucUnit.Set(ref Interface);
                 ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
-
+                ucIrradiationsRequests1.Set(ref Interface);
                 ucMS.Set(ref Interface);
                 ucMS.RowHeaderMouseClick = this.dgvMatrixSelected;
 
@@ -502,14 +476,10 @@ namespace DB.UI
                 this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
-                //    this.currentUnit = (LINAA.UnitRow)Dumb.Cast<LINAA.UnitRow>(bs.Current);
-
-                //   loadBoxesfromUnit();
             }
             catch (System.Exception ex)
             {
                 Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
-                //    errorB.Text += ex.Message + "\n" + ex.Source + "\n";
             }
         }
 

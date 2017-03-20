@@ -18,22 +18,16 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=flux\sql14;Initial Catalog=k014;Persist Security Info=True;User ID=sa;Password=naa;Connect Timeout=5</Value>
     </Setting>
-    <Setting Name="SpectraFolder" Type="System.String" Scope="User">
+    <Setting Name="SpectraFolder" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\scksrv1\gkd\DOKUMENT\LRM\LABO_NAA\METINGEN\</Value>
     </Setting>
-    <Setting Name="SpectraServer" Type="System.String" Scope="User">
+    <Setting Name="SpectraServer" Type="System.String" Scope="Application">
       <Value Profile="(Default)">PC1533</Value>
     </Setting>
-    <Setting Name="deployPath" Type="System.String" Scope="User">
+    <Setting Name="deployPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\scksrv1\gkd\DOKUMENT\LRM\_Software_Ontwikkeling\ex_RNM_Archief\k0X\</Value>
     </Setting>
-    <Setting Name="SSFFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\k0-X\MatSSF\</Value>
-    </Setting>
-    <Setting Name="SOLCOIFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\k0-X\SolCoi\</Value>
-    </Setting>
-    <Setting Name="SSFSQL" Type="System.String" Scope="User">
+    <Setting Name="SSFSQL" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Data Source=flux\sql14;Initial Catalog=SSF;Persist Security Info=True;User ID=sa;Password=naa;Connect Timeout=5</Value>
     </Setting>
   </Settings>

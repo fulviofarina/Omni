@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
-
-using DB.Tools;
 using System.Data;
+using System.Windows.Forms;
+using DB.Tools;
 using Rsx;
 
 namespace DB.UI
@@ -41,18 +40,16 @@ namespace DB.UI
             Dumb.LinkBS(ref this.ContainerBS, this.lINAA.VialType, column + " = " + "True", innerRadCol);
         }
 
-        public void RefreshVCC()
+        public void RefreshCC()
         {
             LINAA.UnitRow u = MatSSF.UNIT;
             string column;
             column = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
-            int id = u.VialTypeID;
-            //    this.VialBS.Position = this.VialBS.Find(column, id);
-            id = u.ContainerID;
+            int id = u.SubSamplesRow.VialTypeRowByChCapsule_SubSamples.VialTypeID;
             this.ContainerBS.Position = this.ContainerBS.Find(column, id);
             column = this.lINAA.Channels.ChannelsIDColumn.ColumnName;
+            id = u.SubSamplesRow.IrradiationRequestsRow.ChannelsID;
 
-            id = u.ChannelID;
             this.ChannelBS.Position = this.ChannelBS.Find(column, id);
         }
 

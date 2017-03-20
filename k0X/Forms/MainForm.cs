@@ -18,7 +18,7 @@ namespace k0X
         private Pop msn = null;
         private k0X.IWatch watch = null;
 
-        bool shouldWatchEmail = false;
+        private bool shouldWatchEmail = false;
 
         public MainForm()
         {
@@ -33,7 +33,7 @@ namespace k0X
             this.Location = new System.Drawing.Point(x, y);
 
             //set user control list
-            LIMS.UserControls = Program.UserControls;
+            LIMS.UserControls = new System.Collections.Generic.List<object>();
 
             //set the timer
             this.timer.Enabled = true;
@@ -70,7 +70,7 @@ namespace k0X
                 LIMS.Linaa.Msg("I'm loading it", "Found... " + ProjectOrOrder);
                 //  LIMS.IReport.Speak("Found... " + ProjectOrOrder + "...");
 
-                this.Create(sender, true, ProjectOrOrder);
+                Create(sender, true, ProjectOrOrder);
             }
             else if (e.KeyCode == Keys.Enter)
             {
@@ -92,7 +92,7 @@ namespace k0X
                     if (fromFile)
                     {
                         ICollection<string> ls = LIMS.Linaa.ActiveProjectsList;
-                        foreach (string project in ls) this.Create(ucOrder, false, project.ToUpper());
+                        foreach (string project in ls) Create(ucOrder, false, project.ToUpper());
                     }
                     else ucOrder.Populate();
 
@@ -117,7 +117,7 @@ namespace k0X
 
                     if (control == null) return;
 
-                    Program.UserControls.Add(control);
+                    LIMS.UserControls.Add(control);
 
                     ucIrradiationsRequests ucIrrReq = control as ucIrradiationsRequests;
                     ucIrrReq.Name = ProjectOrOrder + " - New Irradiation";
@@ -167,8 +167,8 @@ namespace k0X
             if (sender == this.ToDoPanel || sender.GetType().Equals(typeof(ucPeaks)))
             {
                 ucToDoPanel todo = new ucToDoPanel(ref LIMS.Linaa);
-                Program.UserControls.Add(todo);
-                Program.UserControls.Add(todo.ucToDoData);
+                LIMS.UserControls.Add(todo);
+                LIMS.UserControls.Add(todo.ucToDoData);
                 todo.panel1box.Text = LIMS.Linaa.CurrentPref.LastIrradiationProject;
                 todo.panel2box.Text = LIMS.Linaa.CurrentPref.LastIrradiationProject;
             }
@@ -179,31 +179,31 @@ namespace k0X
                     object dataset = LIMS.Linaa;
 
                     IPeaks ucP = new ucPeaks(ref dataset);
-                    Program.UserControls.Add(ucP);
+                    LIMS.UserControls.Add(ucP);
                     IEnumerable<LINAA.ElementsRow> elements = LIMS.Linaa.Elements.AsEnumerable();
                     ucPeriodic = new ucPeriodicTable(ref elements);  //creates the interface
                     ucP.IPeriodicTable = ucPeriodic;  //docks the ucPeriodic interface
-                    Program.UserControls.Add(ucPeriodic);
+                    LIMS.UserControls.Add(ucPeriodic);
                 }
 
                 ucPeriodic.Projects = Dumb.HashFrom<string>(LIMS.Linaa.SubSamples.IrradiationCodeColumn);
             }
             else if (sender.Equals(this.MatSSFPanel))
             {
-                ucSSF matssf = new ucSSF(ref LIMS.Linaa);
-                Program.UserControls.Add(matssf);
+                ucSSF matssf = new ucSSF(ref LIMS.Interface);
+                LIMS.UserControls.Add(matssf);
             }
             else if (sender.Equals(this.SolCoiPanel))
             {
-                ucSolcoi sol = new ucSolcoi(ref LIMS.Linaa);
-                Program.UserControls.Add(sol);
-                Program.UserControls.Add(sol.ucDetectors);
+                ucSolcoi sol = new ucSolcoi(ref LIMS.Interface);
+                LIMS.UserControls.Add(sol);
+                LIMS.UserControls.Add(sol.ucDetectors);
             }
             else if (sender.Equals(this.HyperLabData))
             {
                 ucHyperLab HL = new ucHyperLab();
                 HL.MainForm = this;
-                Program.UserControls.Add(HL);
+                LIMS.UserControls.Add(HL);
             }
             else if (sender.Equals(this.ExplorerMenu))
             {
@@ -258,68 +258,87 @@ namespace k0X
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private void Create(object sender, bool load, string project)
+        public static void Create(object sender, bool load, string project)
         {
-            bool newForm = false;
+            bool newForm = false; //deserves a new form?
+
+            //sender type
             Type tipo = sender.GetType();
+
+            //is a todo panel?
             bool todopanel = tipo.Equals(typeof(ucToDoPanel));
+
+            //is an order?
             bool order = tipo.Equals(typeof(ucOrder));
 
             ucSamples ucSamples = null;
-            ucSamples = Program.FindLastControl<ucSamples>(project);
+            //find last control with that project name
+            ucSamples = LIMS.FindLastControl<ucSamples>(project);
 
             if (ucSamples == null || ucSamples.IsDisposed || todopanel)
             {
-                bool clone = false;
-
-                DB.UI.ISubSamples ISS = null;
-                ISS = Program.FindLastControl<ucSubSamples>(project);
+                DB.UI.ucSubSamples ISS = null;
+                //find subsample control
+                ISS = LIMS.FindLastControl<ucSubSamples>(project);
                 if (ISS == null)
                 {
                     UserControl control = DB.UI.LIMS.CreateUI(ControlNames.SubSamples);
-                    if (control == null) return;
-
-                    control.Name = project;
+                    if (control == null)
+                    {
+                        return;
+                    }
+                    //  control.Name = project;
                     ISS = control as DB.UI.ucSubSamples;
-                    ISS.Offline = !load;
-                    ISS.CanSelectProject = false;
+
+                    ISS.Name = project;
+                    //  ISS.Project = project;
+                    ISS.projectbox.Offline = !load;
+                    ISS.projectbox.CanSelectProject = false;
+                    ISS.ucContent.Set(ref LIMS.Interface);
                     AuxiliarForm form = new AuxiliarForm();
                     form.Populate(ref control);
                 }
 
-                if (todopanel && ucSamples != null && !ucSamples.IsDisposed) clone = true;
+                //clone or not to clone
+                bool clone = (todopanel && ucSamples != null && !ucSamples.IsDisposed);
 
-                Interface interf = LIMS.Interface;
+                //  Interface interf = LIMS.Interface;
 
-                ucSamples = new ucSamples(ref interf);
+                ucSamples = new ucSamples(ref LIMS.Interface);
                 ucSamples.ISubS = ISS;
-                Program.UserControls.Add(ucSamples);
-                newForm = true;
                 ucSamples.Name = project;
+                LIMS.UserControls.Add(ucSamples);
+                newForm = true;
+
                 ucSamples.IsClone = clone;
             }
 
             ucSamples.Populate.PerformClick();  //population....
 
-            if (!newForm) return;
-
+            if (!newForm)
+            {
+                return;
+            }
             if (order)
             {
                 ucOrder ucOrder = sender as ucOrder;
                 ucOrder.AddProject(ref ucSamples);
             }
-            if (!todopanel) ucSamples.NewForm();
+            if (!todopanel)
+            {
+                ucSamples.NewForm();
+            }
         }
 
-        private ucOrder CreateOrder(string ProjectOrOrder)
+        public static ucOrder CreateOrder(string ProjectOrOrder)
         {
             ucOrder ucOrder = null;
-            ucOrder = Program.UserControls.OfType<ucOrder>().FirstOrDefault(o => o.Box.Text.CompareTo(ProjectOrOrder) == 0);
+            ucOrder = LIMS.UserControls.OfType<ucOrder>().FirstOrDefault(o => o.Box.Text.CompareTo(ProjectOrOrder) == 0);
             if (ucOrder == null || ucOrder.IsDisposed)
             {
                 ucOrder = null;
                 ucOrder = new ucOrder(ref LIMS.Linaa, ProjectOrOrder);
-                Program.UserControls.Add(ucOrder);
+                LIMS.UserControls.Add(ucOrder);
             }
 
             return ucOrder;
@@ -385,7 +404,7 @@ namespace k0X
                 DB.Tools.Creator.CallBack = delegate
                 {
                     //this is OK
-                    new LIMS(); //make a new UI LIMS
+                    LIMS.Form = new LIMS(); //make a new UI LIMS
                     //make a new interface
                     LIMS.Interface = new Interface(ref LIMS.Linaa);
 
@@ -410,8 +429,6 @@ namespace k0X
                 //set lastcallback
                 DB.Tools.Creator.LastCallBack = delegate
                 {
-
-
                     if (!shouldWatchEmail) return;
                     //put this line back!!!
                     //so you can get the watcher running

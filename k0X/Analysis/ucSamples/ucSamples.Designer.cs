@@ -29,12 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Monitors", -2, 2);
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Standards", -2, 2);
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Ref Materials", -2, 2);
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("SubSamples", -2, 2);
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Blanks", -2, 2);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucSamples));
             this.CMSSample = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Analysis = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -101,8 +95,6 @@
             this.measXTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.watchDogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Orderbox = new System.Windows.Forms.ToolStripComboBox();
-            this.TV = new System.Windows.Forms.TreeView();
-            this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.Status = new System.Windows.Forms.StatusStrip();
             this.progress = new System.Windows.Forms.ToolStripProgressBar();
             this.View = new System.Windows.Forms.ToolStripStatusLabel();
@@ -110,6 +102,7 @@
             this.CMSMeasurement = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Peaks = new System.Windows.Forms.ToolStripMenuItem();
             this.needsEffi = new System.Windows.Forms.ToolStripMenuItem();
+            this.TV = new k0X.ucTreeView();
             this.CMSSample.SuspendLayout();
             this.TSC.BottomToolStripPanel.SuspendLayout();
             this.TSC.ContentPanel.SuspendLayout();
@@ -139,7 +132,6 @@
             this.Analysis.Name = "Analysis";
             this.Analysis.Size = new System.Drawing.Size(183, 26);
             this.Analysis.Text = "&Analysis Mode";
-            this.Analysis.CheckedChanged += new System.EventHandler(this.Analysis_CheckedChanged);
             // 
             // toolStripSeparator7
             // 
@@ -469,7 +461,6 @@
             this.OptionsMenu.Text = "&Options";
             this.OptionsMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.OptionsMenu.DropDownClosed += new System.EventHandler(this.OptionsMenu_DropDownClosed);
-          //  this.OptionsMenu.DropDownOpened += new System.EventHandler(this.OptionsMenu_DropDownOpened);
             // 
             // toolStripMenuItem1
             // 
@@ -800,74 +791,6 @@
             this.Orderbox.Name = "Orderbox";
             this.Orderbox.Size = new System.Drawing.Size(200, 29);
             // 
-            // TV
-            // 
-            this.TV.AllowDrop = true;
-            this.TV.BackColor = System.Drawing.Color.LemonChiffon;
-            this.TV.CheckBoxes = true;
-            this.TV.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TV.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TV.FullRowSelect = true;
-            this.TV.HideSelection = false;
-            this.TV.ImageIndex = 0;
-            this.TV.ImageList = this.imgList;
-            this.TV.Indent = 10;
-            this.TV.ItemHeight = 26;
-            this.TV.Location = new System.Drawing.Point(0, 0);
-            this.TV.Margin = new System.Windows.Forms.Padding(2);
-            this.TV.Name = "TV";
-            treeNode1.ForeColor = System.Drawing.Color.Crimson;
-            treeNode1.ImageIndex = -2;
-            treeNode1.Name = "Monitor";
-            treeNode1.SelectedImageIndex = 2;
-            treeNode1.Text = "Monitors";
-            treeNode2.ForeColor = System.Drawing.Color.Indigo;
-            treeNode2.ImageIndex = -2;
-            treeNode2.Name = "Standard";
-            treeNode2.SelectedImageIndex = 2;
-            treeNode2.Text = "Standards";
-            treeNode3.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            treeNode3.ImageIndex = -2;
-            treeNode3.Name = "RefMaterial";
-            treeNode3.SelectedImageIndex = 2;
-            treeNode3.Text = "Ref Materials";
-            treeNode4.ForeColor = System.Drawing.Color.DarkGreen;
-            treeNode4.ImageIndex = -2;
-            treeNode4.Name = "SubSample";
-            treeNode4.SelectedImageIndex = 2;
-            treeNode4.Text = "SubSamples";
-            treeNode5.ForeColor = System.Drawing.Color.Black;
-            treeNode5.ImageIndex = -2;
-            treeNode5.Name = "Blank";
-            treeNode5.NodeFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            treeNode5.SelectedImageIndex = 2;
-            treeNode5.Text = "Blanks";
-            this.TV.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5});
-            this.TV.SelectedImageIndex = 2;
-            this.TV.ShowLines = false;
-            this.TV.ShowNodeToolTips = true;
-            this.TV.Size = new System.Drawing.Size(186, 454);
-            this.TV.TabIndex = 4;
-            this.TV.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TV_ItemDrag);
-            this.TV.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.TV_NodeMouseHover);
-            this.TV.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TV_NodeMouseClick);
-            this.TV.DragDrop += new System.Windows.Forms.DragEventHandler(this.TV_DragDrop);
-            this.TV.DragEnter += new System.Windows.Forms.DragEventHandler(this.TV_DragEnter);
-            // 
-            // imgList
-            // 
-            this.imgList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgList.ImageStream")));
-            this.imgList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgList.Images.SetKeyName(0, "green");
-            this.imgList.Images.SetKeyName(1, "red");
-            this.imgList.Images.SetKeyName(2, "neutral");
-            // 
             // Status
             // 
             this.Status.Dock = System.Windows.Forms.DockStyle.None;
@@ -927,6 +850,27 @@
             this.needsEffi.Size = new System.Drawing.Size(253, 26);
             this.needsEffi.Text = "Needs Efficiency Transfer";
             // 
+            // TV
+            // 
+            this.TV.AllowDrop = true;
+            this.TV.BackColor = System.Drawing.Color.LemonChiffon;
+            this.TV.CheckBoxes = true;
+            this.TV.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TV.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TV.FullRowSelect = true;
+            this.TV.HideSelection = false;
+            this.TV.Indent = 10;
+            this.TV.ItemHeight = 26;
+            this.TV.Location = new System.Drawing.Point(0, 0);
+            this.TV.Margin = new System.Windows.Forms.Padding(2);
+            this.TV.Name = "TV";
+            this.TV.ShowLines = false;
+            this.TV.ShowNodeToolTips = true;
+            this.TV.ShowPlusMinus = false;
+            this.TV.Size = new System.Drawing.Size(186, 454);
+            this.TV.TabIndex = 0;
+            // 
             // ucSamples
             // 
             this.AllowDrop = true;
@@ -960,8 +904,8 @@
 
         private System.Windows.Forms.MenuStrip TopMenu;
         private System.Windows.Forms.ToolStripMenuItem asSamplebox;
-        private System.Windows.Forms.ToolStripMenuItem Analysis;
-        private System.Windows.Forms.ContextMenuStrip CMSSample;
+        public System.Windows.Forms.ToolStripMenuItem Analysis;
+        public System.Windows.Forms.ContextMenuStrip CMSSample;
         private System.Windows.Forms.ToolStripContainer TSC;
 		private System.Windows.Forms.ToolStripMenuItem Delete;
         private System.Windows.Forms.ToolStripMenuItem SampleReports;
@@ -978,7 +922,7 @@
 		private System.Windows.Forms.ToolStripTextBox Bwindowbox;
         private System.Windows.Forms.ToolStripMenuItem ProjectFCs;
         private System.Windows.Forms.ToolStripMenuItem ProjectConcentrations;
-        private System.Windows.Forms.ToolStripMenuItem sampleDescription;
+        public System.Windows.Forms.ToolStripMenuItem sampleDescription;
         private System.Windows.Forms.ToolStripMenuItem SampleFCs;
         private System.Windows.Forms.ToolStripMenuItem Solang;
         private System.Windows.Forms.ToolStripMenuItem doSolang;
@@ -987,16 +931,16 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripTextBox maxUncbox;
         private System.Windows.Forms.ToolStripTextBox minAreabox;
-		private System.Windows.Forms.ToolStripMenuItem MeasurementsHyperLab;
-        private System.Windows.Forms.ContextMenuStrip CMSMeasurement;
-		private System.Windows.Forms.ToolStripMenuItem Peaks;
+        public System.Windows.Forms.ToolStripMenuItem MeasurementsHyperLab;
+        public System.Windows.Forms.ContextMenuStrip CMSMeasurement;
+        public System.Windows.Forms.ToolStripMenuItem Peaks;
         private System.Windows.Forms.ToolStripMenuItem Recalculate;
         private System.Windows.Forms.ToolStripMenuItem calculateSolang;
-		private System.Windows.Forms.ToolStripMenuItem ViewMatSSF;
+        public System.Windows.Forms.ToolStripMenuItem ViewMatSSF;
         private System.Windows.Forms.ToolStripMenuItem sp2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        public System.Windows.Forms.TreeView TV;
+        public ucTreeView TV;
         public System.Windows.Forms.ToolStripComboBox Orderbox;
         private System.Windows.Forms.ToolStripMenuItem ProjectMenu;
         private System.Windows.Forms.ToolStripMenuItem OptionsMenu;
@@ -1032,7 +976,6 @@
 		public System.Windows.Forms.ToolStripMenuItem Populate;
         private System.Windows.Forms.ToolStripMenuItem measXTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem watchDogToolStripMenuItem;
-        private System.Windows.Forms.ImageList imgList;
 
     }
 }

@@ -110,6 +110,11 @@
     <Compile Include="LINAA.cs">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
+    <Compile Include="LINAA.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,11 +130,6 @@
     <Compile Include="Interfaces\InterfaceClass.cs" />
     <Compile Include="Interfaces\Interfaces.cs" />
     <Compile Include="Interfaces\Interfaces.Populate.cs" />
-    <Compile Include="LINAA.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Main\Populate.Actions.cs" />
     <Compile Include="Main\Populate.Components.cs" />
     <Compile Include="Main\Populate.Main.cs" />

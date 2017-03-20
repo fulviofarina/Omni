@@ -112,20 +112,29 @@
     <Compile Include="Analysis\ucSamples\ucSamples.Clicks.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Analysis\ucSamples\ucSamples.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Analysis\ucSamples\ucSamples.designer.cs">
+      <DependentUpon>ucSamples.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\ucSamples\ucSamples.Engine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Analysis\ucSamples\ucSamples.Fields.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Analysis\ucSamples\ucSamples.TV.Actions.cs">
+    <Compile Include="Analysis\ucSamples\ucSamples.QM.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Analysis\ucSamples\ucTreeView.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\AuxiliarForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AuxiliarForm.designer.cs">
       <DependentUpon>AuxiliarForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Analysis\ucSamples\ucSamples.QM.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <None Include="Resources\resources.designer.cs" />
     <None Include="Resources\resources.resx" />
@@ -147,9 +156,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Analysis\ucPeaks\ucPeaks.SR.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Analysis\ucSamples\ucSamples.TV.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Analysis\ucPeaks\ucPeaks.cs">
@@ -178,6 +184,9 @@
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\DataSources\DB.LINAA.datasource" />
+    <EmbeddedResource Include="Analysis\ucSamples\ucTreeView.resx">
+      <DependentUpon>ucTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuxiliarForm.resx">
       <DependentUpon>AuxiliarForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -204,12 +213,6 @@
     <Compile Include="Analysis\ToDo\ucToDoPanel.Designer.cs">
       <DependentUpon>ucToDoPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Analysis\ucSamples\ucSamples.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Analysis\ucSamples\ucSamples.Designer.cs">
-      <DependentUpon>ucSamples.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,11 +228,6 @@
     <EmbeddedResource Include="Analysis\ToDo\ucToDoPanel.resx">
       <DependentUpon>ucToDoPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Analysis\ucSamples\ucSamples.resx">
-      <DependentUpon>ucSamples.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <LastGenOutput>ucSamples1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -238,16 +236,16 @@
     <EmbeddedResource Include="Others\ucEffiCOIS.resx">
       <DependentUpon>ucEffiCOIS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Analysis\ucElement.resx">
+    <EmbeddedResource Include="Analysis\ucSamples\ucElement.resx">
       <DependentUpon>ucElement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Analysis\ucPeriodicTable.resx">
+    <EmbeddedResource Include="Analysis\ucSamples\ucPeriodicTable.resx">
       <DependentUpon>ucPeriodicTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Analysis\ToDo\ucToDoData.resx">
       <DependentUpon>ucToDoData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Analysis\ucOrder.resx">
+    <EmbeddedResource Include="Analysis\ucSamples\ucOrder.resx">
       <DependentUpon>ucOrder.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Others\ucEffiCOIS.cs">
@@ -256,16 +254,16 @@
     <None Include="Others\ucEffiCOIS.Designer.cs">
       <DependentUpon>ucEffiCOIS.cs</DependentUpon>
     </None>
-    <Compile Include="Analysis\ucElement.cs">
+    <Compile Include="Analysis\ucSamples\ucElement.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Analysis\ucElement.designer.cs">
+    <Compile Include="Analysis\ucSamples\ucElement.designer.cs">
       <DependentUpon>ucElement.cs</DependentUpon>
     </Compile>
-    <Compile Include="Analysis\ucPeriodicTable.cs">
+    <Compile Include="Analysis\ucSamples\ucPeriodicTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Analysis\ucPeriodicTable.Designer.cs">
+    <Compile Include="Analysis\ucSamples\ucPeriodicTable.Designer.cs">
       <DependentUpon>ucPeriodicTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Analysis\ToDo\ucToDoData.cs">
@@ -274,10 +272,10 @@
     <Compile Include="Analysis\ToDo\ucToDoData.Designer.cs">
       <DependentUpon>ucToDoData.cs</DependentUpon>
     </Compile>
-    <Compile Include="Analysis\ucOrder.cs">
+    <Compile Include="Analysis\ucSamples\ucOrder.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Analysis\ucOrder.Designer.cs">
+    <Compile Include="Analysis\ucSamples\ucOrder.Designer.cs">
       <DependentUpon>ucOrder.cs</DependentUpon>
     </Compile>
   </ItemGroup>

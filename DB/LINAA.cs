@@ -1,13 +1,6 @@
-﻿
-
-
-namespace DB
+﻿namespace DB
 {
-
-
-  public partial class LINAA
-  {
-
-   
-  }
+    public partial class LINAA
+    {
+    }
 }

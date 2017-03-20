@@ -49,9 +49,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NPlot, Version=0.9.10.0, Culture=neutral, PublicKeyToken=4eda430eb4395eb1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NPlot.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,39 +66,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auxiliar.cs">
+    <Compile Include="Samples\ucSubSamples.Content.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Samples\ucSubSamples.Content.Designer.cs">
+      <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Auxiliar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Auxiliar.designer.cs">
+    <Compile Include="UI\Auxiliar.designer.cs">
       <DependentUpon>Auxiliar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Picker\Picker.cs" />
-    <Compile Include="Picker\IPicker.cs" />
-    <Compile Include="Picker\PickerForm.cs">
+    <Compile Include="Samples\ucProjectBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Samples\ucProjectBox.Designer.cs">
+      <DependentUpon>ucProjectBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Picker\Picker.cs" />
+    <Compile Include="UI\Picker\IPicker.cs" />
+    <Compile Include="UI\Picker\PickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Picker\PickerForm.designer.cs">
+    <Compile Include="UI\Picker\PickerForm.designer.cs">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LIMS.Static.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LIMS\Geometries\ucGeometry.cs">
+    <Compile Include="Geometries\ucGeometry.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Geometries\ucGeometry.Designer.cs">
+    <Compile Include="Geometries\ucGeometry.Designer.cs">
       <DependentUpon>ucGeometry.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Geometries\ucMatrix.cs">
+    <Compile Include="Geometries\ucMatrix.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Geometries\ucMatrix.Designer.cs">
+    <Compile Include="Geometries\ucMatrix.Designer.cs">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Geometries\ucVialType.cs">
+    <Compile Include="Geometries\ucVialType.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Geometries\ucVialType.Designer.cs">
+    <Compile Include="Geometries\ucVialType.Designer.cs">
       <DependentUpon>ucVialType.cs</DependentUpon>
     </Compile>
     <Compile Include="LIMS.cs">
@@ -102,62 +119,62 @@
     <Compile Include="LIMS.Designer.cs">
       <DependentUpon>LIMS.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Instruments\ucChannels.cs">
+    <Compile Include="Instruments\ucChannels.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Instruments\ucChannels.Designer.cs">
+    <Compile Include="Instruments\ucChannels.Designer.cs">
       <DependentUpon>ucChannels.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Projects\ucIrradiationsRequests.cs">
+    <Compile Include="Projects\ucIrradiationsRequests.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Projects\ucIrradiationsRequests.Designer.cs">
+    <Compile Include="Projects\ucIrradiationsRequests.Designer.cs">
       <DependentUpon>ucIrradiationsRequests.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Projects\ucOrders.cs">
+    <Compile Include="Projects\ucOrders.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Projects\ucOrders.Designer.cs">
+    <Compile Include="Projects\ucOrders.Designer.cs">
       <DependentUpon>ucOrders.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Samples\ucMonitors.cs">
+    <Compile Include="Samples\ucMonitors.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Samples\ucMonitors.Designer.cs">
+    <Compile Include="Samples\ucMonitors.Designer.cs">
       <DependentUpon>ucMonitors.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Samples\ucMonitorsFlags.cs">
+    <Compile Include="Samples\ucMonitorsFlags.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Samples\ucMonitorsFlags.Designer.cs">
+    <Compile Include="Samples\ucMonitorsFlags.Designer.cs">
       <DependentUpon>ucMonitorsFlags.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Samples\ucSamples.cs">
+    <Compile Include="Samples\ucSamples.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Samples\ucSamples.Designer.cs">
+    <Compile Include="Samples\ucSamples.Designer.cs">
       <DependentUpon>ucSamples.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Samples\ucStandards.cs">
+    <Compile Include="Samples\ucStandards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Samples\ucStandards.Designer.cs">
+    <Compile Include="Samples\ucStandards.Designer.cs">
       <DependentUpon>ucStandards.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Samples\ucSubSamples.cs">
+    <Compile Include="Samples\ucSubSamples.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Samples\ucSubSamples.Designer.cs">
+    <Compile Include="Samples\ucSubSamples.Designer.cs">
       <DependentUpon>ucSubSamples.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\Instruments\ucDetectors.cs">
+    <Compile Include="Instruments\ucDetectors.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\Instruments\ucDetectors.Designer.cs">
+    <Compile Include="Instruments\ucDetectors.Designer.cs">
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ControlNames.cs" />
+    <Compile Include="UI\ControlNames.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -168,63 +185,69 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\ucPredict.cs">
+    <Compile Include="ucPredict.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\ucPredict.Designer.cs">
+    <Compile Include="ucPredict.Designer.cs">
       <DependentUpon>ucPredict.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS\ucSolcoi.cs">
+    <Compile Include="ucSolcoi.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LIMS\ucSolcoi.designer.cs">
+    <Compile Include="ucSolcoi.designer.cs">
       <DependentUpon>ucSolcoi.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Auxiliar.resx">
+    <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
+      <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Auxiliar.resx">
       <DependentUpon>Auxiliar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Picker\PickerForm.resx">
+    <EmbeddedResource Include="Samples\ucProjectBox.resx">
+      <DependentUpon>ucProjectBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Geometries\ucGeometry.resx">
+    <EmbeddedResource Include="Geometries\ucGeometry.resx">
       <DependentUpon>ucGeometry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Geometries\ucMatrix.resx">
+    <EmbeddedResource Include="Geometries\ucMatrix.resx">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Geometries\ucVialType.resx">
+    <EmbeddedResource Include="Geometries\ucVialType.resx">
       <DependentUpon>ucVialType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIMS.resx">
       <DependentUpon>LIMS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Instruments\ucChannels.resx">
+    <EmbeddedResource Include="Instruments\ucChannels.resx">
       <DependentUpon>ucChannels.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Projects\ucIrradiationsRequests.resx">
+    <EmbeddedResource Include="Projects\ucIrradiationsRequests.resx">
       <DependentUpon>ucIrradiationsRequests.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Projects\ucOrders.resx">
+    <EmbeddedResource Include="Projects\ucOrders.resx">
       <DependentUpon>ucOrders.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Samples\ucMonitors.resx">
+    <EmbeddedResource Include="Samples\ucMonitors.resx">
       <DependentUpon>ucMonitors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Samples\ucMonitorsFlags.resx">
+    <EmbeddedResource Include="Samples\ucMonitorsFlags.resx">
       <DependentUpon>ucMonitorsFlags.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Samples\ucSamples.resx">
+    <EmbeddedResource Include="Samples\ucSamples.resx">
       <DependentUpon>ucSamples.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Samples\ucStandards.resx">
+    <EmbeddedResource Include="Samples\ucStandards.resx">
       <DependentUpon>ucStandards.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Samples\ucSubSamples.resx">
+    <EmbeddedResource Include="Samples\ucSubSamples.resx">
       <DependentUpon>ucSubSamples.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\Instruments\ucDetectors.resx">
+    <EmbeddedResource Include="Instruments\ucDetectors.resx">
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -236,10 +259,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\ucPredict.resx">
+    <EmbeddedResource Include="ucPredict.resx">
       <DependentUpon>ucPredict.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIMS\ucSolcoi.resx">
+    <EmbeddedResource Include="ucSolcoi.resx">
       <DependentUpon>ucSolcoi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -248,9 +271,17 @@
       <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
       <Name>DB.Reports</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.NuDat\DB.Tools.NuDat.csproj">
+      <Project>{f7c2d211-65d8-4fda-ba14-4e39a7e8c036}</Project>
+      <Name>DB.Tools.NuDat</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
       <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
       <Name>DB.Tools.SOLCOI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.ToDo\DB.Tools.ToDo.csproj">
+      <Project>{094bec2a-1d8e-4b20-905e-aac94895ec59}</Project>
+      <Name>DB.Tools.ToDo</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.XCOM\DB.Tools.XCOM.csproj">
       <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
@@ -276,6 +307,10 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
+      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
+      <Name>Rsx.Math</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rsx\Rsx.csproj">
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
       <Name>Rsx</Name>
@@ -287,6 +322,14 @@
     <ProjectReference Include="..\VTools.Graph\VTools.Graph.csproj">
       <Project>{3deca30c-9a3d-4268-8241-fa10f50bb78e}</Project>
       <Name>VTools.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.TreeView\VTools.TreeView.csproj">
+      <Project>{5e5cd6b3-e66f-4a73-b2bc-1350d3143192}</Project>
+      <Name>VTools.TreeView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Watchers\Watchers.csproj">
+      <Project>{3ffdfa74-1dce-4bde-921d-f0d785ed88d7}</Project>
+      <Name>Watchers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

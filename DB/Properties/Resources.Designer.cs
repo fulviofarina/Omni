@@ -205,6 +205,15 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \k0-X\MatSSF\.
+        /// </summary>
+        public static string SSFFolder {
+            get {
+                return ResourceManager.GetString("SSFFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \k0-X\SSFPreferences.xml.
         /// </summary>
         public static string SSFPreferences {

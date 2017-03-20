@@ -56,7 +56,7 @@ namespace k0X
             {
                 LIMS.Linaa.CurrentPref.FillBySpectra = check;
             }
-                LIMS.Linaa.SavePreferences();
+            LIMS.Linaa.SavePreferences();
         }
 
         private void Help_Click(object sender, EventArgs e)
@@ -68,6 +68,7 @@ namespace k0X
         {
             ReleaseMemory(sender);
         }
+
         protected internal void Connections_Click(object sender, EventArgs e)
         {
             object prefe = LIMS.Linaa.CurrentPref;
@@ -87,10 +88,7 @@ namespace k0X
 
             LIMS.Interface.IStore.SavePreferences();
 
-
             this.Quit_Click(this.ClearLinaa, e); //leave like this, the sender must be ClearLinaa.
-
-
         }
 
         protected internal void EmailerMenu_Click(object sender, EventArgs e)
@@ -144,8 +142,6 @@ namespace k0X
             }
         }
 
-
-
         private void BugReportMenu_Click(object sender, EventArgs e)
         {
             LIMS.Linaa.GenerateBugReport();
@@ -153,12 +149,11 @@ namespace k0X
 
         private void Quit_Click(object sender, EventArgs e)
         {
-               FormClosingEventArgs closeArgs;
-               closeArgs = new FormClosingEventArgs(CloseReason.UserClosing, false);
+            FormClosingEventArgs closeArgs;
+            closeArgs = new FormClosingEventArgs(CloseReason.UserClosing, false);
 
             this.MainForm_FormClosing(sender, closeArgs);
         }
-
 
         private void ReleaseMemory(object sender)
         {
@@ -168,7 +163,7 @@ namespace k0X
 
             int disposedNr = 0;
 
-            IList<object> arr = Program.UserControls.ToList();
+            IList<object> arr = LIMS.UserControls.ToList();
 
             for (int i = arr.Count - 1; i >= 0; i--)
             {
@@ -216,8 +211,8 @@ namespace k0X
 
             bufferedMsg = "\nListed:\n" + listed + "\n\nDisposed:\n" + disposed + "\n\nRemaining:\n" + reimaining;
 
-            Program.UserControls = null;
-            Program.UserControls = arr.ToList();
+            LIMS.UserControls = null;
+            LIMS.UserControls = arr.ToList();
             arr = null;
         }
     }

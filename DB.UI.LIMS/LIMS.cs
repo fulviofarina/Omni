@@ -15,26 +15,27 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            LIMS.Form = this;
             LIMS.IFind = new ucSearch();
 
             this.halflife.Click += LIMS.SetItem;
             this.setGeometry.Click += LIMS.SetItem;
-            this.setIrradiation.Click += LIMS.SetItem;
+            this.setVials.Click += LIMS.SetItem;
             this.setMonitor.Click += LIMS.SetItem;
             this.setStandards.Click += LIMS.SetItem;
             this.setSubSamples.Click += LIMS.SetItem;
             this.setMatrix.Click += LIMS.SetItem;
             this.setIrradCh.Click += LIMS.SetItem;
+            this.setRabbit.Click += LIMS.SetItem;
 
             this.setMatrix.Tag = ControlNames.Matrices;
-            this.setGeometry.Tag = ControlNames.Geometries;
-            this.setIrradiation.Tag = ControlNames.Vials;
+            this.setGeometry.Tag = ControlNames.Geometries; //set geometries
+            this.setVials.Tag = ControlNames.Vials; // set vials
             this.setMonitor.Tag = ControlNames.Monitors;
             this.setStandards.Tag = ControlNames.Standards;
             this.setSubSamples.Tag = ControlNames.Samples;
             this.setIrradCh.Tag = ControlNames.Channels;
             this.halflife.Tag = ControlNames.MonitorsFlags;
+            this.setRabbit.Tag = ControlNames.Vials; //for rabitt capsules channel
 
             this.updateIrradiationDateToolStripMenuItem.Click += UpdateIrradiationDates;
             this.unlockProtectedCellsToolStripMenuItem.Click += UnLockProtectedCells;
@@ -95,8 +96,8 @@ namespace DB.UI
                 case ControlNames.Geometries:
                     {
                         this.setMatrix.Visible = true;
-                        this.setIrradiation.Text = "Set Vial";
-                        this.setIrradiation.Visible = true;
+                        this.setVials.Text = "Set Vial";
+                        this.setVials.Visible = true;
 
                         break;
                     }
@@ -129,11 +130,11 @@ namespace DB.UI
                 case ControlNames.SubSamples:
                     {
                         Rsx.DGV.Control cv = dgv.Tag as Rsx.DGV.Control;
-                        DB.UI.ISubSamples iS = (DB.UI.ISubSamples)cv.UsrControl;
+                        ucSubSamples iS = (ucSubSamples)cv.UsrControl;
                         this.halflife.Visible = false;
                         this.setIrradCh.Visible = false;
                         this.updateIrradiationDateToolStripMenuItem.Visible = false;
-                        this.setIrradiation.Text = "Set Irr. Container";
+                        this.setVials.Text = "Set Irr. Container";
                         this.shareTirr.Click -= iS.ShareTirr;
                         this.predictToolStripMenuItem.Click -= iS.Predict;
                         this.shareTirr.Click += iS.ShareTirr;
@@ -165,17 +166,12 @@ namespace DB.UI
 
         private void Modules_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string module = Modules.FocusedItem.Text;
+            ListViewItem mod = Modules.FocusedItem;
+            string title = mod.Group.Header + " - " + mod.Text;
 
-            UserControl control = CreateUI(module);
+            UserControl control = CreateUI(mod.Text);
 
-            if (control == null) return;
-
-            Auxiliar form = new Auxiliar();
-            form.MaximizeBox = true;
-            form.Populate(control);
-            form.Text = Modules.FocusedItem.Group.Header + " - " + module;
-            form.Show();
+            CreateForm(title, ref control);
         }
 
         private void LIMS_Load(object sender, System.EventArgs e)

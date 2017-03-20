@@ -33,15 +33,13 @@
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
-            this.ucUnit = new DB.UI.ucUnit();
             this.MatrixTab = new System.Windows.Forms.TabPage();
-            this.ucMS = new DB.UI.ucMatrixSimple();
             this.ShapeTab = new System.Windows.Forms.TabPage();
-            this.ucVcc = new DB.UI.ucV();
-            this.SourceTab = new System.Windows.Forms.TabPage();
-            this.ucCC1 = new DB.UI.ucCC();
+            this.ChannelTab = new System.Windows.Forms.TabPage();
+            this.ProjectTab = new System.Windows.Forms.TabPage();
             this.FileTab = new System.Windows.Forms.TabPage();
             this.compositionsbox = new System.Windows.Forms.RichTextBox();
+            this.SamplesTab = new System.Windows.Forms.TabPage();
             this.leftSC = new System.Windows.Forms.SplitContainer();
             this.inputTLP = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
@@ -122,8 +120,8 @@
             this.volLbl = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
             this.shTS = new System.Windows.Forms.ToolStrip();
-            this.diameterlabel = new System.Windows.Forms.ToolStripLabel();
-            this.diameterbox = new System.Windows.Forms.ToolStripTextBox();
+            this.radiusLabel = new System.Windows.Forms.ToolStripLabel();
+            this.radiusbox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lenghtlabel = new System.Windows.Forms.ToolStripLabel();
@@ -159,12 +157,18 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.ucUnit = new DB.UI.ucUnit();
+            this.ucMS = new DB.UI.ucMatrixSimple();
+            this.ucVcc = new DB.UI.ucV();
+            this.ucCC1 = new DB.UI.ucCC();
+            this.ucIrradiationsRequests1 = new DB.UI.ucIrradiationsRequests();
             this.TLP.SuspendLayout();
             this.Tab.SuspendLayout();
             this.CalcTab.SuspendLayout();
             this.MatrixTab.SuspendLayout();
             this.ShapeTab.SuspendLayout();
-            this.SourceTab.SuspendLayout();
+            this.ChannelTab.SuspendLayout();
+            this.ProjectTab.SuspendLayout();
             this.FileTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftSC)).BeginInit();
             this.leftSC.Panel1.SuspendLayout();
@@ -226,8 +230,10 @@
             this.Tab.Controls.Add(this.CalcTab);
             this.Tab.Controls.Add(this.MatrixTab);
             this.Tab.Controls.Add(this.ShapeTab);
-            this.Tab.Controls.Add(this.SourceTab);
+            this.Tab.Controls.Add(this.ChannelTab);
+            this.Tab.Controls.Add(this.ProjectTab);
             this.Tab.Controls.Add(this.FileTab);
+            this.Tab.Controls.Add(this.SamplesTab);
             this.Tab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tab.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Tab.Location = new System.Drawing.Point(693, 3);
@@ -242,21 +248,10 @@
             this.CalcTab.Location = new System.Drawing.Point(4, 37);
             this.CalcTab.Name = "CalcTab";
             this.CalcTab.Padding = new System.Windows.Forms.Padding(3);
-            this.CalcTab.Size = new System.Drawing.Size(685, 787);
+            this.CalcTab.Size = new System.Drawing.Size(735, 787);
             this.CalcTab.TabIndex = 1;
             this.CalcTab.Text = "Units";
             this.CalcTab.UseVisualStyleBackColor = true;
-            // 
-            // ucUnit
-            // 
-            this.ucUnit.AutoSize = true;
-            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUnit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucUnit.Location = new System.Drawing.Point(3, 3);
-            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
-            this.ucUnit.Name = "ucUnit";
-            this.ucUnit.Size = new System.Drawing.Size(679, 781);
-            this.ucUnit.TabIndex = 0;
             // 
             // MatrixTab
             // 
@@ -269,64 +264,44 @@
             this.MatrixTab.Text = "Matrices";
             this.MatrixTab.UseVisualStyleBackColor = true;
             // 
-            // ucMS
-            // 
-            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucMS.Location = new System.Drawing.Point(3, 3);
-            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMS.Name = "ucMS";
-            this.ucMS.Size = new System.Drawing.Size(729, 781);
-            this.ucMS.TabIndex = 0;
-            // 
             // ShapeTab
             // 
             this.ShapeTab.Controls.Add(this.ucVcc);
             this.ShapeTab.Location = new System.Drawing.Point(4, 37);
             this.ShapeTab.Name = "ShapeTab";
             this.ShapeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ShapeTab.Size = new System.Drawing.Size(685, 787);
+            this.ShapeTab.Size = new System.Drawing.Size(735, 787);
             this.ShapeTab.TabIndex = 3;
-            this.ShapeTab.Text = "Samples";
+            this.ShapeTab.Text = "Vials";
             this.ShapeTab.UseVisualStyleBackColor = true;
             // 
-            // ucVcc
+            // ChannelTab
             // 
-            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucVcc.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucVcc.Location = new System.Drawing.Point(3, 3);
-            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
-            this.ucVcc.Name = "ucVcc";
-            this.ucVcc.Size = new System.Drawing.Size(679, 781);
-            this.ucVcc.TabIndex = 0;
+            this.ChannelTab.Controls.Add(this.ucCC1);
+            this.ChannelTab.Location = new System.Drawing.Point(4, 37);
+            this.ChannelTab.Name = "ChannelTab";
+            this.ChannelTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ChannelTab.Size = new System.Drawing.Size(735, 787);
+            this.ChannelTab.TabIndex = 4;
+            this.ChannelTab.Text = "Channels";
+            this.ChannelTab.UseVisualStyleBackColor = true;
             // 
-            // SourceTab
+            // ProjectTab
             // 
-            this.SourceTab.Controls.Add(this.ucCC1);
-            this.SourceTab.Location = new System.Drawing.Point(4, 37);
-            this.SourceTab.Name = "SourceTab";
-            this.SourceTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SourceTab.Size = new System.Drawing.Size(685, 787);
-            this.SourceTab.TabIndex = 4;
-            this.SourceTab.Text = "Sources";
-            this.SourceTab.UseVisualStyleBackColor = true;
-            // 
-            // ucCC1
-            // 
-            this.ucCC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucCC1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucCC1.Location = new System.Drawing.Point(3, 3);
-            this.ucCC1.Margin = new System.Windows.Forms.Padding(4);
-            this.ucCC1.Name = "ucCC1";
-            this.ucCC1.Size = new System.Drawing.Size(679, 781);
-            this.ucCC1.TabIndex = 0;
+            this.ProjectTab.Controls.Add(this.ucIrradiationsRequests1);
+            this.ProjectTab.Location = new System.Drawing.Point(4, 37);
+            this.ProjectTab.Name = "ProjectTab";
+            this.ProjectTab.Size = new System.Drawing.Size(735, 787);
+            this.ProjectTab.TabIndex = 5;
+            this.ProjectTab.Text = "Projects";
+            this.ProjectTab.UseVisualStyleBackColor = true;
             // 
             // FileTab
             // 
             this.FileTab.Controls.Add(this.compositionsbox);
             this.FileTab.Location = new System.Drawing.Point(4, 37);
             this.FileTab.Name = "FileTab";
-            this.FileTab.Size = new System.Drawing.Size(685, 787);
+            this.FileTab.Size = new System.Drawing.Size(735, 787);
             this.FileTab.TabIndex = 2;
             this.FileTab.Text = "Input File";
             this.FileTab.UseVisualStyleBackColor = true;
@@ -338,9 +313,18 @@
             this.compositionsbox.Location = new System.Drawing.Point(0, 0);
             this.compositionsbox.Margin = new System.Windows.Forms.Padding(2);
             this.compositionsbox.Name = "compositionsbox";
-            this.compositionsbox.Size = new System.Drawing.Size(685, 787);
+            this.compositionsbox.Size = new System.Drawing.Size(735, 787);
             this.compositionsbox.TabIndex = 2;
             this.compositionsbox.Text = "";
+            // 
+            // SamplesTab
+            // 
+            this.SamplesTab.Location = new System.Drawing.Point(4, 37);
+            this.SamplesTab.Name = "SamplesTab";
+            this.SamplesTab.Size = new System.Drawing.Size(735, 787);
+            this.SamplesTab.TabIndex = 6;
+            this.SamplesTab.Text = "Samples";
+            this.SamplesTab.UseVisualStyleBackColor = true;
             // 
             // leftSC
             // 
@@ -1138,8 +1122,8 @@
             this.shTS.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.shTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.shTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.diameterlabel,
-            this.diameterbox,
+            this.radiusLabel,
+            this.radiusbox,
             this.toolStripSeparator5,
             this.toolStripSeparator4,
             this.lenghtlabel,
@@ -1150,21 +1134,22 @@
             this.shTS.TabIndex = 4;
             this.shTS.Text = "toolStrip1";
             // 
-            // diameterlabel
+            // radiusLabel
             // 
-            this.diameterlabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.diameterlabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.diameterlabel.Name = "diameterlabel";
-            this.diameterlabel.Size = new System.Drawing.Size(127, 25);
-            this.diameterlabel.Text = "Diameter (mm)";
+            this.radiusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.radiusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.radiusLabel.Name = "radiusLabel";
+            this.radiusLabel.Size = new System.Drawing.Size(107, 25);
+            this.radiusLabel.Text = "Radius (mm)";
             // 
-            // diameterbox
+            // radiusbox
             // 
-            this.diameterbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.diameterbox.Name = "diameterbox";
-            this.diameterbox.Size = new System.Drawing.Size(100, 28);
-            this.diameterbox.Text = "8";
-            this.diameterbox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.radiusbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.radiusbox.Margin = new System.Windows.Forms.Padding(20, 0, 1, 0);
+            this.radiusbox.Name = "radiusbox";
+            this.radiusbox.Size = new System.Drawing.Size(100, 28);
+            this.radiusbox.Text = "8";
+            this.radiusbox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator5
             // 
@@ -1211,9 +1196,10 @@
             this.unitTLP.Location = new System.Drawing.Point(0, 0);
             this.unitTLP.Margin = new System.Windows.Forms.Padding(2);
             this.unitTLP.Name = "unitTLP";
-            this.unitTLP.RowCount = 2;
+            this.unitTLP.RowCount = 3;
             this.unitTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.unitTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.unitTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.unitTLP.Size = new System.Drawing.Size(684, 346);
             this.unitTLP.TabIndex = 10;
             // 
@@ -1407,6 +1393,57 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // ucUnit
+            // 
+            this.ucUnit.AutoSize = true;
+            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUnit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucUnit.Location = new System.Drawing.Point(3, 3);
+            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
+            this.ucUnit.Name = "ucUnit";
+            this.ucUnit.Size = new System.Drawing.Size(729, 781);
+            this.ucUnit.TabIndex = 0;
+            // 
+            // ucMS
+            // 
+            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMS.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucMS.Location = new System.Drawing.Point(3, 3);
+            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMS.Name = "ucMS";
+            this.ucMS.Size = new System.Drawing.Size(729, 781);
+            this.ucMS.TabIndex = 0;
+            // 
+            // ucVcc
+            // 
+            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucVcc.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucVcc.Location = new System.Drawing.Point(3, 3);
+            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
+            this.ucVcc.Name = "ucVcc";
+            this.ucVcc.Size = new System.Drawing.Size(729, 781);
+            this.ucVcc.TabIndex = 0;
+            // 
+            // ucCC1
+            // 
+            this.ucCC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCC1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucCC1.Location = new System.Drawing.Point(3, 3);
+            this.ucCC1.Margin = new System.Windows.Forms.Padding(4);
+            this.ucCC1.Name = "ucCC1";
+            this.ucCC1.Size = new System.Drawing.Size(729, 781);
+            this.ucCC1.TabIndex = 0;
+            // 
+            // ucIrradiationsRequests1
+            // 
+            this.ucIrradiationsRequests1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucIrradiationsRequests1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucIrradiationsRequests1.Location = new System.Drawing.Point(0, 0);
+            this.ucIrradiationsRequests1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucIrradiationsRequests1.Name = "ucIrradiationsRequests1";
+            this.ucIrradiationsRequests1.Size = new System.Drawing.Size(735, 787);
+            this.ucIrradiationsRequests1.TabIndex = 0;
+            // 
             // ucSSF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1422,7 +1459,8 @@
             this.CalcTab.PerformLayout();
             this.MatrixTab.ResumeLayout(false);
             this.ShapeTab.ResumeLayout(false);
-            this.SourceTab.ResumeLayout(false);
+            this.ChannelTab.ResumeLayout(false);
+            this.ProjectTab.ResumeLayout(false);
             this.FileTab.ResumeLayout(false);
             this.leftSC.Panel1.ResumeLayout(false);
             this.leftSC.Panel2.ResumeLayout(false);
@@ -1495,8 +1533,8 @@
         private System.Windows.Forms.ToolStripButton Calculate;
         private System.Windows.Forms.TableLayoutPanel inputTLP;
         private System.Windows.Forms.ToolStrip shTS;
-        private System.Windows.Forms.ToolStripLabel diameterlabel;
-        private System.Windows.Forms.ToolStripTextBox diameterbox;
+        private System.Windows.Forms.ToolStripLabel radiusLabel;
+        private System.Windows.Forms.ToolStripTextBox radiusbox;
         private System.Windows.Forms.ToolStripLabel lenghtlabel;
         private System.Windows.Forms.ToolStripTextBox lenghtbox;
         private System.Windows.Forms.ToolStripLabel densitylabel;
@@ -1614,7 +1652,10 @@
         private System.Windows.Forms.ToolStripTextBox volLbl;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
     private System.Windows.Forms.ToolStripTextBox N4;
-        private System.Windows.Forms.TabPage SourceTab;
+        private System.Windows.Forms.TabPage ChannelTab;
         private ucCC ucCC1;
+        private System.Windows.Forms.TabPage ProjectTab;
+        private ucIrradiationsRequests ucIrradiationsRequests1;
+        private System.Windows.Forms.TabPage SamplesTab;
     }
 }

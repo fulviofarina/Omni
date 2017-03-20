@@ -14,38 +14,36 @@ using DB.Tools;
 using DB.UI;
 using Rsx;
 
-
 namespace k0X
 {
     public partial class ucSamples
     {
-        protected bool Waiting = false;
+        public LINAA.ProjectsRow ProjectsRow = null;
+
+        public ucOrder ucOrder;
+        public Interface Interface = null;
+        private bool isClone = false;
+        public ucSubSamples ISubS = null;
+        protected IWC iW;
         protected string pathCode = string.Empty;
-        protected bool isClone = false;
+        public IPeriodicTable pTable = null;
+        public IEnumerable<LINAA.SubSamplesRow> samples = null;
+        protected bool Waiting = false;
+
         public bool IsClone
         {
-            get { return isClone; }
+            get
+            {
+                return isClone;
+            }
             set
             {
                 isClone = value;
-
                 pathCode = this.Name;
                 if (isClone) pathCode += ".Clone";
             }
         }
-        protected Interface Interface = null;
-        protected IPeriodicTable pTable = null;
-        public ucOrder ucOrder;
-        protected ISubSamples iSubS = null;
 
-        public ISubSamples ISubS
-        {
-            get { return iSubS; }
-            set { iSubS = value; }
-        }
-        public LINAA.ProjectsRow ProjectsRow = null;
-        protected IEnumerable<LINAA.SubSamplesRow> samples = null;
-        protected IWC iW;
         public IWC W
         {
             get
@@ -56,8 +54,9 @@ namespace k0X
                     {
                         LINAA Linaa = Interface.Get() as LINAA;
                         iW = new WC(this.Name, ref this.progress, ref this.Cancel, ref Linaa);
-                        iW.SetExternalMethods(this.CheckNode, this.Finished);
-                        iW.SetNodes(ref TV); //link nodes
+                        iW.SetExternalMethods(TV.CheckNode, this.Finished);
+                        TreeView tv = TV;
+                        iW.SetNodes(ref tv); //link nodes
                     }
                     iW.SetPeakSearch(minAreabox.Text, maxUncbox.Text, Awindowbox.Text, Bwindowbox.Text);
                     iW.SetOverriders(fbox.Text, alphabox.Text, Gtbox.Text, Geobox.Text, asSamplebox.Checked);
@@ -71,8 +70,5 @@ namespace k0X
                 return iW;
             }
         }
-
-
-
     }
 }

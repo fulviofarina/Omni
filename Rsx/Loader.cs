@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Rsx
 {
@@ -33,11 +34,11 @@ namespace Rsx
 
     private void worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
-      int length = mainMethods.Length;
+      int length = mainMethods.Count;
       double step = 100;
       if (length != 1) step = (100.0 / (length - 1));
 
-      for (int i = 0; i < mainMethods.Length; i++)
+      for (int i = 0; i < mainMethods.Count; i++)
       {
         if (e.Cancel) continue;
         int perc = Convert.ToInt32(Math.Ceiling((step * i)));
@@ -56,7 +57,7 @@ namespace Rsx
       }
     }
 
-    public void Set(Action[] LoadMethods, Action CallBackMethod, Reporter ReportMethod)
+    public void Set(IList<Action> LoadMethods, Action CallBackMethod, Reporter ReportMethod)
     {
       mainMethods = LoadMethods;
       callback = CallBackMethod;
@@ -77,7 +78,7 @@ namespace Rsx
       this.Dispose();
     }
 
-    private Action[] mainMethods;
+    private IList<Action> mainMethods;
     private Action callback;
     private Reporter report;
   }

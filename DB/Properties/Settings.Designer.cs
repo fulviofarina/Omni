@@ -45,76 +45,40 @@ namespace DB.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\scksrv1\\gkd\\DOKUMENT\\LRM\\LABO_NAA\\METINGEN\\")]
         public string SpectraFolder {
             get {
                 return ((string)(this["SpectraFolder"]));
             }
-            set {
-                this["SpectraFolder"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("PC1533")]
         public string SpectraServer {
             get {
                 return ((string)(this["SpectraServer"]));
             }
-            set {
-                this["SpectraServer"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\scksrv1\\gkd\\DOKUMENT\\LRM\\_Software_Ontwikkeling\\ex_RNM_Archief\\k0X\\")]
         public string deployPath {
             get {
                 return ((string)(this["deployPath"]));
             }
-            set {
-                this["deployPath"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\k0-X\\MatSSF\\")]
-        public string SSFFolder {
-            get {
-                return ((string)(this["SSFFolder"]));
-            }
-            set {
-                this["SSFFolder"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\k0-X\\SolCoi\\")]
-        public string SOLCOIFolder {
-            get {
-                return ((string)(this["SOLCOIFolder"]));
-            }
-            set {
-                this["SOLCOIFolder"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=SSF;Persist Security Info=True;User ID=sa;" +
             "Password=naa;Connect Timeout=5")]
         public string SSFSQL {
             get {
                 return ((string)(this["SSFSQL"]));
-            }
-            set {
-                this["SSFSQL"] = value;
             }
         }
     }

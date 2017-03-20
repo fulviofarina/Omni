@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using DB;
 using DB.Properties;
 using DB.Reports;
+using DB.UI;
 using VTools;
 
 namespace k0X
@@ -13,51 +14,6 @@ namespace k0X
     public partial class ucSamples
     {
         private CReport Irepo = null;
-
-        private void Import_Click(object sender, EventArgs e)
-        {
-            //When Importing --> MatSSF, Load Peaks (with re-transfer), Solang and recalculate (NAA)
-            //When MatSSF ===> only MatSFF of coourse
-            //When CalculateSolang =>  Load Peaks (without re-transfer unless not found), Solang and recalculate (NAA)...
-            //When Recalculate --> Load Peaks (without re-transfer unless not found), recalculate (NAA)
-
-            string toDo = "Run";
-
-            if (sender.Equals(this.Delete))
-            {
-                DialogResult result = MessageBox.Show("Are you sure you want to delete all calculated data available for the samples or measurements selected?\n\n" +
-                "This will NOT affect any sample data and its available measurements. Recalculation can be done once more at any time.\nHowever current self-shielding results, " +
-                "calculated concentrations / FCs and gamma-lines selection/rejection information will be lost.\n\nContinue?", "Delete Analysis...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.No) return;
-
-                toDo = "Delete";
-            }
-
-            if (MQ == null)
-            {
-                MQ = Rsx.Emailer.CreateMQ(QM.QMWorks + "." + pathCode, null);
-            }
-            if (MQ == null)
-            {
-                Interface.IReport.Msg("Check if MSMQ wether is installed", "Cannot initiate the Message Queue", false);
-                return;
-            }
-            else MQ.Purge();
-
-            if (timerQM == null)
-            {
-                timerQM = new Timer(this.components);
-                timerQM.Interval = 200;
-                timerQM.Tick += timerQM_Tick;
-            }
-            timerQM.Tag = null;
-            timerQM.Enabled = true;
-
-            ButtonVisible(false);
-
-            int obj = Index(sender);
-            SendQMsg(obj, toDo);
-        }
 
         private void SampleConcentrationsOrFCs_Click(object sender, EventArgs e)
         {
@@ -125,7 +81,7 @@ namespace k0X
                 {
                     wD = new ucWatchDog();
 
-                    Program.UserControls.Add(wD);
+                    LIMS.UserControls.Add(wD);
 
                     wD.Link(ref Linaa, this.Name);
                     if (!Linaa.IsSpectraPathOk)
@@ -186,10 +142,10 @@ namespace k0X
         {
             System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
 
-            this.iSubS.Daddy = this;
+            this.ISubS.Daddy = this;
             //visible or not? save if necessary
 
-            this.iSubS.ChangeView();
+            this.ISubS.ChangeView();
 
             if (ParentForm != null)
             {
@@ -197,15 +153,15 @@ namespace k0X
 
                 if (this.ParentForm.Visible)
                 {
-                    this.BuildTV();
-                    this.TV.CollapseAll();
+                    TV.BuildTV();
+                    TV.CollapseAll();
 
                     this.progress.Value = 0;
                     this.progress.Maximum = samples.Count();
                     foreach (LINAA.SubSamplesRow sample in samples)
                     {
                         LINAA.SubSamplesRow s = sample;
-                        CheckNode(ref s);
+                        TV.CheckNode(ref s);
                         this.progress.PerformStep();
                     }
                     this.TV.TopNode.Expand();
