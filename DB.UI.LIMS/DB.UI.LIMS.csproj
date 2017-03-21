@@ -66,11 +66,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometries\ucCC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Geometries\ucCC.Designer.cs">
+      <DependentUpon>ucCC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Geometries\ucMatrixSimple.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Geometries\ucMatrixSimple.Designer.cs">
+      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Geometries\ucUnit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Geometries\ucUnit.Designer.cs">
+      <DependentUpon>ucUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Geometries\ucV.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Geometries\ucV.Designer.cs">
+      <DependentUpon>ucV.cs</DependentUpon>
+    </Compile>
     <Compile Include="Samples\ucSubSamples.Content.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Samples\ucSubSamples.Content.Designer.cs">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucGAlgo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucGAlgo.Designer.cs">
+      <DependentUpon>ucGAlgo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucSSF.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucSSF.Designer.cs">
+      <DependentUpon>ucSSF.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Auxiliar.cs">
       <SubType>Form</SubType>
@@ -84,6 +120,7 @@
     <Compile Include="Samples\ucProjectBox.Designer.cs">
       <DependentUpon>ucProjectBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Picker\Picker.Fields.cs" />
     <Compile Include="UI\Picker\Picker.cs" />
     <Compile Include="UI\Picker\IPicker.cs" />
     <Compile Include="UI\Picker\PickerForm.cs">
@@ -199,8 +236,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Geometries\ucCC.resx">
+      <DependentUpon>ucCC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Geometries\ucMatrixSimple.resx">
+      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Geometries\ucUnit.resx">
+      <DependentUpon>ucUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Geometries\ucV.resx">
+      <DependentUpon>ucV.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucGAlgo.resx">
+      <DependentUpon>ucGAlgo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucSSF.resx">
+      <DependentUpon>ucSSF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Auxiliar.resx">
       <DependentUpon>Auxiliar.cs</DependentUpon>
@@ -278,6 +333,10 @@
     <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
       <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
       <Name>DB.Tools.SOLCOI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
+      <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
+      <Name>DB.Tools.SSF</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.ToDo\DB.Tools.ToDo.csproj">
       <Project>{094bec2a-1d8e-4b20-905e-aac94895ec59}</Project>

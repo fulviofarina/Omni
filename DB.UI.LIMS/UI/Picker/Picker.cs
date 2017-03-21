@@ -5,61 +5,12 @@ using System.Linq;
 using System.Windows.Forms;
 using Rsx;
 
+//this works too good YEAH!!!
+
 namespace DB.UI
 {
-    public class Picker : IPicker
+    public partial class Picker : IPicker
     {
-        private DataGridView fromdgv = null;
-
-        public DataGridView FromDgv
-        {
-            get { return fromdgv; }
-            set { fromdgv = value; }
-        }
-
-        private DataGridView todgv = null;
-
-        public DataGridView ToDgv
-        {
-            get { return todgv; }
-            set { todgv = value; }
-        }
-
-        private DataTable from = null;
-
-        public DataTable FromDt
-        {
-            get { return from; }
-            set { from = value; }
-        }
-
-        private DataTable to = null;
-
-        public DataTable ToDt
-        {
-            get { return to; }
-            set { to = value; }
-        }
-
-        private bool toAdd = false;
-        private DataRelation relation = null;
-
-        public DataRelation Relation
-        {
-            get { return relation; }
-            set { relation = value; }
-        }
-
-        private LINAA.ExceptionsDataTable exceptions;
-
-        public LINAA.ExceptionsDataTable Exceptions
-        {
-            get { return exceptions; }
-            set { exceptions = value; }
-        }
-
-        private List<DataRow> ToRowList;
-
         public void LinkDGVs()
         {
             from.BeginLoadData();
@@ -251,13 +202,16 @@ namespace DB.UI
             return cancel;
         }
 
-        public Picker(ref DataGridView ToDgv, ref DataGridView[] FromDgv, bool Add)
+        public Picker(ref DataGridView ToDgv, ref DataGridView[] FromDgv, bool Add, ref LINAA.ExceptionsDataTable Exceptions, int relNr = 0)
         {
-            toAdd = Add; //to add or set
+            this.exceptions = Exceptions;
+            this.fromDgvs = FromDgv;
+
+            this.toAdd = Add; //to add or set
 
             //To
-            todgv = ToDgv;
-            to = Rsx.DGV.Control.GetDataSource<DataTable>(ref todgv);
+            this.todgv = ToDgv;
+            this.to = Rsx.DGV.Control.GetDataSource<DataTable>(ref todgv);
 
             if (to == null) throw new SystemException("Could not find DataTable to send data to");
 
@@ -270,22 +224,42 @@ namespace DB.UI
             {
                 try
                 {
-                    fromdgv = FromDgv[i];
+                    //find dgv from list of fromDgVs
+                    fromdgv = fromDgvs[i];
+                    //get table
                     from = Rsx.DGV.Control.GetDataSource<DataTable>(ref fromdgv);
+                    //if null
                     if (from == null) throw new SystemException("Could not find DataTable to take data from");
-                    relation = rels.FirstOrDefault(r => r.ParentTable.TableName.CompareTo(from.TableName) == 0);
-                    i++;
+
+                    //find relations for the "from" data table...
+                    rels = rels.Where(r => r.ParentTable.TableName.CompareTo(from.TableName) == 0);
+
+                    //if there is more than one relation for the same table
+                    //as with Vials and Rabbits... and SubSamples (Child)
+                    if (rels.Count() > 1)
+                    {
+                        //take the one with the number provided as input argument
+                        relation = rels.ElementAt(relNr);
+                    }
+                    //else take the firts relation found...
+                    else relation = rels.FirstOrDefault(r => r.ParentTable.TableName.CompareTo(from.TableName) == 0);
+                    i++; //loop until some relation is found
                 }
                 catch (SystemException ex)
                 {
                     fromdgv = null;
+                    exceptions.AddExceptionsRow(ex);
                     break;
                 }
             }
             if (fromdgv != null) fromdgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            else throw new SystemException("Could not find DataRelation to establish a link between tables");
-
-            exceptions = new LINAA.ExceptionsDataTable();
+            else
+            {
+                SystemException ex;
+                ex = new SystemException("Could not find DataRelation to establish a link between tables");
+                exceptions.AddExceptionsRow(ex);
+                throw ex;
+            }
         }
     }
 }

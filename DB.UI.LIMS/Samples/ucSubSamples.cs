@@ -5,20 +5,23 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
+using DB.Tools;
 using Rsx;
 
 namespace DB.UI
 {
     public partial class ucSubSamples : UserControl
     {
-        //  public ucProjectBox projectbox;
-        private object daddy;
+        private string filter;
+
+        private string sort;
 
         private CReport Icrepo = null;
         private Interface Interface;
 
-        private string filter;
-        private string sort;
+        private ucSSF ucssf;
+
+        private object daddy;
 
         public object Daddy
         {
@@ -26,9 +29,43 @@ namespace DB.UI
             set { daddy = value; }
         }
 
+        private ucSSContent uccontent;
+
+        public ucSSContent ucContent
+        {
+            get
+            {
+                return uccontent;
+            }
+            set
+            {
+                this.splitContainer1.Panel2.Controls.Clear();
+                uccontent = value;
+                this.splitContainer1.Panel2.Controls.Add(uccontent);
+            }
+        }
+
+        public ucSSF ucSSF
+        {
+            get
+            {
+                return ucssf;
+            }
+            set
+            {
+                this.splitContainer1.Panel2.Controls.Clear();
+                ucssf = value;
+                this.splitContainer1.Panel2.Controls.Add(ucssf);
+            }
+        }
+
         public ucSubSamples()
         {
             InitializeComponent();
+
+            //these two functions work flawlessly for selecting the rowHeader in the
+            //dgv and for updating of child row positions
+            this.BS.CurrentChanged += BS_CurrentChanged;
         }
 
         /// <summary>
@@ -65,6 +102,18 @@ namespace DB.UI
         }
 
         /// <summary>
+        /// Hides the content of the PANEL 2 containers
+        /// </summary>
+        public bool HideSamplesContent
+        {
+            set
+            {
+                this.splitContainer1.Panel2Collapsed = value;
+                this.splitContainer2.Panel2Collapsed = value;
+            }
+        }
+
+        /// <summary>
         /// links to the binding source
         /// </summary>
         public void Link(string Filter, string Sort)
@@ -97,7 +146,24 @@ namespace DB.UI
 
             IEnumerable<LINAA.SubSamplesRow> send = samplesToPredict.ToArray();
 
-            ucPredict uc = new ucPredict(ref this.Linaa, ref send);
+            LINAA newLina = this.Linaa.Clone() as DB.LINAA;
+            newLina.CloneDataSet(ref Linaa);
+
+            ToolStripProgressBar bar = new ToolStripProgressBar();
+            ToolStripMenuItem can = new ToolStripMenuItem();
+
+            IWC w = new WC("Predict", ref bar, ref can, ref newLina);
+
+            DataTable dtk0 = WC.Populatek0NAA(true);
+            DataTable dtNAA = WC.PopulateNAA(true);
+
+            Dumb.MergeTable(ref dtk0, ref newLina);
+            Dumb.MergeTable(ref dtNAA, ref newLina);
+
+            w.SelectedSamples = send.ToList();
+
+            w.Predict(ref send);
+            ucPredict uc = new ucPredict(ref newLina);
         }
 
         /// <summary>
@@ -106,18 +172,19 @@ namespace DB.UI
         /// <param name="row"></param>
         public void RowAdded(ref DataRow row)
         {
+            this.BS.SuspendBinding();
+
+            IEnumerable<LINAA.SubSamplesRow> samples = Dumb.Cast<LINAA.SubSamplesRow>(this.BS.List as DataView);
+            LINAA.IrradiationRequestsRow irr = projectbox.Irradiation;
+
             try
             {
-                IEnumerable<LINAA.SubSamplesRow> samples = Dumb.Cast<LINAA.SubSamplesRow>(this.BS.List as DataView);
-
                 IList<LINAA.SubSamplesRow> list = samples.ToList();
                 list.Add((LINAA.SubSamplesRow)row);
                 samples = list;
 
                 Interface.IPopulate.ISamples
                     .SetLabels(ref samples, projectbox.Project.ToUpper());
-
-                LINAA.IrradiationRequestsRow irr = projectbox.Irradiation;
                 Interface.IPopulate.ISamples
                     .SetIrradiatioRequest(ref samples, ref irr);
 
@@ -128,6 +195,16 @@ namespace DB.UI
             {
                 this.Linaa.AddException(ex);
             }
+
+            this.BS.ResumeBinding();
+
+            this.BS.EndEdit();
+
+            Link(this.filter, this.sort);
+
+            string subSIDCol = this.Linaa.SubSamples.SubSamplesIDColumn.ColumnName;
+            int ind = this.BS.Find(subSIDCol, samples.Last().SubSamplesID);
+            this.BS.Position = ind;
         }
 
         /// <summary>
@@ -141,44 +218,8 @@ namespace DB.UI
             this.Linaa = Interface.Get();
 
             projectbox.Set(ref inter, Link);
-        }
 
-        private ucSSContent uccontent;
-
-        public ucSSContent ucContent
-        {
-            get
-            {
-                return uccontent;
-            }
-            set
-            {
-                this.splitContainer1.Panel2.Controls.Clear();
-                uccontent = value;
-                this.splitContainer1.Panel2.Controls.Add(uccontent);
-            }
-        }
-
-        private UserControl ucssf;
-
-        public UserControl ucSSF
-        {
-            get
-            {
-                return ucssf;
-            }
-            set
-            {
-                this.splitContainer1.Panel2.Controls.Clear();
-                ucssf = value;
-                this.splitContainer1.Panel2.Controls.Add(ucssf);
-            }
-        }
-
-        public void HideContent()
-        {
-            this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer2.Panel2Collapsed = true;
+            this.BS.Sort = this.Linaa.SubSamples.SubSampleNameColumn.ColumnName + " asc";
         }
 
         /// <summary>
@@ -205,6 +246,42 @@ namespace DB.UI
             }
         }
 
+        /// <summary>
+        /// When the BS changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BS_CurrentChanged(object sender, EventArgs e)
+        {
+            DataRow r = (BS.Current as DataRowView).Row;
+            if (r == null) return;
+            //if not usercontrol attached...
+            if (ucssf == null) return;
+
+            LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
+            //get unit
+            LINAA.UnitRow u = s.GetUnitRows().AsEnumerable().FirstOrDefault();
+            if (u != null) ucssf.Set(ref u);
+        }
+
+        /*
+        private void itemSelected(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // ucSSF
+            if (e.RowIndex < 0) return;
+
+            var dgv = sender as DataGridView;
+            DataRow r = (dgv.Rows[e.RowIndex].DataBoundItem as DataRowView).Row;
+
+            updateUnitPosition(ref r);
+        }
+        */
+
+        /// <summary>
+        /// something about a crystal report
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void reportBtton_Click(object sender, EventArgs e)
         {
             if (Icrepo == null) Icrepo = new CReport(this.Linaa as DataSet);

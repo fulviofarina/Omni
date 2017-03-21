@@ -470,10 +470,13 @@ namespace DB
                     {
                         SubSamplesRow ip = deleteIR.ElementAt(i);
                         ip.RejectChanges();
+
+                        //delete units
                         IEnumerable<UnitRow> us = ip.GetUnitRows();
                         uta.DeleteBySampleID(ip.SubSamplesID);
                         Delete(ref us);
                         Dumb.AcceptChanges(ref us);
+
                         ta.Delete(ip.SubSamplesID);
                         ip.Delete();
                         ip.AcceptChanges();

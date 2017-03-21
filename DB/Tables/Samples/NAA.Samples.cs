@@ -133,28 +133,30 @@ namespace DB
                     {
                         if (!subs.CheckGeometry()) return;
                         if (!subs.CheckFillRad(false, subs.RowState != DataRowState.Added)) return;
-                        if (!subs.CheckDensity(this.AAFh, this.AARad, false)) return;
+                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
                     }
                     else if (e.Column == this.CapsulesIDColumn)
                     {
                         if (!subs.CheckVialCapsule()) return;
                         if (!subs.CheckFillRad(true, subs.RowState != DataRowState.Added)) return;
-                        if (!subs.CheckDensity(this.AAFh, this.AARad, true)) return;
+                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
                     }
                     else if (columnFillHeight == e.Column || columnRadius == e.Column)
                     {
-                        if (!subs.CheckDensity(this.AAFh, this.AARad, false)) return;
+                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
                     }
                     else if (columnMatrixID == (e.Column))
                     {
                         if (!subs.CheckMatrix()) return;
                         //  if (!subs.CheckMass()) return;
-                        if (!subs.CheckDensity(this.AAFh, this.AARad, false)) return;
+                        //   if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
                     }
                     else if (Masses.Contains(e.Column))
                     {
                         if (!subs.CheckMass()) return;
-                        if (!subs.CheckDensity(this.AAFh, this.AARad, false)) return;
+                        if (subs.IsSender) return; //keept this
+
+                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
                     }
                     else if (e.Column == this.columnMonitorsID)
                     {
@@ -297,6 +299,8 @@ namespace DB
                 }
             }
 
+            public bool IsSender = false;
+
             public bool CheckMass()
             {
                 bool one = EC.CheckNull(this.tableSubSamples.Gross1Column, this);
@@ -306,17 +310,30 @@ namespace DB
                 SetColumnError(col, null);
 
                 //set unit massarru
-                UnitRow[] arru = this.GetUnitRows();
-                if (arru.Length != 0)
-                {
-                    UnitRow u = arru.FirstOrDefault();
-                    if (!EC.IsNuDelDetch(u)) u.Mass = this.Net;
-                }
+                //      double calcDensity = 0;
+
                 if (one || two)
                 {
                     SetColumnError(col, "NULL. Assign the Net Mass (in miligrams) through Gross and Tare Mass");
                     return false;
                 }
+                /*
+                if (!one && !two)
+                {
+                    UnitRow[] arru = this.GetUnitRows();
+
+                    if (arru.Length != 0)
+                    {
+                        UnitRow u = arru.FirstOrDefault();
+                        if (!EC.IsNuDelDetch(u))
+                        {
+                            IsSender = true;
+                            u.FindMD(true);
+                            IsSender = false;
+                        }
+                    }
+                }
+                */
                 double diff = Math.Abs(Gross1 - Gross2) * 100;
                 double pent = 0.1;
 
@@ -325,6 +342,7 @@ namespace DB
                     SetColumnError(col, "Difference between weights is higher than 0.1%\nPlease check");
                     return false;
                 }
+
                 if ((diff / Gross2) >= pent)
                 {
                     SetColumnError(col, "Difference between weights is higher than 0.1%\nPlease check");
@@ -531,46 +549,39 @@ namespace DB
                 }
             }
 
-            public bool CheckDensity(bool aaFh, bool aaRad, bool takeFromVial)
+            public bool CheckDensity(bool aaFh, bool aaRad)
             {
                 double rad, fh = 0;
 
                 //find density
-                DataColumn matDenCol = this.tableSubSamples.MatrixDensityColumn;
-                double ro = this.FindDensity();
+                double ro = 0;
+                UnitRow u = this.GetUnitRows().AsEnumerable().FirstOrDefault();
 
-                UnitRow[] aru = this.GetUnitRows();
-                UnitRow u = null;
-                if (aru.Length != 0)
+                if (!EC.IsNuDelDetch(u))
                 {
-                    u = aru[0];
-                    if (!EC.IsNuDelDetch(u)) u.Density = ro;
+                    //probando esta linea
+                    // u.FindMD(true);
+                    //  u.SetDensityNull();
+                    IsSender = true;
+                    u.FindMD(true);
+                    IsSender = false;
+                    if (!u.IsDensityNull()) ro = u.Density;
+                    // u.AcceptChanges();
                 }
+                else return false;
 
                 decimal density = Decimal.Round(Convert.ToDecimal(ro), 3);
                 string estimateRo = "The calculated density = " + density;
 
+                DataColumn matDenCol = this.tableSubSamples.MatrixDensityColumn;
                 if (nomatrixdensity)
                 {
                     this.SetColumnError(matDenCol, "There is no default density value assigned to this matrix, a comparison is not possible.\n" + estimateRo + " might not be the correct one\nPlease verify this");
                     return false;
                 }
 
-                bool seterror = false;
-                string HighLow = string.Empty;
-                double ratio = (this.MatrixDensity / ro) * 100;
-                int pent = 3;
-
-                if (ratio >= 100 + pent)
-                {
-                    HighLow = " gr/cm3 exceeds more than " + pent + "% the density shown\n\n";
-                    seterror = true;
-                }
-                else if (ratio <= 100 - pent)
-                {
-                    HighLow = " gr/cm3 is " + pent + "% lower than the density shown\n\n";
-                    seterror = true;
-                }
+                string HighLow;
+                bool seterror = checkDensityValues(ro, out HighLow);
 
                 if (!seterror) return !nomatrixdensity;
 
@@ -600,6 +611,26 @@ namespace DB
                 return true;
             }
 
+            private bool checkDensityValues(double ro, out string HighLow)
+            {
+                bool seterror = false;
+                HighLow = string.Empty;
+                double ratio = (this.MatrixDensity / ro) * 100;
+                int pent = 3;
+
+                if (ratio >= 100 + pent)
+                {
+                    HighLow = " gr/cm3 exceeds more than " + pent + "% the density shown\n\n";
+                    seterror = true;
+                }
+                else if (ratio <= 100 - pent)
+                {
+                    HighLow = " gr/cm3 is " + pent + "% lower than the density shown\n\n";
+                    seterror = true;
+                }
+                return seterror;
+            }
+
             public bool CheckFillRad(bool takeFromVial, bool force)
             {
                 UnitRow[] aru = this.GetUnitRows();
@@ -617,9 +648,6 @@ namespace DB
                     if ((nofillheight && fh != 0) || force)
                     {
                         this.FillHeight = fh;
-                        //now the unit
-                        //  if (!EC.IsNuDelDetch(u)) u.Length = FillHeight;
-                        //   return false;
                     }
 
                     rad = this.GeometryRow.Radius;
@@ -628,9 +656,6 @@ namespace DB
                     if ((noradius && rad != 0) || force)
                     {
                         this.Radius = rad;
-                        //now the unit
-                        //    if (!EC.IsNuDelDetch(u)) u.Diameter = 2 * Radius;
-                        //  return false;
                     }
                 }
                 else
@@ -689,8 +714,12 @@ namespace DB
                         UnitRow u = aru.FirstOrDefault();
                         if (!EC.IsNuDelDetch(u))
                         {
+                            //    IsSender = true;
                             u.Content = this.MatrixRow.MatrixComposition;
+
                             u.Density = this.MatrixRow.MatrixDensity;
+
+                            //    IsSender = false;
                         }
                     }
                     return true;
@@ -745,14 +774,12 @@ namespace DB
                 return Math.PI * this.Radius * this.Radius * 0.1 * 0.1;
             }
 
-            public double FindDensity()
-            {
-                return (this.DryMass() * 1e-3 / FindVolumen());
-            }
-
             public double FindRadius()
             {
-                return 10 * Math.Sqrt((this.DryMass() * 1e-3 / (Math.PI * this.MatrixDensity * this.FillHeight * 0.1)));
+                UnitRow u = GetUnitRows().AsEnumerable().FirstOrDefault();
+                double ro = this.MatrixDensity;
+                if (u != null) ro = u.Density;
+                return 10 * Math.Sqrt((this.DryMass() * 1e-3 / (Math.PI * ro * this.FillHeight * 0.1)));
             }
 
             public double FindFillingHeight()

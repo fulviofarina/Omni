@@ -32,9 +32,16 @@ namespace DB.Tools
         {
             foreach (LINAA.SubSamplesRow s in samples)
             {
-                if (s.IsElementsNull()) continue;
-
-                HashSet<string> elementsIfAny = new HashSet<string>(System.Text.RegularExpressions.Regex.Split(s.Elements, ","));
+                //LINAA.UnitRow u = s.GetUnitRows().AsEnumerable().FirstOrDefault();
+                // if (EC.IsNuDelDetch(u)) continue;
+                LINAA.MatrixRow m = s.MatrixRow;
+                if (EC.IsNuDelDetch(m)) continue;
+                LINAA.CompositionsRow[] coms = m.GetCompositionsRows();
+                HashSet<string> elementsIfAny = new HashSet<string>(coms.Select(o => o.Element.Trim().ToUpper()).ToArray());
+                //if (s.IsElementsNull()) continue;
+                // HashSet<string> elementsIfAny = new HashSet<string>(System.Text.RegularExpressions.Regex.Split(s.Elements, ","));
+                //if (s.IsElementsNull()) continue;
+                //HashSet<string> elementsIfAny = new HashSet<string>(System.Text.RegularExpressions.Regex.Split(u.Content.uni, ","));
 
                 double FC = 1;
 
@@ -43,7 +50,8 @@ namespace DB.Tools
 
                 foreach (string ele in elementsIfAny)
                 {
-                    IEnumerable<LINAA.NAARow> naas = this.Linaa.NAA.Where(o => o.Sym.Trim().ToUpper().CompareTo(ele.Trim().ToUpper()) == 0);
+                    IEnumerable<LINAA.NAARow> naas = this.Linaa.NAA
+                        .Where(o => o.Sym.Trim().ToUpper().CompareTo(ele) == 0);
                     HashSet<string> isos = new HashSet<string>();
                     foreach (LINAA.NAARow n in naas)
                     {
@@ -52,9 +60,10 @@ namespace DB.Tools
                         LINAA.IRequestsAveragesRow ir = this.Linaa.IRequestsAverages.NewIRequestsAveragesRow();
                         this.Linaa.IRequestsAverages.AddIRequestsAveragesRow(ir);
                         ir.Sample = s.SubSampleName;
+                        ir.NAAID = n.ID;
 
-                        ir.Element = n.Sym.Trim();
-                        ir.Radioisotope = n.Iso.Trim();
+                        //ir.Element = n.Sym.Trim();
+                        //ir.Radioisotope = n.Iso.Trim();
 
                         if (n.MD != 1) ir.SetColumnError(this.Linaa.IRequestsAverages.RadioisotopeColumn, "Decay scheme not straightforward\nResult might not be true");
 

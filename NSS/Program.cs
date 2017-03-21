@@ -76,7 +76,8 @@ namespace NSS
                     ucSSF uc = new ucSSF(ref LIMS.Interface);
                     msn.Dock = DockStyle.Fill;
                     form.Visible = false;
-                    uc.AttachMsn(msn);
+                    Control ctrl = msn as Control;
+                    uc.AttachMsn(ref ctrl);
                     form.Dispose();
                     Mainform.Controls.Add(uc);
 

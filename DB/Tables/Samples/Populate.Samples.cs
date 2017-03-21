@@ -59,18 +59,14 @@ namespace DB
             {
                 if (s.GetUnitRows().Count() == 0)
                 {
-                    //  double kepi = s.IrradiationRequestsRow.ChannelsRow.kepi;
-                    //  double kth = s.IrradiationRequestsRow.ChannelsRow.kth;
-                    // string chfg = s.IrradiationRequestsRow.ChannelsRow.FluxType;
-
                     UnitRow u = this.tableUnit.NewUnitRow();
                     this.tableUnit.AddUnitRow(u);
                     u.Name = s.SubSampleName;
                     //u.Mass = s.Net;
                     u.SampleID = s.SubSamplesID;
                     ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
-                    //.     u.ChannelsRow = s.IrradiationRequestsRow.ChannelsRow;
                     u.SetChannel(ref c);
+                    u.IrrReqID = s.IrradiationRequestsID;
                 }
             }
         }

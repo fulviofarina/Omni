@@ -11,19 +11,11 @@ namespace DB.UI
     {
         protected LINAA Linaa;
 
-        public ucPredict(ref LINAA set, ref IEnumerable<LINAA.SubSamplesRow> samples)
+        public ucPredict(ref LINAA set)
         {
             InitializeComponent();
 
-            Linaa = set.Clone() as DB.LINAA;
-            Linaa.CloneDataSet(ref set);
-
-            ToolStripProgressBar bar = new ToolStripProgressBar();
-            ToolStripMenuItem can = new ToolStripMenuItem();
-
-            IWC w = new WC("Predict", ref bar, ref can, ref this.Linaa);
-            w.SelectedSamples = samples.ToList();
-            w.Predict(ref samples);
+            Linaa = set;
 
             explore();
         }

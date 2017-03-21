@@ -305,7 +305,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.SamplesTabPages);
             this.splitContainer1.Size = new System.Drawing.Size(1483, 703);
-            this.splitContainer1.SplitterDistance = 388;
+            this.splitContainer1.SplitterDistance = 458;
             this.splitContainer1.TabIndex = 11;
             // 
             // SamplesTabPages
@@ -313,22 +313,22 @@
             this.SamplesTabPages.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.SamplesTabPages.Controls.Add(this.SamplesTab);
             this.SamplesTabPages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SamplesTabPages.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.SamplesTabPages.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.SamplesTabPages.Location = new System.Drawing.Point(0, 0);
             this.SamplesTabPages.Margin = new System.Windows.Forms.Padding(2);
             this.SamplesTabPages.Multiline = true;
             this.SamplesTabPages.Name = "SamplesTabPages";
             this.SamplesTabPages.SelectedIndex = 0;
-            this.SamplesTabPages.Size = new System.Drawing.Size(388, 703);
+            this.SamplesTabPages.Size = new System.Drawing.Size(458, 703);
             this.SamplesTabPages.TabIndex = 10;
             // 
             // SamplesTab
             // 
             this.SamplesTab.Controls.Add(this.dataGridView1);
-            this.SamplesTab.Location = new System.Drawing.Point(27, 4);
+            this.SamplesTab.Location = new System.Drawing.Point(32, 4);
             this.SamplesTab.Margin = new System.Windows.Forms.Padding(0);
             this.SamplesTab.Name = "SamplesTab";
-            this.SamplesTab.Size = new System.Drawing.Size(357, 695);
+            this.SamplesTab.Size = new System.Drawing.Size(422, 695);
             this.SamplesTab.TabIndex = 0;
             this.SamplesTab.Text = "Samples";
             this.SamplesTab.UseVisualStyleBackColor = true;
@@ -339,11 +339,11 @@
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.DarkKhaki;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.DarkViolet;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -358,7 +358,7 @@
             this.dataGridView1.DataSource = this.BS;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -369,7 +369,8 @@
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(357, 695);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(422, 695);
             this.dataGridView1.TabIndex = 10;
             // 
             // dataGridViewTextBoxColumn10
@@ -378,14 +379,14 @@
             this.dataGridViewTextBoxColumn10.HeaderText = "Type";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 57;
+            this.dataGridViewTextBoxColumn10.Width = 70;
             // 
             // dataGridViewTextBoxColumn11
             // 
             this.dataGridViewTextBoxColumn11.DataPropertyName = "SubSampleName";
             this.dataGridViewTextBoxColumn11.HeaderText = "Label";
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.Width = 60;
+            this.dataGridViewTextBoxColumn11.Width = 74;
             // 
             // dataGridViewTextBoxColumn17
             // 
@@ -393,7 +394,7 @@
             this.dataGridViewTextBoxColumn17.DividerWidth = 5;
             this.dataGridViewTextBoxColumn17.HeaderText = "Description";
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Width = 98;
+            this.dataGridViewTextBoxColumn17.Width = 124;
             // 
             // dataGridViewCheckBoxColumn1
             // 
@@ -404,7 +405,7 @@
             this.dataGridViewCheckBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewCheckBoxColumn1.HeaderText = "Comparator?";
             this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-            this.dataGridViewCheckBoxColumn1.Width = 81;
+            this.dataGridViewCheckBoxColumn1.Width = 111;
             // 
             // error
             // 

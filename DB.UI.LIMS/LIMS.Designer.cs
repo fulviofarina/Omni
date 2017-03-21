@@ -57,23 +57,28 @@
             this.undoT = new System.Windows.Forms.ToolStripMenuItem();
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.setVials = new System.Windows.Forms.ToolStripMenuItem();
             this.setMatrix = new System.Windows.Forms.ToolStripMenuItem();
+            this.setGeometry = new System.Windows.Forms.ToolStripMenuItem();
+            this.setRabbit = new System.Windows.Forms.ToolStripMenuItem();
+            this.setIrradCh = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.setMonitor = new System.Windows.Forms.ToolStripMenuItem();
             this.setStandards = new System.Windows.Forms.ToolStripMenuItem();
             this.setSubSamples = new System.Windows.Forms.ToolStripMenuItem();
-            this.setVials = new System.Windows.Forms.ToolStripMenuItem();
-            this.setGeometry = new System.Windows.Forms.ToolStripMenuItem();
-            this.halflife = new System.Windows.Forms.ToolStripMenuItem();
-            this.setIrradCh = new System.Windows.Forms.ToolStripMenuItem();
             this.aToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
+            this.predictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.halflife = new System.Windows.Forms.ToolStripMenuItem();
             this.setTodaysDate = new System.Windows.Forms.ToolStripMenuItem();
             this.shareTirr = new System.Windows.Forms.ToolStripMenuItem();
             this.updateIrradiationDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.unlockProtectedCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.predictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.Modules = new System.Windows.Forms.ListView();
             this.images = new System.Windows.Forms.ImageList(this.components);
-            this.setRabbit = new System.Windows.Forms.ToolStripMenuItem();
+            this.GAlgo = new System.Windows.Forms.ToolStripMenuItem();
             this.CMS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,23 +89,28 @@
             this.undoT,
             this.findToolStripMenuItem,
             this.toolStripSeparator3,
+            this.setVials,
             this.setMatrix,
+            this.setGeometry,
+            this.setRabbit,
+            this.setIrradCh,
+            this.toolStripSeparator2,
             this.setMonitor,
             this.setStandards,
             this.setSubSamples,
-            this.setVials,
-            this.setGeometry,
-            this.halflife,
-            this.setIrradCh,
             this.aToolStripMenuItem,
+            this.GAlgo,
+            this.predictToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.halflife,
             this.setTodaysDate,
             this.shareTirr,
             this.updateIrradiationDateToolStripMenuItem,
+            this.toolStripSeparator4,
             this.unlockProtectedCellsToolStripMenuItem,
-            this.predictToolStripMenuItem,
-            this.setRabbit});
+            this.toolStripSeparator5});
             this.CMS.Name = "CMS";
-            this.CMS.Size = new System.Drawing.Size(333, 458);
+            this.CMS.Size = new System.Drawing.Size(333, 530);
             this.CMS.Opening += new System.ComponentModel.CancelEventHandler(this.CMS_Opening);
             // 
             // refreshT
@@ -130,11 +140,40 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(329, 6);
             // 
+            // setVials
+            // 
+            this.setVials.Name = "setVials";
+            this.setVials.Size = new System.Drawing.Size(332, 26);
+            this.setVials.Text = "Set Vial";
+            // 
             // setMatrix
             // 
             this.setMatrix.Name = "setMatrix";
             this.setMatrix.Size = new System.Drawing.Size(332, 26);
             this.setMatrix.Text = "Set Matrix";
+            // 
+            // setGeometry
+            // 
+            this.setGeometry.Name = "setGeometry";
+            this.setGeometry.Size = new System.Drawing.Size(332, 26);
+            this.setGeometry.Text = "Set Geometry";
+            // 
+            // setRabbit
+            // 
+            this.setRabbit.Name = "setRabbit";
+            this.setRabbit.Size = new System.Drawing.Size(332, 26);
+            this.setRabbit.Text = "Set Rabbit";
+            // 
+            // setIrradCh
+            // 
+            this.setIrradCh.Name = "setIrradCh";
+            this.setIrradCh.Size = new System.Drawing.Size(332, 26);
+            this.setIrradCh.Text = "Set Irradiation Channel";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(329, 6);
             // 
             // setMonitor
             // 
@@ -150,38 +189,32 @@
             // 
             // setSubSamples
             // 
+            this.setSubSamples.Enabled = false;
             this.setSubSamples.Name = "setSubSamples";
             this.setSubSamples.Size = new System.Drawing.Size(332, 26);
             this.setSubSamples.Text = "Set SubSamples";
             // 
-            // setVials
+            // aToolStripMenuItem
             // 
-            this.setVials.Name = "setVials";
-            this.setVials.Size = new System.Drawing.Size(332, 26);
-            this.setVials.Text = "Set Vial";
+            this.aToolStripMenuItem.Name = "aToolStripMenuItem";
+            this.aToolStripMenuItem.Size = new System.Drawing.Size(329, 6);
             // 
-            // setGeometry
+            // predictToolStripMenuItem
             // 
-            this.setGeometry.Name = "setGeometry";
-            this.setGeometry.Size = new System.Drawing.Size(332, 26);
-            this.setGeometry.Text = "Set Geometry";
+            this.predictToolStripMenuItem.Name = "predictToolStripMenuItem";
+            this.predictToolStripMenuItem.Size = new System.Drawing.Size(332, 26);
+            this.predictToolStripMenuItem.Text = "Predict (beta)";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(329, 6);
             // 
             // halflife
             // 
             this.halflife.Name = "halflife";
             this.halflife.Size = new System.Drawing.Size(332, 26);
             this.halflife.Text = "Set Half-lives";
-            // 
-            // setIrradCh
-            // 
-            this.setIrradCh.Name = "setIrradCh";
-            this.setIrradCh.Size = new System.Drawing.Size(332, 26);
-            this.setIrradCh.Text = "Set Irradiation Channel";
-            // 
-            // aToolStripMenuItem
-            // 
-            this.aToolStripMenuItem.Name = "aToolStripMenuItem";
-            this.aToolStripMenuItem.Size = new System.Drawing.Size(329, 6);
             // 
             // setTodaysDate
             // 
@@ -204,17 +237,21 @@
             this.updateIrradiationDateToolStripMenuItem.Size = new System.Drawing.Size(332, 26);
             this.updateIrradiationDateToolStripMenuItem.Text = "Update Irradiation Dates";
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(329, 6);
+            // 
             // unlockProtectedCellsToolStripMenuItem
             // 
             this.unlockProtectedCellsToolStripMenuItem.Name = "unlockProtectedCellsToolStripMenuItem";
             this.unlockProtectedCellsToolStripMenuItem.Size = new System.Drawing.Size(332, 26);
             this.unlockProtectedCellsToolStripMenuItem.Text = "Unlock/Lock protected cells";
             // 
-            // predictToolStripMenuItem
+            // toolStripSeparator5
             // 
-            this.predictToolStripMenuItem.Name = "predictToolStripMenuItem";
-            this.predictToolStripMenuItem.Size = new System.Drawing.Size(332, 26);
-            this.predictToolStripMenuItem.Text = "Predict (beta)";
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(329, 6);
             // 
             // Modules
             // 
@@ -318,11 +355,11 @@
             this.images.Images.SetKeyName(36, "Worker3.jpg");
             this.images.Images.SetKeyName(37, "Springfield.jpg");
             // 
-            // setRabbit
+            // GAlgo
             // 
-            this.setRabbit.Name = "setRabbit";
-            this.setRabbit.Size = new System.Drawing.Size(332, 26);
-            this.setRabbit.Text = "Set Rabbit";
+            this.GAlgo.Name = "GAlgo";
+            this.GAlgo.Size = new System.Drawing.Size(332, 26);
+            this.GAlgo.Text = "Time Optimization (beta)";
             // 
             // LIMS
             // 
@@ -364,5 +401,10 @@
 		private System.Windows.Forms.ToolStripMenuItem setTodaysDate;
         private System.Windows.Forms.ToolStripMenuItem setIrradCh;
         private System.Windows.Forms.ToolStripMenuItem setRabbit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem GAlgo;
     }
 }

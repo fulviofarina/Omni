@@ -184,6 +184,9 @@
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\DataSources\DB.LINAA.datasource" />
+    <EmbeddedResource Include="Analysis\ucSamples\ucSamples.resx">
+      <DependentUpon>ucSamples.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Analysis\ucSamples\ucTreeView.resx">
       <DependentUpon>ucTreeView.cs</DependentUpon>
     </EmbeddedResource>
@@ -697,10 +700,6 @@
     <ProjectReference Include="..\DB.UI.LIMS\DB.UI.LIMS.csproj">
       <Project>{4eee1204-d241-4fef-8188-0f6ca5a1a4c0}</Project>
       <Name>DB.UI.LIMS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DB.UI.SSF\DB.UI.SSF.csproj">
-      <Project>{23b5ea4d-b073-46aa-8e66-a4baad1626f1}</Project>
-      <Name>DB.UI.SSF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>

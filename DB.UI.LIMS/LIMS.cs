@@ -35,15 +35,13 @@ namespace DB.UI
             this.setSubSamples.Tag = ControlNames.Samples;
             this.setIrradCh.Tag = ControlNames.Channels;
             this.halflife.Tag = ControlNames.MonitorsFlags;
-            this.setRabbit.Tag = ControlNames.Vials; //for rabitt capsules channel
+            this.setRabbit.Tag = ControlNames.Rabbits; //for rabitt capsules channel
 
-            this.updateIrradiationDateToolStripMenuItem.Click += UpdateIrradiationDates;
+            this.updateIrradiationDateToolStripMenuItem.Click += delegate
+            {
+                LIMS.Linaa.UpdateIrradiationDates();
+            };
             this.unlockProtectedCellsToolStripMenuItem.Click += UnLockProtectedCells;
-        }
-
-        private void UpdateIrradiationDates(object sender, System.EventArgs e)
-        {
-            LIMS.Linaa.UpdateIrradiationDates();
         }
 
         private void UnLockProtectedCells(object sender, System.EventArgs e)
@@ -132,9 +130,11 @@ namespace DB.UI
                         Rsx.DGV.Control cv = dgv.Tag as Rsx.DGV.Control;
                         ucSubSamples iS = (ucSubSamples)cv.UsrControl;
                         this.halflife.Visible = false;
-                        this.setIrradCh.Visible = false;
+                        this.setIrradCh.Visible = true;
+                        //this is for monitors
                         this.updateIrradiationDateToolStripMenuItem.Visible = false;
-                        this.setVials.Text = "Set Irr. Container";
+
+                        //this.setVials.Text = "Set Irr. Container";
                         this.shareTirr.Click -= iS.ShareTirr;
                         this.predictToolStripMenuItem.Click -= iS.Predict;
                         this.shareTirr.Click += iS.ShareTirr;

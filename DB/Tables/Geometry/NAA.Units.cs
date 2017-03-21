@@ -50,8 +50,7 @@ namespace DB
                             this.columnLastCalc,
                             this.columnLastChanged,
                             this.columnToDo,
-                            this.columnContent,
-                            this.columnMass };
+                            this.columnContent };
                     }
                     return nonNullables;
                 }
@@ -88,26 +87,19 @@ namespace DB
                 try
                 {
                     bool nullo = EC.CheckNull(c, row);
-                    bool densityNull = nullo;
-                    //   bool diamLeng = (c == this.columnDiameter || c == this.columnLength);
-
                     bool Dens = (c == this.columnDensity);
-
-                    // diameter or lenght changed
-                    //   if (diamLeng)
-                    //   {
-                    //      if (CalcDensity) r.FindMD(true);
-                    //       else if (!densityNull) r.FindMD(false);
-                    //   }
-                    if (c == this.columnMass) // || densityNull
+                    if (EC.IsNuDelDetch(r.SubSamplesRow)) return;
+                    //the density column called
+                    //but it was not the SubSampleRow Parent who called
+                    //then it was the user updating the value with a combobox
+                    //otherwise FindMD is goind to try to call back the parent
+                    if (Dens)
                     {
-                        r.FindMD(true);
-                    }
-                    else if (Dens)
-                    {
-                        if (densityNull) r.FindMD(true);
-                        else if (!CalcDensity)
+                        if (nullo) r.FindMD(true);
+                        double mass = r.SubSamplesRow.Net;
+                        if (!CalcDensity || mass == 0) // || r.SubSamplesRow.Net == 0)
                         {
+                            // if (!r.SubSamplesRow.IsSender)
                             r.FindMD(false);
                         }
                     }
@@ -137,12 +129,14 @@ namespace DB
                         }
                     }
 
+                    /*
                     if (r.IsNameNull() || string.IsNullOrEmpty(r.Name))
                     {
                         r.Name = "Unit @ ";
                         EC.CheckNull(this.columnLastChanged, r);
                         r.Name += r.LastChanged;
                     }
+                    */
                 }
                 catch (SystemException ex)
                 {
@@ -156,45 +150,46 @@ namespace DB
         partial class UnitRow
         {
             /// <summary>
-            /// Finds the mass or density
+            /// Finds the mass or density 03-2017
             /// </summary>
-            /// <param name="density">forces density calculation</param>
+            /// <param name="density">forces density or mass calculation</param>
             public void FindMD(bool density)
             {
-                if (Vol == 0) return;
-                //   {
-                //  int round = 4;
+                if (EC.IsNuDelDetch(this.SubSamplesRow)) return;
 
-                double current = 0;
+                //no volume? exit
+                if (Vol == 0)
+                {
+                    //  this.Density = this.SubSamplesRow.MatrixDensity;
+                    return;
+                }
+                //chek if null
+
+                double auxMass = this.SubSamplesRow.Net; //take mass
+                                                         //   double Vol = SubSamplesRow.FindVolumen();
                 double aux = 0;
                 if (density)
                 {
-                    aux = this.Mass * 0.001 / this.Vol; //in g/cm3 as Vol is in cm3
-
-                    current = this.Density;
+                    aux = auxMass * 0.001 / Vol; //in g/cm3 as Vol is in cm3
+                    auxMass = this.Density;
                 }
                 else
                 {
                     aux = Vol * Density * 1000; //= cm3 * g/ cm3 * 1000  = in mg
-
-                    current = this.Mass;
                 }
 
-                //  current = Decimal.Round(current, round);
-
-                //  double valor = aux;
-                //   valor = Convert.ToDecimal(aux);
-                //  valor = Decimal.Round(valor, round);
-
-                if (aux != current)
-
+                if (aux != auxMass)
                 {
-                    if (!density) Mass = (double)aux;
-                    else Density = (double)aux;
+                    if (!density)
+                    {
+                        this.SubSamplesRow.IsSender = true;
+                        this.SubSamplesRow.Gross1 = aux;
+                        this.SubSamplesRow.Gross2 = aux;
+                        this.SubSamplesRow.IsSender = false;
+                    }
+                    else Density = aux;
                     LastChanged = DateTime.Now; //update the time
                 }
-
-                //  }
             }
 
             /// <summary>

@@ -320,7 +320,14 @@ namespace DB.UI
             }
             else controlHeader = tsmi.Tag as string; //the tag is a string
 
-            UserControl control = LIMS.CreateUI(controlHeader);
+            //to distinguish between Rabbit and Vial relation and UserInterface (Control)
+            string controlToSend = controlHeader;
+            if (controlToSend == ControlNames.Rabbits)
+            {
+                controlToSend = ControlNames.Vials;
+            }
+
+            UserControl control = LIMS.CreateUI(controlToSend);
 
             if (control == null) return;
 
@@ -333,9 +340,13 @@ namespace DB.UI
                 return;
             }
 
+            int rel = 0;
+            if (controlHeader == ControlNames.Rabbits) rel = 1; //for rabitt capsules channel)
+
             IPickerForm frm = new PickerForm();
             //pick from the following from dgvs, to this dgv,
-            frm.IPicker = new Picker(ref dgv, ref from, false);  //the picker algorithm class
+            LINAA.ExceptionsDataTable exsDT = LIMS.Interface.IDB.Exceptions;
+            frm.IPicker = new Picker(ref dgv, ref from, false, ref exsDT, rel);  //the picker algorithm class
             frm.Module = control;    //this will show the module to pick from
         }
 

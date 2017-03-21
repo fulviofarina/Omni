@@ -81,7 +81,7 @@ namespace DB.Tools
             if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
             {
                 buffer += "\n";
-                buffer += UNIT.Mass + "\n" + diamet + "\n" + lenfgt + "\n" + config;
+                buffer += UNIT.SubSamplesRow.Net + "\n" + diamet + "\n" + lenfgt + "\n" + config;
                 buffer += "\n";
                 buffer += "\n";
             }
@@ -107,7 +107,7 @@ namespace DB.Tools
 
             UNIT.GtCh = 1;
             double surf = (UNIT.SubSamplesRow.Radius) * ((UNIT.SubSamplesRow.Radius) + (UNIT.SubSamplesRow.FillHeight));
-            double SDensity = 6.0221415 * 10 * UNIT.Mass / surf;
+            double SDensity = 6.0221415 * 10 * UNIT.SubSamplesRow.Net / surf;
             double Xi = 1e-12 * SDensity * UNIT.kepi;
             Int32 factor = 10000;
 

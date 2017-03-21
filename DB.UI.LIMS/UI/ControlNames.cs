@@ -7,6 +7,7 @@ namespace DB.UI
 {
     public static class ControlNames
     {
+        public const string Rabbits = "Rabbits";
         public const string Vials = "Vials";
         public const string Geometries = "Geometries";
         public const string Matrices = "Matrices";

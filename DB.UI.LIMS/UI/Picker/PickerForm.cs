@@ -7,52 +7,52 @@ namespace DB.UI
   public interface IPickerForm
   {
     IPicker IPicker { get; set; }
-    System.Windows.Forms.UserControl Module { get; set; }
+    System.Windows.Forms.UserControl Module {  set; }
   }
 
-  public partial class PickerForm : Form, DB.UI.IPickerForm
+  public partial class PickerForm : Form, IPickerForm
   {
     private UserControl DisplayedControl = null;
 
     public UserControl Module
-    {
-      get
-      {
-        return DisplayedControl;
-      }
-      set
-      {
-        DisplayedControl = value;
-
-        DisplayedControl.Dock = DockStyle.Fill;
-
-        this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-        TLP.Controls.Add(DisplayedControl, 0, 1);
-        this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
-        Type tipo = DisplayedControl.GetType();
-        // bool showDialog = true;
-
-        if (tipo.Equals(typeof(ucSamples))) this.Text = "Pick the Parent Sample";
-        else if (tipo.Equals(typeof(ucMonitors))) this.Text = "Pick the Monitors";
-        else if (tipo.Equals(typeof(ucStandards))) this.Text = "Pick the Standards";
-        else if (tipo.Equals(typeof(ucMatrix))) this.Text = "Pick the Matrix...";
-        else if (tipo.Equals(typeof(ucVialType))) this.Text = "Pick the Vial/Container/Irradiation Capsule...";
-        else if (tipo.Equals(typeof(ucGeometry))) this.Text = "Pick the Geometry...";
-        else if (tipo.Equals(typeof(ucChannels)))
         {
-          //showDialog = true;
-          this.Text = "Pick the Channel";
+
+            set
+            {
+                DisplayedControl = value;
+                SetControl();
+
+            }
         }
 
-        picker.LinkDGVs();
+        private void SetControl()
+        {
+            DisplayedControl.Dock = DockStyle.Fill;
 
-        ShowDialog();
-        // if (showDialog) ShowDialog();
-        // else Show();
-      }
-    }
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            TLP.Controls.Add(DisplayedControl, 0, 1);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
+            Type tipo = DisplayedControl.GetType();
+            // bool showDialog = true;
 
-    private IPicker picker = null;
+            if (tipo.Equals(typeof(ucSamples))) this.Text = "Pick the Parent Sample";
+            else if (tipo.Equals(typeof(ucMonitors))) this.Text = "Pick the Monitors";
+            else if (tipo.Equals(typeof(ucStandards))) this.Text = "Pick the Standards";
+            else if (tipo.Equals(typeof(ucMatrix))) this.Text = "Pick the Matrix...";
+            else if (tipo.Equals(typeof(ucVialType))) this.Text = "Pick the Vial/Container/Irradiation Capsule...";
+            else if (tipo.Equals(typeof(ucGeometry))) this.Text = "Pick the Geometry...";
+            else if (tipo.Equals(typeof(ucChannels)))
+            {
+                //showDialog = true;
+                this.Text = "Pick the Channel";
+            }
+
+            picker.LinkDGVs();
+
+            ShowDialog();
+        }
+
+        private IPicker picker = null;
 
     public IPicker IPicker
     {

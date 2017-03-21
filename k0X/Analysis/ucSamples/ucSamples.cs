@@ -20,6 +20,5 @@ namespace k0X
         {
             InitializeComponent();
         }
-
     }
 }

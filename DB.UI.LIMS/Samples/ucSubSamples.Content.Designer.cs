@@ -158,7 +158,7 @@
             this.TB.Controls.Add(this.tabPage4);
             this.TB.Controls.Add(this.tabPage5);
             this.TB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TB.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TB.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.TB.Location = new System.Drawing.Point(0, 0);
             this.TB.Margin = new System.Windows.Forms.Padding(2);
             this.TB.Multiline = true;
@@ -172,11 +172,11 @@
             this.tabPage1.BackColor = System.Drawing.Color.Olive;
             this.tabPage1.Controls.Add(this.DGV);
             this.tabPage1.ForeColor = System.Drawing.Color.Black;
-            this.tabPage1.Location = new System.Drawing.Point(27, 4);
+            this.tabPage1.Location = new System.Drawing.Point(32, 4);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(1111, 747);
+            this.tabPage1.Size = new System.Drawing.Size(1106, 747);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Weights";
             // 
@@ -186,11 +186,11 @@
             this.DGV.AllowUserToOrderColumns = true;
             this.DGV.AutoGenerateColumns = false;
             this.DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.DGV.BackgroundColor = System.Drawing.Color.DarkKhaki;
+            this.DGV.BackgroundColor = System.Drawing.Color.DarkViolet;
             this.DGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -207,7 +207,7 @@
             this.DGV.DataSource = this.BS;
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -218,7 +218,8 @@
             this.DGV.Margin = new System.Windows.Forms.Padding(2);
             this.DGV.Name = "DGV";
             this.DGV.RowTemplate.Height = 24;
-            this.DGV.Size = new System.Drawing.Size(1107, 743);
+            this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGV.Size = new System.Drawing.Size(1102, 743);
             this.DGV.TabIndex = 2;
             // 
             // Tare
@@ -227,7 +228,7 @@
             this.Tare.HeaderText = "Tare";
             this.Tare.Name = "Tare";
             this.Tare.ToolTipText = "in mg";
-            this.Tare.Width = 54;
+            this.Tare.Width = 65;
             // 
             // Gross1
             // 
@@ -238,7 +239,7 @@
             this.Gross1.HeaderText = "Gross 1";
             this.Gross1.Name = "Gross1";
             this.Gross1.ToolTipText = "in mg";
-            this.Gross1.Width = 69;
+            this.Gross1.Width = 86;
             // 
             // Gross2
             // 
@@ -248,7 +249,7 @@
             this.Gross2.HeaderText = "Gross 2";
             this.Gross2.Name = "Gross2";
             this.Gross2.ToolTipText = "in mg";
-            this.Gross2.Width = 71;
+            this.Gross2.Width = 89;
             // 
             // GrossAvg
             // 
@@ -260,7 +261,7 @@
             this.GrossAvg.Name = "GrossAvg";
             this.GrossAvg.ReadOnly = true;
             this.GrossAvg.ToolTipText = "in mg";
-            this.GrossAvg.Width = 85;
+            this.GrossAvg.Width = 109;
             // 
             // dataGridViewTextBoxColumn43
             // 
@@ -272,7 +273,7 @@
             this.dataGridViewTextBoxColumn43.Name = "dataGridViewTextBoxColumn43";
             this.dataGridViewTextBoxColumn43.ReadOnly = true;
             this.dataGridViewTextBoxColumn43.ToolTipText = "in mg";
-            this.dataGridViewTextBoxColumn43.Width = 93;
+            this.dataGridViewTextBoxColumn43.Width = 119;
             // 
             // dataGridViewTextBoxColumn44
             // 
@@ -282,7 +283,7 @@
             this.dataGridViewTextBoxColumn44.HeaderText = "Moisture %";
             this.dataGridViewTextBoxColumn44.Name = "dataGridViewTextBoxColumn44";
             this.dataGridViewTextBoxColumn44.ToolTipText = "in percentage";
-            this.dataGridViewTextBoxColumn44.Width = 92;
+            this.dataGridViewTextBoxColumn44.Width = 118;
             // 
             // BS
             // 
@@ -328,7 +329,7 @@
             this.DGV2.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -345,7 +346,7 @@
             this.DGV2.DataSource = this.BS;
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -367,7 +368,7 @@
             this.geocol.HeaderText = "Geometry";
             this.geocol.Name = "geocol";
             this.geocol.ReadOnly = true;
-            this.geocol.Width = 84;
+            this.geocol.Width = 109;
             // 
             // heigcol
             // 
@@ -378,7 +379,7 @@
             this.heigcol.HeaderText = "Height/Lenght";
             this.heigcol.Name = "heigcol";
             this.heigcol.ToolTipText = "in mm";
-            this.heigcol.Width = 110;
+            this.heigcol.Width = 143;
             // 
             // radiuscol
             // 
@@ -389,7 +390,7 @@
             this.radiuscol.HeaderText = "Inner Radius";
             this.radiuscol.Name = "radiuscol";
             this.radiuscol.ToolTipText = "in mm";
-            this.radiuscol.Width = 98;
+            this.radiuscol.Width = 125;
             // 
             // matrixcol
             // 
@@ -399,7 +400,7 @@
             this.matrixcol.HeaderText = "Matrix";
             this.matrixcol.Name = "matrixcol";
             this.matrixcol.ReadOnly = true;
-            this.matrixcol.Width = 66;
+            this.matrixcol.Width = 82;
             // 
             // matrixdenscol
             // 
@@ -411,14 +412,14 @@
             this.matrixdenscol.Name = "matrixdenscol";
             this.matrixdenscol.ReadOnly = true;
             this.matrixdenscol.ToolTipText = "in g/cm3";
-            this.matrixdenscol.Width = 72;
+            this.matrixdenscol.Width = 89;
             // 
             // DirectSolcoi
             // 
             this.DirectSolcoi.DataPropertyName = "DirectSolcoi";
             this.DirectSolcoi.HeaderText = "Solcoi";
             this.DirectSolcoi.Name = "DirectSolcoi";
-            this.DirectSolcoi.Width = 46;
+            this.DirectSolcoi.Width = 61;
             // 
             // tabPage3
             // 
@@ -441,7 +442,7 @@
             this.DGV3.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -458,7 +459,7 @@
             this.DGV3.DataSource = this.BS;
             dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -482,7 +483,7 @@
             this.InReactorColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.InReactorColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.InReactorColumn.ToolTipText = "Date Time";
-            this.InReactorColumn.Width = 115;
+            this.InReactorColumn.Width = 150;
             // 
             // dataGridViewTextBoxColumn14
             // 
@@ -492,7 +493,7 @@
             this.dataGridViewTextBoxColumn14.HeaderText = "Time";
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             this.dataGridViewTextBoxColumn14.ToolTipText = "in minutes";
-            this.dataGridViewTextBoxColumn14.Width = 59;
+            this.dataGridViewTextBoxColumn14.Width = 71;
             // 
             // OutReactorColumn
             // 
@@ -504,7 +505,7 @@
             this.OutReactorColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.OutReactorColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.OutReactorColumn.ToolTipText = "Date Time";
-            this.OutReactorColumn.Width = 110;
+            this.OutReactorColumn.Width = 142;
             // 
             // capscol
             // 
@@ -516,7 +517,7 @@
             this.capscol.HeaderText = "Capsule";
             this.capscol.Name = "capscol";
             this.capscol.ReadOnly = true;
-            this.capscol.Width = 73;
+            this.capscol.Width = 92;
             // 
             // enaacol
             // 
@@ -529,14 +530,14 @@
             this.enaacol.HeaderText = "Cadmium?";
             this.enaacol.Name = "enaacol";
             this.enaacol.ToolTipText = "Is Cadmium-covered Irradiation?";
-            this.enaacol.Width = 70;
+            this.enaacol.Width = 92;
             // 
             // irradiationCodeDataGridViewTextBoxColumn
             // 
             this.irradiationCodeDataGridViewTextBoxColumn.DataPropertyName = "IrradiationCode";
             this.irradiationCodeDataGridViewTextBoxColumn.HeaderText = "Code";
             this.irradiationCodeDataGridViewTextBoxColumn.Name = "irradiationCodeDataGridViewTextBoxColumn";
-            this.irradiationCodeDataGridViewTextBoxColumn.Width = 59;
+            this.irradiationCodeDataGridViewTextBoxColumn.Width = 74;
             // 
             // tabPage4
             // 
@@ -612,7 +613,7 @@
             this.DGV4.DataSource = this.BS;
             dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -634,7 +635,7 @@
             this.dataGridViewTextBoxColumn12.HeaderText = "Channel";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            this.dataGridViewTextBoxColumn12.Width = 75;
+            this.dataGridViewTextBoxColumn12.Width = 93;
             // 
             // dataGridViewTextBoxColumn13
             // 
@@ -643,7 +644,7 @@
             this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle23;
             this.dataGridViewTextBoxColumn13.HeaderText = "f";
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Width = 36;
+            this.dataGridViewTextBoxColumn13.Width = 41;
             // 
             // dataGridViewTextBoxColumn15
             // 
@@ -652,14 +653,14 @@
             this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle24;
             this.dataGridViewTextBoxColumn15.HeaderText = "Alpha";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.Width = 63;
+            this.dataGridViewTextBoxColumn15.Width = 77;
             // 
             // Gthermal
             // 
             this.Gthermal.DataPropertyName = "Gthermal";
             this.Gthermal.HeaderText = "Gthermal";
             this.Gthermal.Name = "Gthermal";
-            this.Gthermal.Width = 81;
+            this.Gthermal.Width = 102;
             // 
             // elescol
             // 
@@ -667,7 +668,7 @@
             this.elescol.HeaderText = "Elements";
             this.elescol.Name = "elescol";
             this.elescol.ToolTipText = "Elements to look for. Separated by \',\' or just put \'*\' for any element";
-            this.elescol.Width = 80;
+            this.elescol.Width = 101;
             // 
             // concscol
             // 
@@ -677,7 +678,7 @@
             this.concscol.HeaderText = "Concentrations";
             this.concscol.Name = "concscol";
             this.concscol.ToolTipText = "in mg/kg";
-            this.concscol.Width = 112;
+            this.concscol.Width = 146;
             // 
             // dataGridViewTextBoxColumn16
             // 
@@ -686,7 +687,7 @@
             this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle26;
             this.dataGridViewTextBoxColumn16.HeaderText = "Creation Date";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.Width = 104;
+            this.dataGridViewTextBoxColumn16.Width = 135;
             // 
             // subSamplesIDDataGridViewTextBoxColumn
             // 
@@ -694,168 +695,168 @@
             this.subSamplesIDDataGridViewTextBoxColumn.HeaderText = "SubSamplesID";
             this.subSamplesIDDataGridViewTextBoxColumn.Name = "subSamplesIDDataGridViewTextBoxColumn";
             this.subSamplesIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.subSamplesIDDataGridViewTextBoxColumn.Width = 111;
+            this.subSamplesIDDataGridViewTextBoxColumn.Width = 140;
             // 
             // subSampleNameDataGridViewTextBoxColumn
             // 
             this.subSampleNameDataGridViewTextBoxColumn.DataPropertyName = "SubSampleName";
             this.subSampleNameDataGridViewTextBoxColumn.HeaderText = "SubSampleName";
             this.subSampleNameDataGridViewTextBoxColumn.Name = "subSampleNameDataGridViewTextBoxColumn";
-            this.subSampleNameDataGridViewTextBoxColumn.Width = 125;
+            this.subSampleNameDataGridViewTextBoxColumn.Width = 160;
             // 
             // subSampleDescriptionDataGridViewTextBoxColumn
             // 
             this.subSampleDescriptionDataGridViewTextBoxColumn.DataPropertyName = "SubSampleDescription";
             this.subSampleDescriptionDataGridViewTextBoxColumn.HeaderText = "SubSampleDescription";
             this.subSampleDescriptionDataGridViewTextBoxColumn.Name = "subSampleDescriptionDataGridViewTextBoxColumn";
-            this.subSampleDescriptionDataGridViewTextBoxColumn.Width = 154;
+            this.subSampleDescriptionDataGridViewTextBoxColumn.Width = 201;
             // 
             // subSampleCreationDateDataGridViewTextBoxColumn
             // 
             this.subSampleCreationDateDataGridViewTextBoxColumn.DataPropertyName = "SubSampleCreationDate";
             this.subSampleCreationDateDataGridViewTextBoxColumn.HeaderText = "SubSampleCreationDate";
             this.subSampleCreationDateDataGridViewTextBoxColumn.Name = "subSampleCreationDateDataGridViewTextBoxColumn";
-            this.subSampleCreationDateDataGridViewTextBoxColumn.Width = 162;
+            this.subSampleCreationDateDataGridViewTextBoxColumn.Width = 213;
             // 
             // samplesIDDataGridViewTextBoxColumn
             // 
             this.samplesIDDataGridViewTextBoxColumn.DataPropertyName = "SamplesID";
             this.samplesIDDataGridViewTextBoxColumn.HeaderText = "SamplesID";
             this.samplesIDDataGridViewTextBoxColumn.Name = "samplesIDDataGridViewTextBoxColumn";
-            this.samplesIDDataGridViewTextBoxColumn.Width = 90;
+            this.samplesIDDataGridViewTextBoxColumn.Width = 112;
             // 
             // capsulesIDDataGridViewTextBoxColumn
             // 
             this.capsulesIDDataGridViewTextBoxColumn.DataPropertyName = "CapsulesID";
             this.capsulesIDDataGridViewTextBoxColumn.HeaderText = "CapsulesID";
             this.capsulesIDDataGridViewTextBoxColumn.Name = "capsulesIDDataGridViewTextBoxColumn";
-            this.capsulesIDDataGridViewTextBoxColumn.Width = 91;
+            this.capsulesIDDataGridViewTextBoxColumn.Width = 115;
             // 
             // geometryNameDataGridViewTextBoxColumn
             // 
             this.geometryNameDataGridViewTextBoxColumn.DataPropertyName = "GeometryName";
             this.geometryNameDataGridViewTextBoxColumn.HeaderText = "GeometryName";
             this.geometryNameDataGridViewTextBoxColumn.Name = "geometryNameDataGridViewTextBoxColumn";
-            this.geometryNameDataGridViewTextBoxColumn.Width = 116;
+            this.geometryNameDataGridViewTextBoxColumn.Width = 152;
             // 
             // gross1DataGridViewTextBoxColumn
             // 
             this.gross1DataGridViewTextBoxColumn.DataPropertyName = "Gross1";
             this.gross1DataGridViewTextBoxColumn.HeaderText = "Gross1";
             this.gross1DataGridViewTextBoxColumn.Name = "gross1DataGridViewTextBoxColumn";
-            this.gross1DataGridViewTextBoxColumn.Width = 66;
+            this.gross1DataGridViewTextBoxColumn.Width = 82;
             // 
             // gross2DataGridViewTextBoxColumn
             // 
             this.gross2DataGridViewTextBoxColumn.DataPropertyName = "Gross2";
             this.gross2DataGridViewTextBoxColumn.HeaderText = "Gross2";
             this.gross2DataGridViewTextBoxColumn.Name = "gross2DataGridViewTextBoxColumn";
-            this.gross2DataGridViewTextBoxColumn.Width = 68;
+            this.gross2DataGridViewTextBoxColumn.Width = 85;
             // 
             // tareDataGridViewTextBoxColumn
             // 
             this.tareDataGridViewTextBoxColumn.DataPropertyName = "Tare";
             this.tareDataGridViewTextBoxColumn.HeaderText = "Tare";
             this.tareDataGridViewTextBoxColumn.Name = "tareDataGridViewTextBoxColumn";
-            this.tareDataGridViewTextBoxColumn.Width = 54;
+            this.tareDataGridViewTextBoxColumn.Width = 65;
             // 
             // moistureContentDataGridViewTextBoxColumn
             // 
             this.moistureContentDataGridViewTextBoxColumn.DataPropertyName = "MoistureContent";
             this.moistureContentDataGridViewTextBoxColumn.HeaderText = "MoistureContent";
             this.moistureContentDataGridViewTextBoxColumn.Name = "moistureContentDataGridViewTextBoxColumn";
-            this.moistureContentDataGridViewTextBoxColumn.Width = 121;
+            this.moistureContentDataGridViewTextBoxColumn.Width = 160;
             // 
             // irradiationRequestsIDDataGridViewTextBoxColumn
             // 
             this.irradiationRequestsIDDataGridViewTextBoxColumn.DataPropertyName = "IrradiationRequestsID";
             this.irradiationRequestsIDDataGridViewTextBoxColumn.HeaderText = "IrradiationRequestsID";
             this.irradiationRequestsIDDataGridViewTextBoxColumn.Name = "irradiationRequestsIDDataGridViewTextBoxColumn";
-            this.irradiationRequestsIDDataGridViewTextBoxColumn.Width = 147;
+            this.irradiationRequestsIDDataGridViewTextBoxColumn.Width = 194;
             // 
             // directSolcoiDataGridViewCheckBoxColumn
             // 
             this.directSolcoiDataGridViewCheckBoxColumn.DataPropertyName = "DirectSolcoi";
             this.directSolcoiDataGridViewCheckBoxColumn.HeaderText = "DirectSolcoi";
             this.directSolcoiDataGridViewCheckBoxColumn.Name = "directSolcoiDataGridViewCheckBoxColumn";
-            this.directSolcoiDataGridViewCheckBoxColumn.Width = 78;
+            this.directSolcoiDataGridViewCheckBoxColumn.Width = 105;
             // 
             // gthermalDataGridViewTextBoxColumn
             // 
             this.gthermalDataGridViewTextBoxColumn.DataPropertyName = "Gthermal";
             this.gthermalDataGridViewTextBoxColumn.HeaderText = "Gthermal";
             this.gthermalDataGridViewTextBoxColumn.Name = "gthermalDataGridViewTextBoxColumn";
-            this.gthermalDataGridViewTextBoxColumn.Width = 81;
+            this.gthermalDataGridViewTextBoxColumn.Width = 102;
             // 
             // radiusDataGridViewTextBoxColumn
             // 
             this.radiusDataGridViewTextBoxColumn.DataPropertyName = "Radius";
             this.radiusDataGridViewTextBoxColumn.HeaderText = "Radius";
             this.radiusDataGridViewTextBoxColumn.Name = "radiusDataGridViewTextBoxColumn";
-            this.radiusDataGridViewTextBoxColumn.Width = 67;
+            this.radiusDataGridViewTextBoxColumn.Width = 83;
             // 
             // fillHeightDataGridViewTextBoxColumn
             // 
             this.fillHeightDataGridViewTextBoxColumn.DataPropertyName = "FillHeight";
             this.fillHeightDataGridViewTextBoxColumn.HeaderText = "FillHeight";
             this.fillHeightDataGridViewTextBoxColumn.Name = "fillHeightDataGridViewTextBoxColumn";
-            this.fillHeightDataGridViewTextBoxColumn.Width = 83;
+            this.fillHeightDataGridViewTextBoxColumn.Width = 105;
             // 
             // monitorsIDDataGridViewTextBoxColumn
             // 
             this.monitorsIDDataGridViewTextBoxColumn.DataPropertyName = "MonitorsID";
             this.monitorsIDDataGridViewTextBoxColumn.HeaderText = "MonitorsID";
             this.monitorsIDDataGridViewTextBoxColumn.Name = "monitorsIDDataGridViewTextBoxColumn";
-            this.monitorsIDDataGridViewTextBoxColumn.Width = 93;
+            this.monitorsIDDataGridViewTextBoxColumn.Width = 118;
             // 
             // referenceMaterialIDDataGridViewTextBoxColumn
             // 
             this.referenceMaterialIDDataGridViewTextBoxColumn.DataPropertyName = "ReferenceMaterialID";
             this.referenceMaterialIDDataGridViewTextBoxColumn.HeaderText = "ReferenceMaterialID";
             this.referenceMaterialIDDataGridViewTextBoxColumn.Name = "referenceMaterialIDDataGridViewTextBoxColumn";
-            this.referenceMaterialIDDataGridViewTextBoxColumn.Width = 140;
+            this.referenceMaterialIDDataGridViewTextBoxColumn.Width = 186;
             // 
             // standardsIDDataGridViewTextBoxColumn
             // 
             this.standardsIDDataGridViewTextBoxColumn.DataPropertyName = "StandardsID";
             this.standardsIDDataGridViewTextBoxColumn.HeaderText = "StandardsID";
             this.standardsIDDataGridViewTextBoxColumn.Name = "standardsIDDataGridViewTextBoxColumn";
-            this.standardsIDDataGridViewTextBoxColumn.Width = 98;
+            this.standardsIDDataGridViewTextBoxColumn.Width = 124;
             // 
             // blankIDDataGridViewTextBoxColumn
             // 
             this.blankIDDataGridViewTextBoxColumn.DataPropertyName = "BlankID";
             this.blankIDDataGridViewTextBoxColumn.HeaderText = "BlankID";
             this.blankIDDataGridViewTextBoxColumn.Name = "blankIDDataGridViewTextBoxColumn";
-            this.blankIDDataGridViewTextBoxColumn.Width = 74;
+            this.blankIDDataGridViewTextBoxColumn.Width = 90;
             // 
             // outReactorDataGridViewTextBoxColumn
             // 
             this.outReactorDataGridViewTextBoxColumn.DataPropertyName = "OutReactor";
             this.outReactorDataGridViewTextBoxColumn.HeaderText = "OutReactor";
             this.outReactorDataGridViewTextBoxColumn.Name = "outReactorDataGridViewTextBoxColumn";
-            this.outReactorDataGridViewTextBoxColumn.Width = 92;
+            this.outReactorDataGridViewTextBoxColumn.Width = 119;
             // 
             // inReactorDataGridViewTextBoxColumn
             // 
             this.inReactorDataGridViewTextBoxColumn.DataPropertyName = "InReactor";
             this.inReactorDataGridViewTextBoxColumn.HeaderText = "InReactor";
             this.inReactorDataGridViewTextBoxColumn.Name = "inReactorDataGridViewTextBoxColumn";
-            this.inReactorDataGridViewTextBoxColumn.Width = 83;
+            this.inReactorDataGridViewTextBoxColumn.Width = 106;
             // 
             // matrixIDDataGridViewTextBoxColumn
             // 
             this.matrixIDDataGridViewTextBoxColumn.DataPropertyName = "MatrixID";
             this.matrixIDDataGridViewTextBoxColumn.HeaderText = "MatrixID";
             this.matrixIDDataGridViewTextBoxColumn.Name = "matrixIDDataGridViewTextBoxColumn";
-            this.matrixIDDataGridViewTextBoxColumn.Width = 79;
+            this.matrixIDDataGridViewTextBoxColumn.Width = 98;
             // 
             // eNAADataGridViewCheckBoxColumn
             // 
             this.eNAADataGridViewCheckBoxColumn.DataPropertyName = "ENAA";
             this.eNAADataGridViewCheckBoxColumn.HeaderText = "ENAA";
             this.eNAADataGridViewCheckBoxColumn.Name = "eNAADataGridViewCheckBoxColumn";
-            this.eNAADataGridViewCheckBoxColumn.Width = 44;
+            this.eNAADataGridViewCheckBoxColumn.Width = 58;
             // 
             // netDataGridViewTextBoxColumn
             // 
@@ -863,7 +864,7 @@
             this.netDataGridViewTextBoxColumn.HeaderText = "Net";
             this.netDataGridViewTextBoxColumn.Name = "netDataGridViewTextBoxColumn";
             this.netDataGridViewTextBoxColumn.ReadOnly = true;
-            this.netDataGridViewTextBoxColumn.Width = 51;
+            this.netDataGridViewTextBoxColumn.Width = 62;
             // 
             // capsuleNameDataGridViewTextBoxColumn
             // 
@@ -871,7 +872,7 @@
             this.capsuleNameDataGridViewTextBoxColumn.HeaderText = "CapsuleName";
             this.capsuleNameDataGridViewTextBoxColumn.Name = "capsuleNameDataGridViewTextBoxColumn";
             this.capsuleNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.capsuleNameDataGridViewTextBoxColumn.Width = 105;
+            this.capsuleNameDataGridViewTextBoxColumn.Width = 135;
             // 
             // channelNameDataGridViewTextBoxColumn
             // 
@@ -879,7 +880,7 @@
             this.channelNameDataGridViewTextBoxColumn.HeaderText = "ChannelName";
             this.channelNameDataGridViewTextBoxColumn.Name = "channelNameDataGridViewTextBoxColumn";
             this.channelNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.channelNameDataGridViewTextBoxColumn.Width = 107;
+            this.channelNameDataGridViewTextBoxColumn.Width = 136;
             // 
             // grossAvgDataGridViewTextBoxColumn
             // 
@@ -887,7 +888,7 @@
             this.grossAvgDataGridViewTextBoxColumn.HeaderText = "GrossAvg";
             this.grossAvgDataGridViewTextBoxColumn.Name = "grossAvgDataGridViewTextBoxColumn";
             this.grossAvgDataGridViewTextBoxColumn.ReadOnly = true;
-            this.grossAvgDataGridViewTextBoxColumn.Width = 82;
+            this.grossAvgDataGridViewTextBoxColumn.Width = 105;
             // 
             // matrixNameDataGridViewTextBoxColumn
             // 
@@ -895,7 +896,7 @@
             this.matrixNameDataGridViewTextBoxColumn.HeaderText = "MatrixName";
             this.matrixNameDataGridViewTextBoxColumn.Name = "matrixNameDataGridViewTextBoxColumn";
             this.matrixNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.matrixNameDataGridViewTextBoxColumn.Width = 98;
+            this.matrixNameDataGridViewTextBoxColumn.Width = 125;
             // 
             // matrixDensityDataGridViewTextBoxColumn
             // 
@@ -903,56 +904,56 @@
             this.matrixDensityDataGridViewTextBoxColumn.HeaderText = "MatrixDensity";
             this.matrixDensityDataGridViewTextBoxColumn.Name = "matrixDensityDataGridViewTextBoxColumn";
             this.matrixDensityDataGridViewTextBoxColumn.ReadOnly = true;
-            this.matrixDensityDataGridViewTextBoxColumn.Width = 106;
+            this.matrixDensityDataGridViewTextBoxColumn.Width = 136;
             // 
             // comparatorDataGridViewCheckBoxColumn
             // 
             this.comparatorDataGridViewCheckBoxColumn.DataPropertyName = "Comparator";
             this.comparatorDataGridViewCheckBoxColumn.HeaderText = "Comparator";
             this.comparatorDataGridViewCheckBoxColumn.Name = "comparatorDataGridViewCheckBoxColumn";
-            this.comparatorDataGridViewCheckBoxColumn.Width = 76;
+            this.comparatorDataGridViewCheckBoxColumn.Width = 104;
             // 
             // concentrationDataGridViewTextBoxColumn
             // 
             this.concentrationDataGridViewTextBoxColumn.DataPropertyName = "Concentration";
             this.concentrationDataGridViewTextBoxColumn.HeaderText = "Concentration";
             this.concentrationDataGridViewTextBoxColumn.Name = "concentrationDataGridViewTextBoxColumn";
-            this.concentrationDataGridViewTextBoxColumn.Width = 107;
+            this.concentrationDataGridViewTextBoxColumn.Width = 139;
             // 
             // elementsDataGridViewTextBoxColumn
             // 
             this.elementsDataGridViewTextBoxColumn.DataPropertyName = "Elements";
             this.elementsDataGridViewTextBoxColumn.HeaderText = "Elements";
             this.elementsDataGridViewTextBoxColumn.Name = "elementsDataGridViewTextBoxColumn";
-            this.elementsDataGridViewTextBoxColumn.Width = 80;
+            this.elementsDataGridViewTextBoxColumn.Width = 101;
             // 
             // irradiationCodeDataGridViewTextBoxColumn1
             // 
             this.irradiationCodeDataGridViewTextBoxColumn1.DataPropertyName = "IrradiationCode";
             this.irradiationCodeDataGridViewTextBoxColumn1.HeaderText = "IrradiationCode";
             this.irradiationCodeDataGridViewTextBoxColumn1.Name = "irradiationCodeDataGridViewTextBoxColumn1";
-            this.irradiationCodeDataGridViewTextBoxColumn1.Width = 114;
+            this.irradiationCodeDataGridViewTextBoxColumn1.Width = 150;
             // 
             // fDataGridViewTextBoxColumn
             // 
             this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
             this.fDataGridViewTextBoxColumn.HeaderText = "f";
             this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
-            this.fDataGridViewTextBoxColumn.Width = 36;
+            this.fDataGridViewTextBoxColumn.Width = 41;
             // 
             // alphaDataGridViewTextBoxColumn
             // 
             this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
             this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
             this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
-            this.alphaDataGridViewTextBoxColumn.Width = 63;
+            this.alphaDataGridViewTextBoxColumn.Width = 77;
             // 
             // irradiationTotalTimeDataGridViewTextBoxColumn
             // 
             this.irradiationTotalTimeDataGridViewTextBoxColumn.DataPropertyName = "IrradiationTotalTime";
             this.irradiationTotalTimeDataGridViewTextBoxColumn.HeaderText = "IrradiationTotalTime";
             this.irradiationTotalTimeDataGridViewTextBoxColumn.Name = "irradiationTotalTimeDataGridViewTextBoxColumn";
-            this.irradiationTotalTimeDataGridViewTextBoxColumn.Width = 140;
+            this.irradiationTotalTimeDataGridViewTextBoxColumn.Width = 182;
             // 
             // dryNetDataGridViewTextBoxColumn
             // 
@@ -960,7 +961,7 @@
             this.dryNetDataGridViewTextBoxColumn.HeaderText = "DryNet";
             this.dryNetDataGridViewTextBoxColumn.Name = "dryNetDataGridViewTextBoxColumn";
             this.dryNetDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dryNetDataGridViewTextBoxColumn.Width = 70;
+            this.dryNetDataGridViewTextBoxColumn.Width = 88;
             // 
             // subSampleTypeDataGridViewTextBoxColumn
             // 
@@ -968,28 +969,27 @@
             this.subSampleTypeDataGridViewTextBoxColumn.HeaderText = "SubSampleType";
             this.subSampleTypeDataGridViewTextBoxColumn.Name = "subSampleTypeDataGridViewTextBoxColumn";
             this.subSampleTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.subSampleTypeDataGridViewTextBoxColumn.Width = 118;
+            this.subSampleTypeDataGridViewTextBoxColumn.Width = 152;
             // 
             // detectorDataGridViewTextBoxColumn
             // 
             this.detectorDataGridViewTextBoxColumn.DataPropertyName = "Detector";
             this.detectorDataGridViewTextBoxColumn.HeaderText = "Detector";
             this.detectorDataGridViewTextBoxColumn.Name = "detectorDataGridViewTextBoxColumn";
-            this.detectorDataGridViewTextBoxColumn.Width = 78;
             // 
             // positionDataGridViewTextBoxColumn
             // 
             this.positionDataGridViewTextBoxColumn.DataPropertyName = "Position";
             this.positionDataGridViewTextBoxColumn.HeaderText = "Position";
             this.positionDataGridViewTextBoxColumn.Name = "positionDataGridViewTextBoxColumn";
-            this.positionDataGridViewTextBoxColumn.Width = 75;
+            this.positionDataGridViewTextBoxColumn.Width = 93;
             // 
             // orderDataGridViewTextBoxColumn
             // 
             this.orderDataGridViewTextBoxColumn.DataPropertyName = "Order";
             this.orderDataGridViewTextBoxColumn.HeaderText = "Order";
             this.orderDataGridViewTextBoxColumn.Name = "orderDataGridViewTextBoxColumn";
-            this.orderDataGridViewTextBoxColumn.Width = 62;
+            this.orderDataGridViewTextBoxColumn.Width = 78;
             // 
             // tabPage5
             // 

@@ -196,7 +196,7 @@ namespace DB.Tools
          Linaa.PopulatepValues,
                  Linaa.PopulateSigmas,
                    Linaa.PopulateSigmasSal,
-                   Linaa.PopulateYields
+                   Linaa.PopulateYields,
             };
 
                 todo = lastCallBack;

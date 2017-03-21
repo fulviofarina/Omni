@@ -127,7 +127,7 @@ namespace DB.Tools
                     u.Name = iS.SubSampleName;
 
                     u.Content = iS.MatrixRow.MatrixComposition;
-                    u.Mass = iS.Net;
+                    //      u.Mass = iS.Net;
                     //  u.Diameter = (iS.Radius * 2);
                     //    u.Length = iS.FillHeight;
 

@@ -29,6 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Monitors", -2, 2);
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Standards", -2, 2);
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Ref Materials", -2, 2);
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("SubSamples", -2, 2);
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Blanks", -2, 2);
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Monitors", -2, 2);
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Standards", -2, 2);
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Ref Materials", -2, 2);
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("SubSamples", -2, 2);
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Blanks", -2, 2);
             this.CMSSample = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Analysis = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -95,6 +105,7 @@
             this.measXTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.watchDogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Orderbox = new System.Windows.Forms.ToolStripComboBox();
+            this.TV = new k0X.ucTreeView();
             this.Status = new System.Windows.Forms.StatusStrip();
             this.progress = new System.Windows.Forms.ToolStripProgressBar();
             this.View = new System.Windows.Forms.ToolStripStatusLabel();
@@ -102,7 +113,6 @@
             this.CMSMeasurement = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Peaks = new System.Windows.Forms.ToolStripMenuItem();
             this.needsEffi = new System.Windows.Forms.ToolStripMenuItem();
-            this.TV = new k0X.ucTreeView();
             this.CMSSample.SuspendLayout();
             this.TSC.BottomToolStripPanel.SuspendLayout();
             this.TSC.ContentPanel.SuspendLayout();
@@ -189,7 +199,7 @@
             this.TSC.ContentPanel.Controls.Add(this.TV);
             this.TSC.ContentPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TSC.ContentPanel.Margin = new System.Windows.Forms.Padding(2);
-            this.TSC.ContentPanel.Size = new System.Drawing.Size(186, 454);
+            this.TSC.ContentPanel.Size = new System.Drawing.Size(186, 435);
             this.TSC.Dock = System.Windows.Forms.DockStyle.Fill;
             // 
             // TSC.LeftToolStripPanel
@@ -229,7 +239,7 @@
             this.TopMenu.Location = new System.Drawing.Point(0, 0);
             this.TopMenu.Name = "TopMenu";
             this.TopMenu.ShowItemToolTips = true;
-            this.TopMenu.Size = new System.Drawing.Size(186, 52);
+            this.TopMenu.Size = new System.Drawing.Size(186, 71);
             this.TopMenu.TabIndex = 2;
             this.TopMenu.Text = "Top Menu";
             // 
@@ -791,6 +801,92 @@
             this.Orderbox.Name = "Orderbox";
             this.Orderbox.Size = new System.Drawing.Size(200, 29);
             // 
+            // TV
+            // 
+            this.TV.AllowDrop = true;
+            this.TV.BackColor = System.Drawing.Color.LemonChiffon;
+            this.TV.CheckBoxes = true;
+            this.TV.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TV.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TV.FullRowSelect = true;
+            this.TV.HideSelection = false;
+            this.TV.ImageIndex = 0;
+            this.TV.Indent = 10;
+            this.TV.ItemHeight = 26;
+            this.TV.Location = new System.Drawing.Point(0, 0);
+            this.TV.Margin = new System.Windows.Forms.Padding(2);
+            this.TV.Name = "TV";
+            treeNode1.ForeColor = System.Drawing.Color.Crimson;
+            treeNode1.ImageIndex = -2;
+            treeNode1.Name = "Monitor";
+            treeNode1.SelectedImageIndex = 2;
+            treeNode1.Text = "Monitors";
+            treeNode2.ForeColor = System.Drawing.Color.Indigo;
+            treeNode2.ImageIndex = -2;
+            treeNode2.Name = "Standard";
+            treeNode2.SelectedImageIndex = 2;
+            treeNode2.Text = "Standards";
+            treeNode3.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            treeNode3.ImageIndex = -2;
+            treeNode3.Name = "RefMaterial";
+            treeNode3.SelectedImageIndex = 2;
+            treeNode3.Text = "Ref Materials";
+            treeNode4.ForeColor = System.Drawing.Color.DarkGreen;
+            treeNode4.ImageIndex = -2;
+            treeNode4.Name = "SubSample";
+            treeNode4.SelectedImageIndex = 2;
+            treeNode4.Text = "SubSamples";
+            treeNode5.ForeColor = System.Drawing.Color.Black;
+            treeNode5.ImageIndex = -2;
+            treeNode5.Name = "Blank";
+            treeNode5.NodeFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode5.SelectedImageIndex = 2;
+            treeNode5.Text = "Blanks";
+            treeNode6.ForeColor = System.Drawing.Color.Crimson;
+            treeNode6.ImageIndex = -2;
+            treeNode6.Name = "Monitor";
+            treeNode6.SelectedImageIndex = 2;
+            treeNode6.Text = "Monitors";
+            treeNode7.ForeColor = System.Drawing.Color.Indigo;
+            treeNode7.ImageIndex = -2;
+            treeNode7.Name = "Standard";
+            treeNode7.SelectedImageIndex = 2;
+            treeNode7.Text = "Standards";
+            treeNode8.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            treeNode8.ImageIndex = -2;
+            treeNode8.Name = "RefMaterial";
+            treeNode8.SelectedImageIndex = 2;
+            treeNode8.Text = "Ref Materials";
+            treeNode9.ForeColor = System.Drawing.Color.DarkGreen;
+            treeNode9.ImageIndex = -2;
+            treeNode9.Name = "SubSample";
+            treeNode9.SelectedImageIndex = 2;
+            treeNode9.Text = "SubSamples";
+            treeNode10.ForeColor = System.Drawing.Color.Black;
+            treeNode10.ImageIndex = -2;
+            treeNode10.Name = "Blank";
+            treeNode10.NodeFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode10.SelectedImageIndex = 2;
+            treeNode10.Text = "Blanks";
+            this.TV.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10});
+            this.TV.SelectedImageIndex = 0;
+            this.TV.ShowLines = false;
+            this.TV.ShowNodeToolTips = true;
+            this.TV.ShowPlusMinus = false;
+            this.TV.Size = new System.Drawing.Size(186, 435);
+            this.TV.TabIndex = 0;
+            // 
             // Status
             // 
             this.Status.Dock = System.Windows.Forms.DockStyle.None;
@@ -849,27 +945,6 @@
             this.needsEffi.Name = "needsEffi";
             this.needsEffi.Size = new System.Drawing.Size(253, 26);
             this.needsEffi.Text = "Needs Efficiency Transfer";
-            // 
-            // TV
-            // 
-            this.TV.AllowDrop = true;
-            this.TV.BackColor = System.Drawing.Color.LemonChiffon;
-            this.TV.CheckBoxes = true;
-            this.TV.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TV.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TV.FullRowSelect = true;
-            this.TV.HideSelection = false;
-            this.TV.Indent = 10;
-            this.TV.ItemHeight = 26;
-            this.TV.Location = new System.Drawing.Point(0, 0);
-            this.TV.Margin = new System.Windows.Forms.Padding(2);
-            this.TV.Name = "TV";
-            this.TV.ShowLines = false;
-            this.TV.ShowNodeToolTips = true;
-            this.TV.ShowPlusMinus = false;
-            this.TV.Size = new System.Drawing.Size(186, 454);
-            this.TV.TabIndex = 0;
             // 
             // ucSamples
             // 
