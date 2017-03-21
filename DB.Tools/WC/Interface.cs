@@ -34,7 +34,7 @@ namespace DB.Tools
 
         void PopulateIsotopes();
 
-        void Predict(ref IEnumerable<LINAA.SubSamplesRow> samples);
+        void Predict();
 
         void RefreshDB(bool official);
 

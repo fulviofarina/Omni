@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Data;
 using System.Data.Linq;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using DB;
 using DB.Linq;
 using DB.Tools;
 using DB.UI;
 using Msn;
+using System.Linq;
 
 namespace NSS
 {
@@ -31,6 +34,7 @@ namespace NSS
         public static Form Start()
         {
             Form Mainform = new Form();
+            Mainform.Opacity = 0;
             //   DB.LINAA db = DB.UI.LIMS.Linaa;
 
             try
@@ -87,12 +91,22 @@ namespace NSS
 
                     lastCallBack(ref uc);
 
-                    LIMS.Form.Visible = true;
-                    Mainform.Opacity = 100;
-
                     GAForm.Form gafrm = new GAForm.Form();
-                    gafrm.IControl = new NAAControl();
+                    NAAControl ganaaControl = new NAAControl();
+                    gafrm.IControl = ganaaControl;
+                    ganaaControl.Interface = LIMS.Interface;
                     gafrm.Show();
+
+                    DataRow[] rows = LIMS.Interface.IDB.SubSamples.AsEnumerable().ToArray();
+                    string field = LIMS.Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
+                    string fieldID = LIMS.Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
+                    gafrm.FillExternalProblems(ref rows, field, fieldID);
+
+                    LIMS.Form.WindowState = FormWindowState.Minimized;
+                    LIMS.Form.Visible = true;
+
+                    // Mainform.Opacity = 100;
+                    //     Mainform.Opacity = 100;
                 };
 
                 if (!string.IsNullOrEmpty(result))

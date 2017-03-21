@@ -96,12 +96,6 @@
     <Compile Include="Samples\ucSubSamples.Content.Designer.cs">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucGAlgo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ucGAlgo.Designer.cs">
-      <DependentUpon>ucGAlgo.cs</DependentUpon>
-    </Compile>
     <Compile Include="ucSSF.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -250,9 +244,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ucGAlgo.resx">
-      <DependentUpon>ucGAlgo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucSSF.resx">
       <DependentUpon>ucSSF.cs</DependentUpon>

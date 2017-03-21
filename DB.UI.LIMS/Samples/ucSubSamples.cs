@@ -135,6 +135,45 @@ namespace DB.UI
             {
                 if (!indexes.Add(cell.RowIndex)) continue;
 
+                var r = dataGridView1.Rows[cell.RowIndex];
+                var vr = r.DataBoundItem as DataRowView;
+                LINAA.SubSamplesRow s = vr.Row as LINAA.SubSamplesRow;
+
+                samplesToPredict.Add(s);
+            }
+
+         //   samplesToPredict = samplesToPredict.ToArray();
+
+            //   LINAA newLina = this.Linaa.Clone() as DB.LINAA;
+            //newLina.CloneDataSet(ref Linaa);
+
+            ToolStripProgressBar bar = new ToolStripProgressBar();
+            ToolStripMenuItem can = new ToolStripMenuItem();
+
+            IWC w = new WC("Predict", ref bar, ref can, ref Linaa);
+
+            DataTable dtk0 = WC.Populatek0NAA(true);
+            DataTable dtNAA = WC.PopulateNAA(true);
+
+            Dumb.MergeTable(ref dtk0, ref Linaa);
+            Dumb.MergeTable(ref dtNAA, ref Linaa);
+
+            w.SelectedSamples = samplesToPredict;//.ToList();
+
+            w.Predict();
+            ucPredict uc = new ucPredict(ref Linaa);
+        }
+
+        public void PredictOLDVERSION(object sender, EventArgs e)
+        {
+            List<LINAA.SubSamplesRow> samplesToPredict = new List<LINAA.SubSamplesRow>();
+
+            HashSet<int> indexes = new HashSet<int>();
+
+            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            {
+                if (!indexes.Add(cell.RowIndex)) continue;
+
                 DataGridViewRow r = dataGridView1.Rows[cell.RowIndex];
 
                 DataRowView vr = r.DataBoundItem as DataRowView;
@@ -162,7 +201,7 @@ namespace DB.UI
 
             w.SelectedSamples = send.ToList();
 
-            w.Predict(ref send);
+            w.Predict();
             ucPredict uc = new ucPredict(ref newLina);
         }
 

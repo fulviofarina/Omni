@@ -28,9 +28,10 @@ namespace DB.Tools
             r.RunWorkerAsync(official);
         }
 
-        public void Predict(ref IEnumerable<LINAA.SubSamplesRow> samples)
+        public void Predict()
         {
-            foreach (LINAA.SubSamplesRow s in samples)
+           // this.selectedSamples
+            foreach (LINAA.SubSamplesRow s in selectedSamples)
             {
                 //LINAA.UnitRow u = s.GetUnitRows().AsEnumerable().FirstOrDefault();
                 // if (EC.IsNuDelDetch(u)) continue;
