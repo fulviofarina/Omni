@@ -68,7 +68,6 @@ namespace NSS
 
                 DB.Tools.Creator.LastCallBack = delegate
                 {
-                    //   new LIMS(); //make a new UI LIMS
                     //make a new interface
                     LIMS.Interface = new Interface(ref LIMS.Linaa);
                     //set user control list
@@ -76,33 +75,24 @@ namespace NSS
                     ucSSF uc = new ucSSF(ref LIMS.Interface);
                     msn.Dock = DockStyle.Fill;
                     form.Visible = false;
+
                     Control ctrl = msn as Control;
                     uc.AttachMsn(ref ctrl);
+
                     form.Dispose();
                     Mainform.Controls.Add(uc);
 
                     //create LIMS form
                     LIMS.Form = new LIMS(); //make a new UI LIMS
 
-                    //create form for SubSamples
-                    UserControl control = LIMS.CreateUI(DB.UI.ControlNames.SubSamples);
-                    LIMS.CreateForm("Samples", ref control);
-
-                    //set bindings
-                    ucSubSamples ucSubSamples = control as ucSubSamples;
-                    ucSubSamples.ucContent.Set(ref LIMS.Interface);
-                    ucSubSamples.projectbox.Project = "X1701";
-
-                    //set child parent
-                    ucSubSamples.ucSSF = uc;
-                    uc.ParentUI = ucSubSamples;
-                    uc.LoadDatabase();
+                    lastCallBack(ref uc);
 
                     LIMS.Form.Visible = true;
                     Mainform.Opacity = 100;
 
-                    //  uc.ucSubSamples.HideContent();
-                    //     CreateSSFDatablase(); //TAKE THIS AWAY
+                    GAForm.Form gafrm = new GAForm.Form();
+                    gafrm.IControl = new NAAControl();
+                    gafrm.Show();
                 };
 
                 if (!string.IsNullOrEmpty(result))
@@ -120,6 +110,26 @@ namespace NSS
                 MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
             }
             return Mainform;
+        }
+
+        private static void lastCallBack(ref ucSSF uc)
+        {
+            //create form for SubSamples
+            UserControl control = LIMS.CreateUI(DB.UI.ControlNames.SubSamples);
+            LIMS.CreateForm("Samples", ref control);
+
+            //set bindings
+            ucSubSamples ucSubSamples = control as ucSubSamples;
+            ucSubSamples.ucContent.Set(ref LIMS.Interface);
+            ucSubSamples.projectbox.Project = "X1701";
+
+            //set child parent
+            ucSubSamples.ucSSF = uc;
+            uc.ParentUI = ucSubSamples;
+            uc.LoadDatabase();
+
+            //  uc.ucSubSamples.HideContent();
+            //     CreateSSFDatablase(); //TAKE THIS AWAY
         }
 
         // private static LinqDataContext linq = null;

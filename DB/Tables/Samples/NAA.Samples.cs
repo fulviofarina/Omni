@@ -133,17 +133,17 @@ namespace DB
                     {
                         if (!subs.CheckGeometry()) return;
                         if (!subs.CheckFillRad(false, subs.RowState != DataRowState.Added)) return;
-                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
+                        subs.CheckDensity(this.AAFh, this.AARad);
                     }
                     else if (e.Column == this.CapsulesIDColumn)
                     {
                         if (!subs.CheckVialCapsule()) return;
                         if (!subs.CheckFillRad(true, subs.RowState != DataRowState.Added)) return;
-                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
+                        subs.CheckDensity(this.AAFh, this.AARad);
                     }
                     else if (columnFillHeight == e.Column || columnRadius == e.Column)
                     {
-                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
+                        subs.CheckDensity(this.AAFh, this.AARad);
                     }
                     else if (columnMatrixID == (e.Column))
                     {
@@ -154,22 +154,20 @@ namespace DB
                     else if (Masses.Contains(e.Column))
                     {
                         if (!subs.CheckMass()) return;
+
                         if (subs.IsSender) return; //keept this
 
-                        if (!subs.CheckDensity(this.AAFh, this.AARad)) return;
+                        subs.CheckDensity(this.AAFh, this.AARad);
                     }
                     else if (e.Column == this.columnMonitorsID)
                     {
-                        subs.CheckMonitor();
+                        if (!subs.CheckMonitor()) return;
+
+                        subs.CheckStandard();
                     }
                     else if (e.Column == this.columnStandardsID)
                     {
-                        StandardsRow std = subs.StandardsRow;
-                        if (!subs.CheckStandard(ref std)) return;
-                        if (subs.IsSubSampleDescriptionNull() && !subs.StandardsRow.IsstdNameNull())
-                        {
-                            subs.SubSampleDescription = subs.StandardsRow.stdName;
-                        }
+                        subs.CheckStandard();
                     }
                     else if (e.Column == this.columnSubSampleType)
                     {
@@ -187,18 +185,7 @@ namespace DB
                     }
                     else if (e.Column == this.ChCapsuleIDColumn)
                     {
-                        subs.SetColumnError(this.ChCapsuleIDColumn, null);
-                        VialTypeRow v = subs.VialTypeRowByChCapsule_SubSamples;
-                        if (EC.IsNuDelDetch(v))
-                        {
-                            subs.SetColumnError(this.ChCapsuleIDColumn, "Assign an irradiation container");
-                        }
-                        else
-                        {
-                            UnitRow u = subs.GetUnitRows().FirstOrDefault();
-                            if (!EC.IsNuDelDetch(u)) u.SetVialContainer(ref v);
-                        }
-                        //
+                        subs.CheckRabbit();
                     }
                     else if (e.Column == this.ENAAColumn) subs.CheckENAA();
                     else
@@ -246,6 +233,22 @@ namespace DB
                     return false;
                 }
                 else return true;
+            }
+
+            public void CheckRabbit()
+            {
+                SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, null);
+                VialTypeRow v = VialTypeRowByChCapsule_SubSamples;
+                if (EC.IsNuDelDetch(v))
+                {
+                    SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, "Assign an irradiation container");
+                }
+                else
+                {
+                    UnitRow u = GetUnitRows().FirstOrDefault();
+                    if (!EC.IsNuDelDetch(u)) u.SetVialContainer(ref v);
+                }
+                //
             }
 
             // creates a MatSSF unit
@@ -351,9 +354,9 @@ namespace DB
                 return true;
             }
 
-            public void CheckMonitor()
+            public bool CheckMonitor()
             {
-                if (EC.IsNuDelDetch(MonitorsRow)) return;
+                if (EC.IsNuDelDetch(MonitorsRow)) return false;
 
                 bool namenull = MonitorsRow.IsMonNameNull();
                 if (!namenull)
@@ -382,9 +385,7 @@ namespace DB
                     GeometryRow = MonitorsRow.GeometryRow;
                 }
 
-                StandardsRow std = MonitorsRow.StandardsRow;
-
-                if (!CheckStandard(ref std)) return;
+                return true;
             }
 
             private object tag;
@@ -445,17 +446,22 @@ namespace DB
                 }
             }
 
-            public bool CheckStandard(ref StandardsRow std)
+            public bool CheckStandard()
             {
-                if (EC.IsNuDelDetch(std)) return false;
+                // StandardsRow std = StandardsRow;
+                if (EC.IsNuDelDetch(StandardsRow)) return false;
 
                 Concentration = 1;
                 Comparator = true;
                 Elements = string.Empty;
-                if (EC.IsNuDelDetch(std.MatrixRow)) return false;
-                if (EC.IsNuDelDetch(MatrixRow) || MatrixID != std.MatrixRow.MatrixID)
+                if (EC.IsNuDelDetch(StandardsRow.MatrixRow)) return false;
+                if (EC.IsNuDelDetch(MatrixRow) || MatrixID != StandardsRow.MatrixRow.MatrixID)
                 {
-                    MatrixRow = std.MatrixRow;
+                    MatrixRow = StandardsRow.MatrixRow;
+                }
+                if (IsSubSampleDescriptionNull() && !StandardsRow.IsstdNameNull())
+                {
+                    SubSampleDescription = StandardsRow.stdName;
                 }
                 return true;
             }

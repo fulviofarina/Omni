@@ -75,10 +75,17 @@ namespace DB.Tools
 
                         if (sigma == null) continue;
 
-                        IEnumerable<LINAA.MeasurementsRow> meas = s.GetMeasurementsRows();
+                        // IEnumerable<LINAA.MeasurementsRow> meas = s.GetMeasurementsRows();
+
+                        //whathever values
+                        if (s.IsIrradiationTotalTimeNull()) s.IrradiationTotalTime = 200;
+
+                        LINAA.MeasurementsRow mea = Interface.IDB.Measurements.AddMeasurementsRow(s.IrradiationCode, 0, "A", s.SubSampleName + "A", DateTime.Now, 0, s, "D", 0, 5, s.IrradiationRequestsID, s.SubSamplesID, 0, false, true, s.GeometryName, "DUNNO", TimeSpan.MinValue);
+
+                        IEnumerable<LINAA.MeasurementsRow> measurements = new LINAA.MeasurementsRow[] { mea };
 
                         Rate(s.Alpha, s.f, ref ir);
-                        Temporal(ref meas, ref ir);
+                        Temporal(ref measurements, ref ir);
                         ir.Asp = (s.Concentration * s.DryNet * 0.001 * 1e-6) * (MyMath.NAvg * sigma.sigma0 * 1e-24 * sigma.theta * 0.01 / ir.NAARow.ReactionsRowParent.SigmasSalRow.Mat) * (FC * 1e6 / 0.2882) * ir.R0 * MyMath.S((0.693 / n.T2), s.IrradiationTotalTime); //result in Bq
                         ir.Asp = ir.Asp * 0.001; //result in kBq
                     }

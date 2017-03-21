@@ -98,6 +98,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GeneticSharp.Domain">
+      <HintPath>A:\GAlgo\GADB\library\GeneticSharp.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="GeneticSharp.Infrastructure.Framework">
+      <HintPath>A:\GAlgo\GADB\library\GeneticSharp.Infrastructure.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="GeneticSharp.Infrastructure.Threading">
+      <HintPath>A:\GAlgo\GADB\library\GeneticSharp.Infrastructure.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
@@ -112,6 +121,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NAA\NAAChromosome.cs" />
+    <Compile Include="NAA\NAAControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -158,6 +169,14 @@
     <ProjectReference Include="..\Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>
+    </ProjectReference>
+    <ProjectReference Include="A:\GAlgo\GADB\GADB.csproj">
+      <Project>{b41c5a17-b5a2-4b38-94df-607615c90823}</Project>
+      <Name>GADB</Name>
+    </ProjectReference>
+    <ProjectReference Include="A:\GAlgo\GAForm\GAForm.csproj">
+      <Project>{d3e976d0-da5e-4a09-81a1-ae6ad5e756ab}</Project>
+      <Name>GAForm</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
