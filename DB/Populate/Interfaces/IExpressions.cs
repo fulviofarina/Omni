@@ -14,8 +14,6 @@ namespace DB
 
         void PopulateColumnExpresions();
 
-        void PopulateUserDirectories();
-
         //    bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref DB.LINAA.TAMDeleteMethod remover);
     }
 }

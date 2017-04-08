@@ -17,10 +17,6 @@ namespace DB
 
         void Msg(string msg, string title);
 
-        void AddException(Exception ex);
-
-        LINAA.ExceptionsDataTable Exceptions { get; }
-
         void ReportProgress(int percentage);
     }
 }

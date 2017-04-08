@@ -12,6 +12,9 @@ namespace DB
     {
         IList<SubSamplesRow> FindByProject(string project);
 
+        IList<string> ProjectsList { get; }
+        ICollection<string> ActiveProjectsList { get; }
+
         void PopulateToDoes();
 
         void PopulateProjects();

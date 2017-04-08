@@ -70,7 +70,7 @@ namespace DB
             {
                 get
                 {
-                    return (this.DataSet as LINAA).currentPref.AAFillHeight;
+                    return (this.DataSet as LINAA).CurrentSSFPref.AAFillHeight;
                 }
             }
 
@@ -78,7 +78,7 @@ namespace DB
             {
                 get
                 {
-                    return (this.DataSet as LINAA).currentPref.AARadius;
+                    return (this.DataSet as LINAA).CurrentSSFPref.AARadius;
                 }
             }
 
@@ -330,7 +330,7 @@ namespace DB
                     if (forceContent) u.Content = this.MatrixRow.MatrixComposition;
                     if (this.Net != 0 && Vol != 0 && caldensity)
                     {
-                        this.CalcDensity = this.Net / Vol;
+                        this.CalcDensity = (this.Net / Vol) * 1e-3;
                         string HighLow = "The calculated density (in gr/cm3)";
                         double ratio = (this.MatrixDensity / this.CalcDensity) * 100;
                         int pent = 3;

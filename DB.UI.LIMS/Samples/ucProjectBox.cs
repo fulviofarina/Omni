@@ -48,7 +48,7 @@ namespace DB.UI
 
             string project = projectbox.Text.ToUpper().Trim();
 
-            if (!Interface.IDB.ProjectsList.Contains(project)) return;
+            if (!Interface.IPopulate.IProjects.ProjectsList.Contains(project)) return;
             LINAA.IrradiationRequestsRow Irradiation = null;
             Irradiation = Interface.IDB.IrradiationRequests.FindByIrradiationCode(project);
             IrrReqID = Irradiation.IrradiationRequestsID;
@@ -73,31 +73,14 @@ namespace DB.UI
         {
             Interface = inter;
 
-            this.AAFillHeight.Checked = Interface.IPreferences.CurrentPref.AAFillHeight;
-            this.AARadius.Checked = Interface.IPreferences.CurrentPref.AARadius;
-
             callBack = CallBack;
 
-            projectbox.Items.AddRange(Interface.IDB.ProjectsList.ToArray());
+            projectbox.Items.AddRange(Interface.IPopulate.IProjects.ProjectsList.ToArray());
 
             this.projectbox.TextChanged += delegate
             {
                 RefreshSubSamples();// this.projectbox_Click;
             };
-        }
-
-        private void AutoAdjust_CheckedChanged(object sender, EventArgs e)
-        {
-            if (sender.Equals(AAFillHeight))
-            {
-                if (AAFillHeight.Checked == true) AARadius.Checked = false;
-            }
-            else if (AARadius.Checked == true) AAFillHeight.Checked = false;
-
-            Interface.IPreferences.CurrentPref.AAFillHeight = AAFillHeight.Checked;
-            Interface.IPreferences.CurrentPref.AARadius = AARadius.Checked;
-
-            Interface.IStore.Save<LINAA.PreferencesDataTable>();
         }
     }
 }

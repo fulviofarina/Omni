@@ -107,6 +107,10 @@
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\DB.cs" />
+    <Compile Include="DB\NAA.Exceptions.cs" />
+    <Compile Include="Interface\BindingSources.cs" />
+    <Compile Include="Interface\Current.cs" />
+    <Compile Include="Interface\Populate.cs" />
     <Compile Include="Populate\Interfaces\IIrradiations.cs" />
     <Compile Include="Populate\Interfaces\IProjects.cs" />
     <Compile Include="Populate\Interfaces\IOrders.cs" />
@@ -139,7 +143,7 @@
     <Compile Include="DB\Geometry\NAA.Vial.cs" />
     <Compile Include="Populate\Populate.DetSol.cs" />
     <Compile Include="Populate\Populate.Geometry.cs" />
-    <Compile Include="Interfaces\InterfaceClass.cs" />
+    <Compile Include="Interface\Interface.cs" />
     <Compile Include="Preferences\IPreferences.cs" />
     <Compile Include="Populate\Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Actions.cs" />
@@ -152,7 +156,7 @@
     <Compile Include="DB\Nuclear\NAA.Element.cs" />
     <Compile Include="Populate\Populate.Nuclear.cs" />
     <Compile Include="Preferences\NAA.Preferences.cs" />
-    <Compile Include="Populate\Populate.Preferences.cs" />
+    <Compile Include="Preferences\Populate.Preferences.cs" />
     <Compile Include="DB\Project\NAA.Irradiations.cs" />
     <Compile Include="Populate\Populate.Irradiations.cs" />
     <Compile Include="Populate\Populate.Orders.cs" />

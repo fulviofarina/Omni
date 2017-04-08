@@ -51,6 +51,7 @@ namespace DB.UI
             int id = u.SubSamplesRow.VialTypeRowByChCapsule_SubSamples.VialTypeID;
             BindingSource rabbitBS = Interface.IBS.Rabbit;
             rabbitBS.Position = rabbitBS.Find(column, id);
+
             column = Interface.IDB.Channels.ChannelsIDColumn.ColumnName;
             id = u.SubSamplesRow.IrradiationRequestsRow.ChannelsID;
             BindingSource channelBs = Interface.IBS.Channels;

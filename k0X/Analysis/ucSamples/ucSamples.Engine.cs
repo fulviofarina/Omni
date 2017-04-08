@@ -305,12 +305,13 @@ namespace k0X
             try
             {
                 LINAA.PreferencesRow preferences = Interface.IPreferences.CurrentPref;
+                LINAA.SSFPrefRow ssfpref = Interface.IPreferences.CurrentSSFPref;
 
                 if (load)
                 {
                     minAreabox.Text = preferences.minArea.ToString();
                     maxUncbox.Text = preferences.maxUnc.ToString();
-                    showMATSSF.Checked = preferences.ShowMatSSF;
+                    showMATSSF.Checked = ssfpref.ShowMatSSF;
 
                     showSolang.Checked = preferences.ShowSolang;
                     Awindowbox.Text = preferences.windowA.ToString();
@@ -331,7 +332,7 @@ namespace k0X
                     preferences.maxUnc = Convert.ToDouble(maxUncbox.Text);
                     preferences.windowA = Convert.ToDouble(Awindowbox.Text);
                     preferences.windowB = Convert.ToDouble(Bwindowbox.Text);
-                    preferences.ShowMatSSF = showMATSSF.Checked;
+                    ssfpref.ShowMatSSF = showMATSSF.Checked;
                     preferences.ShowSolang = showSolang.Checked;
                     preferences.ShowSampleDescription = sampleDescription.Checked;
                     preferences.LastAccessDate = DateTime.Now;
@@ -349,7 +350,7 @@ namespace k0X
             catch (SystemException ex)
             {
                 MessageBox.Show("Error loading preferences\n\n" + ex.Message + "\n\n" + ex.StackTrace);
-                Interface.IReport.AddException(ex);
+                Interface.IMain.AddException(ex);
             }
         }
 

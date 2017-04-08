@@ -38,14 +38,14 @@ namespace k0X
                     }
                     catch (SystemException ex)
                     {
-                        ucSample.Interface.IReport.AddException(ex);
+                        ucSample.Interface.IMain.AddException(ex);
                     }
                 }
                 SetASampleNode(ucSample.sampleDescription.Checked, ref old);
             }
             catch (SystemException ex)
             {
-                ucSample.Interface.IReport.AddException(ex);
+                ucSample.Interface.IMain.AddException(ex);
             }
 
             Populating = false;

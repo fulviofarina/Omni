@@ -217,7 +217,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IReport.AddException(ex);
+                Interface.IMain.AddException(ex);
             }
         }
 
@@ -252,7 +252,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IReport.AddException(ex);
+                Interface.IMain.AddException(ex);
             }
             if (time > 0) SchTimer.Interval = time * 1000;
             SchTimer.Enabled = true;
@@ -289,7 +289,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IReport.AddException(ex);
+                Interface.IMain.AddException(ex);
             }
             return runing;
         }

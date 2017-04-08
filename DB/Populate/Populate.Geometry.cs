@@ -39,19 +39,6 @@ namespace DB
         }
 
         //
-        public Action[] PMMatrix()
-        {
-            Action[] populatorArray = null;
-
-            populatorArray = new Action[]   {
-            PopulateCompositions ,
-        PopulateMatrix,
-            PopulateXCOMList,
-         PopulateVials,
-            PopulateGeometry};
-
-            return populatorArray;
-        }
 
         public void PopulateCompositions()
         {

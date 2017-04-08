@@ -57,6 +57,8 @@ namespace DB
 
       */
 
+        private delegate int TAMDeleteMethod(int index);
+
         private System.ComponentModel.IContainer components;
 
         /// <summary>

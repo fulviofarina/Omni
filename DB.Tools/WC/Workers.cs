@@ -672,7 +672,7 @@ namespace DB.Tools
                 case (int)R.AddException:    // peaks	merge
                     {
                         SystemException x = e.UserState as SystemException;
-                        if (x != null) Interface.IReport.AddException(x);
+                        if (x != null) Interface.IMain.AddException(x);
                     }
                     break;
 
@@ -729,7 +729,7 @@ namespace DB.Tools
 
                         if (res[0] != null)
                         {
-                            Interface.IReport.AddException(res[0] as SystemException);
+                            Interface.IMain.AddException(res[0] as SystemException);
                         }
                         int sum = (int)res[1];
                         progress.Value += sum;

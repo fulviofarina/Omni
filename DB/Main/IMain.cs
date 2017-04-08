@@ -10,6 +10,10 @@ namespace DB
 {
     public interface IMain
     {
+        void PopulateUserDirectories();
+
+        void AddException(Exception ex);
+
         bool IsSpectraPathOk { get; }
 
         void Read(string filepath);

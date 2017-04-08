@@ -7,6 +7,20 @@ namespace DB
 {
     public partial class LINAA
     {
+        public Action[] PMMatrix()
+        {
+            Action[] populatorArray = null;
+
+            populatorArray = new Action[]   {
+            PopulateCompositions ,
+        PopulateMatrix,
+            PopulateXCOMList,
+         PopulateVials,
+            PopulateGeometry};
+
+            return populatorArray;
+        }
+
         public Action[] PMBasic()
         {
             Action[] populatorArray = null;

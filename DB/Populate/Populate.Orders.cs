@@ -8,6 +8,11 @@ namespace DB
 {
     public partial class LINAA : IOrders
     {
+        public Int32? FindOrderID(string LabOrdRef)
+        {
+            return this.tableOrders.FindOrderID(LabOrdRef);
+        }
+
         protected internal ICollection<string> ordersList;
 
         /// <summary>
@@ -37,11 +42,6 @@ namespace DB
             {
                 this.AddException(ex);
             }
-        }
-
-        public Int32? FindOrderID(string LabOrdRef)
-        {
-            return this.tableOrders.FindOrderID(LabOrdRef);
         }
     }
 }

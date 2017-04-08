@@ -12,6 +12,8 @@ namespace DB
     {
         void PopulateOrders();
 
+        ICollection<string> OrdersList { get; }
+
         Int32? FindOrderID(string LabOrdRef);
     }
 }

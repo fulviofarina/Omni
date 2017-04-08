@@ -101,28 +101,34 @@ namespace SSF
                     Control ctrl = msn as Control;
                     uc.AttachMsn(ref ctrl);
                     form.Dispose();
+
                     form = new Form();
                     form.AutoSizeMode = AutoSizeMode.GrowOnly;
                     form.AutoSize = true;
-                    form.Controls.Add(uc);
-
-                    //   form.ControlBox = true;
-                    //  form.TopMost = false;
-
                     IntPtr Hicon = Properties.Resources.Logo.GetHicon();
                     Icon myIcon = Icon.FromHandle(Hicon);
                     form.Icon = myIcon;
                     form.Text = title;
+
+                    form.Controls.Add(uc);
+
                     form.Show();
+                    //   form.ControlBox = true;
+                    //  form.TopMost = false;
 
                     //     ucSubSamples.ucSSF = uc;
-                    uc.ParentUI = ucSubSamples;
+
+             
+
                     Control ctrl2 = ucSubSamples.projectbox;
                     uc.AttachProjectBox(ref ctrl2);
                     Control ctrl3 = ucSubSamples.BN;
                     uc.AttachBN(ref ctrl3);
 
                     uc.Set(ref LIMS.Interface);
+
+                    //    Control ctrl4 = ucSubSamples;
+                    //   uc.AttachSampleCtrl(ref ctrl4);
 
                     LIMS.Form.Visible = true;
 

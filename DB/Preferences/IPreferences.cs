@@ -9,11 +9,11 @@ namespace DB
     {
         void PopulatePreferences();
 
+        //     void PopulateSSFPreferences();
+
         LINAA.PreferencesRow CurrentPref { get; set; }
 
         LINAA.SSFPrefRow CurrentSSFPref { get; set; }
-
-        LINAA.SSFPrefDataTable SSFPref { get; }
 
         //   void PopulateSSFPreferences();
     }

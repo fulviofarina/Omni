@@ -224,7 +224,7 @@ namespace DB.UI
             }
             catch (SystemException ex)
             {
-                Interface.IReport.AddException(ex);
+                Interface.IMain.AddException(ex);
             }
 
             Interface.IBS.SubSamples.ResumeBinding();

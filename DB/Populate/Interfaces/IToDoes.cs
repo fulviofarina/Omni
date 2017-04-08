@@ -10,6 +10,8 @@ namespace DB
 {
     public interface IToDoes
     {
+        IList<string> ToDoesList { get; }
+
         void PopulateToDoes();
     }
 }

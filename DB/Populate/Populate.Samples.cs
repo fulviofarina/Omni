@@ -358,7 +358,7 @@ namespace DB
                 string uniquefield = newsamples.SubSampleNameColumn.ColumnName;
                 string Indexfield = newsamples.SubSamplesIDColumn.ColumnName;
                 TAMDeleteMethod remov = this.tAM.SubSamplesTableAdapter.Delete;
-                bool duplicates = RemoveDuplicates(newsamples, uniquefield, Indexfield, ref remov);
+                bool duplicates = removeDuplicates(newsamples, uniquefield, Indexfield, ref remov);
 
                 if (duplicates)
                 {

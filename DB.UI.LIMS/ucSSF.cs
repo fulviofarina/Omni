@@ -15,11 +15,8 @@ namespace DB.UI
     public partial class ucSSF : UserControl
     {
         // private bool Offline = false;
-        private static string mf = preFolder + "lims.xml";
 
         private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
-
-        private static string preFolder = Environment.GetFolderPath(folder);
 
         private Interface Interface = null;
 
@@ -30,7 +27,13 @@ namespace DB.UI
 
         public void AttachProjectBox(ref Control pro)
         {
-            this.inputTLP.Controls.Add(pro);
+            this.splitContainer1.Panel1.Controls.Add(pro);
+        }
+
+        public void AttachSampleCtrl(ref Control ctrl)
+        {
+            ctrl.Dock = DockStyle.Fill;
+            this.SamplesTab.Controls.Add(ctrl);
         }
 
         public void AttachBN(ref Control bn)
@@ -78,17 +81,22 @@ namespace DB.UI
 
                 ///find which dgv called it
                 bool isChannel = row.GetType().Equals(typeof(LINAA.ChannelsRow));
-
+                bool isMatrix = row.GetType().Equals(typeof(LINAA.MatrixRow));
                 if (isChannel)
                 {
                     LINAA.ChannelsRow c = row as LINAA.ChannelsRow;
                     MatSSF.UNIT.SetChannel(ref c);
                 }
-                else
+                else if (!isMatrix)
                 {
                     LINAA.VialTypeRow v = row as LINAA.VialTypeRow;
                     if (!v.IsRabbit) MatSSF.UNIT.SubSamplesRow.VialTypeRow = v;
                     else MatSSF.UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
+                }
+                else
+                {
+                    LINAA.MatrixRow m = row as LINAA.MatrixRow;
+                    MatSSF.UNIT.SubSamplesRow.MatrixID = m.MatrixID;
                 }
             }
             catch (System.Exception ex)
@@ -127,8 +135,6 @@ namespace DB.UI
 
             try
             {
-                ///check if table has no rows
-
                 ///has errors
                 if (row.HasErrors)
                 {
@@ -137,8 +143,6 @@ namespace DB.UI
                 }
 
                 MatSSF.UNIT = row as LINAA.UnitRow;
-
-                //        this.ucUnit.RefreshSSF();
 
                 this.ucCC1.RefreshCC();
 
@@ -157,132 +161,124 @@ namespace DB.UI
             }
         }
 
-        private void dgvMatrixSelected(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            DataGridView dgv = sender as DataGridView;
-
-            if (dgv.RowCount == 0) return;
-
-            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
-            string rowWithError = DB.UI.Properties.Resources.rowWithError;
-            string noTemplate = DB.UI.Properties.Resources.noTemplate;
-            string Error = DB.UI.Properties.Resources.Error;
-
-            try
-            {
-                ///check if table has no rows
-                if (row == null)
-                {
-                    Interface.IReport.Msg(noTemplate, Error); //report
-                                                              //  row.RowError = noTemplate;
-                    return;
-                }
-
-                ///find which dgv called it
-                //  bool isChannel = dgv.Equals(this.ChannelDGV);
-                //  bool isMatrix = dgv.Equals(this.matrixDGV);
-
-                ///has errors
-                if (row.HasErrors)
-                {
-                    ///is not a matrix row so exit and report
-
-                    LINAA.MatrixDataTable dt = Interface.IDB.Matrix;
-
-                    string colError = row.GetColumnError(dt.MatrixCompositionColumn);
-                    if (!string.IsNullOrEmpty(colError)) ///matrix content has error, exit and report
-
-                    {
-                        Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-
-                        return;
-                    }
-
-                    // colError = row.GetColumnError(dt.MatrixDensityColumn);
-                }
-
-                LINAA.MatrixRow m = row as LINAA.MatrixRow;
-                MatSSF.UNIT.SubSamplesRow.MatrixID = m.MatrixID;
-            }
-            catch (System.Exception ex)
-            {
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
-            }
-        }
-
         private void SaveItem_Click(object sender, EventArgs e)
         {
-            // this.currentUnit.LastChanged = DateTime.Now;
+            Cursor.Current = Cursors.WaitCursor;
 
             this.Validate();
 
-            Interface.IBS.Matrix.EndEdit();
-            Interface.IBS.Units.EndEdit();
-            Interface.IBS.Vial.EndEdit();
-            Interface.IBS.Rabbit.EndEdit();
-            Interface.IBS.Channels.EndEdit();
+            saveMethod();
 
-            bool off = Interface.IPreferences.CurrentPref.Offline;
-            Interface.IStore.SaveSSF(off, mf);
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void saveMethod()
+        {
+            try
+            {
+                Interface.IBS.Matrix.EndEdit();
+                Interface.IBS.Units.EndEdit();
+                Interface.IBS.Vial.EndEdit();
+                Interface.IBS.Rabbit.EndEdit();
+                Interface.IBS.Channels.EndEdit();
+
+                MatSSF.WriteXML();
+
+                bool off = Interface.IPreferences.CurrentPref.Offline;
+                string savePath = Environment.GetFolderPath(folder) + "\\" + "lims.xml";
+                Interface.IStore.SaveSSF(off, savePath);
+
+                Interface.IReport.Msg("Saving", "Saving completed!");
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
+            }
         }
 
         private void Calculate_Click(object sender, EventArgs e)
         {
-            //Validate Binding sources
-            Interface.IBS.Matrix.EndEdit();
-            Interface.IBS.Units.EndEdit();
-            Interface.IBS.Vial.EndEdit();
-            Interface.IBS.Rabbit.EndEdit();
-            Interface.IBS.Channels.EndEdit();
+            Cursor.Current = Cursors.WaitCursor;
 
-            this.ucUnit.DeLink();
-
+            this.progress.Minimum = 0;
+            this.progress.Maximum = 8;
+            this.progress.Value = 1;
             //Go to Calculations/ Units Tab
             this.Tab.SelectedTab = this.CalcTab;
 
             //Clear InputFile RTF Control
-            compositionsbox.Clear();
+            inputbox.Clear();
 
-            this.progress.Value = 0;
+            Action showProgress = delegate
+            {
+                Application.DoEvents();
+                this.progress.PerformStep();
+                Application.DoEvents();
+            };
 
+            CalculateUnit(ref showProgress, folder);
+
+            //load files
+            string file = MatSSF.StartupPath + MatSSF.InputFile;
+            bool exist = System.IO.File.Exists(file);
+            if (exist) inputbox.LoadFile(file, RichTextBoxStreamType.PlainText);
+
+            showProgress();
+
+            file = MatSSF.StartupPath + MatSSF.OutputFile;
+            exist = System.IO.File.Exists(file);
+            if (exist) outputBox.LoadFile(file, RichTextBoxStreamType.PlainText);
+            //3
+            showProgress();
+
+            saveMethod();
+
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void CalculateUnit(ref Action showProgress, Environment.SpecialFolder mainSpecialFolder)
+        {
             try
             {
-                bool hide = !(Interface.IPreferences.CurrentPref.ShowMatSSF);
+                //Validate Binding sources
+                Interface.IBS.Matrix.EndEdit();
+                Interface.IBS.Units.EndEdit();
+                Interface.IBS.Vial.EndEdit();
+                Interface.IBS.Rabbit.EndEdit();
+                Interface.IBS.Channels.EndEdit();
 
-                bool doCk = (Interface.IPreferences.CurrentPref.DoCK);
+                IPreferences ip = Interface.IPreferences;
+                bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
 
-                bool doSSF = (Interface.IPreferences.CurrentPref.DoMatSSF);
+                bool doCk = (ip.CurrentSSFPref.DoCK);
 
-                this.progress.PerformStep();
+                bool doSSF = (ip.CurrentSSFPref.DoMatSSF);
 
-                Application.DoEvents();
+                MatSSF.StartupPath = Environment.GetFolderPath(mainSpecialFolder);
+                MatSSF.StartupPath += "\\" + ip.CurrentSSFPref.Folder + "\\";
+
+                //1
+                showProgress();
 
                 //  MatSSF.UNIT = currentUnit;
                 //  MatSSF.Table = this.lINAA.MatSSF;
                 MatSSF.INPUT();
                 //2
-                this.progress.PerformStep();
-                Application.DoEvents();
-
-                //arreglar esto
-                string file = MatSSF.StartupPath + MatSSF.InputFile;
-                compositionsbox.LoadFile(file, RichTextBoxStreamType.PlainText);
-                //3
-                this.progress.PerformStep();
-                Application.DoEvents();
+                showProgress();
+                Interface.IReport.Msg("Input metadata generated", "Starting Calculations...");
 
                 bool runOk = false;
 
                 if (doSSF) runOk = MatSSF.RUN(hide);
 
                 //4
-                this.progress.PerformStep();
-                Application.DoEvents();
+                showProgress();
 
                 if (runOk)
                 {
+                    Interface.IReport.Msg("MatSSF Ran", "Reading Output");
+
                     MatSSF.OUTPUT();
 
                     if (MatSSF.Table.Count == 0)
@@ -292,202 +288,120 @@ namespace DB.UI
                 }
                 else if (doSSF)
                 {
-                    throw new SystemException("MATSSF is still calculating stuff...\n");
+                    Interface.IReport.Msg("MatSSF hanged...", "Something happened executing MatSSF");
+
+                    throw new SystemException("MATSSF hanged...\n");
+
                     // errorB.Text += "MATSSF is still calculating stuff...\n";
                 }
                 //5
-                this.progress.PerformStep();
-                Application.DoEvents();
+                showProgress();
 
-                if (doCk) MatSSF.CHILEAN();
+                Interface.IReport.Msg("MatSSF done", "Calculations completed!");
+
+                if (doCk)
+                {
+                    MatSSF.CHILEAN();
+                    Interface.IReport.Msg("CK done", "Calculations completed!");
+                }
 
                 //6
-                this.progress.PerformStep();
-                Application.DoEvents();
-
-                //  else errorB.Text += "Matrix Composition is empty\n";
+                showProgress();
             }
             catch (SystemException ex)
             {
-                //  Interface.IReport.Msg("Database", "Database updated!");
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
-                //    errorB.Text += ex.Message + "\n" + ex.Source + "\n";
+                Interface.IMain.AddException(ex);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
             }
-
-            MatSSF.WriteXML();
-
-            SaveItem_Click(sender, e);
-
-            //    this.ucUnit.RefreshSSF();
-
-            //7
-            this.progress.PerformStep();
-            Application.DoEvents();
-
-            Interface.IReport.Msg("Calculations", "Calculations completed!");
         }
-
-        public ucSubSamples ParentUI;
-        private Hashtable bindings = null;
 
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
         /// </summary>
-
         public void Set(ref Interface inter)
         {
-            //  object db = Linaa;
             Interface = inter;
             try
             {
                 // OTHER CONTROLS
                 ucCC1.Set(ref Interface);
                 ucCC1.RowHeaderMouseClick = this.dgvItemSelected;
+
                 ucVcc.Set(ref Interface);
                 ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
 
+                ucMS.Set(ref Interface);
+                ucMS.RowHeaderMouseClick = this.dgvItemSelected;
+
                 ucUnit.Set(ref Interface);
                 ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
-                ucIrradiationsRequests1.Set(ref Interface);
-                ucMS.Set(ref Interface);
-                ucMS.RowHeaderMouseClick = this.dgvMatrixSelected;
 
-                string folder = Interface.IPreferences.CurrentSSFPref.Folder;
-                MatSSF.StartupPath = preFolder + folder;
+                //ucIrradiationsRequests1.Set(ref Interface);
 
-                //SET THE PREFERENCES
-                string format = Interface.IPreferences.CurrentSSFPref.Rounding;
-                N4.TextBox.Text = format;
-
-                BindingSource bsSample = Interface.IBS.SubSamples;
-
-                Hashtable samplebindings = null;
-                //unit bindings
-                string rounding = Interface.IPreferences.CurrentSSFPref.Rounding;
-
-                samplebindings = Dumb.ArrayOfBindings(ref bsSample, rounding);
-                //  Dumb.ChangeBindingsFormat("N2", ref bindings);
-
-                LINAA.SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
-                string column;
-                //samples
-                column = SSamples.RadiusColumn.ColumnName;
-                this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-                column = SSamples.FillHeightColumn.ColumnName;
-                this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-                column = SSamples.Gross1Column.ColumnName;
-                this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-                column = SSamples.SubSampleNameColumn.ColumnName;
-                this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
-                this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
-                column = SSamples.VolColumn.ColumnName;
-                this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-                column = SSamples.CalcDensityColumn.ColumnName;
-                this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-
-                //units
-                LINAA.UnitDataTable Unit = Interface.IDB.Unit;
-                BindingSource bs = Interface.IBS.Units; //link to binding source;
-                bindings = Dumb.ArrayOfBindings(ref bs, rounding);
-
-                column = Unit.ChDiameterColumn.ColumnName;
-                this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
-                column = Unit.ChLengthColumn.ColumnName;
-                this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-                column = Unit.ChCfgColumn.ColumnName;
-                this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
-                column = Unit.ContentColumn.ColumnName;
-                this.matrixB.DataBindings.Add(bindings[column] as Binding);
-                column = Unit.kepiColumn.ColumnName;
-                this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
-                column = Unit.kthColumn.ColumnName;
-                this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-                //types
-                this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
-
-                if (!Interface.IPreferences.CurrentPref.Offline)
-                {
-                    // Interface.IPopulate.IGeometry.PopulateUnits();
-                }
-                else //fix this
-                {
-                    //  Interface.IPopulate.IMain.Read(mf);
-                }
-
-                //preferences
-                IPreferences ip = Interface.IPreferences;
-
-                this.loop.Checked = ip.CurrentSSFPref.Loop;
-                this.calcDensity.Checked = ip.CurrentSSFPref.CalcDensity;
-                this.doCK.Checked = ip.CurrentPref.DoCK;
-                this.doMatSSF.Checked = ip.CurrentPref.DoMatSSF;
-                this.showMatSSF.Checked = ip.CurrentPref.ShowMatSSF;
-                this.AutoLoad.Checked = ip.CurrentSSFPref.AutoLoad;
-                // this.SQL.Checked = ip.CurrentSSFPref.SQL;
-                this.FolderPath.Text = ip.CurrentSSFPref.Folder;
-                this.showOther.Checked = ip.CurrentSSFPref.ShowOther;
-                this.workOffline.Checked = ip.CurrentPref.Offline;
-
-                this.loop.CheckedChanged += this.checkedChanged;
-                this.calcDensity.CheckedChanged += this.checkedChanged;
-                this.showMatSSF.CheckedChanged += this.checkedChanged;
-                this.showOther.CheckedChanged += this.checkedChanged;
-                this.workOffline.CheckedChanged += this.checkedChanged;
-                this.doMatSSF.CheckedChanged += this.checkedChanged;
-                this.doCK.CheckedChanged += this.checkedChanged;
-                this.AutoLoad.CheckedChanged += this.checkedChanged;
+                setBoxesBindings();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
             catch (System.Exception ex)
             {
+                Interface.IMain.AddException(ex);
                 Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
             }
         }
 
-        private void checkedChanged(object sender, EventArgs e)
+        private void setBoxesBindings()
         {
-            IPreferences ip = Interface.IPreferences;
+            string format = Interface.IPreferences.CurrentSSFPref.Rounding;
 
-            ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
+            //unit bindings
+            string rounding = Interface.IPreferences.CurrentSSFPref.Rounding;
 
-            ip.CurrentSSFPref.Loop = this.loop.Checked;
+            BindingSource bsSample = Interface.IBS.SubSamples;
 
-            ip.CurrentSSFPref.Loop = this.loop.Checked;
-            ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-            ip.CurrentPref.DoCK = this.doCK.Checked;
-            ip.CurrentPref.DoMatSSF = this.doMatSSF.Checked;
-            ip.CurrentPref.ShowMatSSF = this.showMatSSF.Checked;
-            ip.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
-            // this.SQL.Checked = ip.CurrentSSFPref.SQL;
-            ip.CurrentSSFPref.Folder = this.FolderPath.Text;
-            ip.CurrentSSFPref.ShowOther = this.showOther.Checked;
-            ip.CurrentPref.Offline = this.workOffline.Checked;
+            Hashtable samplebindings = null;
+            samplebindings = Dumb.ArrayOfBindings(ref bsSample, rounding);
 
-            Interface.IStore.SavePreferences();
-        }
+            LINAA.SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
+            string column;
+            //samples
+            column = SSamples.RadiusColumn.ColumnName;
+            this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            column = SSamples.FillHeightColumn.ColumnName;
+            this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            column = SSamples.Gross1Column.ColumnName;
+            this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            column = SSamples.SubSampleNameColumn.ColumnName;
+            this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
+            column = SSamples.VolColumn.ColumnName;
+            this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            column = SSamples.CalcDensityColumn.ColumnName;
+            this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
 
-        /// <summary>
-        /// ROUNDING FORMAT for bindings
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void N4_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                string format = N4.TextBox.Text;
-                if (format.Length < 2) return;
+            //units
+            LINAA.UnitDataTable Unit = Interface.IDB.Unit;
+            BindingSource bs = Interface.IBS.Units; //link to binding source;
+            Hashtable bindings = null;
+            bindings = Dumb.ArrayOfBindings(ref bs, rounding);
 
-                Dumb.ChangeBindingsFormat(format, ref bindings);
-                Interface.IPreferences.CurrentSSFPref.Rounding = format;
-            }
-            catch (Exception ex)
-            {
-                Interface.IReport.AddException(ex);
-            }
+            column = Unit.ChDiameterColumn.ColumnName;
+            this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
+            column = Unit.ChLengthColumn.ColumnName;
+            this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Unit.ChCfgColumn.ColumnName;
+            this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
+            column = Unit.ContentColumn.ColumnName;
+            this.matrixB.DataBindings.Add(bindings[column] as Binding);
+            column = Unit.kepiColumn.ColumnName;
+            this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
+            column = Unit.kthColumn.ColumnName;
+            this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
+
+            //types
+            this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
+
+            ucCalc.Set(ref Interface, ref bindings, ref samplebindings);
         }
     }
 }

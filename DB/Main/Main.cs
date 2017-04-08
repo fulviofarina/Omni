@@ -40,6 +40,20 @@ namespace DB
      }
      */
 
+        public void CloneDataSet(ref LINAA set)
+        {
+            this.InitializeComponent();
+            this.Merge(set, false, MissingSchemaAction.Ignore);
+            this.PopulateColumnExpresions();
+            this.IRequestsAverages.Clear();
+            this.IPeakAverages.Clear();
+
+            DataTable table = IRequestsAverages;
+            cleanReadOnly(ref table);
+            table = IPeakAverages;
+            cleanReadOnly(ref table);
+        }
+
         protected internal string appPath = Application.StartupPath;
 
         public string AppPath
@@ -171,7 +185,7 @@ namespace DB
             }
         }
 
-        private static bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
+        private static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
         {
             bool duplicates = false;
 
@@ -272,6 +286,7 @@ namespace DB
 
                 this.SavePreferences();
                 this.PopulatePreferences();
+                // this.PopulateSSFPreferences();
             }
             catch (Exception ex)
             {
@@ -292,7 +307,5 @@ namespace DB
 
             Dumb.Process(new System.Diagnostics.Process(), appPath, "notepad.exe", path, false, false, 0);
         }
-
-        private delegate int TAMDeleteMethod(int index);
     }
 }

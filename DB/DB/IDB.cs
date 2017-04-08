@@ -7,15 +7,10 @@ namespace DB
     {
         LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
 
-        ICollection<string> ActiveProjectsList { get; }
-
-        LINAA.GeometryRow DefaultGeometry { get; }
-        string Exception { get; }
-
         //   string FolderPath { get; set; }
+        LINAA.SSFPrefDataTable SSFPref { get; }
 
-        ICollection<string> OrdersList { get; }
-        IList<string> ProjectsList { get; }
+        LINAA.PreferencesDataTable Preferences { get; }
 
         LINAA.AcquisitionsDataTable Acquisitions { get; }
         LINAA.BlanksDataTable Blanks { get; }
@@ -27,7 +22,7 @@ namespace DB
         LINAA.DetectorsAbsorbersDataTable DetectorsAbsorbers { get; }
         LINAA.DetectorsCurvesDataTable DetectorsCurves { get; }
         LINAA.DetectorsDimensionsDataTable DetectorsDimensions { get; }
-        ICollection<string> DetectorsList { get; set; }
+
         LINAA.ElementsDataTable Elements { get; }
         LINAA.ExceptionsDataTable Exceptions { get; }
         LINAA.GammasDataTable Gammas { get; }
@@ -46,7 +41,7 @@ namespace DB
         LINAA.OrdersDataTable Orders { get; }
         LINAA.PeaksDataTable Peaks { get; }
         LINAA.PeaksHLDataTable PeaksHL { get; }
-        LINAA.PreferencesDataTable Preferences { get; }
+
         LINAA.ProjectsDataTable Projects { get; }
         LINAA.pValuesDataTable pValues { get; }
         LINAA.ReactionsDataTable Reactions { get; }
@@ -65,7 +60,7 @@ namespace DB
         LINAA.ToDoAvgDataTable ToDoAvg { get; }
         LINAA.ToDoAvgUncDataTable ToDoAvgUnc { get; }
         LINAA.ToDoDataDataTable ToDoData { get; }
-        IList<string> ToDoesList { get; }
+
         LINAA.ToDoResDataTable ToDoRes { get; }
         LINAA.ToDoResAvgDataTable ToDoResAvg { get; }
         LINAA.UnitDataTable Unit { get; }

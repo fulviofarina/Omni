@@ -10,6 +10,9 @@ namespace DB
 {
     public interface IDetSol
     {
+        ICollection<string> DetectorsList { get; set; }
+        LINAA.GeometryRow DefaultGeometry { get; }
+
         void PopulateCOIList();
 
         void PopulateDetectorCurves();

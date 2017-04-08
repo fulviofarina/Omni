@@ -10,7 +10,7 @@ namespace DB.Tools
     public partial class MatSSF
     {
         private static string exefile = "matssf.exe";
-        private static string startupPath;
+        private static string startupPath = string.Empty;
         private static string inputFile = "MATSSF_INP.TXT";
         private static string outputFile = "MATSSF_LST.TXT";
 
@@ -26,10 +26,13 @@ namespace DB.Tools
             {
                 return inputFile;
             }
+        }
 
-            set
+        public static string OutputFile
+        {
+            get
             {
-                inputFile = value;
+                return outputFile;
             }
         }
 

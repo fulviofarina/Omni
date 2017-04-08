@@ -90,6 +90,12 @@
     <Compile Include="Geometries\ucV.Designer.cs">
       <DependentUpon>ucV.cs</DependentUpon>
     </Compile>
+    <Compile Include="Samples\ucOptionsSSF.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Samples\ucOptionsSSF.Designer.cs">
+      <DependentUpon>ucOptionsSSF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Samples\ucSubSamples.Content.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -241,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Geometries\ucV.resx">
       <DependentUpon>ucV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Samples\ucOptionsSSF.resx">
+      <DependentUpon>ucOptionsSSF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
