@@ -38,29 +38,26 @@ namespace DB.UI
             string innerRadCol = this.lINAA.VialType.InnerRadiusColumn.ColumnName + " asc";
             //      Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
             Dumb.LinkBS(ref this.ContainerBS, this.lINAA.VialType, column + " = " + "True", innerRadCol);
+
+            Interface.IBS.Channels = this.ChannelBS;
+            Interface.IBS.Rabbit = this.ContainerBS;
         }
 
         public void RefreshCC()
         {
             LINAA.UnitRow u = MatSSF.UNIT;
             string column;
-            column = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
+            column = Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
             int id = u.SubSamplesRow.VialTypeRowByChCapsule_SubSamples.VialTypeID;
-            this.ContainerBS.Position = this.ContainerBS.Find(column, id);
-            column = this.lINAA.Channels.ChannelsIDColumn.ColumnName;
+            BindingSource rabbitBS = Interface.IBS.Rabbit;
+            rabbitBS.Position = rabbitBS.Find(column, id);
+            column = Interface.IDB.Channels.ChannelsIDColumn.ColumnName;
             id = u.SubSamplesRow.IrradiationRequestsRow.ChannelsID;
-
-            this.ChannelBS.Position = this.ChannelBS.Find(column, id);
+            BindingSource channelBs = Interface.IBS.Channels;
+            channelBs.Position = channelBs.Find(column, id);
         }
 
-        public void EndEdit()
-        {
-            //     this.VialBS.EndEdit();
-            this.ChannelBS.EndEdit();
-            this.ContainerBS.EndEdit();
-        }
-
-        private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
+        //   private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
 
         /// <summary>
         /// DGV ITEM SELECTED
@@ -72,15 +69,15 @@ namespace DB.UI
             {
                 // rowHeaderMouseClick = value;
 
-                if (rowHeaderMouseClick != null) return;
+                //    if (rowHeaderMouseClick != null) return;
 
-                DataGridViewCellMouseEventHandler handler = value;
-                rowHeaderMouseClick = handler;
+                //  DataGridViewCellMouseEventHandler handler = value;
+                //   rowHeaderMouseClick = handler;
 
                 //  this.unitDGV.RowHeaderMouseClick += handler;
-                this.ChannelDGV.RowHeaderMouseClick += handler; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
+                this.ChannelDGV.RowHeaderMouseDoubleClick += value; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
 
-                this.ContainerDGV.RowHeaderMouseClick += handler;// new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
+                this.ContainerDGV.RowHeaderMouseDoubleClick += value;// new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
             }
         }
 

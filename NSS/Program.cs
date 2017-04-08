@@ -35,12 +35,10 @@ namespace NSS
         {
             Form Mainform = new Form();
             Mainform.Opacity = 0;
-            //   DB.LINAA db = DB.UI.LIMS.Linaa;
 
             try
             {
                 //main form
-
                 Mainform.Text = "SSF Panel by Fulvio Farina Arboccò";
                 IntPtr Hicon = Properties.Resources.Logo.GetHicon();
                 Icon myIcon = Icon.FromHandle(Hicon);
@@ -63,6 +61,7 @@ namespace NSS
                 NotifyIcon con = null;
                 LIMS.UserControls = new System.Collections.Generic.List<object>();
 
+                //create database
                 string result = Creator.Build(ref LIMS.Linaa, ref con, ref msn);
 
                 //    DB.Tools.Creator.CallBack = delegate
@@ -76,15 +75,17 @@ namespace NSS
                     LIMS.Interface = new Interface(ref LIMS.Linaa);
                     //set user control list
 
-                    ucSSF uc = new ucSSF(ref LIMS.Interface);
+                    /////// VOLVER A PONEEEEER
+
+                    ucSSF uc = new ucSSF();
+
                     msn.Dock = DockStyle.Fill;
                     form.Visible = false;
-
                     Control ctrl = msn as Control;
                     uc.AttachMsn(ref ctrl);
+                    Mainform.Controls.Add(uc);
 
                     form.Dispose();
-                    Mainform.Controls.Add(uc);
 
                     //create LIMS form
                     LIMS.Form = new LIMS(); //make a new UI LIMS
@@ -93,14 +94,14 @@ namespace NSS
 
                     GAForm.Form gafrm = new GAForm.Form();
                     NAAControl ganaaControl = new NAAControl();
-                    gafrm.IControl = ganaaControl;
                     ganaaControl.Interface = LIMS.Interface;
+                    gafrm.IControl = ganaaControl;
+
                     gafrm.Show();
 
-                    DataRow[] rows = LIMS.Interface.IDB.SubSamples.AsEnumerable().ToArray();
-                    string field = LIMS.Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
-                    string fieldID = LIMS.Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
-                    gafrm.FillExternalProblems(ref rows, field, fieldID);
+                    //esto lo puse para que no esté regenerando todo a cada rato
+                    bool fillexternal = false;
+                    if (fillexternal) FillExternalData(gafrm);
 
                     LIMS.Form.WindowState = FormWindowState.Minimized;
                     LIMS.Form.Visible = true;
@@ -126,6 +127,25 @@ namespace NSS
             return Mainform;
         }
 
+        private static void FillExternalData(GAForm.Form gafrm)
+        {
+            DataRow[] rows = LIMS.Interface.IDB.SubSamples.AsEnumerable().ToArray();
+            string label = LIMS.Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
+            string problemID = LIMS.Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
+
+            gafrm.FillExternalProblems(ref rows, label, problemID, 3, 3, 1);
+
+            foreach (LINAA.SubSamplesRow item in LIMS.Interface.IDB.SubSamples)
+            {
+                int ProblemID = item.SubSamplesID;
+                //    LINAA.SubSamplesRow s = (item as LINAA.SubSamplesRow);
+                LINAA.IRequestsAveragesRow[] irrs = item.GetIRequestsAveragesRows();
+                int[] subProblemIDs = irrs.Select(o => o.NAAID).ToArray();
+
+                gafrm.FillExternalData(ProblemID, subProblemIDs);
+            }
+        }
+
         private static void lastCallBack(ref ucSSF uc)
         {
             //create form for SubSamples
@@ -135,13 +155,24 @@ namespace NSS
             //set bindings
             ucSubSamples ucSubSamples = control as ucSubSamples;
             ucSubSamples.ucContent.Set(ref LIMS.Interface);
-            ucSubSamples.projectbox.Project = "X1701";
+            ucSubSamples.projectbox.Project = "X1706";
 
             //set child parent
-            ucSubSamples.ucSSF = uc;
-            uc.ParentUI = ucSubSamples;
-            uc.LoadDatabase();
+            ///VOLVER A PONER ESTO EVENTUALMENTE
+            ///
 
+            //     ucSubSamples.ucSSF = uc;
+
+            uc.ParentUI = ucSubSamples;
+
+            uc.Set(ref LIMS.Interface);
+
+            ucSubSamples.Predict(null, EventArgs.Empty);
+
+            //////////////////////QUITAR ESTA LINEAAAAAAAAAAAA
+            //    uc.ParentForm.Visible = false;
+
+            //  ucSubSamples.DeLink();
             //  uc.ucSubSamples.HideContent();
             //     CreateSSFDatablase(); //TAKE THIS AWAY
         }

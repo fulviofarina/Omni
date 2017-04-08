@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Data;
+using System.Windows.Forms;
 
 using DB.Tools;
 using Rsx;
@@ -11,16 +12,16 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            Dumb.FD<LINAA>(ref this.lINAA);
+            this.UnitBS.CurrentChanged += UnitBS_CurrentChanged;
         }
 
-        public void DeLink()
+        private void UnitBS_CurrentChanged(object sender, System.EventArgs e)
         {
-            Dumb.DeLinkBS(ref this.SSFBS);
-        }
+            DataRow r = (Interface.IBS.Units.Current as DataRowView).Row;
+            MatSSF.UNIT = r as LINAA.UnitRow;
+            string sampleIDvalue = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
+            Interface.IBS.SubSamples.Position = Interface.IBS.SubSamples.Find(sampleIDvalue, MatSSF.UNIT.SampleID);
 
-        public void RefreshSSF()
-        {
             // if (this.unitBS.Count == 0) return;
             //   MatSSF.UNIT = row as LINAA.UnitRow;
             MatSSF.ReadXML();
@@ -29,8 +30,14 @@ namespace DB.UI
             string column = MatSSF.Table.UnitIDColumn.ColumnName;
             string sortCol = MatSSF.Table.TargetIsotopeColumn.ColumnName;
             string unitID = MatSSF.UNIT.UnitID.ToString();
+            string filter = column + " is " + unitID;
 
-            Dumb.LinkBS(ref this.SSFBS, MatSSF.Table, column + " is " + unitID, sortCol);
+            Dumb.LinkBS(ref this.SSFBS, MatSSF.Table, filter, sortCol);
+        }
+
+        public void DeLink()
+        {
+            Dumb.DeLinkBS(ref this.SSFBS);
         }
 
         private Interface Interface = null;
@@ -40,26 +47,28 @@ namespace DB.UI
         /// </summary>
         /// <param name="Unitbs"></param>
         /// <param name="SSFbs"></param>
-        public void Set(ref Interface LinaaInterface)
+        public void Set(ref Interface inter)
         {
-            Interface = LinaaInterface;
-
+            Interface = inter;
+            Dumb.FD<LINAA>(ref this.lINAA);
             this.lINAA = Interface.Get() as LINAA;
+            Interface.IBS.Units = this.UnitBS; //link to binding source
 
-            MatSSF.Table = this.lINAA.MatSSF;
+            MatSSF.Table = Interface.IDB.MatSSF;
 
             //sets all the bindings again
-
-            Dumb.LinkBS(ref this.UnitBS, this.lINAA.Unit, string.Empty, this.lINAA.Unit.NameColumn.ColumnName + " asc");
+            BindingSource bs = Interface.IBS.Units;
+            string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
+            Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
 
             //set binding sources
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
             string text = "Text";
-            string column = this.lINAA.Unit.LastCalcColumn.ColumnName;
-            Binding lastcalbs = new Binding(text, this.UnitBS, column, true, mo);
-            column = this.lINAA.Unit.LastChangedColumn.ColumnName;
-            Binding lastchgbs = new Binding(text, this.UnitBS, column, true, mo);
+            string column = Interface.IDB.Unit.LastCalcColumn.ColumnName;
+            Binding lastcalbs = new Binding(text, bs, column, true, mo);
+            column = Interface.IDB.Unit.LastChangedColumn.ColumnName;
+            Binding lastchgbs = new Binding(text, bs, column, true, mo);
             this.lastCal.TextBox.DataBindings.Add(lastcalbs);
             this.lastChg.TextBox.DataBindings.Add(lastchgbs);
         }

@@ -190,8 +190,8 @@ namespace k0X
             }
             else if (sender.Equals(this.MatSSFPanel))
             {
-                ucSSF matssf = new ucSSF(ref LIMS.Interface);
-
+                ucSSF matssf = new ucSSF();
+                matssf.Set(ref LIMS.Interface);
                 LIMS.UserControls.Add(matssf);
             }
             else if (sender.Equals(this.SolCoiPanel))

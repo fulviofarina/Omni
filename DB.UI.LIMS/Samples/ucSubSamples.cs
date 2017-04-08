@@ -19,7 +19,9 @@ namespace DB.UI
         private CReport Icrepo = null;
         private Interface Interface;
 
-        private ucSSF ucssf;
+        //  private LINAA.SubSamplesRow currentSample = null;
+
+        //   private ucSSF ucssf;
 
         private object daddy;
 
@@ -45,20 +47,6 @@ namespace DB.UI
             }
         }
 
-        public ucSSF ucSSF
-        {
-            get
-            {
-                return ucssf;
-            }
-            set
-            {
-                this.splitContainer1.Panel2.Controls.Clear();
-                ucssf = value;
-                this.splitContainer1.Panel2.Controls.Add(ucssf);
-            }
-        }
-
         public ucSubSamples()
         {
             InitializeComponent();
@@ -66,6 +54,8 @@ namespace DB.UI
             //these two functions work flawlessly for selecting the rowHeader in the
             //dgv and for updating of child row positions
             this.BS.CurrentChanged += BS_CurrentChanged;
+
+            reportBtton.Visible = false;
         }
 
         /// <summary>
@@ -98,7 +88,7 @@ namespace DB.UI
             this.filter = this.BS.Filter;
             this.sort = this.BS.Sort;
             Dumb.DeLinkBS(ref this.BS);
-            ucContent.DeLink();
+            //   ucContent.DeLink();
         }
 
         /// <summary>
@@ -122,7 +112,7 @@ namespace DB.UI
             if (!string.IsNullOrEmpty(Sort)) this.sort = Sort;
             Dumb.LinkBS(ref this.BS, this.Linaa.SubSamples, this.filter, this.sort);
             if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
-            ucContent.Link(Filter, Sort);
+            //      ucContent.Link(Filter, Sort);
         }
 
         public void Predict(object sender, EventArgs e)
@@ -131,18 +121,17 @@ namespace DB.UI
 
             HashSet<int> indexes = new HashSet<int>();
 
-            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            foreach (DataGridViewRow r in dataGridView1.Rows)
             {
-                if (!indexes.Add(cell.RowIndex)) continue;
+                // if (!indexes.Add(r.RowIndex)) continue;
 
-                var r = dataGridView1.Rows[cell.RowIndex];
                 var vr = r.DataBoundItem as DataRowView;
                 LINAA.SubSamplesRow s = vr.Row as LINAA.SubSamplesRow;
 
                 samplesToPredict.Add(s);
             }
 
-         //   samplesToPredict = samplesToPredict.ToArray();
+            //   samplesToPredict = samplesToPredict.ToArray();
 
             //   LINAA newLina = this.Linaa.Clone() as DB.LINAA;
             //newLina.CloneDataSet(ref Linaa);
@@ -162,6 +151,9 @@ namespace DB.UI
 
             w.Predict();
             ucPredict uc = new ucPredict(ref Linaa);
+            //  this.Linaa.Save<LINAA.IRequestsAveragesRow>();
+            ///QUITAR ESTA LINEAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            // uc.Visible = false;
         }
 
         public void PredictOLDVERSION(object sender, EventArgs e)
@@ -211,10 +203,10 @@ namespace DB.UI
         /// <param name="row"></param>
         public void RowAdded(ref DataRow row)
         {
-            this.BS.SuspendBinding();
-
-            IEnumerable<LINAA.SubSamplesRow> samples = Dumb.Cast<LINAA.SubSamplesRow>(this.BS.List as DataView);
-            LINAA.IrradiationRequestsRow irr = projectbox.Irradiation;
+            Interface.IBS.SubSamples.SuspendBinding();
+            IEnumerable<LINAA.SubSamplesRow> samples = Interface.ICurrent.SubSamples;
+            int IrrReqID = projectbox.IrrReqID;
+            string project = projectbox.Project;
 
             try
             {
@@ -223,27 +215,27 @@ namespace DB.UI
                 samples = list;
 
                 Interface.IPopulate.ISamples
-                    .SetLabels(ref samples, projectbox.Project.ToUpper());
+                    .SetLabels(ref samples, project);
                 Interface.IPopulate.ISamples
-                    .SetIrradiatioRequest(ref samples, ref irr);
+                    .SetIrradiatioRequest(ref samples, IrrReqID);
 
                 Interface.IPopulate.ISamples
                     .SetUnits(ref samples);
             }
             catch (SystemException ex)
             {
-                this.Linaa.AddException(ex);
+                Interface.IReport.AddException(ex);
             }
 
-            this.BS.ResumeBinding();
+            Interface.IBS.SubSamples.ResumeBinding();
 
-            this.BS.EndEdit();
+            Interface.IBS.SubSamples.EndEdit();
 
             Link(this.filter, this.sort);
 
-            string subSIDCol = this.Linaa.SubSamples.SubSamplesIDColumn.ColumnName;
-            int ind = this.BS.Find(subSIDCol, samples.Last().SubSamplesID);
-            this.BS.Position = ind;
+            string subSIDCol = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
+            int ind = Interface.IBS.SubSamples.Find(subSIDCol, samples.Last().SubSamplesID);
+            Interface.IBS.SubSamples.Position = ind;
         }
 
         /// <summary>
@@ -256,9 +248,12 @@ namespace DB.UI
             Dumb.FD(ref Linaa);
             this.Linaa = Interface.Get();
 
-            projectbox.Set(ref inter, Link);
+            projectbox.Set(ref Interface, Link);
 
-            this.BS.Sort = this.Linaa.SubSamples.SubSampleNameColumn.ColumnName + " asc";
+            string toSort = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
+            this.BS.Sort = toSort + " asc";
+
+            Interface.IBS.SubSamples = this.BS;
         }
 
         /// <summary>
@@ -292,15 +287,15 @@ namespace DB.UI
         /// <param name="e"></param>
         private void BS_CurrentChanged(object sender, EventArgs e)
         {
-            DataRow r = (BS.Current as DataRowView).Row;
+            DataRow r = (Interface.IBS.SubSamples.Current as DataRowView).Row;
             if (r == null) return;
             //if not usercontrol attached...
-            if (ucssf == null) return;
-
+            BindingSource bsUnits = Interface.IBS.Units;
+            if (bsUnits == null) return;
             LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
-            //get unit
-            LINAA.UnitRow u = s.GetUnitRows().AsEnumerable().FirstOrDefault();
-            if (u != null) ucssf.Set(ref u);
+            LINAA.UnitRow u = s.GetUnitRows().FirstOrDefault();
+            string unitValID = Interface.IDB.Unit.UnitIDColumn.ColumnName;
+            bsUnits.Position = bsUnits.Find(unitValID, u.UnitID);
         }
 
         /*

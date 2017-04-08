@@ -21,7 +21,7 @@ namespace DB.UI
         /// <summary>
         /// Changes the view with another form
         /// </summary>
-
+/*
         public void DeLink()
         {
             Dumb.DeLinkBS(ref this.BS);
@@ -34,14 +34,22 @@ namespace DB.UI
         {
             Dumb.LinkBS(ref this.BS, this.Linaa.SubSamples, Filter, Sort);
         }
+        */
 
         public void Set(ref Interface inter)
         {
-            DeLink();
+            //   DeLink();
 
             Dumb.FD(ref Linaa);
 
             this.Linaa = inter.Get();
+
+            this.BS = inter.IBS.SubSamples;
+
+            DGV.DataSource = this.BS;
+            DGV2.DataSource = this.BS;
+            DGV3.DataSource = this.BS;
+            DGV4.DataSource = this.BS;
         }
 
         /// <summary>

@@ -38,25 +38,27 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucSSContent));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TB = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.DGV = new System.Windows.Forms.DataGridView();
@@ -70,12 +72,6 @@
             this.Linaa = new DB.LINAA();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.DGV2 = new System.Windows.Forms.DataGridView();
-            this.geocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.heigcol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.radiuscol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixcol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixdenscol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DirectSolcoi = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.DGV3 = new System.Windows.Forms.DataGridView();
             this.InReactorColumn = new Rsx.DGV.CalendarColumn();
@@ -136,6 +132,14 @@
             this.positionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.geocol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.heigcol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.radiuscol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixcol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixdenscol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CalcDensity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Vol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DirectSolcoi = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.TB.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
@@ -259,7 +263,6 @@
             this.GrossAvg.DefaultCellStyle = dataGridViewCellStyle4;
             this.GrossAvg.HeaderText = "Gross Avg";
             this.GrossAvg.Name = "GrossAvg";
-            this.GrossAvg.ReadOnly = true;
             this.GrossAvg.ToolTipText = "in mg";
             this.GrossAvg.Width = 109;
             // 
@@ -271,7 +274,6 @@
             this.dataGridViewTextBoxColumn43.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn43.HeaderText = "Net Weight";
             this.dataGridViewTextBoxColumn43.Name = "dataGridViewTextBoxColumn43";
-            this.dataGridViewTextBoxColumn43.ReadOnly = true;
             this.dataGridViewTextBoxColumn43.ToolTipText = "in mg";
             this.dataGridViewTextBoxColumn43.Width = 119;
             // 
@@ -311,11 +313,11 @@
             this.tabPage2.BackColor = System.Drawing.Color.Sienna;
             this.tabPage2.Controls.Add(this.DGV2);
             this.tabPage2.ForeColor = System.Drawing.Color.Black;
-            this.tabPage2.Location = new System.Drawing.Point(27, 4);
+            this.tabPage2.Location = new System.Drawing.Point(32, 4);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(1111, 747);
+            this.tabPage2.Size = new System.Drawing.Size(1106, 747);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Geometries";
             // 
@@ -342,93 +344,34 @@
             this.radiuscol,
             this.matrixcol,
             this.matrixdenscol,
+            this.CalcDensity,
+            this.Vol,
             this.DirectSolcoi});
             this.DGV2.DataSource = this.BS;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGV2.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV2.DefaultCellStyle = dataGridViewCellStyle16;
             this.DGV2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV2.Location = new System.Drawing.Point(2, 2);
             this.DGV2.Margin = new System.Windows.Forms.Padding(2);
             this.DGV2.Name = "DGV2";
             this.DGV2.RowTemplate.Height = 24;
-            this.DGV2.Size = new System.Drawing.Size(1107, 743);
+            this.DGV2.Size = new System.Drawing.Size(1102, 743);
             this.DGV2.TabIndex = 7;
-            // 
-            // geocol
-            // 
-            this.geocol.DataPropertyName = "GeometryName";
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Azure;
-            this.geocol.DefaultCellStyle = dataGridViewCellStyle9;
-            this.geocol.HeaderText = "Geometry";
-            this.geocol.Name = "geocol";
-            this.geocol.ReadOnly = true;
-            this.geocol.Width = 109;
-            // 
-            // heigcol
-            // 
-            this.heigcol.DataPropertyName = "FillHeight";
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heigcol.DefaultCellStyle = dataGridViewCellStyle10;
-            this.heigcol.HeaderText = "Height/Lenght";
-            this.heigcol.Name = "heigcol";
-            this.heigcol.ToolTipText = "in mm";
-            this.heigcol.Width = 143;
-            // 
-            // radiuscol
-            // 
-            this.radiuscol.DataPropertyName = "Radius";
-            dataGridViewCellStyle11.Format = "N2";
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.radiuscol.DefaultCellStyle = dataGridViewCellStyle11;
-            this.radiuscol.HeaderText = "Inner Radius";
-            this.radiuscol.Name = "radiuscol";
-            this.radiuscol.ToolTipText = "in mm";
-            this.radiuscol.Width = 125;
-            // 
-            // matrixcol
-            // 
-            this.matrixcol.DataPropertyName = "MatrixName";
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Lavender;
-            this.matrixcol.DefaultCellStyle = dataGridViewCellStyle12;
-            this.matrixcol.HeaderText = "Matrix";
-            this.matrixcol.Name = "matrixcol";
-            this.matrixcol.ReadOnly = true;
-            this.matrixcol.Width = 82;
-            // 
-            // matrixdenscol
-            // 
-            this.matrixdenscol.DataPropertyName = "MatrixDensity";
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.MintCream;
-            dataGridViewCellStyle13.Format = "N2";
-            this.matrixdenscol.DefaultCellStyle = dataGridViewCellStyle13;
-            this.matrixdenscol.HeaderText = "Density";
-            this.matrixdenscol.Name = "matrixdenscol";
-            this.matrixdenscol.ReadOnly = true;
-            this.matrixdenscol.ToolTipText = "in g/cm3";
-            this.matrixdenscol.Width = 89;
-            // 
-            // DirectSolcoi
-            // 
-            this.DirectSolcoi.DataPropertyName = "DirectSolcoi";
-            this.DirectSolcoi.HeaderText = "Solcoi";
-            this.DirectSolcoi.Name = "DirectSolcoi";
-            this.DirectSolcoi.Width = 61;
             // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.LightSteelBlue;
             this.tabPage3.Controls.Add(this.DGV3);
-            this.tabPage3.Location = new System.Drawing.Point(27, 4);
+            this.tabPage3.Location = new System.Drawing.Point(32, 4);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1111, 747);
+            this.tabPage3.Size = new System.Drawing.Size(1106, 747);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Irradiations";
             // 
@@ -440,14 +383,14 @@
             this.DGV3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.DGV3.BackgroundColor = System.Drawing.Color.LightSteelBlue;
             this.DGV3.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGV3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.DGV3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.InReactorColumn,
@@ -457,27 +400,27 @@
             this.enaacol,
             this.irradiationCodeDataGridViewTextBoxColumn});
             this.DGV3.DataSource = this.BS;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGV3.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV3.DefaultCellStyle = dataGridViewCellStyle23;
             this.DGV3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV3.Location = new System.Drawing.Point(0, 0);
             this.DGV3.Margin = new System.Windows.Forms.Padding(2);
             this.DGV3.Name = "DGV3";
             this.DGV3.RowTemplate.Height = 24;
-            this.DGV3.Size = new System.Drawing.Size(1111, 747);
+            this.DGV3.Size = new System.Drawing.Size(1106, 747);
             this.DGV3.TabIndex = 3;
             // 
             // InReactorColumn
             // 
             this.InReactorColumn.DataPropertyName = "InReactor";
-            dataGridViewCellStyle16.Format = "G";
-            this.InReactorColumn.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle18.Format = "G";
+            this.InReactorColumn.DefaultCellStyle = dataGridViewCellStyle18;
             this.InReactorColumn.HeaderText = "Irradiation Start";
             this.InReactorColumn.Name = "InReactorColumn";
             this.InReactorColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -488,8 +431,8 @@
             // dataGridViewTextBoxColumn14
             // 
             this.dataGridViewTextBoxColumn14.DataPropertyName = "IrradiationTotalTime";
-            dataGridViewCellStyle17.Format = "N2";
-            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle19.Format = "N2";
+            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle19;
             this.dataGridViewTextBoxColumn14.HeaderText = "Time";
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             this.dataGridViewTextBoxColumn14.ToolTipText = "in minutes";
@@ -498,8 +441,8 @@
             // OutReactorColumn
             // 
             this.OutReactorColumn.DataPropertyName = "OutReactor";
-            dataGridViewCellStyle18.Format = "G";
-            this.OutReactorColumn.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle20.Format = "G";
+            this.OutReactorColumn.DefaultCellStyle = dataGridViewCellStyle20;
             this.OutReactorColumn.HeaderText = "Irradiation End";
             this.OutReactorColumn.Name = "OutReactorColumn";
             this.OutReactorColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -510,10 +453,10 @@
             // capscol
             // 
             this.capscol.DataPropertyName = "CapsuleName";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.MintCream;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.capscol.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.MintCream;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.capscol.DefaultCellStyle = dataGridViewCellStyle21;
             this.capscol.HeaderText = "Capsule";
             this.capscol.Name = "capscol";
             this.capscol.ReadOnly = true;
@@ -522,11 +465,11 @@
             // enaacol
             // 
             this.enaacol.DataPropertyName = "ENAA";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle20.NullValue = false;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.enaacol.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.NullValue = false;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.enaacol.DefaultCellStyle = dataGridViewCellStyle22;
             this.enaacol.HeaderText = "Cadmium?";
             this.enaacol.Name = "enaacol";
             this.enaacol.ToolTipText = "Is Cadmium-covered Irradiation?";
@@ -542,11 +485,11 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.DGV4);
-            this.tabPage4.Location = new System.Drawing.Point(27, 4);
+            this.tabPage4.Location = new System.Drawing.Point(32, 4);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage4.Size = new System.Drawing.Size(1111, 747);
+            this.tabPage4.Size = new System.Drawing.Size(1106, 747);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Others";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -611,27 +554,27 @@
             this.positionDataGridViewTextBoxColumn,
             this.orderDataGridViewTextBoxColumn});
             this.DGV4.DataSource = this.BS;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGV4.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV4.DefaultCellStyle = dataGridViewCellStyle29;
             this.DGV4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV4.Location = new System.Drawing.Point(2, 2);
             this.DGV4.Margin = new System.Windows.Forms.Padding(2);
             this.DGV4.Name = "DGV4";
             this.DGV4.RowTemplate.Height = 24;
-            this.DGV4.Size = new System.Drawing.Size(1107, 743);
+            this.DGV4.Size = new System.Drawing.Size(1102, 743);
             this.DGV4.TabIndex = 4;
             // 
             // dataGridViewTextBoxColumn12
             // 
             this.dataGridViewTextBoxColumn12.DataPropertyName = "ChannelName";
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle24;
             this.dataGridViewTextBoxColumn12.HeaderText = "Channel";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             this.dataGridViewTextBoxColumn12.ReadOnly = true;
@@ -640,8 +583,8 @@
             // dataGridViewTextBoxColumn13
             // 
             this.dataGridViewTextBoxColumn13.DataPropertyName = "f";
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.Honeydew;
-            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.Honeydew;
+            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle25;
             this.dataGridViewTextBoxColumn13.HeaderText = "f";
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             this.dataGridViewTextBoxColumn13.Width = 41;
@@ -649,8 +592,8 @@
             // dataGridViewTextBoxColumn15
             // 
             this.dataGridViewTextBoxColumn15.DataPropertyName = "Alpha";
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.Azure;
-            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle26.BackColor = System.Drawing.Color.Azure;
+            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle26;
             this.dataGridViewTextBoxColumn15.HeaderText = "Alpha";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             this.dataGridViewTextBoxColumn15.Width = 77;
@@ -673,8 +616,8 @@
             // concscol
             // 
             this.concscol.DataPropertyName = "Concentration";
-            dataGridViewCellStyle25.Format = "N1";
-            this.concscol.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle27.Format = "N1";
+            this.concscol.DefaultCellStyle = dataGridViewCellStyle27;
             this.concscol.HeaderText = "Concentrations";
             this.concscol.Name = "concscol";
             this.concscol.ToolTipText = "in mg/kg";
@@ -683,8 +626,8 @@
             // dataGridViewTextBoxColumn16
             // 
             this.dataGridViewTextBoxColumn16.DataPropertyName = "SubSampleCreationDate";
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.LavenderBlush;
-            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle28.BackColor = System.Drawing.Color.LavenderBlush;
+            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle28;
             this.dataGridViewTextBoxColumn16.HeaderText = "Creation Date";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             this.dataGridViewTextBoxColumn16.Width = 135;
@@ -993,14 +936,94 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.Location = new System.Drawing.Point(27, 4);
+            this.tabPage5.Location = new System.Drawing.Point(32, 4);
             this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage5.Size = new System.Drawing.Size(1111, 747);
+            this.tabPage5.Size = new System.Drawing.Size(1106, 747);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // geocol
+            // 
+            this.geocol.DataPropertyName = "GeometryName";
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Azure;
+            this.geocol.DefaultCellStyle = dataGridViewCellStyle9;
+            this.geocol.HeaderText = "Geometry";
+            this.geocol.Name = "geocol";
+            this.geocol.ReadOnly = true;
+            this.geocol.Width = 109;
+            // 
+            // heigcol
+            // 
+            this.heigcol.DataPropertyName = "FillHeight";
+            dataGridViewCellStyle10.Format = "N2";
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heigcol.DefaultCellStyle = dataGridViewCellStyle10;
+            this.heigcol.HeaderText = "Height/Lenght";
+            this.heigcol.Name = "heigcol";
+            this.heigcol.ToolTipText = "in mm";
+            this.heigcol.Width = 143;
+            // 
+            // radiuscol
+            // 
+            this.radiuscol.DataPropertyName = "Radius";
+            dataGridViewCellStyle11.Format = "N2";
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.radiuscol.DefaultCellStyle = dataGridViewCellStyle11;
+            this.radiuscol.HeaderText = "Inner Radius";
+            this.radiuscol.Name = "radiuscol";
+            this.radiuscol.ToolTipText = "in mm";
+            this.radiuscol.Width = 125;
+            // 
+            // matrixcol
+            // 
+            this.matrixcol.DataPropertyName = "MatrixName";
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Lavender;
+            this.matrixcol.DefaultCellStyle = dataGridViewCellStyle12;
+            this.matrixcol.HeaderText = "Matrix";
+            this.matrixcol.Name = "matrixcol";
+            this.matrixcol.ReadOnly = true;
+            this.matrixcol.Width = 82;
+            // 
+            // matrixdenscol
+            // 
+            this.matrixdenscol.DataPropertyName = "MatrixDensity";
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.MintCream;
+            dataGridViewCellStyle13.Format = "N2";
+            this.matrixdenscol.DefaultCellStyle = dataGridViewCellStyle13;
+            this.matrixdenscol.HeaderText = "Density";
+            this.matrixdenscol.Name = "matrixdenscol";
+            this.matrixdenscol.ReadOnly = true;
+            this.matrixdenscol.ToolTipText = "in g/cm3";
+            this.matrixdenscol.Width = 89;
+            // 
+            // CalcDensity
+            // 
+            this.CalcDensity.DataPropertyName = "CalcDensity";
+            dataGridViewCellStyle14.Format = "N4";
+            this.CalcDensity.DefaultCellStyle = dataGridViewCellStyle14;
+            this.CalcDensity.HeaderText = "CalcDensity";
+            this.CalcDensity.Name = "CalcDensity";
+            this.CalcDensity.Width = 119;
+            // 
+            // Vol
+            // 
+            this.Vol.DataPropertyName = "Vol";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Format = "N5";
+            this.Vol.DefaultCellStyle = dataGridViewCellStyle15;
+            this.Vol.HeaderText = "Vol";
+            this.Vol.Name = "Vol";
+            this.Vol.Width = 58;
+            // 
+            // DirectSolcoi
+            // 
+            this.DirectSolcoi.DataPropertyName = "DirectSolcoi";
+            this.DirectSolcoi.HeaderText = "Solcoi";
+            this.DirectSolcoi.Name = "DirectSolcoi";
+            this.DirectSolcoi.Width = 61;
             // 
             // ucSSContent
             // 
@@ -1035,18 +1058,6 @@
         public System.Windows.Forms.DataGridView DGV3;
         private System.Windows.Forms.TabPage tabPage4;
         public System.Windows.Forms.DataGridView DGV4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tare;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Gross1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Gross2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GrossAvg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn44;
-		private System.Windows.Forms.DataGridViewTextBoxColumn geocol;
-		private System.Windows.Forms.DataGridViewTextBoxColumn heigcol;
-		private System.Windows.Forms.DataGridViewTextBoxColumn radiuscol;
-		private System.Windows.Forms.DataGridViewTextBoxColumn matrixcol;
-		private System.Windows.Forms.DataGridViewTextBoxColumn matrixdenscol;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn DirectSolcoi;
 		private Rsx.DGV.CalendarColumn InReactorColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
 		private Rsx.DGV.CalendarColumn OutReactorColumn;
@@ -1105,5 +1116,19 @@
         private System.Windows.Forms.TabPage tabPage5;
         private LINAA Linaa;
         private System.Windows.Forms.BindingSource BS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tare;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Gross1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Gross2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GrossAvg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn44;
+        private System.Windows.Forms.DataGridViewTextBoxColumn geocol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn heigcol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn radiuscol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixcol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixdenscol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CalcDensity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Vol;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn DirectSolcoi;
     }
 }

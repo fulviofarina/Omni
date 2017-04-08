@@ -119,6 +119,7 @@
             // projectbox
             // 
             this.projectbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.projectbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectbox.Location = new System.Drawing.Point(0, 0);
             this.projectbox.Margin = new System.Windows.Forms.Padding(2);
             this.projectbox.Name = "projectbox";
@@ -452,7 +453,6 @@
         private System.Windows.Forms.TableLayoutPanel TLP;
         public DB.LINAA Linaa;
         private System.Windows.Forms.ToolTip tip;
-        private System.Windows.Forms.BindingNavigator BN;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
@@ -480,5 +480,6 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         public ucProjectBox projectbox;
+        public System.Windows.Forms.BindingNavigator BN;
     }
 }

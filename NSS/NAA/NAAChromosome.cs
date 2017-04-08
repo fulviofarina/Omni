@@ -1,4 +1,5 @@
-﻿using GeneticSharp.Domain.Chromosomes;
+﻿using System;
+using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Randomizations;
 
 namespace DB
@@ -15,7 +16,7 @@ namespace DB
         /// </summary>
         /// <param name="sizeOfChromosome"></param>
         /// <param name="numOfGenes"></param>
-        public NAAChromo(int numOfGenes, int numberEqs) : base(numOfGenes + 1)
+        public NAAChromo(int numOfGenes, int numberEqs) : base(numOfGenes)
         {
             // nonRepeated = new HashSet<int>();
 
@@ -23,7 +24,7 @@ namespace DB
 
             eqNumber = numberEqs;
 
-            for (int i = 0; i < numberOfGenes + 1; i++)
+            for (int i = 0; i < numberOfGenes; i++)
             {
                 Gene g = GenerateGene(i);
                 ReplaceGene(i, g);
@@ -33,10 +34,9 @@ namespace DB
         public override Gene GenerateGene(int geneIndex)
         {
             object o = 0;
-            if (geneIndex == 0) o = RandomizationProvider.Current.GetInt(0, eqNumber);
-            else o = RandomizationProvider.Current.GetDouble(-1, 1);
-
-            return new Gene(o);
+            o = RandomizationProvider.Current.GetFloat(0.0f, 1.0f);
+            decimal d = Decimal.Round(Convert.ToDecimal(o), 3);
+            return new Gene(d);
         }
 
         /// <summary>

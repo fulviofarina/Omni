@@ -300,6 +300,8 @@ namespace k0X
 
         protected void Preferences(bool load)
         {
+            LINAA.IrradiationRequestsRow irr = Interface.IDB.IrradiationRequests.FindByIrradiationCode(ISubS.projectbox.Project);
+
             try
             {
                 LINAA.PreferencesRow preferences = Interface.IPreferences.CurrentPref;
@@ -315,11 +317,11 @@ namespace k0X
                     Bwindowbox.Text = preferences.windowB.ToString();
                     sampleDescription.Checked = preferences.ShowSampleDescription;
 
-                    if (!EC.IsNuDelDetch(ISubS.projectbox.Irradiation))
+                    if (!EC.IsNuDelDetch(irr))
                     {
-                        if (!EC.IsNuDelDetch(ISubS.projectbox.Irradiation.ChannelsRow))
+                        if (!EC.IsNuDelDetch(irr.ChannelsRow))
                         {
-                            fluxTypebox.Text = ISubS.projectbox.Irradiation.ChannelsRow.FluxType;
+                            fluxTypebox.Text = irr.ChannelsRow.FluxType;
                         }
                     }
                 }
@@ -334,11 +336,11 @@ namespace k0X
                     preferences.ShowSampleDescription = sampleDescription.Checked;
                     preferences.LastAccessDate = DateTime.Now;
 
-                    if (!EC.IsNuDelDetch(ISubS.projectbox.Irradiation))
+                    if (!EC.IsNuDelDetch(irr))
                     {
-                        if (!EC.IsNuDelDetch(ISubS.projectbox.Irradiation.ChannelsRow))
+                        if (!EC.IsNuDelDetch(irr.ChannelsRow))
                         {
-                            ISubS.projectbox.Irradiation.ChannelsRow.FluxType = fluxTypebox.Text;
+                            irr.ChannelsRow.FluxType = fluxTypebox.Text;
                         }
                     }
                     Interface.IStore.SavePreferences();

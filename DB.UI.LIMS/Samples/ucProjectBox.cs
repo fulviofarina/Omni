@@ -25,8 +25,6 @@ namespace DB.UI
             set { offline = value; }
         }
 
-        public LINAA.IrradiationRequestsRow Irradiation = null;
-
         public bool CanSelectProject
         {
             set { projectbox.Enabled = value; }
@@ -38,7 +36,8 @@ namespace DB.UI
             set { projectbox.Text = value; }
         }
 
-        private Int32 irrReqID = 0;
+        //   private
+        public Int32 IrrReqID = 0;
 
         /// <summary>
         /// Refreshed the selected project
@@ -50,16 +49,17 @@ namespace DB.UI
             string project = projectbox.Text.ToUpper().Trim();
 
             if (!Interface.IDB.ProjectsList.Contains(project)) return;
-
+            LINAA.IrradiationRequestsRow Irradiation = null;
             Irradiation = Interface.IDB.IrradiationRequests.FindByIrradiationCode(project);
-            irrReqID = Irradiation.IrradiationRequestsID;
+            IrrReqID = Irradiation.IrradiationRequestsID;
 
             if (!this.offline)
             {
-                Interface.IPopulate.ISamples.PopulateSubSamples(irrReqID);
+                Interface.IPopulate.ISamples.PopulateSubSamples(IrrReqID);
+                Interface.IPopulate.IGeometry.PopulateUnitsByProject(IrrReqID);
             }
 
-            string filter = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName + " = '" + irrReqID + "'";
+            string filter = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
             string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
 
             callBack(filter, sort);

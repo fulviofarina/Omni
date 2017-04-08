@@ -17,37 +17,34 @@ namespace DB.UI
         public ucV()
         {
             InitializeComponent();
-
-            Dumb.FD<LINAA>(ref this.lINAA);
-
-            System.EventHandler addNew = this.addNewVialChannel_Click;
-
-            this.bnVialAddItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
         }
 
         public void Set(ref Interface LinaaInterface)
         {
             Interface = LinaaInterface;
+            Dumb.FD<LINAA>(ref this.lINAA);
             this.lINAA = Interface.Get() as LINAA;
 
             //rabbit column
             string column = this.lINAA.VialType.IsRabbitColumn.ColumnName;
             string innerRadCol = this.lINAA.VialType.InnerRadiusColumn.ColumnName + " asc";
             Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
+
+            Interface.IBS.Vial = this.VialBS;
+
+            System.EventHandler addNew = this.addNewVialChannel_Click;
+
+            this.bnVialAddItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
         }
 
         public void RefreshVCC()
         {
             LINAA.UnitRow u = MatSSF.UNIT;
             string column;
-            column = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
+            column = Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
             int id = u.SubSamplesRow.VialTypeRow.VialTypeID;
-            this.VialBS.Position = this.VialBS.Find(column, id);
-        }
-
-        public void EndEdit()
-        {
-            this.VialBS.EndEdit();
+            BindingSource bs = Interface.IBS.Vial;
+            bs.Position = bs.Find(column, id);
         }
 
         //  private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
@@ -67,7 +64,7 @@ namespace DB.UI
 
                 //  this.unitDGV.RowHeaderMouseClick += handler;
 
-                this.vialDGV.RowHeaderMouseClick += value; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
+                this.vialDGV.RowHeaderMouseDoubleClick += value; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
             }
         }
 
@@ -83,16 +80,13 @@ namespace DB.UI
             string colName = string.Empty;
             object idnumber = null;
             DataRow row = null;
-            //IS A VIAL OR CONTAINER
 
-            //     bool isRabbit = !sender.Equals(this.bnVialAddItem);
-
-            LINAA.VialTypeRow v = this.lINAA.VialType.NewVialTypeRow();
+            LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
             v.IsRabbit = false;
-            this.lINAA.VialType.AddVialTypeRow(v);
+            Interface.IDB.VialType.AddVialTypeRow(v);
 
-            colName = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
-            bs = this.VialBS;
+            colName = Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
+            bs = Interface.IBS.Vial;
             idnumber = v.VialTypeID;
 
             row = v;
@@ -100,6 +94,7 @@ namespace DB.UI
             {
                 string rowWithError = DB.UI.Properties.Resources.rowWithError;
                 string Error = DB.UI.Properties.Resources.Error;
+
                 Interface.IReport.Msg(rowWithError, Error);
             }
 

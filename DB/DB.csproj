@@ -91,8 +91,7 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Interfaces.Populate.cd" />
-    <None Include="Interfaces.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="LINAA.xsc">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
@@ -107,9 +106,21 @@
     <Compile Include="Adapter\Adapter.NAA.Sample.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
-    <Compile Include="LINAA.cs">
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="DB\DB.cs" />
+    <Compile Include="Populate\Interfaces\IIrradiations.cs" />
+    <Compile Include="Populate\Interfaces\IProjects.cs" />
+    <Compile Include="Populate\Interfaces\IOrders.cs" />
+    <Compile Include="Populate\Interfaces\IDetSol.cs" />
+    <Compile Include="Populate\Interfaces\INuclear.cs" />
+    <Compile Include="Populate\Interfaces\ISchedAcqs.cs" />
+    <Compile Include="Populate\Interfaces\IGeometry.cs" />
+    <Compile Include="Populate\Interfaces\ISamples.cs" />
+    <Compile Include="Populate\Interfaces\IExpressions.cs" />
+    <Compile Include="Main\IMain.cs" />
+    <Compile Include="Adapter\IAdapter.cs" />
+    <Compile Include="DB\IDB.cs" />
+    <Compile Include="Report\IReport.cs" />
+    <Compile Include="Store\IStore.cs" />
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -120,31 +131,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tables\Geometry\NAA.DetSol.cs" />
-    <Compile Include="Tables\Geometry\NAA.Geometry.cs" />
-    <Compile Include="Tables\Geometry\NAA.Matrix.cs" />
-    <Compile Include="Tables\Geometry\NAA.Units.cs" />
-    <Compile Include="Tables\Geometry\NAA.Vial.cs" />
-    <Compile Include="Tables\Geometry\Populate.DetSol.cs" />
-    <Compile Include="Tables\Geometry\Populate.Geometry.cs" />
+    <Compile Include="DB\Geometry\NAA.DetSol.cs" />
+    <Compile Include="DB\Geometry\NAA.Geometry.cs" />
+    <Compile Include="DB\Geometry\NAA.Compositions.cs" />
+    <Compile Include="DB\Geometry\NAA.Matrix.cs" />
+    <Compile Include="DB\Geometry\NAA.Units.cs" />
+    <Compile Include="DB\Geometry\NAA.Vial.cs" />
+    <Compile Include="Populate\Populate.DetSol.cs" />
+    <Compile Include="Populate\Populate.Geometry.cs" />
     <Compile Include="Interfaces\InterfaceClass.cs" />
-    <Compile Include="Interfaces\Interfaces.cs" />
-    <Compile Include="Interfaces\Interfaces.Populate.cs" />
-    <Compile Include="Main\Populate.Actions.cs" />
-    <Compile Include="Main\Populate.Components.cs" />
-    <Compile Include="Main\Populate.Main.cs" />
-    <Compile Include="Main\Populate.Tables.cs" />
-    <Compile Include="Tables\Project\NAA.Orders.cs" />
-    <Compile Include="Tables\Project\NAA.Channels.cs" />
-    <Compile Include="Tables\Project\NAA.Projects.cs" />
-    <Compile Include="Tables\Nuclear\NAA.Element.cs" />
-    <Compile Include="Tables\Nuclear\Populate.Nuclear.cs" />
-    <Compile Include="Tables\Preferences\NAA.Preferences.cs" />
-    <Compile Include="Tables\Preferences\Populate.Preferences.cs" />
-    <Compile Include="Tables\Project\NAA.Irradiations.cs" />
-    <Compile Include="Tables\Project\Populate.Irradiations.cs" />
-    <Compile Include="Tables\Project\Populate.Orders.cs" />
-    <Compile Include="Tables\Project\Populate.Projects.cs" />
+    <Compile Include="Preferences\IPreferences.cs" />
+    <Compile Include="Populate\Interfaces\IToDoes.cs" />
+    <Compile Include="Populate\Populate.Actions.cs" />
+    <Compile Include="Populate\Populate.Components.cs" />
+    <Compile Include="Main\Main.cs" />
+    <Compile Include="Populate\Interfaces\Expressions.cs" />
+    <Compile Include="DB\Project\NAA.Orders.cs" />
+    <Compile Include="DB\Project\NAA.Channels.cs" />
+    <Compile Include="DB\Project\NAA.Projects.cs" />
+    <Compile Include="DB\Nuclear\NAA.Element.cs" />
+    <Compile Include="Populate\Populate.Nuclear.cs" />
+    <Compile Include="Preferences\NAA.Preferences.cs" />
+    <Compile Include="Populate\Populate.Preferences.cs" />
+    <Compile Include="DB\Project\NAA.Irradiations.cs" />
+    <Compile Include="Populate\Populate.Irradiations.cs" />
+    <Compile Include="Populate\Populate.Orders.cs" />
+    <Compile Include="Populate\Populate.Projects.cs" />
     <Compile Include="Properties\QM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,12 +164,16 @@
     </Compile>
     <Compile Include="Report\Report.cs" />
     <Compile Include="Report\Report.QueryMsg.cs" />
-    <Compile Include="Tables\Samples\NAA.Measurements.cs" />
-    <Compile Include="Tables\Samples\NAA.Peaks.cs" />
-    <Compile Include="Tables\Samples\NAA.Samples.cs" />
-    <Compile Include="Tables\Samples\Populate.Samples.cs" />
-    <Compile Include="Tables\SchAcqs\NAA.SchedAcqs.cs" />
-    <Compile Include="Tables\SchAcqs\Populate.SchedAcqs.cs" />
+    <Compile Include="DB\Samples\NAA.IPeaksAvg.cs" />
+    <Compile Include="DB\Samples\NAA.IReqAvg.cs" />
+    <Compile Include="DB\Samples\NAA.Standards.cs" />
+    <Compile Include="DB\Samples\NAA.Monitors.cs" />
+    <Compile Include="DB\Samples\NAA.Measurements.cs" />
+    <Compile Include="DB\Samples\NAA.Peaks.cs" />
+    <Compile Include="DB\Samples\NAA.Samples.cs" />
+    <Compile Include="Populate\Populate.Samples.cs" />
+    <Compile Include="DB\SchAcqs\NAA.SchedAcqs.cs" />
+    <Compile Include="Populate\Populate.SchedAcqs.cs" />
     <Compile Include="Static\Comparers.cs" />
     <Compile Include="Static\Main.cs" />
     <Compile Include="Static\Others.cs" />
@@ -166,11 +182,11 @@
     <Compile Include="Store\Store.cs" />
     <Compile Include="Store\Store.Delete.cs" />
     <Compile Include="Store\Store.Save.cs" />
-    <Compile Include="Tables\ToDo\Populate.ToDoes.cs" />
-    <Compile Include="Tables\ToDo\ToDo.Avg.cs" />
-    <Compile Include="Tables\ToDo\ToDo.cs" />
-    <Compile Include="Tables\ToDo\ToDo.Data.cs" />
-    <Compile Include="Tables\ToDo\ToDo.Res.cs" />
+    <Compile Include="Populate\Populate.ToDoes.cs" />
+    <Compile Include="DB\ToDo\ToDo.Avg.cs" />
+    <Compile Include="DB\ToDo\ToDo.cs" />
+    <Compile Include="DB\ToDo\ToDo.Data.cs" />
+    <Compile Include="DB\ToDo\ToDo.Res.cs" />
     <None Include="Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>
@@ -211,7 +227,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\Populate.Components.resx">
+    <EmbeddedResource Include="Populate\Populate.Components.resx">
       <DependentUpon>Populate.Components.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Misc.resx">

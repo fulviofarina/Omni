@@ -12,11 +12,9 @@ namespace DB.UI
         public ucMatrixSimple()
         {
             InitializeComponent();
-
-            Dumb.FD<LINAA>(ref this.lINAA);
         }
 
-        private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
+        //   private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
 
         /// <summary>
         /// DGV ITEM SELECTED
@@ -28,12 +26,12 @@ namespace DB.UI
             {
                 // rowHeaderMouseClick = value;
 
-                if (rowHeaderMouseClick != null) return;
+                //  if (rowHeaderMouseClick != null) return;
 
-                DataGridViewCellMouseEventHandler handler = value;
-                rowHeaderMouseClick = handler;
+                //   DataGridViewCellMouseEventHandler handler = value;
+                //  rowHeaderMouseClick = handler;
 
-                this.matrixDGV.RowHeaderMouseClick += handler;
+                this.matrixDGV.RowHeaderMouseDoubleClick += value;
             }
         }
 
@@ -55,27 +53,29 @@ namespace DB.UI
             LINAA.UnitRow u = MatSSF.UNIT;
 
             int id = u.SubSamplesRow.MatrixID;
-            string column = this.lINAA.Matrix.MatrixIDColumn.ColumnName;
+            string column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
 
-            this.MatrixBS.Position = this.MatrixBS.Find(column, id);
+            Interface.IBS.Matrix.Position = Interface.IBS.Matrix.Find(column, id);
         }
 
         public void Set(ref Interface LinaaInterface)
         {
             Interface = LinaaInterface;
-
+            Dumb.FD<LINAA>(ref this.lINAA);
             this.lINAA = Interface.Get() as LINAA;
 
             BindingSource bs = this.MatrixBS;
 
-            Dumb.LinkBS(ref bs, this.lINAA.Matrix);
+            Dumb.LinkBS(ref bs, Interface.IDB.Matrix);
+
+            Interface.IBS.Matrix = bs;
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
             bool t = true;
             string text = "Text";
             string column;
 
-            column = this.lINAA.Matrix.MatrixCompositionColumn.ColumnName;
+            column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
             Binding mcompoBin = new Binding(text, bs, column, t, mo);
 
             this.matrixRTB.DataBindings.Add(mcompoBin);

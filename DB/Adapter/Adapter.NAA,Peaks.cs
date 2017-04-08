@@ -8,8 +8,8 @@ namespace DB
         {
             this.tAM.MeasurementsTableAdapter = new LINAATableAdapters.MeasurementsTableAdapter();
             this.tAM.PeaksTableAdapter = new LINAATableAdapters.PeaksTableAdapter();
-            // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
-            // this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
+            //  this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
+            //  this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
         }
 
         protected void InitializeToDoAdapters()

@@ -23,8 +23,8 @@ namespace DB.UI
             filter = string.Empty;
             sortColumn = this.Linaa.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
 
-            this.channelBox.ComboBox.DataSource = this.Linaa.Channels;
-            this.channelBox.ComboBox.DisplayMember = this.Linaa.Channels.ChannelNameColumn.ColumnName;
+            this.channelBox.ComboBox.DataSource = inter.IDB.Channels;
+            this.channelBox.ComboBox.DisplayMember = inter.IDB.Channels.ChannelNameColumn.ColumnName;
 
             if (this.channelBox.Items.Count != 0)
             {

@@ -170,6 +170,10 @@
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
+      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
+      <Name>Rsx.Math</Name>
+    </ProjectReference>
     <ProjectReference Include="A:\GAlgo\GADB\GADB.csproj">
       <Project>{b41c5a17-b5a2-4b38-94df-607615c90823}</Project>
       <Name>GADB</Name>

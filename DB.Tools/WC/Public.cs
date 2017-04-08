@@ -30,7 +30,7 @@ namespace DB.Tools
 
         public void Predict()
         {
-           // this.selectedSamples
+            // this.selectedSamples
             foreach (LINAA.SubSamplesRow s in selectedSamples)
             {
                 //LINAA.UnitRow u = s.GetUnitRows().AsEnumerable().FirstOrDefault();
@@ -71,7 +71,7 @@ namespace DB.Tools
                         if (FC == 1) ir.SetColumnError(this.Linaa.IRequestsAverages.AspColumn, "Please multiply this value by the FC factor of this channel. I couldn't find it");
 
                         ir.AcceptChanges();
-
+                        if (ir.NAARow.ReactionsRowParent == null) continue;
                         LINAA.SigmasRow sigma = ir.NAARow.ReactionsRowParent.SigmasRowParent;
 
                         if (sigma == null) continue;
@@ -86,7 +86,8 @@ namespace DB.Tools
                         IEnumerable<LINAA.MeasurementsRow> measurements = new LINAA.MeasurementsRow[] { mea };
 
                         Rate(s.Alpha, s.f, ref ir);
-                        Temporal(ref measurements, ref ir);
+                        //  FindDecayTimes(ref measurements);
+                        //    Temporal(ref measurements, ref ir);
                         ir.Asp = (s.Concentration * s.DryNet * 0.001 * 1e-6) * (MyMath.NAvg * sigma.sigma0 * 1e-24 * sigma.theta * 0.01 / ir.NAARow.ReactionsRowParent.SigmasSalRow.Mat) * (FC * 1e6 / 0.2882) * ir.R0 * MyMath.S((0.693 / n.T2), s.IrradiationTotalTime); //result in Bq
                         ir.Asp = ir.Asp * 0.001; //result in kBq
                     }
