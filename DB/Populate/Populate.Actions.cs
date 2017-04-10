@@ -21,20 +21,6 @@ namespace DB
             return populatorArray;
         }
 
-        public Action[] PMBasic()
-        {
-            Action[] populatorArray = null;
-            populatorArray = new Action[]   {
-                       PopulateColumnExpresions,
-                PopulateUserDirectories,
-                PopulatePreferences,
-                //PopulateSSFPreferences,
-                SavePreferences
-              };
-
-            return populatorArray;
-        }
-
         public IEnumerable<Action> PMThree()
         {
             Action[] populatorOther = null;
@@ -54,8 +40,8 @@ namespace DB
         public IEnumerable<Action> PMTwo()
         {
             IEnumerable<Action> populatorArray = null;
-            populatorArray = PMBasic();
-            populatorArray = populatorArray.Union(PMMatrix());
+            populatorArray = PMMatrix();
+            //   populatorArray = populatorArray.Union(PMMatrix());
 
             populatorArray = populatorArray.Union(PMDetect());
             return populatorArray;

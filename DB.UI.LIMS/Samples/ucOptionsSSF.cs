@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using Rsx;
 using System.Collections;
+using DB.Tools;
+using DB.Properties;
 
 namespace DB.UI.Samples
 {
@@ -25,14 +27,20 @@ namespace DB.UI.Samples
         {
             Interface = inter;
 
-            loadPreferences();
             bindings = binding;
             samplebindings = sampbindings;
-
+            loadPreferences();
             this.OptionsBtn.DropDownClosed += delegate
             {
                 setPreferences();
             };
+
+            this.Save.Click += delegate
+
+                  {
+                      this.ParentForm.Validate();
+                      saveMethod();
+                  };
         }
 
         /// <summary>
@@ -53,14 +61,17 @@ namespace DB.UI.Samples
                 //  Interface.IPopulate.IMain.Read(mf);
             }
 
+            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
+            // MatSSF.StartupPath += ip.CurrentSSFPref.Folder;
+
             N4.TextBox.Text = ip.CurrentSSFPref.Rounding;
             this.loop.Checked = ip.CurrentSSFPref.Loop;
 
             this.doCK.Checked = ip.CurrentSSFPref.DoCK;
             this.doMatSSF.Checked = ip.CurrentSSFPref.DoMatSSF;
             this.showMatSSF.Checked = ip.CurrentSSFPref.ShowMatSSF;
-            this.AutoLoad.Checked = ip.CurrentSSFPref.AutoLoad;
-            this.FolderPath.Text = ip.CurrentSSFPref.Folder;
+            this.AutoLoad.Checked = ip.CurrentPref.AutoLoad;
+            // this.FolderPath.Text = ip.CurrentPref.Folder;
             this.showOther.Checked = ip.CurrentSSFPref.ShowOther;
 
             this.calcDensity.Checked = ip.CurrentSSFPref.CalcDensity;
@@ -68,6 +79,40 @@ namespace DB.UI.Samples
             this.findRadius.Checked = ip.CurrentSSFPref.AAFillHeight;
 
             this.workOffline.Checked = ip.CurrentPref.Offline;
+        }
+
+        private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
+
+        private void saveMethod()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                Interface.IBS.Matrix.EndEdit();
+                Interface.IBS.Units.EndEdit();
+                Interface.IBS.Vial.EndEdit();
+                Interface.IBS.Rabbit.EndEdit();
+                Interface.IBS.Channels.EndEdit();
+
+                //    WHAT IS THIS
+                MatSSF.WriteXML();
+
+                //WHAT IS THIS
+                bool off = Interface.IPreferences.CurrentPref.Offline;
+                string savePath = Interface.IMain.FolderPath + "lims.xml";
+                Interface.IStore.SaveSSF(off, savePath);
+
+                IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
+                Interface.IStore.SaveRemote(ref tables, true);
+
+                Interface.IReport.Msg("Saving", "Saving completed!");
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
+            }
+            Cursor.Current = Cursors.Default;
         }
 
         /// <summary>
@@ -88,9 +133,9 @@ namespace DB.UI.Samples
                 ip.CurrentSSFPref.DoCK = this.doCK.Checked;
                 ip.CurrentSSFPref.DoMatSSF = this.doMatSSF.Checked;
                 ip.CurrentSSFPref.ShowMatSSF = this.showMatSSF.Checked;
-                ip.CurrentSSFPref.AutoLoad = this.AutoLoad.Checked;
+                ip.CurrentPref.AutoLoad = this.AutoLoad.Checked;
 
-                ip.CurrentSSFPref.Folder = this.FolderPath.Text;
+                //  ip.CurrentPref.Folder = this.FolderPath.Text;
                 ip.CurrentSSFPref.ShowOther = this.showOther.Checked;
                 ip.CurrentPref.Offline = this.workOffline.Checked;
 

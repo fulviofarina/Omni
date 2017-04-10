@@ -8,9 +8,13 @@ namespace DB
         {
             //	 this.tAM.CapsulesTableAdapter = new LINAATableAdapters.CapsulesTableAdapter();
             this.tAM.ChannelsTableAdapter = new LINAATableAdapters.ChannelsTableAdapter();
+            adapters.Add(this.tAM.ChannelsTableAdapter, this.tAM.ChannelsTableAdapter);
             this.tAM.IrradiationRequestsTableAdapter = new LINAATableAdapters.IrradiationRequestsTableAdapter();
+            adapters.Add(this.tAM.IrradiationRequestsTableAdapter, this.tAM.IrradiationRequestsTableAdapter);
             this.tAM.OrdersTableAdapter = new LINAATableAdapters.OrdersTableAdapter();
+            adapters.Add(this.tAM.OrdersTableAdapter, this.tAM.OrdersTableAdapter);
             this.tAM.ProjectsTableAdapter = new LINAATableAdapters.ProjectsTableAdapter();
+            adapters.Add(this.tAM.ProjectsTableAdapter, this.tAM.ProjectsTableAdapter);
         }
 
         protected void DisposeIrradiationAdapters()

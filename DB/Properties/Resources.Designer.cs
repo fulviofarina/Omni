@@ -61,7 +61,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\Backups\.
+        ///   Looks up a localized string similar to Backups\.
         /// </summary>
         public static string Backups {
             get {
@@ -70,7 +70,16 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\EffTran\.
+        ///   Looks up a localized string similar to curves.
+        /// </summary>
+        public static string CurvesResource {
+            get {
+                return ResourceManager.GetString("CurvesResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EffTran\.
         /// </summary>
         public static string EffTranFolder {
             get {
@@ -79,7 +88,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\EffTran\Material\.
+        ///   Looks up a localized string similar to EffTran\Material\.
         /// </summary>
         public static string EffTranMaterialsFolder {
             get {
@@ -88,7 +97,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\Exceptions\.
+        ///   Looks up a localized string similar to Exceptions\.
         /// </summary>
         public static string Exceptions {
             get {
@@ -115,7 +124,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\Backups\LIMS.xml.
+        ///   Looks up a localized string similar to Backups\LIMS.xml.
         /// </summary>
         public static string Linaa {
             get {
@@ -124,7 +133,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\Backups\LIMS.Changes.xml.
+        ///   Looks up a localized string similar to Backups\LIMS.Changes.xml.
         /// </summary>
         public static string LinaaChanges {
             get {
@@ -151,7 +160,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\Preferences.xml.
+        ///   Looks up a localized string similar to Preferences.
         /// </summary>
         public static string Preferences {
             get {
@@ -160,16 +169,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \Preferences.xml.
-        /// </summary>
-        public static string PreferencesDev {
-            get {
-                return ResourceManager.GetString("PreferencesDev", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to \Overrider.
+        ///   Looks up a localized string similar to Overrider.
         /// </summary>
         public static string ResourcesOverrider {
             get {
@@ -178,16 +178,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0XResources\.
-        /// </summary>
-        public static string ResourcesPath {
-            get {
-                return ResourceManager.GetString("ResourcesPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to \Restarting.
+        ///   Looks up a localized string similar to Restarting.
         /// </summary>
         public static string Restarting {
             get {
@@ -196,7 +187,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\SolCoi\.
+        ///   Looks up a localized string similar to SolCoi\.
         /// </summary>
         public static string SolCoiFolder {
             get {
@@ -205,7 +196,16 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\MatSSF\.
+        ///   Looks up a localized string similar to solcoi.
+        /// </summary>
+        public static string SolCoiResource {
+            get {
+                return ResourceManager.GetString("SolCoiResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MatSSF\.
         /// </summary>
         public static string SSFFolder {
             get {
@@ -214,7 +214,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\SSFPreferences.xml.
+        ///   Looks up a localized string similar to SSFPreferences.
         /// </summary>
         public static string SSFPreferences {
             get {
@@ -223,7 +223,16 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\WCalc.htm.
+        ///   Looks up a localized string similar to MatSSF.
+        /// </summary>
+        public static string SSFResource {
+            get {
+                return ResourceManager.GetString("SSFResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WCalc.htm.
         /// </summary>
         public static string WCalc {
             get {
@@ -232,7 +241,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \k0-X\XCOMEnergies.txt.
+        ///   Looks up a localized string similar to XCOMEnergies.txt.
         /// </summary>
         public static string XCOMEnergies {
             get {

@@ -64,7 +64,7 @@ namespace SSF
                 LIMS.UserControls = new List<object>();
 
                 //create database
-                string result = Creator.Build(ref LIMS.Linaa, ref con, ref msn);
+                string result = Creator.Build(ref LIMS.Linaa, ref con, ref msn, 0);
 
                 //    DB.Tools.Creator.CallBack = delegate
                 //    {
@@ -84,19 +84,26 @@ namespace SSF
                     //create form for SubSamples
                     UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
                     LIMS.CreateForm("Samples", ref control);
+                    control.ParentForm.Opacity = 0;
+                    control.ParentForm.ShowInTaskbar = false;
 
                     //set bindings
                     ucSubSamples ucSubSamples = control as ucSubSamples;
-                    ucSubSamples.ucContent.Set(ref LIMS.Interface);
-                    ucSubSamples.projectbox.Project = "X1706";
 
+                    ucSubSamples.ucContent.Set(ref LIMS.Interface);
+
+                    bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
+                    if (autoload)
+                    {
+                        string lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                        ucSubSamples.projectbox.Project = lastProject;
+                    }
                     //set child parent
                     ///VOLVER A PONER ESTO EVENTUALMENTE
                     ///
                     msn.Dock = DockStyle.Fill;
                     Form form = msn.ParentForm;
                     form.Opacity = 0;
-
                     ucSSF uc = new ucSSF();
                     Control ctrl = msn as Control;
                     uc.AttachMsn(ref ctrl);
@@ -117,8 +124,6 @@ namespace SSF
                     //  form.TopMost = false;
 
                     //     ucSubSamples.ucSSF = uc;
-
-             
 
                     Control ctrl2 = ucSubSamples.projectbox;
                     uc.AttachProjectBox(ref ctrl2);
@@ -143,7 +148,7 @@ namespace SSF
                 }
                 else
                 {
-                    DB.Tools.Creator.Load(ref LIMS.Linaa, 0);
+                    DB.Tools.Creator.Load();
                 }
             }
             catch (SystemException ex)
@@ -169,7 +174,7 @@ namespace SSF
 
         public static void CreateSSFDatabase()
         {
-            LinqDataContext destiny = new LinqDataContext(DB.Properties.Settings.Default.SSFSQL);
+            LinqDataContext destiny = new LinqDataContext(DB.Properties.Settings.Default.NAAConnectionString);
 
             //  new LinqDataContext(Idb)
 

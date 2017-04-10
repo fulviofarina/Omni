@@ -21,21 +21,20 @@ namespace DB
 
             public void Check()
             {
-                // if (IswindowANull()) windowA = 1.5;
-                // if (IswindowBNull()) windowB = 0.001;
-                // if (IsminAreaNull()) minArea = 500;
-                // if (IsmaxUncNull()) maxUnc = 50;
-                //    if (IsAutoLoadNull()) AutoLoad = true;
-                //    if (IsShowSolangNull()) ShowSolang = false;
-                // if (IsShowMatSSFNull()) ShowMatSSF = false;
-                //if (IsAAFillHeightNull()) AAFillHeight = false;
-                //if (IsAARadiusNull()) AARadius = true;
+                if (IsOfflineNull()) Offline = false;
+
+                if (IswindowANull()) windowA = 1.5;
+                if (IswindowBNull()) windowB = 0.001;
+                if (IsminAreaNull()) minArea = 500;
+                if (IsmaxUncNull()) maxUnc = 50;
+                if (IsAutoLoadNull()) AutoLoad = true;
+                if (IsShowSolangNull()) ShowSolang = false;
                 //   if (IsShowSampleDescriptionNull()) ShowSampleDescription = true;
                 this.LastAccessDate = DateTime.Now;
                 if (IsLastToDoNull()) LastToDo = string.Empty;
                 if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
-                //  if (IsFillByHLNull()) FillByHL = true;
-                // if (IsFillBySpectraNull()) FillBySpectra = true;
+                if (IsFillByHLNull()) FillByHL = true;
+                if (IsFillBySpectraNull()) FillBySpectra = true;
                 if (IsHLNull()) HL = Settings.Default.HLSNMNAAConnectionString;
                 else Settings.Default["HLSNMNAAConnectionString"] = HL;
                 if (IsLIMSNull()) LIMS = Settings.Default.NAAConnectionString;
@@ -45,7 +44,10 @@ namespace DB
                 if (IsSpectraSvrNull()) SpectraSvr = Settings.Default.SpectraServer;
                 else Settings.Default["SpectraServer"] = SpectraSvr;
 
-                if (IsSolCoiFolderNull()) SolCoiFolder = Resources.SolCoiFolder;
+                //    if (IsFolderNull()) Folder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                //   else Settings.Default["Folder"] = Folder;
+
+                //    if (IsSolCoiFolderNull()) SolCoiFolder = Resources.SolCoiFolder;
                 //   else Settings.Default["SOLCOIFolder"] = SolCoiFolder;
 
                 Settings.Default.Save();
@@ -56,30 +58,21 @@ namespace DB
         {
             public void Check()
             {
-                //  DoSolang = false;
-                //  DoMatSSF = false;//fix
+                if (this.IsLastUnitIDNull()) LastUnitID = 0;
+                if (this.IsCalcDensityNull()) CalcDensity = true;
+                if (this.IsDoCKNull()) DoCK = false;
+                if (this.IsDoMatSSFNull()) DoMatSSF = true;
+                if (this.IsLoopNull()) Loop = false;
+                if (this.IsRoundingNull()) Rounding = "N4";
+                //    if (this.IsSQLNull()) SQL = Settings.Default.SSFSQL;
+                //  else Settings.Default["SSFSQL"] = SQL;
+                if (IsShowOtherNull()) ShowOther = false;
 
-                //  if (IsAutoLoadNull()) AutoLoad = true;
-                //  if (IsShowSolangNull()) ShowSolang = false;
-                //  if (IsShowMatSSFNull()) ShowMatSSF = false;
-                // if (IsAAFillHeightNull()) AAFillHeight = false;
-                //if (IsAARadiusNull()) AARadius = true;
-                if (IsFolderNull()) Folder = Resources.SSFFolder;
-                //    else Settings.Default["SSFFolder"] = Folder;
+                //   if (IsAutoLoadNull()) AutoLoad = true;
 
-                // ShowSampleDescription = true;
-                //   if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
-                //   if (IsFillByHLNull()) FillByHL = true;
-                //  if (IsFillBySpectraNull()) FillBySpectra = true;
-                //// if (IsHLNull()) HL = DB.Properties.Settings.Default.HLSNMNAAConnectionString;
-                // else DB.Properties.Settings.Default["HLSNMNAAConnectionString"] = HL;
-
-                // if (IsLIMSNull()) LIMS = DB.Properties.Settings.Default.NAAConnectionString;
-                //  else DB.Properties.Settings.Default["NAAConnectionString"] = LIMS;
-                //  if (IsSpectraNull()) Spectra = DB.Properties.Settings.Default.SpectraFolder;
-                //  else DB.Properties.Settings.Default["SpectraFolder"] = Spectra;
-                //  if (IsSpectraSvrNull()) SpectraSvr = DB.Properties.Settings.Default.SpectraServer;
-                //  else DB.Properties.Settings.Default["SpectraServer"] = SpectraSvr;
+                if (IsShowMatSSFNull()) ShowMatSSF = false;
+                if (IsAAFillHeightNull()) AAFillHeight = false;
+                if (IsAARadiusNull()) AARadius = true;
 
                 Settings.Default.Save();
             }

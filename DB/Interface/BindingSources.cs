@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Rsx;
 
@@ -27,6 +28,50 @@ namespace DB
 
         public BindingSources()
         {
+        }
+
+        public void EndEdit()
+        {
+            Matrix?.EndEdit();
+            Units?.EndEdit();
+            Vial?.EndEdit();
+            Geometry?.EndEdit();
+            Rabbit?.EndEdit();
+            Channels?.EndEdit();
+            Irradiations?.EndEdit();
+        }
+
+        public void Update<T>(DataRowView r)
+        {
+            Update<T>(r.Row);
+        }
+        public void Update<T>(DataRow r)
+        {
+
+            Type tipo = typeof(T);
+            if (r == null) return;
+
+            if (tipo.Equals(typeof(LINAA.SubSamplesRow)))
+            {
+              //  DataRow r = (SubSamples.Current as DataRowView).Row;
+               
+               LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
+
+                Update<LINAA.UnitRow>(s.UnitRow);
+              
+            }
+            else if (tipo.Equals(typeof(LINAA.UnitRow)))
+            {
+                if (Units != null)
+                {
+                    LINAA.UnitRow s = r as LINAA.UnitRow;
+                    string unitValID = (s.Table as LINAA.UnitDataTable).UnitIDColumn.ColumnName;
+                    Units.Position = Units.Find(unitValID, s.UnitID);
+                }
+            }
+
+
+
         }
     }
 }

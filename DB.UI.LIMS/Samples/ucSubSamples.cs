@@ -204,7 +204,9 @@ namespace DB.UI
         public void RowAdded(ref DataRow row)
         {
             Interface.IBS.SubSamples.SuspendBinding();
-            IEnumerable<LINAA.SubSamplesRow> samples = Interface.ICurrent.SubSamples;
+            IEnumerable<LINAA.SubSamplesRow> samples = Interface.ICurrent.SubSamples
+                .OfType<LINAA.SubSamplesRow>();
+
             int IrrReqID = projectbox.IrrReqID;
             string project = projectbox.Project;
 
@@ -287,15 +289,9 @@ namespace DB.UI
         /// <param name="e"></param>
         private void BS_CurrentChanged(object sender, EventArgs e)
         {
-            DataRow r = (Interface.IBS.SubSamples.Current as DataRowView).Row;
-            if (r == null) return;
-            //if not usercontrol attached...
-            BindingSource bsUnits = Interface.IBS.Units;
-            if (bsUnits == null) return;
-            LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
-            LINAA.UnitRow u = s.GetUnitRows().FirstOrDefault();
-            string unitValID = Interface.IDB.Unit.UnitIDColumn.ColumnName;
-            bsUnits.Position = bsUnits.Find(unitValID, u.UnitID);
+            //   DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
+            DataRow r = Interface.ICurrent.SubSample;
+            Interface.IBS.Update<LINAA.SubSamplesRow>(r);
         }
 
         /*

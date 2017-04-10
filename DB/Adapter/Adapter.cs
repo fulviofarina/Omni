@@ -1,4 +1,5 @@
 ﻿//using DB.Interfaces;
+using System.Data.OleDb;
 
 namespace DB
 {
@@ -59,7 +60,7 @@ namespace DB
 
         private delegate int TAMDeleteMethod(int index);
 
-        private System.ComponentModel.IContainer components;
+        //  private System.ComponentModel.IContainer components;
 
         /// <summary>
         /// The master Table Adapter Manager of this dataset
@@ -84,7 +85,27 @@ namespace DB
             this.EnforceConstraints = false;
             this.Locale = new System.Globalization.CultureInfo("");
 
+            adapters = new System.Collections.Hashtable();
+
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+        }
+
+        public string ChangeConnection
+        {
+            set
+            {
+                string connection = value;
+                System.Data.IDbConnection con = this.TAM.Connection;
+                con.Close();
+                con = new System.Data.SqlClient.SqlConnection(connection);
+                this.TAM.Connection = con;
+                foreach (dynamic a in adapters.Values)
+                {
+                    a.Connection.Close();
+                    a.Connection = new System.Data.SqlClient.SqlConnection(connection);
+                }
+                con.Open();
+            }
         }
 
         public string Exception
@@ -143,12 +164,23 @@ namespace DB
         /// </summary>
         public void InitializeAdapters()
         {
+            //probando esta linea
             InitializeSolCoinAdapters();
             InitializeIrradiationAdapters();
             InitializeSampleAdapters();
             InitializePeaksAdapters();
             InitializeToDoAdapters();
             InitializeOtherAdapters();
+
+            //   ChangeConnection = Properties.Settings.Default.LIMSConnectionString;
+            //  this.TAM.Connection.Close();
+
+            //  this.TAM.Connection.Open();
+
+            //   this.TAM.Connection.Database. = "LIMS";
+            //     this.TAM.Connection.Close();
+            //      this.TAM.Connection.ConnectionString = DB.Properties.Settings.Default.NAAConnectionString;
+            //        this.TAM.Connection.Open();
         }
 
         /// <summary>

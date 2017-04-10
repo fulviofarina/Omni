@@ -18,11 +18,11 @@ namespace DB
 
         void Read(string filepath);
 
-        string AppPath
-        {
-            get;
-            set;
-        }
+        //   string AppPath
+        //  {
+        //      get;
+        //      set;
+        //  }
 
         string FolderPath
         {

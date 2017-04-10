@@ -10,6 +10,12 @@ namespace DB
         void PopulatePreferences();
 
         //     void PopulateSSFPreferences();
+        string WinUser
+        {
+            get;
+
+            set;
+        }
 
         LINAA.PreferencesRow CurrentPref { get; set; }
 

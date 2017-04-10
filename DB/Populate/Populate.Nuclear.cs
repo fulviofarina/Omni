@@ -96,6 +96,7 @@ namespace DB
             {
                 this.tableElements.BeginLoadData();
                 this.tableElements.Clear();
+
                 this.TAM.ElementsTableAdapter.Fill(this.tableElements);
                 this.tableElements.AcceptChanges();
                 this.tableElements.EndLoadData();

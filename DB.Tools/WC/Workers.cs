@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using DB.Properties;
 using Rsx;
 
 namespace DB.Tools
@@ -118,9 +119,13 @@ namespace DB.Tools
 
                 try
                 {
-                    LINAA.UnitRow u = unitDT.NewUnitRow();
-                    unitDT.AddUnitRow(u);
+                    LINAA.UnitRow u = null;
+                    if (iS.UnitRow == null)
+                    {
+                        u = unitDT.NewUnitRow();
 
+                        unitDT.AddUnitRow(u);
+                    }
                     u.ChDiameter = (iS.VialTypeRow.InnerRadius * 2);
                     u.ChLength = iS.VialTypeRow.MaxFillHeight;
                     u.ChCfg = fluxtypo.ToString();
@@ -131,7 +136,7 @@ namespace DB.Tools
                     //  u.Diameter = (iS.Radius * 2);
                     //    u.Length = iS.FillHeight;
 
-                    MatSSF.StartupPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + this.Linaa.CurrentSSFPref.Folder;
+                    MatSSF.StartupPath = Linaa.FolderPath + Resources.SSFFolder;
 
                     MatSSF.UNIT = u;
 

@@ -7,14 +7,22 @@ namespace DB
         protected void InitializeSampleAdapters()
         {
             this.tAM.MatSSFTableAdapter = new LINAATableAdapters.MatSSFTableAdapter();
+            adapters.Add(this.tAM.MatSSFTableAdapter, this.tAM.MatSSFTableAdapter);
             this.tAM.UnitTableAdapter = new LINAATableAdapters.UnitTableAdapter();
-
+            adapters.Add(this.tAM.UnitTableAdapter, this.tAM.UnitTableAdapter);
             this.tAM.MonitorsFlagsTableAdapter = new LINAATableAdapters.MonitorsFlagsTableAdapter();
+            adapters.Add(this.tAM.MonitorsFlagsTableAdapter, this.tAM.MonitorsFlagsTableAdapter);
             this.tAM.MonitorsTableAdapter = new LINAATableAdapters.MonitorsTableAdapter();
+            adapters.Add(this.tAM.MonitorsTableAdapter, this.tAM.MonitorsTableAdapter);
             this.tAM.SamplesTableAdapter = new LINAATableAdapters.SamplesTableAdapter();
+            adapters.Add(this.tAM.SamplesTableAdapter, this.tAM.SamplesTableAdapter);
             this.tAM.StandardsTableAdapter = new LINAATableAdapters.StandardsTableAdapter();
+            adapters.Add(this.tAM.StandardsTableAdapter, this.tAM.StandardsTableAdapter);
             this.tAM.SubSamplesTableAdapter = new LINAATableAdapters.SubSamplesTableAdapter();
+            adapters.Add(this.tAM.SubSamplesTableAdapter, this.tAM.SubSamplesTableAdapter);
+
             this.tAM.SubSamplesTableAdapter.Adapter.AcceptChangesDuringUpdate = true;
+
             // this.tAM.SubSamplesTableAdapter.Adapter.FillError += new System.Data.FillErrorEventHandler(Adapter_FillError);
             // this.tAM.SubSamplesTableAdapter.Adapter.RowUpdating += new System.Data.SqlClient.SqlRowUpdatingEventHandler(Adapter_RowUpdating);
         }

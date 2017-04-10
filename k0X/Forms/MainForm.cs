@@ -399,7 +399,7 @@ namespace k0X
 
                 //Build
 
-                string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn);
+                string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn, 0);
 
                 //set medium callback
                 DB.Tools.Creator.CallBack = delegate
@@ -453,7 +453,7 @@ namespace k0X
                 else
                 {
                     //LOAD
-                    DB.Tools.Creator.Load(ref LIMS.Linaa, 0);
+                    DB.Tools.Creator.Load();
                 }
             }
             catch (SystemException ex)

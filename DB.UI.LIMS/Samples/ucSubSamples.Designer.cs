@@ -171,7 +171,7 @@
             // 
             // Linaa
             // 
-            this.Linaa.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
+        //    this.Linaa.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
             this.Linaa.CurrentPref = null;
             this.Linaa.CurrentSSFPref = null;
             this.Linaa.DataSetName = "LINAA";

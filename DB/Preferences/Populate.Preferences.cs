@@ -13,6 +13,9 @@ namespace DB
     {
         private PreferencesRow currentPref;
 
+        private SSFPrefRow currentSSFPref;
+        private string winUser = WindowsIdentity.GetCurrent().Name.ToUpper();
+
         public PreferencesRow CurrentPref
         {
             get
@@ -21,8 +24,6 @@ namespace DB
             }
             set { currentPref = value; }
         }
-
-        private SSFPrefRow currentSSFPref;
 
         public SSFPrefRow CurrentSSFPref
         {
@@ -33,35 +34,149 @@ namespace DB
             set { currentSSFPref = value; }
         }
 
-        private void savePreferences<T>()
+        public string WinUser
+        {
+            get
+            {
+                return winUser;
+            }
+
+            set
+            {
+                winUser = value;
+            }
+        }
+
+        /// <summary>
+        /// Reads the preferences files
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool populatePreferences<T>()
+        {
+            //  string prefFolder=   Resources.Preferences;
+            DataTable dt = null;
+            string path = string.Empty;
+
+            findTableAndPath<T>(out dt, out path);
+            //keep this this way, works fine
+
+            //load into table
+            bool ok = Dumb.ReadTable(path, ref dt);
+
+            return ok;
+        }
+
+        public void PopulatePreferences()
         {
             try
             {
-                DataTable dt = null;
-
-                string path = string.Empty;
-
-                if (typeof(T).Equals(typeof(PreferencesDataTable)))
+                bool ok = populatePreferences<PreferencesDataTable>();
+                if (ok)
                 {
-                    path = this.folderPath + Resources.Preferences;
-                    dt = this.Preferences;
+                    //cleaning
+                    cleanPreferences<PreferencesDataTable>();    //important
                 }
-                else
-                {
-                    path = this.folderPath + Resources.SSFPreferences;
-                    dt = this.SSFPref;
-                }
-                // if (this.Preferences.Columns.Contains(this.Preferences.DoSolangColumn.ColumnName)) this.Preferences.Columns.Remove(this.Preferences.DoSolangColumn);
-                //  if (this.Preferences.Columns.Contains(this.Preferences.DoMatSSFColumn.ColumnName)) this.Preferences.Columns.Remove(this.Preferences.DoMatSSFColumn);
-                dt.EndLoadData();
-                dt.AcceptChanges();
-
-                System.IO.File.Delete(path);
-                dt.WriteXml(path, System.Data.XmlWriteMode.WriteSchema, true);
+                loadCurrentPreferences<PreferencesDataTable>();
             }
             catch (SystemException ex)
             {
                 this.AddException(ex);
+            }
+            try
+            {
+                bool ok = populatePreferences<SSFPrefDataTable>();
+                if (ok)
+                {
+                    //cleaning
+                    cleanPreferences<SSFPrefDataTable>();    //important
+                }
+                loadCurrentPreferences<SSFPrefDataTable>();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        /// <summary>
+        /// remove shitty preferences
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        private void cleanPreferences<T>()
+        {
+            Type tipo = typeof(T);
+
+            DataTable dt = null;
+            string path = string.Empty;
+
+            findTableAndPath<T>(out dt, out path);
+
+            IEnumerable<DataRow> prefes = null;
+            prefes = dt.AsEnumerable().Where(o => string.IsNullOrEmpty(o.Field<string>("WindowsUser")));
+            this.Delete(ref prefes);
+
+            dt.EndLoadData();
+            dt.AcceptChanges();
+        }
+
+        /// <summary>
+        /// finds wether it should use the preferences or the SSf path and table
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dt"></param>
+        /// <param name="path"></param>
+        private void findTableAndPath<T>(out DataTable dt, out string path)
+        {
+            if (typeof(T).Equals(typeof(PreferencesDataTable)))
+            {
+                path = this.folderPath + Resources.Preferences + ".xml";
+                dt = this.Preferences;
+            }
+            else
+            {
+                path = this.folderPath + Resources.SSFPreferences + ".xml";
+                dt = this.SSFPref;
+            }
+        }
+
+        /// <summary>
+        /// Loads the Current Rows with data
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        private void loadCurrentPreferences<T>()
+        {
+            DataTable dt = null;
+            string path = string.Empty;
+
+            findTableAndPath<T>(out dt, out path);
+
+            Func<DataRow, bool> selector = p =>
+            {
+                return p.Field<string>("WindowsUser").CompareTo(winUser) == 0;
+            };
+
+            DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
+            if (row == null) row = dt.NewRow();
+
+            Type tipo = typeof(T);
+            if (tipo.Equals(typeof(PreferencesDataTable)))
+            {
+                if (this.currentSSFPref == null)
+                {
+                    this.currentPref = dt.LoadDataRow(row.ItemArray, true) as PreferencesRow;
+                    this.currentPref.WindowsUser = winUser;
+                }
+                this.currentPref.Check();
+            }
+            else
+            {
+                if (this.currentSSFPref == null)
+                {
+                    this.currentSSFPref = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
+                    this.currentSSFPref.WindowsUser = winUser;
+                }
+                this.currentSSFPref.Check();
             }
         }
 
@@ -75,116 +190,45 @@ namespace DB
             Type tipo = typeof(T);
 
             this.Merge(this, false, MissingSchemaAction.AddWithKey);
+
+            DataTable dt = null;
+            string path = string.Empty;
+
+            findTableAndPath<T>(out dt, out path);
+
+            DataTable destiny = null;
+
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
-                PreferencesDataTable table = prefe as PreferencesDataTable;
-                this.Preferences.Clear();
-                this.Preferences.Merge(table, false, MissingSchemaAction.AddWithKey);
+                destiny = this.Preferences;
             }
             else
             {
-                SSFPrefDataTable table = prefe as SSFPrefDataTable;
-                this.SSFPref.Clear();
-                this.SSFPref.Merge(table, false, MissingSchemaAction.AddWithKey);
+                destiny = this.SSFPref;
             }
 
+            destiny.Clear();
+            destiny.Merge(dt, false, MissingSchemaAction.AddWithKey);
             // this.AcceptChanges();
         }
 
         /// <summary>
-        /// Loads the CurrentSSFPrefRow
+        /// Saves preferences
         /// </summary>
-
-        private void loadCurrentPreferences<T>()
+        /// <typeparam name="T"></typeparam>
+        private void savePreferences<T>()
         {
-            string WinUser = WindowsIdentity.GetCurrent().Name.ToUpper();
-
-            Type tipo = typeof(T);
-            if (tipo.Equals(typeof(PreferencesRow)))
-            {
-                this.currentPref = tablePreferences.FirstOrDefault(p => p.WindowsUser.CompareTo(WinUser) == 0);
-                if (this.currentPref == null)
-                {
-                    this.currentPref = this.Preferences.NewPreferencesRow();
-                    this.Preferences.AddPreferencesRow(this.currentPref);
-                    this.currentPref.WindowsUser = WinUser;
-                }
-                this.currentPref.Check();
-            }
-            else
-            {
-                this.currentSSFPref = tableSSFPref.FirstOrDefault(p => p.WindowsUser.CompareTo(WinUser) == 0);
-                if (this.currentSSFPref == null)
-                {
-                    this.currentSSFPref = this.SSFPref.NewSSFPrefRow();
-                    this.SSFPref.AddSSFPrefRow(this.currentSSFPref);
-                    this.currentSSFPref.WindowsUser = WinUser;
-                }
-                if (currentSSFPref.IsFolderNull()) currentSSFPref.Folder = Resources.SSFFolder;
-            }
-        }
-
-        private void cleanPreferences<T>()
-        {
-            Type tipo = typeof(T);
-            DataTable table = null;
-            IEnumerable<DataRow> prefes = null;
-
-            if (tipo.Equals(typeof(PreferencesDataTable)))
-            {
-                LINAA.PreferencesDataTable dt = this.tablePreferences;
-                prefes = dt.Where(o => string.IsNullOrEmpty(o.WindowsUser));
-
-                table = dt;
-            }
-            else
-            {
-                LINAA.SSFPrefDataTable dt = this.tableSSFPref;
-                prefes = dt.AsEnumerable().Where(o => string.IsNullOrEmpty(o.WindowsUser));
-
-                table = dt;
-            }
-
-            this.Delete(ref prefes);
-            table.EndLoadData();
-            table.AcceptChanges();
-        }
-
-        public void PopulatePreferences()
-        {
-            PopulatePreferences<LINAA.PreferencesDataTable>();
-
-            PopulatePreferences<LINAA.SSFPrefDataTable>();
-        }
-
-        public void PopulatePreferences<T>()
-        {
-            //  string prefFolder=   Resources.Preferences;
+            DataTable dt = null;
             string path = string.Empty;
 
-            DataTable dt = null;
-            if (typeof(T).Equals(typeof(LINAA.PreferencesDataTable)))
-            {
-                dt = this.Preferences;
-                path = folderPath + Resources.Preferences;
-            }
-            else
-            {
-                dt = this.SSFPref;
-                path = folderPath + Resources.SSFPreferences;
-            }
-            //keep this this way, works fine
+            findTableAndPath<T>(out dt, out path);
+            // if (this.Preferences.Columns.Contains(this.Preferences.DoSolangColumn.ColumnName)) this.Preferences.Columns.Remove(this.Preferences.DoSolangColumn);
+            //  if (this.Preferences.Columns.Contains(this.Preferences.DoMatSSFColumn.ColumnName)) this.Preferences.Columns.Remove(this.Preferences.DoMatSSFColumn);
+            dt.EndLoadData();
+            dt.AcceptChanges();
 
-            //load
-            bool ok = Dumb.ReadTable(path, ref dt);
-
-            if (ok)
-            {
-                //cleaning
-                cleanPreferences<T>();    //important
-            }
-
-            loadCurrentPreferences<T>();
+            System.IO.File.Delete(path);
+            dt.WriteXml(path, System.Data.XmlWriteMode.WriteSchema, true);
         }
     }
 }

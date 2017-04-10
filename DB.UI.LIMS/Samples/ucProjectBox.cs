@@ -49,18 +49,21 @@ namespace DB.UI
             string project = projectbox.Text.ToUpper().Trim();
 
             if (!Interface.IPopulate.IProjects.ProjectsList.Contains(project)) return;
+            Interface.IPreferences.CurrentPref.LastIrradiationProject = project;
             LINAA.IrradiationRequestsRow Irradiation = null;
             Irradiation = Interface.IDB.IrradiationRequests.FindByIrradiationCode(project);
             IrrReqID = Irradiation.IrradiationRequestsID;
 
-            if (!this.offline)
-            {
-                Interface.IPopulate.ISamples.PopulateSubSamples(IrrReqID);
-                Interface.IPopulate.IGeometry.PopulateUnitsByProject(IrrReqID);
-            }
+            //   if (!this.offline)
+            //   {
+            Interface.IPopulate.ISamples.PopulateSubSamples(IrrReqID);
+            Interface.IPopulate.IGeometry.PopulateUnitsByProject(IrrReqID);
+            //  }
 
             string filter = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
             string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
+
+            Interface.IStore.SavePreferences();
 
             callBack(filter, sort);
         }

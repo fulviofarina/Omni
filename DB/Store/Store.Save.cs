@@ -10,6 +10,53 @@ namespace DB
 {
     public partial class LINAA : IStore
     {
+        public bool SaveRemote(ref IEnumerable<DataTable> tables, bool takeChanges)
+        {
+            bool ok = false;
+            try
+            {
+                if (takeChanges)
+                {
+                    foreach (System.Data.DataTable t in tables)
+                    {
+                        IEnumerable<DataRow> rows = t.AsEnumerable();
+                        Save(ref rows);
+                    }
+                    ok = true;
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
+            }
+            return ok;
+        }
+
+        public bool SaveLocalCopy()
+        {
+            bool ok = false;
+            try
+            {
+                string LIMSPath = folderPath + DB.Properties.Resources.Linaa;
+                string aux = "." + DateTime.Now.DayOfYear.ToString();
+                string LIMSDayPath = LIMSPath.Replace(".xml", aux + ".xml");
+
+                if (System.IO.File.Exists(LIMSPath))
+                {
+                    System.IO.File.Copy(LIMSPath, LIMSDayPath, true);
+                    System.IO.File.Delete(LIMSPath);
+                }
+                WriteXml(LIMSPath, XmlWriteMode.WriteSchema);
+                SaveExceptions();
+                ok = true;
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
+            }
+            return ok;
+        }
+
         public void SaveSSF()
         {
             try
@@ -306,7 +353,7 @@ namespace DB
                     }
                     else if (t.Equals(typeof(MeasurementsRow)))
                     {
-                        this.tAM.MeasurementsTableAdapter.Connection.ConnectionString = DB.Properties.Settings.Default.NAAConnectionString;
+                        this.tAM.MeasurementsTableAdapter.SetForLIMS();// Connection.ConnectionString = DB.Properties.Settings.Default.NAAConnectionString;
                         this.tAM.MeasurementsTableAdapter.Update(schs);
                     }
                     else if (t.Equals(typeof(ToDoRow))) this.tAM.ToDoTableAdapter.Update(schs);
@@ -600,9 +647,16 @@ namespace DB
 
         public void SavePreferences()
         {
-            savePreferences<PreferencesDataTable>();
+            try
+            {
+                savePreferences<PreferencesDataTable>();
 
-            savePreferences<SSFPrefDataTable>();
+                savePreferences<SSFPrefDataTable>();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
         }
 
         public string SaveExceptions()

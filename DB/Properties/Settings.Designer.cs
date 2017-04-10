@@ -25,28 +25,6 @@ namespace DB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=HL14;Persist Security Info=True;User ID=sa" +
-            ";Password=naa;Connect Timeout=5")]
-        public string HLSNMNAAConnectionString {
-            get {
-                return ((string)(this["HLSNMNAAConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=k014;Persist Security Info=True;User ID=sa" +
-            ";Password=naa;Connect Timeout=5")]
-        public string NAAConnectionString {
-            get {
-                return ((string)(this["NAAConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\scksrv1\\gkd\\DOKUMENT\\LRM\\LABO_NAA\\METINGEN\\")]
         public string SpectraFolder {
             get {
@@ -74,11 +52,23 @@ namespace DB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=SSF;Persist Security Info=True;User ID=sa;" +
-            "Password=naa;Connect Timeout=5")]
-        public string SSFSQL {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=HL14;Persist Security Info=True;User ID=sa" +
+            ";Password=naa;Connect Timeout=5")]
+        public string HLSNMNAAConnectionString {
             get {
-                return ((string)(this["SSFSQL"]));
+                return ((string)(this["HLSNMNAAConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=k014;Persist Security Info=True;User ID=sa" +
+            ";Password=naa;Connect Timeout=5")]
+        public string NAAConnectionString {
+            get {
+                return ((string)(this["NAAConnectionString"]));
             }
         }
     }

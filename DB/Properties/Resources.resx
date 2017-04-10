@@ -117,69 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MCNPXExe" xml:space="preserve">
-    <value>mcnpx.exe</value>
-  </data>
-  <data name="MCNPXFolder" xml:space="preserve">
-    <value>a:\mcnpx\</value>
-  </data>
   <data name="EffTranFolder" xml:space="preserve">
-    <value>\k0-X\EffTran\</value>
+    <value>EffTran\</value>
+    <comment>not used</comment>
   </data>
   <data name="EffTranMaterialsFolder" xml:space="preserve">
-    <value>\k0-X\EffTran\Material\</value>
+    <value>EffTran\Material\</value>
+    <comment>not used</comment>
+  </data>
+  <data name="SSFFolder" xml:space="preserve">
+    <value>MatSSF\</value>
   </data>
   <data name="SolCoiFolder" xml:space="preserve">
-    <value>\k0-X\SolCoi\</value>
+    <value>SolCoi\</value>
     <comment>\Resources\SolCoi\In the past!!!</comment>
   </data>
-  <data name="Preferences" xml:space="preserve">
-    <value>\k0-X\Preferences.xml</value>
-    <comment>preferences table</comment>
-  </data>
-  <data name="Linaa" xml:space="preserve">
-    <value>\k0-X\Backups\LIMS.xml</value>
-  </data>
-  <data name="LinaaChanges" xml:space="preserve">
-    <value>\k0-X\Backups\LIMS.Changes.xml</value>
-  </data>
   <data name="Backups" xml:space="preserve">
-    <value>\k0-X\Backups\</value>
+    <value>Backups\</value>
   </data>
   <data name="Exceptions" xml:space="preserve">
-    <value>\k0-X\Exceptions\</value>
+    <value>Exceptions\</value>
   </data>
   <data name="k0XFolder" xml:space="preserve">
     <value>\k0-X\</value>
     <comment>To Save data</comment>
   </data>
-  <data name="PreferencesDev" xml:space="preserve">
-    <value>\Preferences.xml</value>
-    <comment>in app path</comment>
+  <data name="Preferences" xml:space="preserve">
+    <value>Preferences</value>
+    <comment>preferences table</comment>
+  </data>
+  <data name="SSFPreferences" xml:space="preserve">
+    <value>SSFPreferences</value>
+    <comment>put extension .xml</comment>
+  </data>
+  <data name="Linaa" xml:space="preserve">
+    <value>Backups\LIMS.xml</value>
+  </data>
+  <data name="LinaaChanges" xml:space="preserve">
+    <value>Backups\LIMS.Changes.xml</value>
   </data>
   <data name="WCalc" xml:space="preserve">
-    <value>\k0-X\WCalc.htm</value>
+    <value>WCalc.htm</value>
   </data>
   <data name="XCOMEnergies" xml:space="preserve">
-    <value>\k0-X\XCOMEnergies.txt</value>
+    <value>XCOMEnergies.txt</value>
   </data>
   <data name="ResourcesOverrider" xml:space="preserve">
-    <value>\Overrider</value>
+    <value>Overrider</value>
     <comment>if file present then Resources should be reinstalled</comment>
   </data>
-  <data name="ResourcesPath" xml:space="preserve">
-    <value>\k0XResources\</value>
-  </data>
   <data name="Restarting" xml:space="preserve">
-    <value>\Restarting</value>
+    <value>Restarting</value>
   </data>
   <data name="Features" xml:space="preserve">
     <value>\Features.txt</value>
   </data>
-  <data name="SSFPreferences" xml:space="preserve">
-    <value>\k0-X\SSFPreferences.xml</value>
+  <data name="MCNPXExe" xml:space="preserve">
+    <value>mcnpx.exe</value>
+    <comment>not used</comment>
   </data>
-  <data name="SSFFolder" xml:space="preserve">
-    <value>\k0-X\MatSSF\</value>
+  <data name="MCNPXFolder" xml:space="preserve">
+    <value>a:\mcnpx\</value>
+    <comment>not used</comment>
+  </data>
+  <data name="CurvesResource" xml:space="preserve">
+    <value>curves</value>
+    <comment>Convert to .exe to work</comment>
+  </data>
+  <data name="SolCoiResource" xml:space="preserve">
+    <value>solcoi</value>
+    <comment>Conver to .exe to work</comment>
+  </data>
+  <data name="SSFResource" xml:space="preserve">
+    <value>MatSSF</value>
+    <comment>from BAK to CAB to expand.exe</comment>
   </data>
 </root>

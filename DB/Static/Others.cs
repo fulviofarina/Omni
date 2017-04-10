@@ -27,13 +27,6 @@ namespace DB
       }
     }
 
-    private static void InstallResources()
-    {
-      string resourcePath = Properties.Settings.Default.deployPath + Properties.Resources.ResourcesPath;
-      if (System.IO.File.Exists(resourcePath + "setup.exe"))
-      {
-        Rsx.Dumb.Process(new System.Diagnostics.Process(), resourcePath, resourcePath + "setup.exe", string.Empty, false, true, 100000);
-      }
-    }
+  
   }
 }

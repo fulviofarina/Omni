@@ -40,6 +40,19 @@ namespace DB
      }
      */
 
+        private string folderPath = string.Empty;
+
+        public string FolderPath
+        {
+            get { return folderPath; }
+            set { folderPath = value; }
+        }
+
+        public void AddException(Exception ex)
+        {
+            this.tableExceptions.AddExceptionsRow(ex);
+        }
+
         public void CloneDataSet(ref LINAA set)
         {
             this.InitializeComponent();
@@ -54,36 +67,16 @@ namespace DB
             cleanReadOnly(ref table);
         }
 
-        protected internal string appPath = Application.StartupPath;
-
-        public string AppPath
+        public void Help()
         {
-            get { return appPath; }
-            set { appPath = value; }
+            string path = folderPath + DB.Properties.Resources.Features;
+            if (!System.IO.File.Exists(path)) return;
+
+            Dumb.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
         }
 
-        private string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-
-        public string FolderPath
+        public void PopulateResourceDirectory(string path)
         {
-            get { return folderPath; }
-            set { folderPath = value; }
-        }
-
-        public void AddException(Exception ex)
-        {
-            this.tableExceptions.AddExceptionsRow(ex);
-        }
-
-        public void PopulateUserDirectories()
-        {
-            //Documents Folder
-            //    this.folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-
-            // bool created = false;
-
-            string path = folderPath + Resources.k0XFolder;
-
             try
             {
                 if (!Directory.Exists(path))
@@ -96,74 +89,56 @@ namespace DB
             {
                 AddException(ex);//                throw;
             }
+        }
+
+        public void PopulateUserDirectories()
+        {
+            string path = string.Empty;
+
+            //override preferences
+            path = folderPath + Resources.Preferences + ".xml";
+            string developerPath = Application.StartupPath + "\\" + Resources.Preferences + "Dev.xml";
+            populateReplaceFile(path, developerPath);
+
+            path = folderPath + Resources.SSFPreferences + ".xml";
+            developerPath = Application.StartupPath + "\\" + Resources.SSFPreferences + "Dev.xml";
+            populateReplaceFile(path, developerPath);
+
+            path = folderPath + Resources.WCalc;
+            developerPath = Application.StartupPath + "\\" + Resources.WCalc;
+            populateReplaceFile(path, developerPath);
+
+            path = folderPath + Resources.XCOMEnergies;
+            developerPath = Application.StartupPath + "\\" + Resources.XCOMEnergies;
+            populateReplaceFile(path, developerPath);
+
+            // path = folderPath + Resources.SolCoiFolder;
+
+            bool overriderFound = false;
+            try
+            {
+                //does nothing
+                path = Application.StartupPath + "\\" + Resources.ResourcesOverrider;
+                overriderFound = File.Exists(path);
+
+                if (overriderFound) File.Delete(path);
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);//                throw;
+            }
+
+            path = Application.StartupPath + "\\" + Resources.Features;
+            string currentpath = folderPath + Resources.Features;
+            populateFeaturesDirectory(path, currentpath);
 
             try
             {
                 path = folderPath + Resources.Exceptions;
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                    //  created = true;
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
+                populateDirectory(path, overriderFound);
 
-            try
-            {
                 path = folderPath + Resources.Backups;
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                    //  created = true;
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-
-            try
-            {
-                path = folderPath + Resources.Preferences;
-                string developerPath = appPath + Resources.PreferencesDev;
-                //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
-                if (File.Exists(developerPath))
-                {
-                    File.Copy(developerPath, path, true);
-                    File.Delete(developerPath);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-
-            try
-            {
-                path = folderPath + Resources.SolCoiFolder;
-                string overrider = appPath + Resources.ResourcesOverrider;
-                bool overriderFound = File.Exists(path);
-                if (overriderFound) File.Delete(overrider);
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-
-            try
-            {
-                string features = appPath + Resources.Features;
-                bool feats = File.Exists(features);
-                if (feats)
-                {
-                    string currentpath = folderPath + Resources.Features;
-                    File.Copy(features, currentpath, true);
-                    File.Delete(features);
-                    Help();
-                }
+                populateDirectory(path, overriderFound);
             }
             catch (SystemException ex)
             {
@@ -173,85 +148,45 @@ namespace DB
             try
             {
                 string solcoi = folderPath + Resources.SolCoiFolder;
-                string matssf = folderPath + Resources.SSFFolder;
                 bool nosolcoi = !Directory.Exists(solcoi);
-                bool nossf = !Directory.Exists(matssf);
 
-                if (nosolcoi || nossf) InstallResources();
+                if (nosolcoi || overriderFound)
+                {
+                    Directory.CreateDirectory(solcoi);
+                    string startexecutePath = folderPath + Resources.SolCoiFolder;
+
+                    string resourcePath = Application.StartupPath + "\\" + Resources.CurvesResource + ".bak";
+                    string destFile = startexecutePath + Resources.CurvesResource + ".bak";
+                    unpackResource(resourcePath, destFile, startexecutePath, false);
+
+                    resourcePath = Application.StartupPath + "\\" + Resources.SolCoiResource + ".bak";
+                    destFile = startexecutePath + Resources.SolCoiResource + ".bak";
+                    unpackResource(resourcePath, destFile, startexecutePath, false);
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);//                throw;
+            }
+
+            try
+            {
+                string matssf = folderPath + Resources.SSFFolder;
+                bool nossf = !Directory.Exists(matssf);
+                if (nossf || overriderFound)
+                {
+                    Directory.CreateDirectory(matssf);
+                    string resourcePath = Application.StartupPath + "\\" + Resources.SSFResource + ".bak";
+                    string startexecutePath = folderPath + Resources.SSFFolder;
+                    string destFile = startexecutePath + Resources.SSFResource + ".CAB";
+                    unpackResource(resourcePath, destFile, startexecutePath, true);
+                }
             }
             catch (SystemException ex)
             {
                 AddException(ex);//                throw;
             }
         }
-
-        private static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
-        {
-            bool duplicates = false;
-
-            IList<object> hs = Dumb.HashFrom<object>(table.Columns[UniqueField]);
-
-            if (hs.Count != table.Rows.Count) //there are duplicates!!
-            {
-                IEnumerable<DataRow> rows = null;
-                foreach (object s in hs)
-                {
-                    rows = table.AsEnumerable();
-                    rows = rows.Where(d => d.Field<object>(UniqueField).Equals(s));
-                    if (rows.Count() > 1)// there are sample duplicates
-                    {
-                        rows = rows.OrderByDescending(d => d.Field<object>(IndexField)); //most recent is the first, older the last
-                        rows = rows.Take(rows.Count() - 1);
-                        foreach (DataRow d in rows)
-                        {
-                            remover.Invoke(d.Field<int>(IndexField));
-                        }
-                    }
-                }
-
-                hs.Clear();
-                hs = null;
-
-                duplicates = true;
-            }
-
-            return duplicates;
-        }
-
-        /*
-    public void PopulateSubSamples()
-    {
-    try
-    {
-       this.tableSubSamples.Clear();
-       this.tableSubSamples.BeginLoadData();
-       TAM.SubSamplesTableAdapter.DeleteNulls();
-       LINAA.SubSamplesDataTable newsamples = new SubSamplesDataTable(false);
-       TAM.SubSamplesTableAdapter.Fill(newsamples);
-       this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
-
-       foreach (LINAA.SubSamplesRow s in this.tableSubSamples)
-       {
-          if (s.IsCapsulesIDNull()) continue;
-          if (s.CapsulesRow == null) continue;
-          int id = s.CapsulesRow.VialTypeID;
-          bool enaa = s.CapsulesRow.ENAA;
-         // s.CapsulesID = id;
-     //	 s.ENAA = enaa;
-
-          this.tAM.SubSamplesTableAdapter.UpdateCaps(enaa, id, s.SubSamplesID);
-       }
-
-       // LINAA.SetAdded(ref old);
-       this.tableSubSamples.EndLoadData();
-       this.tableSubSamples.AcceptChanges();
-    }
-    catch (SystemException ex)
-    {
-       this.AddException(ex);
-    }
-    }
-    */
 
         public void Read(string filepath)
         {
@@ -300,12 +235,154 @@ namespace DB
             Dumb.FD<LINAA>(ref dt);
         }
 
-        public void Help()
+        public void RestartingRoutine()
         {
-            string path = folderPath + DB.Properties.Resources.Features;
-            if (!System.IO.File.Exists(path)) return;
-
-            Dumb.Process(new System.Diagnostics.Process(), appPath, "notepad.exe", path, false, false, 0);
+            string cmd = Application.StartupPath + Resources.Restarting;
+            if (System.IO.File.Exists(cmd))
+            {
+                //  restarting = true;
+                string email = System.IO.File.ReadAllText(cmd);
+                System.IO.File.Delete(cmd);
+                GenerateReport("Restarting succeeded...", string.Empty, string.Empty, DataSetName, email);
+            }
         }
+
+        private static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
+        {
+            bool duplicates = false;
+
+            IList<object> hs = Dumb.HashFrom<object>(table.Columns[UniqueField]);
+
+            if (hs.Count != table.Rows.Count) //there are duplicates!!
+            {
+                IEnumerable<DataRow> rows = null;
+                foreach (object s in hs)
+                {
+                    rows = table.AsEnumerable();
+                    rows = rows.Where(d => d.Field<object>(UniqueField).Equals(s));
+                    if (rows.Count() > 1)// there are sample duplicates
+                    {
+                        rows = rows.OrderByDescending(d => d.Field<object>(IndexField)); //most recent is the first, older the last
+                        rows = rows.Take(rows.Count() - 1);
+                        foreach (DataRow d in rows)
+                        {
+                            remover.Invoke(d.Field<int>(IndexField));
+                        }
+                    }
+                }
+
+                hs.Clear();
+                hs = null;
+
+                duplicates = true;
+            }
+
+            return duplicates;
+        }
+
+        private void installResources(string solcoi, string matssf)
+        {
+            //VOLVER A PONER TODO
+        }
+
+        private void populateReplaceFile(string path, string developerPath)
+        {
+            try
+            {
+                //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
+                if (File.Exists(developerPath))
+                {
+                    File.Copy(developerPath, path, true);
+                    File.Delete(developerPath);
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);//                throw;
+            }
+        }
+
+        private void populateDirectory(string path, bool overrider)
+        {
+            try
+            {
+                if (!Directory.Exists(path) || overrider)
+                {
+                    Directory.CreateDirectory(path);
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);//                throw;
+            }
+        }
+
+        private void populateFeaturesDirectory(string features, string currentpath)
+        {
+            try
+            {
+                bool feats = File.Exists(features);
+                if (feats)
+                {
+                    File.Copy(features, currentpath, true);
+                    File.Delete(features);
+                    Help();
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);//                throw;
+            }
+        }
+
+        private void unpackResource(string resourcePath, string destFile, string startExecutePath, bool unpack)
+        {
+            if (File.Exists(resourcePath))
+            {
+                File.Copy(resourcePath, destFile);
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //conservar esto para unzippear
+                if (unpack)
+                {
+                    Rsx.Dumb.Process(process, startExecutePath, "expand.exe", destFile + " -F:* " + startExecutePath, false, true, 100000);
+                    File.Delete(destFile);
+                }
+            }
+        }
+
+        /*
+    public void PopulateSubSamples()
+    {
+    try
+    {
+       this.tableSubSamples.Clear();
+       this.tableSubSamples.BeginLoadData();
+       TAM.SubSamplesTableAdapter.DeleteNulls();
+       LINAA.SubSamplesDataTable newsamples = new SubSamplesDataTable(false);
+       TAM.SubSamplesTableAdapter.Fill(newsamples);
+       this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
+
+       foreach (LINAA.SubSamplesRow s in this.tableSubSamples)
+       {
+          if (s.IsCapsulesIDNull()) continue;
+          if (s.CapsulesRow == null) continue;
+          int id = s.CapsulesRow.VialTypeID;
+          bool enaa = s.CapsulesRow.ENAA;
+         // s.CapsulesID = id;
+     //	 s.ENAA = enaa;
+
+          this.tAM.SubSamplesTableAdapter.UpdateCaps(enaa, id, s.SubSamplesID);
+       }
+
+       // LINAA.SetAdded(ref old);
+       this.tableSubSamples.EndLoadData();
+       this.tableSubSamples.AcceptChanges();
+    }
+    catch (SystemException ex)
+    {
+       this.AddException(ex);
+    }
+    }
+    */
     }
 }

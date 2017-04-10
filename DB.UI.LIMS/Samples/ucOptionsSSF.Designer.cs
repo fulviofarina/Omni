@@ -34,6 +34,8 @@
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.calcDensity = new System.Windows.Forms.ToolStripMenuItem();
+            this.findRadius = new System.Windows.Forms.ToolStripMenuItem();
+            this.findlength = new System.Windows.Forms.ToolStripMenuItem();
             this.loop = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,9 +54,7 @@
             this.SQL = new System.Windows.Forms.ToolStripMenuItem();
             this.FolderPath = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.export = new System.Windows.Forms.ToolStripMenuItem();
-            this.findlength = new System.Windows.Forms.ToolStripMenuItem();
-            this.findRadius = new System.Windows.Forms.ToolStripMenuItem();
+            this.Save = new System.Windows.Forms.ToolStripMenuItem();
             this.TS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +68,7 @@
             this.toolStripSeparator8,
             this.OptionsBtn,
             this.toolStripSeparator13,
-            this.export});
+            this.Save});
             this.TS.Location = new System.Drawing.Point(0, 0);
             this.TS.Name = "TS";
             this.TS.Size = new System.Drawing.Size(670, 115);
@@ -129,6 +129,24 @@
             this.calcDensity.Name = "calcDensity";
             this.calcDensity.Size = new System.Drawing.Size(293, 30);
             this.calcDensity.Text = "Find Density";
+            // 
+            // findRadius
+            // 
+            this.findRadius.Checked = true;
+            this.findRadius.CheckOnClick = true;
+            this.findRadius.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.findRadius.Name = "findRadius";
+            this.findRadius.Size = new System.Drawing.Size(293, 30);
+            this.findRadius.Text = "Find Radius";
+            // 
+            // findlength
+            // 
+            this.findlength.Checked = true;
+            this.findlength.CheckOnClick = true;
+            this.findlength.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.findlength.Name = "findlength";
+            this.findlength.Size = new System.Drawing.Size(293, 30);
+            this.findlength.Text = "Find Length";
             // 
             // loop
             // 
@@ -264,31 +282,13 @@
             this.toolStripSeparator13.Name = "toolStripSeparator13";
             this.toolStripSeparator13.Size = new System.Drawing.Size(6, 115);
             // 
-            // export
+            // Save
             // 
-            this.export.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.export.ForeColor = System.Drawing.Color.DarkOrange;
-            this.export.Name = "export";
-            this.export.Size = new System.Drawing.Size(70, 115);
-            this.export.Text = "SAVE";
-            // 
-            // findlength
-            // 
-            this.findlength.Checked = true;
-            this.findlength.CheckOnClick = true;
-            this.findlength.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.findlength.Name = "findlength";
-            this.findlength.Size = new System.Drawing.Size(293, 30);
-            this.findlength.Text = "Find Length";
-            // 
-            // findRadius
-            // 
-            this.findRadius.Checked = true;
-            this.findRadius.CheckOnClick = true;
-            this.findRadius.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.findRadius.Name = "findRadius";
-            this.findRadius.Size = new System.Drawing.Size(293, 30);
-            this.findRadius.Text = "Find Radius";
+            this.Save.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Save.ForeColor = System.Drawing.Color.DarkOrange;
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(70, 115);
+            this.Save.Text = "SAVE";
             // 
             // ucOptionsSSF
             // 
@@ -329,7 +329,7 @@
         private System.Windows.Forms.ToolStripMenuItem SQL;
         private System.Windows.Forms.ToolStripTextBox FolderPath;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
-        private System.Windows.Forms.ToolStripMenuItem export;
+        private System.Windows.Forms.ToolStripMenuItem Save;
         private System.Windows.Forms.ToolStripMenuItem findRadius;
         private System.Windows.Forms.ToolStripMenuItem findlength;
     }

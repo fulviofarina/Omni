@@ -11,16 +11,9 @@ namespace DB.Tools
 {
     public class Creator
     {
-        /// <summary>
-        /// a worker to keep in cache (static) for populating a database...
-        /// </summary>
+        private static Rsx.Loader worker = null;
 
-        /// <summary>
-        /// Creates a background worker that will feedback through an inputed runworkerCompleted handler
-        /// </summary>
-        /// <param name="Linaa">database to load</param>
-        /// <param name="handler">required handler to report feedback when completed</param>
-
+        private static string askToSave = "Changes in the LIMS " + " has not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
         private static object dataset = null;
         private static Action lastCallBack = null;
         private static Action mainCallBack = null;
@@ -51,10 +44,9 @@ namespace DB.Tools
         /// <param name="Linaa">referenced database to build (can be a null reference)</param>
         /// <param name="notify">referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition </param>
-        public static string Build(ref LINAA Linaa, ref System.Windows.Forms.NotifyIcon notify, ref Pop msn)
+        public static string Build(ref LINAA Linaa, ref System.Windows.Forms.NotifyIcon notify, ref Pop msn, int populNr)
         {
             //restarting = false;
-            dataset = null;
 
             if (Linaa != null)
             {
@@ -62,7 +54,10 @@ namespace DB.Tools
                 Dumb.FD<LINAA>(ref Linaa);
             }
             Linaa = new LINAA();
+
+            dataset = null;
             dataset = Linaa;
+
             Linaa.InitializeComponent();
 
             if (msn != null)
@@ -76,29 +71,20 @@ namespace DB.Tools
                 Linaa.Msg(Linaa.DataSetName + "- Database loading in progress", "Please wait...");
             }
 
+            //populate directories
+            Linaa.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            Linaa.FolderPath += Resources.k0XFolder; //cambiar esto
+
+            Linaa.PopulateResourceDirectory(Linaa.FolderPath);
+
+            Linaa.PopulateUserDirectories();
             //perform basic loading
-            Action[] populMethod = Linaa.PMBasic(); //i think this only loads the preferences
+            Linaa.PopulateColumnExpresions();
+            Linaa.PopulatePreferences();
 
-            foreach (Action a in populMethod)
-            {
-                try
-                {
-                    a.Invoke();
-                }
-                catch (SystemException ex)
-                {
-                    Linaa.AddException(ex);
-                }
-            }
+            Linaa.SavePreferences();
 
-            string cmd = Application.StartupPath + Resources.Restarting;
-            if (System.IO.File.Exists(cmd))
-            {
-                //  restarting = true;
-                string email = System.IO.File.ReadAllText(cmd);
-                System.IO.File.Delete(cmd);
-                Linaa.GenerateReport("Restarting succeeded...", string.Empty, string.Empty, Linaa.DataSetName, email);
-            }
+            Linaa.RestartingRoutine();
 
             Linaa.InitializeAdapters(); //why was this after the next code? //check
 
@@ -107,6 +93,10 @@ namespace DB.Tools
                 string title = DB.Properties.Errors.Error404;
                 title += Linaa.Exception;
                 result = title;
+            }
+            else
+            {
+                loadMethods(ref Linaa, populNr);
             }
 
             return result;
@@ -122,9 +112,9 @@ namespace DB.Tools
         {
             bool eCancel = false;
 
-            IEnumerable<System.Data.DataTable> tables = Linaa.GetTablesWithChanges();
+            IEnumerable<DataTable> tables = Linaa.GetTablesWithChanges();
 
-            System.Collections.Generic.IList<string> tablesLs = tables.Select(o => o.TableName).Distinct().ToList();
+            IList<string> tablesLs = tables.Select(o => o.TableName).Distinct().ToList();
 
             bool takeChanges = false;
 
@@ -132,53 +122,50 @@ namespace DB.Tools
             {
                 string tablesToSave = string.Empty;
                 foreach (string s in tablesLs) tablesToSave += s + "\n";
-                string ask = "Changes in the LIMS " + " has not been saved yet\n\nDo you want to save the changes on the following tables?\n\n" + tablesToSave;
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(ask, "Save Changes...", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Warning);
-                if (result == System.Windows.Forms.DialogResult.Yes) takeChanges = true;
-                else if (result == System.Windows.Forms.DialogResult.Cancel)
+                string ask = askToSave + tablesToSave;
+                MessageBoxButtons mb = MessageBoxButtons.YesNoCancel;
+                MessageBoxIcon icon = MessageBoxIcon.Warning;
+                DialogResult result = MessageBox.Show(ask, "Save Changes...", mb, icon);
+                if (result == DialogResult.Yes) takeChanges = true;
+                else if (result == DialogResult.Cancel)
                 {
                     eCancel = true;
                     return eCancel;
                 }
             }
 
-            try
-            {
-                Linaa.SavePreferences();
-                if (takeChanges)
-                {
-                    foreach (System.Data.DataTable t in tables)
-                    {
-                        IEnumerable<DataRow> rows = t.AsEnumerable();
-                        Linaa.Save(ref rows);
-                    }
-                }
-            }
-            catch (SystemException ex)
-            {
-                Linaa.AddException(ex);
-            }
-            try
-            {
-                string LIMSPath = Linaa.FolderPath + DB.Properties.Resources.Linaa;
-                if (System.IO.File.Exists(LIMSPath))
-                {
-                    System.IO.File.Copy(LIMSPath, LIMSPath.Replace(".xml", "." + DateTime.Now.DayOfYear.ToString() + ".xml"), true);
-                    System.IO.File.Delete(LIMSPath);
-                }
-                Linaa.WriteXml(LIMSPath, XmlWriteMode.WriteSchema);
-                Linaa.SaveExceptions();
-            }
-            catch (SystemException ex)
-            {
-                eCancel = true;
-                Linaa.AddException(ex);
-            }
+            Linaa.SavePreferences();
+
+            bool savedremotely = Linaa.SaveRemote(ref tables, takeChanges);
+            bool savedlocally = Linaa.SaveLocalCopy();
+
+            eCancel = !savedremotely || !savedlocally;
+            //if cancel, this means that a remote or a local copy could not be saved,
+            //not good, this is the worst nightmare...
+            //the backup
 
             return eCancel;
         }
 
-        public static void Load(ref LINAA Linaa, int populNr)
+        /// <summary>
+        /// The methods are loaded already, just execute...
+        /// rename maybe..
+        /// </summary>
+        public static void Load()
+        {
+            if (worker != null)
+            {
+                worker.RunWorkerAsync(dataset);
+            }
+            // else throw new SystemException("No Populate Method was assigned");
+        }
+
+        /// <summary>
+        /// Creates a background worker that will feedback through an inputed runworkerCompleted handler
+        /// </summary>
+        /// <param name="Linaa">database to load</param>
+        /// <param name="handler">required handler to report feedback when completed</param>
+        public static void loadMethods(ref LINAA Linaa, int populNr)
         {
             IList<Action> auxM = null;
 
@@ -218,24 +205,24 @@ namespace DB.Tools
                 enums = enums.Union(Linaa.PMDetect());
 
                 auxM = enums.ToList();
-                auxM.Add(Linaa.PopulateUnits);
+                //      auxM.Add(Linaa.PopulateUnits);
 
                 report = Linaa.ReportProgress;
-                todo = EndUI;
+                todo = endRoutine;
             }
 
             if (auxM != null)
             {
-                Rsx.Loader worker = null;
+                disposeWorker();
+
                 worker = new Rsx.Loader();
 
                 worker.Set(auxM, todo, report);
-                worker.RunWorkerAsync(Linaa);
             }
             // else throw new SystemException("No Populate Method was assigned");
         }
 
-        private static void DisposeWorker(ref Rsx.Loader worker)
+        private static void disposeWorker()
         {
             if (worker != null)
             {
@@ -245,15 +232,21 @@ namespace DB.Tools
             }
         }
 
-        private static void EndUI()
+        private static void endRoutine()
         {
             LINAA Linaa = dataset as LINAA;
-            if (mainCallBack != null) mainCallBack();
+            mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
+            //oh these guys changed the sintaxis?
+            //wow...
+
+            //DataTable d =  Linaa?.Acquisitions;
+
             Application.DoEvents();
             Linaa.ReportFinished();
             toPopulate++;
 
-            Load(ref Linaa, toPopulate);
+            loadMethods(ref Linaa, toPopulate);
+            Load();
         }
     }
 }

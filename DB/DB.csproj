@@ -92,14 +92,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="LINAA.xsc">
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </None>
-    <None Include="LINAA.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>LINAA.Designer.cs</LastGenOutput>
-    </None>
     <Compile Include="Adapter\Adapter.cs" />
     <Compile Include="Adapter\Adapter.NAA.Irradiations.cs" />
     <Compile Include="Adapter\Adapter.NAA,Peaks.cs" />
@@ -111,6 +103,11 @@
     <Compile Include="Interface\BindingSources.cs" />
     <Compile Include="Interface\Current.cs" />
     <Compile Include="Interface\Populate.cs" />
+    <Compile Include="LINAA.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Populate\Interfaces\IIrradiations.cs" />
     <Compile Include="Populate\Interfaces\IProjects.cs" />
     <Compile Include="Populate\Interfaces\IOrders.cs" />
@@ -123,13 +120,13 @@
     <Compile Include="Main\IMain.cs" />
     <Compile Include="Adapter\IAdapter.cs" />
     <Compile Include="DB\IDB.cs" />
-    <Compile Include="Report\IReport.cs" />
-    <Compile Include="Store\IStore.cs" />
-    <Compile Include="LINAA.Designer.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LINAA.xsd</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Report\IReport.cs" />
+    <Compile Include="Store\IStore.cs" />
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,16 +202,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="LINAA.xsc">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </None>
+    <None Include="LINAA.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LINAA.Designer.cs</LastGenOutput>
+    </None>
     <None Include="LINAA.xss">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
