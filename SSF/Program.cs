@@ -135,6 +135,8 @@ namespace SSF
                     //    Control ctrl4 = ucSubSamples;
                     //   uc.AttachSampleCtrl(ref ctrl4);
 
+                    System.Diagnostics.Process.Start("wpi://SQLExpress/");
+
                     LIMS.Form.Visible = true;
 
                     form.Opacity = 100;

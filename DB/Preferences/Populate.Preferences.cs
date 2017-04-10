@@ -14,7 +14,7 @@ namespace DB
         private PreferencesRow currentPref;
 
         private SSFPrefRow currentSSFPref;
-        private string winUser = WindowsIdentity.GetCurrent().Name.ToUpper();
+        private string windowsUser = WindowsIdentity.GetCurrent().Name.ToUpper();
 
         public PreferencesRow CurrentPref
         {
@@ -34,16 +34,16 @@ namespace DB
             set { currentSSFPref = value; }
         }
 
-        public string WinUser
+        public string WindowsUser
         {
             get
             {
-                return winUser;
+                return windowsUser;
             }
 
             set
             {
-                winUser = value;
+                windowsUser = value;
             }
         }
 
@@ -153,7 +153,7 @@ namespace DB
 
             Func<DataRow, bool> selector = p =>
             {
-                return p.Field<string>("WindowsUser").CompareTo(winUser) == 0;
+                return p.Field<string>("WindowsUser").CompareTo(windowsUser) == 0;
             };
 
             DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
@@ -165,7 +165,7 @@ namespace DB
                 if (this.currentSSFPref == null)
                 {
                     this.currentPref = dt.LoadDataRow(row.ItemArray, true) as PreferencesRow;
-                    this.currentPref.WindowsUser = winUser;
+                    this.currentPref.WindowsUser = windowsUser;
                 }
                 this.currentPref.Check();
             }
@@ -174,7 +174,7 @@ namespace DB
                 if (this.currentSSFPref == null)
                 {
                     this.currentSSFPref = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
-                    this.currentSSFPref.WindowsUser = winUser;
+                    this.currentSSFPref.WindowsUser = windowsUser;
                 }
                 this.currentSSFPref.Check();
             }

@@ -100,7 +100,7 @@ namespace DB
         {
             if (e == null) return;
             MessageQueue qMsg1 = sender as MessageQueue;
-            string user = this.currentPref.WindowsUser;
+            string user = this.WindowsUser;
             try
             {
                 Message w = e.Message;

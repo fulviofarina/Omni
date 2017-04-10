@@ -10,7 +10,7 @@ namespace DB
         void PopulatePreferences();
 
         //     void PopulateSSFPreferences();
-        string WinUser
+        string WindowsUser
         {
             get;
 
