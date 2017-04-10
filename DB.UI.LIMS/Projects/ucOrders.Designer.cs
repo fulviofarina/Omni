@@ -75,7 +75,7 @@
             // 
             // Linaa
             // 
-            this.Linaa.CurrentPref = null;
+         //   this.Linaa.CurrentPref = null;
             this.Linaa.DataSetName = "LINAA";
             this.Linaa.DetectorsList =null;
             this.Linaa.EnforceConstraints = false;

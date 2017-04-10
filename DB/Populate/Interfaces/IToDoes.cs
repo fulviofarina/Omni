@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using static DB.LINAA;
+﻿using System.Collections.Generic;
 
 /// <summary>
 /// DB (LINAA) interfaces

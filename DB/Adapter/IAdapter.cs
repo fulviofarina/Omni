@@ -9,6 +9,8 @@ namespace DB
     {
         void DisposeAdapters();
 
+        QTA QTA { get; set; }
+
         void DisposeSolCoinAdapters();
 
         void InitializeAdapters();

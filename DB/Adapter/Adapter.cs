@@ -1,5 +1,6 @@
 ﻿//using DB.Interfaces;
 using System.Data.OleDb;
+using DB.LINAATableAdapters;
 
 namespace DB
 {
@@ -58,37 +59,20 @@ namespace DB
 
       */
 
-        private delegate int TAMDeleteMethod(int index);
-
-        //  private System.ComponentModel.IContainer components;
+        /// <summary>
+        /// Queries of this dataset
+        /// </summary>
+        private LINAATableAdapters.QTA qTA;
 
         /// <summary>
         /// The master Table Adapter Manager of this dataset
         /// </summary>
         private LINAATableAdapters.TableAdapterManager tAM;
 
+        //  private System.ComponentModel.IContainer components;
         private System.Exception tAMException = null;
 
-        /// <summary>
-        /// Queries of this dataset
-        /// </summary>
-        public LINAATableAdapters.QTA QTA;
-
-        public void InitializeComponent()
-        {
-            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
-
-            this.tAM = new DB.LINAATableAdapters.TableAdapterManager();
-            this.QTA = new DB.LINAATableAdapters.QTA();
-
-            this.tAM.UpdateOrder = DB.LINAATableAdapters.TableAdapterManager.UpdateOrderOption.UpdateInsertDelete;
-            this.EnforceConstraints = false;
-            this.Locale = new System.Globalization.CultureInfo("");
-
-            adapters = new System.Collections.Hashtable();
-
-            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
-        }
+        private delegate int TAMDeleteMethod(int index);
 
         public string ChangeConnection
         {
@@ -142,6 +126,19 @@ namespace DB
             }
         }
 
+        public QTA QTA
+        {
+            get
+            {
+                return qTA;
+            }
+
+            set
+            {
+                qTA = value;
+            }
+        }
+
         public LINAATableAdapters.TableAdapterManager TAM
         {
             get { return tAM; }
@@ -181,6 +178,22 @@ namespace DB
             //     this.TAM.Connection.Close();
             //      this.TAM.Connection.ConnectionString = DB.Properties.Settings.Default.NAAConnectionString;
             //        this.TAM.Connection.Open();
+        }
+
+        public void InitializeComponent()
+        {
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+
+            this.tAM = new DB.LINAATableAdapters.TableAdapterManager();
+            this.qTA = new DB.LINAATableAdapters.QTA();
+
+            this.tAM.UpdateOrder = DB.LINAATableAdapters.TableAdapterManager.UpdateOrderOption.UpdateInsertDelete;
+            this.EnforceConstraints = false;
+            this.Locale = new System.Globalization.CultureInfo("");
+
+            adapters = new System.Collections.Hashtable();
+
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
         }
 
         /// <summary>

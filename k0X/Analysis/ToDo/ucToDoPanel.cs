@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DB;
 using DB.UI;
 using Rsx;
+using DB.Tools;
 
 namespace k0X
 {
@@ -17,21 +18,21 @@ namespace k0X
 
         private LINAA Linaa = null;
 
-        public ucToDoPanel(ref LINAA set)
+        public ucToDoPanel(ref Interface set)
         {
             this.InitializeComponent();
             this.Undock1.Visible = false; //button hidden
             this.Undock2.Visible = false; //button hidden
 
-            Linaa = set;
+            Linaa = set.Get();
 
             ucToDoData = new ucToDoData(ref set);
             ucToDoData.Daddy = this;
 
             this.ToDoMenu.Items.Insert(0, ucToDoData.ToDoLabelBox);
 
-            Dumb.FillABox(panel1box, set.ProjectsList, true, false);
-            Dumb.FillABox(panel2box, set.ProjectsList, true, false);
+            Dumb.FillABox(panel1box, Linaa.ProjectsList, true, false);
+            Dumb.FillABox(panel2box, Linaa.ProjectsList, true, false);
 
             AuxiliarForm form = new AuxiliarForm();
             form.Text = "ToDo Panel - Simple View";

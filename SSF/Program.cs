@@ -66,6 +66,12 @@ namespace SSF
                 //create database
                 string result = Creator.Build(ref LIMS.Linaa, ref con, ref msn, 0);
 
+                LIMS.Interface = new Interface(ref LIMS.Linaa);
+
+                LIMS.Form = new LIMS(); //make a new UI LIMS
+                                        //  LIMS.Form.WindowState = FormWindowState.Minimized;
+
+                LIMS.Form.Visible = true;
                 //    DB.Tools.Creator.CallBack = delegate
                 //    {
                 // Application.DoEvents();
@@ -75,11 +81,9 @@ namespace SSF
                 DB.Tools.Creator.LastCallBack = delegate
                 {
                     //make a new interface
-                    LIMS.Interface = new Interface(ref LIMS.Linaa);
+
                     //set user control list
                     //create LIMS form
-                    LIMS.Form = new LIMS(); //make a new UI LIMS
-                    LIMS.Form.WindowState = FormWindowState.Minimized;
 
                     //create form for SubSamples
                     UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
@@ -135,11 +139,12 @@ namespace SSF
                     //    Control ctrl4 = ucSubSamples;
                     //   uc.AttachSampleCtrl(ref ctrl4);
 
-                    System.Diagnostics.Process.Start("wpi://SQLExpress/");
-
-                    LIMS.Form.Visible = true;
+                    //    System.Diagnostics.Process.Start("wpi://SQLExpress/");
 
                     form.Opacity = 100;
+
+                    Application.DoEvents();
+                    LIMS.Interface.IReport.ReportFinished();
                 };
 
                 if (!string.IsNullOrEmpty(result))

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Windows.Forms;
 using Msn;
 
@@ -64,45 +65,27 @@ namespace DB
 
     public partial class LINAA : IReport
     {
-        public void ReportFinished()
-        {
-            if (Exceptions.Count != 0)
-            {
-                Speak("Loading finished! However... some errors were found");
-            }
-            else Speak("Loading finished!");
+        private Pop msn = null;
 
-            try
-            {
-                string user = this.WindowsUser;
-                LINAA.PreferencesRow p = this.currentPref;
-
-                string comment = findHellos(ref user, ref p);
-
-                string[] txtTitle = findGreeting(ref user);
-
-                Msg(txtTitle[0], txtTitle[1]);
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);
-            }
-        }
+        private NotifyIcon notify = null;
 
         public bool IsSpectraPathOk
         {
             get
             {
-                string spec = currentPref.Spectra;
+                string spec = this.Preferences.FirstOrDefault()?.Spectra;
                 if (string.IsNullOrEmpty(spec)) return false;
                 else return Directory.Exists(spec);
             }
         }
 
+        public Pop Msn
+        {
+            get { return msn; }
+            set { msn = value; }
+        }
+
         //  private System.Drawing.Icon mainIcon = null;
-
-        private NotifyIcon notify = null;
-
         public NotifyIcon Notify
         {
             get { return notify; }
@@ -116,12 +99,23 @@ namespace DB
             }
         }
 
-        private Pop msn = null;
-
-        public Pop Msn
+        public void ChatMe(ref LINAA.PreferencesRow p)
         {
-            get { return msn; }
-            set { msn = value; }
+            try
+            {
+                string windowsUser = WindowsIdentity.GetCurrent().Name.ToUpper();
+                //   LINAA.PreferencesRow p = this.currentPref;
+
+                string comment = findHellos(ref windowsUser, ref p);
+
+                string[] txtTitle = findGreeting(ref windowsUser);
+
+                Msg(txtTitle[0], txtTitle[1]);
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
+            }
         }
 
         public void Msg(string msg, string title, bool ok)
@@ -139,14 +133,23 @@ namespace DB
             this.msn.Msg(msg, title, true);
         }
 
-        public void Speak(string text)
+        public void ReportFinished()
         {
-            this.msn.Speak(text);
+            if (Exceptions.Count != 0)
+            {
+                Speak("Loading finished! However... some errors were found");
+            }
+            else Speak("Loading finished!");
         }
 
         public void ReportProgress(int percentage)
         {
             this.msn.ReportProgress(percentage);
+        }
+
+        public void Speak(string text)
+        {
+            this.msn.Speak(text);
         }
     }
 }

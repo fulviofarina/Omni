@@ -9,12 +9,12 @@ using Rsx;
 
 namespace DB
 {
-    public partial class LINAA : IPreferences
+    public partial class LINAA // : IPreferences
     {
+        /*
         private PreferencesRow currentPref;
 
         private SSFPrefRow currentSSFPref;
-        private string windowsUser = WindowsIdentity.GetCurrent().Name.ToUpper();
 
         public PreferencesRow CurrentPref
         {
@@ -33,19 +33,7 @@ namespace DB
             }
             set { currentSSFPref = value; }
         }
-
-        public string WindowsUser
-        {
-            get
-            {
-                return windowsUser;
-            }
-
-            set
-            {
-                windowsUser = value;
-            }
-        }
+        */
 
         /// <summary>
         /// Reads the preferences files
@@ -150,7 +138,7 @@ namespace DB
             string path = string.Empty;
 
             findTableAndPath<T>(out dt, out path);
-
+            string windowsUser = WindowsIdentity.GetCurrent().Name.ToUpper();
             Func<DataRow, bool> selector = p =>
             {
                 return p.Field<string>("WindowsUser").CompareTo(windowsUser) == 0;
@@ -162,21 +150,20 @@ namespace DB
             Type tipo = typeof(T);
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
-                if (this.currentSSFPref == null)
-                {
-                    this.currentPref = dt.LoadDataRow(row.ItemArray, true) as PreferencesRow;
-                    this.currentPref.WindowsUser = windowsUser;
-                }
-                this.currentPref.Check();
+                // if (this.currentSSFPref == null)
+                //  {
+                PreferencesRow p = dt.LoadDataRow(row.ItemArray, true) as PreferencesRow;
+                p.WindowsUser = windowsUser;
+                //  }
+                p.Check();
             }
             else
             {
-                if (this.currentSSFPref == null)
-                {
-                    this.currentSSFPref = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
-                    this.currentSSFPref.WindowsUser = windowsUser;
-                }
-                this.currentSSFPref.Check();
+                SSFPrefRow p = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
+                p.WindowsUser = windowsUser;
+
+                // }
+                p.Check();
             }
         }
 

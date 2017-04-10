@@ -8,6 +8,22 @@ namespace DB
 {
     public partial class LINAA : IDetSol
     {
+        /// <summary>
+        /// Gets a non-repeated list of Detectors in the database
+        /// </summary>
+        protected internal ICollection<string> detectorsList;
+
+        public ICollection<string> DetectorsList
+        {
+            get
+            {
+                if (detectorsList != null) detectorsList.Clear();
+                detectorsList = Dumb.HashFrom<string>(this.DetectorsDimensions.DetectorColumn);  //list of detectors
+                return detectorsList;
+            }
+            set { detectorsList = value; }
+        }
+
         //   #region Populate Detectors/Solang
         public Action[] PMDetect()
         {
@@ -31,22 +47,6 @@ namespace DB
             COIN.AcceptChanges();
         }
 
-        public void PopulateDetectorCurves()
-        {
-            try
-            {
-                this.tableDetectorsCurves.BeginLoadData();
-                this.tableDetectorsCurves.Clear();
-                this.TAM.DetectorsCurvesTableAdapter.Fill(this.tableDetectorsCurves);
-                this.tableDetectorsCurves.EndLoadData();
-                this.tableDetectorsCurves.AcceptChanges();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
-
         public void PopulateDetectorAbsorbers()
         {
             try
@@ -56,6 +56,22 @@ namespace DB
                 this.TAM.DetectorsAbsorbersTableAdapter.Fill(this.tableDetectorsAbsorbers);
                 this.tableDetectorsAbsorbers.EndLoadData();
                 this.tableDetectorsAbsorbers.AcceptChanges();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        public void PopulateDetectorCurves()
+        {
+            try
+            {
+                this.tableDetectorsCurves.BeginLoadData();
+                this.tableDetectorsCurves.Clear();
+                this.TAM.DetectorsCurvesTableAdapter.Fill(this.tableDetectorsCurves);
+                this.tableDetectorsCurves.EndLoadData();
+                this.tableDetectorsCurves.AcceptChanges();
             }
             catch (SystemException ex)
             {
@@ -94,22 +110,6 @@ namespace DB
             {
                 this.AddException(ex);
             }
-        }
-
-        /// <summary>
-        /// Gets a non-repeated list of Detectors in the database
-        /// </summary>
-        protected internal ICollection<string> detectorsList;
-
-        public ICollection<string> DetectorsList
-        {
-            get
-            {
-                if (detectorsList != null) detectorsList.Clear();
-                detectorsList = Dumb.HashFrom<string>(this.DetectorsDimensions.DetectorColumn);  //list of detectors
-                return detectorsList;
-            }
-            set { detectorsList = value; }
         }
 
         //  #endregion Populate Detectors/Solang

@@ -172,8 +172,8 @@
             // Linaa
             // 
         //    this.Linaa.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
-            this.Linaa.CurrentPref = null;
-            this.Linaa.CurrentSSFPref = null;
+         //   this.Linaa.CurrentPref = null;
+      //      this.Linaa.CurrentSSFPref = null;
             this.Linaa.DataSetName = "LINAA";
             this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
             this.Linaa.EnforceConstraints = false;

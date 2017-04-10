@@ -4,28 +4,6 @@ namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        protected void InitializeOtherAdapters()
-        {
-            this.tAM.ElementsTableAdapter = new LINAATableAdapters.ElementsTableAdapter();
-            adapters.Add(this.tAM.ElementsTableAdapter, this.tAM.ElementsTableAdapter);
-            this.tAM.SigmasTableAdapter = new LINAATableAdapters.SigmasTableAdapter();
-            adapters.Add(this.tAM.SigmasTableAdapter, this.tAM.SigmasTableAdapter);
-            this.tAM.SigmasSalTableAdapter = new LINAATableAdapters.SigmasSalTableAdapter();
-            adapters.Add(this.tAM.SigmasSalTableAdapter, this.tAM.SigmasSalTableAdapter);
-            this.tAM.ReactionsTableAdapter = new LINAATableAdapters.ReactionsTableAdapter();
-            adapters.Add(this.tAM.ReactionsTableAdapter, this.tAM.ReactionsTableAdapter);
-            this.tAM.NAATableAdapter = new LINAATableAdapters.NAATableAdapter();
-            adapters.Add(this.tAM.NAATableAdapter, this.tAM.NAATableAdapter);
-            this.tAM.pValuesTableAdapter = new LINAATableAdapters.pValuesTableAdapter();
-            adapters.Add(this.tAM.pValuesTableAdapter, this.tAM.pValuesTableAdapter);
-            this.tAM.k0NAATableAdapter = new LINAATableAdapters.k0NAATableAdapter();
-            adapters.Add(this.tAM.k0NAATableAdapter, this.tAM.k0NAATableAdapter);
-            this.tAM.SchAcqsTableAdapter = new LINAATableAdapters.SchAcqsTableAdapter();
-            adapters.Add(this.tAM.SchAcqsTableAdapter, this.tAM.SchAcqsTableAdapter);
-            this.tAM.YieldsTableAdapter = new LINAATableAdapters.YieldsTableAdapter();
-            adapters.Add(this.tAM.YieldsTableAdapter, this.tAM.YieldsTableAdapter);
-        }
-
         protected void DisposeMainAdapters()
         {
             if (this.QTA != null) this.QTA.Dispose();
@@ -97,6 +75,28 @@ namespace DB
             this.tAM.pValuesTableAdapter = null;
             this.tAM.k0NAATableAdapter = null;
             this.tAM.SchAcqsTableAdapter = null;
+        }
+
+        protected void InitializeOtherAdapters()
+        {
+            this.tAM.ElementsTableAdapter = new LINAATableAdapters.ElementsTableAdapter();
+            adapters.Add(this.tAM.ElementsTableAdapter, this.tAM.ElementsTableAdapter);
+            this.tAM.SigmasTableAdapter = new LINAATableAdapters.SigmasTableAdapter();
+            adapters.Add(this.tAM.SigmasTableAdapter, this.tAM.SigmasTableAdapter);
+            this.tAM.SigmasSalTableAdapter = new LINAATableAdapters.SigmasSalTableAdapter();
+            adapters.Add(this.tAM.SigmasSalTableAdapter, this.tAM.SigmasSalTableAdapter);
+            this.tAM.ReactionsTableAdapter = new LINAATableAdapters.ReactionsTableAdapter();
+            adapters.Add(this.tAM.ReactionsTableAdapter, this.tAM.ReactionsTableAdapter);
+            this.tAM.NAATableAdapter = new LINAATableAdapters.NAATableAdapter();
+            adapters.Add(this.tAM.NAATableAdapter, this.tAM.NAATableAdapter);
+            this.tAM.pValuesTableAdapter = new LINAATableAdapters.pValuesTableAdapter();
+            adapters.Add(this.tAM.pValuesTableAdapter, this.tAM.pValuesTableAdapter);
+            this.tAM.k0NAATableAdapter = new LINAATableAdapters.k0NAATableAdapter();
+            adapters.Add(this.tAM.k0NAATableAdapter, this.tAM.k0NAATableAdapter);
+            this.tAM.SchAcqsTableAdapter = new LINAATableAdapters.SchAcqsTableAdapter();
+            adapters.Add(this.tAM.SchAcqsTableAdapter, this.tAM.SchAcqsTableAdapter);
+            this.tAM.YieldsTableAdapter = new LINAATableAdapters.YieldsTableAdapter();
+            adapters.Add(this.tAM.YieldsTableAdapter, this.tAM.YieldsTableAdapter);
         }
     }
 }

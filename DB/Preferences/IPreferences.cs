@@ -1,26 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using DB.LINAATableAdapters;
-
-namespace DB
+﻿namespace DB
 {
     public interface IPreferences
     {
-        void PopulatePreferences();
+        LINAA.PreferencesRow CurrentPref { get; }
 
-        //     void PopulateSSFPreferences();
-        string WindowsUser
-        {
-            get;
-
-            set;
-        }
-
-        LINAA.PreferencesRow CurrentPref { get; set; }
-
-        LINAA.SSFPrefRow CurrentSSFPref { get; set; }
-
-        //   void PopulateSSFPreferences();
+        LINAA.SSFPrefRow CurrentSSFPref { get; }
     }
 }

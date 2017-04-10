@@ -100,9 +100,6 @@
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\DB.cs" />
     <Compile Include="DB\NAA.Exceptions.cs" />
-    <Compile Include="Interface\BindingSources.cs" />
-    <Compile Include="Interface\Current.cs" />
-    <Compile Include="Interface\Populate.cs" />
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -120,6 +117,7 @@
     <Compile Include="Main\IMain.cs" />
     <Compile Include="Adapter\IAdapter.cs" />
     <Compile Include="DB\IDB.cs" />
+    <Compile Include="Preferences\IPreferences.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,8 +138,6 @@
     <Compile Include="DB\Geometry\NAA.Vial.cs" />
     <Compile Include="Populate\Populate.DetSol.cs" />
     <Compile Include="Populate\Populate.Geometry.cs" />
-    <Compile Include="Interface\Interface.cs" />
-    <Compile Include="Preferences\IPreferences.cs" />
     <Compile Include="Populate\Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Actions.cs" />
     <Compile Include="Populate\Populate.Components.cs" />

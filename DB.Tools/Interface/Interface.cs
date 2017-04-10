@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using Rsx;
-
-namespace DB
+﻿namespace DB.Tools
 {
     public partial class Interface
     {
@@ -12,7 +8,9 @@ namespace DB
         {
             interf = aux;
             IBS = new BindingSources();
-            ICurrent = new Current(ref IBS);
+            Interface inter = this;
+            ICurrent = new Current(ref IBS, ref inter);
+            IPreferences = ICurrent;
             IPopulate = new Populate(ref aux);
             IMain = (IMain)aux;
             IAdapter = (IAdapter)aux;
@@ -20,7 +18,7 @@ namespace DB
             IReport = (IReport)aux;
             IDB = (IDB)aux;
 
-            IPreferences = (IPreferences)aux;
+            //   IPreferences = (IPreferences)aux;
         }
 
         public LINAA Get()

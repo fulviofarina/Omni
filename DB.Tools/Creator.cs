@@ -54,11 +54,8 @@ namespace DB.Tools
                 Dumb.FD<LINAA>(ref Linaa);
             }
             Linaa = new LINAA();
-
-            dataset = null;
+            //   dataset = null;
             dataset = Linaa;
-
-            Linaa.InitializeComponent();
 
             if (msn != null)
             {
@@ -85,6 +82,8 @@ namespace DB.Tools
             Linaa.SavePreferences();
 
             Linaa.RestartingRoutine();
+
+            Linaa.InitializeComponent();
 
             Linaa.InitializeAdapters(); //why was this after the next code? //check
 
@@ -236,13 +235,13 @@ namespace DB.Tools
         {
             LINAA Linaa = dataset as LINAA;
             mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
-            //oh these guys changed the sintaxis?
-            //wow...
+                                    //oh these guys changed the sintaxis?
+                                    //wow...
 
             //DataTable d =  Linaa?.Acquisitions;
 
-            Application.DoEvents();
-            Linaa.ReportFinished();
+            //    Application.DoEvents();
+            //      Linaa.ReportFinished();
             toPopulate++;
 
             loadMethods(ref Linaa, toPopulate);

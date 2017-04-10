@@ -83,7 +83,7 @@ namespace k0X
 
                     LIMS.UserControls.Add(wD);
 
-                    wD.Link(ref Linaa, this.Name);
+                    wD.Link(ref Interface, this.Name);
                     if (!Linaa.IsSpectraPathOk)
                     {
                         Interface.IReport.Msg("Make sure the right Spectra Directory Path is given in the <DB Connections> (right-click on the Notifier)!", "Could not connect to Spectra Directory", false);

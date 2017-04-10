@@ -8,6 +8,47 @@ namespace DB
     public partial class LINAA
     {
         /// <summary>
+        /// Projects a referenced IEnumerable of DataRow into a new one with only distinct rows according to a given filter field and returns those eliminated
+        /// </summary>
+        /// <param name="peaks1"></param>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Distinct<T>(ref IEnumerable<T> peaks1, string field)
+        {
+            HashSet<string> hashy = new HashSet<string>();
+
+            IEnumerable<DataRow> eliminated = peaks1.OfType<DataRow>().ToList();  //all
+            IEnumerable<DataRow> passed = eliminated.Where(p => hashy.Add(p[field].ToString())).ToList();   //passed the filter
+
+            IEnumerable<T> aux = eliminated.Except(passed).OfType<T>().ToList();
+            eliminated = null;
+            peaks1 = passed.OfType<T>().ToList();
+            passed = null;
+            hashy.Clear();
+            hashy = null;
+            return aux;
+        }
+
+        public static IEnumerable<T> FindSelected<T>(IEnumerable<T> rows)
+        {
+            Type t = typeof(T);
+
+            if (t.Equals(typeof(SubSamplesRow)))
+            {
+                return rows.OfType<SubSamplesRow>().Where(s => s.Selected).Cast<T>();
+            }
+            else if (t.Equals(typeof(MeasurementsRow)))
+            {
+                return rows.OfType<MeasurementsRow>().Where(s => s.Selected).Cast<T>();
+            }
+            else if (t.Equals(typeof(PeaksRow)))
+            {
+                return rows.OfType<PeaksRow>().Where(s => s.Selected).Cast<T>();
+            }
+            else throw new SystemException("FindSelected not Implemented");
+        }
+
+        /// <summary>
         /// Get Peaks in need of calculations
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -30,25 +71,6 @@ namespace DB
             else return aux;
         }
 
-        public static IEnumerable<T> FindSelected<T>(IEnumerable<T> rows)
-        {
-            Type t = typeof(T);
-
-            if (t.Equals(typeof(SubSamplesRow)))
-            {
-                return rows.OfType<SubSamplesRow>().Where(s => s.Selected).Cast<T>();
-            }
-            else if (t.Equals(typeof(MeasurementsRow)))
-            {
-                return rows.OfType<MeasurementsRow>().Where(s => s.Selected).Cast<T>();
-            }
-            else if (t.Equals(typeof(PeaksRow)))
-            {
-                return rows.OfType<PeaksRow>().Where(s => s.Selected).Cast<T>();
-            }
-            else throw new SystemException("FindSelected not Implemented");
-        }
-
         /*
         public static void SetAdded<T>(ref IEnumerable<T> old)
         {
@@ -60,28 +82,6 @@ namespace DB
             }
         }
          */
-
-        /// <summary>
-        /// Projects a referenced IEnumerable of DataRow into a new one with only distinct rows according to a given filter field and returns those eliminated
-        /// </summary>
-        /// <param name="peaks1"></param>
-        /// <param name="field"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> Distinct<T>(ref IEnumerable<T> peaks1, string field)
-        {
-            HashSet<string> hashy = new HashSet<string>();
-
-            IEnumerable<DataRow> eliminated = peaks1.OfType<DataRow>().ToList();  //all
-            IEnumerable<DataRow> passed = eliminated.Where(p => hashy.Add(p[field].ToString())).ToList();   //passed the filter
-
-            IEnumerable<T> aux = eliminated.Except(passed).OfType<T>().ToList();
-            eliminated = null;
-            peaks1 = passed.OfType<T>().ToList();
-            passed = null;
-            hashy.Clear();
-            hashy = null;
-            return aux;
-        }
 
         public static IEnumerable<T> GetRowsAdded<T>(IEnumerable<T> table)
         {

@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using Rsx;
 using VTools;
+using DB.Tools;
 
 namespace DB.UI
 {

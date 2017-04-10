@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using DB.Tools;
 
 //using DB.Interfaces;
 using DB.UI;
@@ -131,17 +132,17 @@ namespace k0X
                 }
             }
 
-            if (LIMS.Linaa.CurrentPref.RowState == System.Data.DataRowState.Added)
+            if (LIMS.Interface.IPreferences.CurrentPref.RowState == System.Data.DataRowState.Added)
             {
                 LIMS.Linaa.Msg("You can change your preferences any time, such as:\n\nPeak-search window...;\nMinimum Peak-Area...;\nMaximum Peak-Uncertainty...;\netc...\n\nI will retrieve, use and store your latest preferences", "Hi, you are a new user!...");
-                LIMS.Linaa.CurrentPref.AcceptChanges();
+                LIMS.Interface.IPreferences.CurrentPref.AcceptChanges();
             }
 
             if (Box.Text.Equals(string.Empty)) return;
 
             if (Cursor.Current == Cursors.WaitCursor)
             {
-                LIMS.Linaa.CurrentPref.LastIrradiationProject = Box.Text;
+                LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject = Box.Text;
                 LIMS.Linaa.SavePreferences();
                 Box.Text = string.Empty;
 
@@ -155,9 +156,9 @@ namespace k0X
             Dumb.FillABox(this.Box, LIMS.Linaa.ProjectsList, true, false);
             Dumb.FillABox(this.Box, LIMS.Linaa.OrdersList, false, false);
 
-            this.autoload.Checked = LIMS.Linaa.CurrentPref.AutoLoad;
-            this.fillbyHL.Checked = LIMS.Linaa.CurrentPref.FillByHL;
-            this.fillBySpectra.Checked = LIMS.Linaa.CurrentPref.FillBySpectra;
+            this.autoload.Checked = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
+            this.fillbyHL.Checked = LIMS.Interface.IPreferences.CurrentPref.FillByHL;
+            this.fillBySpectra.Checked = LIMS.Interface.IPreferences.CurrentPref.FillBySpectra;
         }
 
         public void Panel_Click(object sender, EventArgs e)
@@ -166,11 +167,11 @@ namespace k0X
 
             if (sender == this.ToDoPanel || sender.GetType().Equals(typeof(ucPeaks)))
             {
-                ucToDoPanel todo = new ucToDoPanel(ref LIMS.Linaa);
+                ucToDoPanel todo = new ucToDoPanel(ref LIMS.Interface);
                 LIMS.UserControls.Add(todo);
                 LIMS.UserControls.Add(todo.ucToDoData);
-                todo.panel1box.Text = LIMS.Linaa.CurrentPref.LastIrradiationProject;
-                todo.panel2box.Text = LIMS.Linaa.CurrentPref.LastIrradiationProject;
+                todo.panel1box.Text = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                todo.panel2box.Text = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
             }
             else if (sender == this.Analysis || sender.GetType().Equals(typeof(ucSamples)))
             {

@@ -10,6 +10,19 @@ namespace DB
     {
         partial class ExceptionsDataTable
         {
+            public void AddExceptionsRow(Exception ex)
+            {
+                string target = string.Empty;
+                string stack = string.Empty;
+                string source = string.Empty;
+
+                if (ex.Source != null) source = ex.Source;
+                if (ex.TargetSite != null) target = ex.TargetSite.Name;
+                if (ex.StackTrace != null) stack = ex.StackTrace;
+
+                AddExceptionsRow(target, ex.Message, stack, source, DateTime.Now);
+            }
+
             public void RemoveDuplicates()
             {
                 HashSet<string> hs = new HashSet<string>();
@@ -24,19 +37,6 @@ namespace DB
                 hs.Clear();
                 hs = null;
                 this.AcceptChanges();
-            }
-
-            public void AddExceptionsRow(Exception ex)
-            {
-                string target = string.Empty;
-                string stack = string.Empty;
-                string source = string.Empty;
-
-                if (ex.Source != null) source = ex.Source;
-                if (ex.TargetSite != null) target = ex.TargetSite.Name;
-                if (ex.StackTrace != null) stack = ex.StackTrace;
-
-                AddExceptionsRow(target, ex.Message, stack, source, DateTime.Now);
             }
         }
     }

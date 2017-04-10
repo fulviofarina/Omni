@@ -8,15 +8,16 @@ namespace DB
     {
         //
 
-        public void PopulateSigmas()
+        public void PopulateElements()
         {
             try
             {
-                this.tableSigmas.BeginLoadData();
-                this.tableSigmas.Clear();
-                this.TAM.SigmasTableAdapter.FillByReactions(this.tableSigmas);
-                this.tableSigmas.AcceptChanges();
-                this.tableSigmas.EndLoadData();
+                this.tableElements.BeginLoadData();
+                this.tableElements.Clear();
+
+                this.TAM.ElementsTableAdapter.Fill(this.tableElements);
+                this.tableElements.AcceptChanges();
+                this.tableElements.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -33,6 +34,40 @@ namespace DB
                 this.TAM.pValuesTableAdapter.Fill(this.tablepValues);
                 this.tablepValues.AcceptChanges();
                 this.tablepValues.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        public void PopulateReactions()
+        {
+            try
+            {
+                this.tableReactions.BeginLoadData();
+                this.tableReactions.Clear();
+                this.TAM.ReactionsTableAdapter.Fill(this.tableReactions);
+                //  HashSet<string> key = new HashSet<string>();
+                //IEnumerable<ReactionsRow> r = dt.AsEnumerable().Where(o => !key.Add(o.Element + "," + o.Radioisotope));
+                this.tableReactions.AcceptChanges();
+                this.tableReactions.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        public void PopulateSigmas()
+        {
+            try
+            {
+                this.tableSigmas.BeginLoadData();
+                this.tableSigmas.Clear();
+                this.TAM.SigmasTableAdapter.FillByReactions(this.tableSigmas);
+                this.tableSigmas.AcceptChanges();
+                this.tableSigmas.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -65,41 +100,6 @@ namespace DB
                 this.TAM.YieldsTableAdapter.Fill(this.tableYields);
                 this.tableYields.AcceptChanges();
                 this.tableYields.EndLoadData();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
-
-        public void PopulateReactions()
-        {
-            try
-            {
-                this.tableReactions.BeginLoadData();
-                this.tableReactions.Clear();
-                this.TAM.ReactionsTableAdapter.Fill(this.tableReactions);
-                //  HashSet<string> key = new HashSet<string>();
-                //IEnumerable<ReactionsRow> r = dt.AsEnumerable().Where(o => !key.Add(o.Element + "," + o.Radioisotope));
-                this.tableReactions.AcceptChanges();
-                this.tableReactions.EndLoadData();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
-
-        public void PopulateElements()
-        {
-            try
-            {
-                this.tableElements.BeginLoadData();
-                this.tableElements.Clear();
-
-                this.TAM.ElementsTableAdapter.Fill(this.tableElements);
-                this.tableElements.AcceptChanges();
-                this.tableElements.EndLoadData();
             }
             catch (SystemException ex)
             {

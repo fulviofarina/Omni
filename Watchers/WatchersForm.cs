@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using DB.Tools;
 
 namespace k0X
 {
@@ -276,8 +277,8 @@ namespace k0X
                 if (runing == null && force)
                 {
                     if (!Interface.IMain.IsSpectraPathOk) return runing;
-                    LINAA Linaa = (LINAA)Interface.Get();
-                    runing = new ucDetWatch(ref Linaa);
+                    //    LINAA Linaa = (LINAA)Interface.Get();
+                    runing = new ucDetWatch(ref Interface);
                     Application.DoEvents();
                 }
 

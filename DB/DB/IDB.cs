@@ -5,13 +5,6 @@ namespace DB
 {
     public interface IDB
     {
-        LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
-
-        //   string FolderPath { get; set; }
-        LINAA.SSFPrefDataTable SSFPref { get; }
-
-        LINAA.PreferencesDataTable Preferences { get; }
-
         LINAA.AcquisitionsDataTable Acquisitions { get; }
         LINAA.BlanksDataTable Blanks { get; }
         LINAA.ChannelsDataTable Channels { get; }
@@ -22,37 +15,65 @@ namespace DB
         LINAA.DetectorsAbsorbersDataTable DetectorsAbsorbers { get; }
         LINAA.DetectorsCurvesDataTable DetectorsCurves { get; }
         LINAA.DetectorsDimensionsDataTable DetectorsDimensions { get; }
-
         LINAA.ElementsDataTable Elements { get; }
         LINAA.ExceptionsDataTable Exceptions { get; }
         LINAA.GammasDataTable Gammas { get; }
         LINAA.GeometryDataTable Geometry { get; }
         LINAA.HelloWorldDataTable HelloWorld { get; }
         LINAA.HoldersDataTable Holders { get; }
+        LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
+
         LINAA.IrradiationRequestsDataTable IrradiationRequests { get; }
+
         LINAA.k0NAADataTable k0NAA { get; }
+
         LINAA.MatrixDataTable Matrix { get; }
+
         LINAA.MatSSFDataTable MatSSF { get; }
+
         LINAA.MeasurementsDataTable Measurements { get; }
+
         LINAA.MonitorsDataTable Monitors { get; }
+
         LINAA.MonitorsFlagsDataTable MonitorsFlags { get; }
+
         LINAA.MUESDataTable MUES { get; }
+
         LINAA.NAADataTable NAA { get; }
+
         LINAA.OrdersDataTable Orders { get; }
+
         LINAA.PeaksDataTable Peaks { get; }
+
         LINAA.PeaksHLDataTable PeaksHL { get; }
 
+        LINAA.PreferencesDataTable Preferences { get; }
+
         LINAA.ProjectsDataTable Projects { get; }
+
         LINAA.pValuesDataTable pValues { get; }
+
         LINAA.ReactionsDataTable Reactions { get; }
+
         LINAA.RefMaterialsDataTable RefMaterials { get; }
+
         DataRelationCollection Relations { get; }
+
         LINAA.SamplesDataTable Samples { get; }
+
         LINAA.SchAcqsDataTable SchAcqs { get; }
+
         SchemaSerializationMode SchemaSerializationMode { get; set; }
+
         LINAA.SigmasDataTable Sigmas { get; }
+
         LINAA.SigmasSalDataTable SigmasSal { get; }
+
         LINAA.SolangDataTable Solang { get; }
+
+        //   string FolderPath { get; set; }
+        LINAA.SSFPrefDataTable SSFPref { get; }
+
         LINAA.StandardsDataTable Standards { get; }
         LINAA.SubSamplesDataTable SubSamples { get; }
         DataTableCollection Tables { get; }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using static DB.LINAA;
+﻿using System.Collections.Generic;
 
 /// <summary>
 /// DB (LINAA) interfaces
@@ -10,14 +7,14 @@ namespace DB
 {
     public interface IDetSol
     {
-        ICollection<string> DetectorsList { get; set; }
         LINAA.GeometryRow DefaultGeometry { get; }
+        ICollection<string> DetectorsList { get; set; }
 
         void PopulateCOIList();
 
-        void PopulateDetectorCurves();
-
         void PopulateDetectorAbsorbers();
+
+        void PopulateDetectorCurves();
 
         void PopulateDetectorDimensions();
 

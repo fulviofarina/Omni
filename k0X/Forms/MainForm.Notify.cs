@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DB.UI;
+using DB.Tools;
 
 namespace k0X
 {
@@ -46,15 +47,15 @@ namespace k0X
             bool check = (sender as ToolStripMenuItem).Checked;
             if (sender.Equals(this.autoload))
             {
-                LIMS.Linaa.CurrentPref.AutoLoad = check;
+                LIMS.Interface.IPreferences.CurrentPref.AutoLoad = check;
             }
             else if (sender.Equals(this.fillbyHL))
             {
-                LIMS.Linaa.CurrentPref.FillByHL = check;
+                LIMS.Interface.IPreferences.CurrentPref.FillByHL = check;
             }
             else if (sender.Equals(this.fillBySpectra))
             {
-                LIMS.Linaa.CurrentPref.FillBySpectra = check;
+                LIMS.Interface.IPreferences.CurrentPref.FillBySpectra = check;
             }
             LIMS.Linaa.SavePreferences();
         }
@@ -71,7 +72,7 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-            object prefe = LIMS.Linaa.CurrentPref;
+            object prefe = LIMS.Interface.IPreferences.CurrentPref;
             if (prefe == null)
             {
                 LIMS.Linaa.Msg("Preferences object is null!", "Cannot load preferences!", false);
@@ -94,7 +95,7 @@ namespace k0X
         protected internal void EmailerMenu_Click(object sender, EventArgs e)
         {
             string sendFrom = "k0x.help@gmail.com";
-            string wUser = LIMS.Linaa.CurrentPref.WindowsUser;
+            string wUser = LIMS.Interface.IPreferences.CurrentPref.WindowsUser;
             if (wUser.Contains("\\"))
             {
                 int ind = wUser.IndexOf('\\');

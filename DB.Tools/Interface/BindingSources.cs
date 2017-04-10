@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using Rsx;
 
-namespace DB
+namespace DB.Tools
 {
     /// <summary>
     /// This is a class to attach the binding sources
@@ -18,6 +16,8 @@ namespace DB
         /// </summary>
         public dynamic Monitors;
 
+        public dynamic Preferences;
+        public dynamic SSFPreferences;
         public dynamic Units;
         public dynamic Matrix;
         public dynamic Vial;
@@ -45,20 +45,19 @@ namespace DB
         {
             Update<T>(r.Row);
         }
+
         public void Update<T>(DataRow r)
         {
-
             Type tipo = typeof(T);
             if (r == null) return;
 
             if (tipo.Equals(typeof(LINAA.SubSamplesRow)))
             {
-              //  DataRow r = (SubSamples.Current as DataRowView).Row;
-               
-               LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
+                //  DataRow r = (SubSamples.Current as DataRowView).Row;
+
+                LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
 
                 Update<LINAA.UnitRow>(s.UnitRow);
-              
             }
             else if (tipo.Equals(typeof(LINAA.UnitRow)))
             {
@@ -69,9 +68,6 @@ namespace DB
                     Units.Position = Units.Find(unitValID, s.UnitID);
                 }
             }
-
-
-
         }
     }
 }

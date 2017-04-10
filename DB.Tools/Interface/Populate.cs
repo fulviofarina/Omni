@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using Rsx;
-
-namespace DB
+﻿namespace DB.Tools
 {
     public class Populate
     {
+        private LINAA db;
+
+        public void Preferences()
+        {
+            db.PopulatePreferences();
+            //  I.
+        }
+
         public Populate(ref LINAA aux)
         {
+            db = aux;
             IExpressions = (IExpressions)aux;
             INuclear = (INuclear)aux;
             IProjects = (IProjects)aux;

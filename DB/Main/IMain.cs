@@ -10,27 +10,26 @@ namespace DB
 {
     public interface IMain
     {
-        void PopulateUserDirectories();
-
-        void AddException(Exception ex);
-
-        bool IsSpectraPathOk { get; }
-
-        void Read(string filepath);
-
-        //   string AppPath
-        //  {
-        //      get;
-        //      set;
-        //  }
-
         string FolderPath
         {
             get;
             set;
         }
 
+        bool IsSpectraPathOk { get; }
+
+        void AddException(Exception ex);
+
+        //   string AppPath
+        //  {
+        //      get;
+        //      set;
+        //  }
         void Help();
+
+        void PopulateUserDirectories();
+
+        void Read(string filepath);
 
         //    bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref DB.LINAA.TAMDeleteMethod remover);
     }

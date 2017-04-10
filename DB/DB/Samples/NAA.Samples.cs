@@ -70,7 +70,8 @@ namespace DB
             {
                 get
                 {
-                    return (this.DataSet as LINAA).CurrentSSFPref.AAFillHeight;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().AAFillHeight;
+                    //return false;
                 }
             }
 
@@ -78,7 +79,8 @@ namespace DB
             {
                 get
                 {
-                    return (this.DataSet as LINAA).CurrentSSFPref.AARadius;
+                    //return false;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().AARadius;
                 }
             }
 
@@ -86,7 +88,8 @@ namespace DB
             {
                 get
                 {
-                    return (this.DataSet as LINAA).currentSSFPref.CalcDensity;
+                    // return true;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().CalcDensity;
                 }
             }
 

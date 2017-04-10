@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using static DB.LINAA;
 
 /// <summary>
@@ -10,13 +8,14 @@ namespace DB
 {
     public interface IProjects
     {
-        IList<SubSamplesRow> FindByProject(string project);
-
-        IList<string> ProjectsList { get; }
         ICollection<string> ActiveProjectsList { get; }
 
-        void PopulateToDoes();
+        IList<string> ProjectsList { get; }
+
+        IList<SubSamplesRow> FindByProject(string project);
 
         void PopulateProjects();
+
+        void PopulateToDoes();
     }
 }

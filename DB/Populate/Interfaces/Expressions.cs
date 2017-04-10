@@ -8,6 +8,10 @@ namespace DB
 {
     public partial class LINAA : IExpressions
     {
+        private List<int> dTWithHandlers;
+
+        private List<DataColumnChangeEventHandler> handlers;
+
         public void PopulateColumnExpresions()
         {
             handlers = new List<DataColumnChangeEventHandler>();
@@ -73,27 +77,6 @@ namespace DB
             }
         }
 
-        private void Handlers(bool activate)
-        {
-            for (int i = 0; i < dTWithHandlers.Count; i++)
-            {
-                int index = dTWithHandlers[i];
-                DataTable dt = this.Tables[index];
-                Handlers(activate, ref dt);
-                RowHandlers(ref dt, activate);
-            }
-        }
-
-        protected internal void RowHandlers(ref DataTable table, bool activate)
-        {
-            int dtindex = this.Tables.IndexOf(table);
-            int index = dTWithHandlers.IndexOf(dtindex);
-            if (index < 0) return; //not in the list of handlers
-
-            if (activate) table.RowChanged += this.RowChanged;
-            else table.RowChanged -= this.RowChanged;
-        }
-
         protected internal void RowChanged(object sender, DataRowChangeEventArgs e)
         {
             if (e.Action != DataRowAction.Add && e.Action != DataRowAction.Commit) return;
@@ -109,9 +92,15 @@ namespace DB
             }
         }
 
-        private List<DataColumnChangeEventHandler> handlers;
+        protected internal void RowHandlers(ref DataTable table, bool activate)
+        {
+            int dtindex = this.Tables.IndexOf(table);
+            int index = dTWithHandlers.IndexOf(dtindex);
+            if (index < 0) return; //not in the list of handlers
 
-        private List<int> dTWithHandlers;
+            if (activate) table.RowChanged += this.RowChanged;
+            else table.RowChanged -= this.RowChanged;
+        }
 
         private void cleanReadOnly(ref DataTable table)
         {
@@ -122,6 +111,17 @@ namespace DB
                 ok = ok && column.Expression.Equals(string.Empty);
                 ok = ok && !table.PrimaryKey.Contains(column);
                 if (ok) column.ReadOnly = false;
+            }
+        }
+
+        private void Handlers(bool activate)
+        {
+            for (int i = 0; i < dTWithHandlers.Count; i++)
+            {
+                int index = dTWithHandlers[i];
+                DataTable dt = this.Tables[index];
+                Handlers(activate, ref dt);
+                RowHandlers(ref dt, activate);
             }
         }
     }

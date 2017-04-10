@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using Rsx;
+using DB.Tools;
 
 namespace DB.UI
 {

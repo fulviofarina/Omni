@@ -118,7 +118,7 @@ namespace DB.UI
             // 
             // Linaa
             // 
-            this.Linaa.CurrentPref = null;
+        //    this.Linaa.CurrentPref = null;
             this.Linaa.DataSetName = "LINAA";
             this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
             this.Linaa.EnforceConstraints = false;

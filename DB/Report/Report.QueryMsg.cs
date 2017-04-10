@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Messaging;
+using System.Security.Principal;
 using DB.Properties;
 using Rsx;
 
@@ -10,36 +11,21 @@ namespace DB
 {
     public partial class LINAA : IReport
     {
-        public void GenerateReport(string labelReport, object path, string extra, string module, string email)
-        {
-            try
-            {
-                //send path as the body of the QMsg
-                //put a extended body to the email please
+        private static string bePatient = "Please be patient...";
 
-                string queuePath = QM.QMAcquisitions + "." + module + "." + email;
-                MessageQueue qm = Rsx.Emailer.CreateMQ(queuePath, this.qMsg_ReceiveCompleted);
-                string title = labelReport + " - " + module;
-                Message m = Rsx.Emailer.CreateQMsg(path, title, extra);
+        private static string bugReportNotGen = "Bug Report not generated!";
 
-                Rsx.Emailer.SendQMsg(ref qm, ref m);
-                qm.BeginReceive();
-            }
-            catch (SystemException ex)
-            {
-                this.Msg(ex.Message + "\n\n" + ex.StackTrace, problemsWithReport, false);
-                this.AddException(ex);
-            }
-        }
+        private static string bugReportOnWay = "Bug Report is being populated";
+
+        private static string bugReportProblem = "Problems with Bug Report!";
+
+        private static string cannotMSMQ = "Cannot initiate the Message Queue";
+
+        private static string checkifMSMQ = "Check if MSMQ wether is installed";
+
+        private static string nothingBuggy = "Nothing seems 'buggy' this time ;)";
 
         private static string problemsWithReport = "Problems while generating Report!";
-        private static string checkifMSMQ = "Check if MSMQ wether is installed";
-        private static string bugReportOnWay = "Bug Report is being populated";
-        private static string cannotMSMQ = "Cannot initiate the Message Queue";
-        private static string bePatient = "Please be patient...";
-        private static string bugReportProblem = "Problems with Bug Report!";
-        private static string nothingBuggy = "Nothing seems 'buggy' this time ;)";
-        private static string bugReportNotGen = "Bug Report not generated!";
 
         public void GenerateBugReport()
         {
@@ -92,40 +78,35 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
+        public void GenerateReport(string labelReport, object path, string extra, string module, string email)
+        {
+            try
+            {
+                //send path as the body of the QMsg
+                //put a extended body to the email please
+
+                string queuePath = QM.QMAcquisitions + "." + module + "." + email;
+                MessageQueue qm = Rsx.Emailer.CreateMQ(queuePath, this.qMsg_ReceiveCompleted);
+                string title = labelReport + " - " + module;
+                Message m = Rsx.Emailer.CreateQMsg(path, title, extra);
+
+                Rsx.Emailer.SendQMsg(ref qm, ref m);
+                qm.BeginReceive();
+            }
+            catch (SystemException ex)
+            {
+                this.Msg(ex.Message + "\n\n" + ex.StackTrace, problemsWithReport, false);
+                this.AddException(ex);
+            }
+        }
     }
 
     public partial class LINAA
     {
-        private void qMsg_ReceiveCompleted(object sender, System.Messaging.ReceiveCompletedEventArgs e)
-        {
-            if (e == null) return;
-            MessageQueue qMsg1 = sender as MessageQueue;
-            string user = this.WindowsUser;
-            try
-            {
-                Message w = e.Message;
-                //feedback came from emailing process
-                //body of message is a FileStream (the attachment of the email)
-                if (w.Label.Contains("AsyncEmail"))
-                {
-                    //was ok or not?
+        private MessageQueue bugQM = null;
 
-                    Async(ref qMsg1, ref w);
-                }
-                else
-                {
-                    string result = notAsync(ref qMsg1, ref w, user);
-
-                    DateTime when = w.SentTime;
-
-                    reportResult(result, when);
-                }
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
+        private IAsyncResult bugresult = null;
 
         private static string notAsync(ref MessageQueue qMsg1, ref Message w, string user)
         {
@@ -151,26 +132,6 @@ namespace DB
             //read for more messages!!
             //int totalremaining = qMsg1.GetAllMessages().Length;
             //if (totalremaining > 0) qMsg1.BeginReceive();
-        }
-
-        private void reportResult(string result, DateTime when)
-        {
-            string whatsSending = "Status";
-            string title = whatsSending + " NOT Sent!";
-            bool sending = false;
-
-            if (result.Contains("sending"))
-            {
-                title = "Sending " + whatsSending + "...";
-                sending = true;
-            }
-
-            this.msn.Msg(result + "\n\nAt " + when.ToString(), title, sending);
-
-            if (!sending)
-            {
-                throw new SystemException("Failure sending email - Async email failed");
-            }
         }
 
         private static string sendTo(ref MessageQueue qMsg1, ref Message w, string user, string sendto)
@@ -244,8 +205,55 @@ namespace DB
             bugresult = bugQM.BeginReceive();
         }
 
-        private MessageQueue bugQM = null;
+        private void qMsg_ReceiveCompleted(object sender, System.Messaging.ReceiveCompletedEventArgs e)
+        {
+            if (e == null) return;
+            MessageQueue qMsg1 = sender as MessageQueue;
+            string user = WindowsIdentity.GetCurrent().Name.ToUpper();
+            try
+            {
+                Message w = e.Message;
+                //feedback came from emailing process
+                //body of message is a FileStream (the attachment of the email)
+                if (w.Label.Contains("AsyncEmail"))
+                {
+                    //was ok or not?
 
-        private IAsyncResult bugresult = null;
+                    Async(ref qMsg1, ref w);
+                }
+                else
+                {
+                    string result = notAsync(ref qMsg1, ref w, user);
+
+                    DateTime when = w.SentTime;
+
+                    reportResult(result, when);
+                }
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        private void reportResult(string result, DateTime when)
+        {
+            string whatsSending = "Status";
+            string title = whatsSending + " NOT Sent!";
+            bool sending = false;
+
+            if (result.Contains("sending"))
+            {
+                title = "Sending " + whatsSending + "...";
+                sending = true;
+            }
+
+            this.msn.Msg(result + "\n\nAt " + when.ToString(), title, sending);
+
+            if (!sending)
+            {
+                throw new SystemException("Failure sending email - Async email failed");
+            }
+        }
     }
 }

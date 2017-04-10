@@ -1,14 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Principal;
 using DB.Properties;
 
 namespace DB
 {
     public partial class LINAA
     {
+        public partial class SSFPrefRow
+        {
+            public void Check()
+            {
+                if (this.IsLastUnitIDNull()) LastUnitID = 0;
+                if (this.IsCalcDensityNull()) CalcDensity = true;
+                if (this.IsDoCKNull()) DoCK = false;
+                if (this.IsDoMatSSFNull()) DoMatSSF = true;
+                if (this.IsLoopNull()) Loop = false;
+                if (this.IsRoundingNull()) Rounding = "N4";
+                //    if (this.IsSQLNull()) SQL = Settings.Default.SSFSQL;
+                //  else Settings.Default["SSFSQL"] = SQL;
+                if (IsShowOtherNull()) ShowOther = false;
+
+                //   if (IsAutoLoadNull()) AutoLoad = true;
+
+                if (IsShowMatSSFNull()) ShowMatSSF = false;
+                if (IsAAFillHeightNull()) AAFillHeight = false;
+                if (IsAARadiusNull()) AARadius = true;
+
+                Settings.Default.Save();
+            }
+        }
+
         partial class PreferencesRow
         {
             private bool usrAnal = false;
@@ -49,30 +69,6 @@ namespace DB
 
                 //    if (IsSolCoiFolderNull()) SolCoiFolder = Resources.SolCoiFolder;
                 //   else Settings.Default["SOLCOIFolder"] = SolCoiFolder;
-
-                Settings.Default.Save();
-            }
-        }
-
-        public partial class SSFPrefRow
-        {
-            public void Check()
-            {
-                if (this.IsLastUnitIDNull()) LastUnitID = 0;
-                if (this.IsCalcDensityNull()) CalcDensity = true;
-                if (this.IsDoCKNull()) DoCK = false;
-                if (this.IsDoMatSSFNull()) DoMatSSF = true;
-                if (this.IsLoopNull()) Loop = false;
-                if (this.IsRoundingNull()) Rounding = "N4";
-                //    if (this.IsSQLNull()) SQL = Settings.Default.SSFSQL;
-                //  else Settings.Default["SSFSQL"] = SQL;
-                if (IsShowOtherNull()) ShowOther = false;
-
-                //   if (IsAutoLoadNull()) AutoLoad = true;
-
-                if (IsShowMatSSFNull()) ShowMatSSF = false;
-                if (IsAAFillHeightNull()) AAFillHeight = false;
-                if (IsAARadiusNull()) AARadius = true;
 
                 Settings.Default.Save();
             }

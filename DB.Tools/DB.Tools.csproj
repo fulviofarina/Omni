@@ -69,6 +69,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\BindingSources.cs" />
+    <Compile Include="Interface\Current.cs" />
+    <Compile Include="Interface\Interface.cs" />
+    <Compile Include="Interface\Populate.cs" />
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
     <Compile Include="WC\Properties.cs" />

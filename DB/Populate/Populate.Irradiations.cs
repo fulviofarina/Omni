@@ -6,24 +6,9 @@ namespace DB
 {
     public partial class LINAA : IIrradiations
     {
-        public void PopulateIrradiationRequests()
+        public Int32? FindIrrReqID(string project)
         {
-            try
-            {
-                //	Dumb.CleanColumnExpressions(tableIrradiationRequests);
-                this.tableIrradiationRequests.BeginLoadData();
-                this.tableIrradiationRequests.Clear();
-                //Handlers(this.tableIrradiationRequests, false, tableIrradiationRequests.DataColumnChanged);
-                this.TAM.IrradiationRequestsTableAdapter.Fill(this.tableIrradiationRequests);
-                //    IEnumerable<DataRow> rows = this.tableIrradiationRequests.AsEnumerable();
-                //   LINAA.SetAdded(ref rows);
-                this.tableIrradiationRequests.AcceptChanges();
-                this.tableIrradiationRequests.EndLoadData();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
+            return this.tableIrradiationRequests.FindIrrReqID(project);
         }
 
         public void PopulateChannels()
@@ -42,9 +27,24 @@ namespace DB
             }
         }
 
-        public Int32? FindIrrReqID(string project)
+        public void PopulateIrradiationRequests()
         {
-            return this.tableIrradiationRequests.FindIrrReqID(project);
+            try
+            {
+                //	Dumb.CleanColumnExpressions(tableIrradiationRequests);
+                this.tableIrradiationRequests.BeginLoadData();
+                this.tableIrradiationRequests.Clear();
+                //Handlers(this.tableIrradiationRequests, false, tableIrradiationRequests.DataColumnChanged);
+                this.TAM.IrradiationRequestsTableAdapter.Fill(this.tableIrradiationRequests);
+                //    IEnumerable<DataRow> rows = this.tableIrradiationRequests.AsEnumerable();
+                //   LINAA.SetAdded(ref rows);
+                this.tableIrradiationRequests.AcceptChanges();
+                this.tableIrradiationRequests.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
         }
     }
 }

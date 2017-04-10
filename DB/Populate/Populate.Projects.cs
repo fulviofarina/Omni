@@ -8,22 +8,8 @@ namespace DB
 {
     public partial class LINAA : IProjects
     {
-        protected internal IList<string> projectsList;
-
-        /// <summary>
-        /// Gets a non-repeated list of Irradiation Requests in the database
-        /// </summary>
-        public IList<string> ProjectsList
-        {
-            get
-            {
-                if (projectsList != null) projectsList.Clear();
-                projectsList = Dumb.HashFrom<string>(this.tableIrradiationRequests.IrradiationCodeColumn);
-                return projectsList;
-            }
-        }
-
         protected internal ICollection<string> activeProjectsList;
+        protected internal IList<string> projectsList;
 
         /// <summary>
         /// Gets a non-repeated list of Lab-Order References in the database
@@ -36,6 +22,19 @@ namespace DB
                 activeProjectsList = Dumb.HashFrom<string>(tableIRequestsAverages.ProjectColumn, DB.Properties.Misc.Cd, string.Empty);
 
                 return activeProjectsList;
+            }
+        }
+
+        /// <summary>
+        /// Gets a non-repeated list of Irradiation Requests in the database
+        /// </summary>
+        public IList<string> ProjectsList
+        {
+            get
+            {
+                if (projectsList != null) projectsList.Clear();
+                projectsList = Dumb.HashFrom<string>(this.tableIrradiationRequests.IrradiationCodeColumn);
+                return projectsList;
             }
         }
 

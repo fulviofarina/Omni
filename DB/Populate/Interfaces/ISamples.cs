@@ -10,26 +10,26 @@ namespace DB
 {
     public interface ISamples
     {
+        int AddSamples(string project, ref ICollection<string> hsamples);
+
         DataTable CalculateBranchFactor(ref IPeakAveragesRow daugther, ref IEnumerable<IPeakAveragesRow> references);
+
+        void LoadMonitorsFile(string file);
 
         void LoadSampleData(bool load);
 
-        void PopulateStandards();
-
         void PopulateMonitorFlags();
-
-        void SetIrradiatioRequest(ref IEnumerable<SubSamplesRow> samples, int IrrReqID);
-
-        void SetUnits(ref IEnumerable<SubSamplesRow> samples);
-
-        void SetLabels(ref IEnumerable<SubSamplesRow> samples, string project);
 
         void PopulateMonitors();
 
-        int AddSamples(string project, ref ICollection<string> hsamples);
+        void PopulateStandards();
 
         void PopulateSubSamples(Int32 IrReqID);
 
-        void LoadMonitorsFile(string file);
+        void SetIrradiatioRequest(ref IEnumerable<SubSamplesRow> samples, int IrrReqID);
+
+        void SetLabels(ref IEnumerable<SubSamplesRow> samples, string project);
+
+        void SetUnits(ref IEnumerable<SubSamplesRow> samples);
     }
 }

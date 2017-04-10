@@ -1,21 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
 using static DB.LINAA;
 
-namespace DB
+namespace DB.Tools
 {
     /// <summary>
     /// This class gives the current row shown by a Binding Source
     /// </summary>
-    public class Current
+    public partial class Current : IPreferences
     {
-        private BindingSources bs;
+        private PreferencesRow currentPref;
 
-        public Current(ref BindingSources bsources)
+        private SSFPrefRow currentSSFPref;
+
+        public PreferencesRow CurrentPref
         {
-            bs = bsources;
+            get
+            {
+                currentPref = inter.IDB.Preferences.FirstOrDefault();
+                return currentPref;
+            }
+        }
+
+        public SSFPrefRow CurrentSSFPref
+        {
+            get
+            {
+                currentSSFPref = inter.IDB.SSFPref.FirstOrDefault();
+                return currentSSFPref;
+            }
+        }
+
+        private BindingSources bs;
+        private Interface inter;
+
+        public Current(ref BindingSources bss, ref Interface interfaces)
+        {
+            bs = bss;
+            inter = interfaces;
         }
 
         public DataRow SubSample

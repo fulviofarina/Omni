@@ -4,22 +4,6 @@ namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        protected void InitializePeaksAdapters()
-        {
-            this.tAM.MeasurementsTableAdapter = new LINAATableAdapters.MeasurementsTableAdapter();
-            adapters.Add(this.tAM.MeasurementsTableAdapter, this.tAM.MeasurementsTableAdapter);
-            this.tAM.PeaksTableAdapter = new LINAATableAdapters.PeaksTableAdapter();
-            adapters.Add(this.tAM.PeaksTableAdapter, this.tAM.PeaksTableAdapter);
-            // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
-            //this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
-        }
-
-        protected void InitializeToDoAdapters()
-        {
-            this.tAM.ToDoTableAdapter = new LINAATableAdapters.ToDoTableAdapter();
-            adapters.Add(this.tAM.ToDoTableAdapter, this.tAM.ToDoTableAdapter);
-        }
-
         protected void DisposePeaksAdapters()
         {
             // this.tAM.IRequestsAveragesTableAdapter.Connection.Close();
@@ -48,6 +32,22 @@ namespace DB
             this.tAM.ToDoTableAdapter = null;
             //	 this.tAM.IRequestsAveragesTableAdapter = null;
             //	 this.tAM.IPeakAveragesTableAdapter = null;
+        }
+
+        protected void InitializePeaksAdapters()
+        {
+            this.tAM.MeasurementsTableAdapter = new LINAATableAdapters.MeasurementsTableAdapter();
+            adapters.Add(this.tAM.MeasurementsTableAdapter, this.tAM.MeasurementsTableAdapter);
+            this.tAM.PeaksTableAdapter = new LINAATableAdapters.PeaksTableAdapter();
+            adapters.Add(this.tAM.PeaksTableAdapter, this.tAM.PeaksTableAdapter);
+            // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
+            //this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
+        }
+
+        protected void InitializeToDoAdapters()
+        {
+            this.tAM.ToDoTableAdapter = new LINAATableAdapters.ToDoTableAdapter();
+            adapters.Add(this.tAM.ToDoTableAdapter, this.tAM.ToDoTableAdapter);
         }
     }
 }

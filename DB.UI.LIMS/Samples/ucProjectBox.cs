@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
 using Rsx;
+using DB.Tools;
 
 namespace DB.UI
 {

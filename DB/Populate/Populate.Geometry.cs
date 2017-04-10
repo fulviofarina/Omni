@@ -30,16 +30,6 @@ namespace DB
             return reference;
         }
 
-        public void PopulateXCOMList()
-        {
-            MUESDataTable mues = this.TAM.MUESTableAdapter.GetListOfMatrices();
-            MUES.Clear();
-            MUES.Merge(mues);
-            MUES.AcceptChanges();
-        }
-
-        //
-
         public void PopulateCompositions()
         {
             //  string path = folderPath + DB.Properties.Resources.Backups + "Compositions.xml" ;
@@ -77,6 +67,23 @@ namespace DB
             }
         }
 
+        public void PopulateGeometry()
+        {
+            try
+            {
+                this.tableGeometry.BeginLoadData();
+                this.tableGeometry.Clear();
+                this.TAM.GeometryTableAdapter.Fill(this.tableGeometry);
+                this.tableGeometry.AcceptChanges();
+                this.tableGeometry.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        //
         public void PopulateMatrix()
         {
             try
@@ -88,22 +95,6 @@ namespace DB
                 this.TAM.MatrixTableAdapter.Fill(this.tableMatrix);
                 this.tableMatrix.EndLoadData();
                 this.tableMatrix.AcceptChanges();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
-
-        public void PopulateVials()
-        {
-            try
-            {
-                this.tableVialType.BeginLoadData();
-                this.tableVialType.Clear();
-                this.TAM.VialTypeTableAdapter.Fill(this.tableVialType);
-                this.tableVialType.AcceptChanges();
-                this.tableVialType.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -145,20 +136,28 @@ namespace DB
             }
         }
 
-        public void PopulateGeometry()
+        public void PopulateVials()
         {
             try
             {
-                this.tableGeometry.BeginLoadData();
-                this.tableGeometry.Clear();
-                this.TAM.GeometryTableAdapter.Fill(this.tableGeometry);
-                this.tableGeometry.AcceptChanges();
-                this.tableGeometry.EndLoadData();
+                this.tableVialType.BeginLoadData();
+                this.tableVialType.Clear();
+                this.TAM.VialTypeTableAdapter.Fill(this.tableVialType);
+                this.tableVialType.AcceptChanges();
+                this.tableVialType.EndLoadData();
             }
             catch (SystemException ex)
             {
                 this.AddException(ex);
             }
+        }
+
+        public void PopulateXCOMList()
+        {
+            MUESDataTable mues = this.TAM.MUESTableAdapter.GetListOfMatrices();
+            MUES.Clear();
+            MUES.Merge(mues);
+            MUES.AcceptChanges();
         }
     }
 }

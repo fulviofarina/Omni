@@ -65,6 +65,8 @@ namespace DB
             cleanReadOnly(ref table);
             table = IPeakAverages;
             cleanReadOnly(ref table);
+
+            //   this.notify;
         }
 
         public void Help()
@@ -191,8 +193,6 @@ namespace DB
         public void Read(string filepath)
         {
             LINAA dt = null;
-            PreferencesDataTable prefe = null;
-            SSFPrefDataTable ssfPrefe = null;
 
             //  file.EnforceConstraints = false;
             XmlReader reader = null;
@@ -211,6 +211,9 @@ namespace DB
 
                 dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
 
+                PreferencesDataTable prefe = null;
+                SSFPrefDataTable ssfPrefe = null;
+
                 prefe = new PreferencesDataTable(this.Preferences);
 
                 ssfPrefe = new SSFPrefDataTable(this.SSFPref);
@@ -221,16 +224,16 @@ namespace DB
 
                 this.SavePreferences();
                 this.PopulatePreferences();
+
+                Dumb.FD<PreferencesDataTable>(ref prefe);
+
+                Dumb.FD<SSFPrefDataTable>(ref ssfPrefe);
                 // this.PopulateSSFPreferences();
             }
             catch (Exception ex)
             {
                 this.AddException(ex);
             }
-
-            Dumb.FD<PreferencesDataTable>(ref prefe);
-
-            Dumb.FD<SSFPrefDataTable>(ref ssfPrefe);
 
             Dumb.FD<LINAA>(ref dt);
         }
@@ -285,23 +288,6 @@ namespace DB
             //VOLVER A PONER TODO
         }
 
-        private void populateReplaceFile(string path, string developerPath)
-        {
-            try
-            {
-                //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
-                if (File.Exists(developerPath))
-                {
-                    File.Copy(developerPath, path, true);
-                    File.Delete(developerPath);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-        }
-
         private void populateDirectory(string path, bool overrider)
         {
             try
@@ -327,6 +313,23 @@ namespace DB
                     File.Copy(features, currentpath, true);
                     File.Delete(features);
                     Help();
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);//                throw;
+            }
+        }
+
+        private void populateReplaceFile(string path, string developerPath)
+        {
+            try
+            {
+                //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
+                if (File.Exists(developerPath))
+                {
+                    File.Copy(developerPath, path, true);
+                    File.Delete(developerPath);
                 }
             }
             catch (SystemException ex)

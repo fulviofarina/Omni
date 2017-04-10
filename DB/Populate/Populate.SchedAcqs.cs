@@ -7,26 +7,6 @@ namespace DB
 {
     public partial class LINAA : ISchedAcqs
     {
-        public IEnumerable<SchAcqsRow> FindLastSchedules()
-        {
-            return this.tableSchAcqs.FindLastSchedules();
-        }
-
-        public void PopulateScheduledAcqs()
-        {
-            try
-            {
-                this.tableSchAcqs.BeginLoadData();
-                DB.LINAA.SchAcqsDataTable table = this.TAM.SchAcqsTableAdapter.GetData();
-                this.tableSchAcqs.Merge(table, false, MissingSchemaAction.AddWithKey);
-                this.tableSchAcqs.EndLoadData();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
-
         public void AddSchedule(string project, string sample, Int16 pos, string det, Int16 repeats, double preset, DateTime startOn, string useremail, bool cummu, bool Force)
         {
             DB.LINAA.SchAcqsRow sch = this.SchAcqs.FindASpecificSchedule(det, project, sample);
@@ -60,6 +40,26 @@ namespace DB
             if (result == DialogResult.Cancel) sch.Delete();
 
             this.Save<LINAA.SchAcqsDataTable>();
+        }
+
+        public IEnumerable<SchAcqsRow> FindLastSchedules()
+        {
+            return this.tableSchAcqs.FindLastSchedules();
+        }
+
+        public void PopulateScheduledAcqs()
+        {
+            try
+            {
+                this.tableSchAcqs.BeginLoadData();
+                DB.LINAA.SchAcqsDataTable table = this.TAM.SchAcqsTableAdapter.GetData();
+                this.tableSchAcqs.Merge(table, false, MissingSchemaAction.AddWithKey);
+                this.tableSchAcqs.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
         }
     }
 }
