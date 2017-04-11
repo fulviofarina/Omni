@@ -96,6 +96,12 @@
     <Compile Include="Samples\ucOptionsSSF.Designer.cs">
       <DependentUpon>ucOptionsSSF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Samples\ucPreferences.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Samples\ucPreferences.Designer.cs">
+      <DependentUpon>ucPreferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Samples\ucSubSamples.Content.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -251,6 +257,9 @@
     <EmbeddedResource Include="Samples\ucOptionsSSF.resx">
       <DependentUpon>ucOptionsSSF.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Samples\ucPreferences.resx">
+      <DependentUpon>ucPreferences.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </EmbeddedResource>
@@ -390,6 +399,11 @@
       <Project>{3ffdfa74-1dce-4bde-921d-f0d785ed88d7}</Project>
       <Name>Watchers</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\DB.LINAA+PreferencesDataTable.datasource" />
+    <None Include="Properties\DataSources\DB.LINAA+SSFPrefDataTable.datasource" />
+    <None Include="Properties\DataSources\DB.LINAA.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

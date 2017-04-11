@@ -22,5 +22,6 @@ namespace DB.UI
         public const string Orders = "Orders";
         public const string MonitorsFlags = "Monitors Flags";
         public const string SubSamplesContent = "SubSamples Content";
+        public const string Preferences = "Preferences";
     }
 }

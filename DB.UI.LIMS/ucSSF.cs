@@ -78,7 +78,9 @@ namespace DB.UI
                 //types
                 this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
 
-                ucCalc.Set(ref Interface, ref bindings, ref samplebindings);
+                ucCalcOptions.Set(ref Interface, ref bindings, ref samplebindings);
+
+                Interface.IBS.EndEdit();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
@@ -345,24 +347,43 @@ namespace DB.UI
 
             BindingSource bsSample = Interface.IBS.SubSamples;
             Hashtable samplebindings = null;
-            samplebindings = Dumb.ArrayOfBindings(ref bsSample, rounding);
+      
 
             SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
+
+            samplebindings = Dumb.ArrayOfBindings(ref bsSample, rounding);
             string column;
             //samples
             column = SSamples.RadiusColumn.ColumnName;
             this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.radiusbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             column = SSamples.FillHeightColumn.ColumnName;
             this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.lenghtbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
             column = SSamples.Gross1Column.ColumnName;
+            Binding massbin = samplebindings[column] as Binding;
             this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.massB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
+            massbin.FormatString = "N2";
+            samplebindings.Remove(massbin); //so it does not update its format!!!
             column = SSamples.SubSampleNameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.nameB.ComboBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
             this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
             column = SSamples.VolColumn.ColumnName;
             this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.volLbl.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
             column = SSamples.CalcDensityColumn.ColumnName;
             this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+            this.densityB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
+            //  Binding b = new Binding();
+
+
             return samplebindings;
         }
 
@@ -376,6 +397,7 @@ namespace DB.UI
             UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = Interface.IBS.Units; //link to binding source;
             Hashtable bindings = null;
+
             bindings = Dumb.ArrayOfBindings(ref bs, rounding);
 
             column = Unit.ChDiameterColumn.ColumnName;
@@ -391,7 +413,23 @@ namespace DB.UI
             this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.kthColumn.ColumnName;
             this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
+
+            Binding renabled = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
+            this.radiusbox.TextBox.DataBindings.Add(renabled);
+            Binding renabled2 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName);
+            this.lenghtbox.TextBox.DataBindings.Add(renabled2);
+            Binding renabled3 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.CalcDensityColumn.ColumnName);
+            this.densityB.TextBox.DataBindings.Add(renabled3);
+            Binding renabled4 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.CalcMassColumn.ColumnName);
+            this.massB.TextBox.DataBindings.Add(renabled4);
+
+            //   Binding c = new Binding("Width", Interface.IDB.SubSamples, Interface.IDB.SubSamples.RadiusColumn.ColumnName);
+
+            //      this.ParentForm.DataBindings.Add(c);
+            //    this.ParentForm.Size.
             return bindings;
         }
+
+     
     }
 }

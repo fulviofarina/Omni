@@ -61,7 +61,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,19 +74,24 @@
     <Compile Include="Interface\BindingSources.cs" />
     <Compile Include="Interface\Current.cs" />
     <Compile Include="Interface\Interface.cs" />
+    <Compile Include="Interface\IPreferences.cs" />
     <Compile Include="Interface\Populate.cs" />
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
     <Compile Include="WC\Properties.cs" />
     <Compile Include="WC\Workers.cs" />
     <Compile Include="WC\Static\Efficiency.cs" />
-    <Compile Include="Creator.cs" />
+    <Compile Include="Interface\Creator.cs" />
     <Compile Include="WC\Static\NAA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WC\Public.cs" />
     <Compile Include="WC\SolcoiEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Linq\DB.Linq.csproj">
+      <Project>{4f5b1a09-8cfe-41ba-a1b1-5eeaecedd329}</Project>
+      <Name>DB.Linq</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
       <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
       <Name>DB.Tools.SSF</Name>
@@ -116,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WC\Static\Populate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

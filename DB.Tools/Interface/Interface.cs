@@ -2,16 +2,16 @@
 {
     public partial class Interface
     {
-        private LINAA interf = null;
+        private LINAA dataset = null;
 
         public Interface(ref LINAA aux)
         {
-            interf = aux;
+            dataset = aux;
             IBS = new BindingSources();
             Interface inter = this;
             ICurrent = new Current(ref IBS, ref inter);
             IPreferences = ICurrent;
-            IPopulate = new Populate(ref aux);
+            IPopulate = new Populate(ref inter);
             IMain = (IMain)aux;
             IAdapter = (IAdapter)aux;
             IStore = (IStore)aux;
@@ -23,7 +23,7 @@
 
         public LINAA Get()
         {
-            return interf;
+            return dataset;
         }
 
         public IMain IMain;

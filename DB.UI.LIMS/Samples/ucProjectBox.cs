@@ -64,7 +64,7 @@ namespace DB.UI
             string filter = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
             string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
 
-            Interface.IStore.SavePreferences();
+            Interface.IPreferences.SavePreferences();
 
             callBack(filter, sort);
         }

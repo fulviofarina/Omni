@@ -92,6 +92,14 @@ namespace DB
                     return (this.DataSet as LINAA).SSFPref.FirstOrDefault().CalcDensity;
                 }
             }
+            public bool calMass
+            {
+                get
+                {
+                    // return true;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().CalcMass;
+                }
+            }
 
             private DataColumn[] nonNullable;
             /*
@@ -120,7 +128,7 @@ namespace DB
                     if (nonNullable == null)
                     {
                         nonNullable = new DataColumn[]{columnSubSampleName,
-                     columnSubSampleCreationDate,columnSubSampleDescription,
+                     columnSubSampleCreationDate,columnSubSampleDescription,VolColumn,
                      columnConcentration, columnCapsuleName, columnMatrixName};
                     }
 
@@ -164,17 +172,53 @@ namespace DB
                     }
                     else if (e.Column == this.CalcDensityColumn)
                     {
-                        if (!calDensity) subs.CalculateMass();
+                        if (calMass) subs.CalculateMass();
+                        if (calRad)
+                        {
+                           subs.Radius= subs.FindRadius();
+                        }
+                        else if (calFh)
+                        {
+                            subs.FillHeight = subs.FindFillingHeight();
+                        }
+                        return;
                     }
-                    else if (columnFillHeight == e.Column || columnRadius == e.Column)
+                    else if (columnFillHeight == e.Column )
                     {
+
+                      
+
+                        //     if (!calDensity) subs.CalculateMass();
+                        if (calRad)
+                        {
+                            subs.Radius = subs.FindRadius();
+                            return;
+                        }
                         subs.Vol = subs.FindVolumen();
-                    }
-                    else if (columnVol == e.Column)
-                    {
                         if (calDensity) subs.CalculateDensity(true, false);
-                        else subs.CalculateMass();
+                        else if (calMass) subs.CalculateMass();
+                        return;
+
                     }
+                    else if (columnRadius == e.Column)
+                    {
+                        //     if (!calDensity) subs.CalculateMass();
+
+
+                    
+                        if (calFh)
+                        {
+                            subs.FillHeight = subs.FindFillingHeight();
+                            return;
+                        }
+                        subs.Vol = subs.FindVolumen();
+                        if (calDensity) subs.CalculateDensity(true, false);
+                        else if (calMass) subs.CalculateMass();
+                        return;
+
+
+                    }
+                  
                     else if (columnMatrixID == (e.Column))
                     {
                         if (subs.CheckMatrix())
@@ -205,7 +249,19 @@ namespace DB
                         if (subs.CheckMass())
                         {
                             //      subs.Net = subs.GrossAvg = subs.Tare;
-                            subs.CalculateDensity(calDensity, false);
+                            if (calDensity)
+                            {
+                                subs.CalculateDensity(calDensity, false);
+                            }
+                            if (calRad)
+                            {
+                                subs.Radius = subs.FindRadius();
+                            }
+                            else if (calFh)
+                            {
+                                subs.FillHeight = subs.FindFillingHeight();
+                            }
+                            return;
                         }
                     }
                     else if (e.Column == this.ChCapsuleIDColumn)
@@ -365,8 +421,8 @@ namespace DB
                 {
                     if (this.CalcDensity != 0 && Vol != 0)
                     {
-                        this.Gross1 = Vol * this.CalcDensity;
-                        this.Gross2 = Vol * this.CalcDensity;
+                        this.Gross1 = Vol * this.CalcDensity*1e3;
+                        this.Gross2 = Vol * this.CalcDensity*1e3;
                     }
                 }
             }
@@ -755,20 +811,37 @@ namespace DB
 
             public double FindSurface()
             {
-                return Math.PI * this.Radius * this.Radius * 0.1 * 0.1;
+                double result =  Math.PI * this.Radius * this.Radius * 0.1 * 0.1; //indexer cm
+                return result;
             }
 
             public double FindRadius()
             {
-                UnitRow u = GetUnitRows().AsEnumerable().FirstOrDefault();
-                double ro = this.MatrixDensity;
-                if (u != null) ro = this.CalcDensity;
-                return 10 * Math.Sqrt((this.DryMass() * 1e-3 / (Math.PI * ro * this.FillHeight * 0.1)));
+                if (IsCalcDensityNull()) return 0;
+
+                double deno = (Math.PI * this.CalcDensity * this.FillHeight * 0.1);
+                double result = 0;
+
+                if (deno != 0)
+                {
+                     result = 10 * Math.Sqrt(this.Net * 1e-3 / deno);
+                }
+                return result;
             }
 
             public double FindFillingHeight()
             {
-                return (10 * this.DryMass() * 1e-3 / (this.MatrixDensity * FindSurface()));
+                if (IsCalcDensityNull()) return 0;
+
+                double deno = this.CalcDensity * FindSurface();
+                double result = 0;
+
+                if (deno != 0)
+                {
+                    result = 10 * this.Net * 1e-3 /  deno;
+                }
+                return result;
+              
             }
 
             /// <summary>

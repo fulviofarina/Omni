@@ -143,7 +143,7 @@ namespace k0X
             if (Cursor.Current == Cursors.WaitCursor)
             {
                 LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject = Box.Text;
-                LIMS.Linaa.SavePreferences();
+                LIMS.Interface.IPreferences.SavePreferences();
                 Box.Text = string.Empty;
 
                 Cursor.Current = Cursors.Default;
@@ -399,16 +399,19 @@ namespace k0X
                 msn = new Pop(false);
 
                 //Build
-
-                string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn, 0);
-
+                Creator.Build(ref LIMS.Interface, ref notify, ref msn);
+                Creator.CheckDirectories();
+                bool ok = Creator.Prepare(0);
+                //       string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn, 0);
+                //
                 //set medium callback
                 DB.Tools.Creator.CallBack = delegate
                 {
                     //this is OK
+                    LIMS.Linaa = LIMS.Interface.Get();
                     LIMS.Form = new LIMS(); //make a new UI LIMS
-                    //make a new interface
-                    LIMS.Interface = new Interface(ref LIMS.Linaa);
+                                            //make a new interface
+                                            //      LIMS.Interface = new Interface(ref LIMS.Linaa);
 
                     Link(); //dont remember
 
@@ -446,9 +449,9 @@ namespace k0X
                 };
 
                 //could not connect?
-                if (!string.IsNullOrEmpty(result))
+                if (!ok)
                 {
-                    MessageBox.Show(result, "Could not connect to LIMS DataBase", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No connection", "Could not connect to LIMS DataBase", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Connections_Click(null, EventArgs.Empty);
                 }
                 else

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using DB.LINAATableAdapters;
+using Msn;
 
 namespace DB
 {
     public interface IReport
     {
         NotifyIcon Notify { set; get; }
+        Pop Msn { get; set; }
 
         void GenerateBugReport();
 

@@ -22,7 +22,7 @@ namespace DB
 
         bool SaveLocalCopy();
 
-        void SavePreferences();
+        //  void SavePreferences();
 
         bool SaveRemote(ref IEnumerable<DataTable> tables, bool takeChanges);
 

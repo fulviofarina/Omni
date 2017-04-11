@@ -48,9 +48,143 @@ namespace DB
             set { folderPath = value; }
         }
 
+        private List<int> dTWithHandlers;
+
+        private List<DataColumnChangeEventHandler> handlers;
+
+        protected internal void Handlers(bool activate, ref DataTable dt)
+        {
+            int dtindex = Tables.IndexOf(dt);
+            int index = dTWithHandlers.IndexOf(dtindex);
+            if (index < 0) return; //not in the list of handlers
+
+            DataColumnChangeEventHandler han = handlers.ElementAt(index);
+            if (activate)
+            {
+                if (dt.Equals(Matrix)) Matrix.ColumnChanging += Matrix.DataColumnChanging;
+                dt.ColumnChanged += han;
+            }
+            else
+            {
+                if (dt.Equals(Matrix)) Matrix.ColumnChanging -= Matrix.DataColumnChanging;
+                dt.ColumnChanged -= han;
+            }
+        }
+
+        protected internal void RowChanged(object sender, DataRowChangeEventArgs e)
+        {
+            if (e.Action != DataRowAction.Add && e.Action != DataRowAction.Commit) return;
+            //	if( e.Action != DataRowAction.Commit) return;
+
+            e.Row.ClearErrors();
+            dynamic table;
+            table = e.Row.Table;
+            IEnumerable<DataColumn> cols = e.Row.Table.Columns.OfType<DataColumn>();
+            foreach (DataColumn column in cols)
+            {
+                table.DataColumnChanged(sender, new DataColumnChangeEventArgs(e.Row, column, e.Row[column]));
+            }
+        }
+
+        protected internal void RowHandlers(ref DataTable table, bool activate)
+        {
+            int dtindex = Tables.IndexOf(table);
+            int index = dTWithHandlers.IndexOf(dtindex);
+            if (index < 0) return; //not in the list of handlers
+
+            if (activate) table.RowChanged += this.RowChanged;
+            else table.RowChanged -= this.RowChanged;
+        }
+
+        private void cleanReadOnly(ref DataTable table)
+        {
+            //    DataTable table = dt as DataTable;
+            foreach (DataColumn column in table.Columns)
+            {
+                bool ok = column.ReadOnly;
+                ok = ok && column.Expression.Equals(string.Empty);
+                ok = ok && !table.PrimaryKey.Contains(column);
+                if (ok) column.ReadOnly = false;
+            }
+        }
+
         public void AddException(Exception ex)
         {
+            // this.PopulateColumnExpresions()
             this.tableExceptions.AddExceptionsRow(ex);
+        }
+
+        private void Handlers(bool activate)
+        {
+            for (int i = 0; i < dTWithHandlers.Count; i++)
+            {
+                int index = dTWithHandlers[i];
+                DataTable dt = Tables[index];
+                Handlers(activate, ref dt);
+                RowHandlers(ref dt, activate);
+            }
+        }
+
+        public void PopulateColumnExpresions()
+        {
+            handlers = new List<DataColumnChangeEventHandler>();
+            dTWithHandlers = new List<int>();
+
+            handlers.Add(Channels.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Channels));
+
+            handlers.Add(IrradiationRequests.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(IrradiationRequests));
+
+            handlers.Add(Matrix.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Matrix));
+            handlers.Add(VialType.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(VialType));
+            handlers.Add(Geometry.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(Geometry));
+            handlers.Add(SubSamples.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(SubSamples));
+
+            handlers.Add(Standards.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(Standards));
+            handlers.Add(Monitors.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(Monitors));
+            handlers.Add(DetectorsAbsorbers.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
+            handlers.Add(Unit.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(Unit));
+            handlers.Add(Preferences.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(Preferences));
+            handlers.Add(SSFPref.DataColumnChanged);
+
+
+            dTWithHandlers.Add(Tables.IndexOf(SSFPref));
+
+            Handlers(true);
+
+            PopulateSelectedExpression(true);
+
+            //  tableIRequestsAverages.ChThColumn.Expression = " ISNULL(1000 * Parent(SigmasSal_IRequestsAverages).sigmaSal / Parent(SigmasSal_IRequestsAverages).Mat ,'0')";
+            //  tableIRequestsAverages.ChEpiColumn.Expression = " ISNULL(1000 * Parent(Sigmas_IRequestsAverages).sigmaEp / Parent(Sigmas_IRequestsAverages).Mat,'0') ";
+            //   tableIRequestsAverages.SDensityColumn.Expression = "  6.0221415 * 10 * Parent(SubSamples_IRequestsAverages).DryNet / ( Parent(SubSamples_IRequestsAverages).Radius * ( Parent(SubSamples_IRequestsAverages).Radius + Parent(SubSamples_IRequestsAverages).FillHeight))";
+        }
+
+        public void PopulateSelectedExpression(bool setexpression)
+        {
+            string expression = string.Empty;
+            if (setexpression)
+            {
+                expression = "Parent(Measurements_Peaks).Selected";
+            }
+            //   PopulatePreferences();
+            Peaks.SelectedColumn.Expression = expression;
         }
 
         public void CloneDataSet(ref LINAA set)
@@ -67,127 +201,6 @@ namespace DB
             cleanReadOnly(ref table);
 
             //   this.notify;
-        }
-
-        public void Help()
-        {
-            string path = folderPath + DB.Properties.Resources.Features;
-            if (!System.IO.File.Exists(path)) return;
-
-            Dumb.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
-        }
-
-        public void PopulateResourceDirectory(string path)
-        {
-            try
-            {
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                    //   created = true;
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-        }
-
-        public void PopulateUserDirectories()
-        {
-            string path = string.Empty;
-
-            //override preferences
-            path = folderPath + Resources.Preferences + ".xml";
-            string developerPath = Application.StartupPath + "\\" + Resources.Preferences + "Dev.xml";
-            populateReplaceFile(path, developerPath);
-
-            path = folderPath + Resources.SSFPreferences + ".xml";
-            developerPath = Application.StartupPath + "\\" + Resources.SSFPreferences + "Dev.xml";
-            populateReplaceFile(path, developerPath);
-
-            path = folderPath + Resources.WCalc;
-            developerPath = Application.StartupPath + "\\" + Resources.WCalc;
-            populateReplaceFile(path, developerPath);
-
-            path = folderPath + Resources.XCOMEnergies;
-            developerPath = Application.StartupPath + "\\" + Resources.XCOMEnergies;
-            populateReplaceFile(path, developerPath);
-
-            // path = folderPath + Resources.SolCoiFolder;
-
-            bool overriderFound = false;
-            try
-            {
-                //does nothing
-                path = Application.StartupPath + "\\" + Resources.ResourcesOverrider;
-                overriderFound = File.Exists(path);
-
-                if (overriderFound) File.Delete(path);
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-
-            path = Application.StartupPath + "\\" + Resources.Features;
-            string currentpath = folderPath + Resources.Features;
-            populateFeaturesDirectory(path, currentpath);
-
-            try
-            {
-                path = folderPath + Resources.Exceptions;
-                populateDirectory(path, overriderFound);
-
-                path = folderPath + Resources.Backups;
-                populateDirectory(path, overriderFound);
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-
-            try
-            {
-                string solcoi = folderPath + Resources.SolCoiFolder;
-                bool nosolcoi = !Directory.Exists(solcoi);
-
-                if (nosolcoi || overriderFound)
-                {
-                    Directory.CreateDirectory(solcoi);
-                    string startexecutePath = folderPath + Resources.SolCoiFolder;
-
-                    string resourcePath = Application.StartupPath + "\\" + Resources.CurvesResource + ".bak";
-                    string destFile = startexecutePath + Resources.CurvesResource + ".bak";
-                    unpackResource(resourcePath, destFile, startexecutePath, false);
-
-                    resourcePath = Application.StartupPath + "\\" + Resources.SolCoiResource + ".bak";
-                    destFile = startexecutePath + Resources.SolCoiResource + ".bak";
-                    unpackResource(resourcePath, destFile, startexecutePath, false);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-
-            try
-            {
-                string matssf = folderPath + Resources.SSFFolder;
-                bool nossf = !Directory.Exists(matssf);
-                if (nossf || overriderFound)
-                {
-                    Directory.CreateDirectory(matssf);
-                    string resourcePath = Application.StartupPath + "\\" + Resources.SSFResource + ".bak";
-                    string startexecutePath = folderPath + Resources.SSFFolder;
-                    string destFile = startexecutePath + Resources.SSFResource + ".CAB";
-                    unpackResource(resourcePath, destFile, startexecutePath, true);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
         }
 
         public void Read(string filepath)
@@ -211,23 +224,7 @@ namespace DB
 
                 dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
 
-                PreferencesDataTable prefe = null;
-                SSFPrefDataTable ssfPrefe = null;
-
-                prefe = new PreferencesDataTable(this.Preferences);
-
-                ssfPrefe = new SSFPrefDataTable(this.SSFPref);
-
-                mergePreferences(ref prefe);
-
-                mergePreferences(ref ssfPrefe);
-
-                this.SavePreferences();
-                this.PopulatePreferences();
-
-                Dumb.FD<PreferencesDataTable>(ref prefe);
-
-                Dumb.FD<SSFPrefDataTable>(ref ssfPrefe);
+                //MergePreferences();
                 // this.PopulateSSFPreferences();
             }
             catch (Exception ex)
@@ -238,15 +235,47 @@ namespace DB
             Dumb.FD<LINAA>(ref dt);
         }
 
-        public void RestartingRoutine()
+        public bool RestartingRoutine()
         {
             string cmd = Application.StartupPath + Resources.Restarting;
-            if (System.IO.File.Exists(cmd))
+            bool shouldReport = System.IO.File.Exists(cmd);
+
+            if (shouldReport)
             {
-                //  restarting = true;
                 string email = System.IO.File.ReadAllText(cmd);
-                System.IO.File.Delete(cmd);
                 GenerateReport("Restarting succeeded...", string.Empty, string.Empty, DataSetName, email);
+                System.IO.File.Delete(cmd);
+            }
+            shouldReport = shouldReport || this.Exceptions.Count != 0;
+
+            //should send bug report?
+            if (!shouldReport) return false;
+
+            //yes...
+            GenerateBugReport();
+
+            return true;
+        }
+
+        public void SendToRestartRoutine(string texto)
+        {
+            string cmd = Application.StartupPath + Resources.Restarting;
+
+            try
+            {
+                bool shouldReport = System.IO.File.Exists(cmd);
+
+                if (shouldReport)
+                {
+                    System.IO.File.AppendAllText(cmd, texto);
+                    //     GenerateReport("Restarting succeeded...", string.Empty, string.Empty, DataSetName, email);
+                    //   System.IO.File.Delete(cmd);
+                }
+                else System.IO.File.WriteAllText(cmd, texto);
+            }
+            catch (Exception ex)
+            {
+                this.AddException(ex);
             }
         }
 
@@ -281,76 +310,6 @@ namespace DB
             }
 
             return duplicates;
-        }
-
-        private void installResources(string solcoi, string matssf)
-        {
-            //VOLVER A PONER TODO
-        }
-
-        private void populateDirectory(string path, bool overrider)
-        {
-            try
-            {
-                if (!Directory.Exists(path) || overrider)
-                {
-                    Directory.CreateDirectory(path);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-        }
-
-        private void populateFeaturesDirectory(string features, string currentpath)
-        {
-            try
-            {
-                bool feats = File.Exists(features);
-                if (feats)
-                {
-                    File.Copy(features, currentpath, true);
-                    File.Delete(features);
-                    Help();
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-        }
-
-        private void populateReplaceFile(string path, string developerPath)
-        {
-            try
-            {
-                //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
-                if (File.Exists(developerPath))
-                {
-                    File.Copy(developerPath, path, true);
-                    File.Delete(developerPath);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);//                throw;
-            }
-        }
-
-        private void unpackResource(string resourcePath, string destFile, string startExecutePath, bool unpack)
-        {
-            if (File.Exists(resourcePath))
-            {
-                File.Copy(resourcePath, destFile);
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //conservar esto para unzippear
-                if (unpack)
-                {
-                    Rsx.Dumb.Process(process, startExecutePath, "expand.exe", destFile + " -F:* " + startExecutePath, false, true, 100000);
-                    File.Delete(destFile);
-                }
-            }
         }
 
         /*

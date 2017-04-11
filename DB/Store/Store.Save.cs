@@ -146,10 +146,6 @@ namespace DB
                         //  this.tableCompositions.AcceptChanges();
                         // this.tableCompositions.WriteXml(path);
                     }
-                    else if (t.Equals(typeof(PreferencesRow)))
-                    {
-                        this.SavePreferences();
-                    }
                     else throw new SystemException("Not implemented. Save<> Method");
                     //   }
 
@@ -227,20 +223,6 @@ namespace DB
                 AddException(ex);
             }
             return ok;
-        }
-
-        public void SavePreferences()
-        {
-            try
-            {
-                savePreferences<PreferencesDataTable>();
-
-                savePreferences<SSFPrefDataTable>();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
         }
 
         public bool SaveRemote(ref IEnumerable<DataTable> tables, bool takeChanges)

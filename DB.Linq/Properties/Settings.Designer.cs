@@ -26,19 +26,7 @@ namespace DB.Linq.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=SSF;Persist Security Info=True;User ID=sa;" +
-            "Connect Timeout=5")]
-        public string SSF {
-            get {
-                return ((string)(this["SSF"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=k014;Persist Security Info=True;User ID=sa" +
-            ";Password=naa;Connect Timeout=5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=FLUX\\SQL14;Initial Catalog=k014;Integrated Security=True")]
         public string k014ConnectionString {
             get {
                 return ((string)(this["k014ConnectionString"]));

@@ -140,7 +140,7 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ucCalc = new DB.UI.Samples.ucOptionsSSF();
+            this.ucCalcOptions = new DB.UI.Samples.ucOptionsSSF();
             this.ucUnit = new DB.UI.ucUnit();
             this.ucMS = new DB.UI.ucMatrixSimple();
             this.ucVcc = new DB.UI.ucV();
@@ -485,6 +485,8 @@
             // 
             // toolStripTextBox2
             // 
+            this.toolStripTextBox2.AcceptsReturn = true;
+            this.toolStripTextBox2.AcceptsTab = true;
             this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripTextBox2.Margin = new System.Windows.Forms.Padding(39, 0, 1, 0);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
@@ -770,6 +772,8 @@
             // 
             // kthB
             // 
+            this.kthB.AcceptsReturn = true;
+            this.kthB.AcceptsTab = true;
             this.kthB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.kthB.Margin = new System.Windows.Forms.Padding(90, 0, 1, 0);
             this.kthB.Name = "kthB";
@@ -798,6 +802,8 @@
             // 
             // kepiB
             // 
+            this.kepiB.AcceptsReturn = true;
+            this.kepiB.AcceptsTab = true;
             this.kepiB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.kepiB.Margin = new System.Windows.Forms.Padding(99, 0, 1, 0);
             this.kepiB.Name = "kepiB";
@@ -835,6 +841,8 @@
             // 
             // chdiamB
             // 
+            this.chdiamB.AcceptsReturn = true;
+            this.chdiamB.AcceptsTab = true;
             this.chdiamB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.chdiamB.Name = "chdiamB";
             this.chdiamB.Size = new System.Drawing.Size(100, 41);
@@ -861,6 +869,8 @@
             // 
             // chlenB
             // 
+            this.chlenB.AcceptsReturn = true;
+            this.chlenB.AcceptsTab = true;
             this.chlenB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.chlenB.Margin = new System.Windows.Forms.Padding(34, 0, 1, 0);
             this.chlenB.Name = "chlenB";
@@ -902,6 +912,9 @@
             // 
             // massB
             // 
+            this.massB.AcceptsReturn = true;
+            this.massB.AcceptsTab = true;
+            this.massB.CausesValidation = false;
             this.massB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.massB.Margin = new System.Windows.Forms.Padding(35, 0, 1, 0);
             this.massB.Name = "massB";
@@ -929,6 +942,9 @@
             // 
             // densityB
             // 
+            this.densityB.AcceptsReturn = true;
+            this.densityB.AcceptsTab = true;
+            this.densityB.CausesValidation = false;
             this.densityB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.densityB.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
             this.densityB.Name = "densityB";
@@ -991,6 +1007,9 @@
             // 
             // radiusbox
             // 
+            this.radiusbox.AcceptsReturn = true;
+            this.radiusbox.AcceptsTab = true;
+            this.radiusbox.CausesValidation = false;
             this.radiusbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.radiusbox.Margin = new System.Windows.Forms.Padding(20, 0, 1, 0);
             this.radiusbox.Name = "radiusbox";
@@ -1018,6 +1037,9 @@
             // 
             // lenghtbox
             // 
+            this.lenghtbox.AcceptsReturn = true;
+            this.lenghtbox.AcceptsTab = true;
+            this.lenghtbox.CausesValidation = false;
             this.lenghtbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lenghtbox.Margin = new System.Windows.Forms.Padding(33, 0, 1, 0);
             this.lenghtbox.Name = "lenghtbox";
@@ -1043,7 +1065,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.ucCalc);
+            this.splitContainer1.Panel2.Controls.Add(this.ucCalcOptions);
             this.splitContainer1.Size = new System.Drawing.Size(650, 35);
             this.splitContainer1.SplitterDistance = 420;
             this.splitContainer1.TabIndex = 13;
@@ -1239,13 +1261,13 @@
             // 
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
-            // ucCalc
+            // ucCalcOptions
             // 
-            this.ucCalc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucCalc.Location = new System.Drawing.Point(0, 0);
-            this.ucCalc.Name = "ucCalc";
-            this.ucCalc.Size = new System.Drawing.Size(226, 35);
-            this.ucCalc.TabIndex = 0;
+            this.ucCalcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCalcOptions.Location = new System.Drawing.Point(0, 0);
+            this.ucCalcOptions.Name = "ucCalcOptions";
+            this.ucCalcOptions.Size = new System.Drawing.Size(226, 35);
+            this.ucCalcOptions.TabIndex = 0;
             // 
             // ucUnit
             // 
@@ -1484,7 +1506,7 @@
         private System.Windows.Forms.TabControl FilesTab;
         private System.Windows.Forms.TabPage outputTab;
         private System.Windows.Forms.RichTextBox outputBox;
-        private Samples.ucOptionsSSF ucCalc;
+        private Samples.ucOptionsSSF ucCalcOptions;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button button1;
     }

@@ -138,7 +138,7 @@ namespace k0X
                 string msg = this.ToDoLabelBox.Text + c + this.ToDoGroupBox.Text + c + this.f0box.Text + c + this.alpha0box.Text + c + this.stepbox.Text;
 
                 Interface.IPreferences.CurrentPref.LastToDo = msg;
-                this.Linaa.SavePreferences();
+                Interface.IPreferences.SavePreferences();
             }
             catch (SystemException exception)
             {

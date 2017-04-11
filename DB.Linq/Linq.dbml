@@ -1,5 +1,341 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="k014" Class="LinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=flux\sql14;Initial Catalog=SSF;Persist Security Info=True;User ID=sa;Connect Timeout=5" SettingsObjectName="DB.Linq.Properties.Settings" SettingsPropertyName="SSF" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=FLUX\SQL14;Initial Catalog=k014;Integrated Security=True" SettingsObjectName="DB.Linq.Properties.Settings" SettingsPropertyName="k014ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Acquisitions" Member="Acquisitions">
+    <Type Name="Acquisition">
+      <Column Name="AcquisitionsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SubSamplesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PresetTime" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DetectorsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TotalTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DeadTimePercent" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="UserInterupted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DetectorName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AcquisitionPath" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AcquisitionFileName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AcquisitionPathBackup" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AcquisitionFileNameBackup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AcquisitionStatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PeakTablePath" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PeakTableFile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ComparatorFactor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Blanks" Member="Blanks">
+    <Type Name="Blank">
+      <Column Name="BlanksID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BlankName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BlankVial" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Capsules" Member="Capsules">
+    <Type Name="Capsule">
+      <Column Name="CapsulesID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CapsuleName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VialTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ENAA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Channels" Member="Channels">
+    <Type Name="Channel">
+      <Column Name="ChannelsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ChannelName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Alpha" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="f" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IrReqCode" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Reactor" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="kth" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="kepi" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FluxType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.COIN" Member="COINs">
+    <Type Name="COIN">
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Geometry" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Isotope" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="COI" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Companies" Member="Companies">
+    <Type Name="Company">
+      <Column Name="CompanyID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ImputationNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AccountancyNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CityCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefNumber" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
+      <Column Name="IsIntern" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SubCompanyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Compositions" Member="Compositions">
+    <Type Name="Composition">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Formula" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Element" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Unc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="QuantityUnit" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="UncUnit" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContactPersons" Member="ContactPersons">
+    <Type Name="ContactPerson">
+      <Column Name="ContactPersonID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContactPersonID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsDefault" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Closed" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetectorsAbsorbers" Member="DetectorsAbsorbers">
+    <Type Name="DetectorsAbsorber">
+      <Column Name="DetectorAbsorberID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CrystalMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ContactLayerMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TopDeadLayerMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HolderSupportMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CanTopMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OtherAbsorberMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CanSideMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CrystalHolderMatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetectorsCurves" Member="DetectorsCurves">
+    <Type Name="DetectorsCurve">
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Curve" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LowEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HighEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Degree" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="a0" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="a1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="a2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="a3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="a4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RefGeometry" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefPosition" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetectorsDimensions" Member="DetectorsDimensions">
+    <Type Name="DetectorsDimension">
+      <Column Name="DetectorDimensionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="DetectorType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CrystalRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CoreCavityRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CoreCavityHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ContactLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TopDeadLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HolderSupportThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanTopThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="OtherAbsorberThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PulseShaping" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AirLayerCanToHolderSupport" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="VacuumGap" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="NrOfEnergies" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EndEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="StartEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalDisplacement" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Bulletization" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SideDeadLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanSideThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalHolderThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetectorsDimensionsLatest" Member="DetectorsDimensionsLatests">
+    <Type Name="DetectorsDimensionsLatest">
+      <Column Name="DetectorDimensionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="DetectorType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CrystalRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CoreCavityRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CoreCavityHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ContactLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TopDeadLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HolderSupportThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanTopThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="OtherAbsorberThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PulseShaping" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AirLayerCanToHolderSupport" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="VacuumGap" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="NrOfEnergies" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EndEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="StartEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalDisplacement" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Bulletization" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SideDeadLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanSideThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalHolderThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetectorsDimensionsOldOld" Member="DetectorsDimensionsOldOlds">
+    <Type Name="DetectorsDimensionsOldOld">
+      <Column Name="DetectorDimensionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="DetectorType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CrystalRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CoreCavityRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CoreCavityHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ContactLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TopDeadLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HolderSupportThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanTopThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="OtherAbsorberThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PulseShaping" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AirLayerCanToHolderSupport" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="VacuumGap" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="NrOfEnergies" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EndEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="StartEnergy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalDisplacement" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Bulletization" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SideDeadLayerThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanSideThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CanRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CrystalHolderThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ElementPerOrder" Member="ElementPerOrders">
+    <Type Name="ElementPerOrder">
+      <Column Name="ElementPerOrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrdersID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ElementZ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProtocolsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Elements" Member="Elements">
+    <Type Name="Element">
+      <Column Name="Z" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Element" Member="Element1" Type="System.String" DbType="NVarChar(2) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ElementNameEn" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Row" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Col" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Wiki" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ElementsCorrectionFactors" Member="ElementsCorrectionFactors">
+    <Type Name="ElementsCorrectionFactor">
+      <Column Name="Z" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Element" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="ElementNameEn" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CorrectionFactorDefault" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CorrectionFactor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CorFac1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CorFac2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CorFac3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CorFac4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Protocol1" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Protocol2" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Protocol3" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Protocol4" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Row" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Col" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Geometry" Member="Geometries">
+    <Type Name="Geometry">
+      <Column Name="GeometryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GeometryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VialTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Radius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FillHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CreationDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Holders" Member="Holders">
+    <Type Name="Holder">
+      <Column Name="HolderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DistanceToBaseSupport" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IPeakAverages" Member="IPeakAverages">
+    <Type Name="IPeakAverage">
+      <Column Name="Sample" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ObsSD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="GActUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="X" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="n" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="k0ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IRequestsAverages" Member="IRequestsAverages">
+    <Type Name="IRequestsAverage">
+      <Column Name="Sample" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ObsSD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="R0" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="R1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Ge" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Asp" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="n" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NAAID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IrradiationRequests" Member="IrradiationRequests">
+    <Type Name="IrradiationRequest">
+      <Column Name="IrradiationRequestsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IrradiationCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BudgetNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IrradiationRequestDocPath" Type="System.String" DbType="NVarChar(350)" CanBeNull="true" />
+      <Column Name="IrradiationRequestDocFileName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IrradiationStartDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IrradiationEndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ChannelsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Irradiations" Member="Irradiations">
+    <Type Name="Irradiation">
+      <Column Name="IrradiationsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CapsulesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InReactor" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutReactor" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IrradiationTotalTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IrradiationRequestsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.k0NAA" Member="k0NAAs">
     <Type Name="k0NAA">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -14,6 +350,120 @@
       <Column Name="Codek0x" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
       <Column Name="Comments" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="NAAID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.k0NAAUnOff" Member="k0NAAUnOffs">
+    <Type Name="k0NAAUnOff">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Iso" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Sym" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="k0" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="k0Unc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Codek0" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="k0x" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="k0xUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Codek0x" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="NAAID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LINES" Member="LINEs">
+    <Type Name="LINE">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Iso" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Sym" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Yield" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CodeG" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LINES_FIS" Member="LINES_FIs">
+    <Type Name="LINES_FI">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Iso" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Sym" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Yield" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CodeGFis" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lorito" Member="Loritos">
+    <Type Name="Lorito">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Matrix" Member="Matrixes">
+    <Type Name="Matrix">
+      <Column Name="MatrixID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MatrixName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MatrixComposition" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MatrixDensity" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MatSSF" Member="MatSSFs">
+    <Type Name="MatSSF">
+      <Column Name="MatSSFID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TargetIsotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SSF" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="GFast" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SubSamplesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UnitID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RadioIsotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SSFCh" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Measurements" Member="Measurements">
+    <Type Name="Measurement">
+      <Column Name="Project" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="MeasurementNr" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="MeasurementID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Measurement" Member="Measurement1" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MeasurementStart" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LiveTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Sample" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CountTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Monitors" Member="Monitors">
+    <Type Name="Monitor">
+      <Column Name="MonitorsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MonName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MonGrossMass1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MonGrossMass2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LastMassDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastIrradiationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Difference" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="NumberOfDays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="GeometryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MonitorsFlags" Member="MonitorsFlags">
+    <Type Name="MonitorsFlag">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MonitorCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="HalfLife" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MUES" Member="MUEs">
+    <Type Name="MUE">
+      <Column Name="MUID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MU" Type="System.Double" DbType="Float" IsDbGenerated="true" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="MACS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MAIS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PE" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PPNF" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PPEF" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MATCS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MATNCS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Density" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Edge" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.NAA" Member="NAAs">
@@ -42,135 +492,162 @@
       <Column Name="Comments" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Unit" Member="Units">
-    <Type Name="Unit">
-      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SampleID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(55)" CanBeNull="true" />
-      <Column Name="Gt" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Mass" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Density" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Diameter" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Length" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="ChDiameter" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="ChLength" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="ChCfg" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="MCL" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="EXS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PXS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="ToDo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ChTh" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="GtCh" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="kth" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="kepi" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ChannelID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="VialTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ContainerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="LastChanged" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="LastCalc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="SSFTable" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
-  <Table Name="dbo.VialType" Member="VialTypes">
-    <Type Name="VialType">
-      <Column Name="VialTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="VialTypeRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="InnerRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="SideThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="BottomThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="MaxFillHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Comments" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="IsRabbit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.MatSSF" Member="MatSSFs">
-    <Type Name="MatSSF">
-      <Column Name="MatSSFID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TargetIsotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SSF" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="GFast" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="SubSamplesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="UnitID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="RadioIsotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SSFCh" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Matrix" Member="Matrixes">
-    <Type Name="Matrix">
-      <Column Name="MatrixID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="MatrixName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="MatrixComposition" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="MatrixDensity" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Geometry" Member="Geometries">
-    <Type Name="Geometry">
-      <Column Name="GeometryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="GeometryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="VialTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Radius" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="FillHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Comments" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="CreationDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Elements" Member="Elements">
-    <Type Name="Element">
-      <Column Name="Z" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Element" Member="Element1" Type="System.String" DbType="NVarChar(2) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ElementNameEn" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Row" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Col" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Enabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Wiki" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ElementPerOrder" Member="ElementPerOrders">
-    <Type Name="ElementPerOrder">
-      <Column Name="ElementPerOrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="OrdersID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ElementZ" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ProtocolsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Compositions" Member="Compositions">
-    <Type Name="Composition">
+  <Table Name="dbo.NAAUnOff" Member="NAAUnOffs">
+    <Type Name="NAAUnOff">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Formula" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Element" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="Quantity" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Unc" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="QuantityUnit" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="UncUnit" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Iso" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Sym" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Qog" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="QogUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Qom" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="QomUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Qomg" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="QomgUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Er" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ErUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="T2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="T3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="T4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="F1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="F2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="F3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="F4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Cd" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Checked" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Channels" Member="Channels">
-    <Type Name="Channel">
-      <Column Name="ChannelsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ChannelName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Alpha" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="f" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="IrReqCode" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="Reactor" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="kth" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="kepi" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="FluxType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Order">
+      <Column Name="OrdersID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContactPersonID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderNr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderInfo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OrderComments" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="RegistrationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StartingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Urgent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CustomerOrderReference" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerOrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LabRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LabOrderRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NumberOfSamples" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UnitsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Units" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OrderStatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Capsules" Member="Capsules">
-    <Type Name="Capsule">
-      <Column Name="CapsulesID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CapsuleName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="VialTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ENAA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+  <Table Name="dbo.OrderStatus" Member="OrderStatus">
+    <Type Name="OrderStatus">
+      <Column Name="OrderStatusID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="OrderStatusDescription" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OrderStatusInfo" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Peaks" Member="Peaks">
+    <Type Name="Peak">
+      <Column Name="MeasurementID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SampleID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IrradiationID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Area" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AreaUncertainty" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PeaksID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Efficiency" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="COI" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="T0" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MD" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Project">
+      <Column Name="OrdersID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IrradiationRequestsID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="X" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Y" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pValues" Member="pValues">
+    <Type Name="pValue">
+      <Column Name="Target" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="p" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reactions" Member="Reactions">
+    <Type Name="Reaction">
+      <Column Name="Target" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Radioisotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Element" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RefMaterials" Member="RefMaterials">
+    <Type Name="RefMaterial">
+      <Column Name="RefMaterialsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RefMaterialName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefMaterialNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefMaterialDescription" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="RefMaterialIdentNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CurrentlyUsed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Results" Member="Results">
+    <Type Name="Result">
+      <Column Name="ResultsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SamplesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Element" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Concentration" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ConcentrationCorrected" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ConcenCorRounded" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Uncertainty" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="UncerRounded" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IsMDA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Samples" Member="Samples">
+    <Type Name="Sample">
+      <Column Name="SamplesID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerSampleReference1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerSampleReference2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerSampleReference3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SampleDescription" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SampleReceiptionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SampleAnalyseDateBegin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SampleAnalyseDateEnd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrdersID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SchAcqs" Member="SchAcqs">
+    <Type Name="SchAcq">
+      <Column Name="SID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(55)" CanBeNull="true" />
+      <Column Name="Project" Type="System.String" DbType="NVarChar(55)" CanBeNull="true" />
+      <Column Name="Sample" Type="System.String" DbType="NVarChar(55)" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="LastMeas" Type="System.String" DbType="NVarChar(55)" CanBeNull="true" />
+      <Column Name="PresetTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Repeats" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="StartOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Counter" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="[User]" Member="User" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Interrupted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsAwake" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Delay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Saved" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Informed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NotCrashed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NextStartOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CheckedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RefreshRate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MeasStart" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Cummulative" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Sigmas" Member="Sigmas">
@@ -192,29 +669,199 @@
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.Reactions" Member="Reactions">
-    <Type Name="Reaction">
-      <Column Name="Target" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Radioisotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+  <Table Name="dbo.Solang" Member="Solangs">
+    <Type Name="Solang">
+      <Column Name="Detector" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Geometry" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Solang" Member="Solang1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Element" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.MUES" Member="MUEs">
-    <Type Name="MUE">
-      <Column Name="MUID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Standards" Member="Standards">
+    <Type Name="Standard">
+      <Column Name="StandardsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="stdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="stdProducer" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="stdConcentration" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="stdUnc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="stdBottleNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MonitorCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubCompanies" Member="SubCompanies">
+    <Type Name="SubCompany">
+      <Column Name="SubCompanyID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubSamples" Member="SubSamples">
+    <Type Name="SubSample">
+      <Column Name="SubSamplesID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SubSampleName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubSampleDescription" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubSampleCreationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SamplesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CapsulesID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GeometryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Gross1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Gross2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Tare" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MoistureContent" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FillHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IrradiationRequestsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MonitorsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ReferenceMaterialID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StandardsID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BlankID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Gthermal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Radius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DirectSolcoi" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="InReactor" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutReactor" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Concentration" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ENAA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ChCapsuleID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ToDo" Member="ToDos">
+    <Type Name="ToDo">
+      <Column Name="groupNr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="groupDes" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sample" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sym" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sym2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sample2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ref" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[use]" Member="use" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="label" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Iso" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Iso2" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="comment" Type="System.String" DbType="NVarChar(120)" CanBeNull="true" />
+      <Column Name="ToDoNr" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="calib" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ToDoOld" Member="ToDoOlds">
+    <Type Name="ToDoOld">
+      <Column Name="groupNr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="groupDes" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sample" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sym" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sym2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sample2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ref" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[use]" Member="use" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="label" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Iso" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Iso2" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="comment" Type="System.String" DbType="NVarChar(120)" CanBeNull="true" />
+      <Column Name="ToDoNr" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="calib" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ToDoResults" Member="ToDoResults">
+    <Type Name="ToDoResult">
+      <Column Name="[index]" Member="index" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ToDoNr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="groupNr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="groupDes" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="project1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="project2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sample1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sample2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="meas1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="meas2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="det1" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="det2" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="pos1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pos2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Iso1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Iso2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Energy1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Energy2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="k01" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="k02" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Qo1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Qo2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="N12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="T12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="R12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="COI12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="EFFI12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="W12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SD12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="P12" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tStudent" Member="tStudents">
+    <Type Name="tStudent">
+      <Column Name="v" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="confidence" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="t" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="[index]" Member="index" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Unit" Member="Units">
+    <Type Name="Unit">
+      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SampleID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Gt" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ChDiameter" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ChLength" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ChCfg" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MCL" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="EXS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PXS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ToDo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ChTh" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="GtCh" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="kth" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="kepi" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastChanged" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastCalc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SSFTable" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="IrrReqID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VialType" Member="VialTypes">
+    <Type Name="VialType">
+      <Column Name="VialTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VialTypeRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="InnerRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SideThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="BottomThickness" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MatrixID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaxFillHeight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IsRabbit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Yields" Member="Yields">
+    <Type Name="Yield">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Iso" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
       <Column Name="Energy" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="MU" Type="System.Double" DbType="Float" IsDbGenerated="true" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="MACS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="MAIS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PE" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PPNF" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PPEF" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="MATCS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="MATNCS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Density" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Edge" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="EnergyUnc" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Yield" Member="Yield1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="YieldUnc" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Dose" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DoseUnc" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="NChar(30)" CanBeNull="true" />
+      <Column Name="NAAID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="k0NAAID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

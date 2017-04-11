@@ -10,11 +10,19 @@ namespace DB
 {
     public interface IMain
     {
+        // void PopulateDirectory(string path);
+
         string FolderPath
         {
             get;
             set;
         }
+
+        void SendToRestartRoutine(string texto);
+
+        void PopulateColumnExpresions();
+
+        bool RestartingRoutine();
 
         bool IsSpectraPathOk { get; }
 
@@ -25,9 +33,9 @@ namespace DB
         //      get;
         //      set;
         //  }
-        void Help();
+        // void Help();
 
-        void PopulateUserDirectories();
+        //  void PopulateUserDirectories();
 
         void Read(string filepath);
 

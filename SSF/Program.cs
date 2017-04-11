@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Data;
-using System.Data.Linq;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using DB;
-using DB.Linq;
 using DB.Tools;
 using DB.UI;
 using Msn;
-using System.Linq;
 
 namespace SSF
 {
@@ -61,29 +56,41 @@ namespace SSF
                 msn.ParentForm.StartPosition = FormStartPosition.CenterScreen;
 
                 NotifyIcon con = null;
-                LIMS.UserControls = new List<object>();
 
                 //create database
-                string result = Creator.Build(ref LIMS.Linaa, ref con, ref msn, 0);
+                Creator.Build(ref LIMS.Interface, ref con, ref msn);
 
-                LIMS.Interface = new Interface(ref LIMS.Linaa);
+                Creator.CheckDirectories();
 
+                bool ok = Creator.Prepare(0);
+
+                LIMS.Linaa = LIMS.Interface.Get();
+                LIMS.UserControls = new List<object>();
                 LIMS.Form = new LIMS(); //make a new UI LIMS
-                                        //  LIMS.Form.WindowState = FormWindowState.Minimized;
-
+                LIMS.Form.Enabled = false;
                 LIMS.Form.Visible = true;
+
+                //    LIMS.Interface = new Interface(ref LIMS.Linaa);
+
+                //  LIMS.Form.WindowState = FormWindowState.Minimized;
+
                 //    DB.Tools.Creator.CallBack = delegate
                 //    {
                 // Application.DoEvents();
 
                 //   };
 
-                DB.Tools.Creator.LastCallBack = delegate
+                if (ok)
+                {
+                    DB.Tools.Creator.LastCallBack = delegate
                 {
                     //make a new interface
 
                     //set user control list
                     //create LIMS form
+                    UserControl c = LIMS.CreateUI(ControlNames.Preferences);
+                    LIMS.CreateForm("Preferences", ref c);
+                    c.ParentForm.Visible = false;
 
                     //create form for SubSamples
                     UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
@@ -139,22 +146,16 @@ namespace SSF
                     //    Control ctrl4 = ucSubSamples;
                     //   uc.AttachSampleCtrl(ref ctrl4);
 
-                    //    System.Diagnostics.Process.Start("wpi://SQLExpress/");
+                    //
 
                     form.Opacity = 100;
 
                     Application.DoEvents();
+                    LIMS.Form.Enabled = true;
                     LIMS.Interface.IReport.ReportFinished();
                 };
 
-                if (!string.IsNullOrEmpty(result))
-                {
-                    MessageBox.Show(result, "Could not connect to LIMS DataBase", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //   Connections_Click(null, EventArgs.Empty);
-                    // Application.Restart();
-                }
-                else
-                {
+                    //GO GO GO GO
                     DB.Tools.Creator.Load();
                 }
             }
@@ -178,66 +179,6 @@ namespace SSF
         }
 
         // private static LinqDataContext linq = null;
-
-        public static void CreateSSFDatabase()
-        {
-            LinqDataContext destiny = new LinqDataContext(DB.Properties.Settings.Default.NAAConnectionString);
-
-            //  new LinqDataContext(Idb)
-
-            if (destiny.DatabaseExists()) destiny.DeleteDatabase();
-            //{
-            destiny.CreateDatabase();
-            //}
-            LinqDataContext original = new LinqDataContext(DB.Properties.Settings.Default.NAAConnectionString);
-
-            Clone(ref original, ref destiny);
-        }
-
-        public static void Clone(ref LinqDataContext original, ref LinqDataContext destiny)
-        {
-            // Type tipo = typeof(T);
-
-            //   Type o = typeof(Unit);
-
-            ITable dt = original.GetTable<Unit>();
-            ITable ita = destiny.GetTable(typeof(Unit));
-            Insert(ref dt, ref ita);
-
-            dt = original.GetTable<Matrix>();
-            ita = destiny.GetTable(typeof(Matrix));
-            Insert(ref dt, ref ita);
-
-            dt = original.GetTable<VialType>();
-            ita = destiny.GetTable(typeof(VialType));
-            Insert(ref dt, ref ita);
-
-            dt = original.GetTable<Channel>();
-            ita = destiny.GetTable(typeof(Channel));
-            Insert(ref dt, ref ita);
-
-            dt = original.GetTable<Geometry>();
-            ita = destiny.GetTable(typeof(Geometry));
-            Insert(ref dt, ref ita);
-
-            dt = original.GetTable<NAA>();
-            ita = destiny.GetTable(typeof(NAA));
-            Insert(ref dt, ref ita);
-
-            dt = original.GetTable<k0NAA>();
-            ita = destiny.GetTable(typeof(k0NAA));
-            Insert(ref dt, ref ita);
-        }
-
-        private static void Insert(ref ITable dt, ref ITable ita)
-        {
-            foreach (var i in dt)
-            {
-                ita.InsertOnSubmit(i);
-            }
-
-            ita.Context.SubmitChanges();
-        }
 
         /// <summary>
         /// Loads the Database, makes the ucControl

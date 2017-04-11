@@ -95,6 +95,14 @@ namespace DB.UI
                         postRefresh = mat.PostRefresh;
                         break;
                     }
+                case ControlNames.Preferences:
+                    {
+                        ucPreferences ucPreferences = new ucPreferences();
+                        ucPreferences.Set(ref LIMS.Interface);
+                        control = (UserControl)ucPreferences;
+
+                        break;
+                    }
                 case ControlNames.Detectors:
                     {
                         ucDetectors ucDetectors = new ucDetectors();
@@ -212,6 +220,8 @@ namespace DB.UI
                 LIMS.Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
                 return null;
             }
+            UserControls.Add(control);
+
             //create the DGV controller... and
             //set methods...
             Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Linaa.Msg, ref LIMS.IFind);
@@ -228,22 +238,23 @@ namespace DB.UI
             cv.SaveMethod = LIMS.Interface.IStore.Save;
 
             DataGridView[] dgvs = Rsx.Dumb.GetChildControls<DataGridView>(control).ToArray();
-            if (dgvs.Count() == 0) return null;
 
-            cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
+            if (dgvs.Count() != 0)
+            {
+                cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
 
-            //create events
-            cv.CreateEvents(ref dgvs);
-            dgvs = null;
+                //create events
+                cv.CreateEvents(ref dgvs);
+                dgvs = null;
+            }
+
             ToolStripButton[] items = Rsx.Dumb.GetChildControls<ToolStrip>(control)
                 .SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
-
             cv.CreateEvents(ref items);
             items = null;
+
             control.Tag = cv;   //sets the CV as a TAG for the control
             cv.UsrControl = control; //set the control as a tag for the CV
-
-            UserControls.Add(control);
 
             return control;
         }

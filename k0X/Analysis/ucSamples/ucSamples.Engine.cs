@@ -344,7 +344,7 @@ namespace k0X
                             irr.ChannelsRow.FluxType = fluxTypebox.Text;
                         }
                     }
-                    Interface.IStore.SavePreferences();
+                    Interface.IPreferences.SavePreferences();
                 }
             }
             catch (SystemException ex)

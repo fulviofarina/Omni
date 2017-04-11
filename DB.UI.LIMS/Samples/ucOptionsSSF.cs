@@ -18,6 +18,8 @@ namespace DB.UI.Samples
         public ucOptionsSSF()
         {
             InitializeComponent();
+
+           
         }
 
         private Interface Interface;
@@ -30,6 +32,11 @@ namespace DB.UI.Samples
             bindings = binding;
             samplebindings = sampbindings;
             loadPreferences();
+
+            string col = Interface.IDB.SSFPref.LoopColumn.ColumnName;
+            object source = Interface.IPreferences.CurrentSSFPref;
+            Binding b = new Binding("Checked", source, col);
+
             this.OptionsBtn.DropDownClosed += delegate
             {
                 setPreferences();
@@ -65,20 +72,7 @@ namespace DB.UI.Samples
             // MatSSF.StartupPath += ip.CurrentSSFPref.Folder;
 
             N4.TextBox.Text = ip.CurrentSSFPref.Rounding;
-            this.loop.Checked = ip.CurrentSSFPref.Loop;
-
-            this.doCK.Checked = ip.CurrentSSFPref.DoCK;
-            this.doMatSSF.Checked = ip.CurrentSSFPref.DoMatSSF;
-            this.showMatSSF.Checked = ip.CurrentSSFPref.ShowMatSSF;
-            this.AutoLoad.Checked = ip.CurrentPref.AutoLoad;
-            // this.FolderPath.Text = ip.CurrentPref.Folder;
-            this.showOther.Checked = ip.CurrentSSFPref.ShowOther;
-
-            this.calcDensity.Checked = ip.CurrentSSFPref.CalcDensity;
-            this.findlength.Checked = ip.CurrentSSFPref.AARadius;
-            this.findRadius.Checked = ip.CurrentSSFPref.AAFillHeight;
-
-            this.workOffline.Checked = ip.CurrentPref.Offline;
+       
         }
 
         private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
@@ -115,6 +109,13 @@ namespace DB.UI.Samples
             Cursor.Current = Cursors.Default;
         }
 
+    
+     
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LIMS.UserControls.OfType<ucPreferences>().FirstOrDefault().ParentForm.Visible = true;
+        }
+
         /// <summary>
         /// sets the preferences when the OptionsMenu closes
         /// </summary>
@@ -122,29 +123,11 @@ namespace DB.UI.Samples
         {
             try
             {
+                // calcDensity_Click();
+
                 IPreferences ip = Interface.IPreferences;
 
-                ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-
-                ip.CurrentSSFPref.Loop = this.loop.Checked;
-
-                ip.CurrentSSFPref.Loop = this.loop.Checked;
-
-                ip.CurrentSSFPref.DoCK = this.doCK.Checked;
-                ip.CurrentSSFPref.DoMatSSF = this.doMatSSF.Checked;
-                ip.CurrentSSFPref.ShowMatSSF = this.showMatSSF.Checked;
-                ip.CurrentPref.AutoLoad = this.AutoLoad.Checked;
-
-                //  ip.CurrentPref.Folder = this.FolderPath.Text;
-                ip.CurrentSSFPref.ShowOther = this.showOther.Checked;
-                ip.CurrentPref.Offline = this.workOffline.Checked;
-
-                ip.CurrentSSFPref.CalcDensity = this.calcDensity.Checked;
-                ip.CurrentSSFPref.AARadius = this.findlength.Checked;
-                ip.CurrentSSFPref.AAFillHeight = this.findRadius.Checked;
-
-                ip.CurrentPref.Offline = this.workOffline.Checked;
-
+               
                 //  ip.CurrentSSFPref.SQL = this.SQL.Checked;
 
                 //ROUNDING
@@ -156,7 +139,8 @@ namespace DB.UI.Samples
                 Dumb.ChangeBindingsFormat(format, ref samplebindings);
                 Interface.IPreferences.CurrentSSFPref.Rounding = format;
 
-                Interface.IStore.SavePreferences();
+                //save preferences
+                Interface.IPreferences.SavePreferences();
             }
             catch (Exception ex)
             {

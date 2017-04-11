@@ -71,5 +71,16 @@ namespace DB.Properties {
                 return ((string)(this["NAAConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k017;Persist Security Info=Tru" +
+            "e;Connect Timeout=10")]
+        public string localDB {
+            get {
+                return ((string)(this["localDB"]));
+            }
+        }
     }
 }

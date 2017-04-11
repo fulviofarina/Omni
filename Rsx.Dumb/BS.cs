@@ -16,6 +16,8 @@ namespace Rsx
         Binding b = item as Binding;
         b.FormatString = newFormat;
 
+             
+
       }
 
 
@@ -26,29 +28,33 @@ namespace Rsx
     /// </summary>
     /// <param name="bs"></param>
     /// <returns></returns>
-    public static Hashtable ArrayOfBindings(ref BindingSource bs, string format)
-    {
-      Hashtable bslist = new Hashtable();
-      DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
-      bool t = true;
-      string text = "Text";
-      string column;
+    public static Hashtable ArrayOfBindings(ref BindingSource bs, string format, string Property = "Text")
+        {
+            DataTable dt = (bs.DataSource as DataSet).Tables[bs.DataMember];
+            //     Binding diam = new Binding(text, bs, column, t, mo);
+          
+            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
+            bool t = true;
+           // string text = "Text";
+            string column;
+            Hashtable bslist = new Hashtable();
 
-      DataTable dt = (bs.DataSource as DataSet).Tables[bs.DataMember];
-      //     Binding diam = new Binding(text, bs, column, t, mo);
+            foreach (DataColumn item in (dt as DataTable).Columns)
+            {
+                column = item.ColumnName;
+                // column = Unit.DiameterColumn.ColumnName;
+                Binding b = new Binding(Property, bs, column, t, mo, DBNull.Value, format);
+                b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+                bslist.Add(column, b);
+            }
 
-      foreach (DataColumn item in dt.Columns)
-      {
-        column = item.ColumnName;
-        // column = Unit.DiameterColumn.ColumnName;
-        Binding b = new Binding(text, bs, column, t, mo,DBNull.Value,format);
-        bslist.Add(column, b);
-      }
+            return bslist;
+           
+        }
 
-      return bslist;
-    }
+    
 
-    public static void LinkBS(ref BindingSource BS, DataTable table)
+        public static void LinkBS(ref BindingSource BS, DataTable table)
     {
       if (table == null) throw new ArgumentException("table is null", "table");
       if (BS == null) throw new ArgumentException("BindingSource is null", "BS");
@@ -57,8 +63,11 @@ namespace Rsx
       BS.SuspendBinding();
       if (table.DataSet != null)
       {
-        BS.DataSource = table.DataSet;
-        BS.DataMember = table.TableName;
+                //first the datamemember otherwise it is scanned twice!!
+                //important wisdom
+                BS.DataMember = table.TableName;
+                BS.DataSource = table.DataSet;
+    
       }
       else BS.DataSource = table;
       BS.ResumeBinding();
@@ -90,9 +99,10 @@ namespace Rsx
 
       BS.Sort = string.Empty;
       BS.Filter = string.Empty;
-      BS.DataMember = string.Empty;
-      BS.DataSource = null;
-      BS.ResumeBinding();
+            //first datamember
+            BS.DataMember = string.Empty;
+            BS.DataSource = null;
+            BS.ResumeBinding();
       return sortFilter;
     }
   }

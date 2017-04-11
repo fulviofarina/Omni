@@ -122,6 +122,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="localdbx64.msi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="localdbx86.msi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Features.txt" />
     <Content Include="WCalc.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -159,7 +165,9 @@
     <Content Include="solcoi.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Restarting" />
+    <None Include="Restarting">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -167,10 +175,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB.Linq\DB.Linq.csproj">
-      <Project>{4f5b1a09-8cfe-41ba-a1b1-5eeaecedd329}</Project>
-      <Name>DB.Linq</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>

@@ -22,6 +22,7 @@ namespace DB
         LINAA.HelloWorldDataTable HelloWorld { get; }
         LINAA.HoldersDataTable Holders { get; }
         LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
+        string DataSetName { get; }
 
         LINAA.IrradiationRequestsDataTable IrradiationRequests { get; }
 

@@ -57,12 +57,12 @@ namespace k0X
             {
                 LIMS.Interface.IPreferences.CurrentPref.FillBySpectra = check;
             }
-            LIMS.Linaa.SavePreferences();
+            LIMS.Interface.IPreferences.SavePreferences();
         }
 
         private void Help_Click(object sender, EventArgs e)
         {
-            LIMS.Linaa.Help();
+            LIMS.Interface.IPopulate.Help();
         }
 
         private void releaseMemory_Click(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace k0X
                 return;
             }
 
-            LIMS.Interface.IStore.SavePreferences();
+            LIMS.Interface.IPreferences.SavePreferences();
 
             this.Quit_Click(this.ClearLinaa, e); //leave like this, the sender must be ClearLinaa.
         }
