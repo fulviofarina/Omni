@@ -170,6 +170,7 @@ namespace DB
                             subs.CheckFillRad(true);
                         }
                     }
+                   
                     else if (e.Column == this.CalcDensityColumn)
                     {
                         if (calMass) subs.CalculateMass();
@@ -357,11 +358,11 @@ namespace DB
                     rad = this.VialTypeRow.InnerRadius;
                 }
 
-                if ((nofillheight && fh != 0))
+                if ((fh != 0))
                 {
                     this.FillHeight = fh;
                 }
-                if ((noradius && rad != 0))
+                if (( rad != 0))
                 {
                     this.Radius = rad;
                 }

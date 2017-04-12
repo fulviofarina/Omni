@@ -18,14 +18,10 @@ namespace DB
             set;
         }
 
-        void SendToRestartRoutine(string texto);
+    
 
         void PopulateColumnExpresions();
-
-        bool RestartingRoutine();
-
-        bool IsSpectraPathOk { get; }
-
+     
         void AddException(Exception ex);
 
         //   string AppPath

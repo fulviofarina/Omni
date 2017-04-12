@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 using DB.Tools;
 using Rsx;
@@ -9,13 +10,6 @@ namespace DB.UI
     {
         private Interface Interface = null;
 
-        public ucMatrixSimple()
-        {
-            InitializeComponent();
-        }
-
-        //   private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
-
         /// <summary>
         /// DGV ITEM SELECTED
         /// </summary>
@@ -24,38 +18,9 @@ namespace DB.UI
             ///FIRST TIME AND ONLY
             set
             {
-                // rowHeaderMouseClick = value;
-
-                //  if (rowHeaderMouseClick != null) return;
-
-                //   DataGridViewCellMouseEventHandler handler = value;
-                //  rowHeaderMouseClick = handler;
 
                 this.matrixDGV.RowHeaderMouseDoubleClick += value;
             }
-        }
-
-        /// <summary>
-        /// Adds a new row of type VialType or Channels, which is either a Rabbit/Vial or a Channel configuration
-        /// </summary>
-        /// <param name="sender">The Add button that was clicked</param>
-        /// <param name="e"></param>
-        ///
-
-        /// <summary>
-        /// when a DGV-item is selected, take the necessary rows to compose the unit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        public void RefreshMatrix()
-        {
-            LINAA.UnitRow u = MatSSF.UNIT;
-
-            int id = u.SubSamplesRow.MatrixID;
-            string column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
-
-            Interface.IBS.Matrix.Position = Interface.IBS.Matrix.Find(column, id);
         }
 
         public void Set(ref Interface LinaaInterface)
@@ -80,7 +45,25 @@ namespace DB.UI
 
             this.matrixRTB.DataBindings.Add(mcompoBin);
 
+            System.EventHandler addNew = this.addNewVialChannel_Click;
+
+            this.bindingNavigatorAddNewItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
+
+
             // DataGridViewCellMouseEventHandler handler = this.matrixDGV.RowHeaderMouseClick;
+        }
+
+        private void addNewVialChannel_Click(object sender, EventArgs e)
+        {
+            //IS A VIAL OR CONTAINER
+            LINAA.MatrixRow v = Interface.IDB.Matrix.NewMatrixRow();
+            Interface.IDB.Matrix.AddMatrixRow(v);
+            Interface.IBS.Update(v);
+        }
+
+        public ucMatrixSimple()
+        {
+            InitializeComponent();
         }
     }
 }

@@ -35,11 +35,11 @@ namespace DB
                 System.IO.File.Delete(file);
                 this.WriteXml(file, XmlWriteMode.WriteSchema);
                 saved = true;
-                Msg("Database has been updated to a file!\n\n" + file, "Saved");
+                //Msg("Database has been updated to a file!\n\n" + file, "Saved");
             }
             catch (SystemException ex)
             {
-                Msg(ex.StackTrace, ex.Message);
+             //   Msg(ex.StackTrace, ex.Message);
                 AddException(ex);
             }
 
@@ -258,7 +258,7 @@ namespace DB
             }
             catch (SystemException ex)
             {
-                Msg(ex.StackTrace, ex.Message);
+              //  Msg(ex.StackTrace, ex.Message);
                 this.AddException(ex);
             }
         }

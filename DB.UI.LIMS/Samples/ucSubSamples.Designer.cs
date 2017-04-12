@@ -131,6 +131,7 @@
             // BN
             // 
             this.BN.AddNewItem = null;
+            this.BN.BackColor = System.Drawing.SystemColors.Control;
             this.BN.BindingSource = this.BS;
             this.BN.CountItem = this.bindingNavigatorCountItem;
             this.BN.DeleteItem = this.bindingNavigatorDeleteItem;
@@ -171,16 +172,14 @@
             // 
             // Linaa
             // 
-        //    this.Linaa.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
-         //   this.Linaa.CurrentPref = null;
-      //      this.Linaa.CurrentSSFPref = null;
             this.Linaa.DataSetName = "LINAA";
             this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
             this.Linaa.EnforceConstraints = false;
             this.Linaa.FolderPath = null;
             this.Linaa.Locale = new System.Globalization.CultureInfo("");
-            this.Linaa.Msn = null;
-            this.Linaa.Notify = null;
+          //
+      //
+            this.Linaa.QTA = null;
             this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.Linaa.TAM = null;
             // 
@@ -340,7 +339,7 @@
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.DarkViolet;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;

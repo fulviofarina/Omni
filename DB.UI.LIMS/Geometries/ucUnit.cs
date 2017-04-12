@@ -12,21 +12,57 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            this.UnitBS.CurrentChanged += UnitBS_CurrentChanged;
+          
         }
 
+        /// <summary>
+        /// A DGV Item selected to control child ucControls such as ucV uc Matrix Simple, ucCC
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            ///check if table has no rows
+
+            try
+            {
+                DataGridView dgv = sender as DataGridView;
+                if (dgv.RowCount == 0)
+                {
+                    Interface.IReport.Msg("No Rows found in the DataGridView", "Error", false); //report
+                    return;
+                }
+                DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
+
+
+                //link to matrix, channel or vial,/rabbit data
+                MatSSF.LinkToParent(ref row);
+
+            }
+            catch (System.Exception ex)
+            {
+                Interface.IReport.Msg(ex.StackTrace, ex.Message);
+                Interface.IMain.AddException(ex);
+            }
+
+
+        }
+
+        /// <summary>
+        /// A binding Current Changed event to update Binding sources
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UnitBS_CurrentChanged(object sender, System.EventArgs e)
         {
-            DataRow r = (Interface.IBS.Units.Current as DataRowView).Row;
-            MatSSF.UNIT = r as LINAA.UnitRow;
-            string sampleIDvalue = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
-            Interface.IBS.SubSamples.Position = Interface.IBS.SubSamples.Find(sampleIDvalue, MatSSF.UNIT.SampleID);
+         
+            MatSSF.UNIT = Interface.ICurrent.Unit as LINAA.UnitRow;
 
-            // if (this.unitBS.Count == 0) return;
-            //   MatSSF.UNIT = row as LINAA.UnitRow;
+            Interface.IBS.Update<LINAA.SubSamplesRow>(MatSSF.UNIT.SubSamplesRow,false);
+            Interface.IBS.Update<LINAA.UnitRow>(MatSSF.UNIT, true,false);
             MatSSF.ReadXML();
-
-            //  LINAA.UnitRow   u = MatSSF.UNIT;
+          
             string column = MatSSF.Table.UnitIDColumn.ColumnName;
             string sortCol = MatSSF.Table.TargetIsotopeColumn.ColumnName;
             string unitID = MatSSF.UNIT.UnitID.ToString();
@@ -35,10 +71,7 @@ namespace DB.UI
             Dumb.LinkBS(ref this.SSFBS, MatSSF.Table, filter, sortCol);
         }
 
-        public void DeLink()
-        {
-            Dumb.DeLinkBS(ref this.SSFBS);
-        }
+       
 
         private Interface Interface = null;
 
@@ -56,11 +89,19 @@ namespace DB.UI
 
             MatSSF.Table = Interface.IDB.MatSSF;
 
+            setBindings();
+
+            this.UnitBS.CurrentChanged -= UnitBS_CurrentChanged;
+            this.UnitBS.CurrentChanged += UnitBS_CurrentChanged;
+
+        }
+
+        private void setBindings()
+        {
             //sets all the bindings again
             BindingSource bs = Interface.IBS.Units;
-            string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
-            Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
-
+            
+            
             //set binding sources
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
@@ -71,6 +112,12 @@ namespace DB.UI
             Binding lastchgbs = new Binding(text, bs, column, true, mo);
             this.lastCal.TextBox.DataBindings.Add(lastcalbs);
             this.lastChg.TextBox.DataBindings.Add(lastchgbs);
+
+            string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
+            Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
+
+         
+
         }
 
         //     private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
@@ -80,21 +127,19 @@ namespace DB.UI
             ///FIRST TIME AND ONLY
             set
             {
-                // rowHeaderMouseClick = value;
-
-                //      if (rowHeaderMouseClick != null) return;
-
-                //    DataGridViewCellMouseEventHandler handler = value;
-                //     rowHeaderMouseClick = handler;
 
                 this.unitDGV.RowHeaderMouseClick += value;
 
+
+                /*
                 MouseEventArgs m = null;
                 m = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
                 DataGridViewCellMouseEventArgs args = null;
                 args = new DataGridViewCellMouseEventArgs(-1, 0, 0, 0, m);
 
                 value.Invoke(this.unitDGV, args);
+
+                */
             }
         }
     }

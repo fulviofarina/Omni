@@ -25,14 +25,14 @@ namespace DB.UI
         {
             InitializeComponent();
         }
-
+        private Interface Interface;
         public void Set(ref Interface inter)
         {
             this.SuspendLayout();
 
             this.Cancelbtn.Visible = false;
             LINAA inpu = inter.Get();
-
+            Interface = inter;
             LIMS.SwapLinaa(ref inpu, ref this.Linaa);
 
             //create greapher
@@ -147,7 +147,7 @@ namespace DB.UI
 
                             if (string.IsNullOrEmpty(responde))
                             {
-                                this.Linaa.Msg("Problems comunicating with XCOM", "XCOM did not answer the query");
+                                Interface.IReport.Msg("Problems comunicating with XCOM", "XCOM did not answer the query");
                                 return;
                             }
 

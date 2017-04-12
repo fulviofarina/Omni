@@ -43,16 +43,43 @@ namespace DB.UI
                 this.doCKCheckBox.DataBindings.Add(bindings["DoCK"] as Binding);
                 this.calcDensityCheckBox.DataBindings.Add(bindings["CalcDensity"] as Binding);
                 this.showSolangCheckBox.DataBindings.Add(prefbindings["ShowSolang"] as Binding);
-                this.windowATextBox.DataBindings.Add(prefbindings["windowA"] as Binding);
+                this.loopCheckBox.DataBindings.Add(bindings["Loop"] as Binding);
                 this.fillByHLCheckBox.DataBindings.Add(prefbindings["FillByHL"] as Binding);
                 this.fillBySpectraCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
-                this.showMatSSFCheckBox.DataBindings.Add(prefbindings["ShowMatSSF"] as Binding);
+              
                 // 
-                this.showSolangCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
-                this.maxUncTextBox.DataBindings.Add(prefbindings["maxUnc"] as Binding);
-                this.minAreaTextBox.DataBindings.Add(prefbindings["minArea"] as Binding);
+             //   this.showSolangCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
+             
                 this.showSampleDescriptionCheckBox.DataBindings.Add(prefbindings["ShowSampleDescription"] as Binding);
-                this.windowBTextBox.DataBindings.Add(prefbindings["windowB"] as Binding);
+
+            
+
+                 
+                    Binding b = new Binding("Text", this.SSFPref, "ShowMatSSF");
+                    this.showMatSSFCheckBox.DataBindings.Add(b as Binding);
+                    //text binding
+                    Hashtable bindings2 = Dumb.ArrayOfBindings(ref this.PrefBS, string.Empty);
+
+                    this.maxUncTextBox.DataBindings.Add(bindings2["maxUnc"] as Binding);
+                    this.minAreaTextBox.DataBindings.Add(bindings2["minArea"] as Binding);
+                    this.windowBTextBox.DataBindings.Add(bindings2["windowB"] as Binding);
+                    this.windowATextBox.DataBindings.Add(bindings2["windowA"] as Binding);
+
+                 
+            
+        
+
+
+                this.fillByHLCheckBox.Enabled = false;
+                this.windowBTextBox.Enabled = false;
+                this.maxUncTextBox.Enabled = false;
+                this.windowATextBox.Enabled = false;
+                this.minAreaTextBox.Enabled = false;
+                this.offlineCheckBox.Enabled = false;
+                this.doSolangCheckBox.Enabled = false;
+                this.showSolangCheckBox.Enabled = false;
+                this.fillBySpectraCheckBox.Enabled = false;
+
 
                 this.PrefBS.ResumeBinding();
                 this.SSFPref.ResumeBinding();

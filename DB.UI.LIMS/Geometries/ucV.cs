@@ -25,18 +25,19 @@ namespace DB.UI
             Dumb.FD<LINAA>(ref this.lINAA);
             this.lINAA = Interface.Get() as LINAA;
 
+            Interface.IBS.Vial = this.VialBS;
+
             //rabbit column
             string column = this.lINAA.VialType.IsRabbitColumn.ColumnName;
             string innerRadCol = this.lINAA.VialType.InnerRadiusColumn.ColumnName + " asc";
             Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
-
-            Interface.IBS.Vial = this.VialBS;
+          
 
             System.EventHandler addNew = this.addNewVialChannel_Click;
 
             this.bnVialAddItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
         }
-
+        /*
         public void RefreshVCC()
         {
             LINAA.UnitRow u = MatSSF.UNIT;
@@ -46,7 +47,7 @@ namespace DB.UI
             BindingSource bs = Interface.IBS.Vial;
             bs.Position = bs.Find(column, id);
         }
-
+        */
         //  private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
 
         /// <summary>
@@ -76,30 +77,11 @@ namespace DB.UI
 
         private void addNewVialChannel_Click(object sender, EventArgs e)
         {
-            BindingSource bs = null;
-            string colName = string.Empty;
-            object idnumber = null;
-            DataRow row = null;
-
-            LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
-            v.IsRabbit = false;
-            Interface.IDB.VialType.AddVialTypeRow(v);
-
-            colName = Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
-            bs = Interface.IBS.Vial;
-            idnumber = v.VialTypeID;
-
-            row = v;
-            if (row.HasErrors)
-            {
-                string rowWithError = DB.UI.Properties.Resources.rowWithError;
-                string Error = DB.UI.Properties.Resources.Error;
-
-                Interface.IReport.Msg(rowWithError, Error);
-            }
-
-            int newIndex = bs.Find(colName, idnumber);
-            bs.Position = newIndex;
+            //IS A VIAL OR CONTAINER
+                LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
+                v.IsRabbit = true;
+                Interface.IDB.VialType.AddVialTypeRow(v);
+            Interface.IBS.Update(v);
         }
     }
 }

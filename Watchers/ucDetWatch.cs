@@ -742,7 +742,7 @@ namespace k0X
                 else label = "Continuing Acquisition for ";
                 label += LSchAcq.Sample + " (" + remains + ")";
 
-                this.Linaa.GenerateReport(label, string.Empty, msg + content, detBox.Text, LSchAcq.User);
+                Interface.IReport.GenerateReport(label, string.Empty, msg + content, detBox.Text, LSchAcq.User);
             }
             catch (SystemException ex)
             {
@@ -808,7 +808,7 @@ namespace k0X
                 msg += content;
                 label += LSchAcq.Sample;
 
-                this.Linaa.GenerateReport(label, string.Empty, msg, detBox.Text, LSchAcq.User);
+                Interface.IReport.GenerateReport(label, string.Empty, msg, detBox.Text, LSchAcq.User);
 
                 informed = true;
             }
@@ -847,7 +847,7 @@ namespace k0X
                     main.Speak("Next measurement for... " + detBox.Text + "... starts at: " + NxtSchAcq.StartOn);
                 }
 
-                this.Linaa.GenerateReport("Acquisition about to finish", string.Empty, msg + content, detBox.Text, user);
+                Interface.IReport.GenerateReport("Acquisition about to finish", string.Empty, msg + content, detBox.Text, user);
 
                 informed = true;
 
@@ -890,7 +890,7 @@ namespace k0X
                 {
                     string content = LSchAcq.GetReportString() + "\n\n";
                     string msg = "Checkpoint!\n\nUpdated information about the scheduled measurement:\n\n";
-                    this.Linaa.GenerateReport("Checkpoint (" + LSchAcq.Progress + "%)", string.Empty, msg + content, detBox.Text, "ffarina@sckcen.be");
+                    Interface.IReport.GenerateReport("Checkpoint (" + LSchAcq.Progress + "%)", string.Empty, msg + content, detBox.Text, "ffarina@sckcen.be");
                 }
                 break;
             }
@@ -917,7 +917,7 @@ namespace k0X
             }
             else content = this.GetCurrentCrashMeasString();
 
-            this.Linaa.GenerateReport("Cannot take control of " + detBox.Text, string.Empty, message + content, string.Empty, user);
+            Interface.IReport.GenerateReport("Cannot take control of " + detBox.Text, string.Empty, message + content, string.Empty, user);
         }
 
         private void ROItimer_Tick(object sender, EventArgs e)
@@ -955,7 +955,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                this.Linaa.Msg("Inputs are not in the correct format", "Check the ROI Options", false);
+                Interface.IReport.Msg("Inputs are not in the correct format", "Check the ROI Options", false);
                 this.Linaa.AddException(ex);
             }
 
@@ -1276,7 +1276,7 @@ namespace k0X
                 //notify failure during these intervals...
                 if (a == 2 || a == 20 || a == 30 || a == 40 || a == 59 || a == 65)
                 {
-                    this.Linaa.Msg(this.StatusLbl.Text, " when accessing " + detBox.Text, false);
+                    Interface.IReport.Msg(this.StatusLbl.Text, " when accessing " + detBox.Text, false);
                     if (a == 65)
                     {
                         DetectorX.KillVDM(this.preader.Server);
@@ -1286,7 +1286,7 @@ namespace k0X
                 }
                 else if (a == 60)  //last warning message, send the email of failure
                 {
-                    this.Linaa.Msg(this.StatusLbl.Text, " when accessing " + detBox.Text, false);
+                    Interface.IReport.Msg(this.StatusLbl.Text, " when accessing " + detBox.Text, false);
                     this.Linaa.AddException(preader.Exception);
                     ReportFailure();
                 }
@@ -1297,7 +1297,7 @@ namespace k0X
                 if (NrofFailures != 0)   //important so it does not repet the stupid msg
                 {
                     NrofFailures = 0;      //reset the counter...
-                    this.Linaa.Msg("Detector is controlled!", " with " + detBox.Text, true);
+                    Interface.IReport.Msg("Detector is controlled!", " with " + detBox.Text, true);
                 }
                 RefreshADCLabels(clearing);
             }
@@ -1619,7 +1619,7 @@ namespace k0X
             {
                 if (this.elementsList.Count == 0)
                 {
-                    this.Linaa.Msg("Select at least 1 element of the list", "Select at least 1 element!", false);
+                    Interface.IReport.Msg("Select at least 1 element of the list", "Select at least 1 element!", false);
                 }
                 else
                 {
@@ -1637,7 +1637,7 @@ namespace k0X
                         }
                         peaksDT.Clear();
                         doSolcoi = true;
-                        this.Linaa.Msg("Watching peaks on " + det + " every " + rOIRefresh.Text + " seconds", "ROI Lookup started", true);
+                        Interface.IReport.Msg("Watching peaks on " + det + " every " + rOIRefresh.Text + " seconds", "ROI Lookup started", true);
                         this.ROItimer.Interval = 1000;
                         ROItimer.Enabled = true;
                     }

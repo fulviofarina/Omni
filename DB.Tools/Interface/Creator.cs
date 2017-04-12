@@ -207,7 +207,7 @@ namespace DB.Tools
             Interface.IPreferences.SavePreferences();
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
-            bool restartedOrReported = Interface.IMain.RestartingRoutine();
+            bool restartedOrReported = Interface.IReport.RestartingRoutine();
 
             //  return result;
         }
@@ -233,7 +233,7 @@ namespace DB.Tools
                 string title = DB.Properties.Errors.Error404;
                 title += Interface.IAdapter.Exception;
 
-                Interface.IMain.SendToRestartRoutine(title);
+                Interface.IReport.SendToRestartRoutine(title);
 
                 MessageBox.Show(title, couldNotConnect, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -396,7 +396,7 @@ namespace DB.Tools
                 auxM = enums.ToList();
                 //      auxM.Add(Linaa.PopulateUnits);
 
-                report = Linaa.ReportProgress;
+                report = Interface.IReport.ReportProgress;
                 todo = endRoutine;
             }
 

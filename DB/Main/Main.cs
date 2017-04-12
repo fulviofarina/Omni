@@ -235,49 +235,7 @@ namespace DB
             Dumb.FD<LINAA>(ref dt);
         }
 
-        public bool RestartingRoutine()
-        {
-            string cmd = Application.StartupPath + Resources.Restarting;
-            bool shouldReport = System.IO.File.Exists(cmd);
 
-            if (shouldReport)
-            {
-                string email = System.IO.File.ReadAllText(cmd);
-                GenerateReport("Restarting succeeded...", string.Empty, string.Empty, DataSetName, email);
-                System.IO.File.Delete(cmd);
-            }
-            shouldReport = shouldReport || this.Exceptions.Count != 0;
-
-            //should send bug report?
-            if (!shouldReport) return false;
-
-            //yes...
-            GenerateBugReport();
-
-            return true;
-        }
-
-        public void SendToRestartRoutine(string texto)
-        {
-            string cmd = Application.StartupPath + Resources.Restarting;
-
-            try
-            {
-                bool shouldReport = System.IO.File.Exists(cmd);
-
-                if (shouldReport)
-                {
-                    System.IO.File.AppendAllText(cmd, texto);
-                    //     GenerateReport("Restarting succeeded...", string.Empty, string.Empty, DataSetName, email);
-                    //   System.IO.File.Delete(cmd);
-                }
-                else System.IO.File.WriteAllText(cmd, texto);
-            }
-            catch (Exception ex)
-            {
-                this.AddException(ex);
-            }
-        }
 
         private static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
         {

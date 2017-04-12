@@ -229,7 +229,7 @@ namespace k0X
 
             try
             {
-                if (!Interface.IMain.IsSpectraPathOk) return;
+                if (!Interface.IPreferences.IsSpectraPathOk) return;
 
                 string windowsUser = Interface.IPreferences.CurrentPref.WindowsUser.ToUpper();
 
@@ -276,7 +276,7 @@ namespace k0X
                 runing = this.watchersList.FirstOrDefault(o => o.detBox.Text.Trim().ToUpper().CompareTo(detector.ToUpper()) == 0);
                 if (runing == null && force)
                 {
-                    if (!Interface.IMain.IsSpectraPathOk) return runing;
+                    if (!Interface.IPreferences.IsSpectraPathOk) return runing;
                     //    LINAA Linaa = (LINAA)Interface.Get();
                     runing = new ucDetWatch(ref Interface);
                     Application.DoEvents();

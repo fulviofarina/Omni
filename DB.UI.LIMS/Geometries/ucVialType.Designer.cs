@@ -120,8 +120,8 @@
             this.Linaa.EnforceConstraints = false;
             this.Linaa.FolderPath = null;
             this.Linaa.Locale = new System.Globalization.CultureInfo("");
-            this.Linaa.Msn = null;
-            this.Linaa.Notify = null;
+         //   this.Linaa.Msn = null;
+        //    this.Linaa.Notify = null;
             this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.Linaa.TAM = null;
             // 

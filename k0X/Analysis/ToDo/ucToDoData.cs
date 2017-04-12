@@ -59,7 +59,7 @@ namespace k0X
             Interface = set;
 
             this.Linaa = set.Get();
-            TD = new DB.Tools.ToDo(ref this.Linaa);
+            TD = new DB.Tools.ToDo(ref set);
 
             IEnumerable<DataColumn> cols = this.Linaa.ToDoData.Columns.OfType<DataColumn>().Where(c => c.DataType.Equals(typeof(double)));
             IEnumerable<string> aux = cols.Select(o => o.ColumnName);
@@ -554,7 +554,7 @@ namespace k0X
             }
             this.Error.SetError(this.ToDoLabelBox.ComboBox, result);
 
-            this.Linaa.Msg(result + " on: " + ToDoLabelBox.Text + " - " + ToDoGroupBox.Text, "Prepared in " + (DateTime.Now - start).Seconds + " seconds");
+            Interface.IReport.Msg(result + " on: " + ToDoLabelBox.Text + " - " + ToDoGroupBox.Text, "Prepared in " + (DateTime.Now - start).Seconds + " seconds");
 
             Cursor.Current = Cursors.Default;
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using DB.Properties;
 using DB.Tools;
 using Rsx;
 using static DB.LINAA;
@@ -51,18 +52,21 @@ namespace DB.UI
             Interface = inter;
             try
             {
-                // OTHER CONTROLS
-                ucCC1.Set(ref Interface);
-                ucCC1.RowHeaderMouseClick = this.dgvItemSelected;
-
-                ucVcc.Set(ref Interface);
-                ucVcc.RowHeaderMouseClick = this.dgvItemSelected;
-
-                ucMS.Set(ref Interface);
-                ucMS.RowHeaderMouseClick = this.dgvItemSelected;
 
                 ucUnit.Set(ref Interface);
-                ucUnit.RowHeaderMouseClick = this.dgvUnitSelected;
+
+                // OTHER CONTROLS
+                ucCC1.Set(ref Interface);
+                ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+
+                ucVcc.Set(ref Interface);
+                ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+
+                ucMS.Set(ref Interface);
+                ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+
+             
+          //      ucUnit.RowHeaderMouseClick = this.dgvItemSelected;
             }
             catch (System.Exception ex)
             {
@@ -91,9 +95,12 @@ namespace DB.UI
             }
         }
 
-        private void Calculate_Click(object sender, EventArgs e)
+        public void Calculate(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+
+         
+            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
 
             this.progress.Minimum = 0;
             this.progress.Maximum = 3;
@@ -101,9 +108,10 @@ namespace DB.UI
             //Go to Calculations/ Units Tab
             this.Tab.SelectedTab = this.CalcTab;
 
-            //Clear InputFile RTF Control
-            inputbox.Clear();
+            this.Visible = true;
+            this.ParentForm.Visible = true;
 
+//the showprogresss action
             Action showProgress = delegate
             {
                 Application.DoEvents();
@@ -128,33 +136,41 @@ namespace DB.UI
                 units.Add(Interface.ICurrent.Unit as UnitRow);
             }
 
+            this.progress.Maximum += units.Count * 5;
+
             //loop through all samples to work to
             foreach (UnitRow item in units)
             {
-                this.progress.Maximum += 5;
-                MatSSF.UNIT = item;
 
+                MatSSF.UNIT = item;
                 //update position in BS
                 Interface.IBS.Update<LINAA.UnitRow>(item);
                 CalculateUnit(ref showProgress);
             }
-
-            //load files
             string file = MatSSF.StartupPath + MatSSF.InputFile;
-            bool exist = System.IO.File.Exists(file);
-            if (exist) inputbox.LoadFile(file, RichTextBoxStreamType.PlainText);
+            loadFilesMatSSF(ref showProgress, ref inputbox, file);
 
-            showProgress();
-
+           
             file = MatSSF.StartupPath + MatSSF.OutputFile;
-            exist = System.IO.File.Exists(file);
-            if (exist) outputBox.LoadFile(file, RichTextBoxStreamType.PlainText);
-            //3
-            showProgress();
+            loadFilesMatSSF(ref showProgress, ref outputBox, file);
 
-            //      ucCalc.saveMethod();
+
+           
 
             Cursor.Current = Cursors.Default;
+        }
+
+        private void loadFilesMatSSF(ref Action showProgress, ref RichTextBox input, string file)
+        {
+            //load files
+            //Clear InputFile RTF Control
+            input.Clear();
+            //load file if exists
+            bool exist = System.IO.File.Exists(file);
+            if (exist) input.LoadFile(file, RichTextBoxStreamType.PlainText);
+
+            showProgress();
+          
         }
 
         private void CalculateUnit(ref Action showProgress)
@@ -216,6 +232,9 @@ namespace DB.UI
                     Interface.IReport.Msg("CK done", "Calculations completed!");
                 }
 
+                //convert table into subTable of Units
+                MatSSF.WriteXML();
+
                 //6
                 showProgress();
             }
@@ -231,114 +250,16 @@ namespace DB.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
+     
 
-            string noTemplate = DB.UI.Properties.Resources.noTemplate;
-            string Error = DB.UI.Properties.Resources.Error;
 
-            ///check if table has no rows
-            DataGridView dgv = sender as DataGridView;
-            if (dgv.RowCount == 0)
-            {
-                Interface.IReport.Msg(noTemplate, Error); //report
+    
 
-                return;
-            }
-            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
-            try
-            {
-                string rowWithError = DB.UI.Properties.Resources.rowWithError;
-                ///has errors
-                if (row.HasErrors)
-                {
-                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-                    return;
-                }
 
-                ///find which dgv called it
-                bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
-                bool isMatrix = row.GetType().Equals(typeof(MatrixRow));
-                if (isChannel)
-                {
-                    ChannelsRow c = row as ChannelsRow;
-                    MatSSF.UNIT.SetChannel(ref c);
-                }
-                else if (!isMatrix)
-                {
-                    LINAA.VialTypeRow v = row as VialTypeRow;
-                    if (!v.IsRabbit) MatSSF.UNIT.SubSamplesRow.VialTypeRow = v;
-                    else MatSSF.UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
-                }
-                else
-                {
-                    MatrixRow m = row as MatrixRow;
-                    MatSSF.UNIT.SubSamplesRow.MatrixID = m.MatrixID;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
-            }
-        }
 
-        /// <summary>
-        /// when a DGV-item is selected, take the necessary rows to compose the unit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <summary>
-        /// DGV ITEM SELECTED
-        /// </summary>
-        private void dgvUnitSelected(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
+     
 
-            DataGridView dgv = sender as DataGridView;
-            //  DataGridViewRow r = dgv.Rows[e.RowIndex];
-
-            string noTemplate = DB.UI.Properties.Resources.noTemplate;
-            string Error = DB.UI.Properties.Resources.Error;
-
-            if (dgv.RowCount == 0)
-            {
-                Interface.IReport.Msg(noTemplate, Error); //report
-
-                return;
-            }
-
-            DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
-            string rowWithError = DB.UI.Properties.Resources.rowWithError;
-
-            try
-            {
-                ///has errors
-                if (row.HasErrors)
-                {
-                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-                //    return;
-                }
-
-                MatSSF.UNIT = row as UnitRow;
-
-                this.ucCC1.RefreshCC();
-
-                this.ucVcc.RefreshVCC();
-
-                this.ucMS.RefreshMatrix();
-
-                if (row.HasErrors)
-                {
-                    Interface.IReport.Msg(rowWithError, Error); ///cannot process because it has errors
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
-            }
-        }
 
         private Hashtable setSampleBindings()
         {
@@ -381,9 +302,6 @@ namespace DB.UI
             this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
             this.densityB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
-            //  Binding b = new Binding();
-
-
             return samplebindings;
         }
 
@@ -423,10 +341,6 @@ namespace DB.UI
             Binding renabled4 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.CalcMassColumn.ColumnName);
             this.massB.TextBox.DataBindings.Add(renabled4);
 
-            //   Binding c = new Binding("Width", Interface.IDB.SubSamples, Interface.IDB.SubSamples.RadiusColumn.ColumnName);
-
-            //      this.ParentForm.DataBindings.Add(c);
-            //    this.ParentForm.Size.
             return bindings;
         }
 

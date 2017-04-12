@@ -1494,9 +1494,6 @@
         XDYL+wAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Error" xml:space="preserve">
-    <value>Warning</value>
-  </data>
   <data name="Geometries" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAAK+/+WRudgAAACBjSFJNAACH
@@ -8076,9 +8073,6 @@
         dxeD0ymDScaQ/85B4n/nYxn8Oj4Hg8/H55bfh9+TIa+h/0e07qEJKP4PqqJKp8qRJeQAAAAASUVORK5C
         YII=
 </value>
-  </data>
-  <data name="rowWithError" xml:space="preserve">
-    <value>The selected row has some incomplete cells or cells with errors.\nPlease fix before selecting it.</value>
   </data>
   <data name="Springfield" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

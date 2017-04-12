@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
-            this.projectlabel = new System.Windows.Forms.ToolStripLabel();
-            this.projectbox = new System.Windows.Forms.ToolStripComboBox();
             this.TS = new System.Windows.Forms.ToolStrip();
+            this.projectlabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.projectbox = new System.Windows.Forms.ToolStripComboBox();
             this.TLP.SuspendLayout();
             this.TS.SuspendLayout();
             this.SuspendLayout();
@@ -49,24 +49,6 @@
             this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.61589F));
             this.TLP.Size = new System.Drawing.Size(372, 53);
             this.TLP.TabIndex = 2;
-            // 
-            // projectlabel
-            // 
-            this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectlabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.projectlabel.Name = "projectlabel";
-            this.projectlabel.Size = new System.Drawing.Size(91, 50);
-            this.projectlabel.Text = "PROJECT";
-            // 
-            // projectbox
-            // 
-            this.projectbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.projectbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.projectbox.BackColor = System.Drawing.Color.Gray;
-            this.projectbox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.projectbox.Name = "projectbox";
-            this.projectbox.Size = new System.Drawing.Size(223, 53);
             // 
             // TS
             // 
@@ -85,10 +67,28 @@
             this.TS.TabIndex = 2;
             this.TS.Text = "toolStrip1";
             // 
+            // projectlabel
+            // 
+            this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projectlabel.ForeColor = System.Drawing.Color.Purple;
+            this.projectlabel.Name = "projectlabel";
+            this.projectlabel.Size = new System.Drawing.Size(91, 50);
+            this.projectlabel.Text = "PROJECT";
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 53);
+            // 
+            // projectbox
+            // 
+            this.projectbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.projectbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.projectbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.projectbox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projectbox.ForeColor = System.Drawing.Color.Gold;
+            this.projectbox.Name = "projectbox";
+            this.projectbox.Size = new System.Drawing.Size(223, 53);
             // 
             // ucProjectBox
             // 

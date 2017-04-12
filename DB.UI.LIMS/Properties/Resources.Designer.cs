@@ -101,15 +101,6 @@ namespace DB.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning.
-        /// </summary>
-        public static string Error {
-            get {
-                return ResourceManager.GetString("Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Geometries {
@@ -265,15 +256,6 @@ namespace DB.UI.Properties {
             get {
                 object obj = ResourceManager.GetObject("RefMat1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The selected row has some incomplete cells or cells with errors.\nPlease fix before selecting it..
-        /// </summary>
-        public static string rowWithError {
-            get {
-                return ResourceManager.GetString("rowWithError", resourceCulture);
             }
         }
         

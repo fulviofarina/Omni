@@ -13,6 +13,10 @@ namespace DB
         Pop Msn { get; set; }
 
         void GenerateBugReport();
+        void SendToRestartRoutine(string texto);
+        bool RestartingRoutine();
+
+      
 
         void GenerateReport(string labelReport, object path, string extra, string module, string email);
 

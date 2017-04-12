@@ -230,7 +230,7 @@
 		   this.Linaa.FolderPath = null;
 		 //  this.Linaa.IStore = this.Linaa;
 		   this.Linaa.Locale = new System.Globalization.CultureInfo("");
-		   this.Linaa.Notify = null;
+	//	   this.Linaa.Notify = null;
 		   this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 		   this.Linaa.TAM = null;
 		   // 

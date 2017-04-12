@@ -39,10 +39,11 @@ namespace DB.UI
             //      Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
             Dumb.LinkBS(ref this.ContainerBS, this.lINAA.VialType, column + " = " + "True", innerRadCol);
 
+            
             Interface.IBS.Channels = this.ChannelBS;
             Interface.IBS.Rabbit = this.ContainerBS;
         }
-
+        /*
         public void RefreshCC()
         {
             LINAA.UnitRow u = MatSSF.UNIT;
@@ -57,7 +58,7 @@ namespace DB.UI
             BindingSource channelBs = Interface.IBS.Channels;
             channelBs.Position = channelBs.Find(column, id);
         }
-
+        */
         //   private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
 
         /// <summary>
@@ -90,52 +91,27 @@ namespace DB.UI
 
         private void addNewVialChannel_Click(object sender, EventArgs e)
         {
-            BindingSource bs = null;
-            string colName = string.Empty;
-            object idnumber = null;
-            DataRow row = null;
+
             //IS A VIAL OR CONTAINER
+            DataRow r;
             if (!sender.Equals(this.addChParBn))
             {
-                LINAA.VialTypeRow v = this.lINAA.VialType.NewVialTypeRow();
+                LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
                 v.IsRabbit = true;
-                this.lINAA.VialType.AddVialTypeRow(v);
-
-                colName = this.lINAA.VialType.VialTypeIDColumn.ColumnName;
-
-                bs = this.ContainerBS;
-
-                idnumber = v.VialTypeID;
-
-                row = v;
+                Interface.IDB.VialType.AddVialTypeRow(v);
+                r = v;
+              
             }
             //IS A CHANNEL
             else
             {
-                //  {
-                LINAA.ChannelsRow ch = this.lINAA.Channels.NewChannelsRow();
-                this.lINAA.Channels.AddChannelsRow(ch);
-
-                colName = this.lINAA.Channels.ChannelsIDColumn.ColumnName;
-                bs = this.ChannelBS;
-                idnumber = ch.ChannelsID;
-
-                row = ch;
-                //   }
-                //  newIndex = this.ChannelBS.Find(colName, ch.ChannelsID);
-                // this.ChannelBS.Position = newIndex;
+                LINAA.ChannelsRow ch = Interface.IDB.Channels.NewChannelsRow();
+                Interface.IDB.Channels.AddChannelsRow(ch);
+                r = ch;
             }
 
-            if (row.HasErrors)
-            {
-                string rowWithError = DB.UI.Properties.Resources.rowWithError;
-                string Error = DB.UI.Properties.Resources.Error;
+            Interface.IBS.Update(r);
 
-                Interface.IReport.Msg(rowWithError, Error);
-            }
-
-            int newIndex = bs.Find(colName, idnumber);
-            bs.Position = newIndex;
         }
     }
 }

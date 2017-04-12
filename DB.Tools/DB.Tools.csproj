@@ -63,6 +63,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -72,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\BindingSources.cs" />
+    <Compile Include="Interface\Current.Preferences.cs" />
+    <Compile Include="Interface\IReport.cs" />
+    <Compile Include="Interface\Report.cs" />
     <Compile Include="Interface\Current.cs" />
     <Compile Include="Interface\Interface.cs" />
     <Compile Include="Interface\IPreferences.cs" />
@@ -115,6 +119,10 @@
     <ProjectReference Include="..\Msn\Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
+      <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
+      <Name>Rsx.Emailer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx\Rsx.csproj">
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>

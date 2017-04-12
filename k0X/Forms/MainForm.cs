@@ -42,7 +42,7 @@ namespace k0X
             this.timer.Tick += delegate
             {
                 ReleaseMemory(this.Release);
-                LIMS.Linaa.GenerateBugReport();
+                LIMS.Interface.IReport.GenerateBugReport();
             };
 
             this.ResumeLayout(true);
@@ -68,7 +68,7 @@ namespace k0X
             {
                 Cursor.Current = Cursors.WaitCursor;
                 ProjectOrOrder = ProjectOrOrder.ToUpper();
-                LIMS.Linaa.Msg("I'm loading it", "Found... " + ProjectOrOrder);
+                LIMS.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
                 //  LIMS.IReport.Speak("Found... " + ProjectOrOrder + "...");
 
                 Create(sender, true, ProjectOrOrder);
@@ -82,7 +82,7 @@ namespace k0X
                 {
                     Cursor.Current = Cursors.WaitCursor;
 
-                    LIMS.Linaa.Msg("I'm loading it", "Found... " + ProjectOrOrder);
+                    LIMS.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
 
                     if (fromFile) LIMS.Linaa.Read(possiblefile);
 
@@ -106,7 +106,7 @@ namespace k0X
                     if (sender.Equals(Box))
                     {
                         string text = "This Irradiation Project does not exist.\nCreate new one?";
-                        LIMS.Linaa.Msg(text, "Not Found... " + ProjectOrOrder);
+                        LIMS.Interface.IReport.Msg(text, "Not Found... " + ProjectOrOrder);
                         result = MessageBox.Show(text, "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     }
 
@@ -125,7 +125,7 @@ namespace k0X
 
                     Application.DoEvents();
                     ucIrrReq.CreateNewIrradiation(ProjectOrOrder);
-                    LIMS.Linaa.Msg("And there was light...", "Creating... " + ProjectOrOrder);
+                    LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
 
                     this.Box_KeyUp(sender, e);
                     return;
@@ -134,7 +134,7 @@ namespace k0X
 
             if (LIMS.Interface.IPreferences.CurrentPref.RowState == System.Data.DataRowState.Added)
             {
-                LIMS.Linaa.Msg("You can change your preferences any time, such as:\n\nPeak-search window...;\nMinimum Peak-Area...;\nMaximum Peak-Uncertainty...;\netc...\n\nI will retrieve, use and store your latest preferences", "Hi, you are a new user!...");
+                LIMS.Interface.IReport.Msg("You can change your preferences any time, such as:\n\nPeak-search window...;\nMinimum Peak-Area...;\nMaximum Peak-Uncertainty...;\netc...\n\nI will retrieve, use and store your latest preferences", "Hi, you are a new user!...");
                 LIMS.Interface.IPreferences.CurrentPref.AcceptChanges();
             }
 

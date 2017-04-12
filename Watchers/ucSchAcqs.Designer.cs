@@ -153,7 +153,7 @@
           
      //     this.Linaa.IStore = this.Linaa;
           this.Linaa.Locale = new System.Globalization.CultureInfo("en");
-          this.Linaa.Notify = null;
+      //    this.Interface.IReport.Notify = null;
           this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
           this.Linaa.TAM = null;
         //  this.Linaa.WindowsUser = null;

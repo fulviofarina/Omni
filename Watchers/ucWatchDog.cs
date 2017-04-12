@@ -36,6 +36,7 @@ namespace k0X
         private CReport Irepo = null;
         private int? irrId = null;
 
+        private Interface Interface;
         private IEnumerable<LINAA.MeasurementsRow> meas = null;
 
         private string MeasFilter = string.Empty;
@@ -157,12 +158,12 @@ namespace k0X
         public void Link(ref Interface lims, string Project)
         {
             this.ParentForm.Text = "WatchDog - " + project;
-
+            Interface = lims;
             exceptionDT = lims.IDB.Exceptions;
             this.Linaa.QTA = lims.IAdapter.QTA;
             currentPreference = lims.IPreferences.CurrentPref;
             //          Interface.IPreferences.CurrentPref = lims.IPreferences.CurrentPref;
-            this.Linaa.Notify = lims.IReport.Notify;
+        //    Interface.IReport.Notify = lims.IReport.Notify;
 
             project = Project.ToUpper();
             irrId = lims.IDB.IrradiationRequests.FindIrrReqID(project);
@@ -203,7 +204,7 @@ namespace k0X
                 IList<System.IO.FileInfo> files = Rsx.Dumb.GetFiles(rootpath);
                 files = files.Where(o => o.Extension.ToUpper().CompareTo(".CNF") == 0).ToList();
                 if (files.Count() != 0) AddMeasurements(ref files);
-                else this.Linaa.Msg("File list is empty", "No measurement files were found for\n" + rootpath, false);
+                else Interface.IReport.Msg("File list is empty", "No measurement files were found for\n" + rootpath, false);
             }
             else
             {
@@ -422,7 +423,7 @@ namespace k0X
 
             if (TAB.SelectedTab == this.xTableTab) MakeXTable();
 
-            this.Linaa.Msg("Loaded in " + Decimal.Round(Convert.ToDecimal((DateTime.Now - start).TotalSeconds), 1) + " seconds", "Loaded measurements for " + this.project, true);
+            this.Interface.IReport.Msg("Loaded in " + Decimal.Round(Convert.ToDecimal((DateTime.Now - start).TotalSeconds), 1) + " seconds", "Loaded measurements for " + this.project, true);
         }
 
         private void FilterMode_Click(object sender, EventArgs e)

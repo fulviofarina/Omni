@@ -16,7 +16,7 @@ namespace DB
                 if (defaultGeometry == null)
                 {
                     string msg = "The Reference Geometry was not found! Please make sure a Geometry named 'REF' exist in the database";
-                    Msg(msg, "Reference Geometry (REF) not found!!!", false);
+                    throw new System.Exception(msg);
                 }
 
                 return defaultGeometry;

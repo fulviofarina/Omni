@@ -75,7 +75,7 @@ namespace k0X
             object prefe = LIMS.Interface.IPreferences.CurrentPref;
             if (prefe == null)
             {
-                LIMS.Linaa.Msg("Preferences object is null!", "Cannot load preferences!", false);
+                LIMS.Interface.IReport.Msg("Preferences object is null!", "Cannot load preferences!", false);
                 return;
             }
             Connections cform = new Connections(ref prefe);
@@ -134,7 +134,7 @@ namespace k0X
         {
             if (!string.IsNullOrEmpty(this.bufferedMsg))
             {
-                LIMS.Linaa.Msg(this.bufferedMsg, "Buffered Controls!");
+                LIMS.Interface.IReport.Msg(this.bufferedMsg, "Buffered Controls!");
             }
             else
             {
@@ -145,7 +145,7 @@ namespace k0X
 
         private void BugReportMenu_Click(object sender, EventArgs e)
         {
-            LIMS.Linaa.GenerateBugReport();
+            LIMS.Interface.IReport.GenerateBugReport();
         }
 
         private void Quit_Click(object sender, EventArgs e)

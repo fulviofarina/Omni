@@ -32,18 +32,14 @@
             this.TS = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.N4 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.connectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.Save = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectionsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.TS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,16 +69,12 @@
             // 
             this.OptionsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.OptionsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem5,
-            this.preferencesToolStripMenuItem,
+            this.preferencesTSMI,
             this.toolStripSeparator7,
             this.toolStripMenuItem4,
             this.N4,
             this.toolStripSeparator6,
-            this.toolStripMenuItem1,
-            this.toolStripSeparator3,
-            this.toolStripSeparator9,
-            this.connectionsToolStripMenuItem});
+            this.connectionsTSMI});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptionsBtn.ForeColor = System.Drawing.Color.DarkOrange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
@@ -91,13 +83,12 @@
             this.OptionsBtn.Size = new System.Drawing.Size(108, 112);
             this.OptionsBtn.Text = "OPTIONS";
             // 
-            // toolStripMenuItem5
+            // preferencesTSMI
             // 
-            this.toolStripMenuItem5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(293, 30);
-            this.toolStripMenuItem5.Text = "Hacks";
+            this.preferencesTSMI.Name = "preferencesTSMI";
+            this.preferencesTSMI.Size = new System.Drawing.Size(293, 30);
+            this.preferencesTSMI.Text = "Preferences";
+            this.preferencesTSMI.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
@@ -125,32 +116,6 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(290, 6);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(293, 30);
-            this.toolStripMenuItem1.Text = "Engine";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(290, 6);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(290, 6);
-            // 
-            // connectionsToolStripMenuItem
-            // 
-            this.connectionsToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connectionsToolStripMenuItem.Name = "connectionsToolStripMenuItem";
-            this.connectionsToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(293, 30);
-            this.connectionsToolStripMenuItem.Text = "Connections";
-            // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
@@ -164,12 +129,11 @@
             this.Save.Size = new System.Drawing.Size(70, 115);
             this.Save.Text = "SAVE";
             // 
-            // preferencesToolStripMenuItem
+            // connectionsTSMI
             // 
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(293, 30);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
-            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+            this.connectionsTSMI.Name = "connectionsTSMI";
+            this.connectionsTSMI.Size = new System.Drawing.Size(293, 30);
+            this.connectionsTSMI.Text = "Connections";
             // 
             // ucOptionsSSF
             // 
@@ -190,17 +154,13 @@
         private System.Windows.Forms.ToolStrip TS;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripDropDownButton OptionsBtn;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripTextBox N4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripMenuItem connectionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem Save;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem preferencesTSMI;
+        private System.Windows.Forms.ToolStripMenuItem connectionsTSMI;
     }
 }

@@ -224,7 +224,7 @@ namespace DB.UI
 
             //create the DGV controller... and
             //set methods...
-            Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Linaa.Msg, ref LIMS.IFind);
+            Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref LIMS.IFind);
             cv.LoadMethod = loader;
             cv.PostRefresh = postRefresh;
             cv.PreRefresh = preRefresh;
@@ -295,11 +295,11 @@ namespace DB.UI
                 //  this.Linaa.ToDoData.Clear();
 
                 Linaa.WriteXml(file, System.Data.XmlWriteMode.WriteSchema);
-                Linaa.Msg("Workspace was saved on " + file, "Saved Workspace!", true);
+                Interface.IReport.Msg("Workspace was saved on " + file, "Saved Workspace!", true);
             }
             catch (SystemException ex)
             {
-                Linaa.Msg("Workspace was NOT saved on " + file, "Not Saved Workspace!", false);
+                Interface.IReport.Msg("Workspace was NOT saved on " + file, "Not Saved Workspace!", false);
             }
         }
 

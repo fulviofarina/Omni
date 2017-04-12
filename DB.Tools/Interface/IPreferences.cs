@@ -6,6 +6,8 @@
 
         void SavePreferences();
 
+        bool IsSpectraPathOk { get; }
+
         void PopulatePreferences();
 
         LINAA.SSFPrefRow CurrentSSFPref { get; }

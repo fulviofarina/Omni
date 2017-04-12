@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Rsx;
+using static DB.LINAA;
 
 namespace DB.Tools
 {
@@ -54,7 +56,27 @@ namespace DB.Tools
 
             return true;
         }
-
+        public static void LinkToParent(ref DataRow row)
+        {
+            bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
+            bool isMatrix = row.GetType().Equals(typeof(MatrixRow));
+            if (isChannel)
+            {
+                ChannelsRow c = row as ChannelsRow;
+                UNIT.SetChannel(ref c);
+            }
+            else if (!isMatrix)
+            {
+                LINAA.VialTypeRow v = row as VialTypeRow;
+                if (!v.IsRabbit) UNIT.SubSamplesRow.VialTypeRow = v;
+                else UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
+            }
+            else
+            {
+                MatrixRow m = row as MatrixRow;
+                UNIT.SubSamplesRow.MatrixID = m.MatrixID;
+            }
+        }
         public static bool ReadXML()
         {
             //   System.IO.File.Delete(file);
@@ -67,7 +89,7 @@ namespace DB.Tools
             byte[] bites = UNIT.SSFTable;
             Dumb.WriteBytesFile(ref bites, file);
             Table.ReadXml(file);
-            //  UNIT.SSFTable = bites;
+         
             File.Delete(file);
 
             return true;

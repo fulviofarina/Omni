@@ -120,7 +120,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Report\IReport.cs" />
     <Compile Include="Store\IStore.cs" />
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -154,8 +153,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QM.resx</DependentUpon>
     </Compile>
-    <Compile Include="Report\Report.cs" />
-    <Compile Include="Report\Report.QueryMsg.cs" />
     <Compile Include="DB\Samples\NAA.IPeaksAvg.cs" />
     <Compile Include="DB\Samples\NAA.IReqAvg.cs" />
     <Compile Include="DB\Samples\NAA.Standards.cs" />
@@ -262,8 +259,6 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
@@ -273,17 +268,9 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
       <Name>Rsx.CAM</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
-      <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
-      <Name>Rsx.Emailer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
       <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>

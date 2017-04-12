@@ -7,18 +7,22 @@
         public Interface(ref LINAA aux)
         {
             dataset = aux;
-            IBS = new BindingSources();
+          
+            //attach interface classes
             Interface inter = this;
             ICurrent = new Current(ref IBS, ref inter);
             IPreferences = ICurrent;
+            IBS = new BindingSources(ref inter);
             IPopulate = new Populate(ref inter);
+            IReport = new Report(ref inter);
+
+            //attach interfaces of LINAA (DB)
             IMain = (IMain)aux;
             IAdapter = (IAdapter)aux;
             IStore = (IStore)aux;
-            IReport = (IReport)aux;
             IDB = (IDB)aux;
 
-            //   IPreferences = (IPreferences)aux;
+          
         }
 
         public LINAA Get()
@@ -29,9 +33,14 @@
         public IMain IMain;
         public IAdapter IAdapter;
         public IStore IStore;
-        public IReport IReport;
         public IDB IDB;
+
+
+        /// <summary>
+        /// other interfaces of this cl
+        /// </summary>
         public IPreferences IPreferences;
+        public IReport IReport;
 
         public BindingSources IBS;
         public Populate IPopulate;

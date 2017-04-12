@@ -62,7 +62,7 @@ namespace k0X
 
         private void GetLastTime(ref DateTime sinc, bool scan)
         {
-            if ((Interface.IMain.IsSpectraPathOk))
+            if ((Interface.IPreferences.IsSpectraPathOk))
             {
                 string file = Properties.CmdRes.DO;
                 if (scan) file = Properties.CmdRes.SCAN;
@@ -152,7 +152,7 @@ namespace k0X
             }
             else if (subject.Length == 3)// Contains(Properties.CmdRes.ADD) || Contains(Properties.CmdRes.FIX))
             {
-                if (Interface.IMain.IsSpectraPathOk) IWatchers.AddOrFixSchedule(subject, email, summary);
+                if (Interface.IPreferences.IsSpectraPathOk) IWatchers.AddOrFixSchedule(subject, email, summary);
             }
             else if (!subject.Contains(k0X.Properties.CmdRes.REBOOT))
             {
@@ -163,7 +163,7 @@ namespace k0X
 
                 if (cmd.Length == 4 || cmd.Length == 5)
                 {
-                    if (Interface.IMain.IsSpectraPathOk) IWatchers.ExecuteCmd(email, cmd, det);
+                    if (Interface.IPreferences.IsSpectraPathOk) IWatchers.ExecuteCmd(email, cmd, det);
                 }
             }
 
@@ -235,7 +235,7 @@ namespace k0X
 
             if (!set) return;
 
-            if (Interface.IMain.IsSpectraPathOk)
+            if (Interface.IPreferences.IsSpectraPathOk)
             {
                 string path = Interface.IPreferences.CurrentPref.Spectra;
                 string text = inter.ToFileTime().ToString();
@@ -333,7 +333,7 @@ namespace k0X
 
         private void Detectors(object sender, EventArgs e)
         {
-            if (!Interface.IMain.IsSpectraPathOk)
+            if (!Interface.IPreferences.IsSpectraPathOk)
             {
                 Interface.IReport.Msg("Check the <DB Connections>", "Spectra directory not accesible");
             }

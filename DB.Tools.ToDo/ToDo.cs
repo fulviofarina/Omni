@@ -370,9 +370,14 @@ namespace DB.Tools
       set { minPosition = value; }
     }
 
-    public ToDo(ref LINAA set)
+
+        private Interface Interface;
+
+
+    public ToDo(ref Interface set)
     {
-      Linaa = set;
+      Linaa = set.Get();
+            Interface = set;
       clone = new LINAA.ToDoAvgDataTable(false);
       fit = new ToDo.FitParameters();
       LINAA.ToDoAvgDataTable dt = this.Linaa.ToDoAvg;
@@ -800,7 +805,7 @@ namespace DB.Tools
 
       int secs = Convert.ToInt32((DateTime.Now - start).TotalSeconds);
 
-      this.Linaa.Msg(tocalculate.ToString(), "Calculated Ai in " + secs + " seconds");
+      Interface.IReport.Msg(tocalculate.ToString(), "Calculated Ai in " + secs + " seconds");
 
       return result;
     }
@@ -834,7 +839,7 @@ namespace DB.Tools
 
       int secs = Convert.ToInt32((DateTime.Now - start).TotalSeconds);
 
-      this.Linaa.Msg(tocalculate.ToString(), "Calculated FC in " + secs + " seconds");
+      Interface.IReport.Msg(tocalculate.ToString(), "Calculated FC in " + secs + " seconds");
 
       return result;
     }

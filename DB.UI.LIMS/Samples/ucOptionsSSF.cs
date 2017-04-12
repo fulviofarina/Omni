@@ -57,6 +57,11 @@ namespace DB.UI.Samples
         private void loadPreferences()
         {
             //preferences
+       
+
+            //save preferences
+          
+
             IPreferences ip = Interface.IPreferences;
 
             if (!ip.CurrentPref.Offline)
@@ -68,43 +73,43 @@ namespace DB.UI.Samples
                 //  Interface.IPopulate.IMain.Read(mf);
             }
 
-            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
+          
             // MatSSF.StartupPath += ip.CurrentSSFPref.Folder;
 
             N4.TextBox.Text = ip.CurrentSSFPref.Rounding;
        
         }
 
-        private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
+   //     private static Environment.SpecialFolder folder = Environment.SpecialFolder.Personal;
 
         private void saveMethod()
         {
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                Interface.IBS.Matrix.EndEdit();
-                Interface.IBS.Units.EndEdit();
-                Interface.IBS.Vial.EndEdit();
-                Interface.IBS.Rabbit.EndEdit();
-                Interface.IBS.Channels.EndEdit();
-
+                Interface.IBS.EndEdit();
                 //    WHAT IS THIS
-                MatSSF.WriteXML();
+              
 
                 //WHAT IS THIS
                 bool off = Interface.IPreferences.CurrentPref.Offline;
-                string savePath = Interface.IMain.FolderPath + "lims.xml";
-                Interface.IStore.SaveSSF(off, savePath);
+           //     string savePath = Interface.IMain.FolderPath + "lims.xml";
+               // Interface.IStore.SaveSSF(off, savePath);
+
+                Interface.IPreferences.SavePreferences();
+                Interface.IReport.Msg("Saving preferences", "Saving...");
 
                 IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
                 Interface.IStore.SaveRemote(ref tables, true);
+                Interface.IStore.SaveLocalCopy();
+             //   Interface.IReport.Msg("Saving", "Saving completed!");
 
-                Interface.IReport.Msg("Saving", "Saving completed!");
+                Interface.IReport.Msg("Saving database", "Saved!");
             }
             catch (Exception ex)
             {
                 Interface.IMain.AddException(ex);
-                Interface.IReport.Msg(ex.Message + "\n" + ex.Source + "\n", "Error", false);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
             Cursor.Current = Cursors.Default;
         }
@@ -113,7 +118,17 @@ namespace DB.UI.Samples
      
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+
+          
             LIMS.UserControls.OfType<ucPreferences>().FirstOrDefault().ParentForm.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
+            }
         }
 
         /// <summary>
@@ -137,6 +152,7 @@ namespace DB.UI.Samples
 
                 Dumb.ChangeBindingsFormat(format, ref bindings);
                 Dumb.ChangeBindingsFormat(format, ref samplebindings);
+
                 Interface.IPreferences.CurrentSSFPref.Rounding = format;
 
                 //save preferences
