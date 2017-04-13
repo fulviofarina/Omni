@@ -18,6 +18,9 @@ namespace DB.Tools
             Interface = interfaces;
         }
 
+        /// <summary>
+        /// Current
+        /// </summary>
         public DataRow SubSample
         {
             get
@@ -26,6 +29,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Current
+        /// </summary>
         public IEnumerable<DataRow> SubSamples
         {
             get
@@ -34,6 +40,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Current
+        /// </summary>
         public DataRow Unit
         {
             get
@@ -42,6 +51,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Current
+        /// </summary>
         public IEnumerable<DataRow> Units
         {
             get

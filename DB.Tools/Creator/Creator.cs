@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Linq;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -11,8 +12,25 @@ using Rsx;
 
 namespace DB.Tools
 {
+
     public partial class Creator
     {
+
+        private static string sqlStarted = "Installation of SQL LocalDB started. When finished click OK to restart";
+        private static string sqlPack32 = "localdbx32.msi";
+        private static string sqlPack64 = "localdbx64.msi";
+        private static string triedToInstall = "\n\nThe user tried to install SQL Express";
+        private static string deniedTheInstall = "\n\nThe user denied the SQL Express installation";
+        private static string nocontinueWOSQL = "Cannot continue without a SQL connection";
+        private static string sqlDBEXE = "SqlLocalDB.exe";
+
+        private static string shouldInstallSQL = "Would you like to install SQL LocalDB?";
+        private static string sqlLocalDB = "SQL LocalDB Installation";
+    }
+
+    public partial class Creator
+    {
+        private static string restartingOk = "Restarting succeeded...";
         private static string askToSave = "Changes in the database have not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
         private static string checkingSQL = "Checking the SQL connections";
         private static string couldNotConnect = "Could not connect to LIMS DataBase";
@@ -20,6 +38,8 @@ namespace DB.Tools
         private static string loading = "Database loading in progress";
 
     }
+
+   
     public partial class Creator
     {
 
@@ -32,6 +52,9 @@ namespace DB.Tools
 
         private static Loader worker = null;
 
+        /// <summary>
+        /// disposes the worker that loads the data
+        /// </summary>
         private static void disposeWorker()
         {
             if (worker != null)
@@ -42,6 +65,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// the last end routine
+        /// </summary>
         private static void endRoutine()
         {
             // LINAA Linaa = Interface as LINAA;
@@ -57,7 +83,64 @@ namespace DB.Tools
             loadMethods(toPopulate);
             Load();
         }
+        private static void loadMethods(int populNr)
+        {
+            LINAA Linaa = Interface.Get();
 
+            IList<Action> auxM = null;
+
+            Action todo = null;
+
+            Rsx.Loader.Reporter report = null;
+
+            if (toPopulate == 1)
+            {
+                auxM = new Action[]
+                {
+             Linaa.PopulateElements,
+
+       Linaa.PopulateReactions,
+         Linaa.PopulatepValues,
+                 Linaa.PopulateSigmas,
+                   Linaa.PopulateSigmasSal,
+                   Linaa.PopulateYields,
+            };
+
+                todo = lastCallBack;
+            }
+            else if (toPopulate == 0)
+            {
+                auxM = new Action[]
+                {
+           Linaa.PopulateChannels,
+          Linaa.PopulateIrradiationRequests,
+       Linaa.PopulateOrders,
+        Linaa.PopulateProjects
+                };
+
+                IEnumerable<Action> enums = auxM;
+
+                enums = enums.Union(Linaa.PMMatrix());
+                enums = enums.Union(Linaa.PMStd());
+                enums = enums.Union(Linaa.PMDetect());
+
+                auxM = enums.ToList();
+                // auxM.Add(Linaa.PopulateUnits);
+
+                report = Interface.IReport.ReportProgress;
+                todo = endRoutine;
+            }
+
+            if (auxM != null)
+            {
+                disposeWorker();
+
+                worker = new Rsx.Loader();
+
+                worker.Set(auxM, todo, report);
+            }
+            // else throw new SystemException("No Populate Method was assigned");
+        }
     }
 
   

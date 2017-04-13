@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using DB.Reports;
 using DB.Tools;
 using Rsx;
+using static DB.LINAA;
 
 namespace DB.UI
 {
@@ -101,7 +102,7 @@ namespace DB.UI
 
         public void Predict(object sender, EventArgs e)
         {
-            List<LINAA.SubSamplesRow> samplesToPredict = new List<LINAA.SubSamplesRow>();
+            List<SubSamplesRow> samplesToPredict = new List<SubSamplesRow>();
 
             HashSet<int> indexes = new HashSet<int>();
 
@@ -110,7 +111,7 @@ namespace DB.UI
                 // if (!indexes.Add(r.RowIndex)) continue;
 
                 var vr = r.DataBoundItem as DataRowView;
-                LINAA.SubSamplesRow s = vr.Row as LINAA.SubSamplesRow;
+                SubSamplesRow s = vr.Row as SubSamplesRow;
 
                 samplesToPredict.Add(s);
             }
@@ -142,7 +143,7 @@ namespace DB.UI
 
         public void PredictOLDVERSION(object sender, EventArgs e)
         {
-            List<LINAA.SubSamplesRow> samplesToPredict = new List<LINAA.SubSamplesRow>();
+            List<SubSamplesRow> samplesToPredict = new List<SubSamplesRow>();
 
             HashSet<int> indexes = new HashSet<int>();
 
@@ -154,12 +155,12 @@ namespace DB.UI
 
                 DataRowView vr = r.DataBoundItem as DataRowView;
 
-                LINAA.SubSamplesRow s = vr.Row as LINAA.SubSamplesRow;
+                SubSamplesRow s = vr.Row as SubSamplesRow;
 
                 samplesToPredict.Add(s);
             }
 
-            IEnumerable<LINAA.SubSamplesRow> send = samplesToPredict.ToArray();
+            IEnumerable<SubSamplesRow> send = samplesToPredict.ToArray();
 
             LINAA newLina = this.Linaa.Clone() as DB.LINAA;
             newLina.CloneDataSet(ref Linaa);
@@ -187,32 +188,17 @@ namespace DB.UI
         /// <param name="row"></param>
         public void RowAdded(ref DataRow row)
         {
-          
 
-            IEnumerable<LINAA.SubSamplesRow> samples = Interface.ICurrent.SubSamples
-                .OfType<LINAA.SubSamplesRow>();
 
             int IrrReqID = projectbox.IrrReqID;
             string project = projectbox.Project;
 
-            try
-            {
-                IList<LINAA.SubSamplesRow> list = samples.ToList();
-                list.Add((LINAA.SubSamplesRow)row);
-                samples = list;
+            IEnumerable<SubSamplesRow> samples = Interface.ICurrent.SubSamples.OfType<SubSamplesRow>();
+            IList<SubSamplesRow> list = samples.ToList();
+            list.Add((SubSamplesRow)row);
+            samples = list;
 
-                Interface.IPopulate.ISamples
-                    .SetLabels(ref samples, project);
-                Interface.IPopulate.ISamples
-                    .SetIrradiatioRequest(ref samples, IrrReqID);
-
-                Interface.IPopulate.ISamples
-                    .SetUnits(ref samples);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IMain.AddException(ex);
-            }
+            Interface.IPopulate.ISamples.AddSamples(project, ref samples, false);
 
             Link(this.filter, this.sort);
 
@@ -245,16 +231,16 @@ namespace DB.UI
         /// <param name="e">     </param>
         public void ShareTirr(object sender, EventArgs e)
         {
-            LINAA.SubSamplesRow current = Dumb.Cast<LINAA.SubSamplesRow>(BS.Current as DataRowView);
+            SubSamplesRow current = Dumb.Cast<SubSamplesRow>(BS.Current as DataRowView);
 
             if (current.IsInReactorNull() || current.IsIrradiationTotalTimeNull())
             {
                 MessageBox.Show("Please fill in the irradiations date/times for this sample in order to propagate it to the others");
                 return;
             }
-            IEnumerable<LINAA.SubSamplesRow> others = Dumb.Cast<LINAA.SubSamplesRow>(BS.List as DataView);
+            IEnumerable<SubSamplesRow> others = Dumb.Cast<SubSamplesRow>(BS.List as DataView);
             others = others.Where(o => o != current).ToList();
-            foreach (LINAA.SubSamplesRow s in others)
+            foreach (SubSamplesRow s in others)
             {
                 if (s.Equals(current)) continue;
                 s.InReactor = current.InReactor;
@@ -296,17 +282,6 @@ namespace DB.UI
             reportBtton.Visible = false;
         }
 
-        /*
-        private void itemSelected(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            // ucSSF
-            if (e.RowIndex < 0) return;
-
-            var dgv = sender as DataGridView;
-            DataRow r = (dgv.Rows[e.RowIndex].DataBoundItem as DataRowView).Row;
-
-            updateUnitPosition(ref r);
-        }
-        */
+    
     }
 }

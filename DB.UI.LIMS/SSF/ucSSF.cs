@@ -20,6 +20,8 @@ namespace DB.UI
         public ucSSF()
         {
             InitializeComponent();
+
+            currentSize = this.Size;
         }
 
         public void AttachBN(ref Control bn)
@@ -30,7 +32,7 @@ namespace DB.UI
 
         public void AttachMsn(ref Control msn)
         {
-            this.contronSC.Panel2.Controls.Add(msn);
+            this.UnitSSFSC.Panel2.Controls.Add(msn);
         }
 
         public void AttachProjectBox(ref Control pro)
@@ -95,9 +97,29 @@ namespace DB.UI
             }
         }
 
+       private static System.Drawing.Size currentSize;
+
+        public  void HideShowAll(bool show)
+        {
+            //this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            DaCONTAINER.FixedPanel = FixedPanel.Panel1;
+
+            if (!show)
+            {
+                this.Size = new System.Drawing.Size(DaCONTAINER.Panel1.Width, DaCONTAINER.Panel1.Height);
+                ParentForm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            }
+            else this.Size = currentSize;
+             DaCONTAINER.Panel2Collapsed = !show;
+            //DaCONTAINER.Size = 
+        }
+
         public void Calculate(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+
+
+            HideShowAll(false);
 
             this.progress.Minimum = 0;
             this.progress.Maximum = 3;
@@ -109,9 +131,6 @@ namespace DB.UI
 
             this.Tab.SelectedTab = this.CalcTab;
 
-            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
-
-        
          
             Action showProgress = delegate
             {
@@ -122,8 +141,10 @@ namespace DB.UI
 
             Interface.IBS.EndEdit();
 
-       
-           
+
+            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
+
+
 
             IList<UnitRow> units = null;
             bool shoulLoop = Interface.IPreferences.CurrentSSFPref.Loop;
@@ -158,21 +179,13 @@ namespace DB.UI
 
             this.CalcBtn.Enabled = true;
 
+
+            HideShowAll(true);
+
             Cursor.Current = Cursors.Default;
         }
 
-        private void loadFilesMatSSF(ref Action showProgress, ref RichTextBox input, string file)
-        {
-            //load files
-            //Clear InputFile RTF Control
-            input.Clear();
-            //load file if exists
-            bool exist = System.IO.File.Exists(file);
-            if (exist) input.LoadFile(file, RichTextBoxStreamType.PlainText);
-
-            showProgress();
-          
-        }
+      
 
         private void CalculateUnit(ref Action showProgress)
         {
@@ -236,15 +249,19 @@ namespace DB.UI
                 //convert table into subTable of Units
                 MatSSF.WriteXML();
 
+
+           //this also saves the UNITS!!
+                Interface.IStore.Save<SubSamplesRow>();
+
                 //6
                 showProgress();
 
                 string file = MatSSF.StartupPath + MatSSF.InputFile;
-                loadFilesMatSSF(ref showProgress, ref inputbox, file);
+                Dumb.LoadFilesIntoBoxes(ref showProgress, ref inputbox, file);
 
 
                 file = MatSSF.StartupPath + MatSSF.OutputFile;
-                loadFilesMatSSF(ref showProgress, ref outputBox, file);
+                Dumb.LoadFilesIntoBoxes(ref showProgress, ref outputBox, file);
 
 
             }
@@ -254,22 +271,6 @@ namespace DB.UI
                 Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
         }
-
-        /// <summary>
-        /// when a DGV-item is selected, take the necessary rows to compose the unit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-     
-
-
-    
-
-
-
-
-     
-
 
         private Hashtable setSampleBindings()
         {

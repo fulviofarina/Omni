@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Creator\Populate\Creator.Populate.cs" />
+    <Compile Include="Creator\Populate\Creator.Populate.Public.cs" />
     <Compile Include="Creator\Creator.Public.cs" />
     <Compile Include="Interface\BS\BindingSources.Public.cs" />
     <Compile Include="Interface\BS\BindingSources.cs" />

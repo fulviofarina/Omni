@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Linq;
+using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Windows.Forms;
-
+using DB.Linq;
 using DB.Properties;
 using Msn;
 using Rsx;
@@ -12,20 +14,27 @@ using Rsx;
 namespace DB.Tools
 {
    
-
+  
     public partial class Creator
     {
+        /// <summary>
+        /// a method to call back
+        /// </summary>
         public static Action CallBack
         {
             get { return Creator.mainCallBack; }
             set { Creator.mainCallBack = value; }
         }
 
+        /// <summary>
+        /// The last call back method
+        /// </summary>
         public static Action LastCallBack
         {
             get { return Creator.lastCallBack; }
             set { Creator.lastCallBack = value; }
         }
+
 
 
         /// <summary>
@@ -38,6 +47,9 @@ namespace DB.Tools
         public static void Build(ref Interface inter, ref NotifyIcon notify, ref Pop msn)
         {
             //restarting = false;
+
+            Cursor.Current = Cursors.WaitCursor;
+
 
             if (inter != null)
             {
@@ -58,41 +70,64 @@ namespace DB.Tools
                 Interface.IReport.Notify = notify;
             }
 
+            Cursor.Current = Cursors.Default;
+
+            Interface.IMain.PopulateColumnExpresions();
+
             Interface.IReport.Msg(loading, "Please wait...");
+
         }
 
+        /// <summary>
+        /// Checks if the due directories exist
+        /// </summary>
         public static void CheckDirectories()
         {
+
+            Cursor.Current = Cursors.WaitCursor;
+
+
             //assign folderpath (like a App\Local folder)
             Interface.IMain.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Interface.IMain.FolderPath += Resources.k0XFolder; //cambiar esto
 
             //populate main directory at folderPath
-            Interface.IPopulate.PopulateDirectory(Interface.IMain.FolderPath);
+            try
+            {
+                Rsx.Dumb.MakeADirectory(Interface.IMain.FolderPath);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IMain.AddException(ex);//                throw;
+            }
+         
 
             //check for overriders
-            bool overriderFound = Interface.IPopulate.PopulateOverriders();
+            bool overriderFound = populateOverriders();
 
             //populate resources
-            Interface.IPopulate.PopulateResources(overriderFound);
+            PopulateResources(overriderFound);
 
             //perform basic loading
 
-            Interface.IMain.PopulateColumnExpresions();
+     
 
             Interface.IPreferences.PopulatePreferences();
 
             Interface.IPreferences.SavePreferences();
 
-       
+
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
-            bool restartedOrReported = Interface.IPopulate.RestartingRoutine();
+            bool restartedOrReported = restartingRoutine();
 
-            // return result;
+            Cursor.Current = Cursors.Default;
+
+
+         
         }
 
-      
+
         /// <summary>
         /// Closes the given LINAA database
         /// </summary>
@@ -116,6 +151,9 @@ namespace DB.Tools
                 string ask = askToSave + tablesToSave;
                 MessageBoxButtons mb = MessageBoxButtons.YesNoCancel;
                 MessageBoxIcon icon = MessageBoxIcon.Warning;
+
+
+
                 DialogResult result = MessageBox.Show(ask, "Save Changes...", mb, icon);
                 if (result == DialogResult.Yes) takeChanges = true;
                 else if (result == DialogResult.Cancel)
@@ -125,12 +163,9 @@ namespace DB.Tools
                 }
             }
 
-            Interface.IPreferences.SavePreferences();
+          
 
-            bool savedremotely = Linaa.SaveRemote(ref tables, takeChanges);
-            bool savedlocally = Linaa.SaveLocalCopy();
-
-            eCancel = !savedremotely || !savedlocally;
+            eCancel = !SaveInFull(takeChanges);
             //if cancel, this means that a remote or a local copy could not be saved,
             //not good, this is the worst nightmare...
             //the backup
@@ -138,15 +173,66 @@ namespace DB.Tools
             return eCancel;
         }
 
+        public static bool  SaveInFull (bool takechanges)
+        {
+            bool ok = false;
+
+            Cursor.Current = Cursors.WaitCursor;
+          
+
+            try
+            {
+                Interface.IBS.EndEdit();
+          
+                //    WHAT IS THIS
+                //WHAT IS THIS
+                bool off = Interface.IPreferences.CurrentPref.Offline;
+                //     string savePath = Interface.IMain.FolderPath + "lims.xml";
+                // Interface.IStore.SaveSSF(off, savePath);
+
+                Interface.IPreferences.SavePreferences();
+                Interface.IReport.Msg("Saving preferences", "Saved!");
+
+                IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
+
+                bool savedremotely = true;
+                if (!off)
+                {
+                    savedremotely = Interface.IStore.SaveRemote(ref tables, takechanges);
+                    Interface.IReport.Msg("Saving to SQL database", "Saved!");
+                }
+
+                bool savedlocaly = Interface.IStore.SaveLocalCopy();
+                Interface.IReport.Msg("Saving XML database", "Saved!");
+                //   Interface.IReport.Msg("Saving", "Saving completed!");
+
+                ok = savedlocaly && savedremotely;
+                //   Interface.IReport.Msg("Saving database", "Saved!");
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
+            }
+
+            Cursor.Current = Cursors.Default;
+
+            return ok;
+        }
+
         /// <summary>
-        /// The methods are loaded already, just execute... rename maybe..
+        /// The methods are loaded already, just execute...
         /// </summary>
         public static void Load()
         {
+            Cursor.Current = Cursors.WaitCursor;
+
             if (worker != null)
             {
                 worker.RunWorkerAsync(Interface);
             }
+
+            Cursor.Current = Cursors.Default;
             // else throw new SystemException("No Populate Method was assigned");
         }
 
@@ -155,75 +241,20 @@ namespace DB.Tools
         /// </summary>
         /// <param name="Linaa">  database to load</param>
         /// <param name="handler">required handler to report feedback when completed</param>
-        public static void loadMethods(int populNr)
-        {
-            LINAA Linaa = Interface.Get();
-
-            IList<Action> auxM = null;
-
-            Action todo = null;
-
-            Rsx.Loader.Reporter report = null;
-
-            if (toPopulate == 1)
-            {
-                auxM = new Action[]
-                {
-             Linaa.PopulateElements,
-
-       Linaa.PopulateReactions,
-         Linaa.PopulatepValues,
-                 Linaa.PopulateSigmas,
-                   Linaa.PopulateSigmasSal,
-                   Linaa.PopulateYields,
-            };
-
-                todo = lastCallBack;
-            }
-            else if (toPopulate == 0)
-            {
-                auxM = new Action[]
-                {
-           Linaa.PopulateChannels,
-          Linaa.PopulateIrradiationRequests,
-       Linaa.PopulateOrders,
-        Linaa.PopulateProjects
-                };
-
-                IEnumerable<Action> enums = auxM;
-
-                enums = enums.Union(Linaa.PMMatrix());
-                enums = enums.Union(Linaa.PMStd());
-                enums = enums.Union(Linaa.PMDetect());
-
-                auxM = enums.ToList();
-                // auxM.Add(Linaa.PopulateUnits);
-
-                report = Interface.IReport.ReportProgress;
-                todo = endRoutine;
-            }
-
-            if (auxM != null)
-            {
-                disposeWorker();
-
-                worker = new Rsx.Loader();
-
-                worker.Set(auxM, todo, report);
-            }
-            // else throw new SystemException("No Populate Method was assigned");
-        }
+    
 
         /// <summary>
-        /// PREPARATE
+        /// Prepare the needed methods and the worker
         /// </summary>
         /// <param name="populNr"></param>
         /// <returns></returns>
         public static bool Prepare(int populNr)
         {
+            Cursor.Current = Cursors.WaitCursor;
+
             Interface.IReport.Msg(checkingSQL, "Please wait...");
 
-            Interface.IPopulate.RestartSQLServer();
+            RestartSQLServer();
 
             Interface.IAdapter.InitializeComponent();
 
@@ -234,16 +265,22 @@ namespace DB.Tools
             if (!Interface.IAdapter.IsMainConnectionOk)
             {
 
+              
                 Interface.IReport.UserInfo();
 
-                 string title = noConnectionDetected;
-                 title += Interface.IAdapter.Exception;
-               
-                  Interface.IPopulate.SendToRestartRoutine(title);
-                 MessageBox.Show(title, couldNotConnect, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string title = noConnectionDetected;
+                title += Interface.IAdapter.Exception;
+
+                SendToRestartRoutine(title);
+
+                Cursor.Current = Cursors.Default;
+
+                MessageBox.Show(title, couldNotConnect, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 //could not connect
-                Interface.IPopulate.PopulateSQLDatabase();
+                PopulateSQLDatabase();
+
+
                 //send this text to a textFile in order to report by email next Reboot
             }
             else
@@ -253,9 +290,11 @@ namespace DB.Tools
                 ok = true;
             }
 
+            Cursor.Current = Cursors.Default;
+
             return ok;
         }
 
- 
+
     }
 }

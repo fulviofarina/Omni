@@ -16,12 +16,18 @@ namespace DB.Tools
         private static string inputFile = "MATSSF_INP.TXT";
         private static string outputFile = "MATSSF_LST.TXT";
 
+        /// <summary>
+        /// The MatSSF startup path
+        /// </summary>
         public static string StartupPath
         {
             get { return startupPath; }
             set { startupPath = value; }
         }
 
+        /// <summary>
+        /// The input MatSSF file
+        /// </summary>
         public static string InputFile
         {
             get
@@ -30,6 +36,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// The output MatSSF file
+        /// </summary>
         public static string OutputFile
         {
             get
@@ -38,26 +47,45 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// This is the main row with the data
+        /// </summary>
         public static LINAA.UnitRow UNIT = null;
+        /// <summary>
+        /// This is the table for the epithermal self-shielding factors
+        /// </summary>
         public static LINAA.MatSSFDataTable Table = null;
 
+        /// <summary>
+        /// Is it used? should not
+        /// </summary>
         public static LINAA.SubSamplesRow Sample = null;
 
+        /// <summary>
+        /// Writes the MatSSF datatable to an xml file and assigns it to the row object
+        /// </summary>
         public static bool WriteXML()
         {
             string file = startupPath + UNIT.Name;
             File.Delete(file);
+            //write to file
             Table.WriteXml(file);
 
+            //read bytes
             byte[] bites = Dumb.ReadFileBytes(file);
 
+            //asign
             UNIT.SSFTable = bites;
 
+            //delete file
             File.Delete(file);
 
             return true;
         }
 
+        /// <summary>
+        /// Link the Unit Row to the Parent Matrix, Vial, Channel, Rabbit
+        /// </summary>
         public static void LinkToParent(ref DataRow row)
         {
             bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
@@ -80,23 +108,32 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Reads the MatSSF datatable from an xml file 
+        /// </summary>
         public static bool ReadXML()
         {
             // System.IO.File.Delete(file);
             Table.Clear();
 
             if (UNIT.IsSSFTableNull()) return false;
-
+            //file to save as
             string file = startupPath + UNIT.Name;
+            //get bytes
             byte[] bites = UNIT.SSFTable;
+            //write to file
             Dumb.WriteBytesFile(ref bites, file);
+            //read from file
             Table.ReadXml(file);
-
+            //delete file
             File.Delete(file);
 
             return true;
         }
 
+        /// <summary>
+        /// Generates the INPUT File for MatSSF
+        /// </summary>
         public static bool INPUT()
         {
             bool success = false;
@@ -124,6 +161,9 @@ namespace DB.Tools
             return success;
         }
 
+        /// <summary>
+        /// Calculates according to the Chilean method
+        /// </summary>
         public static void CHILEAN()
         {
             //sample geometry dependant values// why recalculate each time? leave them here
@@ -185,33 +225,41 @@ namespace DB.Tools
             elements.Clear();
         }
 
+        /// <summary>
+        /// Generates the OUTPUT File for MatSSF
+        /// </summary>
         public static String OUTPUT()
         {
             string File = startupPath + outputFile;
 
             if (!System.IO.File.Exists(File)) return File;
 
+
+            //read file data
             string lecture = Dumb.ReadFile(File);
             IEnumerable<string> array = lecture.Split('\n');
             array = array.Where(o => !o.Equals("\r"));
             array = array.Select(o => o.Trim(null)).AsEnumerable();
-
+            //fill the unit data
             UNIT.FillWith(ref array);
-
+            //fill the matssf table
             fillTable(array.ToList());
-
             array = null;
 
-            if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
 
+
+            //fill shit I should delete!!!!
+            if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
             Table.GtDensity[1] = UNIT.SubSamplesRow.CalcDensity.ToString();
             if (Sample != null) Sample.Gthermal = UNIT.Gt;
-
             Table.GtDensity[0] = UNIT.Gt.ToString();
 
             return File;
         }
 
+        /// <summary>
+        /// Runs the MatSSF program
+        /// </summary>
         public static bool RUN(bool Hide)
         {
             Process process = new Process();

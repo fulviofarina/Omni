@@ -62,7 +62,7 @@ namespace k0X
 
         private void Help_Click(object sender, EventArgs e)
         {
-            LIMS.Interface.IPopulate.Help();
+            Creator.Help();
         }
 
         private void releaseMemory_Click(object sender, EventArgs e)

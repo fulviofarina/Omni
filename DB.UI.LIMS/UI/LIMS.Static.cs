@@ -10,7 +10,26 @@ namespace DB.UI
     public partial class LIMS
     {
         //  public static System.Collections.Generic.IList<object> UserControls;
+        public static void ShowPreferences()
+        {
 
+            try
+            {
+                UserControl c = LIMS.UserControls.OfType<ucPreferences>().FirstOrDefault();
+                if (c == null)
+                {
+                    c = LIMS.CreateUI(ControlNames.Preferences);
+                    LIMS.CreateForm("Preferences", ref c);
+                }
+                c.ParentForm.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+                // Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
+            }
+
+        }
         public static T FindLastControl<T>(string name)
         {
             Func<T, bool> finder = o =>

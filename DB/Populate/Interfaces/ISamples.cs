@@ -10,7 +10,8 @@ namespace DB
 {
     public interface ISamples
     {
-        int AddSamples(string project, ref ICollection<string> hsamples);
+        int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool monitors = false);
+        IEnumerable<LINAA.SubSamplesRow> CreateSamplesNamesFrom(ref IEnumerable<string> hsamples);
 
         DataTable CalculateBranchFactor(ref IPeakAveragesRow daugther, ref IEnumerable<IPeakAveragesRow> references);
 

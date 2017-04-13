@@ -4,6 +4,8 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Windows.Forms;
 
 ///FULVIO
 namespace Rsx
@@ -74,8 +76,19 @@ namespace Rsx
       raw = null;
       return lecture;
     }
+        public static void LoadFilesIntoBoxes(ref Action showProgress, ref RichTextBox input, string file)
+        {
+            //load files
+            //Clear InputFile RTF Control
+            input.Clear();
+            //load file if exists
+            bool exist = System.IO.File.Exists(file);
+            if (exist) input.LoadFile(file, RichTextBoxStreamType.PlainText);
 
-    public static IList<string> GetDirectories(string path)
+            showProgress();
+
+        }
+        public static IList<string> GetDirectories(string path)
     {
       if (!System.IO.Directory.Exists(path)) return new List<string>();
       System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
@@ -90,8 +103,20 @@ namespace Rsx
 
       return hs.ToList();
     }
+        public static void MakeADirectory(string path, bool overrider = false)
+        {
 
-    public static IList<System.IO.FileInfo> GetFiles(string rootpath)
+         
+                DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.All);
+
+                if (!Directory.Exists(path) || overrider)
+                {
+                    Directory.CreateDirectory(path);
+                }
+          
+        }
+
+        public static IList<System.IO.FileInfo> GetFiles(string rootpath)
     {
       System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(rootpath);
       IEnumerable<System.IO.FileInfo> files = dir.GetFiles();

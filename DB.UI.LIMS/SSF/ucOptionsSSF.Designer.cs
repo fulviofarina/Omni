@@ -37,9 +37,11 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.N4 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.connectionsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.Save = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectionsTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.limsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.TS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,17 +55,19 @@
             this.toolStripSeparator8,
             this.OptionsBtn,
             this.toolStripSeparator13,
-            this.Save});
+            this.Save,
+            this.toolStripSeparator1,
+            this.limsTSMI});
             this.TS.Location = new System.Drawing.Point(0, 0);
             this.TS.Name = "TS";
-            this.TS.Size = new System.Drawing.Size(670, 115);
+            this.TS.Size = new System.Drawing.Size(670, 46);
             this.TS.TabIndex = 6;
             this.TS.Text = "toolStrip4";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 115);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 46);
             // 
             // OptionsBtn
             // 
@@ -80,7 +84,7 @@
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
             this.OptionsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OptionsBtn.Name = "OptionsBtn";
-            this.OptionsBtn.Size = new System.Drawing.Size(108, 112);
+            this.OptionsBtn.Size = new System.Drawing.Size(108, 43);
             this.OptionsBtn.Text = "OPTIONS";
             // 
             // preferencesTSMI
@@ -88,7 +92,6 @@
             this.preferencesTSMI.Name = "preferencesTSMI";
             this.preferencesTSMI.Size = new System.Drawing.Size(293, 30);
             this.preferencesTSMI.Text = "Preferences";
-            this.preferencesTSMI.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
@@ -116,24 +119,37 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(290, 6);
             // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 115);
-            // 
-            // Save
-            // 
-            this.Save.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Save.ForeColor = System.Drawing.Color.DarkOrange;
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(70, 115);
-            this.Save.Text = "SAVE";
-            // 
             // connectionsTSMI
             // 
             this.connectionsTSMI.Name = "connectionsTSMI";
             this.connectionsTSMI.Size = new System.Drawing.Size(293, 30);
             this.connectionsTSMI.Text = "Connections";
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 46);
+            // 
+            // Save
+            // 
+            this.Save.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Save.ForeColor = System.Drawing.Color.DarkCyan;
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(70, 46);
+            this.Save.Text = "SAVE";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 46);
+            // 
+            // limsTSMI
+            // 
+            this.limsTSMI.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.limsTSMI.ForeColor = System.Drawing.Color.MediumVioletRed;
+            this.limsTSMI.Name = "limsTSMI";
+            this.limsTSMI.Size = new System.Drawing.Size(69, 46);
+            this.limsTSMI.Text = "LIMS";
             // 
             // ucOptionsSSF
             // 
@@ -141,7 +157,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TS);
             this.Name = "ucOptionsSSF";
-            this.Size = new System.Drawing.Size(670, 115);
+            this.Size = new System.Drawing.Size(670, 46);
             this.TS.ResumeLayout(false);
             this.TS.PerformLayout();
             this.ResumeLayout(false);
@@ -162,5 +178,7 @@
         private System.Windows.Forms.ToolStripMenuItem Save;
         private System.Windows.Forms.ToolStripMenuItem preferencesTSMI;
         private System.Windows.Forms.ToolStripMenuItem connectionsTSMI;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem limsTSMI;
     }
 }

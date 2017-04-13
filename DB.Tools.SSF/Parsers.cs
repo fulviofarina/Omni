@@ -7,6 +7,9 @@ namespace DB.Tools
     public partial class MatSSF
     {
         private static char[] ch = new char[] { ',', '(', '#', ')' };
+        /// <summary>
+        /// Types of channels configurations
+        /// </summary>
         public static string[] Types = new string[] { "0 = Isotropic", "1 = Wire flat", "2 = Foil/wire ch. axis" };
 
         private static string getChannelCfg()

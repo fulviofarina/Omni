@@ -16,6 +16,9 @@ namespace DB.Tools
 
     public partial class Current : IPreferences
     {
+        /// <summary>
+        /// Check if the Spectra directory is OK
+        /// </summary>
         public bool IsSpectraPathOk
         {
             get
@@ -26,6 +29,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// The current SSF Preferences
+        /// </summary>
         public SSFPrefRow CurrentSSFPref
         {
             get
@@ -35,6 +41,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// The current preferences (Main)
+        /// </summary>
         public PreferencesRow CurrentPref
         {
             get
@@ -76,6 +85,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// The Windows User
+        /// </summary>
         public string WindowsUser
         {
             get

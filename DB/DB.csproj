@@ -115,6 +115,11 @@
     <Compile Include="Main\IMain.cs" />
     <Compile Include="Adapter\IAdapter.cs" />
     <Compile Include="DB\IDB.cs" />
+    <Compile Include="PrefDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrefDB.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,6 +210,17 @@
     </None>
     <None Include="LINAA.xss">
       <DependentUpon>LINAA.xsd</DependentUpon>
+    </None>
+    <None Include="PrefDB.xsc">
+      <DependentUpon>PrefDB.xsd</DependentUpon>
+    </None>
+    <None Include="PrefDB.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PrefDB.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="PrefDB.xss">
+      <DependentUpon>PrefDB.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

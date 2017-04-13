@@ -538,7 +538,7 @@ namespace k0X
 
                 if ((fillHL || fillSpec))
                 {
-                    ICollection<string> samsToAddSpec = null;
+                    IEnumerable<string> samsToAddSpec = null;
                     if (fillSpec)
                     {
                         string specPath = Interface.IPreferences.CurrentPref.Spectra;
@@ -561,7 +561,9 @@ namespace k0X
                     if (samsToAddSpec != null)
                     {
                         samsToAddSpec = new HashSet<string>(samsToAddSpec);
-                        int added = Interface.IPopulate.ISamples.AddSamples(project, ref samsToAddSpec);
+                        IEnumerable<LINAA.SubSamplesRow> samples =   Interface.IPopulate.ISamples.CreateSamplesNamesFrom(ref samsToAddSpec);
+                      
+                        int added = Interface.IPopulate.ISamples.AddSamples(project, ref samples);
                         samsToAddSpec = null;
                     }
                 }

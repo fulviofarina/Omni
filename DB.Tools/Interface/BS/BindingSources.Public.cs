@@ -33,6 +33,9 @@ namespace DB.Tools
         public dynamic Units;
         public dynamic Vial;
 
+        /// <summary>
+        /// EndEdit for each binding source
+        /// </summary>
         public void EndEdit()
         {
             Matrix?.EndEdit();
@@ -135,6 +138,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// A Binding source for each table
+        /// </summary>
         public BindingSources(ref Interface inter)
         {
             Interface = inter;

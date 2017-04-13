@@ -68,7 +68,8 @@ namespace SSF
                 LIMS.UserControls = new List<object>();
                 LIMS.Form = new LIMS(); //make a new UI LIMS
                 LIMS.Form.Enabled = false;
-                LIMS.Form.Visible = true;
+                LIMS.Form.Visible = false;
+             //   LIMS.Form.Visible = true;
 
                 //    LIMS.Interface = new Interface(ref LIMS.Linaa);
 
@@ -88,9 +89,7 @@ namespace SSF
 
                     //set user control list
                     //create LIMS form
-                    UserControl c = LIMS.CreateUI(ControlNames.Preferences);
-                    LIMS.CreateForm("Preferences", ref c);
-                    c.ParentForm.Visible = false;
+         
 
                     //create form for SubSamples
                     UserControl control = LIMS.CreateUI(ControlNames.SubSamples);

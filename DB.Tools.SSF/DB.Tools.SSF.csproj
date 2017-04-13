@@ -78,6 +78,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="DIAGRAMSSF.cd" />
     <None Include="MatSSF\MATSSF.CFG" />
     <None Include="MatSSF\MATSSF.DAT" />
     <None Include="MatSSF\matssf.for" />

@@ -8,8 +8,12 @@ using Rsx;
 
 namespace DB
 {
+
     public partial class LINAA : IStore
     {
+
+  
+
         private bool Usehandlers = false;
 
         public bool Save<T>()
@@ -237,8 +241,10 @@ namespace DB
                         IEnumerable<DataRow> rows = t.AsEnumerable();
                         Save(ref rows);
                     }
-                    ok = true;
+                  
                 }
+
+                ok = true;
             }
             catch (SystemException ex)
             {
