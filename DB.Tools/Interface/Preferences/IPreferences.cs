@@ -8,6 +8,8 @@
 
         bool IsSpectraPathOk { get; }
 
+        string WindowsUser { get; }
+
         void PopulatePreferences();
 
         LINAA.SSFPrefRow CurrentSSFPref { get; }

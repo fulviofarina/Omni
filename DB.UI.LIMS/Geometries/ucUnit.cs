@@ -58,7 +58,7 @@ namespace DB.UI
         {
          
             MatSSF.UNIT = Interface.ICurrent.Unit as LINAA.UnitRow;
-
+        
             Interface.IBS.Update<LINAA.SubSamplesRow>(MatSSF.UNIT.SubSamplesRow,false);
             Interface.IBS.Update<LINAA.UnitRow>(MatSSF.UNIT, true,false);
             MatSSF.ReadXML();
@@ -85,11 +85,12 @@ namespace DB.UI
             Interface = inter;
             Dumb.FD<LINAA>(ref this.lINAA);
             this.lINAA = Interface.Get() as LINAA;
-            Interface.IBS.Units = this.UnitBS; //link to binding source
+
 
             MatSSF.Table = Interface.IDB.MatSSF;
 
             setBindings();
+      
 
             this.UnitBS.CurrentChanged -= UnitBS_CurrentChanged;
             this.UnitBS.CurrentChanged += UnitBS_CurrentChanged;
@@ -99,10 +100,10 @@ namespace DB.UI
         private void setBindings()
         {
             //sets all the bindings again
-            BindingSource bs = Interface.IBS.Units;
-            
-            
-            //set binding sources
+            BindingSource bs = this.UnitBS;
+
+            string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
+            Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
             string text = "Text";
@@ -113,10 +114,7 @@ namespace DB.UI
             this.lastCal.TextBox.DataBindings.Add(lastcalbs);
             this.lastChg.TextBox.DataBindings.Add(lastchgbs);
 
-            string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
-            Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
-
-         
+            Interface.IBS.Units = bs; //link to binding source
 
         }
 

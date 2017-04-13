@@ -27,7 +27,7 @@ namespace DB.UI
         {
             Interface = LinaaInterface;
             Dumb.FD<LINAA>(ref this.lINAA);
-            this.lINAA = Interface.Get() as LINAA;
+      //      this.lINAA = Interface.Get() as LINAA;
 
             BindingSource bs = this.MatrixBS;
 

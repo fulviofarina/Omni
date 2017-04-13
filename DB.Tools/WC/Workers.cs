@@ -132,9 +132,7 @@ namespace DB.Tools
                     u.Name = iS.SubSampleName;
 
                     u.Content = iS.MatrixRow.MatrixComposition;
-                    //      u.Mass = iS.Net;
-                    //  u.Diameter = (iS.Radius * 2);
-                    //    u.Length = iS.FillHeight;
+                    // u.Mass = iS.Net; u.Diameter = (iS.Radius * 2); u.Length = iS.FillHeight;
 
                     MatSSF.StartupPath = Linaa.FolderPath + Resources.SSFFolder;
 
@@ -176,7 +174,9 @@ namespace DB.Tools
         /// Import Measurements and loads the Peaks for those measurements
         /// </summary>
         /// <param name="sender">The worker!</param>
-        /// <param name="e">Array of Args = { Sample to load measurement/peaks, a bool to transfer, a bool to refresh nodes}</param>
+        /// <param name="e">     
+        /// Array of Args = { Sample to load measurement/peaks, a bool to transfer, a bool to refresh nodes}
+        /// </param>
         private void measImport_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;

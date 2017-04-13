@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Messaging;
 using System.Security.Principal;
-using System.Windows.Forms;
 using DB.Properties;
-using Msn;
 using Rsx;
 using static DB.LINAA;
 
@@ -18,64 +14,16 @@ namespace DB.Tools
     /// This class gives the current row shown by a Binding Source
     /// </summary>
 
-      public partial class Current : IPreferences
+  
+
+    /// <summary>
+    /// PRIVATE FUNCTIONS
+    /// </summary>
+    public partial class Current
     {
-
-        public bool IsSpectraPathOk
-        {
-            get
-            {
-                string spec = CurrentPref.Spectra;
-                if (string.IsNullOrEmpty(spec)) return false;
-                else return Directory.Exists(spec);
-            }
-        }
-
-
         private PreferencesRow currentPref;
 
         private SSFPrefRow currentSSFPref;
-
-        public SSFPrefRow CurrentSSFPref
-        {
-            get
-            {
-                currentSSFPref = Interface.IDB.SSFPref.FirstOrDefault();
-                return currentSSFPref;
-            }
-        }
-
-
-        public PreferencesRow CurrentPref
-        {
-            get
-            {
-                currentPref = Interface.IDB.Preferences.FirstOrDefault();
-                return currentPref;
-            }
-        }
-
-     
-
-        /*
-        public void MergePreferences()
-        {
-            PreferencesDataTable  prefe = new PreferencesDataTable();
-
-            SSFPrefDataTable ssfPrefe = new SSFPrefDataTable();
-
-            mergePreferences(ref prefe);
-
-            mergePreferences(ref ssfPrefe);
-
-            // this.SavePreferences();
-            this.PopulatePreferences();
-
-            Dumb.FD<PreferencesDataTable>(ref prefe);
-
-            Dumb.FD<SSFPrefDataTable>(ref ssfPrefe);
-        }
-        */
 
         /// <summary>
         /// Reads the preferences files
@@ -97,49 +45,12 @@ namespace DB.Tools
             return ok;
         }
 
-        public void PopulatePreferences()
+        private Func<DataRow, bool> selector
         {
-            try
+            get
             {
-                bool ok = populatePreferences<PreferencesDataTable>();
-                if (ok)
-                {
-                    //cleaning
-                    cleanPreferences<PreferencesDataTable>();    //important
-                }
-                loadCurrentPreferences<PreferencesDataTable>();
-            }
-            catch (SystemException ex)
-            {
-                Interface.IMain.AddException(ex);
-            }
-            try
-            {
-                bool ok = populatePreferences<SSFPrefDataTable>();
-                if (ok)
-                {
-                    //cleaning
-                    cleanPreferences<SSFPrefDataTable>();    //important
-                }
-                loadCurrentPreferences<SSFPrefDataTable>();
-            }
-            catch (SystemException ex)
-            {
-                Interface.IMain.AddException(ex);
-            }
-        }
-
-        public void SavePreferences()
-        {
-            try
-            {
-                savePreferences<PreferencesDataTable>();
-
-                savePreferences<SSFPrefDataTable>();
-            }
-            catch (SystemException ex)
-            {
-                Interface.IMain.AddException(ex);
+                string label = "WindowsUser";
+                return p => p.Field<string>(label).CompareTo(WindowsUser) == 0;
             }
         }
 
@@ -194,11 +105,6 @@ namespace DB.Tools
             string path = string.Empty;
 
             findTableAndPath<T>(out dt, out path);
-            string windowsUser = WindowsIdentity.GetCurrent().Name.ToUpper();
-            Func<DataRow, bool> selector = p =>
-            {
-                return p.Field<string>("WindowsUser").CompareTo(windowsUser) == 0;
-            };
 
             DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
             if (row == null) row = dt.NewRow();
@@ -208,14 +114,14 @@ namespace DB.Tools
             {
                 // if (this.currentSSFPref == null) {
                 PreferencesRow p = dt.LoadDataRow(row.ItemArray, true) as PreferencesRow;
-                p.WindowsUser = windowsUser;
+                p.WindowsUser = WindowsUser;
                 // }
                 p.Check();
             }
             else
             {
                 SSFPrefRow p = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
-                p.WindowsUser = windowsUser;
+                p.WindowsUser = WindowsUser;
 
                 // }
                 p.Check();

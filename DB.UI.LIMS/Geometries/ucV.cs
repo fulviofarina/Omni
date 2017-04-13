@@ -23,15 +23,15 @@ namespace DB.UI
         {
             Interface = LinaaInterface;
             Dumb.FD<LINAA>(ref this.lINAA);
-            this.lINAA = Interface.Get() as LINAA;
+          //  this.lINAA = Interface.Get() as LINAA;
+
+      
+            //rabbit column
+            string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
+            string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
+            Dumb.LinkBS(ref this.VialBS, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
 
             Interface.IBS.Vial = this.VialBS;
-
-            //rabbit column
-            string column = this.lINAA.VialType.IsRabbitColumn.ColumnName;
-            string innerRadCol = this.lINAA.VialType.InnerRadiusColumn.ColumnName + " asc";
-            Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
-          
 
             System.EventHandler addNew = this.addNewVialChannel_Click;
 

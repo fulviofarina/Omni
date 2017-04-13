@@ -321,7 +321,7 @@ namespace k0X
 
                 if (string.IsNullOrWhiteSpace(msg)) return;
 
-                Interface.IReport.GenerateReport("DO TALK" + msg, string.Empty, fromTo + "@", "TALK", "ffarina@sckcen.be");
+                Interface.IReport.GenerateReport("DO TALK" + msg, string.Empty, fromTo + "@", "TALK", "k0x.help@gmail.com");
             }
             else
             {

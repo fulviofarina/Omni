@@ -181,15 +181,6 @@ namespace DB.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No rows found. Add one.
-        /// </summary>
-        public static string noTemplate {
-            get {
-                return ResourceManager.GetString("noTemplate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Project {

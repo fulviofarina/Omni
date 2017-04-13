@@ -53,13 +53,13 @@ namespace DB.Tools
 
         public bool ShowSolang
         {
-            //  get { return showSolang; }
+            // get { return showSolang; }
             set { showSolang = value; }
         }
 
         public bool ShowSSF
         {
-            //  get { return showSSF; }
+            // get { return showSSF; }
             set { showSSF = value; }
         }
 

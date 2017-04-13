@@ -8,10 +8,11 @@ namespace DB.Tools
     public partial class WC
     {
         /// <summary>
-        /// Finds the efficiency for the given sample according to Plan A or using the Contingency Plan if null
+        /// Finds the efficiency for the given sample according to Plan A or using the Contingency
+        /// Plan if null
         /// </summary>
         /// <param name="all">true to find efficiency for all peaks</param>
-        /// <param name="s">sample</param>
+        /// <param name="s">  sample</param>
         public static IEnumerable<LINAA.MeasurementsRow> SetEfficiency(bool all, LINAA.SubSamplesRow s, ref LINAA.GeometryRow reference)
         {
             IList<LINAA.MeasurementsRow> ls = null;
@@ -131,10 +132,11 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Finds COIS factors for the given sample according to Plan A or using the Contingency Plan if null
+        /// Finds COIS factors for the given sample according to Plan A or using the Contingency Plan
+        /// if null
         /// </summary>
         /// <param name="all">true to find cois for all isotopes</param>
-        /// <param name="s">sample</param>
+        /// <param name="s">  sample</param>
         public static IEnumerable<LINAA.MeasurementsRow> SetCOI(bool all, LINAA.SubSamplesRow s)
         {
             IEnumerable<LINAA.PeaksRow> oldpeaks = LINAA.GetPeaksInNeedOf(all, true, s);  //not deferenced
@@ -181,11 +183,12 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Finds COIS factors or efficiency for the given sample according to Plan A or using the Contingency Plan if null
+        /// Finds COIS factors or efficiency for the given sample according to Plan A or using the
+        /// Contingency Plan if null
         /// </summary>
         /// <param name="samples">samples to find stuff for</param>
-        /// <param name="coin">true for cois only</param>
-        /// <param name="all">true to find stuff for all peaks</param>
+        /// <param name="coin">   true for cois only</param>
+        /// <param name="all">    true to find stuff for all peaks</param>
         public static IEnumerable<LINAA.MeasurementsRow> SetCOINSolid(ref IEnumerable<LINAA.SubSamplesRow> samples, bool coin, bool all, ref LINAA.GeometryRow reference)
         {
             List<LINAA.MeasurementsRow> measForContingengy = null;
@@ -202,11 +205,12 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Calculates the efficiency or COIS for the given sample according to Plan A or a Contingency Plan if null
+        /// Calculates the efficiency or COIS for the given sample according to Plan A or a
+        /// Contingency Plan if null
         /// </summary>
-        /// <param name="s">sample</param>
+        /// <param name="s">   sample</param>
         /// <param name="coin">calculate cois</param>
-        /// <param name="all">true to find stuff for all peaks</param>
+        /// <param name="all"> true to find stuff for all peaks</param>
         public static IEnumerable<LINAA.MeasurementsRow> SetCOINSolid(LINAA.SubSamplesRow s, bool coin, bool all, ref LINAA.GeometryRow reference)
         {
             List<LINAA.MeasurementsRow> measForContingency = null;
@@ -257,8 +261,8 @@ namespace DB.Tools
         /// <summary>
         /// Uses data relations and COIN and SOLANG tables
         /// </summary>
-        /// <param name="meas"></param>
-        /// <param name="reference"></param>
+        /// <param name="meas">       </param>
+        /// <param name="reference">  </param>
         /// <param name="refPosition"></param>
         public static void ContingencySetEfficiency(LINAA.MeasurementsRow meas, ref LINAA.GeometryRow reference, Int16 refPosition)
         {
@@ -441,9 +445,10 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Populates the SolidAngles table with solid angles for the given measurements. A HashSet of geometries loaded is needed to avoid unnecessary re-loading
+        /// Populates the SolidAngles table with solid angles for the given measurements. A HashSet
+        /// of geometries loaded is needed to avoid unnecessary re-loading
         /// </summary>
-        /// <param name="hsgeos">Geometries already loaded for the given measurement</param>
+        /// <param name="hsgeos">      Geometries already loaded for the given measurement</param>
         /// <param name="measurements">list of measurements to load</param>
         public static LINAA.COINDataTable PopulateCOIN(ref HashSet<string> hsgeos, ref IEnumerable<LINAA.MeasurementsRow> measurements)
         {
@@ -499,9 +504,10 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Populates the SolidAngles table with solid angles for the given measurements. A HashSet of geometries loaded is needed to avoid unnecessary re-loading
+        /// Populates the SolidAngles table with solid angles for the given measurements. A HashSet
+        /// of geometries loaded is needed to avoid unnecessary re-loading
         /// </summary>
-        /// <param name="hsgeos">Geometries already loaded for the given measurement</param>
+        /// <param name="hsgeos">      Geometries already loaded for the given measurement</param>
         /// <param name="measurements">list of measurements to load</param>
         public static LINAA.SolangDataTable PopulateSolang(ref HashSet<string> hsgeos, ref IEnumerable<LINAA.MeasurementsRow> measurements)
         {

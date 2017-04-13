@@ -33,7 +33,7 @@ namespace DB.Tools
             if (i.n >= 1)
             {
                 IEnumerable<LINAA.PeaksRow> peaks = i.GetPeaksRows();
-                //  i.n = peaks.Sum(p => p.Flag);
+                // i.n = peaks.Sum(p => p.Flag);
 
                 double Sumw = peaks.Sum(p => p.w);
                 double SumwX = peaks.Sum(p => p.wX);
@@ -166,7 +166,7 @@ namespace DB.Tools
                 double Sumw = cchilds.Sum(p => p.w);
                 double SumwX = cchilds.Sum(p => p.wX);
 
-                //  i.g = cchilds.Sum(p => p.Flag);
+                // i.g = cchilds.Sum(p => p.Flag);
 
                 if (Sumw != 0.0)
                 {
@@ -460,18 +460,17 @@ namespace DB.Tools
               ir.T5.Add(m.MeasurementID, _T5);
               */
 
-            //   if (n.MD == 11 && n.Iso.CompareTo("In-117m") == 0) n.MD = 7; //For In-117m, scheme VII/a, fix this later
+            // if (n.MD == 11 && n.Iso.CompareTo("In-117m") == 0) n.MD = 7; //For In-117m, scheme
+            // VII/a, fix this later
 
-            //   if (n.MD == 11 && n.Iso.CompareTo("In-117m") == 0)
-            //   {
-            //   decayMod = 7; //For In-117m, scheme VII/a, fix this later
-            //  }
+            // if (n.MD == 11 && n.Iso.CompareTo("In-117m") == 0) { decayMod = 7; //For In-117m,
+            // scheme VII/a, fix this later }
             double a = 0.0;
             double b = 0.0;
             double c = 0.0;
             short md = 0; //decay mode for peaks
             double gamma = 0; //another auxiliar for IV/a/d
-            //	double d = 0.0;
+            // double d = 0.0;
             double TFinal = 0.0;
 
             #region Temporal Decay Chemes
@@ -496,9 +495,8 @@ namespace DB.Tools
 
                 case 2:
                     {
-                        // F2 = 0.88   and F1 = gammaMo/gammaTc at 140keV =  0.594
-                        // so F1/F2 = 0.0675 as given by DeCorte!
-                        // All other MD=2 isotopes have F1=0
+                        // F2 = 0.88 and F1 = gammaMo/gammaTc at 140keV = 0.594 so F1/F2 = 0.0675 as
+                        // given by DeCorte! All other MD=2 isotopes have F1=0
                         a = 0.0;
                         b = 0.0;
                         c = 0.0;
@@ -593,8 +591,7 @@ namespace DB.Tools
                         b = 0.0;
                         c = 0.0;
 
-                        //  short md = 0;
-                        // 2 (Parent) has decayed...
+                        // short md = 0; 2 (Parent) has decayed...
                         if ((dec / n.T2) >= 20 && (dec / n.T4) >= 20) md = 0;
                         else md = 1;
 
@@ -625,8 +622,7 @@ namespace DB.Tools
 
                 case 6:
                     {
-                        //  short md = 0;
-                        // 2 (Parent) has decayed...
+                        // short md = 0; 2 (Parent) has decayed...
                         if ((dec / n.T2) >= 20 && (dec / n.T3) >= 20) md = 0;
                         else md = 1;
 
@@ -647,8 +643,7 @@ namespace DB.Tools
                         a = 0.0;
                         b = 0.0;
                         c = 0.0;
-                        //  short md = 0;
-                        // 2 (Parent) has decayed...
+                        // short md = 0; 2 (Parent) has decayed...
                         if ((dec / n.T2) >= 20 && (dec / n.T3) >= 20) md = 0;
                         else md = 1;
 
@@ -698,11 +693,10 @@ namespace DB.Tools
                         b = 0.0;
                         c = 0.0;
 
-                        //   short md = 1;
+                        // short md = 1;
 
-                        // 2 (Parent) has decayed...
-                        //  if ((dec / n.T2) >= 20 && (dec / n.T3) >= 20) md = 0;
-                        //   else md = 1;
+                        // 2 (Parent) has decayed... if ((dec / n.T2) >= 20 && (dec / n.T3) >= 20) md
+                        // = 0; else md = 1;
 
                         double mg = (ir._Rm / ir._Rg);
                         //this should be next to c, but the Qm and Qog are sometimes not complete
@@ -768,8 +762,7 @@ namespace DB.Tools
                         a = 0.0;
                         b = 0.0;
                         c = 0.0;
-                        //    short md = 0;
-                        // 2 (Parent) has decayed...
+                        // short md = 0; 2 (Parent) has decayed...
                         if ((dec / n.T2) >= 20 && (dec / n.T3) >= 20) md = 0;
                         else md = 1;
 
@@ -820,7 +813,7 @@ namespace DB.Tools
             {
                 foreach (LINAA.PeaksRow p in peaks)
                 {
-                    //  p.MD = md;
+                    // p.MD = md;
 
                     if (md == 1)  //  IVa/d
                     {
@@ -931,8 +924,7 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Calculates the Temporal Decay Scheme of the given isotope
-        /// Must be called after Rate() (compulsory)
+        /// Calculates the Temporal Decay Scheme of the given isotope Must be called after Rate() (compulsory)
         /// </summary>
         /// <returns></returns>
 
@@ -1040,7 +1032,7 @@ namespace DB.Tools
 
         protected static void FindSDs(ref LINAA.IPeakAveragesRow ir)
         {
-            //   IPeakAveragesDataTable table = ir.Table as IPeakAveragesDataTable;
+            // IPeakAveragesDataTable table = ir.Table as IPeakAveragesDataTable;
 
             try
             {

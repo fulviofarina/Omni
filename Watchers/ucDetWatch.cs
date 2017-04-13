@@ -890,7 +890,7 @@ namespace k0X
                 {
                     string content = LSchAcq.GetReportString() + "\n\n";
                     string msg = "Checkpoint!\n\nUpdated information about the scheduled measurement:\n\n";
-                    Interface.IReport.GenerateReport("Checkpoint (" + LSchAcq.Progress + "%)", string.Empty, msg + content, detBox.Text, "ffarina@sckcen.be");
+                    Interface.IReport.GenerateReport("Checkpoint (" + LSchAcq.Progress + "%)", string.Empty, msg + content, detBox.Text, "k0x.help@gmail.com");
                 }
                 break;
             }
@@ -900,7 +900,7 @@ namespace k0X
         {
             string message = "Cannot take full control of the detector.\nSomewhere a computer has locked this detector (opened through Genie)...\nPlease close the detector on that computer and try again...\n\n";
             string title = " When accessing " + detBox.Text;
-            string user = "ffarina@sckcen.be";
+            string user = "k0x.help@gmail.com";
             string content = string.Empty;
             if (!IsNDD(LSchAcq))
             {

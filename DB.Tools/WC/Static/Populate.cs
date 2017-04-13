@@ -7,8 +7,8 @@ namespace DB.Tools
     public partial class WC
     {
         /// <summary>
-        /// Finds all spectra related to directory = curentPref.Spectra + project
-        /// and adds them to the SubSamples table
+        /// Finds all spectra related to directory = curentPref.Spectra + project and adds them to
+        /// the SubSamples table
         /// </summary>
         /// <param name="project"></param>
         public static ICollection<string> FindSpecSamples(string project, string spectPath)
@@ -21,7 +21,7 @@ namespace DB.Tools
             string[] arr = null;
             if (System.IO.Directory.Exists(directory))
             {
-                //  Msg("Searching...", "Searching samples from the Spectra Directory", true);
+                // Msg("Searching...", "Searching samples from the Spectra Directory", true);
                 System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(directory);
                 System.IO.FileInfo[] files = dir.GetFiles("*.cnf", System.IO.SearchOption.AllDirectories);
                 Func<System.IO.FileInfo, string> selec = fi =>
@@ -173,7 +173,7 @@ namespace DB.Tools
 
             TA.Dispose();
             TA = null;
-            //		if (merge) Dumb.MergeTable(ref ipnew);
+            // if (merge) Dumb.MergeTable(ref ipnew);
 
             return ipnew;
         }
@@ -221,7 +221,7 @@ namespace DB.Tools
 
         public static LINAA.MatSSFDataTable PopulateMatSSF(int? IrReq)
         {
-            //  this.tableMatSSF.BeginLoadData();
+            // this.tableMatSSF.BeginLoadData();
 
             LINAA.MatSSFDataTable ssf = new LINAA.MatSSFDataTable(false);
             LINAATableAdapters.MatSSFTableAdapter ta = new LINAATableAdapters.MatSSFTableAdapter();
@@ -276,7 +276,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 m.RowError = "TransferPeaks Module Error: " + ex.Message + "\n\n" + ex.StackTrace;
-                //  this.Linaa.AddException(ex);
+                // this.Linaa.AddException(ex);
             }
             peaksTa.Dispose();
             peaksTa = null;
@@ -301,7 +301,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 m.RowError = "PopulatePeaksHL Module Error: " + ex.Message + "\n\n" + ex.StackTrace;
-                //  this.Linaa.AddException(ex);
+                // this.Linaa.AddException(ex);
             }
             if (peaksHlta != null)
             {
@@ -365,7 +365,7 @@ namespace DB.Tools
             catch (SystemException ex)
             {
                 m.RowError = "FilterPeaks Module Error: " + ex.Message + "\n\n" + ex.StackTrace;
-                //  this.Linaa.AddException(ex);
+                // this.Linaa.AddException(ex);
             }
 
             Finish:

@@ -40,6 +40,7 @@ namespace DB.Tools
 
         public static LINAA.UnitRow UNIT = null;
         public static LINAA.MatSSFDataTable Table = null;
+
         public static LINAA.SubSamplesRow Sample = null;
 
         public static bool WriteXML()
@@ -56,6 +57,7 @@ namespace DB.Tools
 
             return true;
         }
+
         public static void LinkToParent(ref DataRow row)
         {
             bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
@@ -77,10 +79,10 @@ namespace DB.Tools
                 UNIT.SubSamplesRow.MatrixID = m.MatrixID;
             }
         }
+
         public static bool ReadXML()
         {
-            //   System.IO.File.Delete(file);
-            //
+            // System.IO.File.Delete(file);
             Table.Clear();
 
             if (UNIT.IsSSFTableNull()) return false;
@@ -89,7 +91,7 @@ namespace DB.Tools
             byte[] bites = UNIT.SSFTable;
             Dumb.WriteBytesFile(ref bites, file);
             Table.ReadXml(file);
-         
+
             File.Delete(file);
 
             return true;
@@ -143,8 +145,8 @@ namespace DB.Tools
                     LINAA.SigmasSalRow sal = m.ReactionsRowParent.SigmasSalRow;
                     LINAA.SigmasRow sepi = m.ReactionsRowParent.SigmasRowParent;
 
-                    //     double kth = ir.SubSamplesRow.IrradiationRequestsRow.ChannelsRow.kth;
-                    //    double kepi = ir.SubSamplesRow.IrradiationRequestsRow.ChannelsRow.kepi;
+                    // double kth = ir.SubSamplesRow.IrradiationRequestsRow.ChannelsRow.kth; double
+                    // kepi = ir.SubSamplesRow.IrradiationRequestsRow.ChannelsRow.kepi;
 
                     m.SSFCh = 1;
                     if (sal != null)

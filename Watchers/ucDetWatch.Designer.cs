@@ -861,7 +861,7 @@
             "lsneyers@sckcen.be",
             "ksmits@sckcen.be",
             "lverheye@sckcen.be",
-            "ffarina@sckcen.be",
+            "k0x.help@gmail.com",
             "aisenbor@sckcen.be",
             "pvermaer@sckcen.be"});
 		 this.usrbox.Name = "usrbox";

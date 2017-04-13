@@ -139,7 +139,7 @@
 		   this.textBoxDescription.TabIndex = 23;
 		   this.textBoxDescription.TabStop = false;
 		   this.textBoxDescription.Text = "Software for k0-NAA\r\n\r\nAuthor:\r\n                Fulvio Farina Arboccò\r\n\r\nContact:" +
-			   " \r\n                fulviofarina@gmail.com\r\n                ffarina@sckcen.be";
+			   " \r\n                fulviofarina@gmail.com\r\n                k0x.help@gmail.com";
 		   // 
 		   // okButton
 		   // 

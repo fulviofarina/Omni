@@ -18,7 +18,7 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            Dumb.FD<LINAA>(ref this.lINAA);
+         
 
             System.EventHandler addNew = this.addNewVialChannel_Click;
 
@@ -31,13 +31,14 @@ namespace DB.UI
         {
             Interface = LinaaInterface;
 
-            this.lINAA = Interface.Get() as LINAA;
+            Dumb.FD<LINAA>(ref this.lINAA);
+            //  this.lINAA = Interface.Get() as LINAA;
 
-            Dumb.LinkBS(ref this.ChannelBS, this.lINAA.Channels);
-            string column = this.lINAA.VialType.IsRabbitColumn.ColumnName;
-            string innerRadCol = this.lINAA.VialType.InnerRadiusColumn.ColumnName + " asc";
+            Dumb.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
+            string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
+            string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
             //      Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
-            Dumb.LinkBS(ref this.ContainerBS, this.lINAA.VialType, column + " = " + "True", innerRadCol);
+            Dumb.LinkBS(ref this.ContainerBS, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
 
             
             Interface.IBS.Channels = this.ChannelBS;

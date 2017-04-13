@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Windows.Forms;
-using DB.LINAATableAdapters;
+﻿using System.Windows.Forms;
 using Msn;
 
 namespace DB
@@ -13,11 +9,11 @@ namespace DB
         Pop Msn { get; set; }
 
         void GenerateBugReport();
-        void SendToRestartRoutine(string texto);
-        bool RestartingRoutine();
 
-      
-
+     
+        void UserInfo();
+     
+        void  AskToRestart();
         void GenerateReport(string labelReport, object path, string extra, string module, string email);
 
         void Msg(string msg, string title, bool ok);

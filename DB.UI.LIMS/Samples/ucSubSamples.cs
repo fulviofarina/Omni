@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
@@ -12,26 +11,34 @@ namespace DB.UI
 {
     public partial class ucSubSamples : UserControl
     {
+        private object daddy;
         private string filter;
-
-        private string sort;
 
         private CReport Icrepo = null;
         private Interface Interface;
+        private string sort;
+        // private LINAA.SubSamplesRow currentSample = null;
 
-        //  private LINAA.SubSamplesRow currentSample = null;
+        private ucSSContent uccontent;
 
-        //   private ucSSF ucssf;
-
-        private object daddy;
-
+        // private ucSSF ucssf;
         public object Daddy
         {
             get { return daddy; }
             set { daddy = value; }
         }
 
-        private ucSSContent uccontent;
+        /// <summary>
+        /// Hides the content of the PANEL 2 containers
+        /// </summary>
+        public bool HideSamplesContent
+        {
+            set
+            {
+                this.splitContainer1.Panel2Collapsed = value;
+                this.splitContainer2.Panel2Collapsed = value;
+            }
+        }
 
         public ucSSContent ucContent
         {
@@ -45,17 +52,6 @@ namespace DB.UI
                 uccontent = value;
                 this.splitContainer1.Panel2.Controls.Add(uccontent);
             }
-        }
-
-        public ucSubSamples()
-        {
-            InitializeComponent();
-
-            //these two functions work flawlessly for selecting the rowHeader in the
-            //dgv and for updating of child row positions
-            this.BS.CurrentChanged += BS_CurrentChanged;
-
-            reportBtton.Visible = false;
         }
 
         /// <summary>
@@ -88,19 +84,7 @@ namespace DB.UI
             this.filter = this.BS.Filter;
             this.sort = this.BS.Sort;
             Dumb.DeLinkBS(ref this.BS);
-            //   ucContent.DeLink();
-        }
-
-        /// <summary>
-        /// Hides the content of the PANEL 2 containers
-        /// </summary>
-        public bool HideSamplesContent
-        {
-            set
-            {
-                this.splitContainer1.Panel2Collapsed = value;
-                this.splitContainer2.Panel2Collapsed = value;
-            }
+            // ucContent.DeLink();
         }
 
         /// <summary>
@@ -112,7 +96,7 @@ namespace DB.UI
             if (!string.IsNullOrEmpty(Sort)) this.sort = Sort;
             Dumb.LinkBS(ref this.BS, this.Linaa.SubSamples, this.filter, this.sort);
             if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
-            //      ucContent.Link(Filter, Sort);
+            // ucContent.Link(Filter, Sort);
         }
 
         public void Predict(object sender, EventArgs e)
@@ -131,7 +115,7 @@ namespace DB.UI
                 samplesToPredict.Add(s);
             }
 
-            //   samplesToPredict = samplesToPredict.ToArray();
+            // samplesToPredict = samplesToPredict.ToArray();
 
             //   LINAA newLina = this.Linaa.Clone() as DB.LINAA;
             //newLina.CloneDataSet(ref Linaa);
@@ -151,7 +135,7 @@ namespace DB.UI
 
             w.Predict();
             ucPredict uc = new ucPredict(ref Linaa);
-            //  this.Linaa.Save<LINAA.IRequestsAveragesRow>();
+            // this.Linaa.Save<LINAA.IRequestsAveragesRow>();
             ///QUITAR ESTA LINEAAAAAAAAAAAAAAAAAAAAAAAAAAA
             // uc.Visible = false;
         }
@@ -203,7 +187,8 @@ namespace DB.UI
         /// <param name="row"></param>
         public void RowAdded(ref DataRow row)
         {
-            Interface.IBS.SubSamples.SuspendBinding();
+          
+
             IEnumerable<LINAA.SubSamplesRow> samples = Interface.ICurrent.SubSamples
                 .OfType<LINAA.SubSamplesRow>();
 
@@ -229,15 +214,10 @@ namespace DB.UI
                 Interface.IMain.AddException(ex);
             }
 
-            Interface.IBS.SubSamples.ResumeBinding();
-
-            Interface.IBS.SubSamples.EndEdit();
-
             Link(this.filter, this.sort);
 
-            string subSIDCol = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
-            int ind = Interface.IBS.SubSamples.Find(subSIDCol, samples.Last().SubSamplesID);
-            Interface.IBS.SubSamples.Position = ind;
+          
+            Interface.IBS.Update(row, true, true);
         }
 
         /// <summary>
@@ -262,7 +242,7 @@ namespace DB.UI
         /// several sample share the irradiation times
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
         public void ShareTirr(object sender, EventArgs e)
         {
             LINAA.SubSamplesRow current = Dumb.Cast<LINAA.SubSamplesRow>(BS.Current as DataRowView);
@@ -286,12 +266,34 @@ namespace DB.UI
         /// When the BS changes
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
         private void BS_CurrentChanged(object sender, EventArgs e)
         {
-            //   DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
+            // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
             DataRow r = Interface.ICurrent.SubSample;
-            Interface.IBS.Update<LINAA.SubSamplesRow>(r);
+            Interface.IBS.Update(r, true, false);
+        }
+
+        /// <summary>
+        /// something about a crystal report
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">     </param>
+        private void reportBtton_Click(object sender, EventArgs e)
+        {
+            if (Icrepo == null) Icrepo = new CReport(this.Linaa as DataSet);
+            Icrepo.LoadACrystalReport(this.projectbox.Project, CReport.ReporTypes.ProjectReport);
+        }
+
+        public ucSubSamples()
+        {
+            InitializeComponent();
+
+            //these two functions work flawlessly for selecting the rowHeader in the
+            //dgv and for updating of child row positions
+            this.BS.CurrentChanged += BS_CurrentChanged;
+
+            reportBtton.Visible = false;
         }
 
         /*
@@ -306,16 +308,5 @@ namespace DB.UI
             updateUnitPosition(ref r);
         }
         */
-
-        /// <summary>
-        /// something about a crystal report
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void reportBtton_Click(object sender, EventArgs e)
-        {
-            if (Icrepo == null) Icrepo = new CReport(this.Linaa as DataSet);
-            Icrepo.LoadACrystalReport(this.projectbox.Project, CReport.ReporTypes.ProjectReport);
-        }
     }
 }

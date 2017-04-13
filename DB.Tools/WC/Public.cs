@@ -86,8 +86,7 @@ namespace DB.Tools
                         IEnumerable<LINAA.MeasurementsRow> measurements = new LINAA.MeasurementsRow[] { mea };
 
                         Rate(s.Alpha, s.f, ref ir);
-                        //  FindDecayTimes(ref measurements);
-                        //    Temporal(ref measurements, ref ir);
+                        // FindDecayTimes(ref measurements); Temporal(ref measurements, ref ir);
                         ir.Asp = (s.Concentration * s.DryNet * 0.001 * 1e-6) * (MyMath.NAvg * sigma.sigma0 * 1e-24 * sigma.theta * 0.01 / ir.NAARow.ReactionsRowParent.SigmasSalRow.Mat) * (FC * 1e6 / 0.2882) * ir.R0 * MyMath.S((0.693 / n.T2), s.IrradiationTotalTime); //result in Bq
                         ir.Asp = ir.Asp * 0.001; //result in kBq
                     }
@@ -121,10 +120,10 @@ namespace DB.Tools
         /// <summary>
         /// Initilizes the workload engine for the given ProjectName, with a progressBar and CancelBtn
         /// </summary>
-        /// <param name="Project">The Project Name to search for</param>
+        /// <param name="Project">    The Project Name to search for</param>
         /// <param name="progressBar"></param>
         /// <param name="CancelBtton"></param>
-        /// <param name="set"></param>
+        /// <param name="set">        </param>
         public WC(string Project, ref ToolStripProgressBar progressBar, ref ToolStripMenuItem CancelBtton, ref LINAA set)
         {
             cancel = CancelBtton;
@@ -275,9 +274,9 @@ namespace DB.Tools
         /// <summary>
         /// Load the Peaks
         /// </summary>
-        /// <param name="samples">samples whose peaks should be loaded when peaks not found</param>
+        /// <param name="samples">   samples whose peaks should be loaded when peaks not found</param>
         /// <param name="deleteOnly">true when peaks should be deleted instead of loaded</param>
-        /// <param name="transfer">true for forcing peaks to be transfered</param>
+        /// <param name="transfer">  true for forcing peaks to be transfered</param>
         public void LoadPeaks(bool deleteOnly, bool transfer)
         {
             if (cancel.Checked) return;
@@ -323,7 +322,7 @@ namespace DB.Tools
         /// <summary>
         /// Fecthes the measurements from the spectrommetry database (HyperLab, etc)
         /// </summary>
-        /// <param name="transfer">true for forcing the measurements to be transfered</param>
+        /// <param name="transfer">    true for forcing the measurements to be transfered</param>
         /// <param name="refreshNodes">true for forcing refresh of Nodes!</param>
         public void Fetch(bool transfer)
         {
@@ -360,7 +359,6 @@ namespace DB.Tools
         /// <summary>
         /// Calculates Solcoin units according to whats needed..
         /// </summary>
-        ///
         public void CalculateSolang(bool DoSolang, bool AlsoCOIS, string IntegrateAs)
         {
             if (cancel.Checked) return;
@@ -451,9 +449,9 @@ namespace DB.Tools
         /// <summary>
         /// Loads COIS or Efficiencies
         /// </summary>
-        /// <param name="coin">true to retrieve cois instead of efficiencies</param>
+        /// <param name="coin">   true to retrieve cois instead of efficiencies</param>
         /// <param name="samples">samples to retrieve cois or solangs from</param>
-        /// <param name="all">retrieve only for those with effi=1 or have errors</param>
+        /// <param name="all">    retrieve only for those with effi=1 or have errors</param>
         public void EffiLoad(bool coin, bool all)
         {
             if (cancel.Checked) return;

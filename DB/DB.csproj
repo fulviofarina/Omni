@@ -176,7 +176,7 @@
     <Compile Include="DB\ToDo\ToDo.cs" />
     <Compile Include="DB\ToDo\ToDo.Data.cs" />
     <Compile Include="DB\ToDo\ToDo.Res.cs" />
-    <None Include="ClassDiagram1.cd" />
+    <None Include="DIAGRAMLINAA.cd" />
     <None Include="Main\Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>

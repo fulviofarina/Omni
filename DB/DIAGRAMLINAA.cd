@@ -90,15 +90,20 @@
       <Class Name="DB.LINAA.UnitRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
-      <Delegate Name="DB.LINAA.CompositionsRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
+      <Class Name="DB.LINAA.GeometryDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DB\Geometry\NAA.Geometry.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
       <Class Name="DB.LINAA.MonitorsFlagsDataTable" Collapsed="true">
         <TypeIdentifier />
       </Class>
       <Class Name="DB.LINAA.GeometryRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
+      <Delegate Name="DB.LINAA.CompositionsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
       <Class Name="DB.LINAA.CompositionsRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
@@ -178,9 +183,6 @@
       <Class Name="DB.LINAA.SigmasSalDataTable" Collapsed="true">
         <TypeIdentifier />
       </Class>
-      <Delegate Name="DB.LINAA.IRequestsAveragesRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
       <Class Name="DB.LINAA.SigmasSalRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
@@ -203,9 +205,9 @@
           <NewMemberFileName>DB\Project\NAA.Channels.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="DB.LINAA.SubSamplesRowChangeEvent" Collapsed="true">
+      <Delegate Name="DB.LINAA.IRequestsAveragesRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
-      </Class>
+      </Delegate>
       <Class Name="DB.LINAA.DetectorsAbsorbersRow" Collapsed="true">
         <TypeIdentifier />
       </Class>
@@ -473,7 +475,9 @@
         <TypeIdentifier />
       </Class>
       <Class Name="DB.LINAA.SSFPrefDataTable" Collapsed="true">
-        <TypeIdentifier />
+        <TypeIdentifier>
+          <NewMemberFileName>DB\NAA.Preferences.cs</NewMemberFileName>
+        </TypeIdentifier>
       </Class>
       <Class Name="DB.LINAA.CompositionsRow" Collapsed="true">
         <TypeIdentifier />
@@ -526,6 +530,9 @@
       <Delegate Name="DB.LINAA.ReactionsRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
       </Delegate>
+      <Class Name="DB.LINAA.SubSamplesRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
       <Class Name="DB.LINAA.HoldersDataTable" Collapsed="true">
         <TypeIdentifier />
       </Class>
@@ -550,6 +557,9 @@
         <TypeIdentifier />
       </Class>
       <Delegate Name="DB.LINAA.DetectorsDimensionsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="DB.LINAA.PeaksRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
       </Delegate>
       <Class Name="DB.LINAA.ToDoResAvgRow" Collapsed="true">
@@ -577,9 +587,6 @@
       <Delegate Name="DB.LINAA.IrradiationRequestsRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
       </Delegate>
-      <Class Name="DB.LINAA.PreferencesDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
       <Enum Name="DB.LINAA.ToDoType" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DB\ToDo\ToDo.cs</NewMemberFileName>
@@ -666,12 +673,9 @@
       <Class Name="DB.LINAA.MUESRow" Collapsed="true">
         <TypeIdentifier />
       </Class>
-      <Delegate Name="DB.LINAA.PeaksRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="DB.LINAA.GeometryDataTable" Collapsed="true">
+      <Class Name="DB.LINAA.PreferencesDataTable" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>DB\Geometry\NAA.Geometry.cs</NewMemberFileName>
+          <NewMemberFileName>DB\NAA.Preferences.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
       <Delegate Name="DB.LINAA.MUESRowChangeEventHandler" Collapsed="true">
@@ -729,7 +733,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>1ev8P//1P119r0P//b/c8y3/v////b/3d77//f/v//8=</HashCode>
+      <HashCode>1ev8H//1P119j0P//L/c8y2/v///+b93d77//X/v//8=</HashCode>
       <FileName>Adapter\Adapter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -744,7 +748,7 @@
   <Interface Name="DB.IMain" Collapsed="true">
     <Position X="3.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAAAAAAAACAgAAgACAAABAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAACAgAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Main\IMain.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -805,7 +809,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.ISchedAcqs">
-    <Position X="4.5" Y="3.5" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAACAA=</HashCode>
       <FileName>Populate\Interfaces\ISchedAcqs.cs</FileName>
@@ -816,13 +820,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IToDoes.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="DB.IReport" Collapsed="true">
-    <Position X="5.5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAJABAAgAAAABIAAA=</HashCode>
-      <FileName>Report\IReport.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IStore" Collapsed="true">

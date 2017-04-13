@@ -72,20 +72,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\BindingSources.cs" />
-    <Compile Include="Interface\Current.Preferences.cs" />
-    <Compile Include="Interface\IReport.cs" />
-    <Compile Include="Interface\Report.cs" />
-    <Compile Include="Interface\Current.cs" />
+    <Compile Include="Creator\Creator.Public.cs" />
+    <Compile Include="Interface\BS\BindingSources.Public.cs" />
+    <Compile Include="Interface\BS\BindingSources.cs" />
+    <Compile Include="Interface\Current\Current.Public.cs" />
+    <Compile Include="Interface\Populate\Populate.Public.cs" />
+    <Compile Include="Interface\Preferences\Preferences.Public.cs" />
+    <Compile Include="Interface\Preferences\Preferences.cs" />
+    <Compile Include="Interface\Report\IReport.cs" />
+    <Compile Include="Interface\Report\Report.Public.cs" />
+    <Compile Include="Interface\Report\Report.cs" />
+    <Compile Include="Interface\Current\Current.cs" />
     <Compile Include="Interface\Interface.cs" />
-    <Compile Include="Interface\IPreferences.cs" />
-    <Compile Include="Interface\Populate.cs" />
+    <Compile Include="Interface\Preferences\IPreferences.cs" />
+    <Compile Include="Interface\Populate\Populate.cs" />
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
     <Compile Include="WC\Properties.cs" />
     <Compile Include="WC\Workers.cs" />
     <Compile Include="WC\Static\Efficiency.cs" />
-    <Compile Include="Interface\Creator.cs" />
+    <Compile Include="Creator\Creator.cs" />
     <Compile Include="WC\Static\NAA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WC\Public.cs" />
@@ -133,7 +139,7 @@
     <Compile Include="WC\Static\Populate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="CLASSDIAGRAM.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

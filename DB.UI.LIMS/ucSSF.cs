@@ -99,19 +99,20 @@ namespace DB.UI
         {
             Cursor.Current = Cursors.WaitCursor;
 
-         
-            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
-
             this.progress.Minimum = 0;
             this.progress.Maximum = 3;
-            this.progress.Value = 1;
-            //Go to Calculations/ Units Tab
-            this.Tab.SelectedTab = this.CalcTab;
+            this.progress.Value = 0;
 
+            this.CalcBtn.Enabled = false;
             this.Visible = true;
             this.ParentForm.Visible = true;
 
-//the showprogresss action
+            this.Tab.SelectedTab = this.CalcTab;
+
+            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
+
+        
+         
             Action showProgress = delegate
             {
                 Application.DoEvents();
@@ -120,6 +121,9 @@ namespace DB.UI
             };
 
             Interface.IBS.EndEdit();
+
+       
+           
 
             IList<UnitRow> units = null;
             bool shoulLoop = Interface.IPreferences.CurrentSSFPref.Loop;
@@ -138,6 +142,10 @@ namespace DB.UI
 
             this.progress.Maximum += units.Count * 5;
 
+            //1
+            showProgress();
+
+
             //loop through all samples to work to
             foreach (UnitRow item in units)
             {
@@ -147,15 +155,8 @@ namespace DB.UI
                 Interface.IBS.Update<LINAA.UnitRow>(item);
                 CalculateUnit(ref showProgress);
             }
-            string file = MatSSF.StartupPath + MatSSF.InputFile;
-            loadFilesMatSSF(ref showProgress, ref inputbox, file);
 
-           
-            file = MatSSF.StartupPath + MatSSF.OutputFile;
-            loadFilesMatSSF(ref showProgress, ref outputBox, file);
-
-
-           
+            this.CalcBtn.Enabled = true;
 
             Cursor.Current = Cursors.Default;
         }
@@ -237,6 +238,15 @@ namespace DB.UI
 
                 //6
                 showProgress();
+
+                string file = MatSSF.StartupPath + MatSSF.InputFile;
+                loadFilesMatSSF(ref showProgress, ref inputbox, file);
+
+
+                file = MatSSF.StartupPath + MatSSF.OutputFile;
+                loadFilesMatSSF(ref showProgress, ref outputBox, file);
+
+
             }
             catch (SystemException ex)
             {
