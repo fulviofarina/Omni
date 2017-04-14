@@ -42,9 +42,10 @@ namespace k0X
             this.Linaa.Measurements.ProjectColumn.Expression = string.Empty;
             this.Linaa.Measurements.ProjectColumn.ReadOnly = false;
 
-            this.geoBox.ComboBox.DataSource = this.Linaa.Geometry;
             this.geoBox.ComboBox.DisplayMember = "GeometryName";
 
+            this.geoBox.ComboBox.DataSource = this.Linaa.Geometry;
+        
             this.GaTA.Fill(this.Linaa.Gammas);
 
             Dumb.FillABox(projectbox, this.Linaa.ProjectsList, true, false);

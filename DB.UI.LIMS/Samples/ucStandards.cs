@@ -14,9 +14,10 @@ namespace DB.UI
         public void Set(ref Interface inter)
         {
             Dumb.FD(ref this.Linaa);
-            this.Linaa = inter.Get();
-
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Standards);
+            Dumb.FD(ref BS);
+            //     this.Linaa = inter.Get();
+            DGV.DataSource = inter.IBS.Standards;
+          //  Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Standards);
         }
 
         private void DGV_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)

@@ -6,12 +6,28 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SSF")]
-[assembly: AssemblyDescription("Sel-shielding calculation factors")]
+[assembly: AssemblyDescription(@"Software for Neutron Self-shielding calculations
+on cylindrical samples according to several authors
+
+Calculation methods:
+
+-MatSSF(Trkov)
+- Chilean, Kennedy, St.Pierre(Not included yet)
+- The Universal Curve(Martinho, Salgado, Goncalves)(Not included yet)
+- GEANT4(Not included yet)
+
+This software author:
+                Fulvio Farina Arboccò
+    email: fulviofarina@usb.ve
+
+MatSSF bundle software author:
+                 Andrej Trkov
+")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fulvio Farina Arboccò")]
-[assembly: AssemblyProduct("SSF")]
-[assembly: AssemblyCopyright("Fulvio Farina Arboccò, Copyright (c) 2017")]
-[assembly: AssemblyTrademark("FRFA")]
+[assembly: AssemblyProduct("SSF Program")]
+[assembly: AssemblyCopyright("Fulvio Farina Arboccò, 2017")]
+[assembly: AssemblyTrademark("Registered by FRFA")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

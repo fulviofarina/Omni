@@ -5,8 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
-using Rsx;
 using DB.Tools;
+using Rsx;
 
 namespace DB.UI
 {
@@ -16,6 +16,11 @@ namespace DB.UI
         {
             InitializeComponent();
         }
+
+
+        Action hideChildControl;
+
+
 
         private Interface Interface;
         private bool offline = false;
@@ -37,43 +42,38 @@ namespace DB.UI
             set { projectbox.Text = value; }
         }
 
+        public Action HideChildControl
+        {
+       
+
+            set
+            {
+                hideChildControl = value;
+            }
+        }
+
+        public void Refresher()
+        {
+            
+             
+                    this.KeyUpPressed(this.projectbox, new KeyEventArgs(Keys.Enter));
+         
+            
+        }
+
         //   private
         public Int32 IrrReqID = 0;
 
         /// <summary>
         /// Refreshed the selected project
         /// </summary>
-        public void RefreshSubSamples()
-        {
-            if (projectbox.Text.CompareTo(string.Empty) == 0) return;
+     
 
-            string project = projectbox.Text.ToUpper().Trim();
-
-            if (!Interface.IPopulate.IProjects.ProjectsList.Contains(project)) return;
-            Interface.IPreferences.CurrentPref.LastIrradiationProject = project;
-            LINAA.IrradiationRequestsRow Irradiation = null;
-            Irradiation = Interface.IDB.IrradiationRequests.FindByIrradiationCode(project);
-            IrrReqID = Irradiation.IrradiationRequestsID;
-
-            //   if (!this.offline)
-            //   {
-            Interface.IPopulate.ISamples.PopulateSubSamples(IrrReqID);
-            Interface.IPopulate.IGeometry.PopulateUnitsByProject(IrrReqID);
-            //  }
-
-            string filter = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
-            string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
-
-            Interface.IPreferences.SavePreferences();
-
-            callBack(filter, sort);
-        }
-
-        private Action<string, string> callBack;
+        private Action callBack;
 
         /// </summary>
         /// <param name="inter"></param>
-        public void Set(ref Interface inter, Action<string, string> CallBack)
+        public void Set(ref Interface inter, Action CallBack)
         {
             Interface = inter;
 
@@ -81,10 +81,49 @@ namespace DB.UI
 
             projectbox.Items.AddRange(Interface.IPopulate.IProjects.ProjectsList.ToArray());
 
-            this.projectbox.TextChanged += delegate
+            this.projectbox.KeyUp += KeyUpPressed;
+
+
+        }
+
+     //   EventHandler refresher;
+
+
+
+        private  void KeyUpPressed(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyValue < 47 || e.KeyValue > 105) && e.KeyCode != Keys.Enter) return;
+
+            string ProjectOrOrder = projectbox.Text;
+
+            if (ProjectOrOrder.CompareTo(string.Empty) == 0) return;
+
+            ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
+
+            bool  isAProjectOrOrder = Interface.IPopulate.IProjects.ProjectsList.Contains(ProjectOrOrder);
+
+            if (!isAProjectOrOrder && e.KeyCode == Keys.Enter)
             {
-                RefreshSubSamples();// this.projectbox_Click;
-            };
+                Interface.IPopulate.MakeAProjectOrOrder(ProjectOrOrder);
+
+            }
+
+            Interface.IPopulate.LoadProject(ProjectOrOrder,ref  IrrReqID);
+
+
+            callBack?.Invoke();
+        }
+
+
+        /// <summary>
+        /// This could be outside since it does not depend on anything
+        /// </summary>
+        /// <param name="ProjectOrOrder"></param>
+    
+
+        private void projectlabel_Click(object sender, EventArgs e)
+        {
+            hideChildControl?.Invoke();
         }
     }
 }

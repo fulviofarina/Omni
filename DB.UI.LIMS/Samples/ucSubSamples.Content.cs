@@ -42,15 +42,16 @@ namespace DB.UI
             //   DeLink();
 
             Dumb.FD(ref Linaa);
+            Dumb.FD(ref BS);
 
-            this.Linaa = inter.Get();
+        //    this.Linaa = inter.Get();
 
-            this.BS = inter.IBS.SubSamples;
+             BS = inter.IBS.SubSamples;
 
-            DGV.DataSource = this.BS;
-            DGV2.DataSource = this.BS;
-            DGV3.DataSource = this.BS;
-            DGV4.DataSource = this.BS;
+            DGV.DataSource = BS;
+            DGV2.DataSource = BS;
+            DGV3.DataSource = BS;
+            DGV4.DataSource = BS;
         }
 
         /// <summary>
@@ -89,6 +90,8 @@ namespace DB.UI
         /// <param name="sampleCellArgs"></param>
         private void SampleCellPaint(ref DataGridViewCellPaintingEventArgs sampleCellArgs)
         {
+            if (sampleCellArgs == null) return;
+            if (sampleCellArgs.Value == null) return;
             //   if (sampleCellArgs.CellStyle.BackColor != Color.FromName("Window")) return;
             string aux = sampleCellArgs.Value.ToString();
             if (aux.Contains(DB.Properties.Samples.Std))

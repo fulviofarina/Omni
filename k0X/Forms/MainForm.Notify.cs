@@ -72,22 +72,9 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-            object prefe = LIMS.Interface.IPreferences.CurrentPref;
-            if (prefe == null)
-            {
-                LIMS.Interface.IReport.Msg("Preferences object is null!", "Cannot load preferences!", false);
-                return;
-            }
-            Connections cform = new Connections(ref prefe);
-            cform.ShowDialog();
-            DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == System.Windows.Forms.DialogResult.No)
-            {
-                LIMS.Linaa.Preferences.RejectChanges();
-                return;
-            }
+          bool restart =   LIMS.Connections();
 
-            LIMS.Interface.IPreferences.SavePreferences();
+            if (!restart) return;
 
             this.Quit_Click(this.ClearLinaa, e); //leave like this, the sender must be ClearLinaa.
         }

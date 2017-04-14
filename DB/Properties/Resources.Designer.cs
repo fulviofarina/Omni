@@ -79,6 +79,15 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \Files\.
+        /// </summary>
+        public static string DevFiles {
+            get {
+                return ResourceManager.GetString("DevFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EffTran\.
         /// </summary>
         public static string EffTranFolder {
@@ -106,7 +115,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \Features.txt.
+        ///   Looks up a localized string similar to Features.txt.
         /// </summary>
         public static string Features {
             get {

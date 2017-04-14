@@ -902,7 +902,7 @@ namespace DB
                 DataColumn col = this.tableSubSamples.MatrixDensityColumn;
                 string chk = "\nCheck the filling height, radius net mass or matrix composition\n";
                 string rofrom = "The density from MatSSF";
-                if (MatSSFDensity == 0)
+                if (this.CalcDensity == 0)
                 {
                     this.SetColumnError(col, "The density from MatSSF is NULL!" + chk);
                     return false;
@@ -910,7 +910,7 @@ namespace DB
                 bool seterror = false;
                 string HighLow = string.Empty;
                 int pent = 7;
-                double ratio = (this.MatrixDensity / MatSSFDensity) * 100;
+                double ratio = (this.MatrixDensity / CalcDensity) * 100;
                 if (ratio >= 100 + pent)
                 {
                     HighLow = rofrom + " exceeds more than " + pent + "% the density shown" + chk;
@@ -924,7 +924,7 @@ namespace DB
 
                 if (seterror)
                 {
-                    decimal ro = Decimal.Round(Convert.ToDecimal(MatSSFDensity), 2);
+                    decimal ro = Decimal.Round(Convert.ToDecimal(CalcDensity), 2);
                     decimal r = Decimal.Round(Convert.ToDecimal(FindRadius()), 2);
                     decimal h = Decimal.Round(Convert.ToDecimal(FindFillingHeight()), 2);
                     string estimateRo = "MatSSF estimated it as " + ro + " gr/cm3\n";
@@ -936,13 +936,7 @@ namespace DB
                 return seterror;
             }
 
-            private double matSSFDensity = 0;
-
-            public double MatSSFDensity
-            {
-                get { return matSSFDensity; }
-                set { matSSFDensity = value; }
-            }
+           
 
             private bool selected;
 

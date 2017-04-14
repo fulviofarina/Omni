@@ -636,7 +636,7 @@ namespace DB
 
                         if (added)
                         {
-                            ta.Insert(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.Concentration, i.ENAA, chCapsID);
+                            ta.Insert(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.Concentration, i.ENAA, chCapsID,i.CalcDensity);
                             int? ID = (int?)ta.GetSubSampleID(i.SubSampleName);
                             if (ID != null)
                             {
@@ -646,7 +646,7 @@ namespace DB
                                 dt.SubSamplesIDColumn.ReadOnly = true;
                             }
                         }
-                        ta.Update(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.Concentration, i.ENAA, chCapsID, i.SubSamplesID);
+                        ta.Update(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.Concentration, i.ENAA, chCapsID,i.CalcDensity, i.SubSamplesID);
                         i.AcceptChanges();
 
                         UnitRow[] us = i.GetUnitRows();

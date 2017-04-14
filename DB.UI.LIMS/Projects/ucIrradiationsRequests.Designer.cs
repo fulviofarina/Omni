@@ -34,7 +34,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BN = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.BS = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -50,6 +49,7 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.irradiationSave = new System.Windows.Forms.ToolStripButton();
             this.DGV = new System.Windows.Forms.DataGridView();
             this.IrradiationCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,17 +63,12 @@
             this.IrradiationRequestDocFileNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BudgetNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IrradiationRequestsIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.SetIrradiationChannel = new System.Windows.Forms.ToolStripMenuItem();
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
             this.BN.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
-            this.CMS.SuspendLayout();
             this.TLP.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,15 +106,6 @@
             this.BN.TabIndex = 0;
             this.BN.Text = "bindingNavigator1";
             // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 23);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
-            // 
             // BS
             // 
             this.BS.DataMember = "IrradiationRequests";
@@ -127,21 +113,19 @@
             // 
             // Linaa
             // 
-     //       this.Linaa.CurrentPref = null;
             this.Linaa.DataSetName = "LINAA";
             this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
             this.Linaa.EnforceConstraints = false;
             this.Linaa.FolderPath = null;
-          //  this.Linaa.IStore = this.Linaa;
             this.Linaa.Locale = new System.Globalization.CultureInfo("");
-        //    this.Linaa.Notify = null;
+            this.Linaa.QTA = null;
             this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.Linaa.TAM = null;
             // 
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 23);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(47, 23);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
             // 
@@ -157,16 +141,14 @@
             // channellabel
             // 
             this.channellabel.Name = "channellabel";
-            this.channellabel.Size = new System.Drawing.Size(62, 23);
+            this.channellabel.Size = new System.Drawing.Size(67, 23);
             this.channellabel.Text = "Channel";
             // 
             // channelBox
             // 
             this.channelBox.Name = "channelBox";
             this.channelBox.Size = new System.Drawing.Size(100, 26);
-            this.channelBox.SelectedIndexChanged += new System.EventHandler(this.channelBox_SelectedIndexChanged);
-            this.channelBox.TextChanged += new System.EventHandler(this.channelBox_SelectedIndexChanged);
-            // 
+           // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -232,6 +214,15 @@
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 26);
             // 
+            // bindingNavigatorAddNewItem
+            // 
+            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 23);
+            this.bindingNavigatorAddNewItem.Text = "Add new";
+            // 
             // irradiationSave
             // 
             this.irradiationSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -260,7 +251,6 @@
             this.IrradiationRequestDocFileNameColumn,
             this.BudgetNumberColumn,
             this.IrradiationRequestsIDColumn});
-            this.DGV.ContextMenuStrip = this.CMS;
             this.DGV.DataSource = this.BS;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
@@ -277,14 +267,13 @@
             this.DGV.RowTemplate.Height = 24;
             this.DGV.Size = new System.Drawing.Size(688, 680);
             this.DGV.TabIndex = 1;
-            this.DGV.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DGV_CellPainting);
             // 
             // IrradiationCodeColumn
             // 
             this.IrradiationCodeColumn.DataPropertyName = "IrradiationCode";
             this.IrradiationCodeColumn.HeaderText = "Irradiation Code";
             this.IrradiationCodeColumn.Name = "IrradiationCodeColumn";
-            this.IrradiationCodeColumn.Width = 130;
+            this.IrradiationCodeColumn.Width = 107;
             // 
             // Channel
             // 
@@ -295,7 +284,7 @@
             this.Channel.HeaderText = "Channel";
             this.Channel.Name = "Channel";
             this.Channel.ReadOnly = true;
-            this.Channel.Width = 87;
+            this.Channel.Width = 76;
             // 
             // Reactor
             // 
@@ -306,14 +295,14 @@
             this.Reactor.HeaderText = "Reactor";
             this.Reactor.Name = "Reactor";
             this.Reactor.ReadOnly = true;
-            this.Reactor.Width = 85;
+            this.Reactor.Width = 72;
             // 
             // NumberColumn
             // 
             this.NumberColumn.DataPropertyName = "Number";
             this.NumberColumn.HeaderText = "Irradiation Number";
             this.NumberColumn.Name = "NumberColumn";
-            this.NumberColumn.Width = 147;
+            this.NumberColumn.Width = 122;
             // 
             // ChannelsIDColumn
             // 
@@ -330,6 +319,7 @@
             this.IrradiationStartDateTimeColumn.HeaderText = "Created On";
             this.IrradiationStartDateTimeColumn.Name = "IrradiationStartDateTimeColumn";
             this.IrradiationStartDateTimeColumn.ReadOnly = true;
+            this.IrradiationStartDateTimeColumn.Width = 85;
             // 
             // IrradiationEndDateTimeColumn
             // 
@@ -376,32 +366,6 @@
             this.IrradiationRequestsIDColumn.Visible = false;
             this.IrradiationRequestsIDColumn.Width = 144;
             // 
-            // CMS
-            // 
-            this.CMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.SetIrradiationChannel});
-            this.CMS.Name = "CMS";
-            this.CMS.Size = new System.Drawing.Size(230, 80);
-            // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(229, 24);
-            this.refreshToolStripMenuItem.Text = "Refresh";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
-            // 
-            // SetIrradiationChannel
-            // 
-            this.SetIrradiationChannel.Name = "SetIrradiationChannel";
-            this.SetIrradiationChannel.Size = new System.Drawing.Size(229, 24);
-            this.SetIrradiationChannel.Text = "Set Irradiation Channel";
-            // 
             // TLP
             // 
             this.TLP.ColumnCount = 1;
@@ -420,7 +384,7 @@
             // 
             // ucIrradiationsRequests
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TLP);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -433,7 +397,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.BS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
-            this.CMS.ResumeLayout(false);
             this.TLP.ResumeLayout(false);
             this.TLP.PerformLayout();
             this.ResumeLayout(false);
@@ -458,11 +421,7 @@
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.ToolStripButton irradiationSave;
         private System.Windows.Forms.DataGridView DGV;
-        private System.Windows.Forms.ContextMenuStrip CMS;
-        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel TLP;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem SetIrradiationChannel;
 		//private System.Windows.Forms.DataGridViewTextBoxColumn ReactorNameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn IrradiationCodeColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Channel;

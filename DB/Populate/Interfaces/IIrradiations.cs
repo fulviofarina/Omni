@@ -9,6 +9,8 @@ namespace DB
     {
         Int32? FindIrrReqID(string project);
 
+        LINAA.IrradiationRequestsRow AddIrradiation(string project);
+
         void PopulateChannels();
 
         void PopulateIrradiationRequests();

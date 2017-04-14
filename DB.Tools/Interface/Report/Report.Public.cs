@@ -52,6 +52,7 @@ namespace DB.Tools
             e.UserDomainName = Environment.UserDomainName;
             e.UserName = Environment.UserName;
             e.WorkingSet = Environment.WorkingSet;
+            e.Ticks = Environment.TickCount;
 
             en.Environment.AddEnvironmentRow(e);
 
@@ -74,17 +75,7 @@ namespace DB.Tools
         }
 
         // private System.Drawing.Icon mainIcon = null;
-        public NotifyIcon Notify
-        {
-            get { return notify; }
-            set
-            {
-                // if (value == null) return;
-                notify = value;
-
-                // if (notify.Icon == null) return; if (mainIcon == null) mainIcon = notify.Icon;
-            }
-        }
+       
 
         public void ChatMe(ref LINAA.PreferencesRow p)
         {
@@ -93,7 +84,7 @@ namespace DB.Tools
                 string windowsUser = Interface.IPreferences.WindowsUser;
                 // LINAA.PreferencesRow p = this.currentPref;
 
-                string comment = findHellos(ref windowsUser, ref p);
+            //    string comment = findHellos(ref windowsUser, ref p);
 
                 string[] txtTitle = findGreeting(ref windowsUser);
 
@@ -104,6 +95,7 @@ namespace DB.Tools
                 Interface.IMain.AddException(ex);
             }
         }
+       
 
         public void GenerateBugReport()
         {
@@ -143,7 +135,7 @@ namespace DB.Tools
                         System.Messaging.Message w = Emailer.CreateQMsg(excFile, "Bug Report", "Should I add more comments?");
                         Emailer.SendQMsg(ref bugQM, ref w);
                     }
-                    this.notify.ShowBalloonTip(7000, "Bug Reports on tray...", cnt + " scheduled to be sent", System.Windows.Forms.ToolTipIcon.Info);
+                    this.msn.Msg("Bug Reports on tray...", cnt + " scheduled to be sent", System.Windows.Forms.ToolTipIcon.Info);
                     exceptions = null;
                 }
                 else this.Msg(bugReportNotGen, nothingBuggy);

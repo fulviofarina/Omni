@@ -406,7 +406,7 @@ namespace k0X
             }
             else useranalysing = true;
 
-            if (useranalysing && Tag == null) ucSample.Interface.IPopulate.ISamples.LoadSampleData(true);
+            if (useranalysing && Tag == null) ucSample.Interface.IPopulate.ISamples.BeginEndLoadData(true);
             bool measNode = true;
 
             if (nodeTag == null) //selection on MAIN NODE
@@ -457,7 +457,7 @@ namespace k0X
 
             if (Tag == null)
             {
-                if (useranalysing) ucSample.Interface.IPopulate.ISamples.LoadSampleData(false);
+                if (useranalysing) ucSample.Interface.IPopulate.ISamples.BeginEndLoadData(false);
                 TreeNode node = e.Node;
                 if (measNode && e.Node.Parent != null) node = e.Node.Parent;
 

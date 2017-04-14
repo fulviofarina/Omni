@@ -92,8 +92,8 @@ namespace DB
             int index = dTWithHandlers.IndexOf(dtindex);
             if (index < 0) return; //not in the list of handlers
 
-            if (activate) table.RowChanged += this.RowChanged;
-            else table.RowChanged -= this.RowChanged;
+            if (activate) table.RowChanged += RowChanged;
+            else table.RowChanged -= RowChanged;
         }
 
         private void cleanReadOnly(ref DataTable table)

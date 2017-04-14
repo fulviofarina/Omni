@@ -1,0 +1,432 @@
+
+<html> 
+<head> 
+	<title>Formular Weight Calculator</title> 
+	
+ 
+
+<script type="text/javascript"> 
+<!--
+    var atomString = "";
+    var badData = false
+    NumAtoms = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    ANofAtom = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    var MolarMass = 0
+    var printS = ""
+    var formula = ""
+    var numEls = ""
+
+    function cmpd(NumAtoms, ANofAtom, MM, printString) {
+        this.NumAtoms = NumAtoms;
+        this.ANofAtom = ANofAtom;
+        this.MM = MM;
+        this.printString = printString;
+    }
+
+    compound = new cmpd(NumAtoms, ANofAtom, MolarMass, printS)
+
+    function ParseFormula(formula) {
+        var c = 0; x = 0; y = 0; c1 = 0; marker1 = 0; marker2 = -1; loopCount = 0;
+        var badData = false; multiplier = 1
+        a1 = new Array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        a2 = new Array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        while (c <= formula.length - 1 && !badData) {
+            AN = findAN(formula.substring(c, c + 2));
+            if (AN == -1) {
+                AN = findAN(formula.substring(c, c + 1));
+                y = 1;
+            }
+            else y = 2;
+            if (AN > -1) {
+                marker2 = -1
+                for (var c2 = 0; c2 <= 9; c2++) {
+                    if (a2[c2] == AN) {
+                        marker2 = c2; break
+                    }
+                }
+                if (marker2 >= 0) { marker1 = marker2; loopCount -= 1; }
+                else marker1 = loopCount;
+                c += y;
+                a2[marker1] = AN;
+                var OK = true;
+                var c3 = 0;
+                while (OK && c + c3 <= formula.length - 1) {
+                    AN = findNum(formula.substring(c + c3, c + c3 + 1));
+                    if (AN >= 0) c3++; else OK = false;
+                }
+                if (c3 > 0) {
+                    if (marker2 >= 0)
+                        a1[marker1] +=
+            parseInt(formula.substring(c, c + c3)) * multiplier;
+                    else
+                        a1[marker1] =
+            parseInt(formula.substring(c, c + c3)) * multiplier;
+                }
+                else {
+                    if (marker2 >= 0)
+                        a1[marker1] +=
+            1 * multiplier; else a1[marker1] = 1 * multiplier
+                }
+                c += c3;
+                loopCount++
+            }
+            else {
+                AN = "[]().".indexOf(formula.substring(c, c + 1));
+                if (AN == -1) { badData = true; break }
+                if (AN == 0 || AN == 2) {
+                    if (AN == 2) {
+                        var zz = 0
+                        for (x = c; x <= formula.length - 1; x++) {
+                            if (formula.substring(x, x + 1) == ")") { zz = x; break }
+                        }
+                    }
+                    else {
+                        for (x = c; x <= formula.length - 1; x++) {
+                            if (formula.substring(x, x + 1) == "]") { zz = x; break }
+                        }
+                    }
+                    var c4 = 1; OK = true
+                    while (OK && zz + c4 <= formula.length - 1) {
+                        var AN1 = findNum(formula.substring(zz + c4, zz + c4 + 1));
+                        if (AN1 >= 0) c4++; else OK = false;
+                    }
+                    if (c4 > 1) {
+                        var z = parseInt(formula.substring(1 + zz, c4 + zz));
+                        multiplier = multiplier * z
+                    }
+                    c++
+                }
+                if (AN == 1 || AN == 3) {
+                    var c5 = 1; OK = true
+                    while (OK && c + c5 <= formula.length - 1) {
+                        var AN1 = findNum(formula.substring(c + c5, c + c5 + 1));
+                        if (AN1 >= 0) c5++; else OK = false;
+                    }
+                    if (c5 > 1) {
+                        multiplier =
+             Math.round(multiplier /
+               parseInt(formula.substring(c + 1, c + c5)));
+                    }
+                    c += c5
+                }
+                if (AN == 4) {
+                    var c6 = 1; OK = true
+                    while (OK && c + c6 <= formula.length - 1) {
+                        var AN1 = findNum(formula.substring(c + c6, c + c6 + 1));
+                        if (AN1 >= 0) c6++; else OK = false;
+                    }
+                    if (c6 > 1) {
+                        multiplier *= parseInt(formula.substring(c + 1, c + c6));
+                    }
+                    c += c6
+                }
+            }
+        }
+        NumEls = loopCount - 1
+        for (var i = 0; i <= NumEls; i++) {
+            NumAtoms[i] = a1[i];
+            ANofAtom[i] = a2[i];
+        }
+        if (badData) { alert("formula did not parse correctly") };
+    }
+
+    function findAN(aSym) {
+        var AN = 0
+        if (aSym.length == 1) aSym += "*";
+        var x = atomString.indexOf(aSym);
+        AN = (x == -1) ? x : (x / 2) + 1;
+        return AN;
+    }
+
+    function findNum(ch) {
+        var numstring = "0123456789";
+        var x = numstring.indexOf(ch);
+        return x;
+    }
+
+    function CalcMolarMass() {
+        MM = 0;
+        for (var c = 0; c <= NumEls; c++) {
+            var x = ANofAtom[c];
+            MM += a[x]["mass"] * NumAtoms[c]
+        }
+        MM = Math.round(MM * 100) / 100
+    }
+
+    function printFormula() {
+        printS = ""
+        for (var c = 0; c <= NumEls; c++) {
+            printS += a[ANofAtom[c]["symbol"]];
+            if (NumAtoms[c] > 1) printS += "<sub>" + NumAtoms[c] + "</sub>"
+        }
+    }
+
+    function atomArray(symbol, mass) {
+        this.symbol = symbol;
+        this.mass = mass;
+    }
+
+    function makeArray(arraySize) {
+        this.length = arraySize;
+        for (var c = 0; c <= arraySize; c++) {
+            this[c] = 0;
+        }
+        return this;
+    }
+
+    a = new makeArray(92)
+    a[1] = new atomArray("H", 1.008);
+    a[2] = new atomArray("He", 4.003);
+    a[3] = new atomArray("Li", 6.941);
+    a[4] = new atomArray("Be", 9.0122);
+    a[5] = new atomArray("B", 10.811);
+    a[6] = new atomArray("C", 12.011);
+    a[7] = new atomArray("N", 14.007);
+    a[8] = new atomArray("O", 15.999);
+    a[9] = new atomArray("F", 18.998);
+    a[10] = new atomArray("Ne", 20.180);
+    a[11] = new atomArray("Na", 22.990);
+    a[12] = new atomArray("Mg", 24.305);
+    a[13] = new atomArray("Al", 26.982);
+    a[14] = new atomArray("Si", 28.086);
+    a[15] = new atomArray("P", 30.974);
+    a[16] = new atomArray("S", 32.066);
+    a[17] = new atomArray("Cl", 35.453);
+    a[18] = new atomArray("Ar", 39.948);
+    a[19] = new atomArray("K", 39.098);
+    a[20] = new atomArray("Ca", 40.078);
+    a[21] = new atomArray("Sc", 44.956);
+    a[22] = new atomArray("Ti", 47.88);
+    a[23] = new atomArray("V", 50.942);
+    a[24] = new atomArray("Cr", 51.996);
+    a[25] = new atomArray("Mn", 54.938);
+    a[26] = new atomArray("Fe", 55.847);
+    a[27] = new atomArray("Co", 58.933);
+    a[28] = new atomArray("Ni", 58.69);
+    a[29] = new atomArray("Cu", 63.546);
+    a[30] = new atomArray("Zn", 65.39);
+    a[31] = new atomArray("Ga", 69.723);
+    a[32] = new atomArray("Ge", 72.61);
+    a[33] = new atomArray("As", 74.922);
+    a[34] = new atomArray("Se", 78.96);
+    a[35] = new atomArray("Br", 79.904);
+    a[36] = new atomArray("Kr", 83.80);
+    a[37] = new atomArray("Rb", 85.468);
+    a[38] = new atomArray("Sr", 87.62);
+    a[39] = new atomArray("Y", 88.906);
+    a[40] = new atomArray("Zr", 91.224);
+    a[41] = new atomArray("Nb", 92.906);
+    a[42] = new atomArray("Mo", 95.94);
+    a[43] = new atomArray("Tc", 98);
+    a[44] = new atomArray("Ru", 101.07);
+    a[45] = new atomArray("Rh", 102.91);
+    a[46] = new atomArray("Pd", 106.42);
+    a[47] = new atomArray("Ag", 107.87);
+    a[48] = new atomArray("Cd", 112.41);
+    a[49] = new atomArray("In", 114.82);
+    a[50] = new atomArray("Sn", 118.71);
+    a[51] = new atomArray("Sb", 121.75);
+    a[52] = new atomArray("Te", 127.60);
+    a[53] = new atomArray("I", 126.90);
+    a[54] = new atomArray("Xe", 131.29);
+    a[55] = new atomArray("Cs", 132.91);
+    a[56] = new atomArray("Ba", 137.33);
+    a[57] = new atomArray("La", 138.9);
+    a[58] = new atomArray("Ce", 140.1);
+    a[59] = new atomArray("Pr", 140.9);
+    a[60] = new atomArray("Nd", 144.2);
+    a[61] = new atomArray("Pm", 145);
+    a[62] = new atomArray("Sm", 150.4);
+    a[63] = new atomArray("Eu", 152.0);
+    a[64] = new atomArray("Gd", 157.3);
+    a[65] = new atomArray("Tb", 158.9);
+    a[66] = new atomArray("Dy", 162.5);
+    a[67] = new atomArray("Ho", 164.9);
+    a[68] = new atomArray("Er", 167.3);
+    a[69] = new atomArray("Tm", 168.9);
+    a[70] = new atomArray("Yb", 173.0);
+    a[71] = new atomArray("Lu", 174.97);
+    a[72] = new atomArray("Hf", 178.49);
+    a[73] = new atomArray("Ta", 180.95);
+    a[74] = new atomArray("W", 183.85);
+    a[75] = new atomArray("Re", 186.21);
+    a[76] = new atomArray("Os", 190.2);
+    a[77] = new atomArray("Ir", 192.22);
+    a[78] = new atomArray("Pt", 195.08);
+    a[79] = new atomArray("Au", 196.97);
+    a[80] = new atomArray("Hg", 200.59);
+    a[81] = new atomArray("Tl", 204.38);
+    a[82] = new atomArray("Pb", 207.2);
+    a[83] = new atomArray("Bi", 208.98);
+    a[84] = new atomArray("Po", 209);
+    a[85] = new atomArray("At", 210);
+    a[86] = new atomArray("Rn", 222);
+    a[87] = new atomArray("Fr", 223);
+    a[88] = new atomArray("Ra", 226);
+    a[89] = new atomArray("Ac", 227);
+    a[90] = new atomArray("Th", 232.04);
+    a[91] = new atomArray("Pa", 213.04);
+    a[92] = new atomArray("U", 238.03);
+
+    function makeAtomString() {
+        for (var c = 1; c <= a.length; c++) {
+            atomString += a[c]["symbol"]
+            if (a[c]["symbol"].length == 1) atomString += "*";
+        }
+        return atomString
+    }
+
+    function writeOut() {
+        makeAtomString()
+        formula = document.forms[0].elements[1].value
+        ParseFormula(formula)
+        if (!badData) CalcMolarMass(); else MM = "Bad Data"
+        //  printFormula()
+        document.forms[1].elements[1].value = MM;
+        var c1 = 2
+        for (var c = 0; c <= 9; c++) {
+            document.forms[1].elements[c1].value = " "
+            c1++;
+            document.forms[1].elements[c1].value = " "
+            c1++;
+        }
+        var formla = ""
+        c1 = 2
+        for (var c = 0; c <= NumEls; c++) {
+            document.forms[1].elements[c1].value =
+      a[ANofAtom[c]]["symbol"];
+            if (NumAtoms[c] > 1)
+            { formla += a[ANofAtom[c]]["symbol"] + NumAtoms[c] }
+            else formla += a[ANofAtom[c]].symbol;
+            c1++;
+            document.forms[1].elements[c1].value =
+      a[ANofAtom[c]]["mass"] * NumAtoms[c] * 100 / parseFloat(MM);
+            c1++;
+        }
+        document.forms[1].elements[0].value = formla;
+        document.forms[1].elements[22].value =
+    Math.round(10000000 / MM) / 10000;
+        document.forms[1].elements[23].value = Math.round(MM) / 1000;
+    }
+
+    function Prepare(toPrepare) {
+        document.forms[0].elements[1].value = toPrepare.toString();
+        writeOut()
+    }
+ 
+//-->
+    </script> 
+ 
+</head> 
+ 
+<body leftmargin=0 topmargin=0" marginwidth="0" marginheight=0"  bgcolor=#ffffff text="#000000" link="#000099" vlink="#990099" alink="#990000" onLoad=""> 
+<br> 
+<table width=800 align=center> 
+<tr> 
+<td valign="top" align=center>&nbsp;<font class=leftnav16>Formula Weight Calculator</font> 
+</td> 
+</tr> 
+</table> 
+<BR> 
+ 
+<table width="600" cellpadding="0" cellspacing="0" align=center> 
+  <tr> 
+  <td> 
+  
+  <font class=leftnav4> 
+  Putting in a molecular formula of any type such as K2Cr2O7, 
+  CH3CH2COOH, KFe[Fe(CN)6]3, or Na2B4O7.10H20 will result in the molar 
+  mass and mass analyses being calculated when the button is pressed. 
+  Please make sure that the formula has no more than two different 
+  bracket levels open at the same time, and that molecule of crystalization is placed last.
+  </font> 
+  </td> 
+  </tr> 
+</table> 
+ 
+ 
+<CENTER> 
+<form> 
+  <input class=leftnav4 type="button" onClick="writeOut()"  
+         value="Calculate"><br> 
+<font class=leftnav4>Formula: </font><input class=leftnav4 type = "text" size = 40><br> 
+</form>  
+</CENTER> 
+ 
+ 
+ 
+<form> 
+ 
+  <table width="350" cellpadding="0" cellspacing="0" align=center> 
+    <tr> 
+    <td class=leftnav4>Condensed
+    </td> 
+    <td colspan=2> 
+    <input class=leftnav4 type = text size = 20> 
+    </td> 
+    </tr> 
+    
+    <tr> 
+    <td class=leftnav4>Formular Weight = </td> 
+    <td class=leftnav4 colspan=2><input class=leftnav4 type = "text" size = 20>g/mol</td> 
+    </tr> 
+    
+    <tr><td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr> 
+    <td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr> 
+    <td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr><td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr> 
+    <td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr> 
+    <td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr><td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr> 
+    <td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr> 
+    <td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr><td><input class=leftnav4 type = "text" size = 20></td> 
+    <td><input class=leftnav4 type = "text" size = 20>%</td> 
+    </tr> 
+    
+    <tr><td class=leftnav4 >1.000 g = </td><td class=leftnav4 ><input class=leftnav4 type = "text" size = 20>mmol</td> 
+   
+    </tr> 
+    
+    <tr> 
+    <td class=leftnav4 >1 mmole = </td><td class=leftnav4 ><input class=leftnav4 type = "text" size = 20>g</td> 
+    </tr> 
+  </table> 
+</form> 
+ 
+ 
+</body> 
+</html>

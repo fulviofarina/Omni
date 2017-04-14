@@ -13,6 +13,10 @@
         public Interface(ref LINAA aux)
         {
             dataset = aux;
+            IMain = (IMain)aux;
+            IAdapter = (IAdapter)aux;
+            IStore = (IStore)aux;
+            IDB = (IDB)aux;
 
             //attach interface classes
             Interface inter = this;
@@ -24,10 +28,7 @@
             IPreferences = ICurrent;
 
             //attach interfaces of LINAA (DB)
-            IMain = (IMain)aux;
-            IAdapter = (IAdapter)aux;
-            IStore = (IStore)aux;
-            IDB = (IDB)aux;
+       
         }
 
         /// <summary>

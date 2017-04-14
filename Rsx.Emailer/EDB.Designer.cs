@@ -299,6 +299,8 @@ namespace Rsx {
             
             private global::System.Data.DataColumn columnOSVersion;
             
+            private global::System.Data.DataColumn columnTicks;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnvironmentDataTable() {
@@ -414,6 +416,14 @@ namespace Rsx {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TicksColumn {
+                get {
+                    return this.columnTicks;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -449,7 +459,7 @@ namespace Rsx {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnvironmentRow AddEnvironmentRow(string CurrentPath, bool Is64Bit, bool Is64BitOS, string MachineName, string NewLine, int CPUCount, string UserDomainName, string UserName, long WorkingSet, string OSVersion) {
+            public EnvironmentRow AddEnvironmentRow(string CurrentPath, bool Is64Bit, bool Is64BitOS, string MachineName, string NewLine, int CPUCount, string UserDomainName, string UserName, long WorkingSet, string OSVersion, long Ticks) {
                 EnvironmentRow rowEnvironmentRow = ((EnvironmentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CurrentPath,
@@ -461,7 +471,8 @@ namespace Rsx {
                         UserDomainName,
                         UserName,
                         WorkingSet,
-                        OSVersion};
+                        OSVersion,
+                        Ticks};
                 rowEnvironmentRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEnvironmentRow);
                 return rowEnvironmentRow;
@@ -494,6 +505,7 @@ namespace Rsx {
                 this.columnUserName = base.Columns["UserName"];
                 this.columnWorkingSet = base.Columns["WorkingSet"];
                 this.columnOSVersion = base.Columns["OSVersion"];
+                this.columnTicks = base.Columns["Ticks"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -519,6 +531,8 @@ namespace Rsx {
                 base.Columns.Add(this.columnWorkingSet);
                 this.columnOSVersion = new global::System.Data.DataColumn("OSVersion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnOSVersion);
+                this.columnTicks = new global::System.Data.DataColumn("Ticks", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTicks);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -821,6 +835,22 @@ namespace Rsx {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long Ticks {
+                get {
+                    try {
+                        return ((long)(this[this.tableEnvironment.TicksColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Ticks\' in table \'Environment\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvironment.TicksColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCurrentPathNull() {
                 return this.IsNull(this.tableEnvironment.CurrentPathColumn);
             }
@@ -937,6 +967,18 @@ namespace Rsx {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetOSVersionNull() {
                 this[this.tableEnvironment.OSVersionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTicksNull() {
+                return this.IsNull(this.tableEnvironment.TicksColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTicksNull() {
+                this[this.tableEnvironment.TicksColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -5,7 +5,7 @@ namespace DB
 {
     public interface IReport
     {
-        NotifyIcon Notify { set; get; }
+      //  NotifyIcon Notify { set; get; }
         Pop Msn { get; set; }
 
         void GenerateBugReport();

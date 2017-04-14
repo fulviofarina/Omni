@@ -163,6 +163,7 @@ namespace DB.Tools
             bugresult = bugQM.BeginReceive();
         }
 
+        /*
         //SHITTY
         /// <summary>
         /// </summary>
@@ -187,12 +188,12 @@ namespace DB.Tools
                 Random random = new Random();
                 int index = random.Next(0, count);
                 comment = hellos.ElementAt(index).Comment;
-                // user = hellos.ElementAt(index).k0User;
+           
             }
 
             return comment;
         }
-
+        */
         private void qMsg_ReceiveCompleted(object sender, System.Messaging.ReceiveCompletedEventArgs e)
         {
             if (e == null) return;

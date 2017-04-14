@@ -5,29 +5,38 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
 
+
 namespace DB.UI
 {
     public partial class LIMS
     {
         //  public static System.Collections.Generic.IList<object> UserControls;
-        public static void ShowPreferences()
+
+        public static void ShowToUser()
+        {
+
+            LIMS.Form.Visible = true;
+            LIMS.Form.Opacity = 100;
+            LIMS.Form.BringToFront();
+        }
+
+        public static void ShowPreferences(bool show)
         {
 
             try
             {
                 UserControl c = LIMS.UserControls.OfType<ucPreferences>().FirstOrDefault();
-                if (c == null)
-                {
-                    c = LIMS.CreateUI(ControlNames.Preferences);
-                    LIMS.CreateForm("Preferences", ref c);
-                }
-                c.ParentForm.Visible = true;
+               
+                c.ParentForm.Visible = show;
+                c.ParentForm.Opacity = 100;
+                c.ParentForm.BringToFront();
             }
             catch (Exception ex)
             {
                 Interface.IMain.AddException(ex);
-                // Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
+
+
 
         }
         public static T FindLastControl<T>(string name)
@@ -85,6 +94,54 @@ namespace DB.UI
             Rsx.DGV.Control.Adder addedRow = null;
             System.EventHandler preRefresh = null;
 
+            createControl(controlHeader, ref control, ref refresher, ref loader, ref postRefresh, ref cellpainter, ref shouldpaintCell, ref addedRow, ref preRefresh);
+
+            if (control == null)
+            {
+                LIMS.Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
+                return null;
+            }
+            UserControls.Add(control);
+
+            //create the DGV controller... and
+            //set methods...
+            Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref LIMS.IFind);
+            cv.LoadMethod = loader;
+            cv.PostRefresh = postRefresh;
+            cv.PreRefresh = preRefresh;
+            cv.PaintCellsMethod = cellpainter;
+            cv.ShouldPaintCellMethod = shouldpaintCell;
+            cv.PostPaintRowsMethod = rowPostpainter;
+            cv.ShouldPostPaintRowMethod = shouldpostpaintRow;
+            cv.PrePaintRowsMethod = rowPrepainter;
+            cv.ShouldPrePaintRowMethod = shouldprepaintRow;
+            cv.RowAddedMethod = addedRow;
+            cv.SaveMethod = LIMS.Interface.IStore.Save;
+
+            DataGridView[] dgvs = Rsx.Dumb.GetChildControls<DataGridView>(control).ToArray();
+
+            if (dgvs.Count() != 0)
+            {
+                cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
+
+                //create events
+                cv.CreateEvents(ref dgvs);
+                dgvs = null;
+            }
+
+            ToolStripButton[] items = Rsx.Dumb.GetChildControls<ToolStrip>(control)
+                .SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
+            cv.CreateEvents(ref items);
+            items = null;
+
+            control.Tag = cv;   //sets the CV as a TAG for the control
+            cv.UsrControl = control; //set the control as a tag for the CV
+
+            return control;
+        }
+
+        private static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader loader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref Rsx.DGV.Control.Adder addedRow, ref EventHandler preRefresh)
+        {
             switch (controlHeader)
             {
                 case ControlNames.Geometries:
@@ -164,7 +221,8 @@ namespace DB.UI
 
                         cellpainter = ucSubSamples.ucContent.PaintCells;
                         shouldpaintCell = ucSubSamples.ucContent.ShouldPaint;
-                        refresher = ucSubSamples.projectbox.RefreshSubSamples;
+
+                        refresher = ucSubSamples.projectbox.Refresher;
                         addedRow = ucSubSamples.RowAdded;
 
                         control = (UserControl)ucSubSamples;
@@ -207,7 +265,9 @@ namespace DB.UI
                         ucIrradiationsRequests ucIrr = new ucIrradiationsRequests();
                         ucIrr.Set(ref LIMS.Interface);
                         control = (UserControl)ucIrr;
-
+                        addedRow = ucIrr.RowAdded;
+                        cellpainter = ucIrr.CellPainting;
+                        shouldpaintCell = ucIrr.ShouldPaintCell;
                         refresher = Interface.IPopulate.IIrradiations.PopulateIrradiationRequests;
                         break;
                     }
@@ -233,49 +293,27 @@ namespace DB.UI
                 default:
                     break;
             }
+        }
 
-            if (control == null)
+        public static bool Connections()
+        {
+           
+            object prefe = LIMS.Interface.IPreferences.CurrentPref;
+            if (prefe == null)
             {
-                LIMS.Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
-                return null;
+                LIMS.Interface.IReport.Msg("Preferences object is null!", "Cannot load preferences!", false);
+                return false;
             }
-            UserControls.Add(control);
-
-            //create the DGV controller... and
-            //set methods...
-            Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref LIMS.IFind);
-            cv.LoadMethod = loader;
-            cv.PostRefresh = postRefresh;
-            cv.PreRefresh = preRefresh;
-            cv.PaintCellsMethod = cellpainter;
-            cv.ShouldPaintCellMethod = shouldpaintCell;
-            cv.PostPaintRowsMethod = rowPostpainter;
-            cv.ShouldPostPaintRowMethod = shouldpostpaintRow;
-            cv.PrePaintRowsMethod = rowPrepainter;
-            cv.ShouldPrePaintRowMethod = shouldprepaintRow;
-            cv.RowAddedMethod = addedRow;
-            cv.SaveMethod = LIMS.Interface.IStore.Save;
-
-            DataGridView[] dgvs = Rsx.Dumb.GetChildControls<DataGridView>(control).ToArray();
-
-            if (dgvs.Count() != 0)
+            Connections cform = new Connections(ref prefe);
+            cform.ShowDialog();
+            DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == System.Windows.Forms.DialogResult.No)
             {
-                cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
-
-                //create events
-                cv.CreateEvents(ref dgvs);
-                dgvs = null;
+                LIMS.Linaa.Preferences.RejectChanges();
+                return false;
             }
-
-            ToolStripButton[] items = Rsx.Dumb.GetChildControls<ToolStrip>(control)
-                .SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
-            cv.CreateEvents(ref items);
-            items = null;
-
-            control.Tag = cv;   //sets the CV as a TAG for the control
-            cv.UsrControl = control; //set the control as a tag for the CV
-
-            return control;
+            else LIMS.Interface.IPreferences.SavePreferences();
+            return true;
         }
 
         public static void Explore()

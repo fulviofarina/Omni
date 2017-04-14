@@ -90,7 +90,7 @@ namespace Rsx.DGV
         BindingSource BS = GetDataSource<BindingSource>(ref dgv);
         BS.Sort = indexfield + " desc";
 
-        BS.RemoveFilter();
+       // BS.RemoveFilter(); ///?????
       }
 
       return "OK! A new Row was added";

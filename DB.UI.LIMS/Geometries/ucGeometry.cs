@@ -17,7 +17,9 @@ namespace DB.UI
         {
             Dumb.DeLinkBS(ref this.BS);
             Rsx.Dumb.FD(ref this.Linaa);
-            this.Linaa = inter.Get();
+            Rsx.Dumb.FD(ref this.BS);
+
+            this.DGV.DataSource = inter.IBS.Geometry;
 
             bool coon = this.Linaa.Geometry.Columns.Contains("Std");
             if (!coon)
@@ -26,7 +28,7 @@ namespace DB.UI
                 this.Linaa.Geometry.Columns.Add(Std);
             }
 
-            Dumb.LinkBS(ref this.BS, this.Linaa.Geometry, string.Empty, "CreationDateTime desc");
+      
         }
 
         /*

@@ -34,6 +34,22 @@ namespace DB
                 s.IrradiationRequestsID = IrrReqID;
             }
         }
+        public void PopulateUnitsByProject(int irrReqId)
+        {
+            try
+            {
+                this.tableUnit.BeginLoadData();
+                this.tableUnit.Clear();
+                this.TAM.UnitTableAdapter.FillByIrrReqID(this.tableUnit, irrReqId);
+                this.tableUnit.AcceptChanges();
+                this.tableUnit.EndLoadData();
+                //    Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
 
         public void AddMonitors(ref IEnumerable<LINAA.SubSamplesRow> samples, string project)
         {
@@ -277,7 +293,7 @@ namespace DB
             }
         }
 
-        public void LoadSampleData(bool load)
+        public void BeginEndLoadData(bool load)
         {
             if (load)
             {

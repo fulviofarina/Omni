@@ -17,21 +17,28 @@ namespace DB.UI
         {
             InitializeComponent();
         }
-
+        private Interface Interface;
         public void Set(ref Interface inter)
         {
-            Dumb.FD(ref this.Linaa);
 
-            this.Linaa = inter.Get();
+            Interface = inter;
+
+            Dumb.FD(ref this.Linaa);
+           // Dumb.FD(ref this.Linaa);
+            Dumb.FD(ref BS);
+
+            DGV.DataSource = Interface.IBS.Monitors;
+
+         //   this.Linaa = inter.Get();
 
             //	Findbox.ComboBox.DataSource = this.BS;
             //Findbox.ComboBox.DisplayMember = this.Linaa.Monitors.MonNameColumn.ColumnName;
             //Findbox.ComboBox.ValueMember = this.Linaa.Monitors.MonNameColumn.ColumnName;
 
-            MonCodebox.ComboBox.DataSource = this.Linaa.Standards;
-            MonCodebox.ComboBox.DisplayMember = this.Linaa.Standards.MonitorCodeColumn.ColumnName;
-            MonCodebox.ComboBox.ValueMember = this.Linaa.Standards.MonitorCodeColumn.ColumnName;
-
+           
+            MonCodebox.ComboBox.DisplayMember = Interface.IDB.Standards.MonitorCodeColumn.ColumnName;
+            MonCodebox.ComboBox.ValueMember = Interface.IDB.Standards.MonitorCodeColumn.ColumnName;
+            MonCodebox.ComboBox.DataSource = Interface.IDB.Standards;
             PostRefresh(null, EventArgs.Empty);
         }
 
@@ -65,8 +72,9 @@ namespace DB.UI
             {
                 filterCode += " AND " + mmcol + " <= '" + mCode + max + "'";
             }
-
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Monitors, filterCode, sortCode);
+            Interface.IBS.Monitors.Sort = sortCode;
+            Interface.IBS.Monitors.Filter = filterCode;
+         //   Rsx.Dumb.LinkBS(ref Interface.IBS.Monitors, this.Linaa.Monitors, filterCode, sortCode);
         }
 
         public void RowAdded(ref DataRow row)
@@ -75,7 +83,7 @@ namespace DB.UI
             int last = 1;
             minBox.Text = string.Empty;
             maxBox.Text = string.Empty;
-            System.Collections.Generic.IEnumerable<DataRowView> views = this.BS.List.OfType<DataRowView>();
+            System.Collections.Generic.IEnumerable<DataRowView> views = Interface.IBS.Monitors.List.OfType<DataRowView>();
             System.Collections.Generic.IEnumerable<LINAA.MonitorsRow> mons = Dumb.Cast<LINAA.MonitorsRow>(views).Where(o => !o.IsMonNameNull());
             mons = mons.OrderByDescending(o => o.MonName);
 

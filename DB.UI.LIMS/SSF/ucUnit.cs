@@ -49,27 +49,7 @@ namespace DB.UI
 
         }
 
-        /// <summary>
-        /// A binding Current Changed event to update Binding sources
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UnitBS_CurrentChanged(object sender, System.EventArgs e)
-        {
-         
-            MatSSF.UNIT = Interface.ICurrent.Unit as LINAA.UnitRow;
-        
-            Interface.IBS.Update<LINAA.SubSamplesRow>(MatSSF.UNIT.SubSamplesRow,false);
-            Interface.IBS.Update<LINAA.UnitRow>(MatSSF.UNIT, true,false);
-            MatSSF.ReadXML();
-          
-            string column = MatSSF.Table.UnitIDColumn.ColumnName;
-            string sortCol = MatSSF.Table.TargetIsotopeColumn.ColumnName;
-            string unitID = MatSSF.UNIT.UnitID.ToString();
-            string filter = column + " is " + unitID;
-
-            Dumb.LinkBS(ref this.SSFBS, MatSSF.Table, filter, sortCol);
-        }
+  
 
        
 
@@ -83,8 +63,15 @@ namespace DB.UI
         public void Set(ref Interface inter)
         {
             Interface = inter;
+
             Dumb.FD<LINAA>(ref this.lINAA);
-            this.lINAA = Interface.Get() as LINAA;
+            Dumb.FD(ref this.UnitBS);
+            Dumb.FD(ref this.SSFBS);
+
+            unitDGV.DataSource = Interface.IBS.Units;
+            SSFDGV.DataSource = Interface.IBS.SSF;
+
+            //    this.lINAA = Interface.Get() as LINAA;
 
 
             MatSSF.Table = Interface.IDB.MatSSF;
@@ -92,15 +79,14 @@ namespace DB.UI
             setBindings();
       
 
-            this.UnitBS.CurrentChanged -= UnitBS_CurrentChanged;
-            this.UnitBS.CurrentChanged += UnitBS_CurrentChanged;
+         
 
         }
 
         private void setBindings()
         {
             //sets all the bindings again
-            BindingSource bs = this.UnitBS;
+            BindingSource bs = Interface.IBS.Units;
 
             string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
             Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
@@ -114,11 +100,11 @@ namespace DB.UI
             this.lastCal.TextBox.DataBindings.Add(lastcalbs);
             this.lastChg.TextBox.DataBindings.Add(lastchgbs);
 
-            Interface.IBS.Units = bs; //link to binding source
+       //     Interface.IBS.Units = bs; //link to binding source
 
         }
 
-        //     private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
+      
 
         public DataGridViewCellMouseEventHandler RowHeaderMouseClick
         {

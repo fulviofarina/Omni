@@ -365,7 +365,7 @@ namespace k0X
             {
                 //LINK....
                 if (this.ParentForm != null) this.ParentForm.Text = this.Name;
-                this.ISubS.Link(string.Empty, string.Empty);
+                this.ISubS.Link();
                 bool useranalysing = (pTable != null);
                 if (useranalysing) pTable.Link();
 

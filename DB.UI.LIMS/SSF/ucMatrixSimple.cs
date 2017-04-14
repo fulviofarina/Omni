@@ -27,13 +27,16 @@ namespace DB.UI
         {
             Interface = LinaaInterface;
             Dumb.FD<LINAA>(ref this.lINAA);
-      //      this.lINAA = Interface.Get() as LINAA;
+            Dumb.FD(ref this.MatrixBS);
+            //      this.lINAA = Interface.Get() as LINAA;
 
-            BindingSource bs = this.MatrixBS;
 
-            Dumb.LinkBS(ref bs, Interface.IDB.Matrix);
+            matrixDGV.DataSource = Interface.IBS.Matrix;
+        //    BindingSource bs = this.MatrixBS;
 
-            Interface.IBS.Matrix = bs;
+        //    Dumb.LinkBS(ref bs, Interface.IDB.Matrix);
+
+       //     Interface.IBS.Matrix = bs;
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
             bool t = true;
@@ -41,7 +44,7 @@ namespace DB.UI
             string column;
 
             column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
-            Binding mcompoBin = new Binding(text, bs, column, t, mo);
+            Binding mcompoBin = new Binding(text, Interface.IBS.Matrix, column, t, mo);
 
             this.matrixRTB.DataBindings.Add(mcompoBin);
 

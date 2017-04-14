@@ -44,7 +44,7 @@ namespace DB.Tools
         /// <param name="Linaa">  referenced database to build (can be a null reference)</param>
         /// <param name="notify"> referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition</param>
-        public static void Build(ref Interface inter, ref NotifyIcon notify, ref Pop msn)
+        public static void Build(ref Interface inter,  ref Pop msn)
         {
             //restarting = false;
 
@@ -63,12 +63,10 @@ namespace DB.Tools
             if (msn != null)
             {
                 Interface.IReport.Msn = msn;
+              //  msn.ParentForm.Opacity = 100;
             }
 
-            if (notify != null)
-            {
-                Interface.IReport.Notify = notify;
-            }
+          
 
             Cursor.Current = Cursors.Default;
 
@@ -89,7 +87,7 @@ namespace DB.Tools
 
             //assign folderpath (like a App\Local folder)
             Interface.IMain.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            Interface.IMain.FolderPath += Resources.k0XFolder; //cambiar esto
+           Interface.IMain.FolderPath += Resources.k0XFolder; //cambiar esto
 
             //populate main directory at folderPath
             try
@@ -119,7 +117,7 @@ namespace DB.Tools
 
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
-            bool restartedOrReported = restartingRoutine();
+            bool restartedOrReported = checkBugFile();
 
             Cursor.Current = Cursors.Default;
 

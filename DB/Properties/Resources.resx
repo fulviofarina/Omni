@@ -170,7 +170,7 @@
     <value>Restarting</value>
   </data>
   <data name="Features" xml:space="preserve">
-    <value>\Features.txt</value>
+    <value>Features.txt</value>
   </data>
   <data name="MCNPXExe" xml:space="preserve">
     <value>mcnpx.exe</value>
@@ -191,5 +191,8 @@
   <data name="SSFResource" xml:space="preserve">
     <value>MatSSF</value>
     <comment>from BAK to CAB to expand.exe</comment>
+  </data>
+  <data name="DevFiles" xml:space="preserve">
+    <value>\Files\</value>
   </data>
 </root>

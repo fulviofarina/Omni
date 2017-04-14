@@ -249,10 +249,10 @@ namespace DB.Tools
 
 
             //fill shit I should delete!!!!
-            if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
-            Table.GtDensity[1] = UNIT.SubSamplesRow.CalcDensity.ToString();
+         //   if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
+           // Table.GtDensity[1] = UNIT.SubSamplesRow.CalcDensity.ToString();
             if (Sample != null) Sample.Gthermal = UNIT.Gt;
-            Table.GtDensity[0] = UNIT.Gt.ToString();
+         //   Table.GtDensity[0] = UNIT.Gt.ToString();
 
             return File;
         }

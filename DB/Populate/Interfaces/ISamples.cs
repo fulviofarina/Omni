@@ -14,10 +14,10 @@ namespace DB
         IEnumerable<LINAA.SubSamplesRow> CreateSamplesNamesFrom(ref IEnumerable<string> hsamples);
 
         DataTable CalculateBranchFactor(ref IPeakAveragesRow daugther, ref IEnumerable<IPeakAveragesRow> references);
-
+        void PopulateUnitsByProject(int irrReqId);
         void LoadMonitorsFile(string file);
 
-        void LoadSampleData(bool load);
+        void BeginEndLoadData(bool load);
 
         void PopulateMonitorFlags();
 

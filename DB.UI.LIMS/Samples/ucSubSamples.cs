@@ -71,7 +71,7 @@ namespace DB.UI
             }
             else
             {
-                this.Link(this.filter, this.sort);
+                this.Link();
                 this.SaveItem.Enabled = false;
             }
             this.ParentForm.Visible = !this.ParentForm.Visible;
@@ -82,20 +82,22 @@ namespace DB.UI
         /// </summary>
         public void DeLink()
         {
-            this.filter = this.BS.Filter;
-            this.sort = this.BS.Sort;
-            Dumb.DeLinkBS(ref this.BS);
+            this.filter = Interface.IBS.SubSamples.Filter;
+            this.sort = Interface.IBS.SubSamples.Sort;
+            Dumb.DeLinkBS(ref Interface.IBS.SubSamples);
             // ucContent.DeLink();
         }
 
         /// <summary>
         /// links to the binding source
         /// </summary>
-        public void Link(string Filter, string Sort)
+        public void Link()
         {
-            if (!string.IsNullOrEmpty(Filter)) this.filter = Filter;
-            if (!string.IsNullOrEmpty(Sort)) this.sort = Sort;
-            Dumb.LinkBS(ref this.BS, this.Linaa.SubSamples, this.filter, this.sort);
+        //    if (!string.IsNullOrEmpty(Filter)) this.filter = Filter;
+        //    if (!string.IsNullOrEmpty(Sort)) this.sort = Sort;
+        //    Dumb.LinkBS(ref Interface.IBS.SubSamples, Interface.IDB.SubSamples, this.filter, this.sort);
+
+
             if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
             // ucContent.Link(Filter, Sort);
         }
@@ -106,7 +108,7 @@ namespace DB.UI
 
             HashSet<int> indexes = new HashSet<int>();
 
-            foreach (DataGridViewRow r in dataGridView1.Rows)
+            foreach (DataGridViewRow r in DGV.Rows)
             {
                 // if (!indexes.Add(r.RowIndex)) continue;
 
@@ -147,11 +149,11 @@ namespace DB.UI
 
             HashSet<int> indexes = new HashSet<int>();
 
-            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            foreach (DataGridViewCell cell in DGV.SelectedCells)
             {
                 if (!indexes.Add(cell.RowIndex)) continue;
 
-                DataGridViewRow r = dataGridView1.Rows[cell.RowIndex];
+                DataGridViewRow r = DGV.Rows[cell.RowIndex];
 
                 DataRowView vr = r.DataBoundItem as DataRowView;
 
@@ -162,7 +164,7 @@ namespace DB.UI
 
             IEnumerable<SubSamplesRow> send = samplesToPredict.ToArray();
 
-            LINAA newLina = this.Linaa.Clone() as DB.LINAA;
+            LINAA newLina = Interface.Get().Clone() as DB.LINAA;
             newLina.CloneDataSet(ref Linaa);
 
             ToolStripProgressBar bar = new ToolStripProgressBar();
@@ -200,7 +202,7 @@ namespace DB.UI
 
             Interface.IPopulate.ISamples.AddSamples(project, ref samples, false);
 
-            Link(this.filter, this.sort);
+          //  Link(this.filter, this.sort);
 
           
             Interface.IBS.Update(row, true, true);
@@ -214,14 +216,18 @@ namespace DB.UI
         {
             Interface = inter;
             Dumb.FD(ref Linaa);
-            this.Linaa = Interface.Get();
+            Dumb.FD(ref this.BS);
 
+            this.DGV.DataSource = Interface.IBS.SubSamples;
+            this.BN.BindingSource = Interface.IBS.SubSamples;
+
+          //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             projectbox.Set(ref Interface, Link);
 
             string toSort = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
-            this.BS.Sort = toSort + " asc";
+            Interface.IBS.SubSamples.Sort = toSort + " asc";
 
-            Interface.IBS.SubSamples = this.BS;
+          //  Interface.IBS.SubSamples = this.BS;
         }
 
         /// <summary>
@@ -231,14 +237,14 @@ namespace DB.UI
         /// <param name="e">     </param>
         public void ShareTirr(object sender, EventArgs e)
         {
-            SubSamplesRow current = Dumb.Cast<SubSamplesRow>(BS.Current as DataRowView);
+            SubSamplesRow current = Interface.ICurrent.SubSample as SubSamplesRow;
 
             if (current.IsInReactorNull() || current.IsIrradiationTotalTimeNull())
             {
                 MessageBox.Show("Please fill in the irradiations date/times for this sample in order to propagate it to the others");
                 return;
             }
-            IEnumerable<SubSamplesRow> others = Dumb.Cast<SubSamplesRow>(BS.List as DataView);
+            IEnumerable<SubSamplesRow> others = Dumb.Cast<SubSamplesRow>(Interface.IBS.SubSamples.List as DataView);
             others = others.Where(o => o != current).ToList();
             foreach (SubSamplesRow s in others)
             {
@@ -248,17 +254,8 @@ namespace DB.UI
             }
         }
 
-        /// <summary>
-        /// When the BS changes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">     </param>
-        private void BS_CurrentChanged(object sender, EventArgs e)
-        {
-            // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
-            DataRow r = Interface.ICurrent.SubSample;
-            Interface.IBS.Update(r, true, false);
-        }
+       
+     
 
         /// <summary>
         /// something about a crystal report
@@ -267,7 +264,7 @@ namespace DB.UI
         /// <param name="e">     </param>
         private void reportBtton_Click(object sender, EventArgs e)
         {
-            if (Icrepo == null) Icrepo = new CReport(this.Linaa as DataSet);
+            if (Icrepo == null) Icrepo = new CReport(Interface.Get() as DataSet);
             Icrepo.LoadACrystalReport(this.projectbox.Project, CReport.ReporTypes.ProjectReport);
         }
 
@@ -277,7 +274,7 @@ namespace DB.UI
 
             //these two functions work flawlessly for selecting the rowHeader in the
             //dgv and for updating of child row positions
-            this.BS.CurrentChanged += BS_CurrentChanged;
+        
 
             reportBtton.Visible = false;
         }

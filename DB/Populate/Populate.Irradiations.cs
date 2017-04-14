@@ -6,6 +6,26 @@ namespace DB
 {
     public partial class LINAA : IIrradiations
     {
+
+        public IrradiationRequestsRow AddIrradiation(string project)
+        {
+            string projetNoCd = project.Trim().ToUpper();
+           
+            if (projetNoCd.Length > 2)
+            {
+                if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(DB.Properties.Misc.Cd) == 0)
+                {
+                    projetNoCd = projetNoCd.Replace(DB.Properties.Misc.Cd, null);
+                }
+            }
+            IrradiationRequestsRow i = this.IrradiationRequests.NewIrradiationRequestsRow();
+            this.IrradiationRequests.AddIrradiationRequestsRow(i);
+
+            i.IrradiationStartDateTime = DateTime.Now;
+            i.IrradiationCode = projetNoCd;
+
+            return i;
+        }
         public Int32? FindIrrReqID(string project)
         {
             return this.tableIrradiationRequests.FindIrrReqID(project);

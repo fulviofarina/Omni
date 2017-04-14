@@ -6,9 +6,10 @@ using Rsx;
 
 namespace DB.UI
 {
-    public partial class ucPreferences : UserControl
+    public partial class ucPreferences : UserControl, IucPreferences
     {
         private Interface Interface;
+        // 
 
         public void Set(ref Interface inter)
         {
@@ -20,7 +21,7 @@ namespace DB.UI
                 this.SSFPref.DataSource = Interface.Get();
                 this.PrefBS.DataMember = Interface.IDB.Preferences.TableName;
                 this.SSFPref.DataMember = Interface.IDB.SSFPref.TableName;
-             
+
                 Interface.IBS.Preferences = this.PrefBS;
                 Interface.IBS.SSFPreferences = this.SSFPref;
 
@@ -37,6 +38,7 @@ namespace DB.UI
                 this.doSolangCheckBox.Enabled = false;
                 this.showSolangCheckBox.Enabled = false;
                 this.fillBySpectraCheckBox.Enabled = false;
+                this.showSampleDescriptionCheckBox.Enabled = false;
 
                 this.PrefBS.ResetBindings(true);
                 this.SSFPref.ResetBindings(true);
@@ -47,22 +49,42 @@ namespace DB.UI
             }
         }
 
-        private void setSSFPreferencesbindings()
+        /// <summary>
+        /// Sets the Rounding format "link" between the Preferences and the
+        /// textBoxes. The arguments
+        /// (Hashtables of bindings) for these boxes must be provided
+        /// </summary>
+        /// <param name="unitsTable"> </param>
+        /// <param name="sampleTable"></param>
+        public void SetRoundingBinding(ref Hashtable unitsTable, ref Hashtable sampleTable)
         {
-            BindingSource bs = Interface.IBS.SSFPreferences;
+            //the bindings to round
+            Hashtable bindings, samplebindings;
+            bindings = unitsTable;
+            samplebindings = sampleTable;
 
-            Hashtable bindings = Dumb.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+            //Do the update when this control losses focus
+            this.LostFocus += delegate
+              {
+                  try
+                  {
+                      IPreferences ip = Interface.IPreferences;
 
-            this.aARadiusCheckBox.DataBindings.Add(bindings["AARadius"] as Binding);
+                      string format = this.roundingTextBox.Text;
+                      if (format.Length < 2) return;
+                      Dumb.ChangeBindingsFormat(format, ref bindings);
+                      Dumb.ChangeBindingsFormat(format, ref samplebindings);
 
-            this.showOtherCheckBox.DataBindings.Add(bindings["ShowOther"] as Binding);
-            this.aAFillHeightCheckBox.DataBindings.Add(bindings["AAFillHeight"] as Binding);
-            this.doMatSSFCheckBox.DataBindings.Add(bindings["DoMatSSF"] as Binding);
-            this.doCKCheckBox.DataBindings.Add(bindings["DoCK"] as Binding);
-            this.calcDensityCheckBox.DataBindings.Add(bindings["CalcDensity"] as Binding);
+                      Interface.IPreferences.CurrentSSFPref.Rounding = format;
 
-            this.loopCheckBox.DataBindings.Add(bindings["Loop"] as Binding);
-            this.showMatSSFCheckBox.DataBindings.Add(bindings["ShowMatSSF"] as Binding);
+                      //save preferences
+                      Interface.IPreferences.SavePreferences();
+                  }
+                  catch (Exception ex)
+                  {
+                      Interface.IMain.AddException(ex);
+                  }
+              };
         }
 
         private void setPreferencesbindings()
@@ -90,12 +112,30 @@ namespace DB.UI
             this.windowATextBox.DataBindings.Add(bindings2["windowA"] as Binding);
         }
 
+        private void setSSFPreferencesbindings()
+        {
+            BindingSource bs = Interface.IBS.SSFPreferences;
+
+            Hashtable bindings = Dumb.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+
+            this.aARadiusCheckBox.DataBindings.Add(bindings["AARadius"] as Binding);
+
+            this.showOtherCheckBox.DataBindings.Add(bindings["ShowOther"] as Binding);
+            this.aAFillHeightCheckBox.DataBindings.Add(bindings["AAFillHeight"] as Binding);
+            this.doMatSSFCheckBox.DataBindings.Add(bindings["DoMatSSF"] as Binding);
+            this.doCKCheckBox.DataBindings.Add(bindings["DoCK"] as Binding);
+            this.calcDensityCheckBox.DataBindings.Add(bindings["CalcDensity"] as Binding);
+
+            this.loopCheckBox.DataBindings.Add(bindings["Loop"] as Binding);
+            this.showMatSSFCheckBox.DataBindings.Add(bindings["ShowMatSSF"] as Binding);
+
+            Binding b2 = new Binding("Text", bs, Interface.IDB.SSFPref.RoundingColumn.ColumnName, true, DataSourceUpdateMode.OnPropertyChanged);
+            this.roundingTextBox.DataBindings.Add(b2);
+        }
+
         public ucPreferences()
         {
             InitializeComponent();
-        
         }
-
-     
     }
 }

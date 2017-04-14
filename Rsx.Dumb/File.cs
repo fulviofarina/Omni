@@ -76,7 +76,7 @@ namespace Rsx
       raw = null;
       return lecture;
     }
-        public static void LoadFilesIntoBoxes(ref Action showProgress, ref RichTextBox input, string file)
+        public static void LoadFilesIntoBoxes(Action showProgress, ref RichTextBox input, string file)
         {
             //load files
             //Clear InputFile RTF Control
@@ -85,7 +85,7 @@ namespace Rsx
             bool exist = System.IO.File.Exists(file);
             if (exist) input.LoadFile(file, RichTextBoxStreamType.PlainText);
 
-            showProgress();
+            showProgress?.Invoke();
 
         }
         public static IList<string> GetDirectories(string path)

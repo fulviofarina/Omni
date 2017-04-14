@@ -12,7 +12,7 @@
   <xs:element name="EDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EDB" msprop:Generator_UserDSName="EDB">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Environment" msprop:Generator_TableClassName="EnvironmentDataTable" msprop:Generator_TableVarName="tableEnvironment" msprop:Generator_TablePropName="Environment" msprop:Generator_RowDeletingName="EnvironmentRowDeleting" msprop:Generator_RowChangingName="EnvironmentRowChanging" msprop:Generator_RowEvHandlerName="EnvironmentRowChangeEventHandler" msprop:Generator_RowDeletedName="EnvironmentRowDeleted" msprop:Generator_UserTableName="Environment" msprop:Generator_RowChangedName="EnvironmentRowChanged" msprop:Generator_RowEvArgName="EnvironmentRowChangeEvent" msprop:Generator_RowClassName="EnvironmentRow">
+        <xs:element name="Environment" msprop:Generator_TableClassName="EnvironmentDataTable" msprop:Generator_TableVarName="tableEnvironment" msprop:Generator_RowChangedName="EnvironmentRowChanged" msprop:Generator_TablePropName="Environment" msprop:Generator_RowDeletingName="EnvironmentRowDeleting" msprop:Generator_RowChangingName="EnvironmentRowChanging" msprop:Generator_RowEvHandlerName="EnvironmentRowChangeEventHandler" msprop:Generator_RowDeletedName="EnvironmentRowDeleted" msprop:Generator_RowClassName="EnvironmentRow" msprop:Generator_UserTableName="Environment" msprop:Generator_RowEvArgName="EnvironmentRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="CurrentPath" msprop:Generator_ColumnVarNameInTable="columnCurrentPath" msprop:Generator_ColumnPropNameInRow="CurrentPath" msprop:Generator_ColumnPropNameInTable="CurrentPathColumn" msprop:Generator_UserColumnName="CurrentPath" type="xs:string" minOccurs="0" />
@@ -25,6 +25,7 @@
               <xs:element name="UserName" msprop:Generator_ColumnVarNameInTable="columnUserName" msprop:Generator_ColumnPropNameInRow="UserName" msprop:Generator_ColumnPropNameInTable="UserNameColumn" msprop:Generator_UserColumnName="UserName" type="xs:string" minOccurs="0" />
               <xs:element name="WorkingSet" msprop:Generator_ColumnVarNameInTable="columnWorkingSet" msprop:Generator_ColumnPropNameInRow="WorkingSet" msprop:Generator_ColumnPropNameInTable="WorkingSetColumn" msprop:Generator_UserColumnName="WorkingSet" type="xs:long" minOccurs="0" />
               <xs:element name="OSVersion" msprop:Generator_ColumnVarNameInTable="columnOSVersion" msprop:Generator_ColumnPropNameInRow="OSVersion" msprop:Generator_ColumnPropNameInTable="OSVersionColumn" msprop:Generator_UserColumnName="OSVersion" type="xs:string" minOccurs="0" />
+              <xs:element name="Ticks" msprop:Generator_ColumnVarNameInTable="columnTicks" msprop:Generator_ColumnPropNameInRow="Ticks" msprop:Generator_ColumnPropNameInTable="TicksColumn" msprop:Generator_UserColumnName="Ticks" type="xs:long" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

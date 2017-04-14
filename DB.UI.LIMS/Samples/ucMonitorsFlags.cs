@@ -14,9 +14,11 @@ namespace DB.UI
         public void Set(ref Interface inter)
         {
             Dumb.FD(ref this.Linaa);
-            this.Linaa = inter.Get();
+            Dumb.FD(ref this.BS);
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.MonitorsFlags);
+            DGV.DataSource = inter.IBS.MonitorsFlags;
+
+       //     Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.MonitorsFlags);
         }
     }
 }

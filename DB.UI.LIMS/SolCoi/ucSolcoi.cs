@@ -540,12 +540,14 @@ namespace DB.UI
         private void RefreshGeometriesTV()
         {
             string geoname = this.Linaa.Geometry.GeometryNameColumn.ColumnName;
-            geoSolangbox.ComboBox.DataSource = this.Linaa.Geometry;
+          
             geoSolangbox.ComboBox.DisplayMember = geoname;
+            geoSolangbox.ComboBox.DataSource = this.Linaa.Geometry;
             geoSolangbox.ComboBox.ValueMember = geoname;
 
-            geoeffibox.ComboBox.DataSource = this.Linaa.Geometry;
+       
             geoeffibox.ComboBox.DisplayMember = geoname;
+            geoeffibox.ComboBox.DataSource = this.Linaa.Geometry;
             geoeffibox.ComboBox.ValueMember = geoname;
 
             TVgeo.Nodes.Clear();

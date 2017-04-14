@@ -59,6 +59,7 @@ namespace k0X
         public void Box_KeyUp(object sender, KeyEventArgs e)
         {
             if ((e.KeyValue < 47 || e.KeyValue > 105) && e.KeyCode != Keys.Enter) return;
+
             string ProjectOrOrder = Box.Text.Trim();
             if (ProjectOrOrder.Equals(string.Empty)) return;
 
@@ -116,7 +117,7 @@ namespace k0X
 
                     UserControl control = LIMS.CreateUI(ControlNames.Irradiations);
 
-                    if (control == null) return;
+                //    if (control == null) return;
 
                     LIMS.UserControls.Add(control);
 
@@ -124,7 +125,7 @@ namespace k0X
                     ucIrrReq.Name = ProjectOrOrder + " - New Irradiation";
 
                     Application.DoEvents();
-                    ucIrrReq.CreateNewIrradiation(ProjectOrOrder);
+                    LIMS.Interface.IPopulate.IIrradiations.AddIrradiation(ProjectOrOrder);
                     LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
 
                     this.Box_KeyUp(sender, e);
@@ -399,7 +400,7 @@ namespace k0X
                 msn = new Pop(false);
 
                 //Build
-                Creator.Build(ref LIMS.Interface, ref notify, ref msn);
+                Creator.Build(ref LIMS.Interface, ref msn);
                 Creator.CheckDirectories();
                 bool ok = Creator.Prepare(0);
                 //       string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn, 0);

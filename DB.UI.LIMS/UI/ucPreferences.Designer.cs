@@ -33,6 +33,7 @@
             System.Windows.Forms.Label maxUncLabel;
             System.Windows.Forms.Label windowALabel;
             System.Windows.Forms.Label windowBLabel;
+            System.Windows.Forms.Label roundingLabel;
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.showSampleDescriptionCheckBox = new System.Windows.Forms.CheckBox();
@@ -47,6 +48,7 @@
             this.doSolangCheckBox = new System.Windows.Forms.CheckBox();
             this.showSolangCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.loopCheckBox = new System.Windows.Forms.CheckBox();
             this.showMatSSFCheckBox = new System.Windows.Forms.CheckBox();
             this.doCKCheckBox = new System.Windows.Forms.CheckBox();
             this.doMatSSFCheckBox = new System.Windows.Forms.CheckBox();
@@ -56,11 +58,12 @@
             this.showOtherCheckBox = new System.Windows.Forms.CheckBox();
             this.PrefBS = new System.Windows.Forms.BindingSource(this.components);
             this.SSFPref = new System.Windows.Forms.BindingSource(this.components);
-            this.loopCheckBox = new System.Windows.Forms.CheckBox();
+            this.roundingTextBox = new System.Windows.Forms.TextBox();
             minAreaLabel = new System.Windows.Forms.Label();
             maxUncLabel = new System.Windows.Forms.Label();
             windowALabel = new System.Windows.Forms.Label();
             windowBLabel = new System.Windows.Forms.Label();
+            roundingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -74,6 +77,7 @@
             // minAreaLabel
             // 
             minAreaLabel.AutoSize = true;
+            minAreaLabel.ForeColor = System.Drawing.Color.DarkOrange;
             minAreaLabel.Location = new System.Drawing.Point(3, 0);
             minAreaLabel.Name = "minAreaLabel";
             minAreaLabel.Size = new System.Drawing.Size(76, 21);
@@ -83,6 +87,7 @@
             // maxUncLabel
             // 
             maxUncLabel.AutoSize = true;
+            maxUncLabel.ForeColor = System.Drawing.Color.DarkOrange;
             maxUncLabel.Location = new System.Drawing.Point(3, 56);
             maxUncLabel.Name = "maxUncLabel";
             maxUncLabel.Size = new System.Drawing.Size(73, 21);
@@ -92,6 +97,7 @@
             // windowALabel
             // 
             windowALabel.AutoSize = true;
+            windowALabel.ForeColor = System.Drawing.Color.DarkOrange;
             windowALabel.Location = new System.Drawing.Point(3, 112);
             windowALabel.Name = "windowALabel";
             windowALabel.Size = new System.Drawing.Size(85, 21);
@@ -101,6 +107,7 @@
             // windowBLabel
             // 
             windowBLabel.AutoSize = true;
+            windowBLabel.ForeColor = System.Drawing.Color.DarkOrange;
             windowBLabel.Location = new System.Drawing.Point(3, 168);
             windowBLabel.Name = "windowBLabel";
             windowBLabel.Size = new System.Drawing.Size(84, 21);
@@ -109,7 +116,11 @@
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.ForeColor = System.Drawing.Color.White;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -120,8 +131,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer1.Size = new System.Drawing.Size(607, 504);
+            this.splitContainer1.Size = new System.Drawing.Size(607, 596);
             this.splitContainer1.SplitterDistance = 298;
+            this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -168,7 +180,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(298, 504);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 592);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // showSampleDescriptionCheckBox
@@ -176,7 +188,7 @@
             this.showSampleDescriptionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.showSampleDescriptionCheckBox.Location = new System.Drawing.Point(3, 458);
             this.showSampleDescriptionCheckBox.Name = "showSampleDescriptionCheckBox";
-            this.showSampleDescriptionCheckBox.Size = new System.Drawing.Size(292, 43);
+            this.showSampleDescriptionCheckBox.Size = new System.Drawing.Size(288, 131);
             this.showSampleDescriptionCheckBox.TabIndex = 15;
             this.showSampleDescriptionCheckBox.Text = "Show Sample Description";
             this.showSampleDescriptionCheckBox.UseVisualStyleBackColor = true;
@@ -184,10 +196,9 @@
             // fillBySpectraCheckBox
             // 
             this.fillBySpectraCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-          
             this.fillBySpectraCheckBox.Location = new System.Drawing.Point(3, 428);
             this.fillBySpectraCheckBox.Name = "fillBySpectraCheckBox";
-            this.fillBySpectraCheckBox.Size = new System.Drawing.Size(292, 24);
+            this.fillBySpectraCheckBox.Size = new System.Drawing.Size(288, 24);
             this.fillBySpectraCheckBox.TabIndex = 14;
             this.fillBySpectraCheckBox.Text = "Fill by Spectra";
             this.fillBySpectraCheckBox.UseVisualStyleBackColor = true;
@@ -195,17 +206,15 @@
             // fillByHLCheckBox
             // 
             this.fillByHLCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-   
             this.fillByHLCheckBox.Location = new System.Drawing.Point(3, 398);
             this.fillByHLCheckBox.Name = "fillByHLCheckBox";
-            this.fillByHLCheckBox.Size = new System.Drawing.Size(292, 24);
+            this.fillByHLCheckBox.Size = new System.Drawing.Size(288, 24);
             this.fillByHLCheckBox.TabIndex = 13;
             this.fillByHLCheckBox.Text = "Fill by HL";
             this.fillByHLCheckBox.UseVisualStyleBackColor = true;
             // 
             // windowBTextBox
             // 
-          
             this.windowBTextBox.Location = new System.Drawing.Point(3, 192);
             this.windowBTextBox.Name = "windowBTextBox";
             this.windowBTextBox.Size = new System.Drawing.Size(100, 29);
@@ -213,7 +222,6 @@
             // 
             // windowATextBox
             // 
-          
             this.windowATextBox.Location = new System.Drawing.Point(3, 136);
             this.windowATextBox.Name = "windowATextBox";
             this.windowATextBox.Size = new System.Drawing.Size(100, 29);
@@ -221,8 +229,6 @@
             // 
             // maxUncTextBox
             // 
-      
-
             this.maxUncTextBox.Location = new System.Drawing.Point(3, 80);
             this.maxUncTextBox.Name = "maxUncTextBox";
             this.maxUncTextBox.Size = new System.Drawing.Size(100, 29);
@@ -230,7 +236,6 @@
             // 
             // minAreaTextBox
             // 
-       
             this.minAreaTextBox.Location = new System.Drawing.Point(3, 24);
             this.minAreaTextBox.Name = "minAreaTextBox";
             this.minAreaTextBox.Size = new System.Drawing.Size(100, 29);
@@ -239,11 +244,10 @@
             // offlineCheckBox
             // 
             this.offlineCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-       
             this.offlineCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.offlineCheckBox.Location = new System.Drawing.Point(3, 357);
             this.offlineCheckBox.Name = "offlineCheckBox";
-            this.offlineCheckBox.Size = new System.Drawing.Size(292, 35);
+            this.offlineCheckBox.Size = new System.Drawing.Size(288, 35);
             this.offlineCheckBox.TabIndex = 4;
             this.offlineCheckBox.Text = "Offline";
             this.offlineCheckBox.UseVisualStyleBackColor = true;
@@ -254,7 +258,7 @@
             this.autoLoadCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoLoadCheckBox.Location = new System.Drawing.Point(3, 227);
             this.autoLoadCheckBox.Name = "autoLoadCheckBox";
-            this.autoLoadCheckBox.Size = new System.Drawing.Size(292, 42);
+            this.autoLoadCheckBox.Size = new System.Drawing.Size(288, 42);
             this.autoLoadCheckBox.TabIndex = 3;
             this.autoLoadCheckBox.Text = "Auto-Load";
             this.autoLoadCheckBox.UseVisualStyleBackColor = true;
@@ -262,11 +266,10 @@
             // doSolangCheckBox
             // 
             this.doSolangCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-    
             this.doSolangCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doSolangCheckBox.Location = new System.Drawing.Point(3, 275);
             this.doSolangCheckBox.Name = "doSolangCheckBox";
-            this.doSolangCheckBox.Size = new System.Drawing.Size(292, 35);
+            this.doSolangCheckBox.Size = new System.Drawing.Size(288, 35);
             this.doSolangCheckBox.TabIndex = 1;
             this.doSolangCheckBox.Text = "Do SolCoi";
             this.doSolangCheckBox.UseVisualStyleBackColor = true;
@@ -274,11 +277,10 @@
             // showSolangCheckBox
             // 
             this.showSolangCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-    
             this.showSolangCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.showSolangCheckBox.Location = new System.Drawing.Point(3, 316);
             this.showSolangCheckBox.Name = "showSolangCheckBox";
-            this.showSolangCheckBox.Size = new System.Drawing.Size(292, 35);
+            this.showSolangCheckBox.Size = new System.Drawing.Size(288, 35);
             this.showSolangCheckBox.TabIndex = 2;
             this.showSolangCheckBox.Text = "Show SolCoi";
             this.showSolangCheckBox.UseVisualStyleBackColor = true;
@@ -288,6 +290,8 @@
             this.tableLayoutPanel2.AutoScroll = true;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(roundingLabel, 0, 10);
+            this.tableLayoutPanel2.Controls.Add(this.roundingTextBox, 0, 11);
             this.tableLayoutPanel2.Controls.Add(this.loopCheckBox, 0, 7);
             this.tableLayoutPanel2.Controls.Add(this.showMatSSFCheckBox, 0, 7);
             this.tableLayoutPanel2.Controls.Add(this.doCKCheckBox, 0, 5);
@@ -300,7 +304,7 @@
             this.tableLayoutPanel2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 9;
+            this.tableLayoutPanel2.RowCount = 11;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -311,15 +315,28 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(305, 504);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(295, 592);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // loopCheckBox
+            // 
+          //  this.loopCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.SSFPref, "Rounding", true));
+            this.loopCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loopCheckBox.Location = new System.Drawing.Point(3, 276);
+            this.loopCheckBox.Name = "loopCheckBox";
+            this.loopCheckBox.Size = new System.Drawing.Size(289, 105);
+            this.loopCheckBox.TabIndex = 10;
+            this.loopCheckBox.Text = "Loop Calculation";
+            this.loopCheckBox.UseVisualStyleBackColor = true;
             // 
             // showMatSSFCheckBox
             // 
             this.showMatSSFCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.showMatSSFCheckBox.Location = new System.Drawing.Point(3, 333);
+            this.showMatSSFCheckBox.Location = new System.Drawing.Point(3, 387);
             this.showMatSSFCheckBox.Name = "showMatSSFCheckBox";
-            this.showMatSSFCheckBox.Size = new System.Drawing.Size(299, 57);
+            this.showMatSSFCheckBox.Size = new System.Drawing.Size(289, 57);
             this.showMatSSFCheckBox.TabIndex = 9;
             this.showMatSSFCheckBox.Text = "Show MatSSF";
             this.showMatSSFCheckBox.UseVisualStyleBackColor = true;
@@ -330,7 +347,7 @@
             this.doCKCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doCKCheckBox.Location = new System.Drawing.Point(3, 219);
             this.doCKCheckBox.Name = "doCKCheckBox";
-            this.doCKCheckBox.Size = new System.Drawing.Size(299, 51);
+            this.doCKCheckBox.Size = new System.Drawing.Size(289, 51);
             this.doCKCheckBox.TabIndex = 8;
             this.doCKCheckBox.Text = "Do CK";
             this.doCKCheckBox.UseVisualStyleBackColor = true;
@@ -341,7 +358,7 @@
             this.doMatSSFCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doMatSSFCheckBox.Location = new System.Drawing.Point(3, 165);
             this.doMatSSFCheckBox.Name = "doMatSSFCheckBox";
-            this.doMatSSFCheckBox.Size = new System.Drawing.Size(299, 48);
+            this.doMatSSFCheckBox.Size = new System.Drawing.Size(289, 48);
             this.doMatSSFCheckBox.TabIndex = 6;
             this.doMatSSFCheckBox.Text = "Do MatSSF";
             this.doMatSSFCheckBox.UseVisualStyleBackColor = true;
@@ -352,7 +369,7 @@
             this.calcDensityCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.calcDensityCheckBox.Location = new System.Drawing.Point(3, 3);
             this.calcDensityCheckBox.Name = "calcDensityCheckBox";
-            this.calcDensityCheckBox.Size = new System.Drawing.Size(299, 48);
+            this.calcDensityCheckBox.Size = new System.Drawing.Size(289, 48);
             this.calcDensityCheckBox.TabIndex = 5;
             this.calcDensityCheckBox.Text = "Find Density";
             this.calcDensityCheckBox.UseVisualStyleBackColor = true;
@@ -363,7 +380,7 @@
             this.aAFillHeightCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aAFillHeightCheckBox.Location = new System.Drawing.Point(3, 111);
             this.aAFillHeightCheckBox.Name = "aAFillHeightCheckBox";
-            this.aAFillHeightCheckBox.Size = new System.Drawing.Size(299, 48);
+            this.aAFillHeightCheckBox.Size = new System.Drawing.Size(289, 48);
             this.aAFillHeightCheckBox.TabIndex = 4;
             this.aAFillHeightCheckBox.Text = "Find Length";
             this.aAFillHeightCheckBox.UseVisualStyleBackColor = true;
@@ -374,7 +391,7 @@
             this.aARadiusCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aARadiusCheckBox.Location = new System.Drawing.Point(3, 57);
             this.aARadiusCheckBox.Name = "aARadiusCheckBox";
-            this.aARadiusCheckBox.Size = new System.Drawing.Size(299, 48);
+            this.aARadiusCheckBox.Size = new System.Drawing.Size(289, 48);
             this.aARadiusCheckBox.TabIndex = 3;
             this.aARadiusCheckBox.Text = "Find Radius";
             this.aARadiusCheckBox.UseVisualStyleBackColor = true;
@@ -383,9 +400,9 @@
             // 
             this.showOtherCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.showOtherCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.showOtherCheckBox.Location = new System.Drawing.Point(3, 276);
+            this.showOtherCheckBox.Location = new System.Drawing.Point(3, 450);
             this.showOtherCheckBox.Name = "showOtherCheckBox";
-            this.showOtherCheckBox.Size = new System.Drawing.Size(299, 51);
+            this.showOtherCheckBox.Size = new System.Drawing.Size(289, 51);
             this.showOtherCheckBox.TabIndex = 2;
             this.showOtherCheckBox.Text = "Show Other";
             this.showOtherCheckBox.UseVisualStyleBackColor = true;
@@ -398,15 +415,24 @@
             // 
             this.SSFPref.DataSource = typeof(DB.LINAA.SSFPrefDataTable);
             // 
-            // loopCheckBox
+            // roundingLabel
             // 
-            this.loopCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loopCheckBox.Location = new System.Drawing.Point(3, 396);
-            this.loopCheckBox.Name = "loopCheckBox";
-            this.loopCheckBox.Size = new System.Drawing.Size(299, 105);
-            this.loopCheckBox.TabIndex = 10;
-            this.loopCheckBox.Text = "Loop all Units";
-            this.loopCheckBox.UseVisualStyleBackColor = true;
+            roundingLabel.AutoSize = true;
+            roundingLabel.ForeColor = System.Drawing.Color.DarkOrange;
+            roundingLabel.Location = new System.Drawing.Point(3, 504);
+            roundingLabel.Name = "roundingLabel";
+            roundingLabel.Size = new System.Drawing.Size(81, 21);
+            roundingLabel.TabIndex = 10;
+            roundingLabel.Text = "Rounding";
+            // 
+            // roundingTextBox
+            // 
+        //    this.roundingTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SSFPref, "Rounding", true));
+            this.roundingTextBox.Location = new System.Drawing.Point(3, 528);
+            this.roundingTextBox.Name = "roundingTextBox";
+            this.roundingTextBox.Size = new System.Drawing.Size(100, 29);
+            this.roundingTextBox.TabIndex = 11;
+            this.roundingTextBox.Text = "N4";
             // 
             // ucPreferences
             // 
@@ -414,7 +440,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Name = "ucPreferences";
-            this.Size = new System.Drawing.Size(607, 504);
+            this.Size = new System.Drawing.Size(607, 596);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -422,6 +448,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrefBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SSFPref)).EndInit();
             this.ResumeLayout(false);
@@ -454,5 +481,6 @@
         private System.Windows.Forms.CheckBox fillByHLCheckBox;
         private System.Windows.Forms.CheckBox showMatSSFCheckBox;
         private System.Windows.Forms.CheckBox loopCheckBox;
+        private System.Windows.Forms.TextBox roundingTextBox;
     }
 }

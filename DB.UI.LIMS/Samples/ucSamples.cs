@@ -11,15 +11,19 @@ namespace DB.UI
         {
             InitializeComponent();
         }
-
+        private Interface Interface;
         public void Set(ref Interface inter)
         {
+
+            Interface = inter;
             Dumb.FD(ref this.Linaa);
-            this.Linaa = inter.Get();
+            Dumb.FD(ref BS);
 
-            Dumb.LinkBS(ref this.BS, this.Linaa.Samples);
+            DGV.DataSource = Interface.IBS.Samples;
 
-            Dumb.FillABox(orderbox, this.Linaa.OrdersList, true, false);
+     //       Dumb.LinkBS(ref this.BS, this.Linaa.Samples);
+
+            Dumb.FillABox(orderbox, Interface.IPopulate.IOrders.OrdersList, true, false);
         }
 
         private void orderbox_TextChanged(object sender, EventArgs e)
@@ -28,16 +32,16 @@ namespace DB.UI
             {
                 try
                 {
-                    Int32? ordId = this.Linaa.FindOrderID(orderbox.Text.ToUpper());
+                    Int32? ordId = Interface.IPopulate.IOrders.FindOrderID(orderbox.Text.ToUpper());
                     if (ordId != null)
                     {
-                        this.TA.FillByOrderID(this.Linaa.Samples, ordId);
+                        this.TA.FillByOrderID(Interface.IDB.Samples, ordId);
                     }
                 }
                 catch (SystemException ex)
                 {
-                    this.Linaa.AddException(ex);
-                    MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace);
+                    Interface.IMain.AddException(ex);
+               //     MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace);
                 }
             }
         }

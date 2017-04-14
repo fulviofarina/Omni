@@ -10,13 +10,7 @@ namespace DB
     {
         partial class MatSSFDataTable
         {
-            private String[] gtdensity = new String[2] { String.Empty, String.Empty };
-
-            public String[] GtDensity
-            {
-                get { return gtdensity; }
-                set { gtdensity = value; }
-            }
+         
         }
 
         partial class UnitDataTable
@@ -184,9 +178,8 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    LINAA linaa = this.Table.DataSet as LINAA;
-                    linaa.AddException(ex);
-                    this.RowError = ex.Message;
+                    (this.Table.DataSet as LINAA).AddException(ex);
+                 
                 }
 
                 this.FillWith(Mdens, Gt, EXS, MCL, PXS);
@@ -209,15 +202,16 @@ namespace DB
                     if (!Mdens.Equals(string.Empty))
                     {
                         aux2 = Dumb.Parse(Mdens, 0);
-
-                        double dens2 = this.SubSamplesRow.CalcDensity;
                         double dens1 = Math.Abs(aux2);
-                        int factor = 10;
-                        if (Math.Abs((dens1 / dens2) - 1) * 100 > factor)
+                        if (!this.SubSamplesRow.IsCalcDensityNull())
                         {
-                            EC.SetRowError(this, new SystemException("Calculated density does not match input density by " + factor.ToString()));
+                            double dens2 = this.SubSamplesRow.CalcDensity;
+                            int factor = 10;
+                            if (Math.Abs((dens1 / dens2) - 1) * 100 > factor)
+                            {
+                                EC.SetRowError(this, new SystemException("Calculated density does not match input density by " + factor.ToString()));
+                            }
                         }
-
                         this.SubSamplesRow.CalcDensity = dens1;
                     }
                     if (!Gt.Equals(string.Empty))
@@ -249,9 +243,9 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    LINAA linaa = this.Table.DataSet as LINAA;
-                    linaa.AddException(ex);
-                    this.RowError = ex.Message;
+                    //      LINAA linaa = this.Table.DataSet as LINAA;
+                    (this.Table.DataSet as LINAA).AddException(ex);
+                    //  this.RowError = ex.Message;
                 }
             }
         }

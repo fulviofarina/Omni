@@ -19,141 +19,51 @@ namespace SSF
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+
+            msn = new Pop(true);
+            //create database
+            Creator.Build(ref LIMS.Interface, ref msn);
+
+            Creator.CheckDirectories();
+
+            DB.Tools.Creator.CallBack = delegate
+            {
+                Application.DoEvents();
+            };
+
+            DB.Tools.Creator.LastCallBack = CreateSSFUserInterface;
+
+            LIMS.Linaa = LIMS.Interface.Get();
+            LIMS.UserControls = new List<object>();
+
             Application.Run(Start());
         }
 
         private static string title = "SSF Panel by Fulvio Farina Arboccò";
+        static  Pop msn;//= new Pop(true);
 
+        static NotifyIcon con = null;
+      
+   
         /// <summary>
         /// Function meant to Create a LINAA database datatables and load itto store and display data
         /// </summary>
         /// <returns>Form created with the respective ucSSF inner control</returns>
         public static Form Start()
         {
-            //   Form Mainform = new Form();
 
             try
             {
-                /*
-                //main form
-                Mainform.Opacity = 0; //do not show
-                Mainform.Text = title;
-
-                Icon myIcon = Icon.FromHandle(Hicon);
-                Mainform.AutoSize = true;
-                Mainform.Icon = myIcon;
-                */
-                // Mainform.StartPosition = FormStartPosition.CenterScreen;
-
-                //Popper
-                Pop msn = new Pop(true);
-                msn.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-                msn.Location = new System.Drawing.Point(3, 32);
-                msn.Name = "msn";
-                msn.Padding = new System.Windows.Forms.Padding(9);
-                msn.Size = new System.Drawing.Size(512, 113);
-                msn.TabIndex = 6;
-                msn.ParentForm.StartPosition = FormStartPosition.CenterScreen;
-
-                NotifyIcon con = null;
-
-                //create database
-                Creator.Build(ref LIMS.Interface, ref con, ref msn);
-
-                Creator.CheckDirectories();
 
                 bool ok = Creator.Prepare(0);
 
-                LIMS.Linaa = LIMS.Interface.Get();
-                LIMS.UserControls = new List<object>();
+         
                 LIMS.Form = new LIMS(); //make a new UI LIMS
-                LIMS.Form.Enabled = false;
-                LIMS.Form.Visible = false;
-             //   LIMS.Form.Visible = true;
-
-                //    LIMS.Interface = new Interface(ref LIMS.Linaa);
-
-                //  LIMS.Form.WindowState = FormWindowState.Minimized;
-
-                //    DB.Tools.Creator.CallBack = delegate
-                //    {
-                // Application.DoEvents();
-
-                //   };
+                LIMS.Form.Opacity = 0;
+                LIMS.Form.ShowInTaskbar = false;
 
                 if (ok)
                 {
-                    DB.Tools.Creator.LastCallBack = delegate
-                {
-                    //make a new interface
-
-                    //set user control list
-                    //create LIMS form
-         
-
-                    //create form for SubSamples
-                    UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
-                    LIMS.CreateForm("Samples", ref control);
-                    control.ParentForm.Opacity = 0;
-                    control.ParentForm.ShowInTaskbar = false;
-
-                    //set bindings
-                    ucSubSamples ucSubSamples = control as ucSubSamples;
-
-                    ucSubSamples.ucContent.Set(ref LIMS.Interface);
-
-                    bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
-                    if (autoload)
-                    {
-                        string lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
-                        ucSubSamples.projectbox.Project = lastProject;
-                    }
-                    //set child parent
-                    ///VOLVER A PONER ESTO EVENTUALMENTE
-                    ///
-                    msn.Dock = DockStyle.Fill;
-                    Form form = msn.ParentForm;
-                    form.Opacity = 0;
-                    ucSSF uc = new ucSSF();
-                    Control ctrl = msn as Control;
-                    uc.AttachMsn(ref ctrl);
-                    form.Dispose();
-
-                    form = new Form();
-                    form.AutoSizeMode = AutoSizeMode.GrowOnly;
-                    form.AutoSize = true;
-                    IntPtr Hicon = Properties.Resources.Logo.GetHicon();
-                    Icon myIcon = Icon.FromHandle(Hicon);
-                    form.Icon = myIcon;
-                    form.Text = title;
-
-                    form.Controls.Add(uc);
-
-                    form.Show();
-                    //   form.ControlBox = true;
-                    //  form.TopMost = false;
-
-                    //     ucSubSamples.ucSSF = uc;
-
-                    Control ctrl2 = ucSubSamples.projectbox;
-                    uc.AttachProjectBox(ref ctrl2);
-                    Control ctrl3 = ucSubSamples.BN;
-                    uc.AttachBN(ref ctrl3);
-
-                    uc.Set(ref LIMS.Interface);
-
-                    //    Control ctrl4 = ucSubSamples;
-                    //   uc.AttachSampleCtrl(ref ctrl4);
-
-                    //
-
-                    form.Opacity = 100;
-
-                    Application.DoEvents();
-                    LIMS.Form.Enabled = true;
-                    LIMS.Interface.IReport.ReportFinished();
-                };
-
                     //GO GO GO GO
                     DB.Tools.Creator.Load();
                 }
@@ -163,6 +73,123 @@ namespace SSF
                 MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
             }
             return LIMS.Form;
+        }
+
+        public static void CreateSSFUserInterface()
+        {
+
+            IucPreferences preferences = PreferencesUI();
+
+            //create form for SubSamples
+            UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
+            LIMS.CreateForm("Samples", ref control);
+        //    control.ParentForm.Opacity = 0;
+        //    control.ParentForm.ShowInTaskbar = false;
+            //set bindings
+            ucSubSamples ucSubSamples = control as ucSubSamples;
+            ucSubSamples.ucContent.Set(ref LIMS.Interface);
+
+            ucProjectBox ucProjectBox = null;
+            ucProjectBox = ucSubSamples.projectbox;
+
+            BindingNavigator aBindingNavigator = ucSubSamples.BN;
+
+
+            IucOptions options = OptionsUI();
+
+            ucSSF ucSSF = null;
+            ucSSF = new ucSSF();
+            ucSSF.Set(ref LIMS.Interface);
+
+
+            bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
+            if (autoload)
+            {
+                string lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                ucSubSamples.projectbox.Project = lastProject;
+            }
+            //set child parent
+            ///VOLVER A PONER ESTO EVENTUALMENTE
+            ///
+
+
+            Form form = msn.ParentForm;//
+
+            ucSSF.AttachCtrl(ref msn);
+
+            ucSSF.AttachCtrl(ref options);
+            ///////////////////////
+
+            ucSSF.AttachCtrl(ref ucProjectBox);
+
+            ucSSF.AttachCtrl(ref aBindingNavigator);
+
+            //     IucPreferences ucIPref = ucPref as IucPreferences;
+            ucSSF.AttachCtrl(ref preferences);
+
+
+            form.Dispose();
+            form = new Form();
+            form.AutoSizeMode = AutoSizeMode.GrowOnly;
+            form.AutoSize = true;
+            IntPtr Hicon = Properties.Resources.Logo.GetHicon();
+            Icon myIcon = Icon.FromHandle(Hicon);
+            form.Icon = myIcon;
+            form.Text = title;
+
+            form.Controls.Add(ucSSF);
+
+
+
+
+            form.Show();
+            form.Opacity = 100;
+
+
+            Application.DoEvents();
+
+            LIMS.Explore();
+
+            LIMS.Interface.IReport.ReportFinished();
+        }
+
+        private static IucPreferences PreferencesUI()
+        {
+            UserControl ucPref = null;
+            ucPref = LIMS.CreateUI(ControlNames.Preferences); //; as ucPreferences;
+            LIMS.CreateForm("Preferences", ref ucPref);
+            LIMS.ShowPreferences(false);
+            IucPreferences preferences = (IucPreferences)ucPref;
+            return preferences;
+        }
+
+        private static IucOptions OptionsUI()
+        {
+            IucOptions options = new ucOptions();
+            options.Set();
+            options.AboutBoxAction = delegate
+            {
+                AboutBox box = new AboutBox();
+                box.Show();
+            };
+            options.ConnectionBox = delegate
+            {
+                LIMS.Connections();
+            };
+            options.SaveClick = delegate
+            {
+
+                Creator.SaveInFull(true);
+            };
+            options.PreferencesClick = delegate
+            {
+                LIMS.ShowPreferences(true);
+            };
+            options.DatabaseClick = delegate
+            {
+                LIMS.ShowToUser();
+            };
+            return options;
         }
 
         private static void lastCallBack(ref ucSSF uc)

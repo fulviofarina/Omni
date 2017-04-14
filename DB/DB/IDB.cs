@@ -19,7 +19,7 @@ namespace DB
         LINAA.ExceptionsDataTable Exceptions { get; }
         LINAA.GammasDataTable Gammas { get; }
         LINAA.GeometryDataTable Geometry { get; }
-        LINAA.HelloWorldDataTable HelloWorld { get; }
+    
         LINAA.HoldersDataTable Holders { get; }
         LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
         string DataSetName { get; }

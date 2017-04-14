@@ -102,9 +102,9 @@ namespace Msn
                 f.Controls.Remove(this);
             }
             f.AutoSize = true;
-            f.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+        //    f.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             f.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            f.Opacity = 0.7D;
+            f.Opacity = 100;
             f.ControlBox = false;
             f.MaximizeBox = false;
             f.MinimizeBox = false;
@@ -113,11 +113,27 @@ namespace Msn
             f.TopMost = true;
             f.Controls.Add(this);
             f.Visible = true;
+
+
+            f.StartPosition = FormStartPosition.CenterScreen;
+          //  f.Opacity = 0;
+       
+
+
         }
 
         public Pop(bool withForm)
         {
             InitializeComponent();
+
+
+            BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            Location = new System.Drawing.Point(3, 32);
+            Name = "msn";
+            Padding = new System.Windows.Forms.Padding(9);
+            Size = new System.Drawing.Size(512, 113);
+            TabIndex = 6;
+
 
             this.Text = string.Empty;
 

@@ -23,33 +23,21 @@ namespace DB.UI
         {
             Interface = LinaaInterface;
             Dumb.FD<LINAA>(ref this.lINAA);
-          //  this.lINAA = Interface.Get() as LINAA;
+            Dumb.FD(ref this.VialBS);
 
-      
+
             //rabbit column
-            string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
-            string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
-            Dumb.LinkBS(ref this.VialBS, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+            //string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
+            //string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
+            //Dumb.LinkBS(ref this.VialBS, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
 
-            Interface.IBS.Vial = this.VialBS;
+            this.vialDGV.DataSource = Interface.IBS.Vial;  //= this.VialBS;
 
             System.EventHandler addNew = this.addNewVialChannel_Click;
 
             this.bnVialAddItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
         }
-        /*
-        public void RefreshVCC()
-        {
-            LINAA.UnitRow u = MatSSF.UNIT;
-            string column;
-            column = Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
-            int id = u.SubSamplesRow.VialTypeRow.VialTypeID;
-            BindingSource bs = Interface.IBS.Vial;
-            bs.Position = bs.Find(column, id);
-        }
-        */
-        //  private DataGridViewCellMouseEventHandler rowHeaderMouseClick = null;
-
+     
         /// <summary>
         /// DGV ITEM SELECTED
         /// </summary>
@@ -58,12 +46,7 @@ namespace DB.UI
             ///FIRST TIME AND ONLY
             set
             {
-                //      if (rowHeaderMouseClick != null) return;
-
-                //  DataGridViewCellMouseEventHandler handler = value;
-                //   rowHeaderMouseClick = handler;
-
-                //  this.unitDGV.RowHeaderMouseClick += handler;
+            
 
                 this.vialDGV.RowHeaderMouseDoubleClick += value; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
             }

@@ -11,6 +11,8 @@ namespace DB.Tools
     {
        // private Interface Interface;
         private string rowWithError = "The selected row has some incomplete cells or cells with errors.\nPlease fix before selecting it";
+
+     
     }
     public partial class BindingSources
     {

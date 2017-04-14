@@ -90,15 +90,23 @@ namespace Rsx
     /// <typeparam name="T">Generic output, normally a DataRow</typeparam>
     /// <param name="view">A DataGridViewRow or a DataRowView</param>
     /// <returns></returns>
-    public static object Cast<T>(object view)
+    public static T Cast<T>(object view)
     {
-      if (view == null) return view;
+      if (view == null)  throw new ArgumentException("nothing to cast?"); 
       Type tipo = view.GetType();
       if (tipo.Equals(typeof(DataGridViewRow))) return Cast<T>(view as DataGridViewRow);
       else if (tipo.Equals(typeof(DataRowView))) return Cast<T>(view as DataRowView);
-      else if (tipo.Equals(typeof(DataView))) return Cast<T>(view as DataView);
-      else if (tipo.Equals(typeof(DataGridView))) return Cast<T>(view as DataGridView);
+     
       else throw new ArgumentException("not implemented");
     }
-  }
+        public static IEnumerable<T> Cast<T>(IEnumerable<object> view)
+        {
+            if (view == null) throw new ArgumentException("nothing to cast?");
+            Type tipo = view.GetType();
+        
+            if (tipo.Equals(typeof(DataView))) return Cast<T>(view as DataView);
+            else if (tipo.Equals(typeof(DataGridView))) return Cast<T>(view as DataGridView);
+            else throw new ArgumentException("not implemented");
+        }
+    }
 }

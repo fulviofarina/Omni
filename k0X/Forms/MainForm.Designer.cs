@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.notify = new System.Windows.Forms.NotifyIcon(this.components);
-            this.CMS = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.notify = new System.Windows.Forms.NotifyIcon();
+            this.CMS = new System.Windows.Forms.ContextMenuStrip();
             this.LoadWorkspace = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveWorkspace = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -65,7 +64,7 @@
             this.ToDoPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.SolCoiPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.MatSSFPanel = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.timer = new System.Windows.Forms.Timer();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SC = new System.Windows.Forms.SplitContainer();

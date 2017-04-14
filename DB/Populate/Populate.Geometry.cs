@@ -119,22 +119,7 @@ namespace DB
             }
         }
 
-        public void PopulateUnitsByProject(int irrReqId)
-        {
-            try
-            {
-                this.tableUnit.BeginLoadData();
-                this.tableUnit.Clear();
-                this.TAM.UnitTableAdapter.FillByIrrReqID(this.tableUnit, irrReqId);
-                this.tableUnit.AcceptChanges();
-                this.tableUnit.EndLoadData();
-                //    Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
+       
 
         public void PopulateVials()
         {

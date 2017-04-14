@@ -74,6 +74,7 @@
             this.projectlabel.Name = "projectlabel";
             this.projectlabel.Size = new System.Drawing.Size(91, 50);
             this.projectlabel.Text = "PROJECT";
+            this.projectlabel.Click += new System.EventHandler(this.projectlabel_Click);
             // 
             // toolStripSeparator1
             // 

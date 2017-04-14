@@ -120,7 +120,12 @@ namespace DB.Tools
         public static void RestartSQLServer()
         {
             string start = "start";
-            System.Diagnostics.Process.Start(sqlDBEXE, start);
+            bool hide = false;
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+           
+            Dumb.Process(process, string.Empty, sqlDBEXE, start, hide, true, 10000);
+                       
+            // System.Diagnostics.Process.Start(sqlDBEXE, start,);
         }
 
         public static void PopulateSQLDatabase()
@@ -177,11 +182,11 @@ namespace DB.Tools
 
                 if (shouldReport)
                 {
-                    System.IO.File.AppendAllText(cmd, texto);
+                    File.AppendAllText(cmd, texto);
                     // GenerateReport("Restarting succeeded...", string.Empty, string.Empty,
                     // DataSetName, email); System.IO.File.Delete(cmd);
                 }
-                else System.IO.File.WriteAllText(cmd, texto);
+                else File.WriteAllText(cmd, texto);
             }
             catch (Exception ex)
             {

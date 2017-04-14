@@ -1,76 +1,70 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using DB.Tools;
+using Rsx;
 
 namespace DB.UI
 {
     public partial class ucIrradiationsRequests : UserControl
     {
-        protected string sortColumn;
-        protected string filter;
+     
 
         public ucIrradiationsRequests()
         {
             InitializeComponent();
+
+       
+
         }
+
+        private Interface Interface;
 
         public void Set(ref Interface inter)
         {
             //InitializeComponent();
 
-            Rsx.Dumb.FD(ref this.Linaa);
-            this.Linaa = inter.Get();
+            Interface = inter;
 
-            filter = string.Empty;
-            sortColumn = this.Linaa.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
+            Dumb.FD(ref this.Linaa);
+            Dumb.FD(ref this.BS);
+       //     this.Linaa = inter.Get();
 
-            this.channelBox.ComboBox.DataSource = inter.IDB.Channels;
-            this.channelBox.ComboBox.DisplayMember = inter.IDB.Channels.ChannelNameColumn.ColumnName;
+          //  filter = string.Empty;
+           
+    
+    
+       
+         //   this.BS = Interface.IBS.Irradiations;
+            DGV.DataSource = Interface.IBS.Irradiations;
+            this.channelBox.ComboBox.DisplayMember = Interface.IDB.Channels.ChannelNameColumn.ColumnName;
+
+            this.channelBox.ComboBox.DataSource = Interface.IBS.Channels;
+      
+        //    this.channelBox.TextChanged += (this.channelBox_SelectedIndexChanged);
+         //   this.DGV.CellPainting += DGV_CellPainting;
+          //  this.DGV.CellPainting +=(this.DGV_CellPainting);
 
             if (this.channelBox.Items.Count != 0)
             {
                 this.channelBox.Text = this.channelBox.Items[0].ToString();
             }
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.IrradiationRequests, filter, sortColumn + " desc");
+       //     Dumb.LinkBS(ref this.BS, Interface.IDB.IrradiationRequests, filter, sortColumn + " desc");
+
+          
+         //   this.channelBox.TextChanged += (this.channelBox_SelectedIndexChanged);
+
+
+     
+
         }
 
-        public void CreateNewIrradiation(String project)
+    
+
+        public void CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            this.BS.EndEdit();
-
-            string projetNoCd = project.ToUpper();
-            if (projetNoCd.Length < 2) return;
-            else if (projetNoCd.Length > 2)
-            {
-                if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(DB.Properties.Misc.Cd) == 0)
-                {
-                    projetNoCd = projetNoCd.Replace(DB.Properties.Misc.Cd, null);
-                }
-            }
-            LINAA.IrradiationRequestsRow i = this.Linaa.IrradiationRequests.NewIrradiationRequestsRow();
-            this.Linaa.IrradiationRequests.AddIrradiationRequestsRow(i);
-            if (i != null)
-            {
-                i.IrradiationCode = projetNoCd;
-                if (i.ChannelsRow == null) this.SetIrradiationChannel.PerformClick();
-                irradiationSave.PerformClick();
-                this.refreshToolStripMenuItem.PerformClick();
-            }
-        }
-
-        public void RowAdded(ref System.Data.DataRow row)
-        {
-            LINAA.IrradiationRequestsRow ir = row as LINAA.IrradiationRequestsRow;
-            ir.IrradiationStartDateTime = DateTime.Now;
-
-            ir.IrradiationCode = "New";
-        }
-
-        private void DGV_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (IrradiationCodeColumn.Index == e.ColumnIndex && e.RowIndex >= 0)
-            {
+          
                 System.Data.DataRowView v = (System.Data.DataRowView)(DGV.Rows[e.RowIndex].DataBoundItem);
                 LINAA.IrradiationRequestsRow r = (LINAA.IrradiationRequestsRow)v.Row;
                 if (r.ChannelsRow != null)
@@ -80,20 +74,30 @@ namespace DB.UI
                     else if (code.Contains("Z")) e.CellStyle.BackColor = System.Drawing.Color.LemonChiffon;
                     else if (code.Contains("Y")) e.CellStyle.BackColor = System.Drawing.Color.Moccasin;
                 }
-            }
+            
         }
 
-        private void channelBox_SelectedIndexChanged(object sender, EventArgs e)
+
+        public void RowAdded(ref DataRow row)
         {
-            filter = string.Empty;
 
-            if (channelBox.Text.CompareTo(string.Empty) != 0)
+            LINAA.IrradiationRequestsRow ir = row as LINAA.IrradiationRequestsRow;
+
+            if (ir.ChannelsRow==null)
             {
-                string chColumn = this.Linaa.IrradiationRequests.ChannelNameColumn.ColumnName;
-                filter = chColumn + " = '" + channelBox.Text + "' OR " + chColumn + " IS NULL ";
+                LINAA.ChannelsRow c = Dumb.Cast<LINAA.ChannelsRow>(this.channelBox.ComboBox.SelectedItem);
+             
+                ir.ChannelsRow = c;
+
+                Interface.IBS.Update(ir);
+
             }
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.IrradiationRequests, filter, sortColumn + " desc");
         }
+
+        public bool ShouldPaintCell(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            return (IrradiationCodeColumn.Index == e.ColumnIndex);
+        } 
     }
 }
