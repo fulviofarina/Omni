@@ -93,13 +93,7 @@ namespace DB.UI
         /// </summary>
         public void Link()
         {
-        //    if (!string.IsNullOrEmpty(Filter)) this.filter = Filter;
-        //    if (!string.IsNullOrEmpty(Sort)) this.sort = Sort;
-        //    Dumb.LinkBS(ref Interface.IBS.SubSamples, Interface.IDB.SubSamples, this.filter, this.sort);
-
-
             if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
-            // ucContent.Link(Filter, Sort);
         }
 
         public void Predict(object sender, EventArgs e)
@@ -224,8 +218,7 @@ namespace DB.UI
           //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             projectbox.Set(ref Interface, Link);
 
-            string toSort = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
-            Interface.IBS.SubSamples.Sort = toSort + " asc";
+       
 
           //  Interface.IBS.SubSamples = this.BS;
         }

@@ -39,8 +39,12 @@ namespace DB
             try
             {
                 this.tableUnit.BeginLoadData();
-                this.tableUnit.Clear();
-                this.TAM.UnitTableAdapter.FillByIrrReqID(this.tableUnit, irrReqId);
+
+                LINAA.UnitDataTable dt = new UnitDataTable();
+           
+          /// this.tableUnit.Clear();
+                this.TAM.UnitTableAdapter.FillByIrrReqID(dt, irrReqId);
+                this.tableUnit.Merge(dt, false, MissingSchemaAction.AddWithKey);
                 this.tableUnit.AcceptChanges();
                 this.tableUnit.EndLoadData();
                 //    Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
@@ -409,10 +413,7 @@ namespace DB
                     return;
                 }
 
-                this.tableSubSamples.BeginLoadData();
-                this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
-                this.tableSubSamples.EndLoadData();
-                this.tableSubSamples.AcceptChanges();
+                AddSamples(ref newsamples);
 
                 // this.tableSubSamples.TableNewRow -= new DataTableNewRowEventHandler(this.tableSubSamples.SubSamplesDataTable_TableNewRow);
             }
@@ -420,6 +421,14 @@ namespace DB
             {
                 this.AddException(ex);
             }
+        }
+
+        public void AddSamples(ref SubSamplesDataTable newsamples)
+        {
+            this.tableSubSamples.BeginLoadData();
+            this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
+            this.tableSubSamples.EndLoadData();
+           // this.tableSubSamples.AcceptChanges();
         }
     }
 }

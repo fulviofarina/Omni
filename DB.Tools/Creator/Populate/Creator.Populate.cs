@@ -16,27 +16,7 @@ namespace DB.Tools
 
     public partial class Creator
     {
-        private static bool checkBugFile()
-        {
-            string cmd = Application.StartupPath + Resources.Restarting;
-            bool shouldReport = System.IO.File.Exists(cmd);
-
-            if (shouldReport)
-            {
-                string email = System.IO.File.ReadAllText(cmd);
-                Interface.IReport.GenerateReport(restartingOk, string.Empty, string.Empty, Interface.IDB.DataSetName, email);
-                System.IO.File.Delete(cmd);
-            }
-            shouldReport = shouldReport || Interface.IDB.Exceptions.Count != 0;
-
-            //should send bug report?
-            if (!shouldReport) return false;
-
-            //yes...
-            Interface.IReport.GenerateBugReport();
-
-            return true;
-        }
+    
         private static bool populateOverriders()
         {
             string path;

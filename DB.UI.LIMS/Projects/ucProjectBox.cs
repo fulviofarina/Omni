@@ -98,18 +98,30 @@ namespace DB.UI
 
             if (ProjectOrOrder.CompareTo(string.Empty) == 0) return;
 
+         
+
             ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
 
             bool  isAProjectOrOrder = Interface.IPopulate.IProjects.ProjectsList.Contains(ProjectOrOrder);
 
+            if (this.projectbox.Enabled == false) return;
+
+            if (isAProjectOrOrder) this.projectbox.Enabled = false;
+
             if (!isAProjectOrOrder && e.KeyCode == Keys.Enter)
             {
+
+                this.projectbox.Enabled = false;
                 Interface.IPopulate.MakeAProjectOrOrder(ProjectOrOrder);
 
             }
+            else if (isAProjectOrOrder)
+            {
+                Interface.IPopulate.LoadProject(ProjectOrOrder, ref IrrReqID);
 
-            Interface.IPopulate.LoadProject(ProjectOrOrder,ref  IrrReqID);
+            }
 
+            this.projectbox.Enabled = true;
 
             callBack?.Invoke();
         }

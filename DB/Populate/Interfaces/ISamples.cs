@@ -10,6 +10,7 @@ namespace DB
 {
     public interface ISamples
     {
+        void AddSamples(ref SubSamplesDataTable newsamples);
         int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool monitors = false);
         IEnumerable<LINAA.SubSamplesRow> CreateSamplesNamesFrom(ref IEnumerable<string> hsamples);
 

@@ -548,7 +548,6 @@
             this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameB.Name = "nameB";
             this.nameB.Size = new System.Drawing.Size(300, 26);
-            this.nameB.Text = "Example";
             // 
             // chCfgTS
             // 
@@ -656,7 +655,6 @@
             this.chdiamB.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chdiamB.Name = "chdiamB";
             this.chdiamB.Size = new System.Drawing.Size(100, 32);
-            this.chdiamB.Text = "200";
             this.chdiamB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator11
@@ -685,7 +683,6 @@
             this.chlenB.Margin = new System.Windows.Forms.Padding(33, 0, 1, 0);
             this.chlenB.Name = "chlenB";
             this.chlenB.Size = new System.Drawing.Size(100, 32);
-            this.chlenB.Text = "40";
             this.chlenB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // massTS
@@ -729,7 +726,6 @@
             this.massB.Margin = new System.Windows.Forms.Padding(3, 0, 1, 0);
             this.massB.Name = "massB";
             this.massB.Size = new System.Drawing.Size(147, 32);
-            this.massB.Text = "25";
             this.massB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator2
@@ -759,7 +755,6 @@
             this.densityB.Margin = new System.Windows.Forms.Padding(8, 0, 1, 0);
             this.densityB.Name = "densityB";
             this.densityB.Size = new System.Drawing.Size(120, 32);
-            this.densityB.Text = "2.7";
             this.densityB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator16
@@ -826,7 +821,6 @@
             this.radiusbox.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
             this.radiusbox.Name = "radiusbox";
             this.radiusbox.Size = new System.Drawing.Size(120, 32);
-            this.radiusbox.Text = "8";
             this.radiusbox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator5
@@ -856,7 +850,6 @@
             this.lenghtbox.Margin = new System.Windows.Forms.Padding(37, 0, 1, 0);
             this.lenghtbox.Name = "lenghtbox";
             this.lenghtbox.Size = new System.Drawing.Size(120, 32);
-            this.lenghtbox.Text = "0.1";
             this.lenghtbox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // matrixB

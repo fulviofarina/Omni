@@ -327,6 +327,7 @@ namespace DB
 
         partial class SubSamplesRow
         {
+            /*
             public UnitRow UnitRow
             {
                 get
@@ -334,6 +335,7 @@ namespace DB
                     return this.GetUnitRows().AsEnumerable().FirstOrDefault();
                 }
             }
+            */
 
             public void CheckFillRad(bool takeFromVial)
             {

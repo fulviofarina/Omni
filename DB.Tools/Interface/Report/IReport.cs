@@ -16,9 +16,9 @@ namespace DB
         void  AskToRestart();
         void GenerateReport(string labelReport, object path, string extra, string module, string email);
 
-        void Msg(string msg, string title, bool ok);
+        void Msg(string msg, string title, bool ok=true);
 
-        void Msg(string msg, string title);
+    //    void Msg(string msg, string title);
 
         void ReportFinished();
 

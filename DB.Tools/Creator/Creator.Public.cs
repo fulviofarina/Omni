@@ -115,9 +115,9 @@ namespace DB.Tools
             Interface.IPreferences.SavePreferences();
 
 
+            Interface.IBS.ApplyFilters();
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
-            bool restartedOrReported = checkBugFile();
 
             Cursor.Current = Cursors.Default;
 
@@ -127,7 +127,7 @@ namespace DB.Tools
 
 
         /// <summary>
-        /// Closes the given LINAA database
+        /// Closes the given LINAA database asking to Save!
         /// </summary>
         /// <param name="Linaa">      database to close</param>
         /// <param name="takeChanges">true to save changes</param>
@@ -135,6 +135,9 @@ namespace DB.Tools
         public static bool Close(ref LINAA Linaa)
         {
             bool eCancel = false;
+
+            //this is important otherwise it will ask to save this
+            Interface.IStore.SaveExceptions();
 
             IEnumerable<DataTable> tables = Linaa.GetTablesWithChanges();
 
@@ -149,9 +152,7 @@ namespace DB.Tools
                 string ask = askToSave + tablesToSave;
                 MessageBoxButtons mb = MessageBoxButtons.YesNoCancel;
                 MessageBoxIcon icon = MessageBoxIcon.Warning;
-
-
-
+                
                 DialogResult result = MessageBox.Show(ask, "Save Changes...", mb, icon);
                 if (result == DialogResult.Yes) takeChanges = true;
                 else if (result == DialogResult.Cancel)

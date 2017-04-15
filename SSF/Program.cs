@@ -20,21 +20,7 @@ namespace SSF
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            msn = new Pop(true);
-            //create database
-            Creator.Build(ref LIMS.Interface, ref msn);
-
-            Creator.CheckDirectories();
-
-            DB.Tools.Creator.CallBack = delegate
-            {
-                Application.DoEvents();
-            };
-
-            DB.Tools.Creator.LastCallBack = CreateSSFUserInterface;
-
-            LIMS.Linaa = LIMS.Interface.Get();
-            LIMS.UserControls = new List<object>();
+          
 
             Application.Run(Start());
         }
@@ -55,9 +41,27 @@ namespace SSF
             try
             {
 
-                bool ok = Creator.Prepare(0);
+                msn = new Pop(true);
+                //create database
+                Creator.Build(ref LIMS.Interface, ref msn);
 
-         
+                Creator.CheckDirectories();
+
+                DB.Tools.Creator.CallBack = delegate
+                {
+                    Application.DoEvents();
+                };
+
+                DB.Tools.Creator.LastCallBack = CreateSSFUserInterface;
+
+                LIMS.Linaa = LIMS.Interface.Get();
+                LIMS.UserControls = new List<object>();
+
+                bool ok = Creator.Prepare(0);
+                Creator.CheckBugFile();
+
+
+
                 LIMS.Form = new LIMS(); //make a new UI LIMS
                 LIMS.Form.Opacity = 0;
                 LIMS.Form.ShowInTaskbar = false;
@@ -67,8 +71,9 @@ namespace SSF
                     //GO GO GO GO
                     DB.Tools.Creator.Load();
                 }
+                else throw new Exception("Could not start loading the database");
             }
-            catch (SystemException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
             }
@@ -148,9 +153,18 @@ namespace SSF
 
             Application.DoEvents();
 
-            LIMS.Explore();
+            form.FormClosing += Form_FormClosing;     
+
+
+          //  LIMS.Explore();
 
             LIMS.Interface.IReport.ReportFinished();
+        }
+
+        private static void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = Creator.Close(ref LIMS.Linaa);
+            if (!e.Cancel) Application.Exit();
         }
 
         private static IucPreferences PreferencesUI()

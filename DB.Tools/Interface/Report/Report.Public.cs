@@ -97,6 +97,13 @@ namespace DB.Tools
         }
        
 
+        /// <summary>
+        /// What this sends is a solicitude to generate an email with the exceptions
+        /// The solicitude is processed, reported and when the solicitud arrives to the Queue
+        /// then the email is sent Asynchroneusly...
+        /// Then a feedback from the Async operations also arrives at the Queue and reports.
+        /// </summary>
+
         public void GenerateBugReport()
         {
             try
@@ -122,33 +129,22 @@ namespace DB.Tools
                 this.Msg(bePatient, bugReportOnWay);
 
                 //write exceptions to a XML file is Exceptions is not empty...
+                Interface.IStore.SaveExceptions();
 
-                string path = Interface.IStore.SaveExceptions();
-                path = Interface.IMain.FolderPath + DB.Properties.Resources.Exceptions;
+                string path = Interface.IMain.FolderPath + DB.Properties.Resources.Exceptions;
                 IEnumerable<string> exceptions = System.IO.Directory.EnumerateFiles(path);
-
-                int cnt = exceptions.Count();
-                if (cnt != 0)
-                {
-                    foreach (string excFile in exceptions)
-                    {
-                        System.Messaging.Message w = Emailer.CreateQMsg(excFile, "Bug Report", "Should I add more comments?");
-                        Emailer.SendQMsg(ref bugQM, ref w);
-                    }
-                    this.msn.Msg("Bug Reports on tray...", cnt + " scheduled to be sent", System.Windows.Forms.ToolTipIcon.Info);
-                    exceptions = null;
-                }
-                else this.Msg(bugReportNotGen, nothingBuggy);
+                generateBugReports(ref exceptions);
 
                 bugresult = bugQM.BeginReceive();
             }
             catch (SystemException ex)
             {
-                this.Msg(ex.Message + "\n\n" + ex.StackTrace, bugReportProblem, false);
+              //  this.Msg(ex.Message + "\n\n" + ex.StackTrace, bugReportProblem, false);
                 Interface.IMain.AddException(ex);
             }
         }
 
+      
         public void GenerateReport(string labelReport, object path, string extra, string module, string email)
         {
             try
@@ -157,33 +153,35 @@ namespace DB.Tools
                 //put a extended body to the email please
 
                 string queuePath = QM.QMAcquisitions + "." + module + "." + email;
-                MessageQueue qm = Rsx.Emailer.CreateMQ(queuePath, this.qMsg_ReceiveCompleted);
                 string title = labelReport + " - " + module;
+
+
+                MessageQueue qm = Rsx.Emailer.CreateMQ(queuePath, this.qMsg_ReceiveCompleted);
+              
                 System.Messaging.Message m = Rsx.Emailer.CreateQMsg(path, title, extra);
 
                 Rsx.Emailer.SendQMsg(ref qm, ref m);
+
+
                 qm.BeginReceive();
             }
             catch (SystemException ex)
             {
-                this.Msg(ex.Message + "\n\n" + ex.StackTrace, problemsWithReport, false);
+               // this.Msg(ex.Message + "\n\n" + ex.StackTrace, problemsWithReport, false);
                 Interface.IMain.AddException(ex);
             }
         }
 
-        public void Msg(string msg, string title, bool ok)
-        {
-            this.msn.Msg(msg, title, ok);
-        }
+      
 
         /// <summary>
         /// Notifies the given message and title with an Info icon
         /// </summary>
         /// <param name="msg">  Message to display</param>
         /// <param name="title">title of the message</param>
-        public void Msg(string msg, string title)
+        public void Msg(string msg, string title, bool ok = true)
         {
-            this.msn.Msg(msg, title, true);
+            this.msn.Msg(msg, title, ok);
         }
 
         public void ReportFinished()

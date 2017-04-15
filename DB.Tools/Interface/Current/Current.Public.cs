@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Rsx;
 
 namespace DB.Tools
 {
@@ -36,7 +37,7 @@ namespace DB.Tools
         {
             get
             {
-                return (bs.SubSamples.List as DataView).Table.AsEnumerable().OfType<DataRow>();
+                return Dumb.Cast<DataRow>(bs.SubSamples.List as DataView);
             }
         }
 
@@ -58,7 +59,7 @@ namespace DB.Tools
         {
             get
             {
-                return (bs.Units.List as DataView).Table.AsEnumerable().OfType<DataRow>();
+                return Dumb.Cast<DataRow>(bs.Units.List as DataView);
             }
         }
     }

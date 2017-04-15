@@ -17,13 +17,13 @@ namespace DB.UI
 
             try
             {
-                this.PrefBS.DataSource = Interface.Get();
-                this.SSFPref.DataSource = Interface.Get();
-                this.PrefBS.DataMember = Interface.IDB.Preferences.TableName;
-                this.SSFPref.DataMember = Interface.IDB.SSFPref.TableName;
+             //   this.PrefBS.DataSource = Interface.Get();
+             //   this.SSFPref.DataSource = Interface.Get();
+              //  this.PrefBS.DataMember = Interface.IDB.Preferences.TableName;
+              //  this.SSFPref.DataMember = Interface.IDB.SSFPref.TableName;
 
-                Interface.IBS.Preferences = this.PrefBS;
-                Interface.IBS.SSFPreferences = this.SSFPref;
+         //       Interface.IBS.Preferences = this.PrefBS;
+           //     Interface.IBS.SSFPreferences = this.SSFPref;
 
                 setSSFPreferencesbindings();
 
@@ -40,8 +40,8 @@ namespace DB.UI
                 this.fillBySpectraCheckBox.Enabled = false;
                 this.showSampleDescriptionCheckBox.Enabled = false;
 
-                this.PrefBS.ResetBindings(true);
-                this.SSFPref.ResetBindings(true);
+           //     this.PrefBS.ResetBindings(true);
+             //   this.SSFPref.ResetBindings(true);
             }
             catch (Exception ex)
             {

@@ -52,59 +52,7 @@ namespace DB.Tools
             return new string[] { title, text };
         }
 
-        private static string notAsync(ref MessageQueue qMsg1, ref System.Messaging.Message w, string user)
-        {
-            //takes the Qmessage body (usually a path to a file)
-            // retrieves the file and emails it!!
-            //the w.Extension contains the message body of the mail
-            //the w.label the subject of the mail
-            //the w.Body is the filepath
-            string sendto = string.Empty;
-            string qPath = qMsg1.Path;
-            if (qPath.Contains("@"))
-            {
-                string emailExt = qPath.Substring(qPath.LastIndexOf("."));
-                sendto = qPath.Replace(emailExt, null);
-                sendto = sendto.Substring(sendto.LastIndexOf(".") + 1);
-                sendto += emailExt;
-            }
-
-            //Send
-            string result = sendTo(ref qMsg1, ref w, user, sendto);
-
-            return result;
-            //read for more messages!!
-            //int totalremaining = qMsg1.GetAllMessages().Length;
-            //if (totalremaining > 0) qMsg1.BeginReceive();
-        }
-
-
-        private static string sendTo(ref MessageQueue qMsg1, ref System.Messaging.Message w, string user, string sendto)
-        {
-            Type tipo = w.Body.GetType();
-            string bodyMsg = Rsx.Emailer.DecodeMessage(w.Extension);
-
-            string lbel = w.Label;
-            ArrayList array = new ArrayList();
-            //assign label
-            if (tipo.Equals(typeof(string[])))
-            {
-                string[] paths = w.Body as string[];
-                array.AddRange(paths);
-            }
-            else
-            {
-                string path = w.Body as string;
-                // if (path.Contains(DB.Properties.Resources.Exceptions)) whatsSending = " - Bug
-                // Report"; else if (path.Contains(DB.Properties.Settings.Default.SpectraFolder))
-                // whatsSending = " - Scheduled Acquisition";
-                array.Add(path);
-            }
-
-            string result = Rsx.Emailer.SendMessageWithAttachmentAsync(user, lbel, bodyMsg, array, ref qMsg1, sendto);
-            return result;
-        }
-    }
+      }
 
     //PRIVATE
     public partial class Report
@@ -115,9 +63,75 @@ namespace DB.Tools
 
         private Pop msn = null;
 
-        private NotifyIcon notify = null;
+        private void generateBugReports(ref IEnumerable<string> exceptions)
+        {
+            int cnt = exceptions.Count();
+            if (cnt != 0)
+            {
+                foreach (string excFile in exceptions)
+                {
+                    System.Messaging.Message w = null;
+                    w= Emailer.CreateQMsg(excFile, "Bug Report", "Should I add more comments?");
+                    Emailer.SendQMsg(ref bugQM, ref w);
+                    // System.IO.File.Delete(excFile);
+                }
+                this.Msg("Bug Reports on tray...", cnt + " scheduled to be sent",true);
 
-        private void Async(ref MessageQueue qMsg1, ref System.Messaging.Message w)
+            }
+            else this.Msg(bugReportNotGen, nothingBuggy);
+
+            exceptions = null;
+        }
+        private static string sendEmail(ref MessageQueue qMsg1, ref System.Messaging.Message w, string user)
+        {
+            //takes the Qmessage body (usually a path to a file)
+            // retrieves the file and emails it!!
+            //the w.Extension contaings the message body of the mail
+            //the w.label the subject of the mail
+            //the w.Body is the filepath
+
+            string qPath = qMsg1.Path;
+            string lbel = w.Label;
+            byte[] messageContent = w.Extension;
+          
+            ArrayList array = getPathsToAttachments(ref w);
+      
+            string sendto = string.Empty;
+            if (qPath.Contains("@"))
+            {
+                string emailExt = qPath.Substring(qPath.LastIndexOf("."));
+                sendto = qPath.Replace(emailExt, null);
+                sendto = sendto.Substring(sendto.LastIndexOf(".") + 1);
+                sendto += emailExt;
+            }
+
+            string bodyMsg = Rsx.Emailer.DecodeMessage(messageContent);
+            string result = Rsx.Emailer.SendMessageWithAttachmentAsync(user, lbel, bodyMsg, array, ref qMsg1, sendto);
+            return result;
+           
+        }
+
+        private static ArrayList getPathsToAttachments(ref System.Messaging.Message w)
+        {
+            ArrayList array = new ArrayList();
+            Type tipo = w.Body.GetType();
+
+            //assign label
+            if (tipo.Equals(typeof(string[])))
+            {
+                string[] paths = w.Body as string[];
+                array.AddRange(paths);
+            }
+            else
+            {
+                string path = w.Body as string;
+                array.Add(path);
+            }
+
+            return array;
+        }
+
+        private void reportReceivedAsync(ref MessageQueue qMsg1, ref System.Messaging.Message w)
         {
             bool sent = false;
             DateTime when = DateTime.Now;
@@ -136,21 +150,19 @@ namespace DB.Tools
             }
             else EmailTitle = " was sent";
 
+          
+            bool isABugReport = w.Body.GetType().Equals(typeof(string));
+
+            string pathToDelete = string.Empty;
+            if (isABugReport) pathToDelete = w.Body as string;
+
+            bool isExceptionsMessage = QM.QMExceptions.Equals(qMsg1.Path);
+
             // postprocessing...
-            if (QM.QMExceptions.Equals(qMsg1.Path))
+            if (isExceptionsMessage)
             {
                 EmailTitle = "Bug Report" + EmailTitle;
-                if (sent && w.Body.GetType().Equals(typeof(string)))
-                {
-                    try
-                    {
-                        System.IO.File.Delete(w.Body as string);
-                    }
-                    catch (SystemException ex)
-                    {
-                        Interface.IMain.AddException(ex);
-                    }
-                }
+               
             }
             else
             {
@@ -158,64 +170,58 @@ namespace DB.Tools
                 EmailTitle = "Generic Report" + EmailTitle;
             }
 
-            this.msn.Msg("At " + when.ToString(), EmailTitle, sent);
 
-            bugresult = bugQM.BeginReceive();
-        }
-
-        /*
-        //SHITTY
-        /// <summary>
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="pref"></param>
-        /// <returns></returns>
-        private string findHellos(ref string user, ref LINAA.PreferencesRow pref)
-        {
-            IEnumerable<LINAA.HelloWorldRow> hellos = pref.GetHelloWorldRows();
-
-            int count = hellos.Count();
-            if (Interface.IDB.HelloWorld.Rows.Count != count)
+            if (sent && isABugReport && isExceptionsMessage)
             {
-                IEnumerable<LINAA.HelloWorldRow> toremove = Interface.IDB.HelloWorld.Except(hellos);
-                Interface.IStore.Delete(ref toremove);
+                try
+                {
+                    if (System.IO.File.Exists(pathToDelete))
+                    {
+                        System.IO.File.Delete(pathToDelete);
+                    }
+                }
+                catch (SystemException ex)
+                {
+                    Interface.IMain.AddException(ex);
+                }
             }
 
-            string comment = String.Empty;
+                reportResult(EmailTitle, when);
 
-            if (count != 0 && count < 20)
-            {
-                Random random = new Random();
-                int index = random.Next(0, count);
-                comment = hellos.ElementAt(index).Comment;
+                bugresult = bugQM.BeginReceive();
            
-            }
-
-            return comment;
         }
-        */
-        private void qMsg_ReceiveCompleted(object sender, System.Messaging.ReceiveCompletedEventArgs e)
+
+     
+        private void qMsg_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
         {
             if (e == null) return;
-            MessageQueue qMsg1 = sender as MessageQueue;
-            string user = Interface.IPreferences.WindowsUser;
+            MessageQueue queue = sender as MessageQueue;
+            string user = Environment.UserName;
+
+            System.Messaging.Message AMessage = e.Message;
+
+            //TWO TYPES OF SENDING, ASYNC AND SECUENTIAL
+            bool isAsync = AMessage.Label.Contains("AsyncEmail");
+            DateTime when = AMessage.SentTime;
+
             try
             {
-                System.Messaging.Message w = e.Message;
+            
                 //feedback came from emailing process
                 //body of message is a FileStream (the attachment of the email)
-                if (w.Label.Contains("AsyncEmail"))
+                if (isAsync)
                 {
                     //was ok or not?
-
-                    Async(ref qMsg1, ref w);
+                    reportReceivedAsync(ref queue, ref AMessage);
+                    //REPORTS THAT THE EMAIL WAS SENT OR NOT SENT
                 }
                 else
                 {
-                    string result = notAsync(ref qMsg1, ref w, user);
-
-                    DateTime when = w.SentTime;
-
+                    string result = sendEmail(ref queue, ref AMessage, user);
+                //    AMessage.Label = "OK";
+                    //reportReceivedAsync(ref queue, ref AMessage);
+                    //REPORT TO SEND NOW...
                     reportResult(result, when);
                 }
             }
@@ -237,7 +243,7 @@ namespace DB.Tools
                 sending = true;
             }
 
-            this.msn.Msg(result + "\n\nAt " + when.ToString(), title, sending);
+            this.Msg(result + "\n\nAt " + when.ToString(), title, sending);
 
             if (!sending)
             {

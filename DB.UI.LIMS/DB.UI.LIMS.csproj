@@ -77,7 +77,7 @@
     <Compile Include="SSF\ucCC.Designer.cs">
       <DependentUpon>ucCC.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\IucOptions.cs" />
+    <Compile Include="UI\IucOptions.cs" />
     <Compile Include="SSF\ucMatrixSimple.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -102,10 +102,10 @@
     <Compile Include="SSF\ucV.Designer.cs">
       <DependentUpon>ucV.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\ucOptions.cs">
+    <Compile Include="UI\ucOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SSF\ucOptions.Designer.cs">
+    <Compile Include="UI\ucOptions.Designer.cs">
       <DependentUpon>ucOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\IucPreferences.cs" />
@@ -139,13 +139,13 @@
     <Compile Include="Projects\ucProjectBox.Designer.cs">
       <DependentUpon>ucProjectBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Picker\Picker.Fields.cs" />
-    <Compile Include="UI\Picker\Picker.cs" />
-    <Compile Include="UI\Picker\IPicker.cs" />
-    <Compile Include="UI\Picker\PickerForm.cs">
+    <Compile Include="Picker\Picker.Fields.cs" />
+    <Compile Include="Picker\Picker.cs" />
+    <Compile Include="Picker\IPicker.cs" />
+    <Compile Include="Picker\PickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Picker\PickerForm.designer.cs">
+    <Compile Include="Picker\PickerForm.designer.cs">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LIMS.Static.cs">
@@ -157,10 +157,10 @@
     <Compile Include="Geometries\ucGeometry.Designer.cs">
       <DependentUpon>ucGeometry.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucMatrix.cs">
+    <Compile Include="SolCoi\ucMatrix.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucMatrix.Designer.cs">
+    <Compile Include="SolCoi\ucMatrix.Designer.cs">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </Compile>
     <Compile Include="Geometries\ucVialType.cs">
@@ -241,10 +241,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="ucPredict.cs">
+    <Compile Include="SolCoi\ucPredict.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucPredict.Designer.cs">
+    <Compile Include="SolCoi\ucPredict.Designer.cs">
       <DependentUpon>ucPredict.cs</DependentUpon>
     </Compile>
     <Compile Include="SolCoi\ucSolcoi.cs">
@@ -273,7 +273,7 @@
     <EmbeddedResource Include="SSF\ucV.resx">
       <DependentUpon>ucV.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucOptions.resx">
+    <EmbeddedResource Include="UI\ucOptions.resx">
       <DependentUpon>ucOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ucPreferences.resx">
@@ -291,13 +291,13 @@
     <EmbeddedResource Include="Projects\ucProjectBox.resx">
       <DependentUpon>ucProjectBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Picker\PickerForm.resx">
+    <EmbeddedResource Include="Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Geometries\ucGeometry.resx">
       <DependentUpon>ucGeometry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucMatrix.resx">
+    <EmbeddedResource Include="SolCoi\ucMatrix.resx">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Geometries\ucVialType.resx">
@@ -342,7 +342,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucPredict.resx">
+    <EmbeddedResource Include="SolCoi\ucPredict.resx">
       <DependentUpon>ucPredict.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SolCoi\ucSolcoi.resx">

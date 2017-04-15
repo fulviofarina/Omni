@@ -62,11 +62,16 @@ namespace DB
             if (activate)
             {
                 if (dt.Equals(Matrix)) Matrix.ColumnChanging += Matrix.DataColumnChanging;
+                else if (dt.Equals(Unit)) Unit.ColumnChanging += Unit.DataColumnChanging;
+
                 dt.ColumnChanged += han;
+
             }
             else
             {
-                if (dt.Equals(Matrix)) Matrix.ColumnChanging -= Matrix.DataColumnChanging;
+                if (dt.Equals(Unit)) Unit.ColumnChanging -= Unit.DataColumnChanging;
+
+                else if (dt.Equals(Matrix)) Matrix.ColumnChanging -= Matrix.DataColumnChanging;
                 dt.ColumnChanged -= han;
             }
         }

@@ -70,12 +70,15 @@ namespace DB.UI
                 sampleBindings = setSampleBindings();
                 unitBindings = setUnitBindings();
 
-                //types
-                this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
+                setCheckBindings();
+                setEnabledBindings();
+
+
+         
 
                 //set calculation options
 
-              //  Interface.IBS.EndEdit();
+                //  Interface.IBS.EndEdit();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
@@ -210,6 +213,7 @@ namespace DB.UI
             this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
             this.nameB.ComboBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             this.nameB.ComboBox.DisplayMember = column;
+            this.nameB.ComboBox.ValueMember = column;
             this.nameB.ComboBox.DataSource = bsSample;
          
             this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
@@ -251,16 +255,64 @@ namespace DB.UI
             column = Unit.kthColumn.ColumnName;
             this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
 
-            Binding renabled = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
-            this.radiusbox.TextBox.DataBindings.Add(renabled);
-            Binding renabled2 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName);
-            this.lenghtbox.TextBox.DataBindings.Add(renabled2);
-            Binding renabled3 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.CalcDensityColumn.ColumnName);
-            this.densityB.TextBox.DataBindings.Add(renabled3);
-            Binding renabled4 = new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.CalcMassColumn.ColumnName);
-            this.massB.TextBox.DataBindings.Add(renabled4);
+
+
 
             return bindings;
+        }
+
+        private void  setEnabledBindings()
+        {
+            string column;
+           
+
+            column = Interface.IDB.SSFPref.DoCKColumn.ColumnName;
+            Binding renabled5 = new Binding("Enabled", Interface.IBS.SSFPreferences, column);
+            this.kthB.TextBox.DataBindings.Add(renabled5);
+            Binding other = new Binding("Enabled", Interface.IBS.SSFPreferences, column);
+            this.kepiB.TextBox.DataBindings.Add(other);
+
+            column = Interface.IDB.SSFPref.DoMatSSFColumn.ColumnName;
+            Binding renabled6 = new Binding("Enabled", Interface.IBS.SSFPreferences, column);
+            this.chlenB.TextBox.DataBindings.Add(renabled6);
+            Binding other2 = new Binding("Enabled", Interface.IBS.SSFPreferences, column);
+            this.chdiamB.TextBox.DataBindings.Add(other2);
+            Binding other3 = new Binding("Enabled", Interface.IBS.SSFPreferences, column);
+
+            this.cfgB.ComboBox.DataBindings.Add(other3);
+
+
+            this.cfgB.ComboBox.Items.AddRange( MatSSF.Types);
+            /*
+            //types
+            this.cfgB.ComboBox.DisplayMember = Interface.IDB.Channels.FluxTypeColumn.ColumnName;
+            this.cfgB.ComboBox.DataSource = Interface.IBS.Channels;
+            this.cfgB.ComboBox.ValueMember = Interface.IDB.Channels.FluxTypeColumn.ColumnName;
+
+            */
+            // this.cfgB.AutoCompleteMode = AutoCompleteMode.//.OfType<string>();
+
+
+        }
+
+        private void setCheckBindings()
+        {
+            string column;
+            Hashtable checkBindings = Dumb.ArrayOfBindings(ref Interface.IBS.SSFPreferences, string.Empty, "ReadOnly");
+
+            column = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
+            Binding renabled = checkBindings[column] as Binding; //new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
+            this.radiusbox.TextBox.DataBindings.Add(renabled);
+            column = Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName;
+            Binding renabled2 = checkBindings[column] as Binding;//new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName);
+            this.lenghtbox.TextBox.DataBindings.Add(renabled2);
+            column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
+            Binding renabled3 = checkBindings[column] as Binding;
+            this.densityB.TextBox.DataBindings.Add(renabled3);
+            column = Interface.IDB.SSFPref.CalcMassColumn.ColumnName;
+            Binding renabled4 = checkBindings[column] as Binding;
+            this.massB.TextBox.DataBindings.Add(renabled4);
+           // return column;
         }
 
         public ucSSFData()

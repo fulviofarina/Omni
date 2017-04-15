@@ -8,10 +8,7 @@ namespace DB
 {
     public partial class LINAA
     {
-        partial class MatSSFDataTable
-        {
-         
-        }
+      
 
         partial class UnitDataTable
         {
@@ -38,13 +35,19 @@ namespace DB
                     {
                         nonNullables = new DataColumn[] {
                             this.columnChDiameter, this.columnChLength,
+                            this.columnkepi,this.columnkth,
+                            this.columnChCfg,
                             this.columnLastCalc,
                             this.columnLastChanged,
                             this.columnToDo,
-                            this.columnContent };
+                            this.columnContent ,
+                        this.columnSSFTable};
                     }
                     return nonNullables;
                 }
+
+
+               
             }
 
             /// <summary>
@@ -54,6 +57,8 @@ namespace DB
             /// <param name="e"></param>
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
+
+                //this.ColumnChanging += UnitDataTable_ColumnChanging;
                 DataColumn c = e.Column;
                 if (!NonNullables.Contains(c)) return;
 
@@ -64,12 +69,17 @@ namespace DB
                 {
                     bool nullo = EC.CheckNull(c, row);
 
-                    if (c == this.columnLastCalc || c == this.columnLastChanged)
+                    if (c == this.columnLastCalc  )
                     {
                         //negative if calculated after it has changed (which is good)
+                      
+                    }
+                    else if ( c == this.columnLastChanged)
+                    {
+
                         double tot = r.LastChanged.Subtract(r.LastCalc).TotalSeconds;
                         //positive means needs to be calculated
-                        if (tot > 1)
+                        if (tot > 10)
                         {
                             r.ToDo = true;
                         }
@@ -77,18 +87,83 @@ namespace DB
                         {
                             r.ToDo = false;
                         }
+
+                        //negative if calculated after it has changed (which is good)
+
                     }
                     else if (c == this.ToDoColumn)
                     {
-                        if (!r.ToDo) r.LastChanged = r.LastCalc;
+                        if (r.IsToDoNull())
+                        {
+                            r.ToDo = false;
+                        }
+                        //if (!r.ToDo) r.SSFTable = null;
+                       // if (!r.ToDo) r.LastChanged = r.LastCalc;
                     }
-                    else if (c == this.columnContent)
+                    else if (c == this.SSFTableColumn)
                     {
-                        if (r.IsToDoNull() || !r.ToDo)
+                        if (r.IsSSFTableNull())
+                        {
+                            r.ToDo = true;
+                            //      r.LastChanged = DateTime.Now; //update the time
+                        }
+                        else r.ToDo = false;
+                    }
+                   
+                }
+                catch (SystemException ex)
+                {
+                    (this.DataSet as LINAA).AddException(ex);
+                    EC.SetRowError(e.Row, e.Column, ex);
+                }
+            }
+
+
+            private IEnumerable<DataColumn> changeables;
+
+            public IEnumerable<DataColumn> Changeables
+            {
+                get
+                {
+                    if (changeables == null)
+                    {
+                        changeables = new DataColumn[] {
+                            this.columnChDiameter, this.columnChLength,
+                            this.columnkth,this.columnkepi,
+                            this.columnChCfg,
+                         //   this.columnLastCalc,
+                        //    this.columnLastChanged,
+                      //      this.columnToDo,
+                            this.columnContent };
+                     //   this.columnSSFTable};
+                    }
+                    return changeables;
+                }
+
+
+
+            }
+            public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
+            {
+                DataColumn c = e.Column;
+                //if (!NonNullables.Contains(c)) return;
+
+
+                if (!Changeables.Contains(e.Column)) return;
+
+                DataRow row = e.Row;
+                UnitRow r = row as UnitRow;
+
+                try
+                {
+                  //  bool nullo = EC.CheckNull(c, row);
+
+                                         
+                        if (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString())!=0)
                         {
                             r.LastChanged = DateTime.Now; //update the time
                         }
-                    }
+                  
                 }
                 catch (SystemException ex)
                 {
@@ -117,18 +192,9 @@ namespace DB
             /// <param name="v"></param>
             public void SetRabbitContainer(ref LINAA.VialTypeRow v)
             {
-                decimal diameter;
-                decimal leng;
 
-                diameter = Convert.ToDecimal((v.InnerRadius * 2.0));
-                diameter = Decimal.Round(diameter, 4);
-
-                this.ChDiameter = Convert.ToDouble(diameter);
-
-                leng = Convert.ToDecimal(v.MaxFillHeight);
-                leng = Decimal.Round(leng, 4);
-
-                this.ChLength = (double)leng;
+                this.ChDiameter = v.InnerRadius * 2.0;
+                this.ChLength = v.MaxFillHeight;
             }
 
             /*
@@ -197,6 +263,10 @@ namespace DB
             {
                 try
                 {
+                    //this goes FIRST!!!
+                    this.LastCalc = DateTime.Now;
+                
+
                     double aux2 = 0;
 
                     if (!Mdens.Equals(string.Empty))
@@ -239,7 +309,6 @@ namespace DB
                         this.PXS = aux2 / 10;
                     }
 
-                    this.LastCalc = DateTime.Now;
                 }
                 catch (SystemException ex)
                 {

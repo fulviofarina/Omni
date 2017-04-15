@@ -135,7 +135,7 @@
     <Compile Include="DB\Geometry\NAA.Geometry.cs" />
     <Compile Include="DB\Geometry\NAA.Compositions.cs" />
     <Compile Include="DB\Geometry\NAA.Matrix.cs" />
-    <Compile Include="DB\Geometry\NAA.Units.cs" />
+    <Compile Include="DB\Samples\NAA.Units.cs" />
     <Compile Include="DB\Geometry\NAA.Vial.cs" />
     <Compile Include="Populate\Populate.DetSol.cs" />
     <Compile Include="Populate\Populate.Geometry.cs" />

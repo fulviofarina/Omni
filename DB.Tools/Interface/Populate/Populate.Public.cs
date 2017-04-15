@@ -32,11 +32,17 @@ namespace DB.Tools
             Interface.IPreferences.CurrentPref.LastIrradiationProject = ProjectOrOrder;
             Interface.IPreferences.SavePreferences();
 
-            string filter = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
+            string filter = Interface.IDB.SubSamples.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
             string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
 
             Interface.IBS.SubSamples.Filter = filter;
             Interface.IBS.SubSamples.Sort = sort;
+
+            filter = Interface.IDB.Unit.IrrReqIDColumn.ColumnName + " = '" + IrrReqID + "'";
+            sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
+
+            Interface.IBS.Units.Filter = filter;
+            Interface.IBS.Units.Sort = sort;
 
             Interface.IBS.Units.ResumeBinding();
             Interface.IBS.SubSamples.ResumeBinding();
