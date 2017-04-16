@@ -133,7 +133,7 @@ namespace DB.Tools
                 }
             }
 
-            double maxEne = 0;
+          //  double maxEne = 0;
             foreach (LINAA.YieldsRow y in ydt)
             {
                 // double ene = Convert.ToDouble(y.Energy);

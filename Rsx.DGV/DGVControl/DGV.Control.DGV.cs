@@ -188,6 +188,7 @@ namespace Rsx.DGV
       }
       catch (SystemException ex)
       {
+
       }
     }
 

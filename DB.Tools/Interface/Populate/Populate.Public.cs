@@ -22,15 +22,15 @@ namespace DB.Tools
 
             IrrReqID = Irradiation.IrradiationRequestsID;
 
-            Interface.IBS.SubSamples.SuspendBinding();
-            Interface.IBS.Units.SuspendBinding();
+       //     Interface.IBS.SubSamples.SuspendBinding();
+       //     Interface.IBS.Units.SuspendBinding();
 
             Interface.IPopulate.ISamples.PopulateSubSamples(IrrReqID);
             Interface.IPopulate.ISamples.PopulateUnitsByProject(IrrReqID);
 
 
             Interface.IPreferences.CurrentPref.LastIrradiationProject = ProjectOrOrder;
-            Interface.IPreferences.SavePreferences();
+           
 
             string filter = Interface.IDB.SubSamples.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
             string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
@@ -44,8 +44,21 @@ namespace DB.Tools
             Interface.IBS.Units.Filter = filter;
             Interface.IBS.Units.Sort = sort;
 
-            Interface.IBS.Units.ResumeBinding();
-            Interface.IBS.SubSamples.ResumeBinding();
+
+        
+            Interface.IPreferences.SavePreferences();
+            Interface.IReport.Msg("Loaded project " + ProjectOrOrder, "Loading finished", true);
+            //LINAA.UnitRow u = Interface.ICurrent?.Unit as LINAA.UnitRow;
+
+            //    LINAA.UnitRow u = Interface.ICurrent.Unit as LINAA.UnitRow;
+
+            //filter = string.Empty;
+            //    Interface.IBS.Update(u, true, false);
+
+            // Interface.IDB.MatSSF.SSF.Filter = string.Empty;
+
+            //    Interface.IBS.Units.ResumeBinding();
+            //    Interface.IBS.SubSamples.ResumeBinding();
 
 
         }

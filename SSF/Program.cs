@@ -28,7 +28,7 @@ namespace SSF
         private static string title = "SSF Panel by Fulvio Farina Arboccò";
         static  Pop msn;//= new Pop(true);
 
-        static NotifyIcon con = null;
+        static NotifyIcon con;//= new NotifyIcon();
       
    
         /// <summary>
@@ -65,6 +65,9 @@ namespace SSF
                 LIMS.Form = new LIMS(); //make a new UI LIMS
                 LIMS.Form.Opacity = 0;
                 LIMS.Form.ShowInTaskbar = false;
+             
+              
+                //   LIMS.Form.Controls.Add(con as Control);
 
                 if (ok)
                 {
@@ -112,6 +115,7 @@ namespace SSF
             {
                 string lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
                 ucSubSamples.projectbox.Project = lastProject;
+                ucSubSamples.projectbox.Refresher();
             }
             //set child parent
             ///VOLVER A PONER ESTO EVENTUALMENTE
@@ -156,7 +160,7 @@ namespace SSF
             form.FormClosing += Form_FormClosing;     
 
 
-          //  LIMS.Explore();
+            LIMS.Explore();
 
             LIMS.Interface.IReport.ReportFinished();
         }
@@ -164,7 +168,11 @@ namespace SSF
         private static void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = Creator.Close(ref LIMS.Linaa);
-            if (!e.Cancel) Application.Exit();
+            if (!e.Cancel)
+            {
+                //Application.Exit();
+                Application.ExitThread();
+            }
         }
 
         private static IucPreferences PreferencesUI()

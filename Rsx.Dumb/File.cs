@@ -14,16 +14,11 @@ namespace Rsx
   {
     public static void WriteBytesFile(ref byte[] r, string destFile)
     {
-      try
-      {
+    
         FileStream f = new FileStream(destFile, FileMode.Create, FileAccess.Write);
         f.Write(r, 0, Convert.ToInt32(r.Length));
         f.Close();
-      }
-      catch (SystemException ex)
-      {
-        System.Windows.Forms.MessageBox.Show("El archivo está abierto");
-      }
+   
     }
 
     public static byte[] ReadFileBytes(string file)

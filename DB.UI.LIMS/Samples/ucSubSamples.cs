@@ -71,7 +71,7 @@ namespace DB.UI
             }
             else
             {
-                this.Link();
+                if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
                 this.SaveItem.Enabled = false;
             }
             this.ParentForm.Visible = !this.ParentForm.Visible;
@@ -88,13 +88,8 @@ namespace DB.UI
             // ucContent.DeLink();
         }
 
-        /// <summary>
-        /// links to the binding source
-        /// </summary>
-        public void Link()
-        {
-            if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
-        }
+      
+    
 
         public void Predict(object sender, EventArgs e)
         {
@@ -196,11 +191,25 @@ namespace DB.UI
 
             Interface.IPopulate.ISamples.AddSamples(project, ref samples, false);
 
-          //  Link(this.filter, this.sort);
+            //  Link(this.filter, this.sort);
 
-          
+
+
+            Interface.IStore.Save<LINAA.SubSamplesDataTable>();
+            Interface.IStore.Save<LINAA.UnitDataTable>();
+
+
+
             Interface.IBS.Update(row, true, true);
+
+            projectbox.CallBack?.Invoke();
+
         }
+        public void RowDeleted(ref DataRow row)
+        {
+            projectbox.CallBack?.Invoke();
+        }
+
 
         /// <summary>
         /// set interface and basics
@@ -216,9 +225,12 @@ namespace DB.UI
             this.BN.BindingSource = Interface.IBS.SubSamples;
 
           //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
-            projectbox.Set(ref Interface, Link);
-
-       
+            projectbox.Set(ref Interface);
+            projectbox.CallBack += delegate
+            {
+                if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
+            };
+            //other callBACKS CAN BE ADDED TO THIS ONE BY OTHER CONTROLS
 
           //  Interface.IBS.SubSamples = this.BS;
         }
@@ -272,6 +284,6 @@ namespace DB.UI
             reportBtton.Visible = false;
         }
 
-    
+       
     }
 }

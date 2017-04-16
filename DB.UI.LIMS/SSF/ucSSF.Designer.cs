@@ -50,6 +50,7 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.SSFPlitter = new System.Windows.Forms.SplitContainer();
             this.UnitSSFSC = new System.Windows.Forms.SplitContainer();
+            this.ucSSFData = new DB.UI.ucSSFData();
             this.SCMENU = new System.Windows.Forms.SplitContainer();
             this.CalcBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
@@ -81,7 +82,6 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DaCONTAINER = new System.Windows.Forms.SplitContainer();
-            this.ucSSFData = new DB.UI.ucSSFData();
             this.dgvCMS.SuspendLayout();
             this.toolStrip6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -285,14 +285,24 @@
             // 
             // UnitSSFSC.Panel1
             // 
-            this.UnitSSFSC.Panel1.Controls.Add(this.ucSSFData);
+            this.UnitSSFSC.Panel1.Controls.Add(this.SCMENU);
             // 
             // UnitSSFSC.Panel2
             // 
-            this.UnitSSFSC.Panel2.Controls.Add(this.SCMENU);
+            this.UnitSSFSC.Panel2.Controls.Add(this.ucSSFData);
             this.UnitSSFSC.Size = new System.Drawing.Size(711, 791);
-            this.UnitSSFSC.SplitterDistance = 741;
+            this.UnitSSFSC.SplitterDistance = 34;
             this.UnitSSFSC.TabIndex = 11;
+            // 
+            // ucSSFData
+            // 
+            this.ucSSFData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSSFData.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ucSSFData.Location = new System.Drawing.Point(0, 0);
+            this.ucSSFData.Margin = new System.Windows.Forms.Padding(2);
+            this.ucSSFData.Name = "ucSSFData";
+            this.ucSSFData.Size = new System.Drawing.Size(711, 753);
+            this.ucSSFData.TabIndex = 0;
             // 
             // SCMENU
             // 
@@ -307,19 +317,19 @@
             // SCMENU.Panel2
             // 
             this.SCMENU.Panel2.Controls.Add(this.cancelBtn);
-            this.SCMENU.Size = new System.Drawing.Size(711, 46);
+            this.SCMENU.Size = new System.Drawing.Size(711, 34);
             this.SCMENU.SplitterDistance = 513;
             this.SCMENU.TabIndex = 9;
             // 
             // CalcBtn
             // 
-            this.CalcBtn.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.CalcBtn.BackColor = System.Drawing.Color.MintCream;
             this.CalcBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CalcBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CalcBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.CalcBtn.Location = new System.Drawing.Point(0, 0);
             this.CalcBtn.Name = "CalcBtn";
-            this.CalcBtn.Size = new System.Drawing.Size(513, 46);
+            this.CalcBtn.Size = new System.Drawing.Size(513, 34);
             this.CalcBtn.TabIndex = 0;
             this.CalcBtn.Text = "CALCULATE";
             this.CalcBtn.UseVisualStyleBackColor = false;
@@ -327,13 +337,13 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.cancelBtn.BackColor = System.Drawing.Color.Linen;
             this.cancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cancelBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancelBtn.ForeColor = System.Drawing.Color.Red;
             this.cancelBtn.Location = new System.Drawing.Point(0, 0);
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(194, 46);
+            this.cancelBtn.Size = new System.Drawing.Size(194, 34);
             this.cancelBtn.TabIndex = 1;
             this.cancelBtn.Text = "CANCEL";
             this.cancelBtn.UseVisualStyleBackColor = false;
@@ -597,16 +607,6 @@
             this.DaCONTAINER.Size = new System.Drawing.Size(1386, 834);
             this.DaCONTAINER.SplitterDistance = 39;
             this.DaCONTAINER.TabIndex = 0;
-            // 
-            // ucSSFData
-            // 
-            this.ucSSFData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSSFData.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.ucSSFData.Location = new System.Drawing.Point(0, 0);
-            this.ucSSFData.Margin = new System.Windows.Forms.Padding(2);
-            this.ucSSFData.Name = "ucSSFData";
-            this.ucSSFData.Size = new System.Drawing.Size(711, 741);
-            this.ucSSFData.TabIndex = 0;
             // 
             // ucSSF
             // 

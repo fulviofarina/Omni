@@ -79,6 +79,7 @@ namespace DB
         protected internal void RowChanged(object sender, DataRowChangeEventArgs e)
         {
             if (e.Action != DataRowAction.Add && e.Action != DataRowAction.Commit) return;
+            if (e.Action == DataRowAction.Delete) return;
             //	if( e.Action != DataRowAction.Commit) return;
 
             e.Row.ClearErrors();
@@ -87,7 +88,8 @@ namespace DB
             IEnumerable<DataColumn> cols = e.Row.Table.Columns.OfType<DataColumn>();
             foreach (DataColumn column in cols)
             {
-                table.DataColumnChanged(sender, new DataColumnChangeEventArgs(e.Row, column, e.Row[column]));
+                DataColumnChangeEventArgs args = new DataColumnChangeEventArgs(e.Row, column, e.Row[column]); 
+                table.DataColumnChanged(sender, args);
             }
         }
 

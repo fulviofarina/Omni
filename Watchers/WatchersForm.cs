@@ -25,8 +25,8 @@ namespace k0X
         void Speak(string text);
 
         System.Windows.Forms.ToolStripButton Clear { get; }
-        System.Windows.Forms.ToolStripButton Close { get; }
-        System.Windows.Forms.ToolStripButton Hide { get; }
+        System.Windows.Forms.ToolStripButton Closer { get; }
+        System.Windows.Forms.ToolStripButton Hider { get; }
         System.Windows.Forms.ToolStripButton Save { get; }
         System.Windows.Forms.ToolStripButton Schedule { get; }
         System.Windows.Forms.ToolStripButton Start { get; }
@@ -100,7 +100,7 @@ namespace k0X
             }
         }
 
-        public ToolStripButton Close
+        public ToolStripButton Closer
         {
             get
             {
@@ -108,7 +108,7 @@ namespace k0X
             }
         }
 
-        public ToolStripButton Hide
+        public ToolStripButton Hider
         {
             get
             {
@@ -286,7 +286,7 @@ namespace k0X
 
                 this.watchersList.Add(runing);
                 runing.SetDetector(detector);
-                if (runing.Hide.Text.CompareTo("Hide") == 0) runing.Hide.PerformClick();
+                if (runing.Hider.Text.CompareTo("Hide") == 0) runing.Hider.PerformClick();
             }
             catch (SystemException ex)
             {

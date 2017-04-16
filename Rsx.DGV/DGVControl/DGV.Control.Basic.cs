@@ -221,11 +221,17 @@ namespace Rsx.DGV
         case Keys.A:
           {
             action = "Added";
-            result = Add(ref dgv);
+            result = Add(ref dgv, true);
             doRest = true;
           }
           break;
-
+   case Keys.D:
+          {
+            action = "Deleted";
+            result = Add(ref dgv, false);
+            doRest = true;
+          }
+          break;
         case Keys.T:
           {
             action = "Cloned";

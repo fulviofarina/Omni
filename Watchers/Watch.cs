@@ -101,6 +101,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
+                Interface.IMain.AddException(ex);
             }
 
             if (lsCommands != null)
@@ -201,7 +202,7 @@ namespace k0X
                 if (isDet)
                 {
                     possibleDet = posSamDet;
-                    awaitingSample = true;
+               //     awaitingSample = true;
                     IWatchers.ExecuteCmd(email, Properties.Cmds.SETPOS + possiblePos, possibleDet);
                     if (!string.IsNullOrEmpty(fullinfop)) IWatchers.ExecuteCmd(email, Properties.Cmds.SETSAM + fullinfop, possibleDet);
                     if (!string.IsNullOrEmpty(schInfo)) IWatchers.ExecuteCmd(email, Properties.Cmds.SETSCH + schInfo, possibleDet);
@@ -209,7 +210,7 @@ namespace k0X
                 else
                 {
                     IWatchers.ExecuteCmd(email, Properties.Cmds.SETSAM + posSamDet, possibleDet);
-                    awaitingSample = false;
+                //    awaitingSample = false;
                     possibleDet = string.Empty;
                 }
 
@@ -217,10 +218,12 @@ namespace k0X
             }
             catch (SystemException ex)
             {
+
+                Interface.IMain.AddException(ex);
             }
         }
 
-        private bool awaitingSample = false;
+   //     private bool awaitingSample = false;
         private string possibleDet = string.Empty;
 
         private void SetLastTime(ref DateTime inter, DateTime received, bool scan)

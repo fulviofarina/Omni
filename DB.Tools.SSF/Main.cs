@@ -56,10 +56,7 @@ namespace DB.Tools
         /// </summary>
         public static LINAA.MatSSFDataTable Table = null;
 
-        /// <summary>
-        /// Is it used? should not
-        /// </summary>
-        public static LINAA.SubSamplesRow Sample = null;
+     
 
         /// <summary>
         /// Writes the MatSSF datatable to an xml file and assigns it to the row object
@@ -67,9 +64,16 @@ namespace DB.Tools
         public static bool WriteXML()
         {
             string file = startupPath + UNIT.Name;
+
+
+         //   Dumb.MakeDTBytes(, ref Table, file);
             File.Delete(file);
+
+            //MatSSFDataTable dt = Table;
+
+            //WriteXml(file);
             //write to file
-            Table.WriteXml(file);
+            Table.WriteXml(file, XmlWriteMode.IgnoreSchema );
 
             //read bytes
             byte[] bites = Dumb.ReadFileBytes(file);
@@ -116,11 +120,15 @@ namespace DB.Tools
             // System.IO.File.Delete(file);
             Table.Clear();
 
+
+            Table.Clear();
             if (UNIT.IsSSFTableNull()) return false;
             //file to save as
             string file = startupPath + UNIT.Name;
             //get bytes
             byte[] bites = UNIT.SSFTable;
+
+         //   Dumb.ReadDTBytes(file, ref bites, ref Table);
             //write to file
             Dumb.WriteBytesFile(ref bites, file);
             //read from file
@@ -247,11 +255,31 @@ namespace DB.Tools
             array = null;
 
 
+            /*
+
+            IEnumerable<DataRow> rows = Table.AsEnumerable();
+            DataTable clone = Table.Copy();
+            string file = startupPath + UNIT.Name;
+            byte[] bites = Dumb.MakeDTBytes(ref rows, ref clone, file);
+         //   System.IO.File.Delete(file);
+            //write to file
+         //   Table.WriteXml(file);
+
+            //read bytes
+           // byte[] bites = Dumb.ReadFileBytes(file);
+
+            //asign
+            UNIT.SSFTable = bites;
+            */
+            //delete file
+            //  System.IO.File.Delete(file);
+
+       
 
             //fill shit I should delete!!!!
-         //   if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
-           // Table.GtDensity[1] = UNIT.SubSamplesRow.CalcDensity.ToString();
-            if (Sample != null) Sample.Gthermal = UNIT.Gt;
+            //   if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
+            // Table.GtDensity[1] = UNIT.SubSamplesRow.CalcDensity.ToString();
+            if (UNIT.SubSamplesRow != null) UNIT.SubSamplesRow.Gthermal = UNIT.Gt;
          //   Table.GtDensity[0] = UNIT.Gt.ToString();
 
             return File;

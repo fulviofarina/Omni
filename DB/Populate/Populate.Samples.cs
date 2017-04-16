@@ -47,6 +47,8 @@ namespace DB
                 this.tableUnit.Merge(dt, false, MissingSchemaAction.AddWithKey);
                 this.tableUnit.AcceptChanges();
                 this.tableUnit.EndLoadData();
+
+              //  this.MatSSF.Clear();
                 //    Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
             }
             catch (SystemException ex)
@@ -120,12 +122,15 @@ namespace DB
                 if (s.GetUnitRows().Count() == 0)
                 {
                     UnitRow u = this.tableUnit.NewUnitRow();
-                    this.tableUnit.AddUnitRow(u);
-                    // u.Name = s.SubSampleName;
+                    u.ToDo = true;
+                    u.LastCalc = DateTime.Now;
+                    u.LastChanged = DateTime.Now.AddMinutes(1);
+                    u.IrrReqID = s.IrradiationRequestsID;
                     u.SampleID = s.SubSamplesID;
+                    this.tableUnit.AddUnitRow(u);
                     ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
                     u.SetChannel(ref c);
-                    u.IrrReqID = s.IrradiationRequestsID;
+                   
                 }
             }
         }
@@ -428,7 +433,7 @@ namespace DB
             this.tableSubSamples.BeginLoadData();
             this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
             this.tableSubSamples.EndLoadData();
-           // this.tableSubSamples.AcceptChanges();
+            this.tableSubSamples.AcceptChanges();
         }
     }
 }

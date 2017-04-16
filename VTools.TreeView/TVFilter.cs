@@ -57,7 +57,7 @@ namespace VTools
     }
 
     private DataTable dt;
-    private bool filtered = false;
+  //  private bool filtered = false;
 
     public ucTVFilter()
         : base()
@@ -67,7 +67,7 @@ namespace VTools
 
     private void NodeAfterCheck(object sender, TreeViewEventArgs e)
     {
-      filtered = false;
+    //  filtered = false;
 
       if (e.Node.Tag != null)
       {
@@ -102,10 +102,11 @@ namespace VTools
         }
 
         bs.Filter = filter;
-        filtered = true;
+      //  filtered = true;
       }
       catch (SystemException ex)
       {
+
       }
     }
 
@@ -292,7 +293,7 @@ namespace VTools
       }
     }
 
-    private DataTable dt;
+   // private DataTable dt;
 
     private ToolStripItem all = null;
     private ToolStripItem none = null;

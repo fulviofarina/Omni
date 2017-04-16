@@ -40,6 +40,15 @@ namespace DB.UI
 
                     projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel1;
+                    projBox.CallBack += delegate
+                     {
+                         bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
+                         this.CalcBtn.Enabled = ThereIsData;
+                         ucSSFData.Disabler(ThereIsData);
+                       //  this.ucSSFData.Enabled = Interface.IBS.SubSamples.Count!=0;
+
+                     };
+                   
                 }
                 else if (pro.GetType().Equals(typeof(ucOptions)))
                 {
@@ -56,6 +65,11 @@ namespace DB.UI
                     Control p = pro as Control;
                     p.Dock = DockStyle.Fill;
                     destiny = this.SamplesTab;
+
+
+                    //ucSubSamples c = p as ucSubSamples;
+                    
+
                 }
                 else
                 {
@@ -74,6 +88,10 @@ namespace DB.UI
 
         public void Calculate(object sender, EventArgs e)
         {
+
+            Interface.IBS.EndEdit();
+            this.ValidateChildren();
+
             Cursor.Current = Cursors.WaitCursor;
 
             cancelCalculations = false;
@@ -89,7 +107,9 @@ namespace DB.UI
 
             this.Tab.SelectedTab = this.CalcTab;
 
-            Interface.IBS.EndEdit();
+
+            //actual position
+                 int position = Interface.IBS.SubSamples.Position;
 
             MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
 
@@ -112,7 +132,11 @@ namespace DB.UI
             resetProgress?.Invoke(2 + (units.Count * 5));
 
             //1
+            if (units.Count==0)
+            {
+                Interface.IReport.Msg("Select the Units to calculate with the 'Do?' checkbox", "Oops, nothing was selected");
 
+            }
             //loop through all samples to work to
             foreach (UnitRow item in units)
             {
@@ -135,9 +159,15 @@ namespace DB.UI
 
             }
 
+            Interface.IBS.SubSamples.Position = position;
+
+
             this.CalcBtn.Enabled = true;
 
             cancelCalculations = false;
+
+          //  Creator.SaveInFull(true);
+      
 
             this.cancelBtn.Enabled = false;
 
@@ -183,6 +213,9 @@ namespace DB.UI
             try
             {
 
+                MatSSF.Table = Interface.IDB.MatSSF;
+
+
                 ucMS.Set(ref Interface);
                 ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
 
@@ -199,8 +232,10 @@ namespace DB.UI
 
                 ucSSFData.Set(ref Interface);
 
+               
+
                 //set calculation options
-                Interface.IBS.EndEdit();
+             //   Interface.IBS.EndEdit();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }

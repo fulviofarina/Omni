@@ -137,7 +137,13 @@ namespace DB.Tools
             bool eCancel = false;
 
             //this is important otherwise it will ask to save this
+         //   Interface.IDB.MatSSF.Clear();
+            Interface.IDB.MatSSF.AcceptChanges();
+          //  Interface.IDB.MUES.Clear();
+            Interface.IDB.MUES.AcceptChanges();
+            //IMPORTANT FOR THE PROGRAM NOT TO ASK FOR THESE TABLES
             Interface.IStore.SaveExceptions();
+
 
             IEnumerable<DataTable> tables = Linaa.GetTablesWithChanges();
 
@@ -177,32 +183,40 @@ namespace DB.Tools
             bool ok = false;
 
             Cursor.Current = Cursors.WaitCursor;
+
+
           
+
+            //    WHAT IS THIS
+            //WHAT IS THIS
+            bool off = Interface.IPreferences.CurrentPref.Offline;
+            //     string savePath = Interface.IMain.FolderPath + "lims.xml";
+            // Interface.IStore.SaveSSF(off, savePath);
+
+
+            Interface.IBS.EndEdit();
+       
+
+            Interface.IPreferences.SavePreferences();
+            Interface.IReport.Msg("Saved preferences", "Saved!");
+
+           
 
             try
             {
-                Interface.IBS.EndEdit();
-          
-                //    WHAT IS THIS
-                //WHAT IS THIS
-                bool off = Interface.IPreferences.CurrentPref.Offline;
-                //     string savePath = Interface.IMain.FolderPath + "lims.xml";
-                // Interface.IStore.SaveSSF(off, savePath);
 
-                Interface.IPreferences.SavePreferences();
-                Interface.IReport.Msg("Saving preferences", "Saved!");
-
-                IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
+              //  IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
+                IEnumerable<DataTable> tables = Interface.IStore.GetTablesWithChanges();
 
                 bool savedremotely = true;
                 if (!off)
                 {
                     savedremotely = Interface.IStore.SaveRemote(ref tables, takechanges);
-                    Interface.IReport.Msg("Saving to SQL database", "Saved!");
+                    Interface.IReport.Msg("Saved into SQL database", "Saved!");
                 }
 
                 bool savedlocaly = Interface.IStore.SaveLocalCopy();
-                Interface.IReport.Msg("Saving XML database", "Saved!");
+                Interface.IReport.Msg("Saved into local XML file", "Saved!");
                 //   Interface.IReport.Msg("Saving", "Saving completed!");
 
                 ok = savedlocaly && savedremotely;

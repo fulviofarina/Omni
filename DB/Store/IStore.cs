@@ -9,7 +9,7 @@ namespace DB
     {
         // void AddException(Exception ex);
         void Delete<T>(ref IEnumerable<T> rows);
-
+        IEnumerable<DataTable> GetTablesWithChanges();
         bool DeletePeaks(int measID);
 
         bool Save<T>(ref IEnumerable<T> rows);

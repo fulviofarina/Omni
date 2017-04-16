@@ -882,13 +882,13 @@
         private System.Windows.Forms.ToolStripTextBox lastCal;
         private System.Windows.Forms.SplitContainer cfgSC;
         private System.Windows.Forms.DataGridView unitDGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
+      //  private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
+  //      private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private System.Windows.Forms.DataGridView SSFDGV;
         public System.Windows.Forms.BindingSource UnitBS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
+    //    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+    //    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+    //    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ToDo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;

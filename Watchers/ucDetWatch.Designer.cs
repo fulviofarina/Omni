@@ -126,7 +126,7 @@
 		 this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
 		 this.Backup = new System.Windows.Forms.ToolStripButton();
 		 this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
-		 this.Hide = new System.Windows.Forms.ToolStripButton();
+		 this.Hider = new System.Windows.Forms.ToolStripButton();
 		 this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
 		 this.tstVDM = new System.Windows.Forms.ToolStripButton();
 		 this.DetMgrTS = new System.Windows.Forms.ToolStrip();
@@ -945,7 +945,7 @@
             this.toolStripSeparator29,
             this.Backup,
             this.toolStripSeparator21,
-            this.Hide,
+            this.Hider,
             this.toolStripSeparator27,
             this.tstVDM});
 		 this.toolStrip2.Location = new System.Drawing.Point(0, 0);
@@ -1119,17 +1119,17 @@
 		 // 
 		 // Hide
 		 // 
-		 this.Hide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-		 this.Hide.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-		 this.Hide.ForeColor = System.Drawing.Color.Fuchsia;
-		 this.Hide.Image = ((System.Drawing.Image)(resources.GetObject("Hide.Image")));
-		 this.Hide.ImageTransparentColor = System.Drawing.Color.Magenta;
-		 this.Hide.Name = "Hide";
-		 this.Hide.Size = new System.Drawing.Size(35, 29);
-		 this.Hide.Text = "Hide";
-		 this.Hide.ToolTipText = "Mimetic is the key ;)";
-		 this.Hide.Click += new System.EventHandler(this.Hide_Click);
-		 this.Hide.MouseEnter += new System.EventHandler(this.ucDetWatch_MouseEnter);
+		 this.Hider.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+		 this.Hider.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+		 this.Hider.ForeColor = System.Drawing.Color.Fuchsia;
+		 this.Hider.Image = ((System.Drawing.Image)(resources.GetObject("Hide.Image")));
+		 this.Hider.ImageTransparentColor = System.Drawing.Color.Magenta;
+		 this.Hider.Name = "Hide";
+		 this.Hider.Size = new System.Drawing.Size(35, 29);
+		 this.Hider.Text = "Hide";
+		 this.Hider.ToolTipText = "Mimetic is the key ;)";
+		 this.Hider.Click += new System.EventHandler(this.Hide_Click);
+		 this.Hider.MouseEnter += new System.EventHandler(this.ucDetWatch_MouseEnter);
 		 // 
 		 // toolStripSeparator27
 		 // 
@@ -1507,7 +1507,7 @@
 	  private System.Windows.Forms.ToolStripButton serverLabel;
 	  private System.Windows.Forms.ToolStripButton specPathlbl;
 	  public System.Windows.Forms.ToolStripButton Backup;
-	  public System.Windows.Forms.ToolStripButton Hide;
+	  public System.Windows.Forms.ToolStripButton Hider;
 	  private System.Windows.Forms.ToolStripButton timerbtton;
 	  private System.Windows.Forms.ToolStripButton schedule;
 	  private System.Windows.Forms.ToolStripButton startOnlbl;

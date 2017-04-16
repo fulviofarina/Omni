@@ -211,15 +211,21 @@ namespace Rsx.DGV
     private Loader _loader;
     private Saver<DataRow> _saveMethod2;
     private Refresher _refreshMethod;
-    private Adder _rowAddedMethod;
+    private AdderEraser _rowAddedMethod;
 
-    public Adder RowAddedMethod
+    public AdderEraser RowAddedMethod
     {
       get { return _rowAddedMethod; }
       set { _rowAddedMethod = value; }
     }
+        private AdderEraser _rowDeletedMethod;
 
-    public Loader LoadMethod
+        public AdderEraser RowDeletedMethod
+        {
+            get { return _rowDeletedMethod; }
+            set { _rowDeletedMethod = value; }
+        }
+        public Loader LoadMethod
     {
       get { return _loader; }
       set { _loader = value; }
@@ -310,7 +316,7 @@ namespace Rsx.DGV
 
     public delegate void Refresher();
 
-    public delegate void Adder(ref DataRow row);
+    public delegate void AdderEraser(ref DataRow row);
 
     public delegate void Linker(ref BindingSource bs, DataTable dt, string filter, string sort);
 

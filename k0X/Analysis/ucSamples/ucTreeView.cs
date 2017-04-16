@@ -517,7 +517,7 @@ namespace k0X
                     if (!l.NeedsSSF)
                     {
                         ucSample.ViewMatSSF.Enabled = true;
-                        if (!EC.HasErrors(l.GetMatSSFRows())) ucSample.ViewMatSSF.Image = green;
+                        if (!EC.HasErrors(l.UnitRow.GetMatSSFRows())) ucSample.ViewMatSSF.Image = green;
                     }
 
                     ucSample.MeasurementsHyperLab.Enabled = false;

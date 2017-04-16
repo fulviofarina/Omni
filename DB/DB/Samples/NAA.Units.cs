@@ -12,18 +12,7 @@ namespace DB
 
         partial class UnitDataTable
         {
-            public LINAA.UnitRow NewUnitRow(double kepi, double kth, string chfg)
-            {
-                LINAA.UnitRow u = this.NewUnitRow();
-
-                u.kepi = kepi;
-                u.kth = kth;
-                //  u.RowError = string.Empty;
-                u.ChCfg = chfg;
-                this.AddUnitRow(u);
-
-                return u;
-            }
+           
 
             private IEnumerable<DataColumn> nonNullables;
 
@@ -38,18 +27,44 @@ namespace DB
                             this.columnkepi,this.columnkth,
                             this.columnChCfg,
                             this.columnLastCalc,
-                            this.columnLastChanged,
-                            this.columnToDo,
-                            this.columnContent ,
-                        this.columnSSFTable};
+                           this.columnLastChanged,
+                      //      this.columnToDo,
+                            this.columnContent,
+                                  this.columnBellFactor,
+                              this.columnSSFTable
+                        };
+
                     }
                     return nonNullables;
                 }
 
 
-               
-            }
 
+            }
+/*
+
+            private IEnumerable<DataColumn> prohibited;
+
+            public IEnumerable<DataColumn> Prohibited
+            {
+                get
+                {
+                    if (prohibited == null)
+                    {
+                        prohibited = new DataColumn[] {
+                        
+                            this.columnChCfg,
+                            this.columnLastCalc,
+                            this.columnLastChanged
+                         };
+                    }
+                    return prohibited;
+                }
+
+
+
+            }
+            */
             /// <summary>
             /// I think it is perfect like this, don't mess it up
             /// </summary>
@@ -67,49 +82,116 @@ namespace DB
 
                 try
                 {
-                    bool nullo = EC.CheckNull(c, row);
+                    //  bool isZero = false;
 
-                    if (c == this.columnLastCalc  )
+                    //     bool nullo = EC.CheckNull(c, row);
+                  
+                   bool nullo = EC.CheckNull(e.Column, e.Row);// string.IsNullOrEmpty(e.Row.GetColumnError(e.Column));
+                    
+                   // if (NonNullables.Contains(e.Column))    EC.CheckNull(e.Column, e.Row);
+                    if (c == this.columnLastChanged)
                     {
+                            if (r.IsLastCalcNull()) return;
+                            if (r.IsLastChangedNull()) return;
+                            double tot = r.LastChanged.Subtract(r.LastCalc).TotalSeconds;
+                            //positive means needs to be calculated
+                            if (tot > 2)
+                            {
+                                r.ToDo = true;
+                            }
+                            else if (tot != 0) //negative has been calculated
+                            {
+                                r.ToDo = false;
+                            }
+                    //    }
+
                         //negative if calculated after it has changed (which is good)
-                      
-                    }
-                    else if ( c == this.columnLastChanged)
-                    {
-
-                        double tot = r.LastChanged.Subtract(r.LastCalc).TotalSeconds;
-                        //positive means needs to be calculated
-                        if (tot > 10)
-                        {
-                            r.ToDo = true;
-                        }
-                        else if (tot != 0) //negative has been calculated
-                        {
-                            r.ToDo = false;
-                        }
-
-                        //negative if calculated after it has changed (which is good)
 
                     }
-                    else if (c == this.ToDoColumn)
+                    else
                     {
-                        if (r.IsToDoNull())
+
+                        if (nullo)
                         {
-                            r.ToDo = false;
+                            if (this.BellFactorColumn == c)
+                            {
+
+
+                                if (nullo)
+                                {
+                                    r.BellFactor = 1;
+
+                                }
+
+
+                            }
+                            else if (this.kepiColumn == c)
+                            {
+                                if (nullo)
+                                {
+                                    r.kepi = 1;
+                                }
+
+                            }
+                            else if (this.kthColumn == c)
+                            {
+                                if (nullo)
+                                {
+                                    r.kth = 0.6;
+                                }
+
+                            }
+                            else if (this.ChCfgColumn == c)
+                            {
+                                if (nullo)
+                                {
+                                    r.ChCfg = "0";
+                                }
+                            }
+                            else if (this.ChDiameterColumn == c)
+                            {
+                                //     if (Convert.ToDouble(e.ProposedValue) == 0) e.ProposedValue = 1 ;
+                                if (nullo)
+                                {
+                                    r.ChDiameter = 100;
+                                }
+
+                            }
+                            else if (this.ChLengthColumn == c)
+                            {
+                                if (nullo)
+                                {
+                                    r[c] = 100;
+                                }
+
+                            }
+                            else if (c == this.SSFTableColumn)
+                           {
+                              if (r.IsSSFTableNull())
+                             {
+                                    r.ToDo = true;
+                                    //      r.LastChanged = DateTime.Now; //update the time
+                                }
+                                // else r.ToDo = false;
+                            }
+                            else if (c == this.ContentColumn)
+                            {
+                                if (nullo)
+                                {
+                                    r.Content = "#Al (50%), #Gd (50%) "; // "Please assign a Matrix/Content to this Unit";
+                                    //      r.LastChanged = DateTime.Now; //update the time
+                                }
+                                // else r.ToDo = false;
+                            }
+
+
+
                         }
-                        //if (!r.ToDo) r.SSFTable = null;
-                       // if (!r.ToDo) r.LastChanged = r.LastCalc;
-                    }
-                    else if (c == this.SSFTableColumn)
-                    {
-                        if (r.IsSSFTableNull())
-                        {
-                            r.ToDo = true;
-                            //      r.LastChanged = DateTime.Now; //update the time
-                        }
-                        else r.ToDo = false;
                     }
                    
+                                    
+                  
+
                 }
                 catch (SystemException ex)
                 {
@@ -131,6 +213,7 @@ namespace DB
                             this.columnChDiameter, this.columnChLength,
                             this.columnkth,this.columnkepi,
                             this.columnChCfg,
+                            this.columnBellFactor,
                          //   this.columnLastCalc,
                         //    this.columnLastChanged,
                       //      this.columnToDo,
@@ -156,14 +239,66 @@ namespace DB
 
                 try
                 {
-                  //  bool nullo = EC.CheckNull(c, row);
+                    //  bool nullo = EC.CheckNull(c, row);
 
-                                         
-                        if (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString())!=0)
+                    bool change = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) != 0);
+
+                    //  if (e.Column!=this.columnContent)
+                    //   {
+                    //  if (Convert.ToDouble(e.ProposedValue) == 0) return;
+                    //   }
+                    //     change = (e.ProposedValue == DBNull.Value || change);
+
+               //     if (Convert.ToDouble(e.ProposedValue) == 0) r[c] = 1;
+
+                    if (change)
+                    {
+                        r.LastChanged = DateTime.Now; //update the time
+
+                    }
+                   
+
+                    /*
+                    else if (this.kepiColumn == c)
+                    {
+                        if (Convert.ToDouble(e.ProposedValue) == 0)
                         {
-                            r.LastChanged = DateTime.Now; //update the time
+                            r.kepi = 1;
                         }
-                  
+
+                    }
+                    else if (this.kthColumn == c)
+                    {
+                        if (Convert.ToDouble(e.ProposedValue) == 0)
+                        {
+                            r.kth = 0.6;
+                        }
+
+                    }
+                    else if (this.ChCfgColumn == c)
+                    {
+                        if (Convert.ToDouble(e.ProposedValue) == 0)
+                        {
+                            r.ChCfg = "0";
+                        }
+                    }
+                    else if (this.ChDiameterColumn == c)
+                    {
+                        if (Convert.ToDouble(e.ProposedValue) == 0)
+                        {
+                            r.ChDiameter = 100;
+                        }
+
+                    }
+                    else if (this.ChLengthColumn == c)
+                    {
+                        if (Convert.ToDouble(e.ProposedValue) == 0)
+                        {
+                            r[c] = 100;
+                        }
+
+                    }
+                    */
                 }
                 catch (SystemException ex)
                 {
@@ -175,6 +310,20 @@ namespace DB
 
         partial class UnitRow
         {
+         
+            public bool Check()
+            {
+
+          //      bool ok = true; 
+                //columns in error
+               DataColumn[] colsInE =  this.GetColumnsInError();
+               int count  =    colsInE.Intersect(this.tableUnit.Changeables).Count();
+
+             //   List<DataColumn> cols = colsInE.ToList();
+             //   string co = count.ToString();
+
+                return count==0;
+            }
             /// <summary>
             /// Sets the channel data
             /// </summary>
@@ -265,7 +414,7 @@ namespace DB
                 {
                     //this goes FIRST!!!
                     this.LastCalc = DateTime.Now;
-                
+                    this.LastChanged = DateTime.Now;
 
                     double aux2 = 0;
 

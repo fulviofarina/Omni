@@ -61,7 +61,7 @@ namespace Rsx.DGV
       return "OK! Selected were copied";
     }
 
-    public string Add(ref DataGridView dgv)
+    public string Add(ref DataGridView dgv, bool add = true)
     {
       if (dgv == null) return "The Data Grid cannot be null";
 
@@ -70,13 +70,26 @@ namespace Rsx.DGV
       DataColumn col = table.PrimaryKey.FirstOrDefault();
       if (col != null) indexfield = col.ColumnName;
 
-      DataRow s = table.NewRow();
-      table.Rows.Add(s);
-
-      if (_rowAddedMethod != null)
-      {
-        _rowAddedMethod.Invoke(ref s);
-      }
+      string aux = "added";
+            if (add)
+            {
+                DataRow s = table.NewRow();
+                table.Rows.Add(s);
+              
+                    _rowAddedMethod?.Invoke(ref s);
+               
+            }
+            else
+            {
+                aux = "deleted";
+                if (dgv.CurrentRow != null)
+                {
+                    DataRow s = (dgv.CurrentRow.DataBoundItem as DataRowView).Row;
+                    s.Delete();
+                    //  DataRow s = null;
+                    _rowDeletedMethod?.Invoke(ref s);
+                }
+            }
       /*
         Func<DataRowView, bool> finder = f =>
         {
@@ -93,7 +106,7 @@ namespace Rsx.DGV
        // BS.RemoveFilter(); ///?????
       }
 
-      return "OK! A new Row was added";
+      return "OK! A new Item was " + aux;
     }
 
     public static string Paste(ref DataGridView dgv)

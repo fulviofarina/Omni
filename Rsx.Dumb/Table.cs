@@ -162,23 +162,21 @@ namespace Rsx
       Dumb.WriteBytesFile(ref auxiliar, file);
       DataTable toLoad = DestinyDataTable as DataTable;
 
-      try
-      {
+     
         //      toLoad.BeginLoadData();
 
         DataTable table = new DataTable();
-        table.ReadXml(file);
-        //    FillErrorEventHandler hanlder = fillhandler;
+            XmlReadMode m = XmlReadMode.IgnoreSchema;
+            m = table.ReadXml(file); // XmlReadMode.IgnoreSchema ;
+            m = XmlReadMode.IgnoreSchema;
+            //    FillErrorEventHandler hanlder = fillhandler;
 
         toLoad.Merge(table, true, MissingSchemaAction.AddWithKey);
         //    toLoad.EndLoadData();
         toLoad.AcceptChanges();
 
         System.IO.File.Delete(file);
-      }
-      catch (Exception ex)
-      {
-      }
+     
       //    auxiliar = null;
     }
 
@@ -338,19 +336,14 @@ namespace Rsx
       if (set == null) return success;
       if (table == null || table.Rows.Count == 0) return success;
 
-      try
-      {
+      
         DataTable destination = set.Tables[table.TableName];
         destination.BeginLoadData();
         destination.Merge(table, false, MissingSchemaAction.AddWithKey);
         destination.EndLoadData();
         //		destination.AcceptChanges();
         success = true;
-      }
-      catch (SystemException ex)
-      {
-        throw;
-      }
+    
       return success;
     }
 

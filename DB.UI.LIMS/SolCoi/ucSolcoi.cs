@@ -419,8 +419,10 @@ namespace DB.UI
                 VGbox.Text = detdim.VacuumGap.ToString();
                 TDLbox.Text = detdim.TopDeadLayerThickness.ToString();
             }
-            catch (SystemException eX)
+            catch (SystemException ex)
             {
+
+                this.Linaa.AddException(ex);
             }
         }
 
@@ -486,6 +488,7 @@ namespace DB.UI
                                 }
                                 catch (SystemException ex)
                                 {
+                                    this.Linaa.AddException(ex);
                                 }
                             }
                         }
@@ -505,8 +508,9 @@ namespace DB.UI
                     // iteration ends
                 }
             }
-            catch (SystemException eX)
+            catch (SystemException ex)
             {
+                this.Linaa.AddException(ex);
             }
         }
 
@@ -648,7 +652,7 @@ namespace DB.UI
                 {
                     max = Convert.ToInt16(maxload.Text);
                 }
-                catch (SystemException ex)
+                catch (SystemException )
                 {
                     maxload.Text = max.ToString();
                 }

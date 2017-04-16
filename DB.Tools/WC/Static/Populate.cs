@@ -87,8 +87,9 @@ namespace DB.Tools
                     qta.GetMeasurementID("1");
                     ok = true;
                 }
-                catch (SystemException ex)
+                catch (SystemException)
                 {
+                    //AddException(ex);
                 }
                 qta.Dispose();
                 qta = null;

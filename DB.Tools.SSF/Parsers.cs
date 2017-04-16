@@ -80,6 +80,9 @@ namespace DB.Tools
             list = list.Skip(sep + 1).ToList();
             IEnumerable<LINAA.MatSSFRow> ssfs = UNIT.GetMatSSFRows();
 
+          
+
+
             foreach (LINAA.MatSSFRow m in ssfs)
             {
                 m.Delete();
@@ -103,7 +106,7 @@ namespace DB.Tools
                         ZEl[0] = ZEl[0].Trim();// Z
                         ZEl[1] = ZEl[1].Trim(); // Element
 
-                        setMatSSFRow(ref Sample, content, ZEl);
+                        setMatSSFRow( content, ZEl);
                     }
                 }
                 catch (SystemException ex)
@@ -124,17 +127,22 @@ namespace DB.Tools
             foreach (string s in re2.Split(formula)) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
         }
 
-        private static void setMatSSFRow(ref LINAA.SubSamplesRow sample, string[] content, string[] ZEl)
+        private static void setMatSSFRow( string[] content, string[] ZEl)
         {
             LINAA.MatSSFRow m = null;
             string radioisotope = ZEl[1] + "-" + (Convert.ToInt32(ZEl[2]) + 1).ToString();
             string targetIsotope = ZEl[1] + "-" + ZEl[2];
+
+            //find
+            LINAA.SubSamplesRow sample = UNIT.SubSamplesRow;
+
             m = Table.FirstOrDefault(o => o.UnitID == UNIT.UnitID && targetIsotope.Equals(o.TargetIsotope));
-            if (sample != null)
+            if (m==null && sample != null)
             {
                 int sampleID = sample.SubSamplesID;
                 m = Table.FirstOrDefault(o => o.SubSamplesID == sampleID && targetIsotope.Equals(o.TargetIsotope));
             }
+
             if (m == null)
             {
                 m = Table.NewMatSSFRow();

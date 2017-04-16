@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
-
+using static Rsx.DGV.Control;
 
 namespace DB.UI
 {
@@ -91,10 +91,11 @@ namespace DB.UI
             Rsx.DGV.Control.CellPaintChecker shouldpaintCell = null;
             Rsx.DGV.Control.RowPostPaintChecker shouldpostpaintRow = null;
             Rsx.DGV.Control.RowPrePaintChecker shouldprepaintRow = null;
-            Rsx.DGV.Control.Adder addedRow = null;
+            Rsx.DGV.Control.AdderEraser addedRow = null;
+            Rsx.DGV.Control.AdderEraser deleteRow = null;
             System.EventHandler preRefresh = null;
 
-            createControl(controlHeader, ref control, ref refresher, ref loader, ref postRefresh, ref cellpainter, ref shouldpaintCell, ref addedRow, ref preRefresh);
+            createControl(controlHeader, ref control, ref refresher, ref loader, ref postRefresh, ref cellpainter, ref shouldpaintCell, ref addedRow, ref preRefresh, ref deleteRow);
 
             if (control == null)
             {
@@ -116,6 +117,7 @@ namespace DB.UI
             cv.PrePaintRowsMethod = rowPrepainter;
             cv.ShouldPrePaintRowMethod = shouldprepaintRow;
             cv.RowAddedMethod = addedRow;
+            cv.RowDeletedMethod = deleteRow;
             cv.SaveMethod = LIMS.Interface.IStore.Save;
 
             DataGridView[] dgvs = Rsx.Dumb.GetChildControls<DataGridView>(control).ToArray();
@@ -140,7 +142,7 @@ namespace DB.UI
             return control;
         }
 
-        private static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader loader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref Rsx.DGV.Control.Adder addedRow, ref EventHandler preRefresh)
+        private static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader loader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref AdderEraser addedRow, ref EventHandler preRefresh, ref AdderEraser deletedRow)
         {
             switch (controlHeader)
             {
@@ -224,7 +226,7 @@ namespace DB.UI
 
                         refresher = ucSubSamples.projectbox.Refresher;
                         addedRow = ucSubSamples.RowAdded;
-
+                        deletedRow = ucSubSamples.RowDeleted;
                         control = (UserControl)ucSubSamples;
 
                         break;
@@ -354,9 +356,10 @@ namespace DB.UI
                 Linaa.WriteXml(file, System.Data.XmlWriteMode.WriteSchema);
                 Interface.IReport.Msg("Workspace was saved on " + file, "Saved Workspace!", true);
             }
-            catch (SystemException ex)
+            catch (SystemException)
             {
                 Interface.IReport.Msg("Workspace was NOT saved on " + file, "Not Saved Workspace!", false);
+
             }
         }
 

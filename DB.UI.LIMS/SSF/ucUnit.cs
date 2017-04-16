@@ -74,7 +74,7 @@ namespace DB.UI
             //    this.lINAA = Interface.Get() as LINAA;
 
 
-            MatSSF.Table = Interface.IDB.MatSSF;
+        
 
             setBindings();
       

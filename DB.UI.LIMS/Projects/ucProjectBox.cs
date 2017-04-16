@@ -15,10 +15,13 @@ namespace DB.UI
         public ucProjectBox()
         {
             InitializeComponent();
+
+
+
         }
 
 
-        Action hideChildControl;
+      private  Action hideChildControl;
 
 
 
@@ -52,6 +55,19 @@ namespace DB.UI
             }
         }
 
+        public Action CallBack
+        {
+            get
+            {
+                return callBack;
+            }
+
+            set
+            {
+                callBack = value;
+            }
+        }
+
         public void Refresher()
         {
             
@@ -73,11 +89,11 @@ namespace DB.UI
 
         /// </summary>
         /// <param name="inter"></param>
-        public void Set(ref Interface inter, Action CallBack)
+        public void Set(ref Interface inter)
         {
             Interface = inter;
 
-            callBack = CallBack;
+           // callBack = CallBack;
 
             projectbox.Items.AddRange(Interface.IPopulate.IProjects.ProjectsList.ToArray());
 

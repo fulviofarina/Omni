@@ -129,7 +129,10 @@ namespace Rsx
             {
                 if (row.IsNull(column) && !column.ReadOnly) row[column] = false;
             }
-
+            else if (t.Equals(typeof(byte[])))
+            {
+               if (row.IsNull(column)) row.SetColumnError(column, "NULL!");
+            }
             string error = row.GetColumnError(column);
 
             return !String.IsNullOrEmpty(error);

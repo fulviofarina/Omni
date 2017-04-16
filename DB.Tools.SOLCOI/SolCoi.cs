@@ -1022,6 +1022,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
+                    this.linaa.AddException(ex);
                 }
             }
 
@@ -1064,6 +1065,7 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
+                    this.linaa.AddException(ex);
                 }
             }
             if (this.linaa.Solang.Rows.Count != 0)
@@ -1104,8 +1106,9 @@ namespace DB.Tools
                     //    if (Geometry.Position == 0) cointa.FillByDetectorGeometry(this.linaa.COIN, DetectorName, Geometry.GeometryName);
                     //	else cointa.FillByDetectorGeometryPosition(this.linaa.COIN, DetectorName, Geometry.GeometryName, Geometry.Position);
                 }
-                catch (SystemException eX)
+                catch (SystemException ex)
                 {
+                    this.linaa.AddException(ex);
                 }
             }
 

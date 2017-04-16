@@ -44,7 +44,7 @@ namespace Rsx
                 column = item.ColumnName;
                 // column = Unit.DiameterColumn.ColumnName;
                 Binding b = new Binding(Property, bs, column, t, mo, DBNull.Value, format);
-                b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+              //  b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
                 bslist.Add(column, b);
             }
 
@@ -78,14 +78,11 @@ namespace Rsx
       LinkBS(ref BS, table);
       BS.EndEdit();
       BS.SuspendBinding();
-      try
-      {
+     
+     
         BS.Filter = Filter;
         BS.Sort = Sort;
-      }
-      catch (SystemException ex)
-      {
-      }
+     
       BS.ResumeBinding();
     }
 

@@ -26,7 +26,7 @@ namespace DB.Tools
         {
             get
             {
-                return (bs.SubSamples.Current as DataRowView).Row;
+                return (bs.SubSamples.Current as DataRowView)?.Row;
             }
         }
 
@@ -48,7 +48,7 @@ namespace DB.Tools
         {
             get
             {
-                return (bs.Units.Current as DataRowView).Row;
+                return (bs.Units.Current as DataRowView)?.Row;
             }
         }
 

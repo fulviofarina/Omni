@@ -145,10 +145,11 @@ namespace DB.Tools
                         LINAA.MatSSFDataTable ssfDT = new LINAA.MatSSFDataTable(false);
                         ssfDT.Constraints.Clear();
                         LINAA.SubSamplesRow aux = iS;
-                        MatSSF.Sample = iS;
+                     //   MatSSF.Sample = iS;
                         MatSSF.Table = ssfDT;
 
-                        String FileOut = DB.Tools.MatSSF.OUTPUT();
+                        String FileOut =MatSSF.OUTPUT();
+                        MatSSF.WriteXML();
                         //now read OutPut from calculation and store it into the MatSSF data table
                         worker.ReportProgress((int)R.SSFSet, iS);   //delete previous
                         worker.ReportProgress((int)R.MergeTable, ssfDT);   //delete previous
@@ -569,7 +570,7 @@ namespace DB.Tools
                     {
                         object res = e.UserState as object;
                         LINAA.SubSamplesRow s = res as LINAA.SubSamplesRow;
-                        IEnumerable<LINAA.MatSSFRow> ssfs = s.GetMatSSFRows();
+                        IEnumerable<LINAA.MatSSFRow> ssfs = s.UnitRow.GetMatSSFRows();
                         Interface.IStore.Delete(ref ssfs);
                         Dumb.AcceptChanges(ref ssfs);
                     }
@@ -589,7 +590,7 @@ namespace DB.Tools
                         msg += s.SubSampleName;
                         Interface.IReport.Msg(msg, title, !ssfError);
 
-                        IEnumerable<DataRow> ssfs = s.GetMatSSFRows();  //get matssf rows
+                        IEnumerable<DataRow> ssfs = s.UnitRow.GetMatSSFRows();  //get matssf rows
                         Interface.IStore.Save(ref ssfs);
                         IList<DataRow> ls = new List<DataRow>();
                         ls.Add(s);

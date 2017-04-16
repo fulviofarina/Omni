@@ -128,11 +128,43 @@ namespace DB
                     if (nonNullable == null)
                     {
                         nonNullable = new DataColumn[]{columnSubSampleName,
-                     columnSubSampleCreationDate,columnSubSampleDescription,VolColumn,
+                     columnSubSampleCreationDate,columnSubSampleDescription,
                      columnConcentration, columnCapsuleName, columnMatrixName};
                     }
 
                     return nonNullable;
+                }
+            }
+            private DataColumn[] nonNullableUnit;
+            /*
+            //  private DataColumn[] geometric;
+            private DataColumn[] masses;
+
+            public DataColumn[] Masses
+            {
+                get
+                {
+                    if (masses == null)
+                    {
+                        masses = new DataColumn[] {
+                     columnGross1,columnGross2 ,columnGrossAvg };
+                    }
+
+                    return masses;
+                }
+            }
+            */
+
+            public DataColumn[] NonNullableUnit
+            {
+                get
+                {
+                    if (nonNullableUnit == null)
+                    {
+                        nonNullableUnit = new DataColumn[]{this.Gross1Column,this.FillHeightColumn,this.RadiusColumn};
+                    }
+
+                    return nonNullableUnit;
                 }
             }
 
@@ -142,6 +174,8 @@ namespace DB
                 {
                     //e.Row.SetColumnError(e.Column, null);
                     LINAA.SubSamplesRow subs = e.Row as LINAA.SubSamplesRow; //cast
+
+
 
                     if (NonNullable.Contains(e.Column)) EC.CheckNull(e.Column, e.Row);
                     else if (e.Column == this.DirectSolcoiColumn)
@@ -153,10 +187,7 @@ namespace DB
                     {
                         if (subs.CheckGeometry())
                         {
-                            //if the row was modified go ahead
                             //take from geo not vial (first argument)
-                            //   bool rowModified = subs.RowState != DataRowState.Added;
-
                             subs.CheckFillRad(false);
                         }
                     }
@@ -164,15 +195,14 @@ namespace DB
                     {
                         if (subs.CheckVialCapsule())
                         {
-                            //if the row was modified go ahead
-                            //take from vial not geo (first argument)
-                            //     bool rowModified = subs.RowState != DataRowState.Added;
+                           //     bool rowModified = subs.RowState != DataRowState.Added;
                             subs.CheckFillRad(true);
                         }
                     }
                    
                     else if (e.Column == this.CalcDensityColumn)
                     {
+                        if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
                         if (calMass) subs.CalculateMass();
                         if (calRad)
                         {
@@ -186,9 +216,7 @@ namespace DB
                     }
                     else if (columnFillHeight == e.Column )
                     {
-
-                      
-
+                        if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
                         //     if (!calDensity) subs.CalculateMass();
                         if (calRad)
                         {
@@ -196,34 +224,33 @@ namespace DB
                             return;
                         }
                         subs.Vol = subs.FindVolumen();
+                       
+
+                    }
+                    else if (e.Column == this.columnVol)
+                    {
+                        EC.CheckNull(e.Column, e.Row);
                         if (calDensity) subs.CalculateDensity(true, false);
                         else if (calMass) subs.CalculateMass();
                         return;
-
                     }
                     else if (columnRadius == e.Column)
                     {
-                        //     if (!calDensity) subs.CalculateMass();
-
-
-                    
+                        if (subs.UnitRow!=null) subs.UnitRow.LastChanged = DateTime.Now;
                         if (calFh)
                         {
                             subs.FillHeight = subs.FindFillingHeight();
                             return;
                         }
                         subs.Vol = subs.FindVolumen();
-                        if (calDensity) subs.CalculateDensity(true, false);
-                        else if (calMass) subs.CalculateMass();
-                        return;
-
-
+                     
                     }
                   
                     else if (columnMatrixID == (e.Column))
                     {
                         if (subs.CheckMatrix())
                         {
+                            if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
                             subs.CalculateDensity(true, true);
                         }
                     }
@@ -249,6 +276,7 @@ namespace DB
                         //   subs.Net = subs.GrossAvg = subs.Tare;
                         if (subs.CheckMass())
                         {
+                            if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
                             //      subs.Net = subs.GrossAvg = subs.Tare;
                             if (calDensity)
                             {
@@ -262,7 +290,7 @@ namespace DB
                             {
                                 subs.FillHeight = subs.FindFillingHeight();
                             }
-                            return;
+                            //return;
                         }
                     }
                     else if (e.Column == this.ChCapsuleIDColumn)
@@ -299,13 +327,15 @@ namespace DB
                             subs.CheckfOrAlpha();
                             return;
                         }
-                        bool inOut = (e.Column == this.columnInReactor);
-                        inOut = inOut || (e.Column == this.columnOutReactor);
-                        inOut = inOut || e.Column == this.IrradiationTotalTimeColumn;
-                        if (inOut)
-                        {
-                            subs.CheckTimes();
-                        }
+                     
+                            bool inOut = (e.Column == this.columnInReactor);
+                            inOut = inOut || (e.Column == this.columnOutReactor);
+                            inOut = inOut || e.Column == this.IrradiationTotalTimeColumn;
+                            if (inOut)
+                            {
+                                subs.CheckTimes();
+                            }
+                        
                     }
                 }
                 catch (SystemException ex)
@@ -327,7 +357,7 @@ namespace DB
 
         partial class SubSamplesRow
         {
-            /*
+           
             public UnitRow UnitRow
             {
                 get
@@ -335,7 +365,15 @@ namespace DB
                     return this.GetUnitRows().AsEnumerable().FirstOrDefault();
                 }
             }
-            */
+
+            public bool CheckUnit()
+            {
+
+                DataColumn[] colsInE = this.GetColumnsInError();
+                int count = colsInE.Intersect(this.tableSubSamples.NonNullableUnit).Count();
+
+                return count == 0;
+            }
 
             public void CheckFillRad(bool takeFromVial)
             {
@@ -387,12 +425,24 @@ namespace DB
                 UnitRow u = this.UnitRow;
                 SetColumnError(tableSubSamples.MatrixDensityColumn, null);
 
+                bool matrixDensNull = this.MatrixRow == null;
+                matrixDensNull = matrixDensNull || IsMatrixDensityNull() || MatrixDensity==0;
+
                 if (!EC.IsNuDelDetch(u))
                 {
-                    if (forceContent) u.Content = this.MatrixRow.MatrixComposition;
-                    if (this.Net != 0 && Vol != 0 && caldensity)
+
+                    if (forceContent && !matrixDensNull)
+                    {
+                        u.Content = this.MatrixRow.MatrixComposition;
+                    }
+
+
+                    if (this.Net != 0 && Vol != 0 && caldensity )
                     {
                         this.CalcDensity = (this.Net / Vol) * 1e-3;
+
+                        if (matrixDensNull) return;
+
                         string HighLow = "The calculated density (in gr/cm3)";
                         double ratio = (this.MatrixDensity / this.CalcDensity) * 100;
                         int pent = 3;
@@ -412,12 +462,17 @@ namespace DB
                             SetColumnError(tableSubSamples.MatrixDensityColumn, HighLow);
                         }
                     }
-                    else if (caldensity) this.CalcDensity = this.MatrixRow.MatrixDensity;
+                    else if (caldensity && !matrixDensNull)
+                    {
+                            this.CalcDensity = this.MatrixRow.MatrixDensity;
+                       
+                    }
                 }
             }
 
             public void CalculateMass()
             {
+               
                 UnitRow u = this.UnitRow;
 
                 if (!EC.IsNuDelDetch(u))
@@ -678,14 +733,12 @@ namespace DB
                 }
             }
 
-            /// <summary>
-            // MEJORARTE ESTO ESTA MAL USAR UNITS
-            /// </summary>
+           
             public bool NeedsSSF
             {
                 get
                 {
-                    return (this.GetMatSSFRows().Count() == 0);
+                    return (this.UnitRow.GetMatSSFRows().Count() == 0);
                 }
             }
 

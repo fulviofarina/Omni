@@ -1595,12 +1595,12 @@ namespace k0X
 
         private void Hide_Click(object sender, EventArgs e)
         {
-            if (Hide.Text.CompareTo("Hide") == 0)
+            if (Hider.Text.CompareTo("Hide") == 0)
             {
                 int orgHeight = 0;
                 orgHeight = this.MainTLP.Size.Height;
                 this.MainTLP.Controls.Remove(SC2);
-                Hide.Text = "View";
+                Hider.Text = "View";
                 this.AutoSize = true;
                 this.ParentForm.Size = new Size(this.ParentForm.Width, (DetMgrTS.Height + MeasTS.Height + 2 * AutoTS.Height));
             }
@@ -1608,7 +1608,7 @@ namespace k0X
             {
                 this.MainTLP.Controls.Add(SC2);
                 this.AutoSize = false;
-                Hide.Text = "Hide";
+                Hider.Text = "Hide";
                 this.ParentForm.Size = new Size(this.ParentForm.Width, this.ParentForm.Size.Height);
             }
         }

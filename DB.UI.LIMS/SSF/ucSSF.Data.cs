@@ -66,6 +66,10 @@ namespace DB.UI
             try
             {
 
+                
+
+
+
                 //link to bindings
                 sampleBindings = setSampleBindings();
                 unitBindings = setUnitBindings();
@@ -74,7 +78,12 @@ namespace DB.UI
                 setEnabledBindings();
 
 
-         
+
+                errorProvider1.DataMember = Interface.IDB.Unit.TableName ;
+                errorProvider1.DataSource = Interface.IBS.Units;
+                errorProvider2.DataMember = Interface.IDB.SubSamples.TableName;
+                errorProvider2.DataSource = Interface.IBS.SubSamples;
+
 
                 //set calculation options
 
@@ -103,8 +112,23 @@ namespace DB.UI
 
 
                 //1
+               bool isOK = MatSSF.UNIT.Check();
+                isOK = MatSSF.UNIT.SubSamplesRow.CheckUnit() && isOK;
 
-                MatSSF.Table.Clear();
+                if (isOK)
+                {
+
+                    Interface.IReport.Msg("Input data is OK for Unit " + MatSSF.UNIT.Name, "Checking data...");
+
+                }
+                else
+                {
+
+                    Interface.IReport.Msg("Input data is NOT OK for Unit " + MatSSF.UNIT.Name, "Cancelling calculations...");
+                    return;
+                }
+
+                //   MatSSF.Table.Clear();
 
 
                 showProgress?.Invoke();
@@ -113,7 +137,7 @@ namespace DB.UI
                 //2
                 showProgress?.Invoke();
 
-                Interface.IReport.Msg("Input metadata generated", "Starting Calculations...");
+                Interface.IReport.Msg("Input metadata generated for Unit " + MatSSF.UNIT.Name, "Starting calculations...");
 
                 bool runOk = false;
 
@@ -126,24 +150,25 @@ namespace DB.UI
                 {
                     if (runOk)
                     {
-                        Interface.IReport.Msg("MatSSF Ran", "Reading Output");
+                        Interface.IReport.Msg("MatSSF ran OK for Unit " +  MatSSF.UNIT.Name, "Reading MatSSF Output file");
 
                         MatSSF.OUTPUT();
 
                         if (MatSSF.Table.Count == 0)
                         {
-                            throw new SystemException("Problems Reading MATSSF Output\n");
+                            throw new SystemException("Problems Reading MATSSF Output for Unit " + MatSSF.UNIT.Name + "\n");
                         }
                     }
                     else if (doSSF)
                     {
-                        Interface.IReport.Msg("MatSSF hanged...", "Something happened executing MatSSF");
+                        Interface.IReport.Msg("MatSSF calculations hanged for Unit " + MatSSF.UNIT.Name + "\n", "Something wrong loading MatSSF");
 
-                        throw new SystemException("MATSSF hanged...\n");
+                        throw new SystemException("MatSSF hanged for Unit " + MatSSF.UNIT.Name + "\n");
 
                         // errorB.Text += "MATSSF is still calculating stuff...\n";
                     }
-                    Interface.IReport.Msg("MatSSF done", "Calculations completed!");
+                  //  Interface.IReport.Msg("MatSSF done", "Calculations completed!");
+                    Interface.IReport.Msg("MatSSF calculations done for Unit " + MatSSF.UNIT.Name, "MatSSF Calculations");
 
                 }
                 else Interface.IReport.Msg("MatSSF cancelled", "Calculations cancelled!");
@@ -157,7 +182,7 @@ namespace DB.UI
                 if (doCk && !cancelCalculations)
                 {
                     MatSSF.CHILEAN();
-                    Interface.IReport.Msg("CK done", "Calculations completed!");
+                    Interface.IReport.Msg("CKS calculations done for Unit " + MatSSF.UNIT.Name, "CKS Calculations");
                 }
 
                 //convert table into subTable of Units
@@ -166,6 +191,8 @@ namespace DB.UI
                     MatSSF.WriteXML();
                     //this also saves the UNITS!!
                     Interface.IStore.Save<SubSamplesDataTable>();
+                //    Interface.IStore.Save<LINAA.SubSamplesDataTable>();
+                    Interface.IStore.Save<LINAA.UnitDataTable>();
                 }
                 //6
                 showProgress?.Invoke();
@@ -179,7 +206,21 @@ namespace DB.UI
             }
         }
 
-      
+        public void Disabler(bool enable)
+        {
+            //turns off or disables the controls.
+            //necessary protection for user interface
+           IEnumerable<ToolStrip> strips = inputTLP.Controls.OfType<ToolStrip>();
+
+            foreach (var item in strips)
+                {
+                item.Enabled = enable;
+                }
+
+            nameToolStrip.Enabled = enable;
+            this.matrixB.Enabled = enable;
+
+        }
 
         private Hashtable setSampleBindings()
         {
@@ -197,21 +238,21 @@ namespace DB.UI
             //samples
             column = SSamples.RadiusColumn.ColumnName;
             this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-            this.radiusbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+          //  this.radiusbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             column = SSamples.FillHeightColumn.ColumnName;
             this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-            this.lenghtbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+         //   this.lenghtbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
             column = SSamples.Gross1Column.ColumnName;
             Binding massbin = samplebindings[column] as Binding;
             this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-            this.massB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+         //   this.massB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
             massbin.FormatString = "N2";
             samplebindings.Remove(massbin); //so it does not update its format!!!
             column = SSamples.SubSampleNameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
-            this.nameB.ComboBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+        //    this.nameB.ComboBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             this.nameB.ComboBox.DisplayMember = column;
             this.nameB.ComboBox.ValueMember = column;
             this.nameB.ComboBox.DataSource = bsSample;
@@ -219,11 +260,15 @@ namespace DB.UI
             this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
             column = SSamples.VolColumn.ColumnName;
             this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-            this.volLbl.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+        //    this.volLbl.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
             column = SSamples.CalcDensityColumn.ColumnName;
             this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-            this.densityB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+        //    this.densityB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
+
+            column = SSamples.SubSampleDescriptionColumn.ColumnName;
+            this.descripBox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
 
             return samplebindings;
         }
@@ -245,6 +290,10 @@ namespace DB.UI
             this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.ChLengthColumn.ColumnName;
             this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Unit.BellFactorColumn.ColumnName;
+            this.bellfactorBox.TextBox.DataBindings.Add(bindings[column] as Binding);
+
 
             column = Unit.ChCfgColumn.ColumnName;
             this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);

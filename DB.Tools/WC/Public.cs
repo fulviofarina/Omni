@@ -201,6 +201,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
+                Linaa.AddException(ex);
                 msg = "Something is wrong with the averaged FC (not a number)";
             }
 

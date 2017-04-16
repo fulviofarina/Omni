@@ -59,7 +59,7 @@ namespace k0X
                 }
                 else if (sender.Equals(this.ViewMatSSF))
                 {
-                    o = l.GetMatSSFRows();
+                    o = l.UnitRow.GetMatSSFRows();
                     toprint = "MatSSF Results";
                 }
             }

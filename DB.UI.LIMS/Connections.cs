@@ -8,7 +8,7 @@ namespace DB.UI
   public partial class Connections : Form
   {
     private DB.LINAA.PreferencesRow pref;
-    private bool saveChanges = false;
+  //  private bool saveChanges = false;
 
     public Connections(ref object preferences)
     {
