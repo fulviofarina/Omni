@@ -34,6 +34,7 @@ namespace DB
                 s.IrradiationRequestsID = IrrReqID;
             }
         }
+
         public void PopulateUnitsByProject(int irrReqId)
         {
             try
@@ -41,15 +42,14 @@ namespace DB
                 this.tableUnit.BeginLoadData();
 
                 LINAA.UnitDataTable dt = new UnitDataTable();
-           
-          /// this.tableUnit.Clear();
+
+                /// this.tableUnit.Clear();
                 this.TAM.UnitTableAdapter.FillByIrrReqID(dt, irrReqId);
                 this.tableUnit.Merge(dt, false, MissingSchemaAction.AddWithKey);
                 this.tableUnit.AcceptChanges();
                 this.tableUnit.EndLoadData();
 
-              //  this.MatSSF.Clear();
-                //    Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
+                // this.MatSSF.Clear(); Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
             }
             catch (SystemException ex)
             {
@@ -86,24 +86,20 @@ namespace DB
 
             int[] _samplesNrs = null;
 
-
-            //  _samplesNrs = samples.Where(o => o.MonitorsRow == null)
-            //      .Where(o => !o.IsSubSampleNameNull())
-            //     .SelectMany(o => o.SubSampleName.Replace(_projectNr, null))
+            // _samplesNrs = samples.Where(o => o.MonitorsRow == null) .Where(o =>
+            // !o.IsSubSampleNameNull()) .SelectMany(o => o.SubSampleName.Replace(_projectNr, null))
 
             string[] samplesNames = samples.Where(o => o.MonitorsRow == null)
                 .Where(o => !o.IsSubSampleNameNull())
                 .Select(o => o.SubSampleName).ToArray();
-                samplesNames = samplesNames.Select(o => o.Replace(_projectNr, null))
-                .ToArray();
+            samplesNames = samplesNames.Select(o => o.Replace(_projectNr, null))
+            .ToArray();
 
-             _samplesNrs = samplesNames.Select(o => Convert.ToInt32(o)).ToArray() ;
-                
-         
+            _samplesNrs = samplesNames.Select(o => Convert.ToInt32(o)).ToArray();
 
             int _lastSampleNr = 1;
             // while (!_samplesNrs.Add(_lastSampleNr)) _lastSampleNr++;
-            if ( _samplesNrs.Count()!=0)      _lastSampleNr = _samplesNrs.Max()+1;
+            if (_samplesNrs.Count() != 0) _lastSampleNr = _samplesNrs.Max() + 1;
 
             foreach (LINAA.SubSamplesRow s in samples)
             {
@@ -111,7 +107,6 @@ namespace DB
                 {
                     if (s.IsSubSampleNameNull())
                     {
-                       
                         if (_lastSampleNr >= 10) s.SubSampleName = _projectNr + _lastSampleNr.ToString();
                         else s.SubSampleName = _projectNr + "0" + _lastSampleNr.ToString();
                         _lastSampleNr++;
@@ -125,7 +120,7 @@ namespace DB
         public IList<UnitRow> SetUnits(ref IEnumerable<LINAA.SubSamplesRow> samples)
         {
             IList<UnitRow> list = new List<UnitRow>();
-               
+
             foreach (LINAA.SubSamplesRow s in samples)
             {
                 if (s.GetUnitRows().Count() == 0)
@@ -140,7 +135,6 @@ namespace DB
                     ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
                     u.SetChannel(ref c);
                     list.Add(u);
-                   
                 }
             }
 
@@ -160,13 +154,11 @@ namespace DB
             {
                 //find the ones that are already here
                 IEnumerable<SubSamplesRow> samples = SubSamples.OfType<SubSamplesRow>()
-                    .Where(o=> o.RowState!= DataRowState.Deleted);
+                    .Where(o => o.RowState != DataRowState.Deleted);
                 samples = samples.Where(o => !o.IsIrradiationRequestsIDNull() && o.IrradiationRequestsID == id);
                 ///hsamples.un =
-               hsamples =     hsamples.Union(samples);
+                hsamples = hsamples.Union(samples);
                 //hsamples = samples;
-
-         
 
                 if (monitors) AddMonitors(ref hsamples, project);
                 else SetLabels(ref hsamples, project);

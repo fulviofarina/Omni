@@ -9,25 +9,13 @@ namespace DB.UI
 {
     public partial class ucUnit : UserControl
     {
-        public ucUnit()
-        {
-            InitializeComponent();
-
-       
-           
-            
-        }
-
-        private void UnitDGV_SelectionChanged(object sender, EventArgs e)
-        {
-          //  DgvItemSelected(sender, DataGridViewCellMouseEventArgs.Empty as DataGridViewCellMouseEventArgs);
-        }
+        private Interface Interface = null;
 
         /// <summary>
         /// A DGV Item selected to control child ucControls such as ucV uc Matrix Simple, ucCC
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -43,10 +31,8 @@ namespace DB.UI
                 }
                 DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
-
                 try
                 {
-
                     if (row.GetType().Equals(typeof(LINAA.UnitRow)))
                     {
                         Interface.IDB.MatSSF.Clear();
@@ -58,11 +44,9 @@ namespace DB.UI
                         Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
 
                         Interface.IBS.Update<LINAA.UnitRow>(unit, true, false);
-
                     }
                     else
                     {
-
                         //link to matrix, channel or vial,/rabbit data
                         MatSSF.LinkToParent(ref row);
                     }
@@ -71,34 +55,21 @@ namespace DB.UI
                 }
                 catch (Exception ex)
                 {
-
                     Interface.IMain.AddException(ex);
                 }
-
-
-               
-
             }
             catch (System.Exception ex)
             {
                 Interface.IReport.Msg(ex.StackTrace, ex.Message);
                 Interface.IMain.AddException(ex);
             }
-
-
         }
-
-  
-
-       
-
-        private Interface Interface = null;
 
         /// <summary>
         /// Link the bindings sources, EXECUTES ONCE
         /// </summary>
         /// <param name="Unitbs"></param>
-        /// <param name="SSFbs"></param>
+        /// <param name="SSFbs"> </param>
         public void Set(ref Interface inter)
         {
             Interface = inter;
@@ -110,22 +81,12 @@ namespace DB.UI
             unitDGV.DataSource = Interface.IBS.Units;
             SSFDGV.DataSource = Interface.IBS.SSF;
 
-            //    this.lINAA = Interface.Get() as LINAA;
-
-          
+            // this.lINAA = Interface.Get() as LINAA;
 
             setBindings();
 
-            //      this.unitDGV.RowHeaderMouseClick += DgvItemSelected;
-            //    this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
-            this.unitDGV.CellMouseClick += UnitDGV_CellMouseClick;
-
-
-        }
-
-        private void UnitDGV_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            DgvItemSelected(sender,e);
+            // this.unitDGV.RowHeaderMouseClick += DgvItemSelected; this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
+            this.unitDGV.CellMouseClick += DgvItemSelected;
         }
 
         private void setBindings()
@@ -145,24 +106,15 @@ namespace DB.UI
             this.lastCal.TextBox.DataBindings.Add(lastcalbs);
             this.lastChg.TextBox.DataBindings.Add(lastchgbs);
 
-       //     Interface.IBS.Units = bs; //link to binding source
-
+            // Interface.IBS.Units = bs; //link to binding source
         }
 
       
-        /*
-        public DataGridViewCellMouseEventHandler RowHeaderMouseClick
+
+        public ucUnit()
         {
-            ///FIRST TIME AND ONLY
-            set
-            {
-
-                this.unitDGV.RowHeaderMouseClick += value;
-
-
-            }
+            InitializeComponent();
         }
-        */
-        
+
     }
 }

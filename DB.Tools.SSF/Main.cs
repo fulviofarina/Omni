@@ -11,19 +11,20 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
-        private static string exefile = "matssf.exe";
-        private static string startupPath = string.Empty;
-        private static string inputFile = "MATSSF_INP.TXT";
-        private static string outputFile = "MATSSF_LST.TXT";
+        /// <summary>
+        /// This is the table for the epithermal self-shielding factors
+        /// </summary>
+        public static LINAA.MatSSFDataTable Table = null;
 
         /// <summary>
-        /// The MatSSF startup path
+        /// This is the main row with the data
         /// </summary>
-        public static string StartupPath
-        {
-            get { return startupPath; }
-            set { startupPath = value; }
-        }
+        public static LINAA.UnitRow UNIT = null;
+
+        private static string exefile = "matssf.exe";
+        private static string inputFile = "MATSSF_INP.TXT";
+        private static string outputFile = "MATSSF_LST.TXT";
+        private static string startupPath = string.Empty;
 
         /// <summary>
         /// The input MatSSF file
@@ -48,125 +49,12 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// This is the main row with the data
+        /// The MatSSF startup path
         /// </summary>
-        public static LINAA.UnitRow UNIT = null;
-        /// <summary>
-        /// This is the table for the epithermal self-shielding factors
-        /// </summary>
-        public static LINAA.MatSSFDataTable Table = null;
-
-     
-
-        /// <summary>
-        /// Writes the MatSSF datatable to an xml file and assigns it to the row object
-        /// </summary>
-        public static bool WriteXML()
+        public static string StartupPath
         {
-            string file = startupPath + UNIT.Name;
-
-
-         //   Dumb.MakeDTBytes(, ref Table, file);
-            File.Delete(file);
-
-            //MatSSFDataTable dt = Table;
-
-            //WriteXml(file);
-            //write to file
-            Table.WriteXml(file, XmlWriteMode.IgnoreSchema );
-
-            //read bytes
-            byte[] bites = Dumb.ReadFileBytes(file);
-
-            //asign
-            UNIT.SSFTable = bites;
-
-            //delete file
-            File.Delete(file);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Link the Unit Row to the Parent Matrix, Vial, Channel, Rabbit
-        /// </summary>
-        public static void LinkToParent(ref DataRow row)
-        {
-            bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
-            bool isMatrix = row.GetType().Equals(typeof(MatrixRow));
-            if (isChannel)
-            {
-                ChannelsRow c = row as ChannelsRow;
-                UNIT.SetChannel(ref c);
-            }
-            else if (!isMatrix)
-            {
-                LINAA.VialTypeRow v = row as VialTypeRow;
-                if (!v.IsRabbit) UNIT.SubSamplesRow.VialTypeRow = v;
-                else UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
-            }
-            else
-            {
-                MatrixRow m = row as MatrixRow;
-                UNIT.SubSamplesRow.MatrixID = m.MatrixID;
-            }
-        }
-
-        /// <summary>
-        /// Reads the MatSSF datatable from an xml file 
-        /// </summary>
-        public static bool ReadXML()
-        {
-            // System.IO.File.Delete(file);
-            Table.Clear();
-
-
-            Table.Clear();
-            if (UNIT.IsSSFTableNull()) return false;
-            //file to save as
-            string file = startupPath + UNIT.Name;
-            //get bytes
-            byte[] bites = UNIT.SSFTable;
-
-         //   Dumb.ReadDTBytes(file, ref bites, ref Table);
-            //write to file
-            Dumb.WriteBytesFile(ref bites, file);
-            //read from file
-            Table.ReadXml(file);
-            //delete file
-            File.Delete(file);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Generates the INPUT File for MatSSF
-        /// </summary>
-        public static bool INPUT()
-        {
-            bool success = false;
-            string buffer = getDecomposedMatrix();
-            string config = getChannelCfg();
-
-            double lenfgt = UNIT.SubSamplesRow.FillHeight;
-            double diamet = UNIT.SubSamplesRow.Radius * 2;
-            if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
-            {
-                buffer += "\n";
-                buffer += UNIT.SubSamplesRow.Net + "\n" + diamet + "\n" + lenfgt + "\n" + config;
-                buffer += "\n";
-                buffer += "\n";
-            }
-            else return success;
-            // string fileInput = ;
-
-            string fulFile = startupPath + inputFile;
-
-            System.IO.File.Delete(fulFile); //delete fromRow
-
-            success = writeFile(buffer, fulFile);
-
-            return success;
+            get { return startupPath; }
+            set { startupPath = value; }
         }
 
         /// <summary>
@@ -235,6 +123,61 @@ namespace DB.Tools
         }
 
         /// <summary>
+        /// Generates the INPUT File for MatSSF
+        /// </summary>
+        public static bool INPUT()
+        {
+            bool success = false;
+            string buffer = getDecomposedMatrix();
+            string config = getChannelCfg();
+
+            double lenfgt = UNIT.SubSamplesRow.FillHeight;
+            double diamet = UNIT.SubSamplesRow.Radius * 2;
+            if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
+            {
+                buffer += "\n";
+                buffer += UNIT.SubSamplesRow.Net + "\n" + diamet + "\n" + lenfgt + "\n" + config;
+                buffer += "\n";
+                buffer += "\n";
+            }
+            else return success;
+            // string fileInput = ;
+
+            string fulFile = startupPath + inputFile;
+
+            System.IO.File.Delete(fulFile); //delete fromRow
+
+            success = writeFile(buffer, fulFile);
+
+            return success;
+        }
+
+        /// <summary>
+        /// Link the Unit Row to the Parent Matrix, Vial, Channel, Rabbit
+        /// </summary>
+        public static void LinkToParent(ref DataRow row)
+        {
+            bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
+            bool isMatrix = row.GetType().Equals(typeof(MatrixRow));
+            if (isChannel)
+            {
+                ChannelsRow c = row as ChannelsRow;
+                UNIT.SetChannel(ref c);
+            }
+            else if (!isMatrix)
+            {
+                LINAA.VialTypeRow v = row as VialTypeRow;
+                if (!v.IsRabbit) UNIT.SubSamplesRow.VialTypeRow = v;
+                else UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
+            }
+            else
+            {
+                MatrixRow m = row as MatrixRow;
+                UNIT.SubSamplesRow.MatrixID = m.MatrixID;
+            }
+        }
+
+        /// <summary>
         /// Generates the OUTPUT File for MatSSF
         /// </summary>
         public static String OUTPUT()
@@ -243,47 +186,40 @@ namespace DB.Tools
 
             if (!System.IO.File.Exists(File)) return File;
 
-
             //read file data
             string lecture = Dumb.ReadFile(File);
             IEnumerable<string> array = lecture.Split('\n');
             array = array.Where(o => !o.Equals("\r"));
             array = array.Select(o => o.Trim(null)).AsEnumerable();
             //fill the unit data
-            UNIT.FillWith(ref array);
+            fillUnitWithText(ref array);
             //fill the matssf table
             fillTable(array.ToList());
             array = null;
 
-
-            /*
-
-            IEnumerable<DataRow> rows = Table.AsEnumerable();
-            DataTable clone = Table.Copy();
-            string file = startupPath + UNIT.Name;
-            byte[] bites = Dumb.MakeDTBytes(ref rows, ref clone, file);
-         //   System.IO.File.Delete(file);
-            //write to file
-         //   Table.WriteXml(file);
-
-            //read bytes
-           // byte[] bites = Dumb.ReadFileBytes(file);
-
-            //asign
-            UNIT.SSFTable = bites;
-            */
-            //delete file
-            //  System.IO.File.Delete(file);
-
-       
-
-            //fill shit I should delete!!!!
-            //   if (Sample != null) Sample.MatSSFDensity = UNIT.SubSamplesRow.CalcDensity;
-            // Table.GtDensity[1] = UNIT.SubSamplesRow.CalcDensity.ToString();
-            if (UNIT.SubSamplesRow != null) UNIT.SubSamplesRow.Gthermal = UNIT.Gt;
-         //   Table.GtDensity[0] = UNIT.Gt.ToString();
-
             return File;
+        }
+
+        /// <summary>
+        /// Reads the MatSSF datatable from an xml file
+        /// </summary>
+        public static bool ReadXML()
+        {
+            Table.Clear();
+            if (UNIT.IsSSFTableNull()) return false;
+            //file to save as
+            string file = startupPath + UNIT.Name;
+            //get bytes
+            byte[] bites = UNIT.SSFTable;
+
+            //write to file
+            Dumb.WriteBytesFile(ref bites, file);
+            //read from file
+            Table.ReadXml(file);
+            //delete file
+            File.Delete(file);
+
+            return true;
         }
 
         /// <summary>
@@ -298,6 +234,29 @@ namespace DB.Tools
             Dumb.Process(process, startupPath, exefile, String.Empty, Hide, true, 100000);
 
             return process.HasExited;
+        }
+
+        /// <summary>
+        /// Writes the MatSSF datatable to an xml file and assigns it to the row object
+        /// </summary>
+        public static bool WriteXML()
+        {
+            string file = startupPath + UNIT.Name;
+
+            File.Delete(file);
+            //write to file
+            Table.WriteXml(file, XmlWriteMode.IgnoreSchema);
+
+            //read bytes
+            byte[] bites = Dumb.ReadFileBytes(file);
+
+            //asign
+            UNIT.SSFTable = bites;
+
+            //delete file
+            File.Delete(file);
+
+            return true;
         }
     }
 }

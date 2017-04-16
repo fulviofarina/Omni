@@ -63,15 +63,15 @@ namespace DB
             {
                 if (dt.Equals(Matrix)) Matrix.ColumnChanging += Matrix.DataColumnChanging;
                 else if (dt.Equals(Unit)) Unit.ColumnChanging += Unit.DataColumnChanging;
-
+                else if (dt.Equals(SubSamples)) SubSamples.ColumnChanging += SubSamples.DataColumnChanging;
                 dt.ColumnChanged += han;
 
             }
             else
             {
                 if (dt.Equals(Unit)) Unit.ColumnChanging -= Unit.DataColumnChanging;
-
                 else if (dt.Equals(Matrix)) Matrix.ColumnChanging -= Matrix.DataColumnChanging;
+                else if (dt.Equals(SubSamples)) SubSamples.ColumnChanging -= SubSamples.DataColumnChanging;
                 dt.ColumnChanged -= han;
             }
         }

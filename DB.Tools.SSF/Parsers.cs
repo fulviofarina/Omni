@@ -1,11 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Rsx;
 
 namespace DB.Tools
 {
     public partial class MatSSF
     {
+        /// <summary>
+        /// Fills the UnitRow with data from an array extracted from the OUTPUT MatSSF File
+        /// </summary>
+        /// <param name="array">Output file extracted array</param>
+        public static void fillUnitWithText(ref IEnumerable<string> array)
+        {
+            string aux = string.Empty;
+            string Gt = string.Empty;
+            string Mdens = string.Empty;
+            string MCL = string.Empty;
+            string EXS = string.Empty;
+            string PXS = string.Empty;
+
+            try
+            {
+                string densityUnit = "[g/cm3]";
+                string cmUnit = "[cm]";
+                string invcmUnit = "[1/cm]";
+
+                aux = "Material density";
+                Dumb.SetField(ref Mdens, ref array, aux, densityUnit);
+                aux = "G-thermal";
+                Dumb.SetField(ref Gt, ref array, aux, string.Empty);
+                aux = "Mean chord length";
+                Dumb.SetField(ref MCL, ref array, aux, cmUnit);
+                aux = "Escape x.sect.";
+                Dumb.SetField(ref EXS, ref array, aux, invcmUnit);
+                aux = "Potential x.sect.";
+                Dumb.SetField(ref PXS, ref array, aux, invcmUnit);
+            }
+            catch (SystemException ex)
+            {
+                //  (this.Table.DataSet as LINAA).AddException(ex);
+
+            }
+
+            UNIT.FillWith(Mdens, Gt, EXS, MCL, PXS);
+        }
+
+
         private static char[] ch = new char[] { ',', '(', '#', ')' };
         /// <summary>
         /// Types of channels configurations
@@ -79,8 +120,6 @@ namespace DB.Tools
             int sep = list.IndexOf(separator);
             list = list.Skip(sep + 1).ToList();
             IEnumerable<LINAA.MatSSFRow> ssfs = UNIT.GetMatSSFRows();
-
-          
 
 
             foreach (LINAA.MatSSFRow m in ssfs)
