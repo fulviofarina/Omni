@@ -32,6 +32,6 @@ namespace DB
 
         void SetLabels(ref IEnumerable<SubSamplesRow> samples, string project);
 
-        void SetUnits(ref IEnumerable<SubSamplesRow> samples);
+        IList<UnitRow> SetUnits(ref IEnumerable<SubSamplesRow> samples);
     }
 }

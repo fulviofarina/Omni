@@ -98,13 +98,13 @@ namespace Rsx.DGV
         };
        */
 
-      if (!indexfield.Equals(string.Empty))
-      {
-        BindingSource BS = GetDataSource<BindingSource>(ref dgv);
-        BS.Sort = indexfield + " desc";
+    //  if (!indexfield.Equals(string.Empty))
+      //{
+      //  BindingSource BS = GetDataSource<BindingSource>(ref dgv);
+      //  BS.Sort = indexfield + " desc";
 
        // BS.RemoveFilter(); ///?????
-      }
+      //}
 
       return "OK! A new Item was " + aux;
     }

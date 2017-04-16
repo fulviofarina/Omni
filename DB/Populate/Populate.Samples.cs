@@ -84,20 +84,26 @@ namespace DB
         {
             string _projectNr = System.Text.RegularExpressions.Regex.Replace(project, "[a-z]", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
-            System.Collections.Generic.HashSet<int> _samplesNrs = new System.Collections.Generic.HashSet<int>();
+            int[] _samplesNrs = null;
 
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                if (s.MonitorsRow == null)
-                {
-                    if (!s.IsSubSampleNameNull())
-                    {
-                        _samplesNrs.Add(Convert.ToInt16(s.SubSampleName.Replace(_projectNr, null)));
-                    }
-                }
-            }
+
+            //  _samplesNrs = samples.Where(o => o.MonitorsRow == null)
+            //      .Where(o => !o.IsSubSampleNameNull())
+            //     .SelectMany(o => o.SubSampleName.Replace(_projectNr, null))
+
+            string[] samplesNames = samples.Where(o => o.MonitorsRow == null)
+                .Where(o => !o.IsSubSampleNameNull())
+                .Select(o => o.SubSampleName).ToArray();
+                samplesNames = samplesNames.Select(o => o.Replace(_projectNr, null))
+                .ToArray();
+
+             _samplesNrs = samplesNames.Select(o => Convert.ToInt32(o)).ToArray() ;
+                
+         
 
             int _lastSampleNr = 1;
+            // while (!_samplesNrs.Add(_lastSampleNr)) _lastSampleNr++;
+            if ( _samplesNrs.Count()!=0)      _lastSampleNr = _samplesNrs.Max()+1;
 
             foreach (LINAA.SubSamplesRow s in samples)
             {
@@ -105,9 +111,10 @@ namespace DB
                 {
                     if (s.IsSubSampleNameNull())
                     {
-                        while (!_samplesNrs.Add(_lastSampleNr)) _lastSampleNr++;
+                       
                         if (_lastSampleNr >= 10) s.SubSampleName = _projectNr + _lastSampleNr.ToString();
                         else s.SubSampleName = _projectNr + "0" + _lastSampleNr.ToString();
+                        _lastSampleNr++;
                     }
                     // s.IrradiationCode = project;
                     EC.CheckNull(this.SubSamples.SubSampleNameColumn, s);
@@ -115,8 +122,10 @@ namespace DB
             }
         }
 
-        public void SetUnits(ref IEnumerable<LINAA.SubSamplesRow> samples)
+        public IList<UnitRow> SetUnits(ref IEnumerable<LINAA.SubSamplesRow> samples)
         {
+            IList<UnitRow> list = new List<UnitRow>();
+               
             foreach (LINAA.SubSamplesRow s in samples)
             {
                 if (s.GetUnitRows().Count() == 0)
@@ -130,9 +139,12 @@ namespace DB
                     this.tableUnit.AddUnitRow(u);
                     ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
                     u.SetChannel(ref c);
+                    list.Add(u);
                    
                 }
             }
+
+            return list;
         }
 
         public int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool monitors = false)
@@ -146,12 +158,25 @@ namespace DB
 
             try
             {
-                SetIrradiatioRequest(ref hsamples, (int)id);
+                //find the ones that are already here
+                IEnumerable<SubSamplesRow> samples = SubSamples.OfType<SubSamplesRow>()
+                    .Where(o=> o.RowState!= DataRowState.Deleted);
+                samples = samples.Where(o => !o.IsIrradiationRequestsIDNull() && o.IrradiationRequestsID == id);
+                ///hsamples.un =
+               hsamples =     hsamples.Union(samples);
+                //hsamples = samples;
+
+         
 
                 if (monitors) AddMonitors(ref hsamples, project);
                 else SetLabels(ref hsamples, project);
 
-                SetUnits(ref hsamples);
+                SetIrradiatioRequest(ref hsamples, (int)id);
+                hsamples = Dumb.GetRowsWithChanges(hsamples).OfType<SubSamplesRow>();
+                Save(ref hsamples);
+
+                IEnumerable<UnitRow> Urows = SetUnits(ref hsamples);
+                Save(ref Urows);
             }
             catch (SystemException ex)
             {
@@ -311,12 +336,15 @@ namespace DB
                 this.Samples.BeginLoadData();
                 this.IRequestsAverages.BeginLoadData();
                 this.IPeakAverages.BeginLoadData();
+                this.SubSamples.BeginLoadData();
             }
             else
             {
                 this.Measurements.EndLoadData();
                 this.Peaks.EndLoadData();
                 this.Samples.EndLoadData();
+                this.SubSamples.EndLoadData();
+
                 this.IRequestsAverages.EndLoadData();
                 this.IPeakAverages.EndLoadData();
             }

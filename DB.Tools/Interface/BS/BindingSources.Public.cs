@@ -50,6 +50,9 @@ namespace DB.Tools
             Rabbit?.EndEdit();
             Channels?.EndEdit();
             Irradiations?.EndEdit();
+            SubSamples?.EndEdit();
+            SSF?.EndEdit();
+            
         }
 
         /// <summary>
@@ -145,7 +148,7 @@ namespace DB.Tools
             SubSamples.CurrentChanged += subSamples_CurrentChanged;
 
             Units = new BindingSource(Interface.Get(), Interface.IDB.Unit.TableName);
-            Units.CurrentChanged += units_CurrentChanged;
+       //     Units.CurrentChanged += units_CurrentChanged;
 
             SSF = new BindingSource(Interface.Get(), Interface.IDB.MatSSF.TableName);
 

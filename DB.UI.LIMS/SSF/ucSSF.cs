@@ -90,7 +90,7 @@ namespace DB.UI
         {
 
             Interface.IBS.EndEdit();
-            this.ValidateChildren();
+          //  this.ValidateChildren();
 
             Cursor.Current = Cursors.WaitCursor;
 

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Windows.Forms;
 
 using DB.Tools;
@@ -12,7 +13,7 @@ namespace DB.UI
         {
             InitializeComponent();
 
-          
+            this.unitDGV.RowHeaderMouseClick += DgvItemSelected;
         }
 
         /// <summary>
@@ -36,8 +37,39 @@ namespace DB.UI
                 DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
 
-                //link to matrix, channel or vial,/rabbit data
-                MatSSF.LinkToParent(ref row);
+                try
+                {
+
+                    if (row.GetType().Equals(typeof(LINAA.UnitRow)))
+                    {
+                        Interface.IDB.MatSSF.Clear();
+
+                        LINAA.UnitRow unit = Interface.ICurrent.Unit as LINAA.UnitRow;
+
+                        // if (unit == null) return;
+                        //important
+                        Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
+
+                        Interface.IBS.Update<LINAA.UnitRow>(unit, true, false);
+
+                    }
+                    else
+                    {
+
+                        //link to matrix, channel or vial,/rabbit data
+                        MatSSF.LinkToParent(ref row);
+                    }
+
+                    //then it will be updated
+                }
+                catch (Exception ex)
+                {
+
+                    Interface.IMain.AddException(ex);
+                }
+
+
+               
 
             }
             catch (System.Exception ex)
@@ -105,7 +137,7 @@ namespace DB.UI
         }
 
       
-
+        /*
         public DataGridViewCellMouseEventHandler RowHeaderMouseClick
         {
             ///FIRST TIME AND ONLY
@@ -115,16 +147,9 @@ namespace DB.UI
                 this.unitDGV.RowHeaderMouseClick += value;
 
 
-                /*
-                MouseEventArgs m = null;
-                m = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
-                DataGridViewCellMouseEventArgs args = null;
-                args = new DataGridViewCellMouseEventArgs(-1, 0, 0, 0, m);
-
-                value.Invoke(this.unitDGV, args);
-
-                */
             }
         }
+        */
+        
     }
 }

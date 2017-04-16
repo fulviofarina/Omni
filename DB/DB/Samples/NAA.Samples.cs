@@ -128,7 +128,7 @@ namespace DB
                     if (nonNullable == null)
                     {
                         nonNullable = new DataColumn[]{columnSubSampleName,
-                     columnSubSampleCreationDate,columnSubSampleDescription,
+                     columnSubSampleCreationDate,columnSubSampleDescription,columnVol,
                      columnConcentration, columnCapsuleName, columnMatrixName};
                     }
 
@@ -224,16 +224,11 @@ namespace DB
                             return;
                         }
                         subs.Vol = subs.FindVolumen();
-                       
-
-                    }
-                    else if (e.Column == this.columnVol)
-                    {
-                        EC.CheckNull(e.Column, e.Row);
                         if (calDensity) subs.CalculateDensity(true, false);
                         else if (calMass) subs.CalculateMass();
-                        return;
+
                     }
+                  
                     else if (columnRadius == e.Column)
                     {
                         if (subs.UnitRow!=null) subs.UnitRow.LastChanged = DateTime.Now;
@@ -243,7 +238,8 @@ namespace DB
                             return;
                         }
                         subs.Vol = subs.FindVolumen();
-                     
+                        if (calDensity) subs.CalculateDensity(true, false);
+                        else if (calMass) subs.CalculateMass();
                     }
                   
                     else if (columnMatrixID == (e.Column))

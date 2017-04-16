@@ -69,14 +69,14 @@ namespace DB.UI
             return CreateUI(controlHeader, null);
         }
 
-        public static void CreateForm(string title, ref UserControl control)
+        public static void CreateForm(string title, ref UserControl control, bool show = true)
         {
             if (control == null) return;
             Auxiliar form = new Auxiliar();
             form.MaximizeBox = true;
             form.Populate(control);
             form.Text = title;
-            form.Show();
+            form.Visible =show;
         }
 
         public static UserControl CreateUI(string controlHeader, object[] args)

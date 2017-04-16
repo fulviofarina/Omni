@@ -90,7 +90,7 @@ namespace SSF
 
             //create form for SubSamples
             UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
-            LIMS.CreateForm("Samples", ref control);
+            LIMS.CreateForm("Samples", ref control,false);
         //    control.ParentForm.Opacity = 0;
         //    control.ParentForm.ShowInTaskbar = false;
             //set bindings
@@ -179,8 +179,8 @@ namespace SSF
         {
             UserControl ucPref = null;
             ucPref = LIMS.CreateUI(ControlNames.Preferences); //; as ucPreferences;
-            LIMS.CreateForm("Preferences", ref ucPref);
-            LIMS.ShowPreferences(false);
+            LIMS.CreateForm("Preferences", ref ucPref,false);
+         //   LIMS.ShowPreferences(false);
             IucPreferences preferences = (IucPreferences)ucPref;
             return preferences;
         }

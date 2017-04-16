@@ -29,6 +29,8 @@ namespace DB.UI
             set { daddy = value; }
         }
 
+
+
         /// <summary>
         /// Hides the content of the PANEL 2 containers
         /// </summary>
@@ -179,36 +181,51 @@ namespace DB.UI
         /// <param name="row"></param>
         public void RowAdded(ref DataRow row)
         {
-
+            this.bindingNavigatorAddNewItem.Enabled = false;
+            Interface.IBS.SubSamples.SuspendBinding();
+            Interface.IBS.Units.SuspendBinding();
 
             int IrrReqID = projectbox.IrrReqID;
             string project = projectbox.Project;
 
-            IEnumerable<SubSamplesRow> samples = Interface.ICurrent.SubSamples.OfType<SubSamplesRow>();
-            IList<SubSamplesRow> list = samples.ToList();
+            
+            IList<SubSamplesRow> list = new List<SubSamplesRow>();
             list.Add((SubSamplesRow)row);
-            samples = list;
+            IEnumerable<SubSamplesRow> samples = list;
 
             Interface.IPopulate.ISamples.AddSamples(project, ref samples, false);
 
-            //  Link(this.filter, this.sort);
+            Interface.IBS.SubSamples.ResumeBinding();
+            Interface.IBS.Units.ResumeBinding();
 
 
-
-            Interface.IStore.Save<LINAA.SubSamplesDataTable>();
-            Interface.IStore.Save<LINAA.UnitDataTable>();
-
-
-
-            Interface.IBS.Update(row, true, true);
+            this.bindingNavigatorAddNewItem.Enabled = true;
 
             projectbox.CallBack?.Invoke();
+
+           
+            //  Interface.IBS.Update(row, true, true);
 
         }
         public void RowDeleted(ref DataRow row)
         {
+            this.bindingNavigatorDeleteItem.Enabled = false;
+            Interface.IBS.SubSamples.SuspendBinding();
+            Interface.IBS.Units.SuspendBinding();
+
+      
+            Interface.IStore.Save<UnitRow>();
+            Interface.IStore.Save<SubSamplesDataTable>();
+
+            Interface.IBS.SubSamples.ResumeBinding();
+            Interface.IBS.Units.ResumeBinding();
+
             projectbox.CallBack?.Invoke();
+
+            this.bindingNavigatorDeleteItem.Enabled = true;
         }
+
+   
 
 
         /// <summary>

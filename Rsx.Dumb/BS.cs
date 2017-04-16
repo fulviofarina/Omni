@@ -34,7 +34,8 @@ namespace Rsx
             //     Binding diam = new Binding(text, bs, column, t, mo);
           
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
-            bool t = true;
+            bool t = false;
+            format = string.Empty;
            // string text = "Text";
             string column;
             Hashtable bslist = new Hashtable();
@@ -44,7 +45,7 @@ namespace Rsx
                 column = item.ColumnName;
                 // column = Unit.DiameterColumn.ColumnName;
                 Binding b = new Binding(Property, bs, column, t, mo, DBNull.Value, format);
-              //  b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+               b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
                 bslist.Add(column, b);
             }
 

@@ -193,8 +193,9 @@ namespace DB.Tools
             //     string savePath = Interface.IMain.FolderPath + "lims.xml";
             // Interface.IStore.SaveSSF(off, savePath);
 
-
             Interface.IBS.EndEdit();
+       //     Interface.Get().BeginEndLoadData(false);
+           // Interface.IBS.EndEdit();
        
 
             Interface.IPreferences.SavePreferences();

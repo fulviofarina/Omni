@@ -693,9 +693,11 @@ ta.Dispose();
 
             try
             {
-             
+             // en esta mierda si la muy puta malparida no castea como DATAROW del coño
+             //entonces no updatea, y te hace perder media vida en eso..
+             // se me olvidaba que esta mierda es buggy nojoda
 
-                ta.Update(samps.ToArray());
+                ta.Update(samps.Cast<DataRow>().ToArray());
 
      //           uta.Update(samps.SelectMany(o => o.GetUnitRows()).ToArray());
 

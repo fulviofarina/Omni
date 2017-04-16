@@ -79,9 +79,9 @@ namespace DB
         protected internal void RowChanged(object sender, DataRowChangeEventArgs e)
         {
             if (e.Action != DataRowAction.Add && e.Action != DataRowAction.Commit) return;
-            if (e.Action == DataRowAction.Delete) return;
-            //	if( e.Action != DataRowAction.Commit) return;
 
+            //	if( e.Action != DataRowAction.Commit) return;
+            if (e.Row.RowState == DataRowState.Deleted) return;
             e.Row.ClearErrors();
             dynamic table;
             table = e.Row.Table;

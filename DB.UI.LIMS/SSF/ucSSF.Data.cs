@@ -39,8 +39,9 @@ namespace DB.UI
             else if (pro.GetType().Equals(typeof(BindingNavigator)))
             {
                 BindingNavigator b = pro as BindingNavigator;
-               // b.Items["SaveItem"].Visible = false;
-             //   this.unitBN.Dispose();
+                 b.Items["SaveItem"].Visible = false;
+                b.Parent.Controls.Remove(b);
+                //   this.unitBN.Dispose();
                 destiny = this.unitSC.Panel2;
 
             }
@@ -246,9 +247,11 @@ namespace DB.UI
             column = SSamples.Gross1Column.ColumnName;
             Binding massbin = samplebindings[column] as Binding;
             this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-         //   this.massB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+            //   this.massB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
-            massbin.FormatString = "N2";
+            //volver a poner??
+            //    massbin.FormatString = "N2";
+
             samplebindings.Remove(massbin); //so it does not update its format!!!
             column = SSamples.SubSampleNameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
