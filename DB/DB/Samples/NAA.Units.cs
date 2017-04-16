@@ -10,9 +10,29 @@ namespace DB
     {
         partial class UnitDataTable
         {
-            private IEnumerable<DataColumn> nonNullables;
+            private DataColumn[] changeables;
+            private DataColumn[] nonNullables;
 
-            public IEnumerable<DataColumn> NonNullables
+            public DataColumn[] Changeables
+            {
+                get
+                {
+                    if (changeables == null)
+                    {
+                        changeables = new DataColumn[] {
+                            this.columnChDiameter, this.columnChLength,
+                            this.columnkth,this.columnkepi,
+                            this.columnChCfg,
+                            this.columnBellFactor,
+                         // this.columnLastCalc, this.columnLastChanged, this.columnToDo,
+                            this.columnContent };
+                        // this.columnSSFTable};
+                    }
+                    return changeables;
+                }
+            }
+
+            public DataColumn[] NonNullables
             {
                 get
                 {
@@ -34,26 +54,6 @@ namespace DB
                 }
             }
 
-            /*
-
-                        private IEnumerable<DataColumn> prohibited;
-
-                        public IEnumerable<DataColumn> Prohibited
-                        {
-                            get
-                            {
-                                if (prohibited == null)
-                                {
-                                    prohibited = new DataColumn[] {
-                                        this.columnChCfg,
-                                        this.columnLastCalc,
-                                        this.columnLastChanged
-                                     };
-                                }
-                                return prohibited;
-                            }
-                        }
-                        */
 
             /// <summary>
             /// I think it is perfect like this, don't mess it up
@@ -174,31 +174,8 @@ namespace DB
                 }
             }
 
-            private IEnumerable<DataColumn> changeables;
-
-            public IEnumerable<DataColumn> Changeables
-            {
-                get
-                {
-                    if (changeables == null)
-                    {
-                        changeables = new DataColumn[] {
-                            this.columnChDiameter, this.columnChLength,
-                            this.columnkth,this.columnkepi,
-                            this.columnChCfg,
-                            this.columnBellFactor,
-                         // this.columnLastCalc, this.columnLastChanged, this.columnToDo,
-                            this.columnContent };
-                        // this.columnSSFTable};
-                    }
-                    return changeables;
-                }
-            }
-
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
-               // DataColumn c = e.Column;
-                //if (!NonNullables.Contains(c)) return;
 
                 if (!Changeables.Contains(e.Column)) return;
 
@@ -207,21 +184,13 @@ namespace DB
 
                 try
                 {
-                    // bool nullo = EC.CheckNull(c, row);
-
+                  
                     bool change = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) != 0);
-
-                    // if (e.Column!=this.columnContent) { if (Convert.ToDouble(e.ProposedValue) ==
-                    // 0) return; } change = (e.ProposedValue == DBNull.Value || change);
-
-                    // if (Convert.ToDouble(e.ProposedValue) == 0) r[c] = 1;
 
                     if (change)
                     {
                         r.ValueChanged();
                     }
-
-               
                 }
                 catch (SystemException ex)
                 {
@@ -237,6 +206,7 @@ namespace DB
             {
                 //      bool ok = true;
                 //columns in error
+
                 DataColumn[] colsInE = this.GetColumnsInError();
                 int count = colsInE.Intersect(this.tableUnit.Changeables).Count();
 
@@ -244,42 +214,6 @@ namespace DB
 
                 return count == 0;
             }
-
-            /// <summary>
-            /// Sets the channel data
-            /// </summary>
-            /// <param name="c"></param>
-            public void SetChannel(ref LINAA.ChannelsRow c)
-            {
-                this.kth = c.kth;
-                this.kepi = c.kepi;
-                this.ChCfg = c.FluxType;
-            }
-
-            /// <summary>
-            /// sets the vial container data
-            /// </summary>
-            /// <param name="v"></param>
-            public void SetRabbitContainer(ref LINAA.VialTypeRow v)
-            {
-                this.ChDiameter = v.InnerRadius * 2.0;
-                this.ChLength = v.MaxFillHeight;
-            }
-
-            /*
-            /// <summary>
-            /// Sets the matrix data
-            /// </summary>
-            /// <param name="m"></param>
-            public void SetMatrix(ref LINAA.MatrixRow m)
-            {
-                // LINAA.MatrixRow m = this.MatrixRow;
-
-                this.SubSamplesRow.MatrixID = m.MatrixID;
-                this.Density = m.MatrixDensity;
-                this.Content = m.MatrixComposition;
-            }
-            */
 
             /// <summary>
             /// Fills the UnitRow with the given physical parameters
@@ -337,9 +271,9 @@ namespace DB
                     }
 
                     //this goes FIRST!!!
-             
+
                     this.LastCalc = DateTime.Now;
-                 //   ValueChanged();
+                    // ValueChanged();
                     this.ToDo = false;
                 }
                 catch (SystemException ex)
@@ -349,6 +283,42 @@ namespace DB
                     // this.RowError = ex.Message;
                 }
             }
+
+            /// <summary>
+            /// Sets the channel data
+            /// </summary>
+            /// <param name="c"></param>
+            public void SetChannel(ref LINAA.ChannelsRow c)
+            {
+                this.kth = c.kth;
+                this.kepi = c.kepi;
+                this.ChCfg = c.FluxType;
+            }
+
+            /// <summary>
+            /// sets the vial container data
+            /// </summary>
+            /// <param name="v"></param>
+            public void SetRabbitContainer(ref LINAA.VialTypeRow v)
+            {
+                this.ChDiameter = v.InnerRadius * 2.0;
+                this.ChLength = v.MaxFillHeight;
+            }
+
+            /*
+            /// <summary>
+            /// Sets the matrix data
+            /// </summary>
+            /// <param name="m"></param>
+            public void SetMatrix(ref LINAA.MatrixRow m)
+            {
+                // LINAA.MatrixRow m = this.MatrixRow;
+
+                this.SubSamplesRow.MatrixID = m.MatrixID;
+                this.Density = m.MatrixDensity;
+                this.Content = m.MatrixComposition;
+            }
+            */
 
             public void ValueChanged()
             {

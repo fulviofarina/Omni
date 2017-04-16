@@ -21,10 +21,12 @@ namespace DB.Tools
         public BindingSource Matrix;
         public BindingSource MonitorsFlags;
         public BindingSource Samples;
+
         /// <summary>
         /// not attached yet
         /// </summary>
         public BindingSource Monitors;
+
         public BindingSource SelectedSubSample;
         public BindingSource Preferences;
 
@@ -32,6 +34,7 @@ namespace DB.Tools
 
         public BindingSource SSFPreferences;
         public BindingSource Standards;
+
         //binding sources to attach;
         public BindingSource SubSamples;
 
@@ -52,7 +55,6 @@ namespace DB.Tools
             Irradiations?.EndEdit();
             SubSamples?.EndEdit();
             SSF?.EndEdit();
-            
         }
 
         /// <summary>
@@ -66,48 +68,61 @@ namespace DB.Tools
             Type tipo = typeof(T);
             if (r == null) return;
 
-
             bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
             bool isUnit = tipo.Equals(typeof(UnitRow));
             bool isMatrix = tipo.Equals(typeof(MatrixRow));
+            //to check later the columns that should be ok
 
+         //   Action Checker = null;
+        //    DataColumn[] columnsThatShouldBeOk = null;
             if (isSubSample)
             {
+                //take columns that should be ok
+               // columnsThatShouldBeOk = Interface.IDB.SubSamples.NonNullableUnit;
                 updateSubSample(r, doCascade, findItself);
             }
             else if (isUnit)
             {
+               // columnsThatShouldBeOk = Interface.IDB.Unit.Changeables;
                 updateUnit(r, doCascade, findItself);
             }
             else if (isMatrix)
             {
+               //
                 updateMatrix(r, findItself);
             }
             else if (tipo.Equals(typeof(VialTypeRow)))
-                {
-                    updateVialRabbit(r, findItself);
-                }
-              
-                else if (tipo.Equals(typeof(ChannelsRow)))
-                {
-                    updateChannel(r, findItself);
-                }
-                else if (tipo.Equals(typeof(IrradiationRequestsRow)))
-                {
-                    updateIrradiationRequest(r, findItself);
-                    //   return;
-                }
-
-            if (r != null)
             {
-                if ((r as DataRow).HasErrors)
+               //
+                updateVialRabbit(r, findItself);
+            }
+            else if (tipo.Equals(typeof(ChannelsRow)))
+            {
+               //
+                updateChannel(r, findItself);
+            }
+            else if (tipo.Equals(typeof(IrradiationRequestsRow)))
+            {
+               //
+                updateIrradiationRequest(r, findItself);
+               
+            }
+            //now check the errors!!!
+         //   if (columnsThatShouldBeOk == null) return;
+            DataRow row = r as DataRow;
+            if (row.HasErrors)
+            {
+                bool? seriousCellsWithErrors = !AChecker?.Invoke();
+                // if (row.GetColumnsInError())
+                if (seriousCellsWithErrors!=null && (bool)seriousCellsWithErrors)
                 {
-                    Interface.IReport.Msg(rowWithError, "Warning", false); ///cannot process because it has errors
+                    Interface.IReport.Msg(_ROWWITHERROR, "Warning", false); ///cannot process because it has errors
                 }
             }
+
         }
 
-   
+    
         /// <summary>
         /// A Binding source for each table
         /// </summary>
@@ -115,9 +130,8 @@ namespace DB.Tools
         {
             Interface = inter;
 
-            
             Preferences = new BindingSource(Interface.Get(), Interface.IDB.Preferences.TableName);
-      Preferences.ListChanged += preferences_ListChanged;
+            Preferences.ListChanged += preferences_ListChanged;
 
             SSFPreferences = new BindingSource(Interface.Get(), Interface.IDB.SSFPref.TableName);
             SSFPreferences.ListChanged += preferences_ListChanged;
@@ -127,9 +141,7 @@ namespace DB.Tools
             Matrix = new BindingSource(Interface.Get(), Interface.IDB.Matrix.TableName);
             Rabbit = new BindingSource(Interface.Get(), Interface.IDB.VialType.TableName);
 
-
             Vial = new BindingSource(Interface.Get(), Interface.IDB.VialType.TableName);
-
 
             Irradiations = new BindingSource(Interface.Get(), Interface.IDB.IrradiationRequests.TableName);
 
@@ -144,15 +156,15 @@ namespace DB.Tools
             Samples = new BindingSource(Interface.Get(), Interface.IDB.Samples.TableName);
 
             SubSamples = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
-          
+
             SubSamples.CurrentChanged += subSamples_CurrentChanged;
 
             Units = new BindingSource(Interface.Get(), Interface.IDB.Unit.TableName);
-       //     Units.CurrentChanged += units_CurrentChanged;
+            // Units.CurrentChanged += units_CurrentChanged;
 
             SSF = new BindingSource(Interface.Get(), Interface.IDB.MatSSF.TableName);
 
-            //  Units.BindingComplete += Units_BindingComplete;
+            // Units.BindingComplete += Units_BindingComplete;
             SelectedSubSample = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
             // Units.ListChanged += units_ListChanged;
         }
@@ -163,21 +175,15 @@ namespace DB.Tools
             Preferences.Filter = col + " = '" + Interface.IPreferences.WindowsUser + "'";
             SSFPreferences.Filter = Preferences.Filter;
 
-            //    Dumb.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
+            // Dumb.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
             string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
             string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
-            //      Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
+            // Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
             Dumb.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
 
             Dumb.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
 
-
             Dumb.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, "CreationDateTime desc");
-
         }
-
-
     }
-
-   
 }

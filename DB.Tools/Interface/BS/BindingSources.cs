@@ -13,12 +13,15 @@ namespace DB.Tools
     public partial class BindingSources
     {
         // private Interface Interface;
-        private string rowWithError = "The selected row has some incomplete cells or cells with errors.\nPlease fix before selecting it";
+        private string _ROWWITHERROR = "The selected Item has incomplete information, i.e. cells with errors or null values";
 
 
     }
     public partial class BindingSources
     {
+        private CheckerDelegate AChecker = null;
+        private delegate bool CheckerDelegate();
+
         private Interface Interface;
         // private string rowWithError = "The selected row has some incomplete cells or cells with errors.\nPlease fix before selecting it";
     }
@@ -181,6 +184,9 @@ namespace DB.Tools
                 unitID = s.UnitID.ToString();
                 MatSSF.UNIT = s; //this is key
 
+            //the checker Method
+            AChecker = s.Check;
+
                 if (findItself && Units != null)
                 {
                     string unitValID = (s.Table as LINAA.UnitDataTable).UnitIDColumn.ColumnName;
@@ -218,6 +224,7 @@ namespace DB.Tools
                 string unitValID = (s.Table as LINAA.SubSamplesDataTable).SubSamplesIDColumn.ColumnName;
                 SubSamples.Position = SubSamples.Find(unitValID, s.SubSamplesID);
             }
+            AChecker = s.CheckUnit;
             //now update the childs/parents of Units
             if (doCascade && s.UnitRow != null) Update<LINAA.UnitRow>(s.UnitRow);
         }

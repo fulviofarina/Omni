@@ -25,7 +25,7 @@ namespace SSF
             Application.Run(Start());
         }
 
-        private static string title = "SSF Panel by Fulvio Farina Arboccò";
+        private static string TITLE = "SSF Calculations";
         static  Pop msn;//= new Pop(true);
 
         static NotifyIcon con;//= new NotifyIcon();
@@ -144,8 +144,8 @@ namespace SSF
             IntPtr Hicon = Properties.Resources.Logo.GetHicon();
             Icon myIcon = Icon.FromHandle(Hicon);
             form.Icon = myIcon;
-            form.Text = title;
-
+            form.Text = TITLE;
+            form.MaximizeBox = false;
             form.Controls.Add(ucSSF);
 
 

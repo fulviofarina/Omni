@@ -78,6 +78,13 @@
             this.nameB = new System.Windows.Forms.ToolStripComboBox();
             this.matrixB = new System.Windows.Forms.RichTextBox();
             this.sampleDGV = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.gross1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.radiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,13 +96,6 @@
             this.comparatorDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SampleBS = new System.Windows.Forms.BindingSource(this.components);
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
@@ -116,10 +116,10 @@
             this.unitSC.SuspendLayout();
             this.nameToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sampleDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvCMS
@@ -347,7 +347,7 @@
             this.cfgB.Margin = new System.Windows.Forms.Padding(94, 0, 1, 0);
             this.cfgB.Name = "cfgB";
             this.cfgB.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cfgB.Size = new System.Drawing.Size(240, 34);
+            this.cfgB.Size = new System.Drawing.Size(190, 34);
             this.cfgB.Text = "0";
             // 
             // chTS
@@ -441,7 +441,7 @@
             // 
             this.descripBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descripBox.Name = "descripBox";
-            this.descripBox.Size = new System.Drawing.Size(1023, 33);
+            this.descripBox.Size = new System.Drawing.Size(560, 34);
             // 
             // toolStrip2
             // 
@@ -594,10 +594,12 @@
             // 
             // nameB
             // 
+            this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameB.Margin = new System.Windows.Forms.Padding(44, 0, 1, 0);
+            this.nameB.ForeColor = System.Drawing.Color.Violet;
+            this.nameB.Margin = new System.Windows.Forms.Padding(41, 0, 1, 0);
             this.nameB.Name = "nameB";
-            this.nameB.Size = new System.Drawing.Size(455, 33);
+            this.nameB.Size = new System.Drawing.Size(250, 35);
             // 
             // matrixB
             // 
@@ -617,11 +619,11 @@
             this.sampleDGV.AllowUserToOrderColumns = true;
             this.sampleDGV.AutoGenerateColumns = false;
             this.sampleDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.sampleDGV.BackgroundColor = System.Drawing.Color.Olive;
+            this.sampleDGV.BackgroundColor = System.Drawing.Color.DarkKhaki;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 14F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -666,7 +668,73 @@
             this.sampleDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.sampleDGV.Size = new System.Drawing.Size(746, 76);
             this.sampleDGV.TabIndex = 16;
-            //this.sampleDGV.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.sampleDGV_DataBindingComplete);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.checkBox4, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.checkBox3, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.checkBox2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.checkBox1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 28);
+            this.tableLayoutPanel1.TabIndex = 20;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(3, 17);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(120, 8);
+            this.checkBox4.TabIndex = 3;
+            this.checkBox4.Text = "checkBox4";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(735, 17);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(14, 8);
+            this.checkBox3.TabIndex = 2;
+            this.checkBox3.Text = "checkBox3";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(369, 17);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(120, 8);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "checkBox2";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(3, 3);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(120, 8);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            this.errorProvider2.ContainerControl = this;
             // 
             // gross1DataGridViewTextBoxColumn
             // 
@@ -754,73 +822,6 @@
             this.SampleBS.DataMember = "SubSamples";
             this.SampleBS.DataSource = typeof(DB.LINAA);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.checkBox4, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 28);
-            this.tableLayoutPanel1.TabIndex = 20;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(120, 8);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
-            // 
-            // errorProvider2
-            // 
-            this.errorProvider2.ContainerControl = this;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(369, 17);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(120, 8);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(735, 17);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(14, 8);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(3, 17);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(120, 8);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
             // ucSSFData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
@@ -861,11 +862,11 @@
             this.nameToolStrip.ResumeLayout(false);
             this.nameToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sampleDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -18,7 +18,7 @@ namespace DB.UI
         /// <param name="e">     </param>
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0 ) return;
             ///check if table has no rows
 
             try
@@ -31,36 +31,52 @@ namespace DB.UI
                 }
                 DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
-                try
+                bool isToDoColumn = false;
+
+                if (e.ColumnIndex >= 0)
                 {
+                    isToDoColumn = row[e.ColumnIndex].GetType().Equals(typeof(bool));
+                }
+               
                     if (row.GetType().Equals(typeof(LINAA.UnitRow)))
                     {
                         Interface.IDB.MatSSF.Clear();
 
                         LINAA.UnitRow unit = Interface.ICurrent.Unit as LINAA.UnitRow;
 
-                        // if (unit == null) return;
-                        //important
+                        //if it is a checheakble column box
+                        //then check it automatically
+                        if (isToDoColumn)
+                        {
+                            unit.ToDo = !unit.ToDo;
+                        }
+
+
+                        //update bindings
+
                         Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
 
                         Interface.IBS.Update<LINAA.UnitRow>(unit, true, false);
+
                     }
                     else
                     {
                         //link to matrix, channel or vial,/rabbit data
                         MatSSF.LinkToParent(ref row);
-                    }
+                   string tipo =  row.GetType().ToString();
 
-                    //then it will be updated
+                    Interface.IReport.Msg("Unit values updated with Template Item", "Updated!", false); //report
+
+
+
                 }
-                catch (Exception ex)
-                {
-                    Interface.IMain.AddException(ex);
-                }
+
+                //then it will be updated
+
             }
             catch (System.Exception ex)
             {
-                Interface.IReport.Msg(ex.StackTrace, ex.Message);
+               // Interface.IReport.Msg(ex.StackTrace, ex.Message);
                 Interface.IMain.AddException(ex);
             }
         }

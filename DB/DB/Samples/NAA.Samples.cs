@@ -11,60 +11,17 @@ namespace DB
     {
         partial class SubSamplesDataTable
         {
-            /// <summary>
-            /// Finds the SampleRow with given sample name, or adds it if not found and specifically
-            /// requested, using the IrrReqID given
-            /// </summary>
-            /// <param name="sampleName">name of sample to find</param>
-            /// <param name="AddifNull"> true for adding the row if not found</param>
-            /// <param name="IrrReqID">  irradiation request id to set for the sample only if added</param>
-            /// <returns>A non-null SampleRow if AddIfNull is true, otherwise can be null</returns>
-            public SubSamplesRow FindBySample(string sampleName, bool AddifNull, int? IrrReqID)
+            private DataColumn[] nonNullable;
+
+            private DataColumn[] nonNullableUnit;
+
+            public bool calDensity
             {
-                SubSamplesRow sample = this.FindBySample(sampleName);
-                if (sample == null)
+                get
                 {
-                    sample = this.NewSubSamplesRow();
-                    if (IrrReqID != null) sample.IrradiationRequestsID = (int)IrrReqID;
-                    sample.SubSampleName = sampleName;
-                    sample.SubSampleCreationDate = DateTime.Now;
-                    this.AddSubSamplesRow(sample);
+                    // return true;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().CalcDensity;
                 }
-                return sample;
-            }
-
-            /// <summary>
-            /// Finds the SampleRow with given sample name
-            /// </summary>
-            /// <param name="sampleName">name of sample to find</param>
-            /// <returns>A SampleRow or null</returns>
-            public SubSamplesRow FindBySample(string sampleName)
-            {
-                string field = this.SubSampleNameColumn.ColumnName;
-                string fieldVal = sampleName.Trim().ToUpper();
-                return this.FirstOrDefault(LINAA.SelectorByField<SubSamplesRow>(fieldVal, field));
-            }
-
-            public IEnumerable<SubSamplesRow> FindByIrReqID(int? IrReqID)
-            {
-                IEnumerable<SubSamplesRow> old = null;
-                string IrReqField = this.IrradiationRequestsIDColumn.ColumnName;
-                old = this.Where(LINAA.SelectorByField<SubSamplesRow>(IrReqID, IrReqField));
-                return old.ToList();
-            }
-
-            public IList<SubSamplesRow> FindByProject(string project)
-            {
-                IList<SubSamplesRow> old = null;
-                string cd = DB.Properties.Misc.Cd;
-                string IrReqField = this.IrradiationCodeColumn.ColumnName;
-                project = project.Replace(cd, null);
-                old = this.Where(LINAA.SelectorByField<SubSamplesRow>(project, IrReqField)).ToList();
-                IEnumerable<SubSamplesRow> oldCD = this.Where(LINAA.SelectorByField<SubSamplesRow>(project + cd, IrReqField));
-
-                old = old.Union(oldCD).ToList();
-
-                return old;
             }
 
             public bool calFh
@@ -73,24 +30,6 @@ namespace DB
                 {
                     return (this.DataSet as LINAA).SSFPref.FirstOrDefault().AAFillHeight;
                     //return false;
-                }
-            }
-
-            public bool calRad
-            {
-                get
-                {
-                    //return false;
-                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().AARadius;
-                }
-            }
-
-            public bool calDensity
-            {
-                get
-                {
-                    // return true;
-                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().CalcDensity;
                 }
             }
 
@@ -103,25 +42,14 @@ namespace DB
                 }
             }
 
-            private DataColumn[] nonNullable;
-            /*
-            // private DataColumn[] geometric;
-            private DataColumn[] masses;
-
-            public DataColumn[] Masses
+            public bool calRad
             {
                 get
                 {
-                    if (masses == null)
-                    {
-                        masses = new DataColumn[] {
-                     columnGross1,columnGross2 ,columnGrossAvg };
-                    }
-
-                    return masses;
+                    //return false;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().AARadius;
                 }
             }
-            */
 
             public DataColumn[] NonNullable
             {
@@ -138,13 +66,10 @@ namespace DB
                 }
             }
 
-            private DataColumn[] nonNullableUnit;
-
             public DataColumn[] NonNullableUnit
             {
                 get
                 {
-                    
                     if (nonNullableUnit == null)
                     {
                         nonNullableUnit = new DataColumn[] { this.Gross1Column, this.FillHeightColumn, this.RadiusColumn };
@@ -156,14 +81,13 @@ namespace DB
 
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-             //   this.ColumnChanging += SubSamplesDataTable_ColumnChanging;
+                // this.ColumnChanging += SubSamplesDataTable_ColumnChanging;
                 try
                 {
                     //e.Row.SetColumnError(e.Column, null);
                     LINAA.SubSamplesRow subs = e.Row as LINAA.SubSamplesRow; //cast
 
-                    bool sameValue = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString())==0);
-
+                    bool sameValue = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) == 0);
 
                     if (NonNullable.Contains(e.Column)) EC.CheckNull(e.Column, e.Row);
                     else if (e.Column == this.DirectSolcoiColumn)
@@ -189,9 +113,8 @@ namespace DB
                     }
                     else if (e.Column == this.CalcDensityColumn)
                     {
-                     //   subs.ValueChanged();
-                   
-                        
+                        // subs.ValueChanged();
+
                         if (calMass) subs.CalculateMass();
                         if (calRad)
                         {
@@ -205,7 +128,6 @@ namespace DB
                     }
                     else if (columnFillHeight == e.Column)
                     {
-                     
                         // if (!calDensity) subs.CalculateMass();
                         if (calRad)
                         {
@@ -218,7 +140,6 @@ namespace DB
                     }
                     else if (columnRadius == e.Column)
                     {
-                     
                         if (calFh)
                         {
                             subs.FillHeight = subs.FindFillingHeight();
@@ -232,7 +153,6 @@ namespace DB
                     {
                         if (subs.CheckMatrix())
                         {
-                           
                             subs.CalculateDensity(true, true);
                         }
                     }
@@ -258,7 +178,6 @@ namespace DB
                         // subs.Net = subs.GrossAvg = subs.Tare;
                         if (subs.CheckMass())
                         {
-                          
                             // subs.Net = subs.GrossAvg = subs.Tare;
                             if (calDensity)
                             {
@@ -342,11 +261,7 @@ namespace DB
 
                     bool change = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) != 0);
 
-               
-
                     if (change) r.UnitRow?.ValueChanged();
-
-
                 }
                 catch (SystemException ex)
                 {
@@ -355,6 +270,79 @@ namespace DB
                 }
             }
 
+            public IEnumerable<SubSamplesRow> FindByIrReqID(int? IrReqID)
+            {
+                IEnumerable<SubSamplesRow> old = null;
+                string IrReqField = this.IrradiationRequestsIDColumn.ColumnName;
+                old = this.Where(LINAA.SelectorByField<SubSamplesRow>(IrReqID, IrReqField));
+                return old.ToList();
+            }
+
+            public IList<SubSamplesRow> FindByProject(string project)
+            {
+                IList<SubSamplesRow> old = null;
+                string cd = DB.Properties.Misc.Cd;
+                string IrReqField = this.IrradiationCodeColumn.ColumnName;
+                project = project.Replace(cd, null);
+                old = this.Where(LINAA.SelectorByField<SubSamplesRow>(project, IrReqField)).ToList();
+                IEnumerable<SubSamplesRow> oldCD = this.Where(LINAA.SelectorByField<SubSamplesRow>(project + cd, IrReqField));
+
+                old = old.Union(oldCD).ToList();
+
+                return old;
+            }
+
+            /// <summary>
+            /// Finds the SampleRow with given sample name, or adds it if not found and specifically
+            /// requested, using the IrrReqID given
+            /// </summary>
+            /// <param name="sampleName">name of sample to find</param>
+            /// <param name="AddifNull"> true for adding the row if not found</param>
+            /// <param name="IrrReqID">  irradiation request id to set for the sample only if added</param>
+            /// <returns>A non-null SampleRow if AddIfNull is true, otherwise can be null</returns>
+            public SubSamplesRow FindBySample(string sampleName, bool AddifNull, int? IrrReqID)
+            {
+                SubSamplesRow sample = this.FindBySample(sampleName);
+                if (sample == null)
+                {
+                    sample = this.NewSubSamplesRow();
+                    if (IrrReqID != null) sample.IrradiationRequestsID = (int)IrrReqID;
+                    sample.SubSampleName = sampleName;
+                    sample.SubSampleCreationDate = DateTime.Now;
+                    this.AddSubSamplesRow(sample);
+                }
+                return sample;
+            }
+
+            /// <summary>
+            /// Finds the SampleRow with given sample name
+            /// </summary>
+            /// <param name="sampleName">name of sample to find</param>
+            /// <returns>A SampleRow or null</returns>
+            public SubSamplesRow FindBySample(string sampleName)
+            {
+                string field = this.SubSampleNameColumn.ColumnName;
+                string fieldVal = sampleName.Trim().ToUpper();
+                return this.FirstOrDefault(LINAA.SelectorByField<SubSamplesRow>(fieldVal, field));
+            }
+            /*
+            // private DataColumn[] geometric;
+            private DataColumn[] masses;
+
+            public DataColumn[] Masses
+            {
+                get
+                {
+                    if (masses == null)
+                    {
+                        masses = new DataColumn[] {
+                     columnGross1,columnGross2 ,columnGrossAvg };
+                    }
+
+                    return masses;
+                }
+            }
+            */
             public bool Override(String Alpha, String f, String Geo, String Gt, bool asSamples)
             {
                 foreach (LINAA.SubSamplesRow row in this)
@@ -367,65 +355,55 @@ namespace DB
 
         partial class SubSamplesRow
         {
+            private bool selected;
+
+            private object tag;
+
+            public bool NeedsMeasurements
+            {
+                get
+                {
+                    return (this.GetMeasurementsRows().Count() == 0);
+                }
+            }
+
+            public bool NeedsPeaks
+            {
+                get
+                {
+                    return (this.GetIRequestsAveragesRows().Count() == 0);
+                }
+            }
+
+            public bool NeedsSSF
+            {
+                get
+                {
+                    return (this.UnitRow.GetMatSSFRows().Count() == 0);
+                }
+            }
+
+            public bool Selected
+            {
+                get
+                {
+                    return selected;
+                }
+                set { selected = value; }
+            }
+
+            public object Tag
+            {
+                get { return tag; }
+                set { tag = value; }
+            }
+
             public UnitRow UnitRow
             {
                 get
                 {
                     return this.GetUnitRows().AsEnumerable().FirstOrDefault();
                 }
-            }
-
-            public bool CheckUnit()
-            {
-                DataColumn[] colsInE = this.GetColumnsInError();
-                int count = colsInE.Intersect(this.tableSubSamples.NonNullableUnit).Count();
-
-                return count == 0;
-            }
-
-            public void CheckFillRad(bool takeFromVial)
-            {
-                UnitRow u = UnitRow;
-
-                double rad, fh = 0;
-                bool noradius = false;
-                bool nofillheight = false;
-                nofillheight = EC.CheckNull(this.tableSubSamples.FillHeightColumn, this);
-                noradius = EC.CheckNull(this.tableSubSamples.RadiusColumn, this);
-
-                if (!takeFromVial)
-                {
-                    fh = this.GeometryRow.FillHeight;
-
-                    rad = this.GeometryRow.Radius;
-                }
-                else
-                {
-                    fh = this.VialTypeRow.MaxFillHeight;
-
-                    rad = this.VialTypeRow.InnerRadius;
-                }
-
-                if ((fh != 0))
-                {
-                    this.FillHeight = fh;
-                }
-                if ((rad != 0))
-                {
-                    this.Radius = rad;
-                }
-            }
-
-            public bool CheckGeometry()
-            {
-                DataColumn geoCol = this.tableSubSamples.GeometryNameColumn;
-                this.SetColumnError(geoCol, null);
-                if (EC.IsNuDelDetch(GeometryRow))
-                {
-                    this.SetColumnError(geoCol, "Please assign a valid geometry to this sample");
-                    return false;
-                }
-                return true;
             }
 
             public void CalculateDensity(bool caldensity, bool forceContent)
@@ -489,64 +467,6 @@ namespace DB
                 }
             }
 
-            public bool CheckMatrix()
-            {
-                this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
-
-                if (EC.IsNuDelDetch(this.MatrixRow))
-                {
-                    MatrixRow m = null;
-
-                    if (!EC.IsNuDelDetch(this.GeometryRow))
-                    {
-                        m = this.GeometryRow.MatrixRow;
-                    }
-                    if (!EC.IsNuDelDetch(m))
-                    {
-                        this.MatrixID = m.MatrixID;
-                        return true;
-                    }
-                    else
-                    {
-                        this.SetColumnError(this.tableSubSamples.GeometryNameColumn, "Plase assign a matrix for this geometry");
-                        this.SetColumnError(this.tableSubSamples.MatrixNameColumn, "Plase assign a matrix either directly or through a geometry");
-
-                        return false;
-                    }
-                }
-                else return true;
-            }
-
-            public bool CheckVialCapsule()
-            {
-                this.SetColumnError(this.tableSubSamples.CapsuleNameColumn, null);
-                VialTypeRow v = this.VialTypeRow;
-                if (EC.IsNuDelDetch(v))
-                {
-                    this.SetColumnError(tableSubSamples.CapsuleNameColumn, "Assign a vial/capsule");
-                    return false;
-                }
-                return true;
-            }
-
-            public void CheckRabbit()
-            {
-                SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, null);
-                VialTypeRow v = VialTypeRowByChCapsule_SubSamples;
-                if (EC.IsNuDelDetch(v))
-                {
-                    SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, "Assign an irradiation container");
-                }
-                else
-                {
-                    UnitRow u = UnitRow;
-                    if (!EC.IsNuDelDetch(u))
-                    {
-                        u.SetRabbitContainer(ref v);
-                    }
-                }
-            }
-
             public void CheckENAA()
             {
                 if (IsENAANull()) ENAA = false;
@@ -566,6 +486,39 @@ namespace DB
                 }
             }
 
+            public void CheckFillRad(bool takeFromVial)
+            {
+                UnitRow u = UnitRow;
+
+                double rad, fh = 0;
+                bool noradius = false;
+                bool nofillheight = false;
+                nofillheight = EC.CheckNull(this.tableSubSamples.FillHeightColumn, this);
+                noradius = EC.CheckNull(this.tableSubSamples.RadiusColumn, this);
+
+                if (!takeFromVial)
+                {
+                    fh = this.GeometryRow.FillHeight;
+
+                    rad = this.GeometryRow.Radius;
+                }
+                else
+                {
+                    fh = this.VialTypeRow.MaxFillHeight;
+
+                    rad = this.VialTypeRow.InnerRadius;
+                }
+
+                if ((fh != 0))
+                {
+                    this.FillHeight = fh;
+                }
+                if ((rad != 0))
+                {
+                    this.Radius = rad;
+                }
+            }
+
             public void CheckfOrAlpha()
             {
                 if (EC.IsNuDelDetch(IrradiationRequestsRow)) return;
@@ -579,6 +532,57 @@ namespace DB
                 {
                     Alpha = IrradiationRequestsRow.ChannelsRow.Alpha;
                 }
+            }
+
+            public bool CheckGeometry()
+            {
+                DataColumn geoCol = this.tableSubSamples.GeometryNameColumn;
+                this.SetColumnError(geoCol, null);
+                if (EC.IsNuDelDetch(GeometryRow))
+                {
+                    this.SetColumnError(geoCol, "Please assign a valid geometry to this sample");
+                    return false;
+                }
+                return true;
+            }
+
+            public bool CheckGthermal()
+            {
+                DataColumn col = this.tableSubSamples.MatrixDensityColumn;
+                string chk = "\nCheck the filling height, radius net mass or matrix composition\n";
+                string rofrom = "The density from MatSSF";
+                if (this.CalcDensity == 0)
+                {
+                    this.SetColumnError(col, "The density from MatSSF is NULL!" + chk);
+                    return false;
+                }
+                bool seterror = false;
+                string HighLow = string.Empty;
+                int pent = 7;
+                double ratio = (this.MatrixDensity / CalcDensity) * 100;
+                if (ratio >= 100 + pent)
+                {
+                    HighLow = rofrom + " exceeds more than " + pent + "% the density shown" + chk;
+                    seterror = true;
+                }
+                else if (ratio <= 100 - pent)
+                {
+                    HighLow = rofrom + " is " + pent + "% lower than the density shown" + chk;
+                    seterror = true;
+                }
+
+                if (seterror)
+                {
+                    decimal ro = Decimal.Round(Convert.ToDecimal(CalcDensity), 2);
+                    decimal r = Decimal.Round(Convert.ToDecimal(FindRadius()), 2);
+                    decimal h = Decimal.Round(Convert.ToDecimal(FindFillingHeight()), 2);
+                    string estimateRo = "MatSSF estimated it as " + ro + " gr/cm3\n";
+                    string estimateFH = "If the Fill Height and Net mass are correct\nthe Radius should be " + r + " mm\n";
+                    string estimateR = "Or if the Radius and Net mass are correct\nthe Filling Height should be " + h + " mm\n";
+                    this.SetColumnError(col, HighLow + estimateRo + estimateFH + estimateR);
+                }
+
+                return seterror;
             }
 
             public bool CheckMass()
@@ -609,62 +613,32 @@ namespace DB
                 return true;
             }
 
-            private object tag;
-
-            public object Tag
+            public bool CheckMatrix()
             {
-                get { return tag; }
-                set { tag = value; }
-            }
+                this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
 
-            public void SetDetectorPosition(string det, string pos)
-            {
-                try
+                if (EC.IsNuDelDetch(this.MatrixRow))
                 {
-                    SetColumnError(this.tableSubSamples.DetectorColumn, null);
-                    Detector = det;
-                }
-                catch (SystemException ex)
-                {
-                    SetColumnError(this.tableSubSamples.DetectorColumn, ex.Message);
-                }
+                    MatrixRow m = null;
 
-                try
-                {
-                    SetColumnError(this.tableSubSamples.PositionColumn, null);
-
-                    Position = Convert.ToInt16(pos);
-                }
-                catch (SystemException ex)
-                {
-                    SetColumnError(this.tableSubSamples.PositionColumn, ex.Message);
-                }
-            }
-
-            public bool ShouldSelectIt(bool CheckForSSF)
-            {
-                if (this.NeedsMeasurements) return false;
-                IEnumerable<LINAA.MeasurementsRow> measurements = GetMeasurementsRows();
-                if (HasErrors)
-                {
-                    foreach (LINAA.MeasurementsRow m in measurements) m.Selected = false;
-                    return false;
-                }
-                else
-                {
-                    foreach (LINAA.MeasurementsRow m in measurements) m.Selected = m.ShouldSelectIt();
-                    measurements = LINAA.FindSelected(measurements).ToList();
-                    if (measurements.Count() != 0) return true;
+                    if (!EC.IsNuDelDetch(this.GeometryRow))
+                    {
+                        m = this.GeometryRow.MatrixRow;
+                    }
+                    if (!EC.IsNuDelDetch(m))
+                    {
+                        this.MatrixID = m.MatrixID;
+                        return true;
+                    }
                     else
                     {
-                        if (CheckForSSF)
-                        {
-                            if (NeedsSSF) return true;
-                            else return false;
-                        }
-                        else return false;
+                        this.SetColumnError(this.tableSubSamples.GeometryNameColumn, "Plase assign a matrix for this geometry");
+                        this.SetColumnError(this.tableSubSamples.MatrixNameColumn, "Plase assign a matrix either directly or through a geometry");
+
+                        return false;
                     }
                 }
+                else return true;
             }
 
             public bool CheckMonitor()
@@ -701,6 +675,24 @@ namespace DB
                 return true;
             }
 
+            public void CheckRabbit()
+            {
+                SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, null);
+                VialTypeRow v = VialTypeRowByChCapsule_SubSamples;
+                if (EC.IsNuDelDetch(v))
+                {
+                    SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, "Assign an irradiation container");
+                }
+                else
+                {
+                    UnitRow u = UnitRow;
+                    if (!EC.IsNuDelDetch(u))
+                    {
+                        u.SetRabbitContainer(ref v);
+                    }
+                }
+            }
+
             public bool CheckStandard()
             {
                 // StandardsRow std = StandardsRow;
@@ -719,30 +711,6 @@ namespace DB
                     SubSampleDescription = StandardsRow.stdName;
                 }
                 return true;
-            }
-
-            public bool NeedsMeasurements
-            {
-                get
-                {
-                    return (this.GetMeasurementsRows().Count() == 0);
-                }
-            }
-
-            public bool NeedsPeaks
-            {
-                get
-                {
-                    return (this.GetIRequestsAveragesRows().Count() == 0);
-                }
-            }
-
-            public bool NeedsSSF
-            {
-                get
-                {
-                    return (this.UnitRow.GetMatSSFRows().Count() == 0);
-                }
             }
 
             public void CheckTimes()
@@ -805,6 +773,152 @@ namespace DB
                 }
             }
 
+            public bool CheckUnit()
+            {
+                DataColumn[] colsInE = this.GetColumnsInError();
+                int count = colsInE.Intersect(this.tableSubSamples.NonNullableUnit).Count();
+
+                return count == 0;
+            }
+            public bool CheckVialCapsule()
+            {
+                this.SetColumnError(this.tableSubSamples.CapsuleNameColumn, null);
+                VialTypeRow v = this.VialTypeRow;
+                if (EC.IsNuDelDetch(v))
+                {
+                    this.SetColumnError(tableSubSamples.CapsuleNameColumn, "Assign a vial/capsule");
+                    return false;
+                }
+                return true;
+            }
+            /// <summary>
+            /// MoistureContent Content must be in Percentage
+            /// </summary>
+            /// <returns></returns>
+            public double DryMass()
+            {
+                return (this.Net - (this.Net * this.MoistureContent * 1e-2));  // netto dried mass in miligrams;
+            }
+
+            public double FindFillingHeight()
+            {
+                if (IsCalcDensityNull()) return 0;
+
+                double deno = this.CalcDensity * FindSurface();
+                double result = 0;
+
+                if (deno != 0)
+                {
+                    result = 10 * this.Net * 1e-3 / deno;
+                }
+                return result;
+            }
+
+            public double FindRadius()
+            {
+                if (IsCalcDensityNull()) return 0;
+
+                double deno = (Math.PI * this.CalcDensity * this.FillHeight * 0.1);
+                double result = 0;
+
+                if (deno != 0)
+                {
+                    result = 10 * Math.Sqrt(this.Net * 1e-3 / deno);
+                }
+                return result;
+            }
+
+            public double FindSurface()
+            {
+                double result = Math.PI * this.Radius * this.Radius * 0.1 * 0.1; //indexer cm
+                return result;
+            }
+
+            public double FindVolumen()
+            {
+                return FindSurface() * this.FillHeight * 0.1;
+            }
+
+            public bool Override(string alpha, string efe, string Geo, string Gt, bool asSamples)
+            {
+                bool success = false;
+                try
+                {
+                    if (asSamples) this.Comparator = false;
+                    if (!efe.ToUpper().Contains(Properties.Misc.Def))
+                    {
+                        this.f = Convert.ToDouble(efe);
+                    }
+                    if (!alpha.ToUpper().Contains(Properties.Misc.Def))
+                    {
+                        this.Alpha = Convert.ToDouble(alpha);
+                    }
+                    if (!Gt.ToUpper().Contains(Properties.Misc.Def))
+                    {
+                        this.Gthermal = Convert.ToDouble(Gt);
+                    }
+                    if (!Geo.ToUpper().Contains(Properties.Misc.Def))
+                    {
+                        this.GeometryName = Geo;
+                    }
+                    success = true;
+                }
+                catch (System.InvalidCastException)
+                {
+                }
+
+                return success;
+            }
+
+            public void SetDetectorPosition(string det, string pos)
+            {
+                try
+                {
+                    SetColumnError(this.tableSubSamples.DetectorColumn, null);
+                    Detector = det;
+                }
+                catch (SystemException ex)
+                {
+                    SetColumnError(this.tableSubSamples.DetectorColumn, ex.Message);
+                }
+
+                try
+                {
+                    SetColumnError(this.tableSubSamples.PositionColumn, null);
+
+                    Position = Convert.ToInt16(pos);
+                }
+                catch (SystemException ex)
+                {
+                    SetColumnError(this.tableSubSamples.PositionColumn, ex.Message);
+                }
+            }
+
+            public bool ShouldSelectIt(bool CheckForSSF)
+            {
+                if (this.NeedsMeasurements) return false;
+                IEnumerable<LINAA.MeasurementsRow> measurements = GetMeasurementsRows();
+                if (HasErrors)
+                {
+                    foreach (LINAA.MeasurementsRow m in measurements) m.Selected = false;
+                    return false;
+                }
+                else
+                {
+                    foreach (LINAA.MeasurementsRow m in measurements) m.Selected = m.ShouldSelectIt();
+                    measurements = LINAA.FindSelected(measurements).ToList();
+                    if (measurements.Count() != 0) return true;
+                    else
+                    {
+                        if (CheckForSSF)
+                        {
+                            if (NeedsSSF) return true;
+                            else return false;
+                        }
+                        else return false;
+                    }
+                }
+            }
             /*
             public bool CalculateDensityOld()
             {
@@ -862,55 +976,6 @@ namespace DB
             /////////////////////////////////////////////////////////////////
             /// </summary>
             /// <returns></returns>
-
-            public double FindVolumen()
-            {
-                return FindSurface() * this.FillHeight * 0.1;
-            }
-
-            public double FindSurface()
-            {
-                double result = Math.PI * this.Radius * this.Radius * 0.1 * 0.1; //indexer cm
-                return result;
-            }
-
-            public double FindRadius()
-            {
-                if (IsCalcDensityNull()) return 0;
-
-                double deno = (Math.PI * this.CalcDensity * this.FillHeight * 0.1);
-                double result = 0;
-
-                if (deno != 0)
-                {
-                    result = 10 * Math.Sqrt(this.Net * 1e-3 / deno);
-                }
-                return result;
-            }
-
-            public double FindFillingHeight()
-            {
-                if (IsCalcDensityNull()) return 0;
-
-                double deno = this.CalcDensity * FindSurface();
-                double result = 0;
-
-                if (deno != 0)
-                {
-                    result = 10 * this.Net * 1e-3 / deno;
-                }
-                return result;
-            }
-
-            /// <summary>
-            /// MoistureContent Content must be in Percentage
-            /// </summary>
-            /// <returns></returns>
-            public double DryMass()
-            {
-                return (this.Net - (this.Net * this.MoistureContent * 1e-2));  // netto dried mass in miligrams;
-            }
-
             //////////////////////////////////////////////////////////////
 
             /// <summary>
@@ -921,91 +986,8 @@ namespace DB
             /// <param name="Gt">       </param>
             /// <param name="asSamples"></param>
             /// <returns></returns>
-
-            public bool Override(string alpha, string efe, string Geo, string Gt, bool asSamples)
-            {
-                bool success = false;
-                try
-                {
-                    if (asSamples) this.Comparator = false;
-                    if (!efe.ToUpper().Contains(Properties.Misc.Def))
-                    {
-                        this.f = Convert.ToDouble(efe);
-                    }
-                    if (!alpha.ToUpper().Contains(Properties.Misc.Def))
-                    {
-                        this.Alpha = Convert.ToDouble(alpha);
-                    }
-                    if (!Gt.ToUpper().Contains(Properties.Misc.Def))
-                    {
-                        this.Gthermal = Convert.ToDouble(Gt);
-                    }
-                    if (!Geo.ToUpper().Contains(Properties.Misc.Def))
-                    {
-                        this.GeometryName = Geo;
-                    }
-                    success = true;
-                }
-                catch (System.InvalidCastException)
-                {
-                }
-
-                return success;
-            }
-
-            public bool CheckGthermal()
-            {
-                DataColumn col = this.tableSubSamples.MatrixDensityColumn;
-                string chk = "\nCheck the filling height, radius net mass or matrix composition\n";
-                string rofrom = "The density from MatSSF";
-                if (this.CalcDensity == 0)
-                {
-                    this.SetColumnError(col, "The density from MatSSF is NULL!" + chk);
-                    return false;
-                }
-                bool seterror = false;
-                string HighLow = string.Empty;
-                int pent = 7;
-                double ratio = (this.MatrixDensity / CalcDensity) * 100;
-                if (ratio >= 100 + pent)
-                {
-                    HighLow = rofrom + " exceeds more than " + pent + "% the density shown" + chk;
-                    seterror = true;
-                }
-                else if (ratio <= 100 - pent)
-                {
-                    HighLow = rofrom + " is " + pent + "% lower than the density shown" + chk;
-                    seterror = true;
-                }
-
-                if (seterror)
-                {
-                    decimal ro = Decimal.Round(Convert.ToDecimal(CalcDensity), 2);
-                    decimal r = Decimal.Round(Convert.ToDecimal(FindRadius()), 2);
-                    decimal h = Decimal.Round(Convert.ToDecimal(FindFillingHeight()), 2);
-                    string estimateRo = "MatSSF estimated it as " + ro + " gr/cm3\n";
-                    string estimateFH = "If the Fill Height and Net mass are correct\nthe Radius should be " + r + " mm\n";
-                    string estimateR = "Or if the Radius and Net mass are correct\nthe Filling Height should be " + h + " mm\n";
-                    this.SetColumnError(col, HighLow + estimateRo + estimateFH + estimateR);
-                }
-
-                return seterror;
-            }
-
             internal void ValueChanged()
             {
-              
-            }
-
-            private bool selected;
-
-            public bool Selected
-            {
-                get
-                {
-                    return selected;
-                }
-                set { selected = value; }
             }
         }
     }

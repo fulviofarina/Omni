@@ -62,8 +62,9 @@ namespace DB.UI
                 bool doSSF = (ip.CurrentSSFPref.DoMatSSF);
 
                 //1
-                bool isOK = MatSSF.UNIT.Check();
-                isOK = MatSSF.UNIT.SubSamplesRow.CheckUnit() && isOK;
+                bool isOK = MatSSF.UNIT.Check(); //has Unit errors??
+                isOK = MatSSF.UNIT.SubSamplesRow.CheckUnit() && isOK; //has Sample Errors?
+
 
                 if (isOK)
                 {
@@ -71,9 +72,17 @@ namespace DB.UI
                 }
                 else
                 {
-                    Interface.IReport.Msg("Input data is NOT OK for Unit " + MatSSF.UNIT.Name, "Cancelling calculations...");
-                    return;
+                    throw new SystemException("Input data is NOT OK for Unit " + MatSSF.UNIT.Name);
                 }
+
+                //at least activate MatSSF!!!
+                if (!doSSF && !doCk)
+                {
+                    ip.CurrentSSFPref.DoMatSSF = true;
+                    doSSF = true;
+                    //throw new SystemException("No Calculation Method has been selected. Check the Preferences!");
+                }
+
 
                 // MatSSF.Table.Clear();
 
@@ -102,6 +111,8 @@ namespace DB.UI
 
                         if (MatSSF.Table.Count == 0)
                         {
+                           // Interface.IReport.Msg("MatSSF ran OK for Unit " + MatSSF.UNIT.Name, "Reading MatSSF Output file");
+
                             throw new SystemException("Problems Reading MATSSF Output for Unit " + MatSSF.UNIT.Name + "\n");
                         }
                     }
@@ -144,7 +155,7 @@ namespace DB.UI
             catch (SystemException ex)
             {
                 Interface.IMain.AddException(ex);
-                // Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
+                Interface.IReport.Msg(ex.Message, "ERROR", false);
             }
         }
 
@@ -177,11 +188,12 @@ namespace DB.UI
 
                 sampleDGV.DataSource = Interface.IBS.SelectedSubSample;
 
+                //otherwise this shit shows weird text over text
                 Interface.IBS.SelectedSubSample.CurrentChanged += delegate
                 {
                     this.sampleDGV.Select();
                 };
-                // sampleDGV.DataMember = "Current"; Interface.IBS.SubSamples.s
+               
 
                 //link to bindings
                 sampleBindings = setSampleBindings();
