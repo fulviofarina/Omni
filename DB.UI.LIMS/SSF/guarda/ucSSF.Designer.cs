@@ -36,7 +36,11 @@
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
+            this.xCOMDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.toolStrip12 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
@@ -46,10 +50,10 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.SSFPlitter = new System.Windows.Forms.SplitContainer();
             this.UnitSSFSC = new System.Windows.Forms.SplitContainer();
+            this.ucSSFData = new DB.UI.ucSSFData();
             this.SCMENU = new System.Windows.Forms.SplitContainer();
             this.CalcBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
-            this.ucSSFData = new DB.UI.ucSSFData();
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
             this.ucUnit = new DB.UI.ucUnit();
@@ -67,9 +71,21 @@
             this.inputTab = new System.Windows.Forms.TabPage();
             this.inputbox = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DaCONTAINER = new System.Windows.Forms.SplitContainer();
             this.dgvCMS.SuspendLayout();
             this.toolStrip6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.SuspendLayout();
             this.toolStrip12.SuspendLayout();
@@ -143,12 +159,42 @@
             this.toolStrip6.TabIndex = 2;
             this.toolStrip6.Text = "toolStrip6";
             // 
+            // xCOMDataGridViewCheckBoxColumn
+            // 
+            this.xCOMDataGridViewCheckBoxColumn.DataPropertyName = "XCOM";
+            this.xCOMDataGridViewCheckBoxColumn.HeaderText = "XCOM";
+            this.xCOMDataGridViewCheckBoxColumn.Name = "xCOMDataGridViewCheckBoxColumn";
+            this.xCOMDataGridViewCheckBoxColumn.ReadOnly = true;
+            this.xCOMDataGridViewCheckBoxColumn.Width = 54;
+            // 
+            // cDataGridViewCheckBoxColumn
+            // 
+            this.cDataGridViewCheckBoxColumn.DataPropertyName = "C";
+            this.cDataGridViewCheckBoxColumn.HeaderText = "C";
+            this.cDataGridViewCheckBoxColumn.Name = "cDataGridViewCheckBoxColumn";
+            this.cDataGridViewCheckBoxColumn.ReadOnly = true;
+            this.cDataGridViewCheckBoxColumn.Width = 23;
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.Size = new System.Drawing.Size(200, 100);
             this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView2.TabIndex = 0;
             // 
             // splitContainer4
             // 
@@ -248,6 +294,16 @@
             this.UnitSSFSC.SplitterDistance = 34;
             this.UnitSSFSC.TabIndex = 11;
             // 
+            // ucSSFData
+            // 
+            this.ucSSFData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSSFData.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ucSSFData.Location = new System.Drawing.Point(0, 0);
+            this.ucSSFData.Margin = new System.Windows.Forms.Padding(2);
+            this.ucSSFData.Name = "ucSSFData";
+            this.ucSSFData.Size = new System.Drawing.Size(711, 753);
+            this.ucSSFData.TabIndex = 0;
+            // 
             // SCMENU
             // 
             this.SCMENU.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -292,16 +348,6 @@
             this.cancelBtn.Text = "CANCEL";
             this.cancelBtn.UseVisualStyleBackColor = false;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
-            // 
-            // ucSSFData
-            // 
-            this.ucSSFData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSSFData.Font = new System.Drawing.Font("Segoe UI", 14.25F);
-            this.ucSSFData.Location = new System.Drawing.Point(0, 0);
-            this.ucSSFData.Margin = new System.Windows.Forms.Padding(2);
-            this.ucSSFData.Name = "ucSSFData";
-            this.ucSSFData.Size = new System.Drawing.Size(711, 753);
-            this.ucSSFData.TabIndex = 0;
             // 
             // Tab
             // 
@@ -491,6 +537,59 @@
             this.splitContainer1.SplitterDistance = 610;
             this.splitContainer1.TabIndex = 13;
             // 
+            // matrixIDDataGridViewTextBoxColumn
+            // 
+            this.matrixIDDataGridViewTextBoxColumn.DataPropertyName = "MatrixID";
+            this.matrixIDDataGridViewTextBoxColumn.HeaderText = "MatrixID";
+            this.matrixIDDataGridViewTextBoxColumn.Name = "matrixIDDataGridViewTextBoxColumn";
+            this.matrixIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.matrixIDDataGridViewTextBoxColumn.Width = 83;
+            // 
+            // matrixNameDataGridViewTextBoxColumn
+            // 
+            this.matrixNameDataGridViewTextBoxColumn.DataPropertyName = "MatrixName";
+            this.matrixNameDataGridViewTextBoxColumn.HeaderText = "MatrixName";
+            this.matrixNameDataGridViewTextBoxColumn.Name = "matrixNameDataGridViewTextBoxColumn";
+            this.matrixNameDataGridViewTextBoxColumn.Width = 107;
+            // 
+            // matrixCompositionDataGridViewTextBoxColumn
+            // 
+            this.matrixCompositionDataGridViewTextBoxColumn.DataPropertyName = "MatrixComposition";
+            this.matrixCompositionDataGridViewTextBoxColumn.HeaderText = "MatrixComposition";
+            this.matrixCompositionDataGridViewTextBoxColumn.Name = "matrixCompositionDataGridViewTextBoxColumn";
+            this.matrixCompositionDataGridViewTextBoxColumn.Width = 147;
+            // 
+            // matrixDensityDataGridViewTextBoxColumn
+            // 
+            this.matrixDensityDataGridViewTextBoxColumn.DataPropertyName = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn.HeaderText = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn.Name = "matrixDensityDataGridViewTextBoxColumn";
+            this.matrixDensityDataGridViewTextBoxColumn.Width = 117;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
             // DaCONTAINER
             // 
             this.DaCONTAINER.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -521,6 +620,8 @@
             this.dgvCMS.ResumeLayout(false);
             this.toolStrip6.ResumeLayout(false);
             this.toolStrip6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
             this.toolStrip12.ResumeLayout(false);
@@ -569,7 +670,12 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.RichTextBox inputbox;
-      
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn;
         private System.Windows.Forms.ContextMenuStrip dgvCMS;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
@@ -581,8 +687,14 @@
         private System.Windows.Forms.TabPage ShapeTab;
      //   private System.Windows.Forms.TableLayoutPanel TLPS;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-    //    private System.Windows.Forms.DataGridView dataGridView1;
-   
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.ToolStrip toolStrip12;
         private System.Windows.Forms.ToolStripLabel toolStripLabel10;

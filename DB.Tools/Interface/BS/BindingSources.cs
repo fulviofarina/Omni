@@ -252,6 +252,8 @@ namespace DB.Tools
                 // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
                 SubSamplesRow r = Interface.ICurrent.SubSample as SubSamplesRow;
                 Interface.IBS.Update(r, true, false);
+                Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + r.SubSampleName + "'";
+              //  Interface.IBS.SelectedSubSample.ResetBindings(true);
             }
             catch (Exception ex)
             {

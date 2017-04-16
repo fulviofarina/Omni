@@ -849,6 +849,7 @@
             this.radiusbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radiusbox.Size = new System.Drawing.Size(120, 30);
             this.radiusbox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+  //          this.radiusbox.TextChanged += new System.EventHandler(this.radiusbox_TextChanged);
             // 
             // toolStripSeparator4
             // 

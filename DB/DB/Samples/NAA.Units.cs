@@ -91,6 +91,7 @@ namespace DB
                    // if (NonNullables.Contains(e.Column))    EC.CheckNull(e.Column, e.Row);
                     if (c == this.columnLastChanged)
                     {
+                        /*
                             if (r.IsLastCalcNull()) return;
                             if (r.IsLastChangedNull()) return;
                             double tot = r.LastChanged.Subtract(r.LastCalc).TotalSeconds;
@@ -103,6 +104,8 @@ namespace DB
                             {
                                 r.ToDo = false;
                             }
+
+                            */
                     //    }
 
                         //negative if calculated after it has changed (which is good)
@@ -253,8 +256,7 @@ namespace DB
 
                     if (change)
                     {
-                        r.LastChanged = DateTime.Now; //update the time
-
+                        r.ValueChanged();
                     }
                    
 
@@ -414,7 +416,7 @@ namespace DB
                 {
                     //this goes FIRST!!!
                     this.LastCalc = DateTime.Now;
-                    this.LastChanged = DateTime.Now;
+                    ValueChanged();
 
                     double aux2 = 0;
 
@@ -465,6 +467,12 @@ namespace DB
                     (this.Table.DataSet as LINAA).AddException(ex);
                     //  this.RowError = ex.Message;
                 }
+            }
+
+            public void ValueChanged()
+            {
+                this.LastChanged = DateTime.Now;
+                this.ToDo = true;
             }
         }
     }

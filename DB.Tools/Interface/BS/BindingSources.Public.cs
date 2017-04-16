@@ -25,7 +25,7 @@ namespace DB.Tools
         /// not attached yet
         /// </summary>
         public BindingSource Monitors;
-
+        public BindingSource SelectedSubSample;
         public BindingSource Preferences;
 
         public BindingSource Rabbit;
@@ -115,7 +115,7 @@ namespace DB.Tools
         {
             Interface = inter;
 
-
+            
             Preferences = new BindingSource(Interface.Get(), Interface.IDB.Preferences.TableName);
       Preferences.ListChanged += preferences_ListChanged;
 
@@ -144,7 +144,7 @@ namespace DB.Tools
             Samples = new BindingSource(Interface.Get(), Interface.IDB.Samples.TableName);
 
             SubSamples = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
-
+          
             SubSamples.CurrentChanged += subSamples_CurrentChanged;
 
             Units = new BindingSource(Interface.Get(), Interface.IDB.Unit.TableName);
@@ -153,8 +153,8 @@ namespace DB.Tools
             SSF = new BindingSource(Interface.Get(), Interface.IDB.MatSSF.TableName);
 
             //  Units.BindingComplete += Units_BindingComplete;
-
-           // Units.ListChanged += units_ListChanged;
+            SelectedSubSample = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
+            // Units.ListChanged += units_ListChanged;
         }
 
         public void ApplyFilters()

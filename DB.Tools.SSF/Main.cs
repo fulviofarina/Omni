@@ -190,11 +190,12 @@ namespace DB.Tools
             {
                 try
                 {
-                    LINAA.SigmasSalRow sal = m.ReactionsRowParent.SigmasSalRow;
-                    LINAA.SigmasRow sepi = m.ReactionsRowParent.SigmasRowParent;
+                    LINAA.SigmasSalRow sal = m.ReactionsRowParent?.SigmasSalRow;
+                    LINAA.SigmasRow sepi = m.ReactionsRowParent?.SigmasRowParent;
 
                     // double kth = ir.SubSamplesRow.IrradiationRequestsRow.ChannelsRow.kth; double
                     // kepi = ir.SubSamplesRow.IrradiationRequestsRow.ChannelsRow.kepi;
+                    if (sal == null || sepi == null) continue;
 
                     m.SSFCh = 1;
                     if (sal != null)

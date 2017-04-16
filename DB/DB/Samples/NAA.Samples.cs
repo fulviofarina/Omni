@@ -202,7 +202,7 @@ namespace DB
                    
                     else if (e.Column == this.CalcDensityColumn)
                     {
-                        if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
+                        subs.UnitRow?.ValueChanged();
                         if (calMass) subs.CalculateMass();
                         if (calRad)
                         {
@@ -216,7 +216,7 @@ namespace DB
                     }
                     else if (columnFillHeight == e.Column )
                     {
-                        if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
+                        subs.UnitRow?.ValueChanged();
                         //     if (!calDensity) subs.CalculateMass();
                         if (calRad)
                         {
@@ -231,7 +231,7 @@ namespace DB
                   
                     else if (columnRadius == e.Column)
                     {
-                        if (subs.UnitRow!=null) subs.UnitRow.LastChanged = DateTime.Now;
+                        subs.UnitRow?.ValueChanged();
                         if (calFh)
                         {
                             subs.FillHeight = subs.FindFillingHeight();
@@ -246,7 +246,7 @@ namespace DB
                     {
                         if (subs.CheckMatrix())
                         {
-                            if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
+                             subs.UnitRow?.ValueChanged();
                             subs.CalculateDensity(true, true);
                         }
                     }
@@ -272,7 +272,7 @@ namespace DB
                         //   subs.Net = subs.GrossAvg = subs.Tare;
                         if (subs.CheckMass())
                         {
-                            if (subs.UnitRow != null) subs.UnitRow.LastChanged = DateTime.Now;
+                            subs.UnitRow?.ValueChanged();
                             //      subs.Net = subs.GrossAvg = subs.Tare;
                             if (calDensity)
                             {

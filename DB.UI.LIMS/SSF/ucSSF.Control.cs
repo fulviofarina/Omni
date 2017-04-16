@@ -67,9 +67,17 @@ namespace DB.UI
             try
             {
 
-                
 
+                Dumb.FD(ref this.SampleBS);
 
+                sampleDGV.DataSource = Interface.IBS.SelectedSubSample;
+
+                Interface.IBS.SelectedSubSample.CurrentChanged += delegate
+                {
+                    this.sampleDGV.Select();
+                };
+                    //  sampleDGV.DataMember = "Current";            
+                //    Interface.IBS.SubSamples.s
 
                 //link to bindings
                 sampleBindings = setSampleBindings();
@@ -98,6 +106,8 @@ namespace DB.UI
                // Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
         }
+
+      
 
         public void CalculateUnit(Action showProgress, ref bool cancelCalculations)
         {
@@ -236,23 +246,27 @@ namespace DB.UI
 
             samplebindings = Dumb.ArrayOfBindings(ref bsSample, rounding);
             string column;
-            //samples
-            column = SSamples.RadiusColumn.ColumnName;
-            this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-          //  this.radiusbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
-            column = SSamples.FillHeightColumn.ColumnName;
-            this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
-         //   this.lenghtbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
-            column = SSamples.Gross1Column.ColumnName;
-            Binding massbin = samplebindings[column] as Binding;
-            this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+          //  this.sampleDGV.DataBindings.Add(new Binding("Columns.", Interface.IBS.SSFPreferences, "DoMatSSF"));
+          
+        //    this.sampleDGV.Columns[0].o
+            //samples
+       //     column = SSamples.RadiusColumn.ColumnName
+          //  this.radiusbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+       //    this.radiusbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+         //   column = SSamples.FillHeightColumn.ColumnName;
+        //    this.lenghtbox.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+        //    this.lenghtbox.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
+       //     column = SSamples.Gross1Column.ColumnName;
+       //     Binding massbin = samplebindings[column] as Binding;
+        //    this.massB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
             //   this.massB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
             //volver a poner??
-            //    massbin.FormatString = "N2";
+        //    massbin.FormatString = "N2";
 
-            samplebindings.Remove(massbin); //so it does not update its format!!!
+         //   samplebindings.Remove(massbin); //so it does not update its format!!!
             column = SSamples.SubSampleNameColumn.ColumnName;
             this.nameB.ComboBox.DataBindings.Add(samplebindings[column] as Binding);
         //    this.nameB.ComboBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
@@ -261,12 +275,12 @@ namespace DB.UI
             this.nameB.ComboBox.DataSource = bsSample;
          
             this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
-            column = SSamples.VolColumn.ColumnName;
-            this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+         //   column = SSamples.VolColumn.ColumnName;
+        //    this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
         //    this.volLbl.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
-
-            column = SSamples.CalcDensityColumn.ColumnName;
-            this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
+        //
+         //   column = SSamples.CalcDensityColumn.ColumnName;
+         //   this.densityB.TextBox.DataBindings.Add(samplebindings[column] as Binding);
         //    this.densityB.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
 
 
@@ -335,6 +349,8 @@ namespace DB.UI
 
 
             this.cfgB.ComboBox.Items.AddRange( MatSSF.Types);
+            
+
             /*
             //types
             this.cfgB.ComboBox.DisplayMember = Interface.IDB.Channels.FluxTypeColumn.ColumnName;
@@ -347,25 +363,87 @@ namespace DB.UI
 
         }
 
+     //   CheckBox check = new CheckBox();
+
         private void setCheckBindings()
         {
+
+
             string column;
-            Hashtable checkBindings = Dumb.ArrayOfBindings(ref Interface.IBS.SSFPreferences, string.Empty, "ReadOnly");
+            Hashtable checkBindings = Dumb.ArrayOfBindings(ref Interface.IBS.SSFPreferences, string.Empty, "Checked");
 
             column = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
             Binding renabled = checkBindings[column] as Binding; //new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
-            this.radiusbox.TextBox.DataBindings.Add(renabled);
+
+
+            checkBox1.Visible = true;
+            checkBox1.DataBindings.Add(renabled);
+            checkBox1.CheckedChanged += Check_CheckedChanged;
+           
+
+
+            //this.radiusDataGridViewTextBoxColumn.TextBox.DataBindings.Add(renabled);
             column = Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName;
             Binding renabled2 = checkBindings[column] as Binding;//new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName);
-            this.lenghtbox.TextBox.DataBindings.Add(renabled2);
+            checkBox2.DataBindings.Add(renabled2);
+            checkBox2.CheckedChanged += Check_CheckedChanged;
+            // this.lenghtbox.TextBox.DataBindings.Add(renabled2);
             column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
             Binding renabled3 = checkBindings[column] as Binding;
-            this.densityB.TextBox.DataBindings.Add(renabled3);
+            checkBox3.DataBindings.Add(renabled3);
+            checkBox3.CheckedChanged += Check_CheckedChanged;
+            //this.densityB.TextBox.DataBindings.Add(renabled3);
             column = Interface.IDB.SSFPref.CalcMassColumn.ColumnName;
             Binding renabled4 = checkBindings[column] as Binding;
-            this.massB.TextBox.DataBindings.Add(renabled4);
+            checkBox4.DataBindings.Add(renabled4);
+            checkBox4.CheckedChanged += Check_CheckedChanged;
+           // this.massB.TextBox.DataBindings.Add(renabled4);
+
+            
            // return column;
         }
+
+        private void Check_CheckedChanged(object sender, EventArgs e)
+        {
+            bool state = (sender as CheckBox).Checked;
+
+            DataGridViewColumn columna = null;
+
+            if (sender.Equals(checkBox1))
+            {
+                columna = this.radiusDataGridViewTextBoxColumn;
+            }
+            else if (sender.Equals(checkBox2))
+            {
+                columna = this.fillHeightDataGridViewTextBoxColumn;
+            }
+            else if (sender.Equals(checkBox4))
+            {
+                columna = this.gross1DataGridViewTextBoxColumn;
+            }
+            else if (sender.Equals(checkBox3))
+            {
+                columna = this.calcDensityDataGridViewTextBoxColumn;
+            }
+            Color color2 = Color.Yellow;
+            Color colors = Color.Gray;
+        //    Color colors2 = Color.White;
+            if (!state)
+            {
+                colors = Color.White;
+                color2 = Color.Black;
+             //   colors2 = Color.Gray;
+            }
+            columna.ReadOnly = state;
+            columna.DefaultCellStyle.BackColor = colors;
+            columna.DefaultCellStyle.ForeColor = color2;
+            //this.fillHeightDataGridViewTextBoxColumn.ReadOnly = !state;
+            //this.fillHeightDataGridViewTextBoxColumn.DefaultCellStyle.BackColor = colors2;
+
+
+        }
+
+      
 
         public ucSSFData()
         {

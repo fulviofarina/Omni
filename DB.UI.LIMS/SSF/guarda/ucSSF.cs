@@ -229,7 +229,6 @@ namespace DB.UI
                 //link to bindings
 
                 ucUnit.Set(ref Interface);
-             
 
                 ucSSFData.Set(ref Interface);
 
@@ -260,7 +259,5 @@ namespace DB.UI
             this.cancelBtn.Enabled = false;
 
         }
-
-       
     }
 }

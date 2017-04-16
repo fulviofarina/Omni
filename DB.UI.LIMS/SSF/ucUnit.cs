@@ -13,7 +13,14 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            this.unitDGV.RowHeaderMouseClick += DgvItemSelected;
+       
+           
+            
+        }
+
+        private void UnitDGV_SelectionChanged(object sender, EventArgs e)
+        {
+          //  DgvItemSelected(sender, DataGridViewCellMouseEventArgs.Empty as DataGridViewCellMouseEventArgs);
         }
 
         /// <summary>
@@ -105,14 +112,20 @@ namespace DB.UI
 
             //    this.lINAA = Interface.Get() as LINAA;
 
-
-        
+          
 
             setBindings();
-      
 
-         
+            //      this.unitDGV.RowHeaderMouseClick += DgvItemSelected;
+            //    this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
+            this.unitDGV.CellMouseClick += UnitDGV_CellMouseClick;
 
+
+        }
+
+        private void UnitDGV_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DgvItemSelected(sender,e);
         }
 
         private void setBindings()
