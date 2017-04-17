@@ -1,48 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Linq;
-using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-
-using DB.Properties;
-using Msn;
 using Rsx;
 
 namespace DB.Tools
 {
-
     public partial class Creator
     {
-
-        private static string sqlStarted = "Installation of SQL LocalDB started. When finished click OK to restart";
-        private static string sqlPack32 = "localdbx32.msi";
-        private static string sqlPack64 = "localdbx64.msi";
-        private static string triedToInstall = "\n\nThe user tried to install SQL Express";
         private static string deniedTheInstall = "\n\nThe user denied the SQL Express installation";
         private static string nocontinueWOSQL = "Cannot continue without a SQL connection";
-        private static string sqlDBEXE = "SqlLocalDB.exe";
-
         private static string shouldInstallSQL = "Would you like to install SQL LocalDB?";
+        private static string sqlDBEXE = "SqlLocalDB.exe";
         private static string sqlLocalDB = "SQL LocalDB Installation";
+        private static string sqlPack32 = "localdbx32.msi";
+        private static string sqlPack64 = "localdbx64.msi";
+        private static string sqlStarted = "Installation of SQL LocalDB started. When finished click OK to restart";
+        private static string triedToInstall = "\n\nThe user tried to install SQL Express";
     }
 
     public partial class Creator
     {
-        private static string restartingOk = "Restarting succeeded...";
         private static string askToSave = "Changes in the database have not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
         private static string checkingSQL = "Checking the SQL connections";
         private static string couldNotConnect = "Could not connect to LIMS DataBase";
-        private static string noConnectionDetected = "Please check the k0X Database connection.\nThe Server might be down, not installed, misconfigured or just offline.\n\nError message:\n\n";
         private static string loading = "Database loading in progress";
-
+        private static string noConnectionDetected = "Please check the k0X Database connection.\nThe Server might be down, not installed, misconfigured or just offline.\n\nError message:\n\n";
+        private static string restartingOk = "Restarting succeeded...";
     }
 
-   
     public partial class Creator
     {
-
         private static Interface Interface = null;
 
         private static Action lastCallBack = null;
@@ -83,6 +70,7 @@ namespace DB.Tools
             loadMethods(toPopulate);
             Load();
         }
+
         private static void loadMethods(int populNr)
         {
             LINAA Linaa = Interface.Get();
@@ -142,6 +130,4 @@ namespace DB.Tools
             // else throw new SystemException("No Populate Method was assigned");
         }
     }
-
-  
 }

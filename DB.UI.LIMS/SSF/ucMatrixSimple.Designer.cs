@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMatrixSimple));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMatrixSimple));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.contentTS = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.matrixDGV = new System.Windows.Forms.DataGridView();
-            this.MatrixNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MatrixDensity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.matrixRTB = new System.Windows.Forms.RichTextBox();
@@ -80,9 +79,14 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.matrixDGV = new System.Windows.Forms.DataGridView();
+            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xCOMDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Contentlabel = new System.Windows.Forms.ToolStripTextBox();
             this.TLPMatrix.SuspendLayout();
             this.contentTS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).BeginInit();
@@ -98,6 +102,7 @@
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.SuspendLayout();
             this.toolStrip13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // TLPMatrix
@@ -105,8 +110,8 @@
             this.TLPMatrix.ColumnCount = 2;
             this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.92503F));
             this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.07497F));
-            this.TLPMatrix.Controls.Add(this.contentTS, 1, 0);
             this.TLPMatrix.Controls.Add(this.matrixDGV, 0, 1);
+            this.TLPMatrix.Controls.Add(this.contentTS, 1, 0);
             this.TLPMatrix.Controls.Add(this.matrixRTB, 1, 1);
             this.TLPMatrix.Controls.Add(this.MatrixBN, 0, 0);
             this.TLPMatrix.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -126,7 +131,8 @@
             this.contentTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.contentTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel5});
+            this.toolStripLabel5,
+            this.Contentlabel});
             this.contentTS.Location = new System.Drawing.Point(447, 0);
             this.contentTS.Name = "contentTS";
             this.contentTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -139,55 +145,8 @@
             this.toolStripLabel5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel5.ForeColor = System.Drawing.Color.MidnightBlue;
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(125, 40);
-            this.toolStripLabel5.Text = "Matrix Content";
-            // 
-            // matrixDGV
-            // 
-            this.matrixDGV.AllowUserToAddRows = false;
-            this.matrixDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.matrixDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.matrixDGV.AutoGenerateColumns = false;
-            this.matrixDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.matrixDGV.BackgroundColor = System.Drawing.Color.Linen;
-            this.matrixDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            this.matrixDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.matrixDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.MatrixNameColumn,
-            this.MatrixDensity});
-            this.matrixDGV.DataSource = this.MatrixBS;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.matrixDGV.DefaultCellStyle = dataGridViewCellStyle2;
-            this.matrixDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.matrixDGV.Location = new System.Drawing.Point(4, 47);
-            this.matrixDGV.Margin = new System.Windows.Forms.Padding(4);
-            this.matrixDGV.Name = "matrixDGV";
-            this.matrixDGV.RowTemplate.Height = 24;
-            this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.matrixDGV.Size = new System.Drawing.Size(439, 452);
-            this.matrixDGV.TabIndex = 0;
-            // 
-            // MatrixNameColumn
-            // 
-            this.MatrixNameColumn.DataPropertyName = "MatrixName";
-            this.MatrixNameColumn.HeaderText = "Name";
-            this.MatrixNameColumn.Name = "MatrixNameColumn";
-            this.MatrixNameColumn.Width = 77;
-            // 
-            // MatrixDensity
-            // 
-            this.MatrixDensity.DataPropertyName = "MatrixDensity";
-            this.MatrixDensity.HeaderText = "Density";
-            this.MatrixDensity.Name = "MatrixDensity";
-            this.MatrixDensity.ToolTipText = "in gm/cm3";
-            this.MatrixDensity.Width = 87;
+            this.toolStripLabel5.Size = new System.Drawing.Size(96, 40);
+            this.toolStripLabel5.Text = "Content of:";
             // 
             // MatrixBS
             // 
@@ -196,23 +155,19 @@
             // 
             // lINAA
             // 
-        //    this.lINAA.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
-    //        this.lINAA.CurrentPref = null;
-          //  this.lINAA.CurrentSSFPref = null;
             this.lINAA.DataSetName = "LINAA";
             this.lINAA.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("lINAA.DetectorsList")));
             this.lINAA.EnforceConstraints = false;
             this.lINAA.FolderPath = null;
             this.lINAA.Locale = new System.Globalization.CultureInfo("");
-          //  this.lINAA.Msn = null;
-         //   this.lINAA.Notify = null;
+            this.lINAA.QTA = null;
             this.lINAA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.lINAA.TAM = null;
             // 
             // matrixRTB
             // 
             this.matrixRTB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.matrixRTB.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixRTB.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.matrixRTB.Location = new System.Drawing.Point(453, 49);
             this.matrixRTB.Margin = new System.Windows.Forms.Padding(6);
             this.matrixRTB.Name = "matrixRTB";
@@ -531,12 +486,117 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // matrixDGV
+            // 
+            this.matrixDGV.AllowUserToAddRows = false;
+            this.matrixDGV.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            this.matrixDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.matrixDGV.AutoGenerateColumns = false;
+            this.matrixDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.matrixDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.matrixDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.matrixDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.matrixDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            this.matrixDGV.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.matrixDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.matrixDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.matrixDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.matrixNameDataGridViewTextBoxColumn1,
+            this.matrixDensityDataGridViewTextBoxColumn1,
+            this.xCOMDataGridViewCheckBoxColumn1,
+            this.cDataGridViewCheckBoxColumn1});
+            this.matrixDGV.DataSource = this.MatrixBS;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.matrixDGV.DefaultCellStyle = dataGridViewCellStyle3;
+            this.matrixDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.matrixDGV.EnableHeadersVisualStyles = false;
+            this.matrixDGV.GridColor = System.Drawing.Color.Black;
+            this.matrixDGV.Location = new System.Drawing.Point(4, 47);
+            this.matrixDGV.Margin = new System.Windows.Forms.Padding(4);
+            this.matrixDGV.MultiSelect = false;
+            this.matrixDGV.Name = "matrixDGV";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.matrixDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.matrixDGV.RowTemplate.Height = 24;
+            this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.matrixDGV.Size = new System.Drawing.Size(439, 452);
+            this.matrixDGV.TabIndex = 7;
+            // 
+            // matrixNameDataGridViewTextBoxColumn1
+            // 
+            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
+            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "Label";
+            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
+            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for this Matrix";
+            this.matrixNameDataGridViewTextBoxColumn1.Width = 72;
+            // 
+            // matrixDensityDataGridViewTextBoxColumn1
+            // 
+            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density (g/cm3)";
+            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
+            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or Known Density for this Matrix (in g/cm3)";
+            // 
+            // xCOMDataGridViewCheckBoxColumn1
+            // 
+            this.xCOMDataGridViewCheckBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.xCOMDataGridViewCheckBoxColumn1.DataPropertyName = "XCOM";
+            this.xCOMDataGridViewCheckBoxColumn1.HeaderText = "XCOM";
+            this.xCOMDataGridViewCheckBoxColumn1.Name = "xCOMDataGridViewCheckBoxColumn1";
+            this.xCOMDataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.xCOMDataGridViewCheckBoxColumn1.ToolTipText = "Photon Mass Attenuation Coefficients Found";
+            this.xCOMDataGridViewCheckBoxColumn1.Width = 61;
+            // 
+            // cDataGridViewCheckBoxColumn1
+            // 
+            this.cDataGridViewCheckBoxColumn1.DataPropertyName = "C";
+            this.cDataGridViewCheckBoxColumn1.HeaderText = "C";
+            this.cDataGridViewCheckBoxColumn1.Name = "cDataGridViewCheckBoxColumn1";
+            this.cDataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.cDataGridViewCheckBoxColumn1.Visible = false;
+            this.cDataGridViewCheckBoxColumn1.Width = 24;
+            // 
+            // Contentlabel
+            // 
+            this.Contentlabel.BackColor = System.Drawing.SystemColors.Control;
+            this.Contentlabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Contentlabel.Name = "Contentlabel";
+            this.Contentlabel.Size = new System.Drawing.Size(170, 43);
+            this.Contentlabel.Text = "Nothing";
+            // 
             // ucMatrixSimple
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TLPMatrix);
-            this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ucMatrixSimple";
             this.Size = new System.Drawing.Size(787, 503);
@@ -544,7 +604,6 @@
             this.TLPMatrix.PerformLayout();
             this.contentTS.ResumeLayout(false);
             this.contentTS.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).EndInit();
@@ -565,6 +624,7 @@
             this.splitContainer5.ResumeLayout(false);
             this.toolStrip13.ResumeLayout(false);
             this.toolStrip13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -574,7 +634,6 @@
         private System.Windows.Forms.TableLayoutPanel TLPMatrix;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStrip toolStrip6;
-        private System.Windows.Forms.DataGridView matrixDGV;
         private System.Windows.Forms.BindingNavigator MatrixBN;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
@@ -615,9 +674,13 @@
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.ToolStrip toolStrip13;
         private System.Windows.Forms.ToolStripLabel toolStripLabel12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MatrixNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MatrixDensity;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         public System.Windows.Forms.BindingSource MatrixBS;
+        private System.Windows.Forms.DataGridView matrixDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.ToolStripTextBox Contentlabel;
     }
 }

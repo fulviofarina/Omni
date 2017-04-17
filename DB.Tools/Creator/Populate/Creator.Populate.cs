@@ -1,28 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Linq;
 using System.IO;
-using System.Linq;
-using System.Security.AccessControl;
 using System.Windows.Forms;
-using DB.Linq;
 using DB.Properties;
-using Msn;
 using Rsx;
 
 namespace DB.Tools
 {
-
     public partial class Creator
     {
-    
+        private static void insertSQL(ref ITable dt, ref ITable ita)
+        {
+            foreach (var i in dt)
+            {
+                ita.InsertOnSubmit(i);
+            }
+
+            ita.Context.SubmitChanges();
+        }
+
+        private static void populateMatSSFResource(bool overriderFound)
+        {
+            string matssf = Interface.IMain.FolderPath + Resources.SSFFolder;
+            bool nossf = !Directory.Exists(matssf);
+            if (nossf || overriderFound)
+            {
+                Directory.CreateDirectory(matssf);
+                string resourcePath = Application.StartupPath + Resources.DevFiles
+                    + Resources.SSFResource + ".bak";
+                string startexecutePath = Interface.IMain.FolderPath + Resources.SSFFolder;
+                string destFile = startexecutePath + Resources.SSFResource + ".CAB";
+                unpackResource(resourcePath, destFile, startexecutePath, true);
+            }
+        }
+
         private static bool populateOverriders()
         {
             string path;
             //override preferences
             path = Interface.IMain.FolderPath + Resources.Preferences + ".xml";
-            string developerPath = Application.StartupPath + Resources.DevFiles + Resources.Preferences+".xml";
+            string developerPath = Application.StartupPath + Resources.DevFiles + Resources.Preferences + ".xml";
             populateReplaceFile(path, developerPath);
 
             path = Interface.IMain.FolderPath + Resources.SSFPreferences + ".xml";
@@ -30,7 +47,7 @@ namespace DB.Tools
             populateReplaceFile(path, developerPath);
 
             path = Interface.IMain.FolderPath + Resources.WCalc;
-            developerPath = Application.StartupPath + Resources.DevFiles  + Resources.WCalc;
+            developerPath = Application.StartupPath + Resources.DevFiles + Resources.WCalc;
             populateReplaceFile(path, developerPath);
 
             path = Interface.IMain.FolderPath + Resources.XCOMEnergies;
@@ -55,34 +72,18 @@ namespace DB.Tools
 
             path = Application.StartupPath + Resources.DevFiles + Resources.Features;
             string currentpath = Interface.IMain.FolderPath + Resources.Features;
-             bool features = populateReplaceFile(currentpath, path);
+            bool features = populateReplaceFile(currentpath, path);
             if (features) Help();
 
             return overriderFound;
         }
-
-        private static void insertSQL(ref ITable dt, ref ITable ita)
-        {
-            foreach (var i in dt)
-            {
-                ita.InsertOnSubmit(i);
-            }
-
-            ita.Context.SubmitChanges();
-        }
-
-     
-
-     
-        private static bool  populateReplaceFile(string path, string developerPath)
+        private static bool populateReplaceFile(string path, string developerPath)
         {
             try
             {
                 //this overwrites the user preferences for the developers ones. in case I need to deploy them new preferences
                 if (File.Exists(developerPath))
                 {
-
-
                     File.Copy(developerPath, path, true);
                     File.Delete(developerPath);
                 }
@@ -93,20 +94,6 @@ namespace DB.Tools
             }
 
             return File.Exists(path);
-        }
-        private static void populateMatSSFResource(bool overriderFound)
-        {
-            string matssf = Interface.IMain.FolderPath + Resources.SSFFolder;
-            bool nossf = !Directory.Exists(matssf);
-            if (nossf || overriderFound)
-            {
-                Directory.CreateDirectory(matssf);
-                string resourcePath = Application.StartupPath + Resources.DevFiles 
-                    + Resources.SSFResource + ".bak";
-                string startexecutePath = Interface.IMain.FolderPath + Resources.SSFFolder;
-                string destFile = startexecutePath + Resources.SSFResource + ".CAB";
-                unpackResource(resourcePath, destFile, startexecutePath, true);
-            }
         }
         private static void populateSolCoiResource(bool overriderFound)
         {
@@ -123,7 +110,7 @@ namespace DB.Tools
                 string destFile = startexecutePath + Resources.CurvesResource + ".bak";
                 unpackResource(resourcePath, destFile, startexecutePath, false);
 
-                resourcePath = Application.StartupPath + Resources.DevFiles 
+                resourcePath = Application.StartupPath + Resources.DevFiles
                     + Resources.SolCoiResource + ".bak";
                 destFile = startexecutePath + Resources.SolCoiResource + ".bak";
                 unpackResource(resourcePath, destFile, startexecutePath, false);
@@ -144,7 +131,5 @@ namespace DB.Tools
                 }
             }
         }
-
     }
-
 }

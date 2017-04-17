@@ -5,6 +5,12 @@ namespace DB.Tools
 {
     public interface IWC
     {
+        IEnumerable<LINAA.SubSamplesRow> SelectedSamples { get; set; }
+
+        bool ShowSolang { set; }
+
+        bool ShowSSF { set; }
+
         void CalculateMatSSF(bool doSSF, char fluxType);
 
         void CalculatePeaks(bool monitorsOnly, bool uncsOnly);
@@ -21,17 +27,6 @@ namespace DB.Tools
 
         void LoadPeaks(bool deleteOnly, bool transfer);
 
-        void SetOverriders(string fbox, string alphabox, string gtbox, string geobox, bool asSamplesChecked);
-
-        void SetPeakSearch(string mArea, string mUnc, string Aw, string Bw);
-
-        IEnumerable<LINAA.SubSamplesRow> SelectedSamples { get; set; }
-
-        void SetExternalMethods(WC.SampleChecker sampleChecker, WC.AsyncCallBack FinishMethod);
-
-        bool ShowSSF { set; }
-        bool ShowSolang { set; }
-
         void PopulateIsotopes();
 
         void Predict();
@@ -40,6 +35,12 @@ namespace DB.Tools
 
         void SelectItems(bool all);
 
+        void SetExternalMethods(WC.SampleChecker sampleChecker, WC.AsyncCallBack FinishMethod);
+
         void SetNodes(ref TreeView tv);
+
+        void SetOverriders(string fbox, string alphabox, string gtbox, string geobox, bool asSamplesChecked);
+
+        void SetPeakSearch(string mArea, string mUnc, string Aw, string Bw);
     }
 }

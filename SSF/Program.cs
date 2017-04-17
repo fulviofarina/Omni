@@ -154,7 +154,7 @@ namespace SSF
             form.Show();
             form.Opacity = 100;
 
-
+            LIMS.Interface.IReport.Test();
             Application.DoEvents();
 
             form.FormClosing += Form_FormClosing;     

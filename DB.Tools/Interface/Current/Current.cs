@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-
-namespace DB.Tools
+﻿namespace DB.Tools
 {
     /// <summary>
     /// This class gives the current row shown by a Binding Source
@@ -14,5 +10,4 @@ namespace DB.Tools
 
         private Interface Interface;
     }
-
 }

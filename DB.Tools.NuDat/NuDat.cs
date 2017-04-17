@@ -6,6 +6,11 @@ namespace DB.Tools
 {
     public class NuDat
     {
+        public static string GetElementUrl(string element)
+        {
+            return "http://en.wikipedia.org/wiki/" + element.Trim();
+        }
+
         public static string GetIsotopeUrl(string isoName)
         {
             // Link to Internet!!!
@@ -13,42 +18,6 @@ namespace DB.Tools
             string ele = isoName.Split('-')[0].Trim().ToUpper();
             return "http://www.nndc.bnl.gov/nudat2/decaysearchdirect.jsp?nuc=" + isoNr + ele + "&unc=nds";
         }
-
-        public static string GetElementUrl(string element)
-        {
-            return "http://en.wikipedia.org/wiki/" + element.Trim();
-        }
-
-        public static string Query(string isotope)
-        {
-            string uri = GetIsotopeUrl(isotope);
-
-            string completo = string.Empty;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "GET";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-
-            StreamReader reader = new StreamReader(responseStream);
-
-            completo = reader.ReadToEnd();
-
-            reader.Close();
-            reader.Dispose();
-            reader = null;
-            responseStream.Close();
-            responseStream.Dispose();
-            responseStream = null;
-
-            response = null;
-            request = null;
-
-            return completo;
-        }
-
         public static LINAA.YieldsDataTable HtmlToTable(string htmltext, string isotope)
         {
             string[] res = htmltext.Split('\n');
@@ -133,7 +102,7 @@ namespace DB.Tools
                 }
             }
 
-          //  double maxEne = 0;
+            // double maxEne = 0;
             foreach (LINAA.YieldsRow y in ydt)
             {
                 // double ene = Convert.ToDouble(y.Energy);
@@ -144,6 +113,36 @@ namespace DB.Tools
             }
 
             return ydt;
+        }
+
+        public static string Query(string isotope)
+        {
+            string uri = GetIsotopeUrl(isotope);
+
+            string completo = string.Empty;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = "GET";
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+
+            StreamReader reader = new StreamReader(responseStream);
+
+            completo = reader.ReadToEnd();
+
+            reader.Close();
+            reader.Dispose();
+            reader = null;
+            responseStream.Close();
+            responseStream.Dispose();
+            responseStream = null;
+
+            response = null;
+            request = null;
+
+            return completo;
         }
     }
 }

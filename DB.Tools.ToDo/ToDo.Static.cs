@@ -10,7 +10,7 @@ namespace DB.Tools
     //statics
     public partial class ToDo
     {
-        protected internal static double Weight(ref LINAA.ToDoResRow p)
+        public static double Weight(ref LINAA.ToDoResRow p)
         {
             p.w = 0.0;
             p.w2 = 0.0;
@@ -26,7 +26,7 @@ namespace DB.Tools
             return p.w;
         }
 
-        protected internal static void SetUncs(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void SetUncs(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
@@ -57,16 +57,15 @@ namespace DB.Tools
             }
         }
 
-        protected internal static void SetAsp(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void SetAsp(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
-                //  p.use = p.ToDoRow.use;
+                // p.use = p.ToDoRow.use;
 
                 LINAA.IPeakAveragesRow monitor = p.IPAvg;
                 LINAA.IPeakAveragesRow refe = p.IPAvg2;
-                // IRequestsAveragesRow M = p.ToDoAvgRow.IR;
-                // IRequestsAveragesRow R = p.ToDoAvgRow.IR2;
+                // IRequestsAveragesRow M = p.ToDoAvgRow.IR; IRequestsAveragesRow R = p.ToDoAvgRow.IR2;
 
                 if (monitor.MD != refe.MD && X.QoOrCd)
                 {
@@ -88,8 +87,8 @@ namespace DB.Tools
                 {
                     IEnumerable<LINAA.PeaksRow> peaks = null;
                     IEnumerable<LINAA.MeasurementsRow> meas = null;
-            //Specific Activities
-            double[] a = null;
+                    //Specific Activities
+                    double[] a = null;
                     peaks = arow.GetPeaksRows();
                     meas = peaks.Select(c => c.MeasurementsRow);
                     meas = meas.Where(m => m.Position >= MinPos);
@@ -107,13 +106,13 @@ namespace DB.Tools
                 if (monitor.MD == 0)
                 {
                     p.Asp = avg[0] / (monitor.k0 * monitor.ppm);
-                    //   p.Asp = monitor.X / (monitor.k0 * monitor.ppm);
+                    // p.Asp = monitor.X / (monitor.k0 * monitor.ppm);
                     p.k0 = monitor.k0;
                     p.k0Unc = monitor.k0Unc;
                 }
                 else if (monitor.MD == 1)
                 {
-                    //   p.Asp = monitor.X / (monitor.k0x * monitor.ppm);
+                    // p.Asp = monitor.X / (monitor.k0x * monitor.ppm);
 
                     p.Asp = avg[0] / (monitor.k0x * monitor.ppm);
                     p.k0 = monitor.k0x;
@@ -124,8 +123,7 @@ namespace DB.Tools
                     p.use = false;
                     p.RowError = "For this kind of Analysis it's necessary to select measurements were the isotope followed the same decay scheme\ni.e. Use only IVa OR IVb measurements but not combined";
                 }
-                //  p.unc = monitor.GActUnc;
-                //   p.n = monitor.n;
+                // p.unc = monitor.GActUnc; p.n = monitor.n;
                 p.unc = avg[1];
                 p.n = Convert.ToInt32(avg[3]);
                 if (p.n == 0)
@@ -144,7 +142,7 @@ namespace DB.Tools
 
                 if (refe.MD == 0)
                 {
-                    //  p.Asp2 = refe.X / (refe.k0 * refe.ppm);
+                    // p.Asp2 = refe.X / (refe.k0 * refe.ppm);
 
                     p.Asp2 = avg[0] / (refe.k0 * refe.ppm);
                     p.k02 = refe.k0;
@@ -182,7 +180,7 @@ namespace DB.Tools
             }
         }
 
-        protected internal static bool GetResonanceFromAvg(ref LINAA.ToDoAvgRow tavg, bool reference, bool resetEr)
+        public static bool GetResonanceFromAvg(ref LINAA.ToDoAvgRow tavg, bool reference, bool resetEr)
         {
             LINAA.NAARow n = null;
             if (!reference)
@@ -227,7 +225,7 @@ namespace DB.Tools
             return true;
         }
 
-        protected internal static string CalcRateAndTemporal(ref LINAA.IRequestsAveragesRow monitor, double alpha0, double f0, bool sameDecay)
+        public static string CalcRateAndTemporal(ref LINAA.IRequestsAveragesRow monitor, double alpha0, double f0, bool sameDecay)
         {
             if (sameDecay)
             {
@@ -254,7 +252,7 @@ namespace DB.Tools
             return string.Empty;
         }
 
-        protected internal static void GetResonanceFromScratch(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void GetResonanceFromScratch(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             //so we have everything need for input, create TodoDataRow
             LINAA.IRequestsAveragesRow monitor = t.IR;
@@ -312,7 +310,7 @@ namespace DB.Tools
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        protected internal static double X(ref LINAA.ToDoResAvgRow i)
+        public static double X(ref LINAA.ToDoResAvgRow i)
         {
             IEnumerable<LINAA.ToDoResRow> peaks = i.GetToDoResRows();
 
@@ -332,7 +330,7 @@ namespace DB.Tools
             return i.X;
         }
 
-        protected internal static void StDev(ref LINAA.ToDoResAvgRow i)
+        public static void StDev(ref LINAA.ToDoResAvgRow i)
         {
             IEnumerable<LINAA.ToDoResRow> peaks = i.GetToDoResRows();
 
@@ -381,7 +379,7 @@ namespace DB.Tools
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        protected internal static double StDevNoExpressions(ref LINAA.ToDoResAvgRow i)
+        public static double StDevNoExpressions(ref LINAA.ToDoResAvgRow i)
         {
             IEnumerable<LINAA.ToDoResRow> peaks = i.GetToDoResRows();
 
@@ -449,7 +447,7 @@ namespace DB.Tools
             else throw new SystemException("Not impletemented");
         }
 
-        protected internal static void Reset(ref LINAA.ToDoDataRow t, ref ToDoArgs args)
+        public static void Reset(ref LINAA.ToDoDataRow t, ref ToDoArgs args)
         {
             t.ClearErrors();
             t.Ai = 0;
@@ -463,16 +461,11 @@ namespace DB.Tools
             t.use = true;
             t.dk0 = 0;
             t.dk02 = 0;
-            //	t.k0 = 0;
-            //	t.Energy = 0;
-            //	t.k0Unc = 0;
-            //	t.k02 = 0;
-            //	t.k02Unc = 0;
-            //	t.Energy2 = 0;
+            // t.k0 = 0; t.Energy = 0; t.k0Unc = 0; t.k02 = 0; t.k02Unc = 0; t.Energy2 = 0;
             if (t.ToDoRow != null) t.use = t.ToDoRow.use;
         }
 
-        protected internal static void Reset(ref LINAA.ToDoAvgUncRow t, ref ToDoArgs args)
+        public static void Reset(ref LINAA.ToDoAvgUncRow t, ref ToDoArgs args)
         {
             t.ZaEr = 0;
             t.ZaEr2 = 0;
@@ -494,7 +487,7 @@ namespace DB.Tools
             t.ClearErrors();
         }
 
-        protected internal static void Reset(ref LINAA.ToDoAvgRow t, ref ToDoArgs args)
+        public static void Reset(ref LINAA.ToDoAvgRow t, ref ToDoArgs args)
         {
             t.ClearErrors();
             t.__qoa_qo2a__1 = 0;
@@ -548,12 +541,12 @@ namespace DB.Tools
             if (t.ToDoRow != null) t.use = t.ToDoRow.use;
         }
 
-        protected static void DoQ0OrCdRatioNormal(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void DoQ0OrCdRatioNormal(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             p.RCd = (p.Asp / p.Asp2);   //normal
         }
 
-        protected static void DoQoOrk0OrCdRatioOptimized(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void DoQoOrk0OrCdRatioOptimized(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
@@ -605,7 +598,7 @@ namespace DB.Tools
             }
         }
 
-        protected static void Dok0DeterminationOneNormal(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void Dok0DeterminationOneNormal(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
@@ -623,7 +616,7 @@ namespace DB.Tools
             }
         }
 
-        protected static void Dok0DeterminationTwo(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void Dok0DeterminationTwo(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
@@ -693,7 +686,7 @@ namespace DB.Tools
             }
         }
 
-        protected static void DofAlphaBare(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void DofAlphaBare(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
@@ -707,7 +700,7 @@ namespace DB.Tools
             }
         }
 
-        protected static void DofAlphaCdCovered(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
+        public static void DofAlphaCdCovered(ref LINAA.ToDoDataRow p, ref ToDoArgs X)
         {
             try
             {
@@ -720,7 +713,7 @@ namespace DB.Tools
             }
         }
 
-        protected static void DofAlphaBare(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void DofAlphaBare(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             if (t.HasErrors) return;
 
@@ -748,12 +741,12 @@ namespace DB.Tools
         /// When returns, Qo1 contains alpha and Qo2 is the original one without alpha...
         /// </summary>
         /// <param name="t"></param>
-        protected static void DofAlphaCdCovered(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void DofAlphaCdCovered(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             if (t.HasErrors) return;
 
             double Qoalpha = t.qoalpha + t.Calpha;
-            //  t.Qo2 = t.qoalpha + t.Calpha;
+            // t.Qo2 = t.qoalpha + t.Calpha;
             double qg1 = (Qoalpha * t.Ge);
 
             t.Ai = t.RCd / (qg1 * t.Cd);
@@ -765,7 +758,7 @@ namespace DB.Tools
         /// When returns, Qo1 contains alpha and Qo2 is the original one without alpha...
         /// </summary>
         /// <param name="t"></param>
-        protected static void DofAlphaCdRatio(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void DofAlphaCdRatio(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             if (t.HasErrors) return;
 
@@ -784,10 +777,11 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// When returns, Qo1 and Qo2 does not contain alpha, while Ai = Qo(alpha) does. Qo1 contains the new value!!!
+        /// When returns, Qo1 and Qo2 does not contain alpha, while Ai = Qo(alpha) does. Qo1 contains
+        /// the new value!!!
         /// </summary>
         /// <param name="t"></param>
-        protected static void DoQoDetermination(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void DoQoDetermination(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             if (t.HasErrors) return;
 
@@ -836,8 +830,7 @@ namespace DB.Tools
 
                   LINAA.ToDoAvgRow t = p.ToDoAvgRow;   //the isotope parent
 
-                  // t.Qo1 = t.Qo2;
-                  //  r.Qo1 = r.Qo2;
+                  // t.Qo1 = t.Qo2; r.Qo1 = r.Qo2;
 
                   //Refresh the total reaction rates
                   //determine reaction rates based on new f and Qo(alpha)
@@ -869,7 +862,7 @@ namespace DB.Tools
           }
            */
 
-        protected static void Dok0Determination(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void Dok0Determination(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             try
             {
@@ -922,8 +915,7 @@ namespace DB.Tools
                     LINAA.ToDoDataRow aux = r;
                     //main function!!!
                     X.A.Invoke(ref aux, ref X);
-                    /// //   if (!k0) a.Invoke(ref aux);
-                    ///   //  else if (!t.ToDoRow._ref) a.Invoke(ref aux);
+                    /// // if (!k0) a.Invoke(ref aux); // else if (!t.ToDoRow._ref) a.Invoke(ref aux);
                 }
 
                 X.B.Invoke(ref t, ref X);  //main function for avgs (isotopes)
@@ -944,7 +936,7 @@ namespace DB.Tools
             }
         }
 
-        protected static void AvgRCd(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
+        public static void AvgRCd(ref LINAA.ToDoAvgRow t, ref ToDoArgs X)
         {
             IEnumerable<LINAA.ToDoDataRow> dats = t.GetToDoDataRows();
             dats = dats.Where(o => !o.HasErrors).ToList();
@@ -981,7 +973,7 @@ namespace DB.Tools
             }
         }
 
-        protected internal static void CalculateXY(ref LINAA.ToDoAvgRow t, ref ToDoArgs args)
+        public static void CalculateXY(ref LINAA.ToDoAvgRow t, ref ToDoArgs args)
         {
             //now t.Ai has the right value to plot...
             t.X = Math.Log(t.Er);
@@ -989,7 +981,7 @@ namespace DB.Tools
             t.Y = Math.Log(t.Y); //take the log
         }
 
-        protected internal static void CheckSD<T>(ref T aRow, ref ToDoArgs args)
+        public static void CheckSD<T>(ref T aRow, ref ToDoArgs args)
         {
             object aux = aRow;
             Type tipo = typeof(T);
@@ -1016,7 +1008,7 @@ namespace DB.Tools
             else throw new SystemException("CheckSD Notimplemented");
         }
 
-        protected internal static void CheckRCd<T>(ref T aRow, ref ToDoArgs args)
+        public static void CheckRCd<T>(ref T aRow, ref ToDoArgs args)
         {
             object aux = aRow;
             Type tipo = typeof(T);
@@ -1035,474 +1027,6 @@ namespace DB.Tools
                 else if (p.HasErrors) p.use = false;
             }
             else throw new SystemException("CheckRCd Notimplemented");
-        }
-    }
-}
-
-namespace DB.Tools
-{
-    public partial class ToDo
-    {
-        public static IEnumerable<LINAA.PeaksRow> PropagateSR(ref IEnumerable<LINAA.ToDoResAvgRow> ravgs)
-        {
-            HashSet<LINAA.PeaksRow> tosave = new HashSet<LINAA.PeaksRow>();
-            foreach (LINAA.ToDoResAvgRow ravg in ravgs)
-            {
-                IEnumerable<LINAA.ToDoResRow> reses = ravg.GetToDoResRows();
-                bool use = ravg.use;
-                foreach (LINAA.ToDoResRow res in reses)
-                {
-                    try
-                    {
-                        LINAA.PeaksRow p1 = res.PeaksRowParentByPeaks_TDRes;
-                        LINAA.PeaksRow p2 = res.PeaksRowParentByPeaks_TDRes2;
-                        if (use)
-                        {
-                            p1.ID = Math.Abs(p1.ID);
-                            p2.ID = Math.Abs(p2.ID);
-                        }
-                        else
-                        {
-                            p1.ID = -1 * Math.Abs(p1.ID);
-                            p2.ID = -1 * Math.Abs(p2.ID);
-                        }
-
-                        tosave.Add(p1);
-                        tosave.Add(p2);
-                    }
-                    catch (SystemException ex)
-                    {
-                        EC.SetRowError(res, ex);
-                    }
-                }
-            }
-
-            return tosave.ToList();
-        }
-
-        public static string CalculateFCs(LINAA.ToDoType todoType, ref IEnumerable<LINAA.ToDoDataRow> rows)
-        {
-            if (rows.Count() == 0) return "CalculateFCs Error (ToDoData): Collection is empty";
-
-            rows = rows.ToList();
-            foreach (LINAA.ToDoDataRow p in rows)
-            {
-                try
-                {
-                    p.Fc = p.IPAvg.Fc;
-                    if (todoType != LINAA.ToDoType.fAlphaCdCovered) // Alpha Cd-Covered
-                    {
-                        try
-                        {
-                            p.Fc2 = p.IPAvg2.Fc;
-                        }
-                        catch (SystemException ex)
-                        {
-                            p.use = false;
-                            p.SetColumnError("Fc2", ex.Message);
-                        }
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    p.use = false;
-                    p.SetColumnError("Fc", ex.Message);
-                }
-            }
-
-            return "CalculateFC (ToDoData) was OK";
-        }
-
-        public static string CalculateFCs(LINAA.ToDoType todoType, ref IEnumerable<LINAA.ToDoAvgRow> rows)
-        {
-            if (rows.Count() == 0) return "CalculateFCs Error (ToDoAvg): Collection is empty";
-            rows = rows.ToList();
-            foreach (LINAA.ToDoAvgRow t in rows)
-            {
-                try
-                {
-                    IEnumerable<LINAA.ToDoDataRow> Allchilds = t.GetToDoDataRows();
-                    IEnumerable<LINAA.ToDoDataRow> childs = Allchilds.Where(o => !o.HasErrors);
-                    if (childs.Count() == 0) t.use = false;
-                    else
-                    {
-                        t.use = childs.First().use;
-                        //   if (t.use)
-                        //  {
-                        //i'm using the column names because they are common to bot parent and child
-
-                        double[] WAvgs = MyMath.WAverageStDeV(childs, "Fc", "unc", "use", t.use);
-                        t.Fc = WAvgs[0];
-                        WAvgs = MyMath.WAverageStDeV(childs, "Fc2", "unc2", "use", t.use);
-                        t.Fc2 = WAvgs[0];
-
-                        //  }
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    t.use = false;
-                    EC.SetRowError(t, ex);
-                }
-            }
-
-            return "CalculateFCs (ToDoAvg) was OK";
-        }
-
-        public static double[] GetAvgsfAlpha(LINAA.ToDoType todoType, LINAA.ToDoAvgDataTable table)
-        {
-            double avgLogEr = 0;
-            double avgqo_qo2a_1 = 0;
-            double avgQoa_1 = 0;
-
-            if (todoType != LINAA.ToDoType.Q0determination && todoType != LINAA.ToDoType.k0determination)
-            {
-                //SECOND PART, DETERMINING ERRORS
-                string filter = table.useColumn.ColumnName;
-                avgLogEr = 0;
-                IList<double> IavgLogEr = MyMath.ListFrom(table.XColumn, 1, filter, true);
-                avgLogEr = IavgLogEr.Average();
-                avgqo_qo2a_1 = 0;
-                if (todoType.Equals(LINAA.ToDoType.fAlphaBare))
-                {
-                    avgqo_qo2a_1 = MyMath.ListFrom(table.__qoa_qo2a__1Column, 1, filter, true).Average();
-                }
-                avgQoa_1 = 0;
-                avgQoa_1 = MyMath.ListFrom(table.qoalphaColumn, -1, filter, true).Average();
-            }
-
-            return new double[] { avgLogEr, avgqo_qo2a_1, avgQoa_1 };
-        }
-
-        public static void GetUncfAlpha(LINAA.ToDoType tocalculate, double[] args, LINAA.ToDoAvgUncDataTable table)
-        {
-            double avgLogEr = args[0];
-            double avgqo_qo2a_1 = args[1];
-            double avgQoa_1 = args[2];
-
-            string filter = table.useColumn.ColumnName;
-
-            IEnumerable<LINAA.ToDoAvgUncRow> rows = table.AsEnumerable();
-            if (tocalculate == LINAA.ToDoType.fAlphaBare)
-            {
-                foreach (LINAA.ToDoAvgUncRow t in rows)
-                {
-                    try
-                    {
-                        //  if (t.use)
-                        {
-                            LINAA.ToDoAvgRow a = t.ToDoAvgRow;
-                            t.Bi = ((a.qoalpha * Math.Log(a.Er)) - (a.qo2alpha * Math.Log(a.Er2)));
-                            t.Bi = t.Bi * a.__qoa_qo2a__1;
-                        }
-                    }
-                    catch (SystemException ex)
-                    {
-                        EC.SetRowError(t, ex);
-                    }
-                }
-                double avgBi = 0;
-                avgBi = MyMath.ListFrom(table.BiColumn, 1, table.useColumn.ColumnName, true).Average();
-                int used = 0;
-
-                foreach (LINAA.ToDoAvgUncRow r in rows)
-                {
-                    try
-                    {
-                        //  if (r.use)
-                        {
-                            LINAA.ToDoAvgRow a = r.ToDoAvgRow;
-                            r.Ji2 = ((a.X - avgLogEr) * (a.__qoa_qo2a__1 - avgqo_qo2a_1));
-                            r.Ji = ((a.X - avgLogEr) * (r.Bi - avgBi));
-                            used++;
-                        }
-                    }
-                    catch (SystemException ex)
-                    {
-                        EC.SetRowError(r, ex);
-                    }
-                }
-
-                double avgJi = 0;
-                double avgJi2 = 0;
-
-                string use = table.useColumn.ColumnName;
-
-                avgJi = MyMath.ListFrom(table.JiColumn, 1, use, true).Average();
-                avgJi2 = MyMath.ListFrom(table.Ji2Column, 1, use, true).Average();
-
-                GetUncfAlphaBare(avgJi, avgJi2, used, avgLogEr, ref rows);
-                return;
-            }
-            if (tocalculate == LINAA.ToDoType.fAlphaCdCovered || tocalculate == LINAA.ToDoType.fAlphaCdRatio) //cd-covered
-            {
-                foreach (LINAA.ToDoAvgUncRow t in rows)
-                {
-                    try
-                    {
-                        //  if (t.use)
-                        {
-                            LINAA.ToDoAvgRow a = t.ToDoAvgRow;
-                            t.Vi = ((a.qoalpha / a.Qo1) * Math.Log(a.Er));
-                            t.Vi = t.Vi + (((0.26 * a.Calpha) / a.Qo1) * ((1.67 / (a.alpha + 0.5)) - 1));
-                        }
-                    }
-                    catch (SystemException ex)
-                    {
-                        EC.SetRowError(t, ex);
-                    }
-                }
-
-                double avgVi = 0;
-
-                avgVi = MyMath.ListFrom(table.ViColumn, 1, filter, true).Average();
-                int used = 0;
-                foreach (LINAA.ToDoAvgUncRow r in rows)
-                {
-                    try
-                    {
-                        // if (r.use)
-                        {
-                            LINAA.ToDoAvgRow a = r.ToDoAvgRow;
-
-                            r.Ui = ((a.X - avgLogEr) * (r.Vi - avgVi));
-                            r.Wi = ((a.X - avgLogEr) * (Math.Pow(a.qoalpha, -1) - avgQoa_1));
-                            used++;
-                        }
-                    }
-                    catch (SystemException ex)
-                    {
-                        EC.SetRowError(r, ex);
-                    }
-                }
-                double avgWi = 0;
-                double avgUi = 0;
-                avgUi = MyMath.ListFrom(table.UiColumn, 1, filter, true).Average();
-                avgWi = MyMath.ListFrom(table.WiColumn, 1, filter, true).Average();
-
-                if (tocalculate == LINAA.ToDoType.fAlphaCdCovered)
-                {
-                    GetUncfAlphaCdCovered(avgLogEr, used, avgWi, avgUi, ref rows);
-                }
-                else
-                {
-                    GetUncfAlphaCdRatio(avgLogEr, used, avgWi, avgUi, ref rows);
-                }
-            }
-
-            return;
-        }
-
-        protected internal static void GetUncfAlphaBare(double avgJi, double avgJi2, int used, double avgLogEr, ref IEnumerable<LINAA.ToDoAvgUncRow> rows)
-        {
-            foreach (LINAA.ToDoAvgUncRow r in rows)
-            {
-                try
-                {
-                    // if (r.use)
-                    {
-                        LINAA.ToDoAvgRow a = r.ToDoAvgRow;
-                        r.ZaAsp = 0.434 * (a.f + a.Qo1);
-                        r.ZaAsp = r.ZaAsp * Math.Abs((a.X - avgLogEr) * a.__qoa_qo2a__1 * Math.Pow((avgJi * used * a.alpha), -1));
-
-                        r.ZaAsp2 = 0.434 * (a.f + a.Qo2);
-                        r.ZaAsp2 = r.ZaAsp2 * Math.Abs(avgJi2 * Math.Pow(a.alpha * avgJi, -1));
-
-                        r.ZaEr = a.qoalpha * Math.Abs(a.alpha); // first ZEr calculation, including uncertainty in Er
-                        r.ZaEr = (r.ZaEr * r.ZaAsp) * Math.Pow((a.f + a.Qo1), -1);
-
-                        r.ZaEr2 = a.qo2alpha * Math.Abs(a.alpha); //frist ZEr2 calculation, including uncertainty in Er2
-                        r.ZaEr2 = (r.ZaEr2 * r.ZaAsp2) * Math.Pow((a.f + a.Qo2), -1);
-
-                        r.ZaECd = 0;
-
-                        r.ZaQo = (a._QoEr_a * r.ZaAsp) * Math.Pow((a.f + a.Qo1), -1);
-                        r.ZaQo2 = (a._Qo2Er2_a * r.ZaAsp2) * Math.Pow((a.f + a.Qo2), -1);
-
-                        r.ZfQo = Math.Abs(a._QoEr_a * (1 + (a.Qo2 / a.f)) * Math.Pow(a.Qo1 - a.Qo2, -1));
-                        r.ZfQo2 = Math.Abs(a._Qo2Er2_a * (1 + (a.Qo1 / a.f)) * Math.Pow(a.Qo1 - a.Qo2, -1));
-
-                        r.Zfa = (((a.f + a.Qo1) * a.qo2alpha * Math.Log(a.Er2)) - ((a.f + a.Qo2) * a.qoalpha * Math.Log(a.Er)));
-                        r.Zfa = (r.Zfa * Math.Pow(a.Qo1 - a.Qo2, -1)) + (0.60 * a.Calpha * ((1.67 / (a.alpha + 0.5)) - 1));
-                        r.Zfa = Math.Abs(r.Zfa * (a.alpha / a.f));
-
-                        r.ZfEr = Math.Abs(a.alpha * a.qoalpha * (1 + (a.Qo2 / a.f)) * Math.Pow(a.Qo1 - a.Qo2, -1));
-                        r.ZfEr2 = Math.Abs(a.alpha * a.qo2alpha * (1 + (a.Qo1 / a.f)) * Math.Pow(a.Qo1 - a.Qo2, -1));
-                        r.ZfAsp = Math.Abs((a.f + a.Qo1) * (a.f + a.Qo2) * Math.Pow(a.f * (a.Qo1 - a.Qo2), -1));
-
-                        a.alphaUnc = Math.Pow(r.ZaAsp * a.SD * 0.5, 2) + Math.Pow(r.ZaAsp2 * a.SD * 0.5, 2);
-
-                        //fixed accuracy (nuclear data uncertainties)
-
-                        a.alphaUnc += Math.Pow(r.ZaECd * 15, 2);
-                        a.alphaUnc += Math.Pow(r.ZaEr * a.ErUnc, 2) + Math.Pow(r.ZaQo * a.QoUnc, 2);
-                        a.alphaUnc += Math.Pow(r.ZaEr2 * a.Er2Unc, 2) + Math.Pow(r.ZaQo2 * a.Qo2Unc, 2);
-                        a.alphaUnc = Math.Sqrt(a.alphaUnc);
-
-                        a.fUnc = Math.Pow(r.Zfa * a.alphaUnc, 2) + Math.Pow(r.ZfAsp * a.SD, 2);
-                        a.fUnc += Math.Pow(r.ZfEr * a.ErUnc, 2) + Math.Pow(r.ZfQo * a.QoUnc, 2);
-                        a.fUnc += Math.Pow(r.ZfEr2 * a.Er2Unc, 2) + Math.Pow(r.ZfQo2 * a.Qo2Unc, 2);
-                        a.fUnc = Math.Sqrt(a.fUnc);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(r, ex);
-                }
-            }
-        }
-
-        protected internal static void GetUncfAlphaCdCovered(double avgLogEr, int used, double avgWi, double avgUi, ref IEnumerable<LINAA.ToDoAvgUncRow> rows)
-        {
-            foreach (LINAA.ToDoAvgUncRow r in rows)
-            {
-                try
-                {
-                    //  if (r.use)
-                    {
-                        LINAA.ToDoAvgRow a = r.ToDoAvgRow;
-                        r.ZaAsp = 0.434 * Math.Abs((a.X - avgLogEr) * Math.Pow((a.alpha * avgUi * used), -1));
-                        r.ZaAsp2 = 0;
-
-                        r.ZaEr = a.qoalpha * Math.Abs(a.alpha); // first ZEr calculation, including uncertainty in Er
-                        r.ZaEr = r.ZaEr * r.ZaAsp * Math.Pow(a.qoalpha, -1);
-                        r.ZaEr2 = 0;
-
-                        r.ZaECd = 0.434 * a.Calpha * (a.alpha + 0.5); // first ZaECd calculation
-                        r.ZaECd = r.ZaECd * Math.Abs(Math.Pow(a.alpha, -1) * (avgWi / avgUi)); //second ZaECd calculation
-
-                        r.ZaQo = a._QoEr_a; //first ZaQo first calculation, including uncertainty in Qo
-                        r.ZaQo = r.ZaQo * r.ZaAsp * Math.Pow(a.qoalpha, -1);
-                        r.ZaQo2 = 0;
-
-                        r.ZfEr2 = 0;
-                        r.ZfQo2 = 0;
-                        r.ZfAsp = 0;
-                        r.ZfEr = 0;
-                        r.ZfQo = 0;
-
-                        a.alphaUnc = Math.Pow(r.ZaAsp * a.SD, 2);
-
-                        //fixed accuracy (nuclear data uncertainties)
-
-                        a.alphaUnc += Math.Pow(r.ZaECd * 15, 2);
-                        a.alphaUnc += Math.Pow(r.ZaEr * a.ErUnc, 2) + Math.Pow(r.ZaQo * a.QoUnc, 2);
-
-                        a.alphaUnc = Math.Sqrt(a.alphaUnc);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(r, ex);
-                }
-            }
-        }
-
-        protected internal static void GetUncfAlphaCdRatio(double avgLogEr, int used, double avgWi, double avgUi, ref IEnumerable<LINAA.ToDoAvgUncRow> rows)
-        {
-            foreach (LINAA.ToDoAvgUncRow r in rows)
-            {
-                try
-                {
-                    //if (r.use)
-                    {
-                        LINAA.ToDoAvgRow a = r.ToDoAvgRow;
-
-                        r.ZaAsp = 0.434 * Math.Pow(a.f, -1) * (a.f + a.Qo1);
-                        r.ZaAsp = r.ZaAsp * Math.Abs((a.X - avgLogEr) * Math.Pow((a.alpha * avgUi * used), -1));
-                        r.ZaAsp2 = 0;
-
-                        r.ZaEr = a.qoalpha * Math.Abs(a.alpha); // first ZEr calculation, including uncertainty in Er
-                        r.ZaEr = (r.ZaEr * r.ZaAsp * Math.Pow(a.qoalpha, -1) * a.f) * Math.Pow((a.f + a.Qo1), -1);
-                        r.ZaEr2 = 0;
-
-                        r.ZaECd = 0.434 * a.Calpha * (a.alpha + 0.5); // first ZaECd calculation
-                        r.ZaECd = r.ZaECd * Math.Abs(Math.Pow(a.alpha, -1) * (avgWi / avgUi)); //second ZaECd calculation
-
-                        r.ZaQo = a._QoEr_a; //first ZaQo first calculation, including uncertainty in Qo
-                        r.ZaQo = (r.ZaQo * r.ZaAsp * Math.Pow(a.qoalpha, -1) * a.f) * Math.Pow((a.f + a.Qo1), -1);
-                        r.ZaQo2 = 0;
-
-                        r.Zfa = Math.Abs((a.alpha / a.Qo1) * ((a.qoalpha * Math.Log(a.Er)) + (0.60 * a.Calpha * ((1.67 / (a.alpha + 0.5)) - 1))));
-                        r.ZfEr = Math.Abs(a.alpha * (a.qoalpha / a.Qo1));
-                        r.ZfQo = Math.Abs(a._QoEr_a / a.Qo1);
-                        r.ZfAsp = 1 + (a.Qo1 / a.f);
-
-                        r.ZfEr2 = 0;
-                        r.ZfQo2 = 0;
-
-                        a.alphaUnc = Math.Pow(r.ZaAsp * 0.5 * a.SD, 2) + Math.Pow(r.ZaAsp2 * 0.5 * a.SD, 2);
-                        //fixed accuracy (nuclear data uncertainties)
-
-                        a.alphaUnc += Math.Pow(r.ZaECd * 15, 2);
-                        a.alphaUnc += Math.Pow(r.ZaEr * a.ErUnc, 2) + Math.Pow(r.ZaQo * a.QoUnc, 2);
-                        a.alphaUnc += Math.Pow(r.ZaEr2 * a.Er2Unc, 2) + Math.Pow(r.ZaQo2 * a.Qo2Unc, 2);
-                        a.alphaUnc = Math.Sqrt(a.alphaUnc);
-
-                        a.fUnc = Math.Pow(r.Zfa * a.alphaUnc, 2) + Math.Pow(r.ZfAsp * a.SD, 2);
-                        a.fUnc += Math.Pow(r.ZfEr * a.ErUnc, 2) + Math.Pow(r.ZfQo * a.QoUnc, 2);
-                        a.fUnc += Math.Pow(r.ZfEr2 * a.Er2Unc, 2) + Math.Pow(r.ZfQo2 * a.Qo2Unc, 2);
-                        a.fUnc = Math.Sqrt(a.fUnc);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(r, ex);
-                }
-            }
-        }
-
-        public static double GetResiduals(ref IEnumerable<LINAA.ToDoAvgRow> rows)
-        {
-            DateTime start = DateTime.Now;
-            foreach (LINAA.ToDoAvgRow r in rows)
-            {
-                try
-                {
-                    r.YErrorHigh = r.Y + (r.Y * (r.SD / 100));
-                    r.YErrorLow = r.Y - (r.Y * (r.SD / 100));
-                }
-                catch (SystemException ex)
-                {
-                    r.use = false;
-                    EC.SetRowError(r, ex);
-                }
-            }
-
-            return (DateTime.Now - start).TotalSeconds;
-        }
-
-        public static string Push(ref LINAA.ToDoAvgDataTable clone, ref IEnumerable<LINAA.ToDoAvgRow> rows, string newColBase, ref DataColumn[] arrOfColToPush)
-        {
-            rows = rows.ToList();
-            if (rows.Count() == 0) return "SetValues Error: Collection is empty";
-
-            try
-            {
-                //for overriding f and alpha with reference when Qo determination
-
-                foreach (LINAA.ToDoAvgRow avg in rows)
-                {
-                    foreach (DataColumn col in arrOfColToPush)
-                    {
-                        LINAA.ToDoAvgRow cl = clone.FirstOrDefault(c => c.ToDoNr == avg.ToDoNr);
-                        if (Rsx.EC.IsNuDelDetch(cl)) continue;
-                        object valueToPush = avg.Field<object>(col.ColumnName);
-                        cl.SetField<object>(col.ColumnName + "." + newColBase, valueToPush);
-                    }
-                }
-            }
-            catch (SystemException ex)
-            {
-                string msg = ex.Message;
-            }
-            return "Push was OK";
-        }
-
-        protected internal static void OverridefAlpha(ref LINAA.ToDoAvgRow t, double f0, double alpha)
-        {
-            t.f = f0;
-            t.alpha = alpha;
         }
     }
 }

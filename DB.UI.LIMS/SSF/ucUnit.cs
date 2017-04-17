@@ -16,6 +16,10 @@ namespace DB.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e">     </param>
+
+
+        private int lastIndex = -2;
+
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0 ) return;
@@ -37,20 +41,27 @@ namespace DB.UI
                 {
                     isToDoColumn = row[e.ColumnIndex].GetType().Equals(typeof(bool));
                 }
-               
-                    if (row.GetType().Equals(typeof(LINAA.UnitRow)))
+                if (isToDoColumn)
+                {
+                    //invert the bool or check state
+                    row[e.ColumnIndex] = !(bool)row[e.ColumnIndex];
+                    // unit.ToDo = !unit.ToDo;
+                }
+                  bool isUnuit = row.GetType().Equals(typeof(LINAA.UnitRow));
+                    if (isUnuit && lastIndex!=e.RowIndex)
                     {
-                        Interface.IDB.MatSSF.Clear();
+                    //so it does not select and reselect everytime;
+                    lastIndex = e.RowIndex;
 
-                        LINAA.UnitRow unit = Interface.ICurrent.Unit as LINAA.UnitRow;
+                        LINAA.UnitRow unit = row as LINAA.UnitRow;
 
-                        //if it is a checheakble column box
+                    // if ((row as LINAA.UnitRow) == unit) return;
+
+
+                      //   Interface.IDB.MatSSF.Clear();
+                         //if it is a checheakble column box
                         //then check it automatically
-                        if (isToDoColumn)
-                        {
-                            unit.ToDo = !unit.ToDo;
-                        }
-
+                                  
 
                         //update bindings
 
@@ -103,6 +114,7 @@ namespace DB.UI
 
             // this.unitDGV.RowHeaderMouseClick += DgvItemSelected; this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
             this.unitDGV.CellMouseClick += DgvItemSelected;
+            
         }
 
         private void setBindings()

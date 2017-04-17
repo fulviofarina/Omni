@@ -6,6 +6,10 @@ namespace Msn
 {
     public partial class Pop : UserControl
     {
+        public Pop()
+        {
+
+        }
         public void Msg(string msg, string title)
         {
             Msg(msg, title, true);

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Rsx;
 
 namespace DB.Tools
@@ -9,16 +8,8 @@ namespace DB.Tools
     /// This class gives the current row shown by a Binding Source
     /// </summary>
 
- 
-
     public partial class Current
     {
-        public Current(ref BindingSources bss, ref Interface interfaces)
-        {
-            bs = bss;
-            Interface = interfaces;
-        }
-
         /// <summary>
         /// Current
         /// </summary>
@@ -61,6 +52,16 @@ namespace DB.Tools
             {
                 return Dumb.Cast<DataRow>(bs.Units.List as DataView);
             }
+        }
+
+        public Current()
+        {
+        }
+
+        public Current(ref BindingSources bss, ref Interface interfaces)
+        {
+            bs = bss;
+            Interface = interfaces;
         }
     }
 }

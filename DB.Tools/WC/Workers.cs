@@ -10,90 +10,101 @@ namespace DB.Tools
 {
     public partial class WC
     {
-        private void popul_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        /// <summary>
+        /// Adds a worker
+        /// </summary>
+        private void AddWorker(ref System.ComponentModel.BackgroundWorker w)
         {
-            IList<string> ls = e.Argument as IList<string>;
-            SystemException ex = null;
-            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
-            int? id = Interface.IPopulate.IIrradiations.FindIrrReqID(this.Name);
-            try
-            {
-                LINAA.MatSSFDataTable ssf = PopulateMatSSF(id);
-                worker.ReportProgress((int)R.MergeTable, ssf); //tip
-            }
-            catch (SystemException x)
-            {
-                ex = x;
-            }
-
-            foreach (string subsample in ls)
-            {
-                ex = null;
-                try
-                {
-                    LINAA.PeaksDataTable peaks = PopulatePeaks(null, subsample);
-                    worker.ReportProgress((int)R.MergeTable, peaks); //tip
-                    LINAA.IPeakAveragesDataTable ipeaks = PopulateIPeaksAverages(subsample);
-                    worker.ReportProgress((int)R.MergeTable, ipeaks); //tip
-                    LINAA.IRequestsAveragesDataTable irss = PopulateIRequestsAverages(subsample);
-                    worker.ReportProgress((int)R.MergeTable, irss); //tip
-                }
-                catch (SystemException x)
-                {
-                    ex = x;
-                }
-                worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
-            }
-            ex = null;
-
-            worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
+            if (workers == null) workers = new List<System.ComponentModel.BackgroundWorker>();
+            this.workers.Add(w);
         }
 
-        private void r_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        /// <summary>
+        /// worker for Check
+        /// </summary>
+        private void checker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            bool official = (bool)e.Argument;
-            SystemException ex = null;
+            object[] args = e.Argument as object[];
 
             System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
 
-            try
-            {
-                LINAA.NAADataTable n = PopulateNAA(official);
-                worker.ReportProgress((int)R.MergeTable, n); //tip
+            IEnumerable<LINAA.SubSamplesRow> samples = args[0] as IEnumerable<LINAA.SubSamplesRow>;
+            //object caller = (object)args[1];
 
-                LINAA.k0NAADataTable k = Populatek0NAA(official);
-                worker.ReportProgress((int)R.MergeTable, k); //tip
-            }
-            catch (SystemException x)
+            foreach (LINAA.SubSamplesRow s in samples)
             {
-                ex = x;
+                if (Dumb.HasChanges(s.GetPeaksRows()))
+                {
+                    object[] samDelSave = new object[] { s, false, true };
+                    worker.ReportProgress((int)R.PeaksDelSave, samDelSave);  //(s,del,save)
+                }
+                if (Dumb.HasChanges(s))
+                {
+                    worker.ReportProgress((int)R.SampleStatus, s); //saves changes TIP
+                }
             }
-            worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
+
+            object[] args2 = new object[] { samples, true }; //true for also determining whichs needs ssf
+            worker.ReportProgress((int)R.SampleInfere, args2); //refresh nodes!!!
+            foreach (LINAA.SubSamplesRow s in samples)
+            {
+                worker.ReportProgress((int)R.SampleCheck, s); //refresh nodes!!!
+                worker.ReportProgress((int)R.Progress, new object[] { null, 1 });
+            }
+
+            e.Result = e.Argument;
         }
 
-        private void solcoinWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        /// <summary>
+        /// Executes the finishMethod
+        /// </summary>
+        private void checker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            object[] res = e.Result as object[];
+
+            object caller = (object)res[1];
+
+            finishMethod.Invoke(caller);
+        }
+
+        /// <summary>
+        /// worker for EffiLoad
+        /// </summary>
+        private void effiloader_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+
+            DateTime start = DateTime.Now;
 
             object[] args = e.Argument as object[];
 
-            if (e.Cancel) return;
+            bool coin = (bool)args[1];
+            IEnumerable<LINAA.SubSamplesRow> samples = (IEnumerable<LINAA.SubSamplesRow>)args[0];
+            bool all = (bool)args[2];
+            LINAA.GeometryRow reference = (LINAA.GeometryRow)args[3];
 
-            SolCoin Solcoin = (SolCoin)args[0];
-            string[] PosGeoDetFillRad = (string[])args[2];
-            bool calcSolid = (bool)args[1];
-            bool calcCOIs = (bool)args[4];
-            double[] energies = (double[])args[3];
-            bool hide = (bool)args[5];
-            bool success = false;
+            IEnumerable<LINAA.MeasurementsRow> measforContingency = null;
+            measforContingency = SetCOINSolid(ref samples, coin, all, ref reference);
 
-            success = Solcoin.PrepareSampleUnit(PosGeoDetFillRad, energies, calcSolid, calcCOIs);
+            //Contingency plan, in case the first algorithms didn't work...
+            if (measforContingency != null && measforContingency.Count() != 0)
+            {
+                object o = null;
 
-            if (e.Cancel) return;
-            if (success) Solcoin.DoAll(hide);
+                if (coin) o = Linaa.COIN;
+                else o = Linaa.Solang;
+                PopulateCOINSolang(coin, ref measforContingency, ref o);
+                ContingencySetCOINSolid(coin, ref reference, ref measforContingency);
+            }
 
-            worker.ReportProgress((int)R.SolcoiEnded, args);
-            worker.ReportProgress((int)R.Progress, new object[] { null, 1 });
+            DateTime end = DateTime.Now;
+            string loadedin = Decimal.Round(Convert.ToDecimal((end - start).TotalSeconds), 1).ToString();
+
+            string text = string.Empty;
+            if (coin) text = "Coi Factors";
+            else text = "Solid Angles";
+            worker.ReportProgress((int)R.SolcoiLoaded, new object[] { loadedin, text });
+            worker.ReportProgress((int)R.Progress, new object[] { null, samples.Count() }); //tip
         }
 
         /// <summary>
@@ -145,10 +156,10 @@ namespace DB.Tools
                         LINAA.MatSSFDataTable ssfDT = new LINAA.MatSSFDataTable(false);
                         ssfDT.Constraints.Clear();
                         LINAA.SubSamplesRow aux = iS;
-                     //   MatSSF.Sample = iS;
+                        // MatSSF.Sample = iS;
                         MatSSF.Table = ssfDT;
 
-                        String FileOut =MatSSF.OUTPUT();
+                        String FileOut = MatSSF.OUTPUT();
                         MatSSF.WriteXML();
                         //now read OutPut from calculation and store it into the MatSSF data table
                         worker.ReportProgress((int)R.SSFSet, iS);   //delete previous
@@ -287,94 +298,6 @@ namespace DB.Tools
             worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
         }
 
-        /// <summary>
-        /// worker for Check
-        /// </summary>
-        private void checker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            object[] args = e.Argument as object[];
-
-            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
-
-            IEnumerable<LINAA.SubSamplesRow> samples = args[0] as IEnumerable<LINAA.SubSamplesRow>;
-            //object caller = (object)args[1];
-
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                if (Dumb.HasChanges(s.GetPeaksRows()))
-                {
-                    object[] samDelSave = new object[] { s, false, true };
-                    worker.ReportProgress((int)R.PeaksDelSave, samDelSave);  //(s,del,save)
-                }
-                if (Dumb.HasChanges(s))
-                {
-                    worker.ReportProgress((int)R.SampleStatus, s); //saves changes TIP
-                }
-            }
-
-            object[] args2 = new object[] { samples, true }; //true for also determining whichs needs ssf
-            worker.ReportProgress((int)R.SampleInfere, args2); //refresh nodes!!!
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                worker.ReportProgress((int)R.SampleCheck, s); //refresh nodes!!!
-                worker.ReportProgress((int)R.Progress, new object[] { null, 1 });
-            }
-
-            e.Result = e.Argument;
-        }
-
-        /// <summary>
-        /// Executes the finishMethod
-        /// </summary>
-        private void checker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            object[] res = e.Result as object[];
-
-            object caller = (object)res[1];
-
-            finishMethod.Invoke(caller);
-        }
-
-        /// <summary>
-        /// worker for EffiLoad
-        /// </summary>
-        private void effiloader_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
-
-            DateTime start = DateTime.Now;
-
-            object[] args = e.Argument as object[];
-
-            bool coin = (bool)args[1];
-            IEnumerable<LINAA.SubSamplesRow> samples = (IEnumerable<LINAA.SubSamplesRow>)args[0];
-            bool all = (bool)args[2];
-            LINAA.GeometryRow reference = (LINAA.GeometryRow)args[3];
-
-            IEnumerable<LINAA.MeasurementsRow> measforContingency = null;
-            measforContingency = SetCOINSolid(ref samples, coin, all, ref reference);
-
-            //Contingency plan, in case the first algorithms didn't work...
-            if (measforContingency != null && measforContingency.Count() != 0)
-            {
-                object o = null;
-
-                if (coin) o = Linaa.COIN;
-                else o = Linaa.Solang;
-                PopulateCOINSolang(coin, ref measforContingency, ref o);
-                ContingencySetCOINSolid(coin, ref reference, ref measforContingency);
-            }
-
-            DateTime end = DateTime.Now;
-            string loadedin = Decimal.Round(Convert.ToDecimal((end - start).TotalSeconds), 1).ToString();
-
-            string text = string.Empty;
-            if (coin) text = "Coi Factors";
-            else text = "Solid Angles";
-            worker.ReportProgress((int)R.SolcoiLoaded, new object[] { loadedin, text });
-            worker.ReportProgress((int)R.Progress, new object[] { null, samples.Count() }); //tip
-        }
-
         private void peakImport_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
@@ -488,50 +411,43 @@ namespace DB.Tools
             worker.ReportProgress((int)R.Progress, new object[] { x, 1 }); //tip
         }
 
-        /// <summary>
-        /// Adds a worker
-        /// </summary>
-        private void AddWorker(ref System.ComponentModel.BackgroundWorker w)
+        private void popul_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            if (workers == null) workers = new List<System.ComponentModel.BackgroundWorker>();
-            this.workers.Add(w);
-        }
+            IList<string> ls = e.Argument as IList<string>;
+            SystemException ex = null;
+            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+            int? id = Interface.IPopulate.IIrradiations.FindIrrReqID(this.Name);
+            try
+            {
+                LINAA.MatSSFDataTable ssf = PopulateMatSSF(id);
+                worker.ReportProgress((int)R.MergeTable, ssf); //tip
+            }
+            catch (SystemException x)
+            {
+                ex = x;
+            }
 
-        private void ProgressReportSample(ref LINAA.SubSamplesRow sample, int percent)
-        {
-            bool ok = true;
-            string text = string.Empty;
-            string msg = string.Empty;
+            foreach (string subsample in ls)
+            {
+                ex = null;
+                try
+                {
+                    LINAA.PeaksDataTable peaks = PopulatePeaks(null, subsample);
+                    worker.ReportProgress((int)R.MergeTable, peaks); //tip
+                    LINAA.IPeakAveragesDataTable ipeaks = PopulateIPeaksAverages(subsample);
+                    worker.ReportProgress((int)R.MergeTable, ipeaks); //tip
+                    LINAA.IRequestsAveragesDataTable irss = PopulateIRequestsAverages(subsample);
+                    worker.ReportProgress((int)R.MergeTable, irss); //tip
+                }
+                catch (SystemException x)
+                {
+                    ex = x;
+                }
+                worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
+            }
+            ex = null;
 
-            if (!sample.RowError.Equals(string.Empty))
-            {
-                ok = false;
-                text = "When retrieving Sample data for ";
-                msg = sample.RowError;
-            }
-            else if (percent == 95)
-            {
-                text = "When retriving Spectra for ";
-                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
-            }
-            else if (percent == 5)
-            {
-                text = "When retriving Measurements for ";
-                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
-            }
-            else if (percent == 15)
-            {
-                text = "When calculating ";
-                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
-            }
-            else if (percent == 45)
-            {
-                text = "When verifying ";
-                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
-            }
-            text += sample.SubSampleName;
-            Interface.IReport.Msg(msg, text, ok);
-            Application.DoEvents();
+            worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
         }
 
         private void ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
@@ -765,6 +681,90 @@ namespace DB.Tools
                 default:
                     break;
             }
+        }
+
+        private void ProgressReportSample(ref LINAA.SubSamplesRow sample, int percent)
+        {
+            bool ok = true;
+            string text = string.Empty;
+            string msg = string.Empty;
+
+            if (!sample.RowError.Equals(string.Empty))
+            {
+                ok = false;
+                text = "When retrieving Sample data for ";
+                msg = sample.RowError;
+            }
+            else if (percent == 95)
+            {
+                text = "When retriving Spectra for ";
+                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
+            }
+            else if (percent == 5)
+            {
+                text = "When retriving Measurements for ";
+                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
+            }
+            else if (percent == 15)
+            {
+                text = "When calculating ";
+                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
+            }
+            else if (percent == 45)
+            {
+                text = "When verifying ";
+                msg = "OK with " + sample.SubSampleType + " " + sample.SubSampleDescription;
+            }
+            text += sample.SubSampleName;
+            Interface.IReport.Msg(msg, text, ok);
+            Application.DoEvents();
+        }
+
+        private void r_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            bool official = (bool)e.Argument;
+            SystemException ex = null;
+
+            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+
+            try
+            {
+                LINAA.NAADataTable n = PopulateNAA(official);
+                worker.ReportProgress((int)R.MergeTable, n); //tip
+
+                LINAA.k0NAADataTable k = Populatek0NAA(official);
+                worker.ReportProgress((int)R.MergeTable, k); //tip
+            }
+            catch (SystemException x)
+            {
+                ex = x;
+            }
+            worker.ReportProgress((int)R.Progress, new object[] { ex, 1 }); //tip
+        }
+
+        private void solcoinWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+
+            object[] args = e.Argument as object[];
+
+            if (e.Cancel) return;
+
+            SolCoin Solcoin = (SolCoin)args[0];
+            string[] PosGeoDetFillRad = (string[])args[2];
+            bool calcSolid = (bool)args[1];
+            bool calcCOIs = (bool)args[4];
+            double[] energies = (double[])args[3];
+            bool hide = (bool)args[5];
+            bool success = false;
+
+            success = Solcoin.PrepareSampleUnit(PosGeoDetFillRad, energies, calcSolid, calcCOIs);
+
+            if (e.Cancel) return;
+            if (success) Solcoin.DoAll(hide);
+
+            worker.ReportProgress((int)R.SolcoiEnded, args);
+            worker.ReportProgress((int)R.Progress, new object[] { null, 1 });
         }
     }
 }

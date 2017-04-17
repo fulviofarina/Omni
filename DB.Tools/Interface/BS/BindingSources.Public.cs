@@ -14,32 +14,55 @@ namespace DB.Tools
         public BindingSource Channels;
 
         public BindingSource Geometry;
-        public BindingSource SSF;
 
         public BindingSource Irradiations;
 
         public BindingSource Matrix;
-        public BindingSource MonitorsFlags;
-        public BindingSource Samples;
 
         /// <summary>
         /// not attached yet
         /// </summary>
         public BindingSource Monitors;
 
-        public BindingSource SelectedSubSample;
+        public BindingSource MonitorsFlags;
+
         public BindingSource Preferences;
 
         public BindingSource Rabbit;
 
+        public BindingSource Samples;
+
+        public BindingSource SelectedSubSample;
+
+        public BindingSource SSF;
+
         public BindingSource SSFPreferences;
+
         public BindingSource Standards;
 
         //binding sources to attach;
         public BindingSource SubSamples;
 
         public BindingSource Units;
+
         public BindingSource Vial;
+
+        public void ApplyFilters()
+        {
+            string col = Interface.IDB.Preferences.WindowsUserColumn.ColumnName;
+            Preferences.Filter = col + " = '" + Interface.IPreferences.WindowsUser + "'";
+            SSFPreferences.Filter = Preferences.Filter;
+
+            // Dumb.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
+            string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
+            string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
+            // Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
+            Dumb.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
+
+            Dumb.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+
+            Dumb.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, "CreationDateTime desc");
+        }
 
         /// <summary>
         /// EndEdit for each binding source
@@ -73,56 +96,55 @@ namespace DB.Tools
             bool isMatrix = tipo.Equals(typeof(MatrixRow));
             //to check later the columns that should be ok
 
-         //   Action Checker = null;
-        //    DataColumn[] columnsThatShouldBeOk = null;
+            // Action Checker = null; DataColumn[] columnsThatShouldBeOk = null;
             if (isSubSample)
             {
                 //take columns that should be ok
-               // columnsThatShouldBeOk = Interface.IDB.SubSamples.NonNullableUnit;
+                // columnsThatShouldBeOk = Interface.IDB.SubSamples.NonNullableUnit;
                 updateSubSample(r, doCascade, findItself);
             }
             else if (isUnit)
             {
-               // columnsThatShouldBeOk = Interface.IDB.Unit.Changeables;
+                // columnsThatShouldBeOk = Interface.IDB.Unit.Changeables;
                 updateUnit(r, doCascade, findItself);
             }
             else if (isMatrix)
             {
-               //
+                //
                 updateMatrix(r, findItself);
             }
             else if (tipo.Equals(typeof(VialTypeRow)))
             {
-               //
+                //
                 updateVialRabbit(r, findItself);
             }
             else if (tipo.Equals(typeof(ChannelsRow)))
             {
-               //
+                //
                 updateChannel(r, findItself);
             }
             else if (tipo.Equals(typeof(IrradiationRequestsRow)))
             {
-               //
+                //
                 updateIrradiationRequest(r, findItself);
-               
             }
             //now check the errors!!!
-         //   if (columnsThatShouldBeOk == null) return;
+            //   if (columnsThatShouldBeOk == null) return;
             DataRow row = r as DataRow;
             if (row.HasErrors)
             {
                 bool? seriousCellsWithErrors = !AChecker?.Invoke();
                 // if (row.GetColumnsInError())
-                if (seriousCellsWithErrors!=null && (bool)seriousCellsWithErrors)
+                if (seriousCellsWithErrors != null && (bool)seriousCellsWithErrors)
                 {
                     Interface.IReport.Msg(_ROWWITHERROR, "Warning", false); ///cannot process because it has errors
                 }
             }
-
         }
 
-    
+        public BindingSources()
+        {
+        }
         /// <summary>
         /// A Binding source for each table
         /// </summary>
@@ -167,23 +189,6 @@ namespace DB.Tools
             // Units.BindingComplete += Units_BindingComplete;
             SelectedSubSample = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
             // Units.ListChanged += units_ListChanged;
-        }
-
-        public void ApplyFilters()
-        {
-            string col = Interface.IDB.Preferences.WindowsUserColumn.ColumnName;
-            Preferences.Filter = col + " = '" + Interface.IPreferences.WindowsUser + "'";
-            SSFPreferences.Filter = Preferences.Filter;
-
-            // Dumb.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
-            string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
-            string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
-            // Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
-            Dumb.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
-
-            Dumb.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
-
-            Dumb.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, "CreationDateTime desc");
         }
     }
 }

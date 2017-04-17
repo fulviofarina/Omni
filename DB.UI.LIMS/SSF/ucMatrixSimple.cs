@@ -46,8 +46,11 @@ namespace DB.UI
             column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
             Binding mcompoBin = new Binding(text, Interface.IBS.Matrix, column, t, mo);
 
-            this.matrixRTB.DataBindings.Add(mcompoBin);
+            column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
+            Binding mlabel = new Binding(text, Interface.IBS.Matrix, column, t, mo);
 
+            this.matrixRTB.DataBindings.Add(mcompoBin);
+            this.Contentlabel.TextBox.DataBindings.Add(mlabel);
             System.EventHandler addNew = this.addNewVialChannel_Click;
 
             this.bindingNavigatorAddNewItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);

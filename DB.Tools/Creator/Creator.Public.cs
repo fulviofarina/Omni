@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Linq;
-using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Windows.Forms;
-using DB.Linq;
 using DB.Properties;
 using Msn;
-using Rsx;
 
 namespace DB.Tools
 {
-   
-  
     public partial class Creator
     {
         /// <summary>
@@ -35,8 +28,6 @@ namespace DB.Tools
             set { Creator.lastCallBack = value; }
         }
 
-
-
         /// <summary>
         /// Builds a reference Linaa database, creating it if it does not exist, giving feedback
         /// through a notifyIcon and a handler to a method that will run after completition
@@ -44,12 +35,11 @@ namespace DB.Tools
         /// <param name="Linaa">  referenced database to build (can be a null reference)</param>
         /// <param name="notify"> referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition</param>
-        public static void Build(ref Interface inter,  ref Pop msn)
+        public static void Build(ref Interface inter, ref Pop msn)
         {
             //restarting = false;
 
             Cursor.Current = Cursors.WaitCursor;
-
 
             if (inter != null)
             {
@@ -63,17 +53,14 @@ namespace DB.Tools
             if (msn != null)
             {
                 Interface.IReport.Msn = msn;
-              //  msn.ParentForm.Opacity = 100;
+                // msn.ParentForm.Opacity = 100;
             }
-
-          
 
             Cursor.Current = Cursors.Default;
 
             Interface.IMain.PopulateColumnExpresions();
 
             Interface.IReport.Msg(loading, "Please wait...");
-
         }
 
         /// <summary>
@@ -81,13 +68,11 @@ namespace DB.Tools
         /// </summary>
         public static void CheckDirectories()
         {
-
             Cursor.Current = Cursors.WaitCursor;
-
 
             //assign folderpath (like a App\Local folder)
             Interface.IMain.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-           Interface.IMain.FolderPath += Resources.k0XFolder; //cambiar esto
+            Interface.IMain.FolderPath += Resources.k0XFolder; //cambiar esto
 
             //populate main directory at folderPath
             try
@@ -98,7 +83,6 @@ namespace DB.Tools
             {
                 Interface.IMain.AddException(ex);//                throw;
             }
-         
 
             //check for overriders
             bool overriderFound = populateOverriders();
@@ -108,23 +92,16 @@ namespace DB.Tools
 
             //perform basic loading
 
-     
-
             Interface.IPreferences.PopulatePreferences();
 
             Interface.IPreferences.SavePreferences();
-
 
             Interface.IBS.ApplyFilters();
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
 
             Cursor.Current = Cursors.Default;
-
-
-         
         }
-
 
         /// <summary>
         /// Closes the given LINAA database asking to Save!
@@ -137,13 +114,12 @@ namespace DB.Tools
             bool eCancel = false;
 
             //this is important otherwise it will ask to save this
-         //   Interface.IDB.MatSSF.Clear();
+            //   Interface.IDB.MatSSF.Clear();
             Interface.IDB.MatSSF.AcceptChanges();
-          //  Interface.IDB.MUES.Clear();
+            // Interface.IDB.MUES.Clear();
             Interface.IDB.MUES.AcceptChanges();
             //IMPORTANT FOR THE PROGRAM NOT TO ASK FOR THESE TABLES
             Interface.IStore.SaveExceptions();
-
 
             IEnumerable<DataTable> tables = Linaa.GetTablesWithChanges();
 
@@ -158,7 +134,7 @@ namespace DB.Tools
                 string ask = askToSave + tablesToSave;
                 MessageBoxButtons mb = MessageBoxButtons.YesNoCancel;
                 MessageBoxIcon icon = MessageBoxIcon.Warning;
-                
+
                 DialogResult result = MessageBox.Show(ask, "Save Changes...", mb, icon);
                 if (result == DialogResult.Yes) takeChanges = true;
                 else if (result == DialogResult.Cancel)
@@ -168,70 +144,12 @@ namespace DB.Tools
                 }
             }
 
-          
-
             eCancel = !SaveInFull(takeChanges);
             //if cancel, this means that a remote or a local copy could not be saved,
             //not good, this is the worst nightmare...
             //the backup
 
             return eCancel;
-        }
-
-        public static bool  SaveInFull (bool takechanges)
-        {
-            bool ok = false;
-
-            Cursor.Current = Cursors.WaitCursor;
-
-
-          
-
-            //    WHAT IS THIS
-            //WHAT IS THIS
-            bool off = Interface.IPreferences.CurrentPref.Offline;
-            //     string savePath = Interface.IMain.FolderPath + "lims.xml";
-            // Interface.IStore.SaveSSF(off, savePath);
-
-            Interface.IBS.EndEdit();
-       //     Interface.Get().BeginEndLoadData(false);
-           // Interface.IBS.EndEdit();
-       
-
-            Interface.IPreferences.SavePreferences();
-            Interface.IReport.Msg("Saved preferences", "Saved!");
-
-           
-
-            try
-            {
-
-              //  IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
-                IEnumerable<DataTable> tables = Interface.IStore.GetTablesWithChanges();
-
-                bool savedremotely = true;
-                if (!off)
-                {
-                    savedremotely = Interface.IStore.SaveRemote(ref tables, takechanges);
-                    Interface.IReport.Msg("Saved into SQL database", "Saved!");
-                }
-
-                bool savedlocaly = Interface.IStore.SaveLocalCopy();
-                Interface.IReport.Msg("Saved into local XML file", "Saved!");
-                //   Interface.IReport.Msg("Saving", "Saving completed!");
-
-                ok = savedlocaly && savedremotely;
-                //   Interface.IReport.Msg("Saving database", "Saved!");
-            }
-            catch (Exception ex)
-            {
-                Interface.IMain.AddException(ex);
-                Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
-            }
-
-            Cursor.Current = Cursors.Default;
-
-            return ok;
         }
 
         /// <summary>
@@ -249,13 +167,6 @@ namespace DB.Tools
             Cursor.Current = Cursors.Default;
             // else throw new SystemException("No Populate Method was assigned");
         }
-
-        /// <summary>
-        /// Creates a background worker that will feedback through an inputed runworkerCompleted handler
-        /// </summary>
-        /// <param name="Linaa">  database to load</param>
-        /// <param name="handler">required handler to report feedback when completed</param>
-    
 
         /// <summary>
         /// Prepare the needed methods and the worker
@@ -278,8 +189,6 @@ namespace DB.Tools
 
             if (!Interface.IAdapter.IsMainConnectionOk)
             {
-
-              
                 Interface.IReport.UserInfo();
 
                 string title = noConnectionDetected;
@@ -293,7 +202,6 @@ namespace DB.Tools
 
                 //could not connect
                 PopulateSQLDatabase();
-
 
                 //send this text to a textFile in order to report by email next Reboot
             }
@@ -309,6 +217,58 @@ namespace DB.Tools
             return ok;
         }
 
+        public static bool SaveInFull(bool takechanges)
+        {
+            bool ok = false;
 
+            Cursor.Current = Cursors.WaitCursor;
+
+            //    WHAT IS THIS
+            //WHAT IS THIS
+            bool off = Interface.IPreferences.CurrentPref.Offline;
+            // string savePath = Interface.IMain.FolderPath + "lims.xml";
+            // Interface.IStore.SaveSSF(off, savePath);
+
+            Interface.IBS.EndEdit();
+            // Interface.Get().BeginEndLoadData(false); Interface.IBS.EndEdit();
+
+            Interface.IPreferences.SavePreferences();
+            Interface.IReport.Msg("Saved preferences", "Saved!");
+
+            try
+            {
+                // IEnumerable<DataTable> tables = Interface.IDB.Tables.OfType<DataTable>();
+                IEnumerable<DataTable> tables = Interface.IStore.GetTablesWithChanges();
+
+                bool savedremotely = true;
+                if (!off)
+                {
+                    savedremotely = Interface.IStore.SaveRemote(ref tables, takechanges);
+                    Interface.IReport.Msg("Saved into SQL database", "Saved!");
+                }
+
+                bool savedlocaly = Interface.IStore.SaveLocalCopy();
+                Interface.IReport.Msg("Saved into local XML file", "Saved!");
+                // Interface.IReport.Msg("Saving", "Saving completed!");
+
+                ok = savedlocaly && savedremotely;
+                // Interface.IReport.Msg("Saving database", "Saved!");
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+                Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
+            }
+
+            Cursor.Current = Cursors.Default;
+
+            return ok;
+        }
+
+        /// <summary>
+        /// Creates a background worker that will feedback through an inputed runworkerCompleted handler
+        /// </summary>
+        /// <param name="Linaa">  database to load</param>
+        /// <param name="handler">required handler to report feedback when completed</param>
     }
 }

@@ -8,6 +8,13 @@ namespace DB.Tools
     public partial class MatSSF
     {
         /// <summary>
+        /// Types of channels configurations
+        /// </summary>
+        public static string[] Types = new string[] { "0 = Isotropic", "1 = Wire flat", "2 = Foil/wire ch. axis" };
+
+        private static char[] ch = new char[] { ',', '(', '#', ')' };
+
+        /// <summary>
         /// Fills the UnitRow with data from an array extracted from the OUTPUT MatSSF File
         /// </summary>
         /// <param name="array">Output file extracted array</param>
@@ -39,19 +46,63 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                //  (this.Table.DataSet as LINAA).AddException(ex);
-
+                // (this.Table.DataSet as LINAA).AddException(ex);
             }
 
             UNIT.FillWith(Mdens, Gt, EXS, MCL, PXS);
         }
+        private static void decomposeFormula(string formula, ref List<string> elements, ref List<string> moles)
+        {
+            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("[0-9]");
 
+            foreach (string s in re.Split(formula)) if (!s.Equals(string.Empty)) elements.Add(s); // gives elements
 
-        private static char[] ch = new char[] { ',', '(', '#', ')' };
-        /// <summary>
-        /// Types of channels configurations
-        /// </summary>
-        public static string[] Types = new string[] { "0 = Isotropic", "1 = Wire flat", "2 = Foil/wire ch. axis" };
+            //NUMBERS
+            System.Text.RegularExpressions.Regex re2 = new System.Text.RegularExpressions.Regex("[a-z]", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+            foreach (string s in re2.Split(formula)) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
+        }
+
+        private static void fillTable(IList<string> list)
+        {
+            string[] content = null;
+
+            string separator = "------------------------------------------------------------------------";
+            int sep = list.IndexOf(separator);
+            list = list.Skip(sep + 1).ToList();
+            IEnumerable<LINAA.MatSSFRow> ssfs = UNIT.GetMatSSFRows();
+
+            foreach (LINAA.MatSSFRow m in ssfs)
+            {
+                m.Delete();
+            }
+
+            foreach (string item in list)
+            {
+                if (string.IsNullOrWhiteSpace(item)) continue;
+
+                try
+                {
+                    content = item.Substring(10).Trim().Split(' ');
+                    content = content.Where(o => !string.IsNullOrWhiteSpace(o)).ToArray();
+                    // Z, the element and A data
+                    string[] ZEl = item.Substring(0, 10).Split('-');
+                    ZEl[2] = ZEl[2].Trim();
+                    Int16 A = Convert.ToInt16(ZEl[2]);
+                    //interested only in the isotopes
+                    if (A > 0)
+                    {
+                        ZEl[0] = ZEl[0].Trim();// Z
+                        ZEl[1] = ZEl[1].Trim(); // Element
+
+                        setMatSSFRow(content, ZEl);
+                    }
+                }
+                catch (SystemException ex)
+                {
+                }
+            }
+        }
 
         private static string getChannelCfg()
         {
@@ -103,70 +154,7 @@ namespace DB.Tools
             return buffer;
         }
 
-        private static bool writeFile(string buffer, string fileInput)
-        {
-            System.IO.TextWriter writer = new System.IO.StreamWriter(fileInput, false); //create fromRow file
-            writer.Write(buffer);
-            writer.Close();
-            writer = null;
-            return System.IO.File.Exists(fileInput);
-        }
-
-        private static void fillTable(IList<string> list)
-        {
-            string[] content = null;
-
-            string separator = "------------------------------------------------------------------------";
-            int sep = list.IndexOf(separator);
-            list = list.Skip(sep + 1).ToList();
-            IEnumerable<LINAA.MatSSFRow> ssfs = UNIT.GetMatSSFRows();
-
-
-            foreach (LINAA.MatSSFRow m in ssfs)
-            {
-                m.Delete();
-            }
-
-            foreach (string item in list)
-            {
-                if (string.IsNullOrWhiteSpace(item)) continue;
-
-                try
-                {
-                    content = item.Substring(10).Trim().Split(' ');
-                    content = content.Where(o => !string.IsNullOrWhiteSpace(o)).ToArray();
-                    // Z, the element and A data
-                    string[] ZEl = item.Substring(0, 10).Split('-');
-                    ZEl[2] = ZEl[2].Trim();
-                    Int16 A = Convert.ToInt16(ZEl[2]);
-                    //interested only in the isotopes
-                    if (A > 0)
-                    {
-                        ZEl[0] = ZEl[0].Trim();// Z
-                        ZEl[1] = ZEl[1].Trim(); // Element
-
-                        setMatSSFRow( content, ZEl);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                }
-            }
-        }
-
-        private static void decomposeFormula(string formula, ref List<string> elements, ref List<string> moles)
-        {
-            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("[0-9]");
-
-            foreach (string s in re.Split(formula)) if (!s.Equals(string.Empty)) elements.Add(s); // gives elements
-
-            //NUMBERS
-            System.Text.RegularExpressions.Regex re2 = new System.Text.RegularExpressions.Regex("[a-z]", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-
-            foreach (string s in re2.Split(formula)) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
-        }
-
-        private static void setMatSSFRow( string[] content, string[] ZEl)
+        private static void setMatSSFRow(string[] content, string[] ZEl)
         {
             LINAA.MatSSFRow m = null;
             string radioisotope = ZEl[1] + "-" + (Convert.ToInt32(ZEl[2]) + 1).ToString();
@@ -176,7 +164,7 @@ namespace DB.Tools
             LINAA.SubSamplesRow sample = UNIT.SubSamplesRow;
 
             m = Table.FirstOrDefault(o => o.UnitID == UNIT.UnitID && targetIsotope.Equals(o.TargetIsotope));
-            if (m==null && sample != null)
+            if (m == null && sample != null)
             {
                 int sampleID = sample.SubSamplesID;
                 m = Table.FirstOrDefault(o => o.SubSamplesID == sampleID && targetIsotope.Equals(o.TargetIsotope));
@@ -207,6 +195,15 @@ namespace DB.Tools
                 m.GFast = Convert.ToDouble(content[5]);
             }
             else if (content.Length == 5) m.GFast = Convert.ToDouble(content[4]);
+        }
+
+        private static bool writeFile(string buffer, string fileInput)
+        {
+            System.IO.TextWriter writer = new System.IO.StreamWriter(fileInput, false); //create fromRow file
+            writer.Write(buffer);
+            writer.Close();
+            writer = null;
+            return System.IO.File.Exists(fileInput);
         }
     }
 }

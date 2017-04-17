@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Messaging;
@@ -10,19 +9,14 @@ using Rsx;
 
 namespace DB.Tools
 {
-    /// <summary>
-    /// This class gives the current row shown by a Binding Source
-    /// </summary>
-    //STATIC
- 
 
-    //PRIVATE
- 
-
-
- 
     public partial class Report : IReport
     {
+        public Pop Msn
+        {
+            get { return msn; }
+            set { msn = value; }
+        }
 
         public void AskToRestart()
         {
@@ -34,6 +28,131 @@ namespace DB.Tools
                 Application.Restart();
             }
             else System.Environment.Exit(-1);
+        }
+
+        public void ChatMe(ref LINAA.PreferencesRow p)
+        {
+            try
+            {
+                string windowsUser = Interface.IPreferences.WindowsUser;
+                // LINAA.PreferencesRow p = this.currentPref;
+
+                // string comment = findHellos(ref windowsUser, ref p);
+
+                string[] txtTitle = findGreeting(ref windowsUser);
+
+                Msg(txtTitle[0], txtTitle[1]);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IMain.AddException(ex);
+            }
+        }
+
+        public void GenerateBugReport()
+        {
+            try
+            {
+                MessageQueue qm = GetMessageQueue(QM.QMExceptions);
+
+                if (qm == null) return;
+
+                generateBugReport(ref qm);
+
+                bugresult = qm.BeginReceive();
+            }
+            catch (Exception ex)
+            {
+                this.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IMain.AddException(ex);
+            }
+        }
+
+        public void GenerateReport(string labelReport, object path, string extra, string module, string email)
+        {
+            try
+            {
+                //send path as the body of the QMsg
+                //put a extended body to the email please
+
+                string queuePath = QM.QMAcquisitions + "." + module + "." + email;
+                MessageQueue qm = GetMessageQueue(queuePath);
+                if (qm == null) return;
+
+                string title = labelReport + " - " + module;
+
+                System.Messaging.Message m = Rsx.Emailer.CreateQMsg(path, title, extra);
+
+                Rsx.Emailer.SendQMsg(ref qm, ref m);
+
+                qm.BeginReceive();
+            }
+            catch (SystemException ex)
+            {
+                this.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IMain.AddException(ex);
+            }
+        }
+
+        public MessageQueue GetMessageQueue(string QUEUE_PATH)
+        {
+            MessageQueue qm = null;
+
+            try
+            {
+                ReceiveCompletedEventHandler ReceivedHandler = qMsg_ReceiveCompleted;
+                qm = Rsx.Emailer.CreateMQ(QUEUE_PATH, ReceivedHandler);
+
+                if (QUEUE_PATH.Contains(QM.QMAcquisitions))
+                {
+                    if (qm == null)
+                    {
+                        throw new Exception(checkifMSMQ, new Exception(cannotMSMQ));
+                    }
+                }
+                else if (QUEUE_PATH.Contains(QM.QMExceptions))
+                {
+                    if (qm == null)
+                    {
+                        throw new Exception(bugReportProblem, new Exception(bugReportNotGen));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IMain.AddException(ex);
+            }
+            return qm;
+        }
+
+        /// <summary>
+        /// Notifies the given message and title with an Info icon
+        /// </summary>
+        /// <param name="msg">  Message to display</param>
+        /// <param name="title">title of the message</param>
+        public void Msg(string msg, string title, bool ok = true)
+        {
+            this.msn.Msg(msg, title, ok);
+        }
+
+        public void ReportFinished()
+        {
+            if (Interface.IDB.Exceptions.Count != 0)
+            {
+                Speak("Loading finished! However... some errors were found");
+            }
+            else Speak("Loading finished!");
+        }
+
+        public void ReportProgress(int percentage)
+        {
+            this.msn.ReportProgress(percentage);
+        }
+
+        public void Speak(string text)
+        {
+            this.msn.Speak(text);
         }
 
         public void UserInfo()
@@ -65,148 +184,44 @@ namespace DB.Tools
             string usrInfo = "UserInfo";
 
             GenerateReport(enviropath, path, string.Empty, usrInfo, email);
-
-        }
-
-        public Pop Msn
-        {
-            get { return msn; }
-            set { msn = value; }
         }
 
         // private System.Drawing.Icon mainIcon = null;
-       
-
-        public void ChatMe(ref LINAA.PreferencesRow p)
-        {
-            try
-            {
-                string windowsUser = Interface.IPreferences.WindowsUser;
-                // LINAA.PreferencesRow p = this.currentPref;
-
-            //    string comment = findHellos(ref windowsUser, ref p);
-
-                string[] txtTitle = findGreeting(ref windowsUser);
-
-                Msg(txtTitle[0], txtTitle[1]);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IMain.AddException(ex);
-            }
-        }
-       
-
         /// <summary>
-        /// What this sends is a solicitude to generate an email with the exceptions
-        /// The solicitude is processed, reported and when the solicitud arrives to the Queue
-        /// then the email is sent Asynchroneusly...
-        /// Then a feedback from the Async operations also arrives at the Queue and reports.
+        /// What this sends is a solicitude to generate an email with the exceptions The solicitude
+        /// is processed, reported and when the solicitud arrives to the Queue then the email is sent
+        /// Asynchroneusly... Then a feedback from the Async operations also arrives at the Queue and reports.
         /// </summary>
-
-        public void GenerateBugReport()
+        private void generateBugReport(ref MessageQueue qm)
         {
-            try
+            Interface.IStore.SaveExceptions();
+
+            this.Msg(bePatient, bugReportOnWay);
+
+            string path = Interface.IMain.FolderPath + Resources.Exceptions;
+            IEnumerable<string> exceptions = System.IO.Directory.EnumerateFiles(path);
+            int cnt = exceptions.Count();
+            if (cnt != 0)
             {
-                //if sender is null means that the user did not requested this.
-                //if sender is null its because this is automatic...
-
-                // if the sender is null it is because I don't want the qU to listen for exceptions
-                // that must be emailed this is done when the user Asks for a bug report...
-
-                if (bugQM == null)
+                foreach (string excFile in exceptions)
                 {
-                    bugQM = Emailer.CreateMQ(QM.QMExceptions, this.qMsg_ReceiveCompleted);
+                    System.Messaging.Message w = null;
+                    string bodyOfBugEmail = "Should I add more comments?";
+
+                    w = Emailer.CreateQMsg(excFile, "Bug Report", bodyOfBugEmail);
+                    Emailer.SendQMsg(ref qm, ref w);
+                    // System.IO.File.Delete(excFile);
                 }
-                if (bugQM == null)
-                {
-                    this.Msg(checkifMSMQ, cannotMSMQ, false);
-                    return;
-                }
-
-                // when sender is null... I just want the qu to store them in the Server tray and the
-                // user will retrieve and email them later with Send-bugreport
-                this.Msg(bePatient, bugReportOnWay);
-
-                //write exceptions to a XML file is Exceptions is not empty...
-                Interface.IStore.SaveExceptions();
-
-                string path = Interface.IMain.FolderPath + DB.Properties.Resources.Exceptions;
-                IEnumerable<string> exceptions = System.IO.Directory.EnumerateFiles(path);
-                generateBugReports(ref exceptions);
-
-                bugresult = bugQM.BeginReceive();
+                this.Msg(BUGS_ONTRAY, cnt + " scheduled to be sent", true);
             }
-            catch (SystemException ex)
-            {
-              //  this.Msg(ex.Message + "\n\n" + ex.StackTrace, bugReportProblem, false);
-                Interface.IMain.AddException(ex);
-            }
+            else this.Msg(bugReportNotGen, nothingBuggy);
+
+            exceptions = null;
         }
 
-      
-        public void GenerateReport(string labelReport, object path, string extra, string module, string email)
+        public Report()
         {
-            try
-            {
-                //send path as the body of the QMsg
-                //put a extended body to the email please
-
-                string queuePath = QM.QMAcquisitions + "." + module + "." + email;
-                string title = labelReport + " - " + module;
-
-
-                MessageQueue qm = Rsx.Emailer.CreateMQ(queuePath, this.qMsg_ReceiveCompleted);
-              
-                System.Messaging.Message m = Rsx.Emailer.CreateQMsg(path, title, extra);
-
-                Rsx.Emailer.SendQMsg(ref qm, ref m);
-
-
-                qm.BeginReceive();
-            }
-            catch (SystemException ex)
-            {
-               // this.Msg(ex.Message + "\n\n" + ex.StackTrace, problemsWithReport, false);
-                Interface.IMain.AddException(ex);
-            }
         }
-
-      
-
-        /// <summary>
-        /// Notifies the given message and title with an Info icon
-        /// </summary>
-        /// <param name="msg">  Message to display</param>
-        /// <param name="title">title of the message</param>
-        public void Msg(string msg, string title, bool ok = true)
-        {
-            this.msn.Msg(msg, title, ok);
-        }
-
-        public void ReportFinished()
-        {
-            if (Interface.IDB.Exceptions.Count != 0)
-            {
-                Speak("Loading finished! However... some errors were found");
-            }
-            else Speak("Loading finished!");
-        }
-
-        public void ReportProgress(int percentage)
-        {
-            this.msn.ReportProgress(percentage);
-        }
-
-    
-
-      
-
-        public void Speak(string text)
-        {
-            this.msn.Speak(text);
-        }
-
         public Report(ref Interface inter)
         {
             Interface = inter;

@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolCoi.IOFiles.cs" />
+    <Compile Include="SolCoi.Properties.cs" />
+    <Compile Include="SolCoi.Methods.cs" />
     <Compile Include="SolCoi.cs" />
   </ItemGroup>
   <ItemGroup>

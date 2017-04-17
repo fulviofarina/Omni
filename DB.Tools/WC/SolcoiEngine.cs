@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx;
@@ -11,48 +13,6 @@ namespace DB.Tools
     /// </summary>
     public partial class WC
     {
-        /// <summary>
-        /// Calculates Solid Angles
-        /// </summary>
-        private void CalculateSolidAngles(ref System.Collections.Hashtable solcoinTable, ref System.Collections.Hashtable solcoinRefTable)
-        {
-            IterateSolang(ref solcoinRefTable);
-
-            while (progress.Maximum != progress.Value)
-            {
-                if (cancel.Checked) return;
-                Application.DoEvents();
-            }
-
-            IterateSolang(ref solcoinTable);
-        }
-
-        private void IterateSolang(ref System.Collections.Hashtable solcoinTable)
-        {
-            int goSlow = 0;
-
-            foreach (System.Collections.DictionaryEntry sol in solcoinTable)
-            {
-                String key = (String)sol.Key;
-                string[] PosGeoDetFillRad = key.Split(',');
-                double[] energies = ((System.Collections.Generic.ICollection<double>)sol.Value).ToArray();
-                progress.Maximum++;
-                UnitSolang(PosGeoDetFillRad, energies, true, false);
-
-                goSlow++;
-
-                if (goSlow == 3)
-                {
-                    while (progress.Maximum != progress.Value)
-                    {
-                        if (cancel.Checked) return;
-                        Application.DoEvents();
-                    }
-                    goSlow = 0;
-                }
-            }
-        }
-
         /// <summary>
         /// Calculates COI factos
         /// </summary>
@@ -105,14 +65,56 @@ namespace DB.Tools
         }
 
         /// <summary>
+        /// Calculates Solid Angles
+        /// </summary>
+        private void CalculateSolidAngles(ref System.Collections.Hashtable solcoinTable, ref System.Collections.Hashtable solcoinRefTable)
+        {
+            IterateSolang(ref solcoinRefTable);
+
+            while (progress.Maximum != progress.Value)
+            {
+                if (cancel.Checked) return;
+                Application.DoEvents();
+            }
+
+            IterateSolang(ref solcoinTable);
+        }
+
+        private void IterateSolang(ref System.Collections.Hashtable solcoinTable)
+        {
+            int goSlow = 0;
+
+            foreach (System.Collections.DictionaryEntry sol in solcoinTable)
+            {
+                String key = (String)sol.Key;
+                string[] PosGeoDetFillRad = key.Split(',');
+                double[] energies = ((System.Collections.Generic.ICollection<double>)sol.Value).ToArray();
+                progress.Maximum++;
+                UnitSolang(PosGeoDetFillRad, energies, true, false);
+
+                goSlow++;
+
+                if (goSlow == 3)
+                {
+                    while (progress.Maximum != progress.Value)
+                    {
+                        if (cancel.Checked) return;
+                        Application.DoEvents();
+                    }
+                    goSlow = 0;
+                }
+            }
+        }
+
+        /// <summary>
         /// Prepares hashtables with geometries to calculate
         /// </summary>
         private System.Collections.Hashtable[] PrepareSolang(bool DoSolang, ref IEnumerable<LINAA.SubSamplesRow> samples)
         {
-            System.Collections.Hashtable[] array = null;
-            System.Collections.Hashtable solcoin_table = new System.Collections.Hashtable();
-            System.Collections.Hashtable solcoin_tableRef = new System.Collections.Hashtable();
-            array = new System.Collections.Hashtable[] { solcoin_tableRef, solcoin_table };
+           Hashtable[] array = null;
+            Hashtable solcoin_table = new Hashtable();
+            Hashtable solcoin_tableRef = new Hashtable();
+            array = new Hashtable[] { solcoin_tableRef, solcoin_table };
 
             string energyCol = Linaa.Peaks.EnergyColumn.ColumnName;
 
@@ -172,7 +174,7 @@ namespace DB.Tools
             Solcoin.IntegrationMode = mode;
 
             //CREATE A WORKER FOR THIS TASK
-            System.ComponentModel.BackgroundWorker solcoinWorker = new System.ComponentModel.BackgroundWorker();
+            BackgroundWorker solcoinWorker = new BackgroundWorker();
             solcoinWorker.WorkerReportsProgress = true;
             solcoinWorker.WorkerSupportsCancellation = true;
             solcoinWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(ProgressChanged);

@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucV));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucV));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLPShapes = new System.Windows.Forms.TableLayoutPanel();
-            this.vialDGV = new System.Windows.Forms.DataGridView();
-            this.VialTypeRefColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InnerRadiusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaxFillHeightColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VialBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.shapeSC = new System.Windows.Forms.SplitContainer();
@@ -81,8 +80,17 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.vialDGV = new System.Windows.Forms.DataGridView();
+            this.vialTypeRefDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.innerRadiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sideThicknessDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bottomThicknessDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.distanceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maxFillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.commentsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isRabbitDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.TLPShapes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VialBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.shapeSC)).BeginInit();
@@ -103,6 +111,7 @@
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.SuspendLayout();
             this.toolStrip13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // TLPShapes
@@ -122,62 +131,6 @@
             this.TLPShapes.Size = new System.Drawing.Size(792, 513);
             this.TLPShapes.TabIndex = 9;
             // 
-            // vialDGV
-            // 
-            this.vialDGV.AllowUserToAddRows = false;
-            this.vialDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.vialDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.vialDGV.AutoGenerateColumns = false;
-            this.vialDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.vialDGV.BackgroundColor = System.Drawing.Color.LavenderBlush;
-            this.vialDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            this.vialDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.vialDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.VialTypeRefColumn,
-            this.InnerRadiusColumn,
-            this.MaxFillHeightColumn});
-            this.vialDGV.DataSource = this.VialBS;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.vialDGV.DefaultCellStyle = dataGridViewCellStyle2;
-            this.vialDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vialDGV.Location = new System.Drawing.Point(4, 48);
-            this.vialDGV.Margin = new System.Windows.Forms.Padding(4);
-            this.vialDGV.Name = "vialDGV";
-            this.vialDGV.RowTemplate.Height = 24;
-            this.vialDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.vialDGV.Size = new System.Drawing.Size(784, 427);
-            this.vialDGV.TabIndex = 5;
-            // 
-            // VialTypeRefColumn
-            // 
-            this.VialTypeRefColumn.DataPropertyName = "VialTypeRef";
-            this.VialTypeRefColumn.HeaderText = "Name";
-            this.VialTypeRefColumn.Name = "VialTypeRefColumn";
-            this.VialTypeRefColumn.Width = 87;
-            // 
-            // InnerRadiusColumn
-            // 
-            this.InnerRadiusColumn.DataPropertyName = "InnerRadius";
-            this.InnerRadiusColumn.HeaderText = "Radius";
-            this.InnerRadiusColumn.Name = "InnerRadiusColumn";
-            this.InnerRadiusColumn.ToolTipText = "in mm";
-            this.InnerRadiusColumn.Width = 93;
-            // 
-            // MaxFillHeightColumn
-            // 
-            this.MaxFillHeightColumn.DataPropertyName = "MaxFillHeight";
-            this.MaxFillHeightColumn.HeaderText = "Lenght";
-            this.MaxFillHeightColumn.Name = "MaxFillHeightColumn";
-            this.MaxFillHeightColumn.ToolTipText = "in mm";
-            this.MaxFillHeightColumn.Width = 95;
-            // 
             // VialBS
             // 
             this.VialBS.DataMember = "VialType";
@@ -185,16 +138,12 @@
             // 
             // lINAA
             // 
-          //  this.lINAA.AppPath = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE";
-          //  this.lINAA.CurrentPref = null;
-         //   this.lINAA.CurrentSSFPref = null;
             this.lINAA.DataSetName = "LINAA";
             this.lINAA.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("lINAA.DetectorsList")));
             this.lINAA.EnforceConstraints = false;
             this.lINAA.FolderPath = null;
             this.lINAA.Locale = new System.Globalization.CultureInfo("");
-       //     this.lINAA.Msn = null;
-        //    this.lINAA.Notify = null;
+            this.lINAA.QTA = null;
             this.lINAA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.lINAA.TAM = null;
             // 
@@ -548,6 +497,137 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // vialDGV
+            // 
+            this.vialDGV.AllowUserToAddRows = false;
+            this.vialDGV.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            this.vialDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.vialDGV.AutoGenerateColumns = false;
+            this.vialDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.vialDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.vialDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.vialDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.vialDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            this.vialDGV.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.vialDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.vialDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.vialDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.vialTypeRefDataGridViewTextBoxColumn,
+            this.innerRadiusDataGridViewTextBoxColumn,
+            this.sideThicknessDataGridViewTextBoxColumn,
+            this.bottomThicknessDataGridViewTextBoxColumn,
+            this.distanceDataGridViewTextBoxColumn,
+            this.maxFillHeightDataGridViewTextBoxColumn,
+            this.volDataGridViewTextBoxColumn,
+            this.commentsDataGridViewTextBoxColumn,
+            this.isRabbitDataGridViewCheckBoxColumn});
+            this.vialDGV.DataSource = this.VialBS;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.vialDGV.DefaultCellStyle = dataGridViewCellStyle4;
+            this.vialDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vialDGV.EnableHeadersVisualStyles = false;
+            this.vialDGV.GridColor = System.Drawing.Color.Black;
+            this.vialDGV.Location = new System.Drawing.Point(4, 48);
+            this.vialDGV.Margin = new System.Windows.Forms.Padding(4);
+            this.vialDGV.MultiSelect = false;
+            this.vialDGV.Name = "vialDGV";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.vialDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.vialDGV.RowTemplate.Height = 24;
+            this.vialDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.vialDGV.Size = new System.Drawing.Size(784, 427);
+            this.vialDGV.TabIndex = 9;
+            // 
+            // vialTypeRefDataGridViewTextBoxColumn
+            // 
+            this.vialTypeRefDataGridViewTextBoxColumn.DataPropertyName = "VialTypeRef";
+            this.vialTypeRefDataGridViewTextBoxColumn.HeaderText = "Label";
+            this.vialTypeRefDataGridViewTextBoxColumn.Name = "vialTypeRefDataGridViewTextBoxColumn";
+            this.vialTypeRefDataGridViewTextBoxColumn.ToolTipText = "A Label for this Container";
+            // 
+            // innerRadiusDataGridViewTextBoxColumn
+            // 
+            this.innerRadiusDataGridViewTextBoxColumn.DataPropertyName = "InnerRadius";
+            this.innerRadiusDataGridViewTextBoxColumn.HeaderText = "Radius (mm)";
+            this.innerRadiusDataGridViewTextBoxColumn.Name = "innerRadiusDataGridViewTextBoxColumn";
+            this.innerRadiusDataGridViewTextBoxColumn.ToolTipText = "(Inner) Radius of the Container (in mm)";
+            // 
+            // sideThicknessDataGridViewTextBoxColumn
+            // 
+            this.sideThicknessDataGridViewTextBoxColumn.DataPropertyName = "SideThickness";
+            this.sideThicknessDataGridViewTextBoxColumn.HeaderText = "SideThickness";
+            this.sideThicknessDataGridViewTextBoxColumn.Name = "sideThicknessDataGridViewTextBoxColumn";
+            this.sideThicknessDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // bottomThicknessDataGridViewTextBoxColumn
+            // 
+            this.bottomThicknessDataGridViewTextBoxColumn.DataPropertyName = "BottomThickness";
+            this.bottomThicknessDataGridViewTextBoxColumn.HeaderText = "BottomThickness";
+            this.bottomThicknessDataGridViewTextBoxColumn.Name = "bottomThicknessDataGridViewTextBoxColumn";
+            this.bottomThicknessDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // distanceDataGridViewTextBoxColumn
+            // 
+            this.distanceDataGridViewTextBoxColumn.DataPropertyName = "Distance";
+            this.distanceDataGridViewTextBoxColumn.HeaderText = "Distance";
+            this.distanceDataGridViewTextBoxColumn.Name = "distanceDataGridViewTextBoxColumn";
+            this.distanceDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // maxFillHeightDataGridViewTextBoxColumn
+            // 
+            this.maxFillHeightDataGridViewTextBoxColumn.DataPropertyName = "MaxFillHeight";
+            this.maxFillHeightDataGridViewTextBoxColumn.HeaderText = "Length (mm)";
+            this.maxFillHeightDataGridViewTextBoxColumn.Name = "maxFillHeightDataGridViewTextBoxColumn";
+            this.maxFillHeightDataGridViewTextBoxColumn.ToolTipText = "Lenght or Filll Height of the Container (in mm)";
+            // 
+            // volDataGridViewTextBoxColumn
+            // 
+            this.volDataGridViewTextBoxColumn.DataPropertyName = "Vol";
+            dataGridViewCellStyle3.Format = "N3";
+            this.volDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.volDataGridViewTextBoxColumn.HeaderText = "Vol (cm3)";
+            this.volDataGridViewTextBoxColumn.Name = "volDataGridViewTextBoxColumn";
+            this.volDataGridViewTextBoxColumn.ReadOnly = true;
+            this.volDataGridViewTextBoxColumn.ToolTipText = "Volumen of this Container (in cm3)";
+            // 
+            // commentsDataGridViewTextBoxColumn
+            // 
+            this.commentsDataGridViewTextBoxColumn.DataPropertyName = "Comments";
+            this.commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
+            this.commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
+            // 
+            // isRabbitDataGridViewCheckBoxColumn
+            // 
+            this.isRabbitDataGridViewCheckBoxColumn.DataPropertyName = "IsRabbit";
+            this.isRabbitDataGridViewCheckBoxColumn.HeaderText = "IsRabbit";
+            this.isRabbitDataGridViewCheckBoxColumn.Name = "isRabbitDataGridViewCheckBoxColumn";
+            this.isRabbitDataGridViewCheckBoxColumn.Visible = false;
+            // 
             // ucV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
@@ -558,7 +638,6 @@
             this.Name = "ucV";
             this.Size = new System.Drawing.Size(792, 513);
             this.TLPShapes.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VialBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).EndInit();
             this.shapeSC.Panel1.ResumeLayout(false);
@@ -587,6 +666,7 @@
             this.splitContainer5.ResumeLayout(false);
             this.toolStrip13.ResumeLayout(false);
             this.toolStrip13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -610,7 +690,6 @@
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator5;
         private System.Windows.Forms.ToolStrip shapeTS;
         private System.Windows.Forms.ToolStripLabel VialTypelabel;
-        private System.Windows.Forms.DataGridView vialDGV;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.TableLayoutPanel TLPShapes;
@@ -640,9 +719,16 @@
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.ToolStrip toolStrip13;
         private System.Windows.Forms.ToolStripLabel toolStripLabel12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VialTypeRefColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InnerRadiusColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MaxFillHeightColumn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.DataGridView vialDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vialTypeRefDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn innerRadiusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sideThicknessDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bottomThicknessDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn distanceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn maxFillHeightDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn volDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isRabbitDataGridViewCheckBoxColumn;
     }
 }
