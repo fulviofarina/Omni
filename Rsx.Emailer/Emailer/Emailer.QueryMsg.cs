@@ -82,21 +82,59 @@ namespace Rsx
 
       return cont;
     }
+        public static void LoadScript(string path, string argument, string workDir)
+        {
+            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+            info.WorkingDirectory = workDir;
+            info.CreateNoWindow = true;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            info.UseShellExecute = false;
+            System.Diagnostics.Process pro = new System.Diagnostics.Process();
+            info.Arguments = argument;
+            info.FileName = path;
+            //   info.Verb = "runas";
+            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            pro.StartInfo = info;
+            pro.OutputDataReceived += Pro_OutputDataReceived;
+            pro.ErrorDataReceived += Pro_ErrorDataReceived;
+            pro.Start();
+            pro.BeginErrorReadLine();
+            pro.BeginOutputReadLine();
+            pro.WaitForExit();
+        }
+        private static void Pro_ErrorDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                string data = e.Data;
+            }
 
-    /// <summary>
-    /// Initializes a MessageQueue with binary formatter, with the input path and input OnReceive handler.
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="handler">Method to call when the MQueue Receives a Message</param>
-    /// <returns></returns>
-    public static System.Messaging.MessageQueue CreateMQ(string path, ReceiveCompletedEventHandler handler)
+            // throw new NotImplementedException();
+        }
+
+        private static void Pro_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                string data = e.Data;
+            }
+            //  throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Initializes a MessageQueue with binary formatter, with the input path and input OnReceive handler.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="handler">Method to call when the MQueue Receives a Message</param>
+        /// <returns></returns>
+        public static MessageQueue CreateMQ(string path, ReceiveCompletedEventHandler handler)
     {
-      System.Messaging.MessageQueue qMsg = null;
+      MessageQueue qMsg = null;
       try
       {
-        if (!System.Messaging.MessageQueue.Exists(path))
+        if (!MessageQueue.Exists(path))
         {
-          System.Messaging.MessageQueue.Create(path, true);
+          MessageQueue.Create(path, true);
         }
         qMsg = new MessageQueue(path, QueueAccessMode.SendAndReceive);
         qMsg.Path = path;
@@ -115,11 +153,7 @@ namespace Rsx
       }
       catch (SystemException eX)
       {
-        string msg = "Please take some time to FULLY install the Microsoft Message Queue Server\n\n";
-        msg += "You'll need to hold the Window's Logo Key and press R\n\n";
-        msg += "Write 'optionalfeatures' in the box and press Enter\n\nSelect the MSMQ package and click OK\n\n";
-        msg += "Wait for the installation and then close this window\n\nThank you, this will activate the Bug Reporter";
-        System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(msg, "Important", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
+
       }
       return qMsg;
     }

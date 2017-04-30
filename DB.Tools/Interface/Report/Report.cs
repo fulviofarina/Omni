@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Messaging;
+using System.Windows.Forms;
 using DB.Properties;
 using Msn;
+using Rsx;
 
 namespace DB.Tools
 {
@@ -24,7 +26,7 @@ namespace DB.Tools
         private static string problemsWithReport = "Problems while generating Report!";
         private static string shouldRestart = "Do you want to restart the program now?";
         private static string startOrExit = "Restart or Exit?";
-
+        private static string restartingOk = "Restarting succeeded...";
         //SHITTY
         ///SHITTY
         /// </summary>
@@ -56,18 +58,7 @@ namespace DB.Tools
 
         private Pop msn = null;
 
-        public void Test()
-        {
-            try
-            {
-                // bugQM.Formatter = new ActiveXMessageFormatter();// (new Type[] { typeof(LINAA) });
-                // bugQM.Send(Interface.Get()); bugQM.BeginReceive();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+   
 
         private static ArrayList getPathsToAttachments(ref System.Messaging.Message w)
         {

@@ -195,4 +195,8 @@
   <data name="DevFiles" xml:space="preserve">
     <value>\Files\</value>
   </data>
+  <data name="msmq" xml:space="preserve">
+    <value>msmq.bat</value>
+    <comment>script 1 for MSMQ</comment>
+  </data>
 </root>

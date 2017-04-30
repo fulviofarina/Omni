@@ -38,7 +38,6 @@ namespace DB.UI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BN = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.BS = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -51,17 +50,22 @@ namespace DB.UI
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.channelsSave = new System.Windows.Forms.ToolStripButton();
             this.DGV = new System.Windows.Forms.DataGridView();
+            this.TLP = new System.Windows.Forms.TableLayoutPanel();
             this.Reactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fUnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AlphaUnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kepi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FluxType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.TLP = new System.Windows.Forms.TableLayoutPanel();
+            this.BellFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
             this.BN.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
@@ -98,18 +102,9 @@ namespace DB.UI
             this.BN.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.BN.Name = "BN";
             this.BN.PositionItem = this.bindingNavigatorPositionItem;
-            this.BN.Size = new System.Drawing.Size(745, 31);
+            this.BN.Size = new System.Drawing.Size(885, 31);
             this.BN.TabIndex = 0;
             this.BN.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 28);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
             // BS
             // 
@@ -118,22 +113,19 @@ namespace DB.UI
             // 
             // Linaa
             // 
-        //    this.Linaa.CurrentPref = null;
             this.Linaa.DataSetName = "LINAA";
             this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
             this.Linaa.EnforceConstraints = false;
             this.Linaa.FolderPath = null;
-          
-           // this.Linaa.IStore = this.Linaa;
             this.Linaa.Locale = new System.Globalization.CultureInfo("");
-      //      this.Linaa.Notify = null;
+            this.Linaa.QTA = null;
             this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.Linaa.TAM = null;
             // 
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 28);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(47, 28);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
             // 
@@ -207,6 +199,15 @@ namespace DB.UI
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 31);
             // 
+            // bindingNavigatorAddNewItem
+            // 
+            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 28);
+            this.bindingNavigatorAddNewItem.Text = "Add new";
+            // 
             // channelsSave
             // 
             this.channelsSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -230,10 +231,14 @@ namespace DB.UI
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn4,
+            this.fUnc,
             this.dataGridViewTextBoxColumn3,
+            this.AlphaUnc,
             this.kth,
             this.kepi,
-            this.FluxType});
+            this.FluxType,
+            this.BellFactor,
+            this.FC});
             this.DGV.DataSource = this.BS;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -248,8 +253,24 @@ namespace DB.UI
             this.DGV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGV.Name = "DGV";
             this.DGV.RowTemplate.Height = 24;
-            this.DGV.Size = new System.Drawing.Size(739, 415);
+            this.DGV.Size = new System.Drawing.Size(879, 415);
             this.DGV.TabIndex = 1;
+            // 
+            // TLP
+            // 
+            this.TLP.ColumnCount = 1;
+            this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP.Controls.Add(this.DGV, 0, 1);
+            this.TLP.Controls.Add(this.BN, 0, 0);
+            this.TLP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TLP.Location = new System.Drawing.Point(0, 0);
+            this.TLP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TLP.Name = "TLP";
+            this.TLP.RowCount = 2;
+            this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.888889F));
+            this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.11111F));
+            this.TLP.Size = new System.Drawing.Size(885, 450);
+            this.TLP.TabIndex = 2;
             // 
             // Reactor
             // 
@@ -271,10 +292,10 @@ namespace DB.UI
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.DataPropertyName = "IrReqCode";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Code";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Prefix Code";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ToolTipText = "Channel Identifier";
-            this.dataGridViewTextBoxColumn5.Width = 59;
+            this.dataGridViewTextBoxColumn5.Width = 90;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -287,6 +308,14 @@ namespace DB.UI
             this.dataGridViewTextBoxColumn4.ToolTipText = "thermal-to-epithermal fluence ratio";
             this.dataGridViewTextBoxColumn4.Width = 36;
             // 
+            // fUnc
+            // 
+            this.fUnc.DataPropertyName = "fUnc";
+            this.fUnc.HeaderText = "fUnc";
+            this.fUnc.Name = "fUnc";
+            this.fUnc.ToolTipText = "in %";
+            this.fUnc.Width = 56;
+            // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.DataPropertyName = "Alpha";
@@ -297,6 +326,14 @@ namespace DB.UI
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ToolTipText = "epithermal shape parameter";
             this.dataGridViewTextBoxColumn3.Width = 62;
+            // 
+            // AlphaUnc
+            // 
+            this.AlphaUnc.DataPropertyName = "AlphaUnc";
+            this.AlphaUnc.HeaderText = "AlphaUnc";
+            this.AlphaUnc.Name = "AlphaUnc";
+            this.AlphaUnc.ToolTipText = "in %";
+            this.AlphaUnc.Width = 82;
             // 
             // kth
             // 
@@ -328,32 +365,31 @@ namespace DB.UI
             this.FluxType.Name = "FluxType";
             this.FluxType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.FluxType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.FluxType.Width = 76;
+            this.FluxType.Width = 75;
             // 
-            // TLP
+            // BellFactor
             // 
-            this.TLP.ColumnCount = 1;
-            this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TLP.Controls.Add(this.DGV, 0, 1);
-            this.TLP.Controls.Add(this.BN, 0, 0);
-            this.TLP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TLP.Location = new System.Drawing.Point(0, 0);
-            this.TLP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TLP.Name = "TLP";
-            this.TLP.RowCount = 2;
-            this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.888889F));
-            this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.11111F));
-            this.TLP.Size = new System.Drawing.Size(745, 450);
-            this.TLP.TabIndex = 2;
+            this.BellFactor.DataPropertyName = "BellFactor";
+            this.BellFactor.HeaderText = "BellFactor";
+            this.BellFactor.Name = "BellFactor";
+            this.BellFactor.Width = 83;
             // 
-            // ucLinaaChannels
+            // FC
+            // 
+            this.FC.DataPropertyName = "FC";
+            this.FC.HeaderText = "FC";
+            this.FC.Name = "FC";
+            this.FC.ToolTipText = "Typical Comparator Factor";
+            this.FC.Width = 45;
+            // 
+            // ucChannels
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.TLP);
             this.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "ucLinaaChannels";
-            this.Size = new System.Drawing.Size(745, 450);
+            this.Name = "ucChannels";
+            this.Size = new System.Drawing.Size(885, 450);
             ((System.ComponentModel.ISupportInitialize)(this.BN)).EndInit();
             this.BN.ResumeLayout(false);
             this.BN.PerformLayout();
@@ -389,9 +425,13 @@ namespace DB.UI
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fUnc;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AlphaUnc;
         private System.Windows.Forms.DataGridViewTextBoxColumn kth;
         private System.Windows.Forms.DataGridViewTextBoxColumn kepi;
         private System.Windows.Forms.DataGridViewComboBoxColumn FluxType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BellFactor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FC;
     }
 }

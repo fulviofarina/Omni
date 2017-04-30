@@ -10,6 +10,17 @@ namespace DB.UI
     {
         private Interface Interface;
         // 
+        public EventHandler CheckChanged
+        {
+
+            set
+            {
+                this.aARadiusCheckBox.CheckedChanged += value;
+                this.aAFillHeightCheckBox.CheckedChanged += value;
+                this.calcDensityCheckBox.CheckedChanged += value;
+                this.calcMassCheckBox.CheckedChanged += value;
+            }
+        }
 
         public void Set(ref Interface inter)
         {
@@ -39,6 +50,7 @@ namespace DB.UI
                 this.showSolangCheckBox.Enabled = false;
                 this.fillBySpectraCheckBox.Enabled = false;
                 this.showSampleDescriptionCheckBox.Enabled = false;
+               
 
            //     this.PrefBS.ResetBindings(true);
              //   this.SSFPref.ResetBindings(true);
@@ -125,7 +137,7 @@ namespace DB.UI
             this.doMatSSFCheckBox.DataBindings.Add(bindings["DoMatSSF"] as Binding);
             this.doCKCheckBox.DataBindings.Add(bindings["DoCK"] as Binding);
             this.calcDensityCheckBox.DataBindings.Add(bindings["CalcDensity"] as Binding);
-
+            this.calcMassCheckBox.DataBindings.Add(bindings["CalcMass"] as Binding);
             this.loopCheckBox.DataBindings.Add(bindings["Loop"] as Binding);
             this.showMatSSFCheckBox.DataBindings.Add(bindings["ShowMatSSF"] as Binding);
 

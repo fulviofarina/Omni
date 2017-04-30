@@ -17,6 +17,7 @@ namespace DB.UI
 
             LIMS.Form.Visible = true;
             LIMS.Form.Opacity = 100;
+           
             LIMS.Form.BringToFront();
         }
 
@@ -29,6 +30,7 @@ namespace DB.UI
                
                 c.ParentForm.Visible = show;
                 c.ParentForm.Opacity = 100;
+                c.ParentForm.TopMost = show;
                 c.ParentForm.BringToFront();
             }
             catch (Exception ex)

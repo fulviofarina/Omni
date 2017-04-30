@@ -60,6 +60,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
@@ -72,8 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Creator\Populate\Creator.Populate.cs" />
-    <Compile Include="Creator\Populate\Creator.Populate.Public.cs" />
+    <Compile Include="Creator\Creator.SQL.cs" />
     <Compile Include="Creator\Creator.Public.cs" />
     <Compile Include="Interface\BS\BindingSources.Public.cs" />
     <Compile Include="Interface\BS\BindingSources.cs" />

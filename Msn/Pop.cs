@@ -54,6 +54,8 @@ namespace Msn
             Msg(title, msg, ToolTipIcon.Info);
 
             if (percentage == 100) this.iconic.Image = Notifier.MakeBitMap(":)", seg, Color.White);
+
+            Application.DoEvents();
         }
 
         public int DisplayInterval = 8000;
@@ -171,8 +173,17 @@ namespace Msn
 
         public void Msg(string msg, string title, System.Windows.Forms.ToolTipIcon icon)
         {
-            this.textBoxDescription.Text = msg;
-            this.title.Text = title;
+            try
+            {
+                this.textBoxDescription.Text = msg;
+                this.title.Text = title;
+            }
+            catch (Exception)
+            {
+
+                
+            }            
+        
         }
 
         private void n_Tick(object sender, EventArgs e)

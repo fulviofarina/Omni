@@ -102,11 +102,11 @@ namespace Rsx
         {
 
          
-                DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.All);
+                DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.Owner);
 
                 if (!Directory.Exists(path) || overrider)
                 {
-                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(path, secutiry);
                 }
           
         }

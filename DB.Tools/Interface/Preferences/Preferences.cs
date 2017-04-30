@@ -113,18 +113,24 @@ namespace DB.Tools
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
                 // if (this.currentSSFPref == null) {
-                PreferencesRow p = dt.LoadDataRow(row.ItemArray, true) as PreferencesRow;
+                PreferencesRow original = row as PreferencesRow;
+            
+                PreferencesRow p = dt.LoadDataRow(original.ItemArray, true) as PreferencesRow;
                 p.WindowsUser = WindowsUser;
-                // }
                 p.Check();
+                // }
+                //    p.Check();
             }
             else
             {
                 SSFPrefRow p = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
+                SSFPrefRow original = row as SSFPrefRow;
+               
                 p.WindowsUser = WindowsUser;
+                p.Check();
 
                 // }
-                p.Check();
+                // p.Check();
             }
         }
 

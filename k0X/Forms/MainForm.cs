@@ -400,9 +400,13 @@ namespace k0X
                 msn = new Pop(false);
 
                 //Build
-                Creator.Build(ref LIMS.Interface, ref msn);
+                Creator.Build(ref LIMS.Interface);
                 Creator.CheckDirectories();
-                bool ok = Creator.Prepare(0);
+                bool ok = Creator.PrepareSQL();
+                if (ok)
+                {
+                    Creator.LoadMethods(0);
+                }
                 //       string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn, 0);
                 //
                 //set medium callback
@@ -458,7 +462,7 @@ namespace k0X
                 else
                 {
                     //LOAD
-                    DB.Tools.Creator.Load();
+                    Creator.Run();
                 }
             }
             catch (SystemException ex)

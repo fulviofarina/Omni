@@ -116,7 +116,17 @@ namespace DB.UI
                 connectionBox = value;
             }
         }
+        private Action explorer;
 
+        public Action ExplorerClick
+        {
+
+
+            set
+            {
+                explorer = value;
+            }
+        }
         public void  ShowProgress()
         {
             Application.DoEvents();
@@ -144,6 +154,11 @@ namespace DB.UI
         private void connectionsTSMI_Click(object sender, EventArgs e)
         {
             connectionBox?.Invoke();
+        }
+
+        private void explorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            explorer?.Invoke();
         }
     }
 }

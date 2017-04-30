@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Linq.cs">
+      <DependentUpon>Linq.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Linq.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

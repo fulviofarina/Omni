@@ -48,6 +48,8 @@
             this.doSolangCheckBox = new System.Windows.Forms.CheckBox();
             this.showSolangCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.calcMassCheckBox = new System.Windows.Forms.CheckBox();
+            this.roundingTextBox = new System.Windows.Forms.TextBox();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
             this.showMatSSFCheckBox = new System.Windows.Forms.CheckBox();
             this.doCKCheckBox = new System.Windows.Forms.CheckBox();
@@ -58,7 +60,6 @@
             this.showOtherCheckBox = new System.Windows.Forms.CheckBox();
             this.PrefBS = new System.Windows.Forms.BindingSource(this.components);
             this.SSFPref = new System.Windows.Forms.BindingSource(this.components);
-            this.roundingTextBox = new System.Windows.Forms.TextBox();
             minAreaLabel = new System.Windows.Forms.Label();
             maxUncLabel = new System.Windows.Forms.Label();
             windowALabel = new System.Windows.Forms.Label();
@@ -113,6 +114,16 @@
             windowBLabel.Size = new System.Drawing.Size(84, 21);
             windowBLabel.TabIndex = 10;
             windowBLabel.Text = "Window B";
+            // 
+            // roundingLabel
+            // 
+            roundingLabel.AutoSize = true;
+            roundingLabel.ForeColor = System.Drawing.Color.DarkOrange;
+            roundingLabel.Location = new System.Drawing.Point(3, 534);
+            roundingLabel.Name = "roundingLabel";
+            roundingLabel.Size = new System.Drawing.Size(81, 21);
+            roundingLabel.TabIndex = 10;
+            roundingLabel.Text = "Rounding";
             // 
             // splitContainer1
             // 
@@ -290,6 +301,7 @@
             this.tableLayoutPanel2.AutoScroll = true;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.calcMassCheckBox, 0, 3);
             this.tableLayoutPanel2.Controls.Add(roundingLabel, 0, 10);
             this.tableLayoutPanel2.Controls.Add(this.roundingTextBox, 0, 11);
             this.tableLayoutPanel2.Controls.Add(this.loopCheckBox, 0, 7);
@@ -300,11 +312,10 @@
             this.tableLayoutPanel2.Controls.Add(this.aAFillHeightCheckBox, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.aARadiusCheckBox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.showOtherCheckBox, 0, 7);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 11;
+            this.tableLayoutPanel2.RowCount = 12;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -316,15 +327,33 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(295, 592);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
+            // calcMassCheckBox
+            // 
+            this.calcMassCheckBox.AutoCheck = false;
+            this.calcMassCheckBox.Location = new System.Drawing.Point(3, 165);
+            this.calcMassCheckBox.Name = "calcMassCheckBox";
+            this.calcMassCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.calcMassCheckBox.TabIndex = 12;
+            this.calcMassCheckBox.Text = "Find Mass";
+            this.calcMassCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // roundingTextBox
+            // 
+            this.roundingTextBox.Location = new System.Drawing.Point(3, 558);
+            this.roundingTextBox.Name = "roundingTextBox";
+            this.roundingTextBox.Size = new System.Drawing.Size(100, 29);
+            this.roundingTextBox.TabIndex = 11;
+            this.roundingTextBox.Text = "N4";
+            // 
             // loopCheckBox
             // 
-          //  this.loopCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.SSFPref, "Rounding", true));
             this.loopCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loopCheckBox.Location = new System.Drawing.Point(3, 276);
+            this.loopCheckBox.Location = new System.Drawing.Point(3, 363);
             this.loopCheckBox.Name = "loopCheckBox";
             this.loopCheckBox.Size = new System.Drawing.Size(289, 105);
             this.loopCheckBox.TabIndex = 10;
@@ -334,7 +363,7 @@
             // showMatSSFCheckBox
             // 
             this.showMatSSFCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.showMatSSFCheckBox.Location = new System.Drawing.Point(3, 387);
+            this.showMatSSFCheckBox.Location = new System.Drawing.Point(3, 474);
             this.showMatSSFCheckBox.Name = "showMatSSFCheckBox";
             this.showMatSSFCheckBox.Size = new System.Drawing.Size(289, 57);
             this.showMatSSFCheckBox.TabIndex = 9;
@@ -345,7 +374,7 @@
             // 
             this.doCKCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doCKCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.doCKCheckBox.Location = new System.Drawing.Point(3, 219);
+            this.doCKCheckBox.Location = new System.Drawing.Point(3, 249);
             this.doCKCheckBox.Name = "doCKCheckBox";
             this.doCKCheckBox.Size = new System.Drawing.Size(289, 51);
             this.doCKCheckBox.TabIndex = 8;
@@ -356,7 +385,7 @@
             // 
             this.doMatSSFCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doMatSSFCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.doMatSSFCheckBox.Location = new System.Drawing.Point(3, 165);
+            this.doMatSSFCheckBox.Location = new System.Drawing.Point(3, 195);
             this.doMatSSFCheckBox.Name = "doMatSSFCheckBox";
             this.doMatSSFCheckBox.Size = new System.Drawing.Size(289, 48);
             this.doMatSSFCheckBox.TabIndex = 6;
@@ -365,7 +394,6 @@
             // 
             // calcDensityCheckBox
             // 
-            this.calcDensityCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calcDensityCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.calcDensityCheckBox.Location = new System.Drawing.Point(3, 3);
             this.calcDensityCheckBox.Name = "calcDensityCheckBox";
@@ -376,7 +404,6 @@
             // 
             // aAFillHeightCheckBox
             // 
-            this.aAFillHeightCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aAFillHeightCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aAFillHeightCheckBox.Location = new System.Drawing.Point(3, 111);
             this.aAFillHeightCheckBox.Name = "aAFillHeightCheckBox";
@@ -387,7 +414,6 @@
             // 
             // aARadiusCheckBox
             // 
-            this.aARadiusCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aARadiusCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aARadiusCheckBox.Location = new System.Drawing.Point(3, 57);
             this.aARadiusCheckBox.Name = "aARadiusCheckBox";
@@ -400,7 +426,7 @@
             // 
             this.showOtherCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.showOtherCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.showOtherCheckBox.Location = new System.Drawing.Point(3, 450);
+            this.showOtherCheckBox.Location = new System.Drawing.Point(3, 306);
             this.showOtherCheckBox.Name = "showOtherCheckBox";
             this.showOtherCheckBox.Size = new System.Drawing.Size(289, 51);
             this.showOtherCheckBox.TabIndex = 2;
@@ -414,25 +440,6 @@
             // SSFPref
             // 
             this.SSFPref.DataSource = typeof(DB.LINAA.SSFPrefDataTable);
-            // 
-            // roundingLabel
-            // 
-            roundingLabel.AutoSize = true;
-            roundingLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            roundingLabel.Location = new System.Drawing.Point(3, 504);
-            roundingLabel.Name = "roundingLabel";
-            roundingLabel.Size = new System.Drawing.Size(81, 21);
-            roundingLabel.TabIndex = 10;
-            roundingLabel.Text = "Rounding";
-            // 
-            // roundingTextBox
-            // 
-        //    this.roundingTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SSFPref, "Rounding", true));
-            this.roundingTextBox.Location = new System.Drawing.Point(3, 528);
-            this.roundingTextBox.Name = "roundingTextBox";
-            this.roundingTextBox.Size = new System.Drawing.Size(100, 29);
-            this.roundingTextBox.TabIndex = 11;
-            this.roundingTextBox.Text = "N4";
             // 
             // ucPreferences
             // 
@@ -482,5 +489,6 @@
         private System.Windows.Forms.CheckBox showMatSSFCheckBox;
         private System.Windows.Forms.CheckBox loopCheckBox;
         private System.Windows.Forms.TextBox roundingTextBox;
+        private System.Windows.Forms.CheckBox calcMassCheckBox;
     }
 }

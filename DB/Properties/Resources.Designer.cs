@@ -169,6 +169,15 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to msmq.bat.
+        /// </summary>
+        public static string msmq {
+            get {
+                return ResourceManager.GetString("msmq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferences.
         /// </summary>
         public static string Preferences {

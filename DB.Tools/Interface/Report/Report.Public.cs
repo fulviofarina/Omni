@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Messaging;
+using System.Security.Permissions;
 using System.Windows.Forms;
 using DB.Properties;
 using Msn;
@@ -9,15 +12,93 @@ using Rsx;
 
 namespace DB.Tools
 {
-
     public partial class Report : IReport
     {
+        /*
+        public partial class MSMQInstaller
+        {
+            public MSMQInstaller()
+            {
+                InitializeComponent();
+            }
+
+            [DllImport("kernel32")]
+            private static extern IntPtr LoadLibrary(string lpFileName);[DllImport("kernel32.dll", SetLastError = true)]
+            private static extern bool FreeLibrary(IntPtr hModule);
+            public override void Install(IDictionary stateSaver)
+
+            {
+                base.Install(stateSaver); bool loaded; try { IntPtr handle = LoadLibrary("Mqrt.dll"); if (handle == IntPtr.Zero || handle.ToInt32() == 0) { loaded = false; } else { loaded = true; FreeLibrary(handle); } } catch { loaded = false; }
+                if (!loaded)
+                {
+                    if (Environment.OSVersion.Version.Major < 6)
+                    // Windows XP or earlier
+                    { string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "MSMQAnswer.ans"); using (System.IO.StreamWriter writer = new System.IO.StreamWriter(fileName)) { writer.WriteLine("[Version]"); writer.WriteLine("Signature = \"$Windows NT$\""); writer.WriteLine(); writer.WriteLine("[Global]"); writer.WriteLine("FreshMode = Custom"); writer.WriteLine("MaintenanceMode = RemoveAll"); writer.WriteLine("UpgradeMode = UpgradeOnly"); writer.WriteLine(); writer.WriteLine("[Components]"); writer.WriteLine("msmq_Core = ON"); writer.WriteLine("msmq_LocalStorage = ON"); } using (System.Diagnostics.Process p = new System.Diagnostics.Process()) { System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo("sysocmgr.exe", "/i:sysoc.inf /u:\"" + fileName + "\""); p.StartInfo = start; p.Start(); p.WaitForExit(); } }
+                    else
+                    // Vista or later
+                    { using (System.Diagnostics.Process p = new System.Diagnostics.Process()) { System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo("ocsetup.exe", "MSMQ-Container;MSMQ-Server /passive"); p.StartInfo = start; p.Start(); p.WaitForExit(); } }
+                }
+            }
+        }
+        */
+        public  string RestartFile
+        {
+            get
+            {
+                return Application.StartupPath + Resources.DevFiles + Resources.Restarting;
+            }
+        }
+        public void SendToRestartRoutine(string texto)
+        {
+            string cmd = Interface.IReport.RestartFile;
+
+            try
+            {
+                bool shouldReport = System.IO.File.Exists(cmd);
+                //it will write what to send to the Restarting File
+                //but it will not send it until next restart...
+                if (shouldReport)
+                {
+                    File.AppendAllText(cmd, texto);
+                    // GenerateReport("Restarting succeeded...", string.Empty, string.Empty,
+                    // DataSetName, email); System.IO.File.Delete(cmd);
+                }
+                else File.WriteAllText(cmd, texto);
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+            }
+        }
         public Pop Msn
         {
             get { return msn; }
             set { msn = value; }
         }
+        public bool CheckRestartFile()
+        {
+            //RESTART FILE ROUTINE
+            //   string cmd = RestartFile;
+            bool shouldReport = File.Exists(RestartFile);
 
+            if (shouldReport)
+            {
+                string email = File.ReadAllText(RestartFile);
+                Interface.IReport.GenerateReport(restartingOk, string.Empty, string.Empty, Interface.IDB.DataSetName, email);
+                File.Delete(RestartFile);
+            }
+            //  shouldReport = shouldReport || Interface.IDB.Exceptions.Count != 0;
+
+            //should send bug report?
+            //    if (!shouldReport) return false;
+
+            //yes...
+
+            //BUG REPORT ROUTINE 
+            Interface.IReport.GenerateBugReport();
+
+            return true;
+        }
         public void AskToRestart()
         {
             MessageBoxIcon i = MessageBoxIcon.Information;
@@ -48,36 +129,96 @@ namespace DB.Tools
                 Interface.IMain.AddException(ex);
             }
         }
-
-        public void GenerateBugReport()
+        public bool CheckMSMQ()
         {
             try
             {
-                MessageQueue qm = GetMessageQueue(QM.QMExceptions);
+                string test = Properties.QM.QMExceptions;
+                //install MSMQ
+                MessageQueue qm = Rsx.Emailer.CreateMQ(test, null);
+                if (qm == null)
+                {
+                  
 
-                if (qm == null) return;
+                    string msg = "This program will install Microsoft Message Queue Server\n\n";
+                    //  msg += "You'll need to hold the Window's Logo Key and press R\n\n";
+                    // msg += "Write 'optionalfeatures' in the box and press Enter\n\nSelect the MSMQ package and click OK\n\n";
+                    msg += "Wait for the installation to finish\n\nYou will need to restart the system afterwards.\nThank you\n";
+                    DialogResult result = MessageBox.Show(msg, "Important", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
+                    string workDir = Application.StartupPath + Resources.DevFiles;
+                    string path = workDir + Resources.msmq;
+
+                    //one process to create the VB SCRIPTS
+                    Emailer.LoadScript(path, string.Empty, workDir);
+
+                    //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
+                    workDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    workDir += "\\Temp";
+                    path = "/c " + workDir + "\\vb";
+                    string cmd = "cmd";
+                    Emailer.LoadScript(cmd, path + ".vbs", workDir);
+                    //   startCMDProcess(cmd, path + "2.vbs", workDir);
+
+
+
+
+                    return false;
+                }
+                else
+                {
+
+                    qm.Dispose();
+                    qm = null;
+
+                //    return true;
+                }
+
+
+
+            }
+            catch (Exception ex2)
+            {
+                Interface.IReport.Msg(ex2.InnerException.Message, ex2.Message, false);
+                Interface.IMain.AddException(ex2);
+                return false;
+            }
+
+            return true;
+        }
+        public void GenerateBugReport()
+        {
+            MessageQueue qm = getMessageQueue(QM.QMExceptions);
+            if (qm == null) return;
+
+            try
+            {
                 generateBugReport(ref qm);
 
                 bugresult = qm.BeginReceive();
+
+                GenerateUserInfoReport();
+
+
+
             }
             catch (Exception ex)
             {
-                this.Msg(ex.InnerException.Message, ex.Message, false);
+            //    this.Msg(ex.InnerException.Message, ex.Message, false);
                 Interface.IMain.AddException(ex);
             }
         }
 
         public void GenerateReport(string labelReport, object path, string extra, string module, string email)
         {
+            string queuePath = QM.QMAcquisitions + "." + module + "." + email;
+            MessageQueue qm = getMessageQueue(queuePath);
+            if (qm == null) return;
+
             try
             {
                 //send path as the body of the QMsg
                 //put a extended body to the email please
-
-                string queuePath = QM.QMAcquisitions + "." + module + "." + email;
-                MessageQueue qm = GetMessageQueue(queuePath);
-                if (qm == null) return;
 
                 string title = labelReport + " - " + module;
 
@@ -89,12 +230,13 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                this.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
                 Interface.IMain.AddException(ex);
             }
         }
 
-        public MessageQueue GetMessageQueue(string QUEUE_PATH)
+     //   [PrincipalPermission(SecurityAction.Demand, Authenticated =true, Role = @"BUILTIN\Administrators", Unrestricted = false)]
+        private MessageQueue getMessageQueue(string QUEUE_PATH)
         {
             MessageQueue qm = null;
 
@@ -117,15 +259,91 @@ namespace DB.Tools
                         throw new Exception(bugReportProblem, new Exception(bugReportNotGen));
                     }
                 }
+
+             
             }
             catch (Exception ex)
             {
-                this.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
                 Interface.IMain.AddException(ex);
+
+               
             }
             return qm;
         }
+        /*
+        private void installMSMQOLD()
+        {
+            string arg = " /online /get-features | find.exe /i \"mq\"";
+            string arg2 = " /online /enable-feature /featurename:\"MSMQ-Server\"";
+            //string pre = string.Empty;
+            string pre = " /profile /user:" +  Interface.ICurrent.WindowsUser;
 
+            string pre2 = pre;
+            pre += " \"dism" + arg + "\"";
+            pre2 += " \"dism" + arg2 + "\"";
+
+            // string pre2 = "runas /profile /env /user:" + Interface.ICurrent.WindowsUser;
+
+            System.Diagnostics.ProcessStartInfo info = new ProcessStartInfo("runas", pre);
+            System.Diagnostics.ProcessStartInfo info2 = new ProcessStartInfo("runas", pre2);
+            Process pro = new Process();
+            pro.StartInfo = info;
+            Process pro2 = new Process();
+            pro2.StartInfo = info2;
+
+            // info.LoadUserProfile = true; info2.LoadUserProfile = true;
+            info.UseShellExecute = true;
+            info2.UseShellExecute = true;
+
+
+            pro.Start();
+            //  pro.
+            // info. pro.WaitForExit(30000);
+
+            pro2.Start();
+        }
+
+            private void installMSMQ()
+        {
+            string arg = "\\\"/online /get-features | find.exe /i \"mq\"\\\"";
+            string arg2 = "\\\"/online /enable-feature /featurename:\"MSMQ-Server\"\\\"";
+            //string pre = string.Empty;
+            string pre = " /profile /user:" + "Administrator";//Interface.ICurrent.WindowsUser;
+
+            string pre2 = pre;
+            pre += " \"dism " + arg;// + "\"";  
+            pre2 += " \"dism " + arg2;// + "\"";
+
+            // string pre2 = "runas /profile /env /user:" + Interface.ICurrent.WindowsUser;
+
+            System.Diagnostics.ProcessStartInfo info = new ProcessStartInfo("runas", pre);
+            System.Diagnostics.ProcessStartInfo info2 = new ProcessStartInfo("runas", pre2);
+            Process pro = new Process();
+            pro.StartInfo = info;
+        
+            Process pro2 = new Process();
+            pro2.StartInfo = info2;
+
+             info.LoadUserProfile = true;
+            info2.LoadUserProfile = true;
+        //    info.UseShellExecute = true;
+           // info2.UseShellExecute = true;
+        //    info.RedirectStandardOutput = true;
+       //     info2.RedirectStandardOutput = true;
+      
+            pro.Start();
+            //  pro.
+            //   pro.BeginOutputReadLine();
+            //       pro.BeginOutputReadLine();
+
+            //    string result = pro.StandardOutput.ReadLine();
+            // info. pro.WaitForExit(30000);
+
+
+            pro2.Start();
+        }
+        */
         /// <summary>
         /// Notifies the given message and title with an Info icon
         /// </summary>
@@ -136,7 +354,7 @@ namespace DB.Tools
             this.msn.Msg(msg, title, ok);
         }
 
-        public void ReportFinished()
+        public void SpeakLoadingFinished()
         {
             if (Interface.IDB.Exceptions.Count != 0)
             {
@@ -155,7 +373,7 @@ namespace DB.Tools
             this.msn.Speak(text);
         }
 
-        public void UserInfo()
+        public void GenerateUserInfoReport()
         {
             Rsx.EDB en = new EDB();
 
@@ -196,10 +414,10 @@ namespace DB.Tools
         {
             Interface.IStore.SaveExceptions();
 
-            this.Msg(bePatient, bugReportOnWay);
+            Msg(bePatient, bugReportOnWay);
 
             string path = Interface.IMain.FolderPath + Resources.Exceptions;
-            IEnumerable<string> exceptions = System.IO.Directory.EnumerateFiles(path);
+            IEnumerable<string> exceptions = Directory.EnumerateFiles(path);
             int cnt = exceptions.Count();
             if (cnt != 0)
             {
@@ -207,14 +425,13 @@ namespace DB.Tools
                 {
                     System.Messaging.Message w = null;
                     string bodyOfBugEmail = "Should I add more comments?";
-
                     w = Emailer.CreateQMsg(excFile, "Bug Report", bodyOfBugEmail);
                     Emailer.SendQMsg(ref qm, ref w);
                     // System.IO.File.Delete(excFile);
                 }
-                this.Msg(BUGS_ONTRAY, cnt + " scheduled to be sent", true);
+                Msg(BUGS_ONTRAY, cnt + " scheduled to be sent", true);
             }
-            else this.Msg(bugReportNotGen, nothingBuggy);
+            else Msg(bugReportNotGen, nothingBuggy);
 
             exceptions = null;
         }
@@ -222,9 +439,20 @@ namespace DB.Tools
         public Report()
         {
         }
+
         public Report(ref Interface inter)
         {
             Interface = inter;
+
+          //  Pop msn;
+
+            if (msn == null)
+            {
+                msn = new Pop(true);
+             //   LIMS.Interface.IReport.Msn = msn;
+                // msn.ParentForm.Opacity = 100;
+            }
+
         }
     }
 }

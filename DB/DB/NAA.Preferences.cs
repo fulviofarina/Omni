@@ -10,7 +10,7 @@ namespace DB
         {
             public void Check()
             {
-                if (this.IsLastUnitIDNull()) LastUnitID = 0;
+            //    if (this.IsLastUnitIDNull()) LastUnitID = -1;
                 if (this.IsCalcDensityNull()) CalcDensity = true;
                 if (this.IsCalcMassNull()) CalcMass = false;
                 if (IsAAFillHeightNull()) AAFillHeight = false;
@@ -27,7 +27,9 @@ namespace DB
                 //   if (IsAutoLoadNull()) AutoLoad = true;
 
                 if (IsShowMatSSFNull()) ShowMatSSF = false;
-             
+
+        //        this.AcceptChanges();
+
                 Settings.Default.Save();
             }
         }

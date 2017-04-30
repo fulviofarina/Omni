@@ -43,11 +43,20 @@ namespace DB.UI
             else if (pro.GetType().Equals(typeof(ucPreferences)))
             {
                 IucPreferences pref = pro as IucPreferences;
+                pref.CheckChanged = delegate
+                {
+                    paintColumns();
+                };
                 pref.SetRoundingBinding(ref unitBindings, ref sampleBindings);
+              
                 destiny = null;
+               
+
             }
             destiny?.Controls.Add(pro as Control);
         }
+
+     
 
         public void CalculateUnit(Action showProgress, ref bool cancelCalculations)
         {
@@ -184,14 +193,15 @@ namespace DB.UI
             {
                 Dumb.FD(ref this.SampleBS);
                 //desaparece esto porque tiene controles para developers, los checkboxes
-                this.tableLayoutPanel1.Visible = false;
+             //   this.tableLayoutPanel1.Visible = false;
 
                 sampleDGV.DataSource = Interface.IBS.SelectedSubSample;
 
                 //otherwise this shit shows weird text over text
                 Interface.IBS.SelectedSubSample.CurrentChanged += delegate
                 {
-                    this.sampleDGV.Select();
+                    this.sampleDGV.Refresh();
+                   // this.sampleDGV.Select();
                 };
                
 
@@ -199,8 +209,20 @@ namespace DB.UI
                 sampleBindings = setSampleBindings();
                 unitBindings = setUnitBindings();
 
-                setCheckBindings();
+              //  setCheckBindings();
                 setEnabledBindings();
+
+
+                DataGridViewColumn col = this.volDataGridViewTextBoxColumn;
+                paintColumn(true, ref col);
+
+                paintColumns();
+
+               // checkedChanged(null, EventArgs.Empty);
+             
+                // sampleDGV.Paint += SampleDGV_Paint;
+          //      sampleDGV.Paint += SampleDGV_Paint;
+              //  sampleDGV.Invalidated += SampleDGV_Invalidated;
 
                 errorProvider1.DataMember = Interface.IDB.Unit.TableName;
                 errorProvider1.DataSource = Interface.IBS.Units;
@@ -219,44 +241,51 @@ namespace DB.UI
                 // Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
         }
-        private void checkedChanged(object sender, EventArgs e)
+
+    
+
+     
+
+        private void paintColumns()
         {
-            bool state = (sender as CheckBox).Checked;
+            bool readOnly = Interface.IPreferences.CurrentSSFPref.AAFillHeight;
+            DataGridViewColumn columna = this.fillHeightDataGridViewTextBoxColumn;
+            paintColumn(readOnly, ref columna);
 
-            DataGridViewColumn columna = null;
+            // Interface.IPreferences.CurrentSSFPref.EndEdit();
+            columna = this.gross1DataGridViewTextBoxColumn;
+            readOnly = Interface.IPreferences.CurrentSSFPref.CalcMass;
+            paintColumn(readOnly, ref columna);
 
-            if (sender.Equals(checkBox1))
-            {
-                columna = this.radiusDataGridViewTextBoxColumn;
-            }
-            else if (sender.Equals(checkBox2))
-            {
-                columna = this.fillHeightDataGridViewTextBoxColumn;
-            }
-            else if (sender.Equals(checkBox4))
-            {
-                columna = this.gross1DataGridViewTextBoxColumn;
-            }
-            else if (sender.Equals(checkBox3))
-            {
-                columna = this.calcDensityDataGridViewTextBoxColumn;
-            }
+            readOnly = Interface.IPreferences.CurrentSSFPref.AARadius;
+            columna = this.radiusDataGridViewTextBoxColumn;
+            paintColumn(readOnly, ref columna);
+
+            readOnly = Interface.IPreferences.CurrentSSFPref.CalcDensity;
+            columna = this.calcDensityDataGridViewTextBoxColumn;
+            paintColumn(readOnly, ref columna);
+        }
+
+        private static void paintColumn(bool readOnly, ref DataGridViewColumn columna)
+        {
             Color color2 = Color.Yellow;
             Color colors = Color.Gray;
             // Color colors2 = Color.White;
-            if (!state)
+            if (!readOnly)
             {
                 colors = Color.White;
                 color2 = Color.Black;
                 // colors2 = Color.Gray;
             }
-            columna.ReadOnly = state;
+            columna.ReadOnly = readOnly;
             columna.DefaultCellStyle.BackColor = colors;
             columna.DefaultCellStyle.ForeColor = color2;
-            //this.fillHeightDataGridViewTextBoxColumn.ReadOnly = !state;
-            //this.fillHeightDataGridViewTextBoxColumn.DefaultCellStyle.BackColor = colors2;
+            columna.DefaultCellStyle.SelectionBackColor = colors;
+            columna.DefaultCellStyle.SelectionForeColor = color2;
         }
-
+   
+        
+        /*
         private void setCheckBindings()
         {
             string column;
@@ -265,7 +294,7 @@ namespace DB.UI
             column = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
             Binding renabled = checkBindings[column] as Binding; //new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
 
-            checkBox1.Visible = true;
+           // checkBox1.Visible = true;
             checkBox1.DataBindings.Add(renabled);
             checkBox1.CheckedChanged += checkedChanged;
 
@@ -288,7 +317,7 @@ namespace DB.UI
 
             // return column;
         }
-
+        */
         private void setEnabledBindings()
         {
             string column;
@@ -376,7 +405,7 @@ namespace DB.UI
 
         private Hashtable setUnitBindings()
         {
-            string rounding = "N4";
+            string rounding = "N3";
             rounding = Interface.IPreferences.CurrentSSFPref?.Rounding;
 
             string column;

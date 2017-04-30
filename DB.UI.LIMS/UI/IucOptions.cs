@@ -7,6 +7,7 @@ namespace DB.UI
     {
         //  Action AboutBoxAction { set; }
         Action DatabaseClick { set; }
+        Action ExplorerClick { set; }
         Action PreferencesClick { set; }
         Action AboutBoxAction { set; }
         Action ConnectionBox { set; }

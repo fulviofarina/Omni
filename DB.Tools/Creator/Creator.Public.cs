@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using DB.Linq;
 using DB.Properties;
 using Msn;
+using Rsx;
 
 namespace DB.Tools
 {
@@ -35,7 +37,7 @@ namespace DB.Tools
         /// <param name="Linaa">  referenced database to build (can be a null reference)</param>
         /// <param name="notify"> referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition</param>
-        public static void Build(ref Interface inter, ref Pop msn)
+        public static void Build(ref Interface inter)
         {
             //restarting = false;
 
@@ -50,15 +52,9 @@ namespace DB.Tools
             inter = new Interface(ref LINAA);
 
             Interface = inter;
-            if (msn != null)
-            {
-                Interface.IReport.Msn = msn;
-                // msn.ParentForm.Opacity = 100;
-            }
+      
 
             Cursor.Current = Cursors.Default;
-
-            Interface.IMain.PopulateColumnExpresions();
 
             Interface.IReport.Msg(loading, "Please wait...");
         }
@@ -93,6 +89,8 @@ namespace DB.Tools
             //perform basic loading
 
             Interface.IPreferences.PopulatePreferences();
+
+            Interface.IMain.PopulateColumnExpresions();
 
             Interface.IPreferences.SavePreferences();
 
@@ -152,69 +150,133 @@ namespace DB.Tools
             return eCancel;
         }
 
-        /// <summary>
-        /// The methods are loaded already, just execute...
-        /// </summary>
-        public static void Load()
+        public static void Help()
+        {
+            string path = Interface.IMain.FolderPath + DB.Properties.Resources.Features;
+            if (!System.IO.File.Exists(path)) return;
+
+            Dumb.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
+        }
+
+        public static void LoadMethods(int populNr)
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            if (worker != null)
+            LINAA Linaa = Interface.Get();
+
+            IList<Action> populators = null;
+            IList<Action> populators2 = null;
+
+            Action callback = null;
+
+            Action<int> reporter = null;
+
+
+            //before 0
+       
+                populators = new Action[]
+                {
+           Linaa.PopulateChannels,
+          Linaa.PopulateIrradiationRequests,
+       Linaa.PopulateOrders,
+        Linaa.PopulateProjects
+                };
+
+                IEnumerable<Action> enums = populators;
+                enums = enums.Union(Linaa.PMMatrix());
+                enums = enums.Union(Linaa.PMStd());
+                enums = enums.Union(Linaa.PMDetect());
+
+            populators2 = new Action[]
+         {
+              //   Application.DoEvents,
+             Linaa.PopulateElements,
+       Linaa.PopulateReactions,
+         Linaa.PopulatepValues,
+                 Linaa.PopulateSigmas,
+                   Linaa.PopulateSigmasSal,
+                   Linaa.PopulateYields,
+         };
+                enums = enums.Union(populators2);
+                populators = enums.ToList();
+
+            reporter = Interface.IReport.ReportProgress;
+
+                    callback = delegate
+                {
+                    Creator.mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
+                                                    //wow...
+                    Creator.lastCallBack?.Invoke() ;
+                };
+          
+
+            if (populators != null)
             {
-                worker.RunWorkerAsync(Interface);
+                if (worker != null)
+                {
+                    worker.CancelAsync();
+                    worker.Dispose();
+                    worker = null;
+                }
+                worker = new Loader();
+                worker.Set(populators, callback, reporter);
             }
 
             Cursor.Current = Cursors.Default;
+
+
             // else throw new SystemException("No Populate Method was assigned");
         }
 
+        public static void PopulateResources(bool overriderFound)
+        {
+            string path = string.Empty;
+            try
+            {
+                path = Interface.IMain.FolderPath + Resources.Exceptions;
+                Rsx.Dumb.MakeADirectory(path, overriderFound);
+
+                path = Interface.IMain.FolderPath + Resources.Backups;
+                Rsx.Dumb.MakeADirectory(path, overriderFound);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IMain.AddException(ex);//                throw;
+            }
+
+            try
+            {
+                populateSolCoiResource(overriderFound);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IMain.AddException(ex);//                throw;
+            }
+
+            try
+            {
+                populateMatSSFResource(overriderFound);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IMain.AddException(ex);//                throw;
+            }
+        }
+
+     
+
         /// <summary>
-        /// Prepare the needed methods and the worker
+        /// The methods are loaded already, just execute...
         /// </summary>
-        /// <param name="populNr"></param>
-        /// <returns></returns>
-        public static bool Prepare(int populNr)
+        public static void Run()
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            Interface.IReport.Msg(checkingSQL, "Please wait...");
-
-            RestartSQLServer();
-
-            Interface.IAdapter.InitializeComponent();
-
-            Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
-
-            bool ok = false;
-
-            if (!Interface.IAdapter.IsMainConnectionOk)
-            {
-                Interface.IReport.UserInfo();
-
-                string title = noConnectionDetected;
-                title += Interface.IAdapter.Exception;
-
-                SendToRestartRoutine(title);
-
-                Cursor.Current = Cursors.Default;
-
-                MessageBox.Show(title, couldNotConnect, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //could not connect
-                PopulateSQLDatabase();
-
-                //send this text to a textFile in order to report by email next Reboot
-            }
-            else
-            {
-                //ACUMULA LOS METODOS Y CREA EL WORKER, ESPERA FOR RUN...
-                loadMethods(populNr);
-                ok = true;
-            }
-
+       
+                worker?.RunWorkerAsync(Interface);
+        
             Cursor.Current = Cursors.Default;
-
-            return ok;
+            // else throw new SystemException("No Populate Method was assigned");
         }
 
         public static bool SaveInFull(bool takechanges)
@@ -233,6 +295,8 @@ namespace DB.Tools
             // Interface.Get().BeginEndLoadData(false); Interface.IBS.EndEdit();
 
             Interface.IPreferences.SavePreferences();
+            Interface.IStore.SaveExceptions();
+
             Interface.IReport.Msg("Saved preferences", "Saved!");
 
             try
@@ -249,6 +313,7 @@ namespace DB.Tools
 
                 bool savedlocaly = Interface.IStore.SaveLocalCopy();
                 Interface.IReport.Msg("Saved into local XML file", "Saved!");
+              
                 // Interface.IReport.Msg("Saving", "Saving completed!");
 
                 ok = savedlocaly && savedremotely;

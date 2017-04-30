@@ -172,7 +172,8 @@ namespace k0X
 
             if (subject.Contains(k0X.Properties.CmdRes.REBOOT))
             {
-                Reboot(email);
+                Interface.IReport.SendToRestartRoutine(email);
+                Application.Restart();
                 return;
             }
         }
@@ -355,13 +356,7 @@ namespace k0X
             }
         }
 
-        private static void Reboot(string email)
-        {
-            string exe = Application.ExecutablePath;
-            System.IO.File.WriteAllText(Application.StartupPath + DB.Properties.Resources.Restarting, email);
-            Rsx.Dumb.Process(new System.Diagnostics.Process(), Application.StartupPath, exe, string.Empty, false, false, 0);
-            Application.Exit();
-        }
+      
 
         //   System.Diagnostics.Process notepad;
     }

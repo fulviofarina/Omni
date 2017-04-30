@@ -79,10 +79,6 @@
             this.matrixB = new System.Windows.Forms.RichTextBox();
             this.sampleDGV = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.gross1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -116,7 +112,6 @@
             this.unitSC.SuspendLayout();
             this.nameToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sampleDGV)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).BeginInit();
@@ -187,23 +182,23 @@
             this.inputTLP.Controls.Add(this.chCfgTS, 0, 8);
             this.inputTLP.Controls.Add(this.toolStrip4, 0, 9);
             this.inputTLP.Controls.Add(this.chTS, 0, 7);
-            this.inputTLP.Controls.Add(this.toolStrip8, 0, 2);
+            this.inputTLP.Controls.Add(this.toolStrip8, 0, 1);
             this.inputTLP.Controls.Add(this.toolStrip2, 0, 12);
             this.inputTLP.Controls.Add(this.toolStrip7, 0, 10);
             this.inputTLP.Controls.Add(this.toolStrip3, 0, 6);
             this.inputTLP.Controls.Add(this.toolStrip1, 0, 3);
-            this.inputTLP.Controls.Add(this.unitSC, 0, 1);
+            this.inputTLP.Controls.Add(this.unitSC, 0, 0);
             this.inputTLP.Controls.Add(this.matrixB, 0, 11);
             this.inputTLP.Controls.Add(this.sampleDGV, 0, 4);
-            this.inputTLP.Controls.Add(this.tableLayoutPanel1, 0, 0);
+            this.inputTLP.Controls.Add(this.tableLayoutPanel1, 0, 1);
             this.inputTLP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inputTLP.Location = new System.Drawing.Point(0, 0);
             this.inputTLP.Margin = new System.Windows.Forms.Padding(4);
             this.inputTLP.Name = "inputTLP";
             this.inputTLP.RowCount = 13;
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.927095F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.884368F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.927095F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.04023F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.465517F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.017241F));
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.837919F));
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.86476F));
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.923584F));
@@ -214,6 +209,7 @@
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.923584F));
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.0855F));
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.927964F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.inputTLP.Size = new System.Drawing.Size(758, 696);
             this.inputTLP.TabIndex = 4;
             // 
@@ -420,10 +416,10 @@
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.descriplbl,
             this.descripBox});
-            this.toolStrip8.Location = new System.Drawing.Point(0, 81);
+            this.toolStrip8.Location = new System.Drawing.Point(0, 49);
             this.toolStrip8.Name = "toolStrip8";
             this.toolStrip8.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip8.Size = new System.Drawing.Size(758, 34);
+            this.toolStrip8.Size = new System.Drawing.Size(758, 45);
             this.toolStrip8.TabIndex = 15;
             this.toolStrip8.Text = "toolStrip8";
             // 
@@ -434,14 +430,16 @@
             this.descriplbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.descriplbl.Margin = new System.Windows.Forms.Padding(0, 1, 19, 2);
             this.descriplbl.Name = "descriplbl";
-            this.descriplbl.Size = new System.Drawing.Size(110, 31);
+            this.descriplbl.Size = new System.Drawing.Size(110, 42);
             this.descriplbl.Text = "Description";
             // 
             // descripBox
             // 
+            this.descripBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.descripBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descripBox.ForeColor = System.Drawing.Color.Lime;
             this.descripBox.Name = "descripBox";
-            this.descripBox.Size = new System.Drawing.Size(560, 34);
+            this.descripBox.Size = new System.Drawing.Size(560, 45);
             // 
             // toolStrip2
             // 
@@ -547,7 +545,7 @@
             // 
             this.toolStripLabel2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLabel2.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.toolStripLabel2.ForeColor = System.Drawing.Color.Yellow;
             this.toolStripLabel2.Margin = new System.Windows.Forms.Padding(0, 1, 12, 2);
             this.toolStripLabel2.Name = "toolStripLabel2";
             this.toolStripLabel2.Size = new System.Drawing.Size(156, 25);
@@ -556,14 +554,14 @@
             // unitSC
             // 
             this.unitSC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.unitSC.Location = new System.Drawing.Point(6, 40);
+            this.unitSC.Location = new System.Drawing.Point(6, 6);
             this.unitSC.Margin = new System.Windows.Forms.Padding(6);
             this.unitSC.Name = "unitSC";
             // 
             // unitSC.Panel1
             // 
             this.unitSC.Panel1.Controls.Add(this.nameToolStrip);
-            this.unitSC.Size = new System.Drawing.Size(746, 35);
+            this.unitSC.Size = new System.Drawing.Size(746, 37);
             this.unitSC.SplitterDistance = 421;
             this.unitSC.SplitterWidth = 7;
             this.unitSC.TabIndex = 8;
@@ -579,7 +577,7 @@
             this.nameToolStrip.Location = new System.Drawing.Point(0, 0);
             this.nameToolStrip.Name = "nameToolStrip";
             this.nameToolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.nameToolStrip.Size = new System.Drawing.Size(421, 35);
+            this.nameToolStrip.Size = new System.Drawing.Size(421, 37);
             this.nameToolStrip.TabIndex = 2;
             this.nameToolStrip.Text = "toolStrip5";
             // 
@@ -589,17 +587,17 @@
             this.toolStripLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.toolStripLabel14.Margin = new System.Windows.Forms.Padding(0, 1, 19, 2);
             this.toolStripLabel14.Name = "toolStripLabel14";
-            this.toolStripLabel14.Size = new System.Drawing.Size(64, 32);
+            this.toolStripLabel14.Size = new System.Drawing.Size(64, 34);
             this.toolStripLabel14.Text = "Name";
             // 
             // nameB
             // 
             this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameB.ForeColor = System.Drawing.Color.Violet;
+            this.nameB.ForeColor = System.Drawing.Color.White;
             this.nameB.Margin = new System.Windows.Forms.Padding(41, 0, 1, 0);
             this.nameB.Name = "nameB";
-            this.nameB.Size = new System.Drawing.Size(250, 35);
+            this.nameB.Size = new System.Drawing.Size(250, 37);
             // 
             // matrixB
             // 
@@ -647,8 +645,8 @@
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 14F);
             dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle5.Format = "N3";
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.sampleDGV.DefaultCellStyle = dataGridViewCellStyle5;
             this.sampleDGV.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -660,6 +658,7 @@
             this.sampleDGV.MultiSelect = false;
             this.sampleDGV.Name = "sampleDGV";
             this.sampleDGV.RowHeadersVisible = false;
+            this.sampleDGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sampleDGV.RowsDefaultCellStyle = dataGridViewCellStyle6;
@@ -671,62 +670,16 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.checkBox4, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 97);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 28);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 15);
             this.tableLayoutPanel1.TabIndex = 20;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(3, 17);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(120, 8);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(735, 17);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(14, 8);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(369, 17);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(120, 8);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(120, 8);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // errorProvider1
             // 
@@ -862,8 +815,6 @@
             this.nameToolStrip.ResumeLayout(false);
             this.nameToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sampleDGV)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).EndInit();
@@ -931,9 +882,5 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn comparatorDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
