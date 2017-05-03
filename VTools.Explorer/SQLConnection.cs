@@ -2,12 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Rsx.SQL;
 
 namespace VTools
 {
-    public partial class SQLConnection : UserControl
+    public partial class ucSQLConnection : UserControl, IucSQLConnection
     {
     
+
+        public string Database
+        {
+
+            get
+            {
+                return this.hdb.Text;
+            }
+            set
+            {
+                hdb.Text = value;
+            }
+        }
+
         public string ConnectionString
         {
             get
@@ -33,12 +48,12 @@ namespace VTools
                     boxes.Add(this.hpass);
                     boxes.Add(this.timeoutboxHL);
 
-                    Rsx.SQL.ConnectionString sq = new Rsx.SQL.ConnectionString(HyperLabRTB.Text);
+                    SQL.ConnectionString sq = new SQL.ConnectionString(HyperLabRTB.Text);
 
                     hsrv.Text = sq.Server;
 
-                   List<string> ls = Rsx.SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
-                   ls.AddRange( Rsx.SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
+                   List<string> ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
+                   ls.AddRange( SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
 
                     Rsx.Dumb.FillABox(hsrv, ls, true, false);
 
@@ -98,9 +113,11 @@ namespace VTools
             }
         }
 
-        public SQLConnection()
+        public ucSQLConnection()
         {
             InitializeComponent();
+
+            this.Dock = DockStyle.Fill;
         }
     }
 }

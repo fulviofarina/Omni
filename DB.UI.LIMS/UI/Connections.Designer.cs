@@ -34,8 +34,8 @@
             this.Spectra = new System.Windows.Forms.Label();
             this.SpectraRBT = new System.Windows.Forms.RichTextBox();
             this.SpectraSvrRBT = new System.Windows.Forms.RichTextBox();
-            this.ucSQLHLCom = new VTools.SQLConnection();
-            this.ucSQLLIMSCom = new VTools.SQLConnection();
+            this.ucSQLHLCom = new VTools.ucSQLConnection();
+            this.ucSQLLIMSCom = new VTools.ucSQLConnection();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,7 +146,7 @@
         private System.Windows.Forms.Label SpectraSvr;
         private System.Windows.Forms.RichTextBox SpectraRBT;
         private System.Windows.Forms.RichTextBox SpectraSvrRBT;
-        private VTools.SQLConnection ucSQLLIMSCom;
-        private VTools.SQLConnection ucSQLHLCom;
+        private VTools.ucSQLConnection ucSQLLIMSCom;
+        private VTools.ucSQLConnection ucSQLHLCom;
     }
 }

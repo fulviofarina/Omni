@@ -6,17 +6,20 @@ namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        protected void disposeMainAdapters()
+        private void disposeComponent()
         {
             QTA?.Dispose();
             QTA = null;
 
             //if (tAM != null)
             //{
-            tAM?.Connection.Close();
+            tAM?.Connection?.Close();
             tAM?.Dispose();
             //}
             tAM = null;
+
+           
+
         }
 
         protected static void disposeOtherAdapters(ref LINAATableAdapters.TableAdapterManager tAM)

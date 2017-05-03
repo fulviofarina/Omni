@@ -4,12 +4,56 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
+using VTools;
 using static Rsx.DGV.Control;
 
 namespace DB.UI
 {
     public partial class LIMS
     {
+
+        private static  Form aboutBox;
+        public static IucOptions OptionsUI(ref Form AboutBox)
+        {
+            IucOptions options = new ucOptions();
+            options.Set();
+            aboutBox = AboutBox;
+            options.AboutBoxAction = delegate
+            {
+                aboutBox.Show();
+              //  box.Show();
+            };
+            options.ConnectionBox = delegate
+            {
+                LIMS.Connections();
+
+            };
+            options.SaveClick = delegate
+            {
+                Creator.SaveInFull(true);
+            };
+            options.ExplorerClick = LIMS.Explore;
+
+            options.PreferencesClick = delegate
+            {
+                LIMS.ShowPreferences(true);
+            };
+            options.DatabaseClick = LIMS.ShowToUser;
+
+            return options;
+        }
+
+        //= new Pop(true);
+        public static IucPreferences PreferencesUI()
+        {
+            UserControl ucPref = null;
+            ucPref = LIMS.CreateUI(ControlNames.Preferences);
+            LIMS.CreateForm("Preferences", ref ucPref, false);
+            IucPreferences preferences = (IucPreferences)ucPref;
+            return preferences;
+        }
+
+
         //  public static System.Collections.Generic.IList<object> UserControls;
 
         public static void ShowToUser()

@@ -405,8 +405,10 @@ namespace k0X
                 //    Creator.CheckPreferences();
                 LIMS.Interface.IPreferences.PopulatePreferences();
 
-              
-                bool ok = Creator.PrepareSQL();
+                UserControl IConn = new VTools.ucSQLConnection();
+             //   dynamic connectionControl = IConn;
+                bool ok = Creator.PrepareSQL(ref IConn);
+              //  bool ok = Creator.PrepareSQL();
 
                 LIMS.Interface.IReport.CheckRestartFile();
 

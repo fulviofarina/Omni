@@ -29,8 +29,9 @@ namespace SSF
 
       
 
-            IucPreferences preferences = PreferencesUI();
-            IucOptions options = OptionsUI();
+            IucPreferences preferences = LIMS.PreferencesUI();
+            Form box = new AboutBox();
+            IucOptions options = LIMS.OptionsUI(ref box);
 
             ucSSF.AttachCtrl(ref options);
             ucSSF.AttachCtrl(ref preferences);
@@ -127,6 +128,7 @@ namespace SSF
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+        
 
             Form toReturn = null;
 
@@ -149,7 +151,9 @@ namespace SSF
 
                 LIMS.Interface.IReport.CheckMSMQ();
 
-                bool ok = Creator.PrepareSQL();
+
+                UserControl IConn = new ucSQLConnection();
+                bool ok = Creator.PrepareSQL(ref IConn);
 
                 LIMS.Interface.IReport.CheckRestartFile();
 
@@ -170,49 +174,11 @@ namespace SSF
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
+         //       MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
             }
         
         }
 
-        private static IucOptions OptionsUI()
-        {
-            IucOptions options = new ucOptions();
-            options.Set();
-            options.AboutBoxAction = delegate
-            {
-                AboutBox box = new AboutBox();
-                box.Show();
-            };
-            options.ConnectionBox = delegate
-            {
-                 LIMS.Connections();
-               
-            };
-            options.SaveClick = delegate
-            {
-                Creator.SaveInFull(true);
-            };
-            options.ExplorerClick = LIMS.Explore;
-
-            options.PreferencesClick = delegate
-            {
-                LIMS.ShowPreferences(true);
-            };
-            options.DatabaseClick = LIMS.ShowToUser;
-
-            return options;
-        }
-
-        //= new Pop(true);
-        private static IucPreferences PreferencesUI()
-        {
-            UserControl ucPref = null;
-            ucPref = LIMS.CreateUI(ControlNames.Preferences);
-            LIMS.CreateForm("Preferences", ref ucPref, false);
-            IucPreferences preferences = (IucPreferences)ucPref;
-            return preferences;
-        }
 
         /// <summary>
         /// Loads the Database, makes the ucControl

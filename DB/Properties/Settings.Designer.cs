@@ -75,11 +75,22 @@ namespace DB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k017;Persist Security Info=Tru" +
-            "e;Connect Timeout=10;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k0NAA;Persist Security Info=Tr" +
+            "ue;Connect Timeout=10;Integrated Security=True;Pooling=False")]
         public string localDB {
             get {
                 return ((string)(this["localDB"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k0NAA;Persist Security Info=Tr" +
+            "ue;Connect Timeout=10;Integrated Security=True;Pooling=False")]
+        public string developerDB {
+            get {
+                return ((string)(this["developerDB"]));
             }
         }
     }

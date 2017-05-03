@@ -7,34 +7,15 @@ using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Wmi;
 using Microsoft.Win32;
 
-namespace Rsx
+namespace Rsx.SQL
 {
-
     /// <summary>
     /// This part takes care of finding the server instances
     /// </summary>
     public partial class SQL
     {
         public static string Exception;
-        private static void processWithOutPut(string exeName, string arguments, int timeoutMilliseconds, out int exitCode, out string output)
-        {
-            using (Process process = new Process())
-            {
-                process.StartInfo.FileName = exeName;
-                process.StartInfo.Arguments = arguments;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.CreateNoWindow = true;
-                process.Start();
-                output = process.StandardOutput.ReadToEnd();
-                bool exited = process.WaitForExit(timeoutMilliseconds);
-                if (exited) { exitCode = process.ExitCode; }
-                else
-                {
-                    exitCode = -1;
-                }
-            }
-        }
+
         /// <summary>
         /// tarda y consigue lo mismo
         /// </summary>
@@ -174,8 +155,6 @@ namespace Rsx
             // Console.WriteLine("Press any key to continue."); Console.ReadKey();
         }
 
-      
-
         private static List<string> getLocalSqlServerInstances(string[] instanceNames)
         {
             string machineName = Environment.MachineName;
@@ -216,6 +195,26 @@ namespace Rsx
             }
             Exception = msg;
             return new List<string>();
+        }
+
+        private static void processWithOutPut(string exeName, string arguments, int timeoutMilliseconds, out int exitCode, out string output)
+        {
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = exeName;
+                process.StartInfo.Arguments = arguments;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                output = process.StandardOutput.ReadToEnd();
+                bool exited = process.WaitForExit(timeoutMilliseconds);
+                if (exited) { exitCode = process.ExitCode; }
+                else
+                {
+                    exitCode = -1;
+                }
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace DB
             disposeOtherAdapters(ref tAM);
             disposeIrradiationAdapters(ref tAM);
             DisposeSolCoinAdapters();
-            disposeMainAdapters();
+            disposeComponent();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace DB
 
         public void InitializeComponent()
         {
-            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+          //  ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 
             this.tAM = new DB.LINAATableAdapters.TableAdapterManager();
             this.qTA = new DB.LINAATableAdapters.QTA();
@@ -54,7 +54,7 @@ namespace DB
 
             adapters = new System.Collections.Hashtable();
 
-            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+       //     ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
         }
 
         /// <summary>

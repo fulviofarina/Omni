@@ -10,6 +10,7 @@ using System.Windows.Forms;
 ///FULVIO
 namespace Rsx
 {
+
   public static partial class Dumb
   {
     public static void WriteBytesFile(ref byte[] r, string destFile)
@@ -51,7 +52,34 @@ namespace Rsx
             }
         }
 
+        private static string restartPCTitle = "Restart the computer";
+        private static string restartPC = "The computer will restart in 10 minutes to validate the changes.\n\n" +
+            "PLEASE SAVE ANY PENDING WORK\n\n" + extra;
+        private static string extra = "Click OK to Restart the computer with no further delay or\n\nClick Cancel to abort the scheduled shutdown";
 
+        public static void RestartPC()
+        {
+            string cmd = "shutdown.exe";
+            string argument = string.Empty;
+            argument = "-c \""+ restartPC + "\""+ 
+            " -r -t 600 -d P:4:1";
+
+            System.Diagnostics.Process.Start(cmd, argument);
+          
+            DialogResult result =  MessageBox.Show(restartPC+extra, restartPCTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+       
+            if (result == DialogResult.Cancel)
+            {
+                argument = "/a";
+            }
+            else
+            {
+                argument = "-r -t 0";
+            }
+            System.Diagnostics.Process.Start(cmd, argument);
+           
+
+        }
 
         public static double Process(Process process, string WorkingDir, string EXE, string Arguments, bool hide, bool wait, int wait_time)
     {

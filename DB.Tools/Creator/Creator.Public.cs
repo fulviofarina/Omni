@@ -40,6 +40,11 @@ namespace DB.Tools
         {
             //restarting = false;
 
+
+
+         //   Rsx.Dumb.RestartPC();
+
+
             Cursor.Current = Cursors.WaitCursor;
 
             if (inter != null)

@@ -8,7 +8,7 @@ namespace DB
     public interface IAdapter
     {
         void InitializeComponent();
-
+   //    void  disposeComponent();
         void DisposeAdapters();
 
         QTA QTA { get; set; }

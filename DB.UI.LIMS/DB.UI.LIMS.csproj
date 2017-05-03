@@ -405,6 +405,10 @@
       <Project>{3deca30c-9a3d-4268-8241-fa10f50bb78e}</Project>
       <Name>VTools.Graph</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VTools.Menu\VTools.Menu.csproj">
+      <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
+      <Name>VTools.Menu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VTools.TreeView\VTools.TreeView.csproj">
       <Project>{5e5cd6b3-e66f-4a73-b2bc-1350d3143192}</Project>
       <Name>VTools.TreeView</Name>

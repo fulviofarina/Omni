@@ -216,6 +216,10 @@
       <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
       <Name>VTools.Explorer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VTools.Menu\VTools.Menu.csproj">
+      <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
+      <Name>VTools.Menu</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

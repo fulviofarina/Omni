@@ -7,7 +7,7 @@ using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Wmi;
 using Microsoft.Win32;
 
-namespace Rsx
+namespace Rsx.SQL
 {
 
     public partial class SQL

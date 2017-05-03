@@ -83,14 +83,17 @@ namespace DB
                 string connection = value;
                 IDbConnection con = this.TAM.Connection;
                 con.Close();
-                con = new SqlConnection(connection);
-                this.TAM.Connection = con;
+                this.qTA.Dispose();
+                this.qTA = new QTA();
+            //    con = new SqlConnection(connection);
+                this.TAM.Connection = new SqlConnection(connection);
+
                 foreach (dynamic a in adapters.Values)
                 {
                     a.Connection.Close();
                     a.Connection = new SqlConnection(connection);
                 }
-                con.Open();
+                this.TAM.Connection.Open();
             }
         }
 

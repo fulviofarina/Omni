@@ -703,6 +703,10 @@
       <Project>{eaae3cd4-5462-4e43-a738-c76456e8404c}</Project>
       <Name>VTools.Emailer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
+      <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
+      <Name>VTools.Explorer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VTools.Logger\VTools.Logger.csproj">
       <Project>{1a49fe52-db41-43a4-9213-071c5a00c7d1}</Project>
       <Name>VTools.Logger</Name>

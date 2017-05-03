@@ -91,6 +91,8 @@ namespace DB
 
                 dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
 
+
+                this.Merge(dt);
                 //MergePreferences();
                 // this.PopulateSSFPreferences();
             }
@@ -99,7 +101,7 @@ namespace DB
                 this.AddException(ex);
             }
 
-            Dumb.FD<LINAA>(ref dt);
+            //return dt;
         }
 
         private static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
