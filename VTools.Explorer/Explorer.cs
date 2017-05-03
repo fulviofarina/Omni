@@ -71,19 +71,30 @@ namespace VTools
 
     private void DGV_CurrentCellChanged(object sender, EventArgs e)
     {
-      if (DGV.CurrentCell == null) return;
-      if (DGV.CurrentCell.ColumnIndex < 0) return;
-      if (this.BS.Current == null) return;
 
-      string columnName = DGV.Columns[DGV.CurrentCell.ColumnIndex].Name;
-      DataRow row = (this.BS.Current as DataRowView).Row;
-      if (row == null) return;
-      DataColumn colTable = row.Table.Columns[columnName];
-      if (colTable == null) return;
+            try
+            {
 
-      expBox.Text = colTable.Expression;
-      expBox.Tag = colTable;
-      columnBox.Text = columnName;
+                if (DGV.CurrentCell == null) return;
+                if (DGV.CurrentCell.ColumnIndex < 0) return;
+                if (this.BS.Current == null) return;
+
+                string columnName = DGV.Columns[DGV.CurrentCell.ColumnIndex].Name;
+                DataRow row = (this.BS.Current as DataRowView).Row;
+                if (row == null) return;
+                DataColumn colTable = row.Table.Columns[columnName];
+                if (colTable == null) return;
+
+                expBox.Text = colTable.Expression;
+                expBox.Tag = colTable;
+                columnBox.Text = columnName;
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+   
     }
 
     private void AddCol_Click(object sender, EventArgs e)

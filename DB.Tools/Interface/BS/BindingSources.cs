@@ -12,6 +12,8 @@ namespace DB.Tools
     {
         // private Interface Interface;
         private string _ROWWITHERROR = "The selected Item has incomplete information, i.e. cells with errors or null values";
+
+     
     }
 
     public partial class BindingSources
@@ -28,21 +30,32 @@ namespace DB.Tools
 
     public partial class BindingSources
     {
+        private void matrix_CurrentChanged(object sender, EventArgs e)
+        {
+            try
+            {
+
+                //
+                LINAA.MatrixRow c = Interface.ICurrent.Matrix as LINAA.MatrixRow;
+                Update(c, true, false);
+
+            }
+            catch (Exception ex)
+            {
+                Interface.IMain.AddException(ex);
+            }
+
+        }
+
         private void channels_CurrentChanged(object sender, EventArgs e)
         {
             try
             {
-                string sortColumn;
-                string filter;
-                sortColumn = Interface.IDB.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
+            
                 //
-                LINAA.ChannelsRow c = Dumb.Cast<LINAA.ChannelsRow>(Interface.IBS.Channels.Current);
+                LINAA.ChannelsRow c = Interface.ICurrent.Channel as LINAA.ChannelsRow;
+                Update(c, true, false);
 
-                string chColumn = Interface.IDB.IrradiationRequests.ChannelNameColumn.ColumnName;
-                filter = chColumn + " = '" + c.ChannelName + "'";// + " OR " + chColumn + " IS NULL ";
-
-                Interface.IBS.Irradiations.Filter = filter;
-                Interface.IBS.Irradiations.Sort = sortColumn;
             }
             catch (Exception ex)
             {
@@ -85,8 +98,9 @@ namespace DB.Tools
             {
                 // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
                 SubSamplesRow r = Interface.ICurrent.SubSample as SubSamplesRow;
-                Interface.IBS.Update(r, true, false);
-                Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + r.SubSampleName + "'";
+                Update(r, true, false);
+         //       Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + r.SubSampleName + "'";
+           //      Interface.IBS.SelectedMatrix.Filter = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName + " = '" + r.SubSamplesID + "'";
                 // Interface.IBS.SelectedSubSample.ResetBindings(true);
             }
             catch (Exception ex)
@@ -94,7 +108,7 @@ namespace DB.Tools
                 Interface.IMain.AddException(ex);
             }
         }
-
+        /*
         /// <summary>
         /// A binding Current Changed event to update Binding sources
         /// </summary>
@@ -141,7 +155,7 @@ namespace DB.Tools
                 Interface.IMain.AddException(ex);
             }
         }
-
+        */
         private void updateChannel<T>(T r, bool findItself)
         {
             LINAA.ChannelsRow u = r as LINAA.ChannelsRow;
@@ -152,6 +166,19 @@ namespace DB.Tools
                 int id = u.ChannelsID;
                 //BindingSource rabbitBS = Interface.IBS.Rabbit;
                 Channels.Position = Channels.Find(column, id);
+            }
+            if (Irradiations != null)
+            {
+
+              
+                string filter;
+             
+                string chColumn = Interface.IDB.IrradiationRequests.ChannelNameColumn.ColumnName;
+                filter = chColumn + " = '" + u.ChannelName + "'";// + " OR " + chColumn + " IS NULL ";
+
+                Irradiations.Filter = filter;
+
+               
             }
         }
 
@@ -178,16 +205,36 @@ namespace DB.Tools
                 //BindingSource rabbitBS = Interface.IBS.Rabbit;
                 Matrix.Position = Matrix.Find(column, id);
             }
+            string filter = Interface.IDB.Matrix.MatrixIDColumn.ColumnName + " = '" + u.MatrixID + "'";
+
+            if (SelectedMatrix!=null)
+            {
+                Interface.IBS.SelectedMatrix.Filter = filter;
+            }
+            if (Compositions!=null)
+            {
+                Interface.IBS.Compositions.Filter = filter;
+            }
+
+
         }
 
         private void updateSubSample<T>(T r, bool doCascade, bool findItself)
         {
             LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
             // LINAA.UnitRow s = r as LINAA.UnitRow; LINAA.UnitRow u = s.UnitRow as LINAA.UnitRow;
-            if (findItself && SubSamples != null)
+            if (SubSamples != null)
             {
-                string unitValID = (s.Table as LINAA.SubSamplesDataTable).SubSamplesIDColumn.ColumnName;
-                SubSamples.Position = SubSamples.Find(unitValID, s.SubSamplesID);
+                if (findItself && SubSamples != null)
+                {
+                    string unitValID = (s.Table as LINAA.SubSamplesDataTable).SubSamplesIDColumn.ColumnName;
+                    SubSamples.Position = SubSamples.Find(unitValID, s.SubSamplesID);
+                }
+                if (SelectedSubSample != null)
+                {
+                    Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + s.SubSampleName + "'";
+           
+                }
             }
             AChecker = s.CheckUnit;
             //now update the childs/parents of Units

@@ -18,7 +18,7 @@ namespace DB.Tools
         public BindingSource Irradiations;
 
         public BindingSource Matrix;
-
+        public BindingSource Compositions;
         /// <summary>
         /// not attached yet
         /// </summary>
@@ -33,6 +33,7 @@ namespace DB.Tools
         public BindingSource Samples;
 
         public BindingSource SelectedSubSample;
+        public BindingSource SelectedMatrix;
 
         public BindingSource SSF;
 
@@ -57,11 +58,26 @@ namespace DB.Tools
             string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
             string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
             // Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
-            Dumb.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
+            Rabbit.Filter = column + " = " + "True";
+            Vial.Filter = column + " = " + "False";
+            Vial.Sort = innerRadCol;
+            Rabbit.Sort = innerRadCol;
 
-            Dumb.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+            Geometry.Filter = string.Empty;
+            Geometry.Sort = "CreationDateTime desc";
+            // Dumb.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
 
-            Dumb.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, "CreationDateTime desc");
+            //  Dumb.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+
+            //  Dumb.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, );
+            string sortColumn;
+            sortColumn = Interface.IDB.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
+            Irradiations.Sort = sortColumn;
+
+
+            Matrix.Filter = "SubSampleID IS NULL";
+            Matrix.Sort = "MatrixName desc";
+            
         }
 
         /// <summary>
@@ -70,6 +86,7 @@ namespace DB.Tools
         public void EndEdit()
         {
             Matrix?.EndEdit();
+            Compositions?.EndEdit();
             Units?.EndEdit();
             Vial?.EndEdit();
             Geometry?.EndEdit();
@@ -77,6 +94,8 @@ namespace DB.Tools
             Channels?.EndEdit();
             Irradiations?.EndEdit();
             SubSamples?.EndEdit();
+            SelectedSubSample?.EndEdit();
+            SelectedMatrix?.EndEdit();
             SSF?.EndEdit();
         }
 
@@ -153,13 +172,12 @@ namespace DB.Tools
             Interface = inter;
 
             Preferences = new BindingSource(Interface.Get(), Interface.IDB.Preferences.TableName);
-            Preferences.ListChanged += preferences_ListChanged;
+            Compositions = new BindingSource(Interface.Get(), inter.IDB.Compositions.TableName);
 
             SSFPreferences = new BindingSource(Interface.Get(), Interface.IDB.SSFPref.TableName);
-            SSFPreferences.ListChanged += preferences_ListChanged;
 
             Channels = new BindingSource(Interface.Get(), Interface.IDB.Channels.TableName);
-            Channels.CurrentChanged += channels_CurrentChanged;
+
             Matrix = new BindingSource(Interface.Get(), Interface.IDB.Matrix.TableName);
             Rabbit = new BindingSource(Interface.Get(), Interface.IDB.VialType.TableName);
 
@@ -179,16 +197,33 @@ namespace DB.Tools
 
             SubSamples = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
 
-            SubSamples.CurrentChanged += subSamples_CurrentChanged;
 
             Units = new BindingSource(Interface.Get(), Interface.IDB.Unit.TableName);
             // Units.CurrentChanged += units_CurrentChanged;
 
             SSF = new BindingSource(Interface.Get(), Interface.IDB.MatSSF.TableName);
-
+            SelectedMatrix = new BindingSource(Interface.Get(), Interface.IDB.Matrix.TableName);
             // Units.BindingComplete += Units_BindingComplete;
             SelectedSubSample = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
+
+            setHandlers();
+
+
             // Units.ListChanged += units_ListChanged;
         }
+
+        private void setHandlers()
+        {
+            SubSamples.CurrentChanged += subSamples_CurrentChanged;
+
+            SSFPreferences.ListChanged += preferences_ListChanged;
+            Preferences.ListChanged += preferences_ListChanged;
+            Channels.CurrentChanged += channels_CurrentChanged;
+
+
+            Matrix.CurrentChanged += matrix_CurrentChanged;
+        }
+
+      
     }
 }

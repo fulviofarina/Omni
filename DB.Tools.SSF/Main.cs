@@ -74,6 +74,11 @@ namespace DB.Tools
             double Xi = 1e-12 * SDensity * UNIT.kepi;
             Int32 factor = 10000;
 
+            double A2 = 0.06;
+            double pUniEpi = 0.82;
+            double pUniTh = 0.964;
+            double A1 = 1;
+
             foreach (LINAA.MatSSFRow m in rows)
             {
                 try
@@ -102,8 +107,9 @@ namespace DB.Tools
                     {
                         m.ChEpi = 0;
                         m.ChEpi = 1000 * sepi.sigmaEp / sal.Mat;
+                      
 
-                        m.SSFCh = (0.94 / (Math.Pow(Xi * m.ChEpi * (m.Weight * factor), 0.82) + 1.0)) + 0.06;
+                        m.SSFCh = ((A1 - A2) / (Math.Pow(Xi * m.ChEpi * (m.Weight * factor), pUniEpi) + 1.0)) + A2;
                     }
                 }
                 catch (SystemException ex)
@@ -116,7 +122,7 @@ namespace DB.Tools
             //Put the Sum of Thermal absorbers in ChTh of UnitRow
             UNIT.ChTh = sumTh;
 
-            UNIT.GtCh = (1.0 / (Math.Pow(UNIT.ChTh * 1e-12 * UNIT.kth, 0.964) + 1.0));    // and since is inherited by parentRelation...
+            UNIT.GtCh = (A1 / (Math.Pow(UNIT.ChTh * 1e-12 * UNIT.kth, pUniTh) + 1.0));    // and since is inherited by parentRelation...
 
             abs.Clear();
             elements.Clear();
@@ -128,7 +134,8 @@ namespace DB.Tools
         public static bool INPUT()
         {
             bool success = false;
-            string buffer = getDecomposedMatrix();
+            IList<string[]> ls = UNIT.SubSamplesRow.MatrixRow.StripComposition(UNIT.SubSamplesRow.MatrixRow.MatrixComposition);
+            string buffer = UNIT.SubSamplesRow.MatrixRow.StripMoreComposition(ref ls);
             string config = getChannelCfg();
 
             double lenfgt = UNIT.SubSamplesRow.FillHeight;

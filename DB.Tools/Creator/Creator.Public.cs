@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Linq;
 using DB.Properties;
-using Msn;
 using Rsx;
+using Rsx.Generic;
 
 namespace DB.Tools
 {
@@ -52,8 +51,10 @@ namespace DB.Tools
             inter = new Interface(ref LINAA);
 
             Interface = inter;
-      
 
+            Interface.IDB.PopulateColumnExpresions();
+
+            Interface.IBS.ApplyFilters();
             Cursor.Current = Cursors.Default;
 
             Interface.IReport.Msg(loading, "Please wait...");
@@ -87,14 +88,6 @@ namespace DB.Tools
             PopulateResources(overriderFound);
 
             //perform basic loading
-
-            Interface.IPreferences.PopulatePreferences();
-
-            Interface.IMain.PopulateColumnExpresions();
-
-            Interface.IPreferences.SavePreferences();
-
-            Interface.IBS.ApplyFilters();
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
 
@@ -171,25 +164,24 @@ namespace DB.Tools
 
             Action<int> reporter = null;
 
-
             //before 0
-       
-                populators = new Action[]
-                {
+
+            populators = new Action[]
+            {
            Linaa.PopulateChannels,
           Linaa.PopulateIrradiationRequests,
        Linaa.PopulateOrders,
         Linaa.PopulateProjects
-                };
+            };
 
-                IEnumerable<Action> enums = populators;
-                enums = enums.Union(Linaa.PMMatrix());
-                enums = enums.Union(Linaa.PMStd());
-                enums = enums.Union(Linaa.PMDetect());
+            IEnumerable<Action> enums = populators;
+            enums = enums.Union(Linaa.PMMatrix());
+            enums = enums.Union(Linaa.PMStd());
+            enums = enums.Union(Linaa.PMDetect());
 
             populators2 = new Action[]
          {
-              //   Application.DoEvents,
+              // Application.DoEvents,
              Linaa.PopulateElements,
        Linaa.PopulateReactions,
          Linaa.PopulatepValues,
@@ -197,18 +189,20 @@ namespace DB.Tools
                    Linaa.PopulateSigmasSal,
                    Linaa.PopulateYields,
          };
-                enums = enums.Union(populators2);
-                populators = enums.ToList();
+            enums = enums.Union(populators2);
+            populators = enums.ToList();
 
             reporter = Interface.IReport.ReportProgress;
 
-                    callback = delegate
-                {
-                    Creator.mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
-                                                    //wow...
-                    Creator.lastCallBack?.Invoke() ;
-                };
-          
+            callback = delegate
+        {
+            Creator.mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
+                                            //wow...
+                    Creator.lastCallBack?.Invoke();
+        };
+
+            //add save preferences
+            //  populators.Add(Interface.IPreferences.SavePreferences);
 
             if (populators != null)
             {
@@ -223,7 +217,6 @@ namespace DB.Tools
             }
 
             Cursor.Current = Cursors.Default;
-
 
             // else throw new SystemException("No Populate Method was assigned");
         }
@@ -263,8 +256,6 @@ namespace DB.Tools
             }
         }
 
-     
-
         /// <summary>
         /// The methods are loaded already, just execute...
         /// </summary>
@@ -272,9 +263,8 @@ namespace DB.Tools
         {
             Cursor.Current = Cursors.WaitCursor;
 
-       
-                worker?.RunWorkerAsync(Interface);
-        
+            worker?.RunWorkerAsync(Interface);
+
             Cursor.Current = Cursors.Default;
             // else throw new SystemException("No Populate Method was assigned");
         }
@@ -313,7 +303,7 @@ namespace DB.Tools
 
                 bool savedlocaly = Interface.IStore.SaveLocalCopy();
                 Interface.IReport.Msg("Saved into local XML file", "Saved!");
-              
+
                 // Interface.IReport.Msg("Saving", "Saving completed!");
 
                 ok = savedlocaly && savedremotely;

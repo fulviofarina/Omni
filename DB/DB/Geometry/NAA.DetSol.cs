@@ -5,6 +5,12 @@ namespace DB
 {
     public partial class LINAA
     {
+        protected void handlersDetSol()
+        {
+            handlers.Add(DetectorsAbsorbers.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
+        }
+
         public partial class DetectorsAbsorbersDataTable
         {
             public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)

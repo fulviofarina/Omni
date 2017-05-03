@@ -24,6 +24,7 @@ namespace DB.UI
             Interface = LinaaInterface;
             Dumb.FD<LINAA>(ref this.lINAA);
             Dumb.FD(ref this.VialBS);
+            this.VialBN.BindingSource = Interface.IBS.Vial;
 
 
             //rabbit column

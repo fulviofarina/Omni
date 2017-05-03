@@ -142,7 +142,7 @@ namespace DB.Tools
                     u.ChCfg = fluxtypo.ToString();
                     u.Name = iS.SubSampleName;
 
-                    u.Content = iS.MatrixRow.MatrixComposition;
+                 //   u.Content = iS.MatrixRow.MatrixComposition;
                     // u.Mass = iS.Net; u.Diameter = (iS.Radius * 2); u.Length = iS.FillHeight;
 
                     MatSSF.StartupPath = Linaa.FolderPath + Resources.SSFFolder;

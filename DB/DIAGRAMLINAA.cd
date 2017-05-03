@@ -25,9 +25,6 @@
       <Delegate Name="DB.LINAA.ChannelsRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
       </Delegate>
-      <Class Name="DB.LINAA.HelloWorldRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
       <Class Name="DB.LINAA.ToDoResAvgRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
@@ -71,9 +68,6 @@
         <TypeIdentifier />
       </Class>
       <Class Name="DB.LINAA.COINDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="DB.LINAA.HelloWorldRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
       <Class Name="DB.LINAA.pValuesDataTable" Collapsed="true">
@@ -282,9 +276,9 @@
       <Delegate Name="DB.LINAA.YieldsRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
       </Delegate>
-      <Delegate Name="DB.LINAA.RefMaterialsRowChangeEventHandler" Collapsed="true">
+      <Class Name="DB.LINAA.PeaksHLRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
-      </Delegate>
+      </Class>
       <Class Name="DB.LINAA.ElementsRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
@@ -322,7 +316,7 @@
       </Class>
       <Delegate Name="DB.LINAA.Comparer&lt;T&gt;" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Main\Static\Comparers.cs</NewMemberFileName>
+          <NewMemberFileName>Static\Comparers.cs</NewMemberFileName>
         </TypeIdentifier>
       </Delegate>
       <Class Name="DB.LINAA.ToDoDataRow" Collapsed="true">
@@ -391,12 +385,12 @@
       <Class Name="DB.LINAA.GammasRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
-      <Delegate Name="DB.LINAA.HelloWorldRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
       <Class Name="DB.LINAA.SolangDataTable" Collapsed="true">
         <TypeIdentifier />
       </Class>
+      <Delegate Name="DB.LINAA.RefMaterialsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
       <Class Name="DB.LINAA.ToDoResDataTable" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DB\ToDo\ToDo.Res.cs</NewMemberFileName>
@@ -510,7 +504,7 @@
       </Class>
       <Class Name="DB.LINAA.Comparers" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Main\Static\Comparers.cs</NewMemberFileName>
+          <NewMemberFileName>Static\Comparers.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
       <Class Name="DB.LINAA.IrradiationRequestsDataTable" Collapsed="true">
@@ -635,9 +629,6 @@
       <Class Name="DB.LINAA.DetectorsCurvesRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
-      <Class Name="DB.LINAA.HelloWorldDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
       <Delegate Name="DB.LINAA.ToDoResRowChangeEventHandler" Collapsed="true">
         <TypeIdentifier />
       </Delegate>
@@ -645,9 +636,6 @@
         <TypeIdentifier />
       </Class>
       <Class Name="DB.LINAA.SamplesRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="DB.LINAA.PeaksHLRowChangeEvent" Collapsed="true">
         <TypeIdentifier />
       </Class>
       <Class Name="DB.LINAA.StandardsRowChangeEvent" Collapsed="true">
@@ -733,7 +721,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>1ev8H//1P119j0P//L/c8y2/v///+b93d77//X/v//8=</HashCode>
+      <HashCode>1ev8H//9P119jUP//L/c8y+/v7//+b93d77//X/P//8=</HashCode>
       <FileName>Adapter\Adapter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -741,7 +729,7 @@
   <Interface Name="DB.IDB" Collapsed="true">
     <Position X="5.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACEwAgIABQQhCQHAICiQQwAAArohAIgwAhAQKSABkWg=</HashCode>
+      <HashCode>ACEwAgIABQQhCQHAICiQQwAAArohAIgwAhAQKQABkWg=</HashCode>
       <FileName>DB\IDB.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -769,14 +757,14 @@
   <Interface Name="DB.IGeometry" Collapsed="true">
     <Position X="2" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIEAAKAAAQAgAAAAAAAAACAAAAAEAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIEAAKAAAQAgAAAAAAAAACAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IGeometry.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IIrradiations" Collapsed="true">
     <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABQAAAAAAAAAAAAAAAIAAAAAAAAABAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IIrradiations.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -804,7 +792,7 @@
   <Interface Name="DB.ISamples" Collapsed="true">
     <Position X="5.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAAEDACEAgAAAAAABAAEAAAAAABAAAAI=</HashCode>
+      <HashCode>AAAAAAAAAAQAAAETAAEAgAAAAAAVAAEAAAAAABAAAAI=</HashCode>
       <FileName>Populate\Interfaces\ISamples.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -825,7 +813,7 @@
   <Interface Name="DB.IStore" Collapsed="true">
     <Position X="4.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAEBAAAAAAAAAQAAAAEAAAAAAACAQAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAEBAAAAAAAAAQEAAAEAAAAAAACAQAAAAAA=</HashCode>
       <FileName>Store\IStore.cs</FileName>
     </TypeIdentifier>
   </Interface>

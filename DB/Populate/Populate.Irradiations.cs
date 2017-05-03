@@ -7,6 +7,11 @@ namespace DB
     public partial class LINAA : IIrradiations
     {
 
+        /// <summary>
+        /// Adds a new row and returns it with basic dat aon it
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
         public IrradiationRequestsRow AddIrradiation(string project)
         {
             string projetNoCd = project.Trim().ToUpper();
@@ -31,6 +36,7 @@ namespace DB
             return this.tableIrradiationRequests.FindIrrReqID(project);
         }
 
+     
         public void PopulateChannels()
         {
             try

@@ -23,9 +23,10 @@ namespace DB
                             this.columnChDiameter, this.columnChLength,
                             this.columnkth,this.columnkepi,
                             this.columnChCfg,
-                            this.columnBellFactor,
+                            this.columnBellFactor//,
                          // this.columnLastCalc, this.columnLastChanged, this.columnToDo,
-                            this.columnContent };
+                         //   this.columnContent
+                        };
                         // this.columnSSFTable};
                     }
                     return changeables;
@@ -45,7 +46,7 @@ namespace DB
                             this.columnLastCalc,
                            this.columnLastChanged,
                       // this.columnToDo,
-                            this.columnContent,
+                          //  this.columnContent,
                                   this.columnBellFactor,
                               this.columnSSFTable
                         };
@@ -154,6 +155,7 @@ namespace DB
                             }
                             // else r.ToDo = false;
                         }
+                        /*
                         else if (c == this.ContentColumn)
                         {
                             if (nullo)
@@ -164,6 +166,7 @@ namespace DB
                             }
                             // else r.ToDo = false;
                         }
+                        */
                     }
                     //}
                 }
@@ -293,6 +296,8 @@ namespace DB
                 this.kth = c.kth;
                 this.kepi = c.kepi;
                 this.ChCfg = c.FluxType;
+                this.BellFactor = c.BellFactor;
+                this.SubSamplesRow.FC =c.FC;
             }
 
             /// <summary>

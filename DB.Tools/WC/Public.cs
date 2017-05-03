@@ -99,8 +99,8 @@ namespace DB.Tools
 
                 if (uncsOnly)
                 {
-                    if (s.StandardsRow == null && s.MonitorsRow == null && !s.ENAA) s.Concentration = Fc;
-                    else if (s.StandardsRow == null && s.MonitorsRow == null) s.Concentration = FcCD;
+                    if (s.StandardsRow == null && s.MonitorsRow == null && !s.ENAA) s.FC = Fc;
+                    else if (s.StandardsRow == null && s.MonitorsRow == null) s.FC = FcCD;
                 }
                 if (!uncsOnly) s.RowError = string.Empty;
                 bool GoodOverride = true;
@@ -420,7 +420,7 @@ namespace DB.Tools
 
                         Rate(s.Alpha, s.f, ref ir);
                         // FindDecayTimes(ref measurements); Temporal(ref measurements, ref ir);
-                        ir.Asp = (s.Concentration * s.DryNet * 0.001 * 1e-6) * (MyMath.NAvg * sigma.sigma0 * 1e-24 * sigma.theta * 0.01 / ir.NAARow.ReactionsRowParent.SigmasSalRow.Mat) * (FC * 1e6 / 0.2882) * ir.R0 * MyMath.S((0.693 / n.T2), s.IrradiationTotalTime); //result in Bq
+                        ir.Asp = (s.FC * s.DryNet * 0.001 * 1e-6) * (MyMath.NAvg * sigma.sigma0 * 1e-24 * sigma.theta * 0.01 / ir.NAARow.ReactionsRowParent.SigmasSalRow.Mat) * (FC * 1e6 / 0.2882) * ir.R0 * MyMath.S((0.693 / n.T2), s.IrradiationTotalTime); //result in Bq
                         ir.Asp = ir.Asp * 0.001; //result in kBq
                     }
                 }

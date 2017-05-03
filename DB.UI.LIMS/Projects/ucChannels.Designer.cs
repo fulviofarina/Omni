@@ -66,6 +66,10 @@ namespace DB.UI
             this.FluxType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.BellFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.A1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.A2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
             this.BN.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
@@ -238,7 +242,11 @@ namespace DB.UI
             this.kepi,
             this.FluxType,
             this.BellFactor,
-            this.FC});
+            this.FC,
+            this.A1,
+            this.A2,
+            this.pTh,
+            this.pEpi});
             this.DGV.DataSource = this.BS;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -382,6 +390,34 @@ namespace DB.UI
             this.FC.ToolTipText = "Typical Comparator Factor";
             this.FC.Width = 45;
             // 
+            // A1
+            // 
+            this.A1.DataPropertyName = "A1";
+            this.A1.HeaderText = "A1";
+            this.A1.Name = "A1";
+            this.A1.Width = 45;
+            // 
+            // A2
+            // 
+            this.A2.DataPropertyName = "A2";
+            this.A2.HeaderText = "A2";
+            this.A2.Name = "A2";
+            this.A2.Width = 45;
+            // 
+            // pTh
+            // 
+            this.pTh.DataPropertyName = "pTh";
+            this.pTh.HeaderText = "pTh";
+            this.pTh.Name = "pTh";
+            this.pTh.Width = 51;
+            // 
+            // pEpi
+            // 
+            this.pEpi.DataPropertyName = "pEpi";
+            this.pEpi.HeaderText = "pEpi";
+            this.pEpi.Name = "pEpi";
+            this.pEpi.Width = 55;
+            // 
             // ucChannels
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -433,5 +469,9 @@ namespace DB.UI
         private System.Windows.Forms.DataGridViewComboBoxColumn FluxType;
         private System.Windows.Forms.DataGridViewTextBoxColumn BellFactor;
         private System.Windows.Forms.DataGridViewTextBoxColumn FC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn A1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn A2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pTh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pEpi;
     }
 }

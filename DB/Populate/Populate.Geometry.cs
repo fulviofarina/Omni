@@ -7,6 +7,8 @@ namespace DB
 {
     public partial class LINAA : IGeometry
     {
+      
+
         public GeometryRow DefaultGeometry
         {
             get
@@ -90,8 +92,8 @@ namespace DB
             {
                 this.tableMatrix.BeginLoadData();
                 this.tableMatrix.Clear();
-                this.tableMatrix.PopulateXCom = PopulateXCOMList;
-                PopulateXCOMList();
+                this.tableMatrix.populateMUESList = PopulateMUESList;
+                PopulateMUESList();
                 this.TAM.MatrixTableAdapter.Fill(this.tableMatrix);
                 this.tableMatrix.EndLoadData();
                 this.tableMatrix.AcceptChanges();
@@ -137,7 +139,7 @@ namespace DB
             }
         }
 
-        public void PopulateXCOMList()
+        public void PopulateMUESList()
         {
             MUESDataTable mues = this.TAM.MUESTableAdapter.GetListOfMatrices();
             MUES.Clear();

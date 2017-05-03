@@ -299,25 +299,35 @@ namespace DB.UI
             }
         }
 
-        public static bool Connections()
+        public static void Connections()
         {
-           
-            object prefe = LIMS.Interface.IPreferences.CurrentPref;
+
+            LINAA.PreferencesRow prefe = LIMS.Interface.IPreferences.CurrentPref;
             if (prefe == null)
             {
                 LIMS.Interface.IReport.Msg("Preferences object is null!", "Cannot load preferences!", false);
-                return false;
+                return ;
             }
             Connections cform = new Connections(ref prefe);
             cform.ShowDialog();
-            DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == System.Windows.Forms.DialogResult.No)
-            {
-                LIMS.Linaa.Preferences.RejectChanges();
-                return false;
+          
+                  if ((prefe as DataRow).RowState != DataRowState.Modified) return ;
+
+                  DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                  if (res == System.Windows.Forms.DialogResult.No)
+                  {
+                      LIMS.Linaa.Preferences.RejectChanges();
+                    
+                  }
+                  else
+                  {
+                      prefe.Check();
+                      LIMS.Interface.IPreferences.SavePreferences();
+                    Application.Restart();
             }
-            else LIMS.Interface.IPreferences.SavePreferences();
-            return true;
+             
+
+         
         }
 
         public static void Explore()

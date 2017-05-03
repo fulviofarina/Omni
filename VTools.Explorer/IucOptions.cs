@@ -1,7 +1,7 @@
 ﻿using System;
-using DB.Tools;
 
-namespace DB.UI
+
+namespace VTools
 {
     public interface IucOptions
     {

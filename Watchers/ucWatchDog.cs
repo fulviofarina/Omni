@@ -12,6 +12,7 @@ using Rsx;
 using Rsx.CAM;
 using Rsx.DGV;
 using DB.Tools;
+using Rsx.Generic;
 
 namespace k0X
 {
@@ -30,7 +31,7 @@ namespace k0X
 
     public partial class ucWatchDog : UserControl, IWatchDog
     {
-        private Rsx.IWD adder = null;
+        private IWD adder = null;
         private string basicmeasFilter = string.Empty;
         private LINAA.ExceptionsDataTable exceptionDT;
         private CReport Irepo = null;
@@ -393,7 +394,7 @@ namespace k0X
             ///Create worker
             if (adder == null)
             {
-                adder = new Rsx.WD();
+                adder = new WD();
                 adder.CallBackMethod = CallBack;
                 adder.WorkMethod = AddMeasurement;
                 adder.ReportMethod = progress.PerformStep;

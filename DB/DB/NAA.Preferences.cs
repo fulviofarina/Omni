@@ -6,6 +6,16 @@ namespace DB
 {
     public partial class LINAA
     {
+
+        protected void handlersPreferences()
+        {
+            handlers.Add(Preferences.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Preferences));
+            handlers.Add(SSFPref.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(SSFPref));
+        }
+
+
         public partial class SSFPrefRow
         {
             public void Check()
@@ -18,7 +28,7 @@ namespace DB
 
                 if (this.IsDoCKNull()) DoCK = false;
                 if (this.IsDoMatSSFNull()) DoMatSSF = true;
-                if (this.IsLoopNull()) Loop = false;
+                if (this.IsLoopNull()) Loop = true;
                 if (this.IsRoundingNull()) Rounding = "N3";
                 //    if (this.IsSQLNull()) SQL = Settings.Default.SSFSQL;
                 //  else Settings.Default["SSFSQL"] = SQL;
@@ -120,9 +130,12 @@ namespace DB
         partial class PreferencesRow
         {
             private bool usrAnal = false;
-
+            /// <summary>
+            /// Should fix this
+            /// </summary>
             public bool UsrAnal
             {
+                //TODO: change this
                 get { return usrAnal; }
                 set { usrAnal = value; }
             }
@@ -130,7 +143,9 @@ namespace DB
             public void Check()
             {
                 if (IsOfflineNull()) Offline = false;
-
+                if (IsIsSQLNull()) this.IsSQL = false;
+                if (IsIsMSMQNull()) this.IsMSMQ = false;
+                if (IsAdvancedEditorNull()) this.AdvancedEditor = true;
                 if (IswindowANull()) windowA = 1.5;
                 if (IswindowBNull()) windowB = 0.001;
                 if (IsminAreaNull()) minArea = 500;
@@ -143,11 +158,13 @@ namespace DB
                 if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
                 if (IsFillByHLNull()) FillByHL = true;
                 if (IsFillBySpectraNull()) FillBySpectra = true;
+
+
                 if (IsHLNull()) HL = Settings.Default.HLSNMNAAConnectionString;
                 else Settings.Default["HLSNMNAAConnectionString"] = HL;
                 if (IsLIMSNull()) LIMS = Settings.Default.localDB;
-                //reponer
-                // Settings.Default["NAAConnectionString"] = LIMS;
+               ////// //reponer
+                Settings.Default["NAAConnectionString"] = LIMS;
                 if (IsSpectraNull()) Spectra = Settings.Default.SpectraFolder;
                 else Settings.Default["SpectraFolder"] = Spectra;
                 if (IsSpectraSvrNull()) SpectraSvr = Settings.Default.SpectraServer;

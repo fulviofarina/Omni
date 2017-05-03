@@ -180,7 +180,7 @@ namespace DB.UI
             }
 
             nameToolStrip.Enabled = enable;
-            this.matrixB.Enabled = enable;
+            this.ucComposition1.Enabled = enable;
         }
 
         /// <summary>
@@ -189,11 +189,10 @@ namespace DB.UI
         public void Set(ref Interface inter)
         {
             Interface = inter;
+
             try
             {
                 Dumb.FD(ref this.SampleBS);
-                //desaparece esto porque tiene controles para developers, los checkboxes
-             //   this.tableLayoutPanel1.Visible = false;
 
                 sampleDGV.DataSource = Interface.IBS.SelectedSubSample;
 
@@ -209,37 +208,29 @@ namespace DB.UI
                 sampleBindings = setSampleBindings();
                 unitBindings = setUnitBindings();
 
-              //  setCheckBindings();
+           
                 setEnabledBindings();
 
+                ucComposition1.Set(ref Interface);
 
                 DataGridViewColumn col = this.volDataGridViewTextBoxColumn;
                 paintColumn(true, ref col);
 
                 paintColumns();
 
-               // checkedChanged(null, EventArgs.Empty);
-             
-                // sampleDGV.Paint += SampleDGV_Paint;
-          //      sampleDGV.Paint += SampleDGV_Paint;
-              //  sampleDGV.Invalidated += SampleDGV_Invalidated;
 
                 errorProvider1.DataMember = Interface.IDB.Unit.TableName;
                 errorProvider1.DataSource = Interface.IBS.Units;
                 errorProvider2.DataMember = Interface.IDB.SubSamples.TableName;
                 errorProvider2.DataSource = Interface.IBS.SubSamples;
 
-                //set calculation options
-
-                // Interface.IBS.EndEdit();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
             catch (System.Exception ex)
             {
                 Interface.IMain.AddException(ex);
-                // Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
-            }
+                  }
         }
 
     
@@ -337,8 +328,14 @@ namespace DB.UI
 
             this.cfgB.ComboBox.DataBindings.Add(other3);
 
+            Binding other4 = new Binding("Enabled", Interface.IBS.SSFPreferences, column);
+
+            this.bellfactorBox.TextBox.DataBindings.Add(other4);
+
             this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
 
+
+           
             /*
             //types
             this.cfgB.ComboBox.DisplayMember = Interface.IDB.Channels.FluxTypeColumn.ColumnName;
@@ -426,8 +423,8 @@ namespace DB.UI
 
             column = Unit.ChCfgColumn.ColumnName;
             this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
-            column = Unit.ContentColumn.ColumnName;
-            this.matrixB.DataBindings.Add(bindings[column] as Binding);
+
+
             column = Unit.kepiColumn.ColumnName;
             this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.kthColumn.ColumnName;

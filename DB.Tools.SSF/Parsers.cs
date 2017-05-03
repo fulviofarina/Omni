@@ -51,17 +51,7 @@ namespace DB.Tools
 
             UNIT.FillWith(Mdens, Gt, EXS, MCL, PXS);
         }
-        private static void decomposeFormula(string formula, ref List<string> elements, ref List<string> moles)
-        {
-            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("[0-9]");
-
-            foreach (string s in re.Split(formula)) if (!s.Equals(string.Empty)) elements.Add(s); // gives elements
-
-            //NUMBERS
-            System.Text.RegularExpressions.Regex re2 = new System.Text.RegularExpressions.Regex("[a-z]", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-
-            foreach (string s in re2.Split(formula)) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
-        }
+     
 
         private static void fillTable(IList<string> list)
         {
@@ -112,16 +102,17 @@ namespace DB.Tools
 
             return chCfg;
         }
-
+        /*
         private static string getDecomposedMatrix()
         {
             string buffer = string.Empty;
-            if (UNIT.Content == null) return buffer;
-            if (string.IsNullOrWhiteSpace(UNIT.Content)) return buffer;
+            string fullContent = UNIT.SubSamplesRow.MatrixRow.MatrixComposition;
+          //  if (UNIT.Content == null) return buffer;
+            if (string.IsNullOrWhiteSpace(fullContent)) return buffer;
 
             string[] compositions = null;
 
-            compositions = UNIT.Content.Split(ch[0]);
+            compositions = fullContent.Split(ch[0]);
 
             int i = 0;
             int z = 0;
@@ -134,18 +125,21 @@ namespace DB.Tools
                 formula = formula.Trim();
                 weightpercent = weightpercent.Trim();
 
-                string modified_formula = string.Empty;
+           
 
                 //TEXT
                 List<string> elements = new List<string>();
                 List<string> moles = new List<string>();
 
-                decomposeFormula(formula, ref elements, ref moles);
+           //     decomposeFormula(formula, ref elements, ref moles);
+
+
+                string modified_formula = string.Empty;
 
                 for (z = 0; z < elements.Count; z++)
                 {
-                    modified_formula = modified_formula + elements[z] + " ";
-                    if (moles.Count != 0) modified_formula = modified_formula + moles[z] + " ";
+                    modified_formula += elements[z] + " ";
+                    if (moles.Count != 0) modified_formula += moles[z] + " ";
                 }
 
                 buffer += modified_formula + "\n";
@@ -153,7 +147,7 @@ namespace DB.Tools
             }
             return buffer;
         }
-
+        */
         private static void setMatSSFRow(string[] content, string[] ZEl)
         {
             LINAA.MatSSFRow m = null;

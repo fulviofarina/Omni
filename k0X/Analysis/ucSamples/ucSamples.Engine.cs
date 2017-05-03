@@ -513,7 +513,7 @@ namespace k0X
             Dumb.FillABox(this.fbox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;
-            ls = Dumb.HashFrom<string>(Linaa.SubSamples.ConcentrationColumn);
+            ls = Dumb.HashFrom<string>(Linaa.SubSamples.FCColumn);
             Dumb.FillABox(this.FCbox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;

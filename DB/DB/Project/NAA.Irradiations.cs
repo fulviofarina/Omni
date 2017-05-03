@@ -8,6 +8,16 @@ namespace DB
 {
     public partial class LINAA
     {
+
+        protected void handlersIrradiations()
+        {
+            handlers.Add(Channels.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Channels));
+
+            handlers.Add(IrradiationRequests.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(IrradiationRequests));
+        }
+
         partial class IrradiationRequestsDataTable
         {
             public int? FindIrrReqID(String project)

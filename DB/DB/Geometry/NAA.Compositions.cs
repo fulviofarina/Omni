@@ -14,33 +14,11 @@ namespace DB
             /// </summary>
             /// <param name="aux">MatrixRow as input</param>
             /// <returns>the IList of Compositions Rows</returns>
-            public IList<DB.LINAA.CompositionsRow> AddCompositionRow(ref MatrixRow aux)
-            {
-                IList<string[]> ls = aux.StripComposition();
-                IList<LINAA.CompositionsRow> added = new List<LINAA.CompositionsRow>();
-                if (ls != null)
-                {
-                    AddCompositionRow(aux.MatrixID, ref ls, ref added);
-                }
-                return added;
-            }
+          
 
-            public void AddCompositionRow(int MatrixID, ref IList<string[]> ls, ref IList<LINAA.CompositionsRow> added)
-            {
-                //no commas, so make table directly....
-                bool okreturn = added != null;
-                foreach (string[] formCompo in ls)
-                {
-                    string element = formCompo[0];
-                    double formulaweight = 0;
-                    double quantity = Convert.ToDouble(formCompo[1]);
+        
 
-                    LINAA.CompositionsRow c = AddCompositionsRow(MatrixID, element, formulaweight, quantity);
-                    if (okreturn) added.Add(c);
-                }
-            }
-
-            private CompositionsRow AddCompositionsRow(int matrixID, string element, double formulaweight, double quantity)
+            public CompositionsRow AddCompositionsRow(int matrixID, string element, double formulaweight, double quantity)
             {
                 CompositionsRow c = null;
                 try

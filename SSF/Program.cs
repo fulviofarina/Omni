@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DB.Tools;
 using DB.UI;
 using Msn;
+using VTools;
 
 namespace SSF
 {
@@ -136,6 +137,8 @@ namespace SSF
                 //create database
                 Creator.Build(ref LIMS.Interface);
                 Creator.CheckDirectories();
+                LIMS.Interface.IPreferences.PopulatePreferences();
+
 
                 LIMS.Linaa = LIMS.Interface.Get();
                 LIMS.Form = new LIMS(); //make a new UI LIMS
@@ -145,22 +148,20 @@ namespace SSF
                 LIMS.UserControls = new List<object>();
 
                 LIMS.Interface.IReport.CheckMSMQ();
-                LIMS.Interface.IReport.CheckRestartFile();
 
                 bool ok = Creator.PrepareSQL();
 
-                toReturn = CreateSSFUserInterface();
-            
+                LIMS.Interface.IReport.CheckRestartFile();
 
-                if (ok)
-                {
-                    //ACUMULA LOS METODOS Y CREA EL WORKER, ESPERA FOR RUN...
-                    Creator.LoadMethods(0);
-                    //GO GO GO GO
-                    Creator.Run();
-                }
+                LIMS.Interface.IPreferences.SavePreferences();
+
+                if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
-          
+
+                toReturn = CreateSSFUserInterface();
+
+                    Creator.Run();
+        
 
 
                 Application.Run(toReturn);
@@ -185,7 +186,8 @@ namespace SSF
             };
             options.ConnectionBox = delegate
             {
-                LIMS.Connections();
+                 LIMS.Connections();
+               
             };
             options.SaveClick = delegate
             {

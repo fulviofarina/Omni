@@ -54,7 +54,7 @@ namespace DB.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=HL14;Persist Security Info=True;User ID=sa" +
-            ";Password=naa;Connect Timeout=5")]
+            ";Password=naa;Connect Timeout=10")]
         public string HLSNMNAAConnectionString {
             get {
                 return ((string)(this["HLSNMNAAConnectionString"]));
@@ -65,7 +65,7 @@ namespace DB.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=k014;Persist Security Info=True;User ID=sa" +
-            ";Password=naa;Connect Timeout=5")]
+            ";Password=naa;Connect Timeout=10")]
         public string NAAConnectionString {
             get {
                 return ((string)(this["NAAConnectionString"]));
@@ -76,7 +76,7 @@ namespace DB.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k017;Persist Security Info=Tru" +
-            "e;Connect Timeout=10")]
+            "e;Connect Timeout=10;Integrated Security=True")]
         public string localDB {
             get {
                 return ((string)(this["localDB"]));

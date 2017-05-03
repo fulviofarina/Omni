@@ -17,6 +17,8 @@ namespace DB.Linq
 
             System.Diagnostics.Process.Start(path+ "\\" + localdbexpressPack);
         }
+
+
         public static bool PopulateSQL(string localDBPath)
         {
             //create the database if it does not exist
@@ -33,26 +35,42 @@ namespace DB.Linq
         }
         public static bool RestartSQLServer()
         {
-            string start = "start";
+            string start = "start ";
             bool hide = false;
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            bool exist = System.IO.File.Exists(sqlDBEXE);
+            bool is64 = Environment.Is64BitOperatingSystem;
+
+            string path = string.Empty;
+            path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            if (is64) path = path.Replace(" (x86)", null);
+            // else 
+            string workDir = path + "\\Microsoft SQL Server\\120\\Tools\\Binn\\";
+            path = workDir + sqlDBEXE;
+
+          
+            bool exist = System.IO.File.Exists(path);
 
             if (!exist) return exist;
 
+            path = sqlDBEXE;
+            string batPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)+ "\\Temp\\";
+            System.IO.File.WriteAllText(batPath + "sql.bat", "start /B " + path + " start" );
+
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo i = new System.Diagnostics.ProcessStartInfo();
-            process.StartInfo = i;
             if (hide) i.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             else i.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-            i.Arguments = sqlDBEXE;
-            i.FileName = start;
+            i.Verb = "runas";
+            i.Arguments = "/c sql.bat";
+            i.WorkingDirectory = batPath;
+            i.FileName = "cmd.exe";
             i.UseShellExecute = false;
+
+            process.StartInfo = i;
             process.Start();
             process.WaitForExit(10000);
-
-           // System.Diagnostics.Process.Start(sqlDBEXE, string.Empty,  start, hide, true, 10000);
+            
             return exist;
-            // System.Diagnostics.Process.Start(sqlDBEXE, start,);
+        
         }
 
         public static void CloneSQLDatabase(ref LinqDataContext original, ref LinqDataContext destiny)

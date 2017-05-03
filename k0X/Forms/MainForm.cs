@@ -402,10 +402,20 @@ namespace k0X
                 //Build
                 Creator.Build(ref LIMS.Interface);
                 Creator.CheckDirectories();
+                //    Creator.CheckPreferences();
+                LIMS.Interface.IPreferences.PopulatePreferences();
+
+              
                 bool ok = Creator.PrepareSQL();
+
+                LIMS.Interface.IReport.CheckRestartFile();
+
                 if (ok)
                 {
+                    LIMS.Interface.IPreferences.SavePreferences();
+
                     Creator.LoadMethods(0);
+                 
                 }
                 //       string result = DB.Tools.Creator.Build(ref LIMS.Linaa, ref this.notify, ref msn, 0);
                 //

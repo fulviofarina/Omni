@@ -23,6 +23,6 @@ namespace DB
 
         void PopulateVials();
 
-        void PopulateXCOMList();
+        void PopulateMUESList();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace DB.UI
+﻿namespace VTools
 {
     partial class ucOptions
     {

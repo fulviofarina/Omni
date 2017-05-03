@@ -163,11 +163,11 @@
     <Compile Include="Populate\Populate.Samples.cs" />
     <Compile Include="DB\SchAcqs\NAA.SchedAcqs.cs" />
     <Compile Include="Populate\Populate.SchedAcqs.cs" />
-    <Compile Include="Main\Static\Comparers.cs" />
-    <Compile Include="Main\Static\Main.cs" />
-    <Compile Include="Main\Static\Others.cs" />
-    <Compile Include="Main\Static\Selector.cs" />
-    <Compile Include="Main\Static\Selector.SchedAcqs.cs" />
+    <Compile Include="Static\Comparers.cs" />
+    <Compile Include="Static\Main.cs" />
+    <Compile Include="Static\Others.cs" />
+    <Compile Include="Static\Selector.cs" />
+    <Compile Include="Static\Selector.SchedAcqs.cs" />
     <Compile Include="Store\Store.cs" />
     <Compile Include="Store\Store.Delete.cs" />
     <Compile Include="Store\Store.Save.cs" />
@@ -177,7 +177,7 @@
     <Compile Include="DB\ToDo\ToDo.Data.cs" />
     <Compile Include="DB\ToDo\ToDo.Res.cs" />
     <None Include="DIAGRAMLINAA.cd" />
-    <None Include="Main\Basura\Basura.cs">
+    <None Include="Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />

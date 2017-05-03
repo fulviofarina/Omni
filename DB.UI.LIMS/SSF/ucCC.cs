@@ -39,7 +39,10 @@ namespace DB.UI
             ChannelDGV.DataSource = Interface.IBS.Channels;
             ContainerDGV.DataSource = Interface.IBS.Rabbit;
 
-       
+            this.channelParBN.BindingSource = Interface.IBS.Channels;
+            this.ContainerBN.BindingSource = Interface.IBS.Rabbit;
+
+
         }
       
         /// <summary>

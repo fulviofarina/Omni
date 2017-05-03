@@ -8,6 +8,8 @@ namespace DB
 {
     public partial class LINAA : IDetSol
     {
+    
+
         /// <summary>
         /// Gets a non-repeated list of Detectors in the database
         /// </summary>

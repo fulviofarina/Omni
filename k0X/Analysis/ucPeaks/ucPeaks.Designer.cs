@@ -1066,7 +1066,7 @@ namespace k0X
             this.ppm.Name = "ppm";
             this.ppm.Size = new System.Drawing.Size(30, 22);
             this.ppm.Text = "ppm";
-            this.ppm.ToolTipText = "Concentration in mg/kg";
+            this.ppm.ToolTipText = "FC in mg/kg";
             this.ppm.VisitedLinkColor = System.Drawing.Color.Teal;
             this.ppm.Click += new System.EventHandler(this.AnyLabel_Click);
             // 

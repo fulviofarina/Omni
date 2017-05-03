@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rsx.SQL">
+    <Position X="0.5" Y="0.5" Width="4" />
+    <NestedTypes>
+      <Class Name="Rsx.SQL.ConnectionString" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConnectionString.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAgACFAEAEEAAAYACgAIAEACKJAAAABwBAQAAABEA=</HashCode>
+      <FileName>ConnectionString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

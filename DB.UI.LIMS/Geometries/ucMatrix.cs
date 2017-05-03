@@ -167,8 +167,10 @@ namespace DB.UI
                             progress.PerformStep();
                             Application.DoEvents();
 
-                            IList<LINAA.CompositionsRow> add = null;
-                            this.Linaa.Compositions.AddCompositionRow(m.MatrixID, ref ls, ref add);
+                            //   IList<LINAA.CompositionsRow> add = null;
+                            //   .MatrixID, ref ls, ref add
+                        //    m.CodeOrAddComposition(ref ls);
+                            m.CodeOrAddComposition( ls);
 
                             progress.PerformStep();
                             Application.DoEvents();
@@ -188,7 +190,7 @@ namespace DB.UI
             }
 
             Application.DoEvents();
-            if (XcomCalled) this.Linaa.PopulateXCOMList();
+            if (XcomCalled) this.Linaa.PopulateMUESList();
             else
             {
                 this.Linaa.Save<LINAA.CompositionsDataTable>();
@@ -436,7 +438,7 @@ namespace DB.UI
                 if (!plotting) return;
                 double eh = Convert.ToDouble(this.energyEnd.Text);
                 double el = Convert.ToDouble(this.energyStart.Text);
-                DB.LINAA.MUESDataTable mues = this.Linaa.TAM.MUESTableAdapter.GetByMatrixIDAndEnergy(Matrix.MatrixID, el, eh);
+                DB.LINAA.MUESDataTable mues = this.Linaa.TAM.MUESTableAdapter.GetDataByMatrixIDAndEnergy( el, eh, Matrix.MatrixID);
                 DataColumn ene = mues.EnergyColumn;
                 DataColumn mu = mues.MUColumn;
 

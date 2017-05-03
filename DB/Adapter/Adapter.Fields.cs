@@ -1,5 +1,7 @@
 ﻿//using DB.Interfaces;
+using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using DB.LINAATableAdapters;
 
 namespace DB
@@ -79,14 +81,14 @@ namespace DB
             set
             {
                 string connection = value;
-                System.Data.IDbConnection con = this.TAM.Connection;
+                IDbConnection con = this.TAM.Connection;
                 con.Close();
-                con = new System.Data.SqlClient.SqlConnection(connection);
+                con = new SqlConnection(connection);
                 this.TAM.Connection = con;
                 foreach (dynamic a in adapters.Values)
                 {
                     a.Connection.Close();
-                    a.Connection = new System.Data.SqlClient.SqlConnection(connection);
+                    a.Connection = new SqlConnection(connection);
                 }
                 con.Open();
             }
@@ -108,6 +110,7 @@ namespace DB
                 try
                 {
                     System.Data.ConnectionState st = tAM.Connection.State;
+                   
                     if (st == System.Data.ConnectionState.Open)
                     {
                         this.tAM.Connection.Close();

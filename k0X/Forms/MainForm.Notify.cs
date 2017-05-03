@@ -72,9 +72,9 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-          bool restart =   LIMS.Connections();
+            LIMS.Connections();
 
-            if (!restart) return;
+           // if (!restart) return;
 
             this.Quit_Click(this.ClearLinaa, e); //leave like this, the sender must be ClearLinaa.
         }

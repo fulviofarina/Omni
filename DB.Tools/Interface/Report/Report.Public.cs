@@ -134,11 +134,17 @@ namespace DB.Tools
             try
             {
                 string test = Properties.QM.QMExceptions;
+
+                bool ok = false;
+
                 //install MSMQ
                 MessageQueue qm = Rsx.Emailer.CreateMQ(test, null);
                 if (qm == null)
                 {
-                  
+                    //h
+                    //    test.Aggregate();
+
+                
 
                     string msg = "This program will install Microsoft Message Queue Server\n\n";
                     //  msg += "You'll need to hold the Window's Logo Key and press R\n\n";
@@ -147,7 +153,12 @@ namespace DB.Tools
                     DialogResult result = MessageBox.Show(msg, "Important", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                     string workDir = Application.StartupPath + Resources.DevFiles;
-                    string path = workDir + Resources.msmq;
+
+                    bool is64 = Environment.Is64BitOperatingSystem;
+                    string path = workDir + Resources.msmqx86;
+                    if (is64) path = workDir + Resources.msmqx64;
+
+                //    string path = workDir + Resources.msmq;
 
                     //one process to create the VB SCRIPTS
                     Emailer.LoadScript(path, string.Empty, workDir);
@@ -160,21 +171,19 @@ namespace DB.Tools
                     Emailer.LoadScript(cmd, path + ".vbs", workDir);
                     //   startCMDProcess(cmd, path + "2.vbs", workDir);
 
-
-
-
-                    return false;
+                //    ok = true;
                 }
                 else
                 {
-
+                    ok = true;
                     qm.Dispose();
                     qm = null;
 
-                //    return true;
                 }
 
+                Interface.IPreferences.CurrentPref.IsMSMQ = ok;
 
+                return ok;
 
             }
             catch (Exception ex2)

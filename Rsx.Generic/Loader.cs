@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Rsx
+namespace Rsx.Generic
 {
     /// <summary>
     /// This is a System.ComponentModel.BackgroundWorker For be used by another class?
@@ -85,7 +85,8 @@ namespace Rsx
 
         private void defaultExceptionReport(Exception ex)
         {
-            System.Windows.Forms.MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.TargetSite, "Problems loading a data table content");
+            throw ex;
+           // MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.TargetSite, "Problems loading a data table content");
         }
 
         private IList<Action> mainMethods;

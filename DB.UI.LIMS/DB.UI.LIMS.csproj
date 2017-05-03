@@ -65,10 +65,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connections.cs">
+    <Compile Include="Geometries\ucComposition.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Geometries\ucComposition.Designer.cs">
+      <DependentUpon>ucComposition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Connections.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Connections.Designer.cs">
+    <Compile Include="UI\Connections.Designer.cs">
       <DependentUpon>Connections.cs</DependentUpon>
     </Compile>
     <Compile Include="SSF\ucCC.cs">
@@ -83,11 +89,10 @@
     <Compile Include="SSF\ucSSF.Control.Designer.cs">
       <DependentUpon>ucSSF.Control.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\IucOptions.cs" />
-    <Compile Include="SSF\ucMatrixSimple.cs">
+    <Compile Include="Geometries\ucMatrixSimple.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SSF\ucMatrixSimple.Designer.cs">
+    <Compile Include="Geometries\ucMatrixSimple.Designer.cs">
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </Compile>
     <Compile Include="SSF\ucUnit.cs">
@@ -96,23 +101,17 @@
     <Compile Include="SSF\ucUnit.Designer.cs">
       <DependentUpon>ucUnit.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\ucV.cs">
+    <Compile Include="Geometries\ucV.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SSF\ucV.Designer.cs">
+    <Compile Include="Geometries\ucV.Designer.cs">
       <DependentUpon>ucV.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ucOptions.cs">
+    <Compile Include="Preferences\IucPreferences.cs" />
+    <Compile Include="Preferences\ucPreferences.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\ucOptions.Designer.cs">
-      <DependentUpon>ucOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\IucPreferences.cs" />
-    <Compile Include="UI\ucPreferences.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\ucPreferences.Designer.cs">
+    <Compile Include="Preferences\ucPreferences.Designer.cs">
       <DependentUpon>ucPreferences.cs</DependentUpon>
     </Compile>
     <Compile Include="Samples\ucSubSamples.Content.cs">
@@ -139,16 +138,16 @@
     <Compile Include="Projects\ucProjectBox.Designer.cs">
       <DependentUpon>ucProjectBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Picker\Picker.Fields.cs" />
-    <Compile Include="Picker\Picker.cs" />
-    <Compile Include="Picker\IPicker.cs" />
-    <Compile Include="Picker\PickerForm.cs">
+    <Compile Include="UI\Picker\Picker.Fields.cs" />
+    <Compile Include="UI\Picker\Picker.cs" />
+    <Compile Include="UI\Picker\IPicker.cs" />
+    <Compile Include="UI\Picker\PickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Picker\PickerForm.designer.cs">
+    <Compile Include="UI\Picker\PickerForm.designer.cs">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LIMS.Static.cs">
+    <Compile Include="LIMS.Static.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Geometries\ucGeometry.cs">
@@ -157,10 +156,10 @@
     <Compile Include="Geometries\ucGeometry.Designer.cs">
       <DependentUpon>ucGeometry.cs</DependentUpon>
     </Compile>
-    <Compile Include="SolCoi\ucMatrix.cs">
+    <Compile Include="Geometries\ucMatrix.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SolCoi\ucMatrix.Designer.cs">
+    <Compile Include="Geometries\ucMatrix.Designer.cs">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </Compile>
     <Compile Include="Geometries\ucVialType.cs">
@@ -169,10 +168,10 @@
     <Compile Include="Geometries\ucVialType.Designer.cs">
       <DependentUpon>ucVialType.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LIMS.cs">
+    <Compile Include="LIMS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\LIMS.Designer.cs">
+    <Compile Include="LIMS.Designer.cs">
       <DependentUpon>LIMS.cs</DependentUpon>
     </Compile>
     <Compile Include="Projects\ucChannels.cs">
@@ -230,7 +229,7 @@
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\ControlNames.cs" />
+    <Compile Include="ControlNames.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -255,13 +254,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Connections.resx">
+    <EmbeddedResource Include="Geometries\ucComposition.resx">
+      <DependentUpon>ucComposition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Connections.resx">
       <DependentUpon>Connections.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SSF\ucCC.resx">
       <DependentUpon>ucCC.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucMatrixSimple.resx">
+    <EmbeddedResource Include="Geometries\ucMatrixSimple.resx">
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SSF\ucSSF.Control.resx">
@@ -270,13 +272,10 @@
     <EmbeddedResource Include="SSF\ucUnit.resx">
       <DependentUpon>ucUnit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucV.resx">
+    <EmbeddedResource Include="Geometries\ucV.resx">
       <DependentUpon>ucV.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ucOptions.resx">
-      <DependentUpon>ucOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\ucPreferences.resx">
+    <EmbeddedResource Include="Preferences\ucPreferences.resx">
       <DependentUpon>ucPreferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
@@ -291,19 +290,19 @@
     <EmbeddedResource Include="Projects\ucProjectBox.resx">
       <DependentUpon>ucProjectBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Picker\PickerForm.resx">
+    <EmbeddedResource Include="UI\Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Geometries\ucGeometry.resx">
       <DependentUpon>ucGeometry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SolCoi\ucMatrix.resx">
+    <EmbeddedResource Include="Geometries\ucMatrix.resx">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Geometries\ucVialType.resx">
       <DependentUpon>ucVialType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\LIMS.resx">
+    <EmbeddedResource Include="LIMS.resx">
       <DependentUpon>LIMS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Projects\ucChannels.resx">
@@ -397,10 +396,6 @@
     <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
       <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
       <Name>Rsx.Math</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rsx\Rsx.csproj">
-      <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
-      <Name>Rsx</Name>
     </ProjectReference>
     <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
       <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>

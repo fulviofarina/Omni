@@ -2,10 +2,8 @@ REM echo cd %SYSTEMROOT%\SysWow64\ > "%temp%\batch1.bat"
 SET ba1=%temp%\batch1.bat
 SET ba2=%temp%\batch2.bat
 SET vb=%temp%\vb.vbs
-echo call %SYSTEMROOT%\system32\dism /online /enable-feature /featurename:"MSMQ-Container" > %ba1%
-echo call %SYSTEMROOT%\SYSNATIVE\dism /online /enable-feature /featurename:"MSMQ-Container" >> %ba1%
-echo call %SYSTEMROOT%\system32\dism /online /enable-feature /featurename:"MSMQ-Server" > %ba2%
-echo call %SYSTEMROOT%\SYSNATIVE\dism /online /enable-feature /featurename:"MSMQ-Server" >> %ba2%
+echo call %SYSTEMROOT%\SYSNATIVE\dism /online /enable-feature /featurename:"MSMQ-Container" > %ba1%
+echo call %SYSTEMROOT%\SYSNATIVE\dism /online /enable-feature /featurename:"MSMQ-Server" > %ba2%
 REM echo %SendKeys% "n" >>  "%temp%\batch1.bat"
 REM echo %SendKeys% "n" >>  "%temp%\batch2.bat"
 REM echo exit > "%temp%\batch1.bat"

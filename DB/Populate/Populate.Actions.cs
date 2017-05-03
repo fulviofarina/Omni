@@ -14,7 +14,7 @@ namespace DB
             populatorArray = new Action[]   {
             PopulateCompositions ,
         PopulateMatrix,
-            PopulateXCOMList,
+        //    PopulateMUESList,
          PopulateVials,
             PopulateGeometry};
 

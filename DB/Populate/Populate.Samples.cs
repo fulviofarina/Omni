@@ -11,6 +11,8 @@ namespace DB
 {
     public partial class LINAA : ISamples
     {
+    
+
         public IEnumerable<LINAA.SubSamplesRow> CreateSamplesNamesFrom(ref IEnumerable<string> hsamples)
         {
             IList<LINAA.SubSamplesRow> ls = new List<SubSamplesRow>();
@@ -26,7 +28,16 @@ namespace DB
 
             return ls;
         }
-
+        private void populateSelectedExpression(bool setexpression)
+        {
+            string expression = string.Empty;
+            if (setexpression)
+            {
+                expression = "Parent(Measurements_Peaks).Selected";
+            }
+            //   PopulatePreferences();
+            Peaks.SelectedColumn.Expression = expression;
+        }
         public void SetIrradiatioRequest(ref IEnumerable<LINAA.SubSamplesRow> samples, int IrrReqID)
         {
             foreach (LINAA.SubSamplesRow s in samples)
@@ -341,7 +352,7 @@ namespace DB
                 this.IPeakAverages.EndLoadData();
             }
 
-            PopulateSelectedExpression(!load);
+            populateSelectedExpression(!load);
         }
 
         //

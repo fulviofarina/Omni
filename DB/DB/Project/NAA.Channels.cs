@@ -18,7 +18,7 @@ namespace DB
                 {
                     if (nonNullables == null)
                     {
-                        nonNullables = new DataColumn[] { this.columnAlpha, this.columnf, this.columnReactor, this.columnkth, this.columnkepi };
+                        nonNullables = new DataColumn[] { this.columnAlpha, this.columnf, this.columnReactor, this.columnkth, this.columnkepi , columnIrReqCode, columnpEpi, columnpTh, columnA1, columnA2};
                     }
                     return nonNullables;
                 }
@@ -30,14 +30,36 @@ namespace DB
                 {
                     if (NonNullables.Contains(e.Column))
                     {
+                        ChannelsRow ch = e.Row as ChannelsRow;
+
                         bool nu = EC.CheckNull(e.Column, e.Row);
-                        if (e.Column == this.columnChannelName && nu)
+                        if (e.Column == this.columnChannelName)
                         {
-                            ChannelsRow ch = e.Row as ChannelsRow;
-                            ch.ChannelName = "New Channel";
+                            if (nu)
+                            {
+                            
+                                ch.ChannelName = "New Channel";
+                            }
+                        }
+                        else if (e.Column == this.columnpEpi)
+                        {
+                            if (nu) ch.pEpi = 0.82;
+                        }
+                        else if (e.Column == this.columnpTh)
+                        {
+                            if (nu) ch.pTh = 0.964;
+                        }
+                        else if (e.Column == this.columnA1)
+                        {
+                            if (nu) ch.A1 = 1;
+                        }
+                        else if (e.Column == this.columnA2)
+                        {
+                            if (nu) ch.A2 = 0.06;
                         }
                         return;
                     }
+                   
                 }
                 catch (SystemException ex)
                 {

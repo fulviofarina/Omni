@@ -8,10 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 using Rsx;
 using System.Collections;
-using DB.Tools;
-using DB.Properties;
 
-namespace DB.UI
+
+namespace VTools
 {
     public partial class ucOptions : UserControl, IucOptions
     {

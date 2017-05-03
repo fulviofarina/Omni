@@ -159,7 +159,10 @@
     <Content Include="Files\curves.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Files\msmq.bat">
+    <None Include="Files\msmqx64.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\msmqx86.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Overrider" />
@@ -208,6 +211,10 @@
     <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
       <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
       <Name>Rsx.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
+      <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
+      <Name>VTools.Explorer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

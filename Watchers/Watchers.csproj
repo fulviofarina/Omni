@@ -184,9 +184,9 @@
       <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
       <Name>Rsx.Emailer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx\Rsx.csproj">
-      <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
-      <Name>Rsx</Name>
+    <ProjectReference Include="..\Rsx.Generic\Rsx.Generic.csproj">
+      <Project>{c0806053-7e45-4971-a846-28b93ce2f7d1}</Project>
+      <Name>Rsx.Generic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

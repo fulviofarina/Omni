@@ -8,6 +8,22 @@ namespace DB
 {
     public partial class LINAA
     {
+
+        protected void handlersGeometries()
+        {
+            handlers.Add(Matrix.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Matrix));
+            handlers.Add(VialType.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(VialType));
+            handlers.Add(Geometry.DataColumnChanged);
+
+            dTWithHandlers.Add(Tables.IndexOf(Geometry));
+            handlers.Add(SubSamples.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(SubSamples));
+        }
+
+
         partial class GeometryDataTable
         {
             private IEnumerable<DataColumn> nonNullables;

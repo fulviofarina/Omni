@@ -28,25 +28,17 @@ namespace Rsx
     /// </summary>
     /// <param name="bs"></param>
     /// <returns></returns>
-    public static Hashtable ArrayOfBindings(ref BindingSource bs, string format, string Property = "Text")
+    public static Hashtable ArrayOfBindings(ref BindingSource bs, string format = "", string Property = "Text")
         {
             DataTable dt = (bs.DataSource as DataSet).Tables[bs.DataMember];
-            //     Binding diam = new Binding(text, bs, column, t, mo);
-          
-            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
-            bool t = true;
-          //  format = string.Empty;
-           // string text = "Text";
-            string column;
-            Hashtable bslist = new Hashtable();
+             Hashtable bslist = new Hashtable();
 
             foreach (DataColumn item in (dt as DataTable).Columns)
             {
-                column = item.ColumnName;
+
+                string  column = item.ColumnName;
                 // column = Unit.DiameterColumn.ColumnName;
-                Binding b = new Binding(Property, bs, column, t, mo, DBNull.Value, format);
-               b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
-                
+                Binding b = ABinding(ref bs, column, format, Property);
                 bslist.Add(column, b);
             }
 
@@ -54,7 +46,17 @@ namespace Rsx
            
         }
 
-    
+        public static Binding ABinding(ref BindingSource bs, string column, string format ="", string Property = "Text")
+        {
+            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
+            bool t = true;
+            //  format = string.Empty;
+            // string text = "Text";
+            Binding b = new Binding(Property, bs, column, t, mo, DBNull.Value, format);
+            b.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+            return b;
+        }
+
 
         public static void LinkBS(ref BindingSource BS, DataTable table)
     {

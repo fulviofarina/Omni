@@ -10,6 +10,17 @@ namespace DB.Tools
 
     public partial class Current
     {
+
+     
+
+        public DataRow Matrix
+        {
+            get
+            {
+                return (bs.Matrix.Current as DataRowView)?.Row;
+            }
+        }
+
         /// <summary>
         /// Current
         /// </summary>
@@ -21,10 +32,17 @@ namespace DB.Tools
             }
         }
 
-        /// <summary>
-        /// Current
-        /// </summary>
-        public IEnumerable<DataRow> SubSamples
+        public DataRow Channel
+        {
+            get
+            {
+                return (bs.Channels.Current as DataRowView)?.Row;
+            }
+        }
+    /// <summary>
+    /// Current
+    /// </summary>
+    public IEnumerable<DataRow> SubSamples
         {
             get
             {

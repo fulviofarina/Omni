@@ -9,6 +9,27 @@ namespace DB
 {
     public partial class LINAA
     {
+        protected void handlersSamples()
+        {
+            handlers.Add(Standards.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Standards));
+
+            handlers.Add(Monitors.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Monitors));
+
+            handlers.Add(Unit.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Unit));
+
+            // tableIRequestsAverages.ChThColumn.Expression = " ISNULL(1000 *
+            // Parent(SigmasSal_IRequestsAverages).sigmaSal / Parent(SigmasSal_IRequestsAverages).Mat
+            // ,'0')"; tableIRequestsAverages.ChEpiColumn.Expression = " ISNULL(1000 *
+            // Parent(Sigmas_IRequestsAverages).sigmaEp / Parent(Sigmas_IRequestsAverages).Mat,'0')
+            // "; tableIRequestsAverages.SDensityColumn.Expression = " 6.0221415 * 10 *
+            // Parent(SubSamples_IRequestsAverages).DryNet / (
+            // Parent(SubSamples_IRequestsAverages).Radius * (
+            // Parent(SubSamples_IRequestsAverages).Radius + Parent(SubSamples_IRequestsAverages).FillHeight))";
+        }
+
         partial class SubSamplesDataTable
         {
             private DataColumn[] nonNullable;
@@ -59,7 +80,7 @@ namespace DB
                     {
                         nonNullable = new DataColumn[]{columnSubSampleName,
                      columnSubSampleCreationDate,columnSubSampleDescription,columnVol,
-                     columnConcentration, columnCapsuleName, columnMatrixName};
+                     columnFC, columnCapsuleName, columnMatrixName};
                     }
 
                     return nonNullable;
@@ -325,6 +346,7 @@ namespace DB
                 string fieldVal = sampleName.Trim().ToUpper();
                 return this.FirstOrDefault(LINAA.SelectorByField<SubSamplesRow>(fieldVal, field));
             }
+
             /*
             // private DataColumn[] geometric;
             private DataColumn[] masses;
@@ -343,6 +365,7 @@ namespace DB
                 }
             }
             */
+
             public bool Override(String Alpha, String f, String Geo, String Gt, bool asSamples)
             {
                 foreach (LINAA.SubSamplesRow row in this)
@@ -416,10 +439,7 @@ namespace DB
 
                 if (!EC.IsNuDelDetch(u))
                 {
-                    if (forceContent && !matrixDensNull)
-                    {
-                        u.Content = this.MatrixRow.MatrixComposition;
-                    }
+                   
 
                     if (this.Net != 0 && Vol != 0 && caldensity)
                     {
@@ -617,28 +637,29 @@ namespace DB
             {
                 this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
 
-                if (EC.IsNuDelDetch(this.MatrixRow))
+                MatrixRow m = this.MatrixRow;
+                bool cloneMatrix = false;
+                //has not been associated to a matrix before
+                if (EC.IsNuDelDetch(m))
                 {
-                    MatrixRow m = null;
-
                     if (!EC.IsNuDelDetch(this.GeometryRow))
                     {
                         m = this.GeometryRow.MatrixRow;
                     }
-                    if (!EC.IsNuDelDetch(m))
-                    {
-                        this.MatrixID = m.MatrixID;
-                        return true;
-                    }
-                    else
-                    {
-                        this.SetColumnError(this.tableSubSamples.GeometryNameColumn, "Plase assign a matrix for this geometry");
-                        this.SetColumnError(this.tableSubSamples.MatrixNameColumn, "Plase assign a matrix either directly or through a geometry");
-
-                        return false;
-                    }
                 }
-                else return true;
+                if (!EC.IsNuDelDetch(m))
+                {
+                    MatrixDataTable table = m.Table as MatrixDataTable;
+                    SubSamplesRow s = this;
+                    table.FindAMatrix(ref m, ref s);
+                    return true;
+                }
+                else
+                {
+                    this.SetColumnError(this.tableSubSamples.GeometryNameColumn, "Plase assign a matrix for this geometry");
+                    this.SetColumnError(this.tableSubSamples.MatrixNameColumn, "Plase assign a matrix either directly or through a geometry");
+                    return false;
+                }
             }
 
             public bool CheckMonitor()
@@ -698,7 +719,7 @@ namespace DB
                 // StandardsRow std = StandardsRow;
                 if (EC.IsNuDelDetch(StandardsRow)) return false;
 
-                Concentration = 1;
+                FC = 1;
                 Comparator = true;
                 Elements = string.Empty;
                 if (EC.IsNuDelDetch(StandardsRow.MatrixRow)) return false;
@@ -780,6 +801,7 @@ namespace DB
 
                 return count == 0;
             }
+
             public bool CheckVialCapsule()
             {
                 this.SetColumnError(this.tableSubSamples.CapsuleNameColumn, null);
@@ -791,6 +813,7 @@ namespace DB
                 }
                 return true;
             }
+
             /// <summary>
             /// MoistureContent Content must be in Percentage
             /// </summary>
@@ -919,6 +942,7 @@ namespace DB
                     }
                 }
             }
+
             /*
             public bool CalculateDensityOld()
             {

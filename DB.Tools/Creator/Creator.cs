@@ -3,17 +3,15 @@ using System.IO;
 using System.Windows.Forms;
 using DB.Properties;
 using Rsx;
+using Rsx.Generic;
 
 namespace DB.Tools
 {
-   
-
     public partial class Creator
     {
         private static string askToSave = "Changes in the database have not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
-        private static string couldNotConnect = "Could not connect to LIMS DataBase";
+
         private static string loading = "Database loading in progress";
-        private static string noConnectionDetected = "Please check the LIMS Database connection.\nThe Server might be down, not installed, misconfigured or just offline.\n\nError message:\n\n";
     }
 
     public partial class Creator
@@ -23,16 +21,13 @@ namespace DB.Tools
         private static Action lastCallBack = null;
         private static Action mainCallBack = null;
 
-   //     private static int toPopulate = 0;
+        // private static int toPopulate = 0;
 
         private static Loader worker = null;
 
         /// <summary>
         /// disposes the worker that loads the data
         /// </summary>
-      
-
-       
     }
 
     public partial class Creator

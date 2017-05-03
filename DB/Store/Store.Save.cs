@@ -58,9 +58,9 @@ namespace DB
 
             if (Usehandlers)
             {
-                Handlers(false, ref dt);
+                setHandlers(false, ref dt);
             }
-            RowHandlers(ref dt, false);
+            setRowHandlers(ref dt, false);
 
             dt.BeginLoadData();
 
@@ -80,7 +80,7 @@ namespace DB
 
             if (Usehandlers)
             {
-                Handlers(true, ref dt);
+                setHandlers(true, ref dt);
 
                 Usehandlers = false;
             }
@@ -90,7 +90,7 @@ namespace DB
                 Save(ref rows);
             }
 
-            RowHandlers(ref dt, true);
+            setRowHandlers(ref dt, true);
 
             dt.EndLoadData();
 
@@ -106,28 +106,8 @@ namespace DB
             // LINAATableAdapters.UnitTableAdapter uta = new LINAATableAdapters.UnitTableAdapter();
             if (t.Equals(typeof(SubSamplesRow)))
             {
-                LINAATableAdapters.SubSamplesTableAdapter ta = new LINAATableAdapters.SubSamplesTableAdapter();
-                try
-                {
-                    //    ta.Update(samps.Cast<DataRow>().ToArray());
-                    ta.DeleteNulls();
-                    foreach (SubSamplesRow i in schs)
-                    {
-                       // ta.Delete(i.SubSamplesID);
-                        //ta.Insert(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, i.SamplesID, i.CapsulesID, i.GeometryName, i.MatrixID, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, i.MonitorsID,i.ReferenceMaterialID,i.StandardsID,i.BlankID ,i.Gthermal, i.Radius, i.DirectSolcoi, i.InReactor, i.OutReactor, i.Concentration, i.ENAA, i.ChCapsuleID, i.CalcDensity, i.Vol);
-
-                        ta.Update(i);
-                    }
-                    
-                 
-                }
-                catch (SystemException ex)
-                {
-                    this.AddException(ex);
-                }
-
-                ta.Dispose();
-                ta = null;
+                IEnumerable<SubSamplesRow> samps = schs.Cast<SubSamplesRow>();
+                saveSamples(ref samps);
             }
             else if (t.Equals(typeof(SchAcqsRow))) this.tAM.SchAcqsTableAdapter.Update(schs);
             else if (t.Equals(typeof(OrdersRow))) this.tAM.OrdersTableAdapter.Update(schs);
@@ -590,15 +570,15 @@ namespace DB
             return wasPeaks;
         }
 
-        
-
-             private void saveSamples(ref IEnumerable<SubSamplesRow> samps)
+        private void saveSamples(ref IEnumerable<SubSamplesRow> samps)
         {
             LINAATableAdapters.SubSamplesTableAdapter ta = new LINAATableAdapters.SubSamplesTableAdapter();
 
-
             try
             {
+
+                ta.DeleteNulls();
+
                 IEnumerable<SubSamplesRow> deleteIR = (samps).Where(ir => ir.RowState == DataRowState.Deleted);
 
                 for (int i = deleteIR.Count() - 1; i >= 0; i--)
@@ -608,33 +588,32 @@ namespace DB
                         SubSamplesRow ip = deleteIR.ElementAt(i);
                         ip.RejectChanges();
 
-      
-        ta.Delete(ip.SubSamplesID);
+                        ta.Delete(ip.SubSamplesID);
                         ip.Delete();
                         ip.AcceptChanges();
                     }
                     catch (SystemException ex)
                     {
                         this.AddException(ex);
-    }
-}
+                    }
+                }
 
-IEnumerable<SubSamplesRow> toupdate = samps.ToList();
+                IEnumerable<SubSamplesRow> toupdate = samps.ToList();
                 foreach (SubSamplesRow i in toupdate)
                 {
                     try
                     {
                         bool added = (i.RowState == DataRowState.Added);
-int? capsID = null;
-int? sampsID = null;
-int? matId = null;
-int? stdId = null;
-int? refId = null;
-int? monId = null;
-int? blkId = null;
-int? chCapsID = null;
-DateTime? inre = null;
-DateTime? outre = null;
+                        int? capsID = null;
+                        int? sampsID = null;
+                        int? matId = null;
+                        int? stdId = null;
+                        int? refId = null;
+                        int? monId = null;
+                        int? blkId = null;
+                        int? chCapsID = null;
+                        DateTime? inre = null;
+                        DateTime? outre = null;
 
                         if (!i.IsChCapsuleIDNull()) chCapsID = (int?)i.ChCapsuleID;
                         if (!i.IsCapsulesIDNull()) capsID = (int?)i.CapsulesID;
@@ -649,38 +628,33 @@ DateTime? outre = null;
 
                         if (added)
                         {
-                            ta.Insert(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.Concentration, i.ENAA, chCapsID,i.CalcDensity,i.Vol);
+                            ta.Insert(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.FC, i.ENAA, chCapsID, i.CalcDensity, i.Vol);
                             int? ID = (int?)ta.GetSubSampleID(i.SubSampleName);
                             if (ID != null)
                             {
                                 SubSamplesDataTable dt = (SubSamplesDataTable)i.Table;
-dt.SubSamplesIDColumn.ReadOnly = false;
+                                dt.SubSamplesIDColumn.ReadOnly = false;
                                 i.SubSamplesID = (int)ID;
                                 dt.SubSamplesIDColumn.ReadOnly = true;
                             }
                         }
-                        ta.Update(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.Concentration, i.ENAA, chCapsID,i.CalcDensity, i.Vol,i.SubSamplesID);
+                        ta.Update(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.FC, i.ENAA, chCapsID, i.CalcDensity, i.Vol, i.SubSamplesID);
                         i.AcceptChanges();
-
-        
                     }
                     catch (SystemException ex)
                     {
                         this.AddException(ex);
-EC.SetRowError(i, ex);
-}
+                        EC.SetRowError(i, ex);
+                    }
                 }
             }
             catch (SystemException ex)
             {
                 this.AddException(ex);
-}
+            }
 
-ta.Dispose();
+            ta.Dispose();
             ta = null;
-         
-        
         }
-         
     }
 }

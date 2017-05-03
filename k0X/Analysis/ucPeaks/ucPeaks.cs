@@ -115,7 +115,7 @@ namespace k0X
                 double toSet = Convert.ToDouble(tag.Text);
                 if (tag.Equals(this.ppmbox) || tag.Equals(this.Fcbox))
                 {
-                    Sample.Concentration = toSet;
+                    Sample.FC = toSet;
                     return;
                 }
 
