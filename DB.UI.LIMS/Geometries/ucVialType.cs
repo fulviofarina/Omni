@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -12,15 +13,15 @@ namespace DB.UI
 
         public void Set(ref Interface inter)
         {
-            Rsx.Dumb.FD(ref this.Linaa);
+            Dumb.FD(ref this.Linaa);
             this.Linaa = inter.Get();
-            Rsx.Dumb.FD(ref this.BS);
+            Dumb.FD(ref this.BS);
 
 
        
 
             this.DGV.DataSource = inter.IBS.Vial;  //= this.VialBS;
-          //  Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.VialType);
+          //  Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.VialType);
         }
     }
 }

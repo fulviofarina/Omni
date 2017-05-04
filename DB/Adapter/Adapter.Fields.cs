@@ -1,21 +1,64 @@
 ﻿//using DB.Interfaces;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using DB.LINAATableAdapters;
+using System.Collections;
 
 namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        /*
-      //
-      // cRV
-      //
+        protected Hashtable adapters;
 
-      //
+        /// <summary>
+        /// Queries of this dataset
+        /// </summary>
+        protected LINAATableAdapters.QTA qTA;
+
+        /// <summary>
+        /// The master Table Adapter Manager of this dataset
+        /// </summary>
+        protected LINAATableAdapters.TableAdapterManager tAM;
+
+        // private System.ComponentModel.IContainer components;
+        protected System.Exception tAMException = null;
+
+        public delegate int TAMDeleteMethod(int index);
+
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">     </param>
+        protected internal void adapter_FillError(object sender, System.Data.FillErrorEventArgs e)
+        {
+            try
+            {
+                object[] o = e.Values;
+            }
+            catch (System.SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">     </param>
+        protected internal void adapter_RowUpdating(object sender, System.Data.SqlClient.SqlRowUpdatingEventArgs e)
+        {
+            try
+            {
+                object o = e.Row;
+            }
+            catch (System.SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+        /*
+      // cRV
+
       // tAM
-      //
       this.tAM.AcquisitionsTableAdapter = null;
       this.tAM.BackupDataSetBeforeUpdate = false;
       this.tAM.BlanksTableAdapter = null;
@@ -31,8 +74,7 @@ namespace DB
       this.tAM.ElementsTableAdapter = null;
       this.tAM.GeometryTableAdapter = null;
       this.tAM.HoldersTableAdapter = null;
-      //	 this.tAM.IPeakAveragesTableAdapter = null;
-      //	 this.tAM.IRequestsAveragesTableAdapter = null;
+      // this.tAM.IPeakAveragesTableAdapter = null; this.tAM.IRequestsAveragesTableAdapter = null;
       this.tAM.IrradiationRequestsTableAdapter = null;
       this.tAM.k0NAATableAdapter = null;
       this.tAM.MatrixTableAdapter = null;
@@ -60,95 +102,5 @@ namespace DB
       this.tAM.VialTypeTableAdapter = null;
 
       */
-
-        /// <summary>
-        /// Queries of this dataset
-        /// </summary>
-        protected LINAATableAdapters.QTA qTA;
-
-        /// <summary>
-        /// The master Table Adapter Manager of this dataset
-        /// </summary>
-        protected LINAATableAdapters.TableAdapterManager tAM;
-
-        //  private System.ComponentModel.IContainer components;
-        protected System.Exception tAMException = null;
-
-        private delegate int TAMDeleteMethod(int index);
-
-        public string ChangeConnection
-        {
-            set
-            {
-                string connection = value;
-                IDbConnection con = this.TAM.Connection;
-                con.Close();
-                this.qTA.Dispose();
-                this.qTA = new QTA();
-            //    con = new SqlConnection(connection);
-                this.TAM.Connection = new SqlConnection(connection);
-
-                foreach (dynamic a in adapters.Values)
-                {
-                    a.Connection.Close();
-                    a.Connection = new SqlConnection(connection);
-                }
-                this.TAM.Connection.Open();
-            }
-        }
-
-        public string Exception
-        {
-            get
-            {
-                return tAMException.Message;
-            }
-        }
-
-        public bool IsMainConnectionOk
-        {
-            get
-            {
-                tAMException = null;
-                try
-                {
-                    System.Data.ConnectionState st = tAM.Connection.State;
-                   
-                    if (st == System.Data.ConnectionState.Open)
-                    {
-                        this.tAM.Connection.Close();
-                    }
-                    if (st == System.Data.ConnectionState.Closed)
-                    {
-                        this.tAM.Connection.Open();
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    tAMException = ex;
-                }
-
-                return tAMException == null;
-            }
-        }
-
-        public QTA QTA
-        {
-            get
-            {
-                return qTA;
-            }
-
-            set
-            {
-                qTA = value;
-            }
-        }
-
-        public LINAATableAdapters.TableAdapterManager TAM
-        {
-            get { return tAM; }
-            set { tAM = value; }
-        }
     }
 }

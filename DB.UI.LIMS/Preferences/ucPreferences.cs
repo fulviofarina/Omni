@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.UI
 {
@@ -57,7 +57,7 @@ namespace DB.UI
             }
             catch (Exception ex)
             {
-                inter.IMain.AddException(ex);
+                inter.IStore.AddException(ex);
             }
         }
 
@@ -84,8 +84,8 @@ namespace DB.UI
 
                       string format = this.roundingTextBox.Text;
                       if (format.Length < 2) return;
-                      Dumb.ChangeBindingsFormat(format, ref bindings);
-                      Dumb.ChangeBindingsFormat(format, ref samplebindings);
+                      BS.ChangeBindingsFormat(format, ref bindings);
+                      BS.ChangeBindingsFormat(format, ref samplebindings);
 
                       Interface.IPreferences.CurrentSSFPref.Rounding = format;
 
@@ -94,7 +94,7 @@ namespace DB.UI
                   }
                   catch (Exception ex)
                   {
-                      Interface.IMain.AddException(ex);
+                      Interface.IStore.AddException(ex);
                   }
               };
         }
@@ -103,7 +103,7 @@ namespace DB.UI
         {
             BindingSource bs = Interface.IBS.Preferences;
 
-            Hashtable prefbindings = Dumb.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+            Hashtable prefbindings = BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
 
             this.fillByHLCheckBox.DataBindings.Add(prefbindings["FillByHL"] as Binding);
             this.fillBySpectraCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
@@ -116,7 +116,7 @@ namespace DB.UI
             this.showSampleDescriptionCheckBox.DataBindings.Add(prefbindings["ShowSampleDescription"] as Binding);
 
             //text binding
-            Hashtable bindings2 = Dumb.ArrayOfBindings(ref bs, string.Empty);
+            Hashtable bindings2 = BS.ArrayOfBindings(ref bs, string.Empty);
 
             this.maxUncTextBox.DataBindings.Add(bindings2["maxUnc"] as Binding);
             this.minAreaTextBox.DataBindings.Add(bindings2["minArea"] as Binding);
@@ -128,7 +128,7 @@ namespace DB.UI
         {
             BindingSource bs = Interface.IBS.SSFPreferences;
 
-            Hashtable bindings = Dumb.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+            Hashtable bindings = BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
 
             this.aARadiusCheckBox.DataBindings.Add(bindings["AARadius"] as Binding);
 

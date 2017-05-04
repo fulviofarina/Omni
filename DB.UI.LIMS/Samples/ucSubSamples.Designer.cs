@@ -37,7 +37,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.projectbox = new DB.UI.ucProjectBox();
             this.BN = new System.Windows.Forms.BindingNavigator(this.components);
-            this.BS = new System.Windows.Forms.BindingSource(this.components);
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -71,7 +71,7 @@
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
             this.BN.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -133,7 +133,7 @@
             // 
             this.BN.AddNewItem = null;
             this.BN.BackColor = System.Drawing.SystemColors.Control;
-            this.BN.BindingSource = this.BS;
+            this.BN.BindingSource = this.bs;
             this.BN.CountItem = this.bindingNavigatorCountItem;
             this.BN.DeleteItem = this.bindingNavigatorDeleteItem;
             this.BN.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -167,9 +167,9 @@
             // 
             // BS
             // 
-            this.BS.AllowNew = false;
-            this.BS.DataMember = "SubSamples";
-            this.BS.DataSource = this.Linaa;
+            this.bs.AllowNew = false;
+            this.bs.DataMember = "SubSamples";
+            this.bs.DataSource = this.Linaa;
             // 
             // Linaa
             // 
@@ -355,7 +355,7 @@
             this.dataGridViewTextBoxColumn11,
             this.dataGridViewTextBoxColumn17,
             this.dataGridViewCheckBoxColumn1});
-            this.DGV.DataSource = this.BS;
+            this.DGV.DataSource = this.bs;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
@@ -434,7 +434,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BN)).EndInit();
             this.BN.ResumeLayout(false);
             this.BN.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -465,7 +465,7 @@
 		private System.Windows.Forms.ErrorProvider error;
 		private System.ComponentModel.BackgroundWorker worker;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
-        public System.Windows.Forms.BindingSource BS;
+        public System.Windows.Forms.BindingSource bs;
         public System.Windows.Forms.ToolStripButton SaveItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton reportBtton;

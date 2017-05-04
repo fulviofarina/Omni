@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -22,7 +22,7 @@ namespace DB.UI
             try
             {
                 Dumb.FD(ref this.Linaa);
-                Dumb.FD(ref this.BS);
+                Dumb.FD(ref this.bs);
 
                 this.compositionDGV.DataSource = Interface.IBS.Compositions;
 
@@ -30,8 +30,8 @@ namespace DB.UI
                 if (!selectedMatrix) bs = Interface.IBS.Matrix;
 
                 string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
-             
-                Binding mcompoBin=   Dumb.ABinding(ref bs, column);
+
+                Binding mcompoBin = BS.ABinding(ref bs, column);
 
                 this.matrixRTB.DataBindings.Add(mcompoBin);
 
@@ -42,7 +42,7 @@ namespace DB.UI
             }
             catch (System.Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 

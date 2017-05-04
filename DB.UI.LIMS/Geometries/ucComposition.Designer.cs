@@ -73,7 +73,7 @@
             this.weightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.formulaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BS = new System.Windows.Forms.BindingSource(this.components);
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.matrixRTB = new System.Windows.Forms.RichTextBox();
             this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,7 +90,7 @@
             this.SC.Panel2.SuspendLayout();
             this.SC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.compositionDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
@@ -165,7 +165,7 @@
             this.weightDataGridViewTextBoxColumn,
             this.formulaDataGridViewTextBoxColumn,
             this.nameDataGridViewTextBoxColumn});
-            this.compositionDGV.DataSource = this.BS;
+            this.compositionDGV.DataSource = this.bs;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -256,8 +256,8 @@
             // 
             // BS
             // 
-            this.BS.DataMember = "Compositions";
-            this.BS.DataSource = this.Linaa;
+            this.bs.DataMember = "Compositions";
+            this.bs.DataSource = this.Linaa;
             // 
             // Linaa
             // 
@@ -354,7 +354,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SC)).EndInit();
             this.SC.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.compositionDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
@@ -366,7 +366,7 @@
 
         private System.Windows.Forms.SplitContainer SC;
         private System.Windows.Forms.DataGridView compositionDGV;
-        private System.Windows.Forms.BindingSource BS;
+        private System.Windows.Forms.BindingSource bs;
         private System.Windows.Forms.DataGridViewTextBoxColumn elementDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn uncDataGridViewTextBoxColumn;

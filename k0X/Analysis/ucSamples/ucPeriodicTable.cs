@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
-using Rsx;
+using Rsx.Dumb; using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -55,7 +56,7 @@ namespace k0X
       {
         IEnumerable<string> projects = null;
         projects = value;
-        Dumb.FillABox(projectbox, projects.ToList(), true, true);
+        UIControl.FillABox(projectbox, projects.ToList(), true, true);
       }
     }
 
@@ -101,7 +102,7 @@ namespace k0X
 
           if (hssamples.Count != 0)
           {
-            Dumb.FillABox(this.samplebox, hssamples, true, true);
+            UIControl.FillABox(this.samplebox, hssamples, true, true);
             if (hssamples.Count == 1) samplebox.Text = hssamples.First();
           }
         }
@@ -129,7 +130,7 @@ namespace k0X
 
           if (elements.Count != 0)
           {
-            Dumb.FillABox(this.Symbox, elements, true, true);
+            UIControl.FillABox(this.Symbox, elements, true, true);
             if (!SC.Panel1Collapsed) this.PopulateFor(ref elements, true);
             string ele = string.Empty;
             //pick first element or ALL
@@ -283,7 +284,7 @@ namespace k0X
 
         uc.Refresh();
       }
-      else Dumb.NavigateTo("Element Information for " + uc.ElementRow.ElementNameEn, DB.Tools.NuDat.GetElementUrl(uc.ElementRow.ElementNameEn));
+      else UIControl.NavigateTo("Element Information for " + uc.ElementRow.ElementNameEn, DB.Tools.NuDat.GetElementUrl(uc.ElementRow.ElementNameEn));
     }
   }
 }

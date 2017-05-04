@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
 
-        protected void handlersGeometries()
+        protected internal void handlersGeometries()
         {
             handlers.Add(Matrix.DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Matrix));

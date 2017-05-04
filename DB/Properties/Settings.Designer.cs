@@ -75,8 +75,8 @@ namespace DB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k0NAA;Persist Security Info=Tr" +
-            "ue;Connect Timeout=10;Integrated Security=True;Pooling=False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k0NAA;Integrated Security=True" +
+            ";Persist Security Info=True;Connect Timeout=10;Enlist=False;Pooling=False")]
         public string localDB {
             get {
                 return ((string)(this["localDB"]));
@@ -86,8 +86,8 @@ namespace DB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k0NAA;Persist Security Info=Tr" +
-            "ue;Connect Timeout=10;Integrated Security=True;Pooling=False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=k0NAA;Integrated Security=True" +
+            ";Persist Security Info=True;Connect Timeout=10;Enlist=False;Pooling=False")]
         public string developerDB {
             get {
                 return ((string)(this["developerDB"]));

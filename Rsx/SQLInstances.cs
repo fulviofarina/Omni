@@ -17,7 +17,7 @@ namespace Rsx.SQL
         public static string Exception;
 
         /// <summary>
-        /// tarda y consigue lo mismo
+        /// ByCallingBrowser, Takes long
         /// </summary>
         /// <returns></returns>
         public static List<string> GetLocalSqlServerInstancesByCallingSqlBrowser()
@@ -59,7 +59,7 @@ namespace Rsx.SQL
         }
 
         /// <summary>
-        /// Rapido funciona
+        /// Rapido funciona 32 bit
         /// </summary>
         /// <returns></returns>
         public static List<string> GetLocalSqlServerInstancesByCallingSqlWmi32()
@@ -68,7 +68,7 @@ namespace Rsx.SQL
         }
 
         /// <summary>
-        /// Rapido funciona
+        /// Rapido funciona 64 bit
         /// </summary>
         /// <returns></returns>
         public static List<string> GetLocalSqlServerInstancesByCallingSqlWmi64()
@@ -76,6 +76,9 @@ namespace Rsx.SQL
             return localSqlServerInstancesByCallingSqlWmi(ProviderArchitecture.Use64bit);
         }
 
+        /// <summary>
+        /// Mediante Registry
+        /// </summary>
         public static List<string> GetLocalSqlServerInstancesByReadingRegInstalledInstances()
         {
             try
@@ -100,7 +103,7 @@ namespace Rsx.SQL
         }
 
         /// <summary>
-        /// Fracasa
+        /// Mediante Registry (No furula)
         /// </summary>
         /// <returns></returns>
         public static List<string> GetLocalSqlServerInstancesByReadingRegInstanceNames()
@@ -127,7 +130,7 @@ namespace Rsx.SQL
         }
 
         /// <summary>
-        /// Tarda, pero necesario? No por lo visto
+        /// No es necesario y no lo uso, crea dictionario de metodos, investigar
         /// </summary>
         public static void MakeDictionary()
         {
@@ -197,6 +200,9 @@ namespace Rsx.SQL
             return new List<string>();
         }
 
+        /// <summary>
+        /// Opens a process
+        /// </summary>
         private static void processWithOutPut(string exeName, string arguments, int timeoutMilliseconds, out int exitCode, out string output)
         {
             using (Process process = new Process())

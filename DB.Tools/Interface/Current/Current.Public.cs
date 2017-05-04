@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
@@ -8,11 +8,17 @@ namespace DB.Tools
     /// This class gives the current row shown by a Binding Source
     /// </summary>
 
-    public partial class Current
+    public partial class Current : ICurrent
     {
 
-     
+        protected BindingSources bs;
 
+        protected Interface Interface;
+
+
+        /// <summary>
+        /// Current Row
+        /// </summary>
         public DataRow Matrix
         {
             get
@@ -22,7 +28,7 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Current
+        /// Current Row
         /// </summary>
         public DataRow SubSample
         {
@@ -32,6 +38,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Current Row
+        /// </summary>
         public DataRow Channel
         {
             get
@@ -39,19 +48,20 @@ namespace DB.Tools
                 return (bs.Channels.Current as DataRowView)?.Row;
             }
         }
-    /// <summary>
-    /// Current
-    /// </summary>
-    public IEnumerable<DataRow> SubSamples
+
+        /// <summary>
+        /// Current Rows
+        /// </summary>
+        public IEnumerable<DataRow> SubSamples
         {
             get
             {
-                return Dumb.Cast<DataRow>(bs.SubSamples.List as DataView);
+                return Caster.Cast<DataRow>(bs.SubSamples.List as DataView);
             }
         }
 
         /// <summary>
-        /// Current
+        /// Current Row
         /// </summary>
         public DataRow Unit
         {
@@ -62,20 +72,26 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Current
+        /// Current Row
         /// </summary>
         public IEnumerable<DataRow> Units
         {
             get
             {
-                return Dumb.Cast<DataRow>(bs.Units.List as DataView);
+                return Caster.Cast<DataRow>(bs.Units.List as DataView);
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Current()
         {
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Current(ref BindingSources bss, ref Interface interfaces)
         {
             bs = bss;

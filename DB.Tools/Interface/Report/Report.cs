@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Messaging;
-using System.Windows.Forms;
 using DB.Properties;
 using Msn;
-using Rsx;
 
 namespace DB.Tools
 {
@@ -14,25 +12,24 @@ namespace DB.Tools
     //STATIC
     public partial class Report
     {
-        private static string bePatient = "Please be patient...";
-        private static string bugReportNotGen = "Bug Report not generated!";
-        private static string bugReportOnWay = "Bug Report is being populated";
-        private static string bugReportProblem = "Problems with Bug Report!";
-        private static string BUGS_ONTRAY = "Bug Reports on tray...";
-        private static string cannotMSMQ = "Cannot initiate the Message Queue";
-        private static string checkifMSMQ = "Checking if MSMQ is installed";
-        private static string email = "k0x.help@gmail.com";
-        private static string nothingBuggy = "Nothing seems 'buggy' this time ;)";
-        private static string problemsWithReport = "Problems while generating Report!";
-        private static string shouldRestart = "Do you want to restart the program now?";
-        private static string startOrExit = "Restart or Exit?";
-        private static string restartingOk = "Restarting succeeded...";
-        //SHITTY
-        ///SHITTY
+        protected static string BE_PATIENT = "Please be patient...";
+        protected static string BUG_REPORT_FAILED = "Bug Report not generated!";
+        protected static string BUG_REPORT_ONWAY = "Bug Report is being populated";
+        protected static string BUG_REPORT_PROBLEM = "Problems with Bug Report!";
+        protected static string BUGS_ONTRAY = "Bug Reports on tray...";
+        protected static string MSMQ_NOT_OK = "Cannot initiate the Message Queue";
+        protected static string MSMQ_CHECK = "Checking if MSMQ is installed";
+        protected static string EMAIL_DEFAULT = "k0x.help@gmail.com";
+        protected static string BUG_REPORT_EMPTY = "Nothing seems 'buggy' this time ;)";
+        protected static string REPORT_PROBLEMS = "Problems while generating Report!";
+        protected static string SHOULD_RESTART = "Do you want to restart the program now?";
+        protected static string START_OR_EXIT = "Restart or Exit?";
+        protected static string RESTARTING_OK = "Restarting succeeded...";
+
+        /// <summary>
+        /// not used finds greetings
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        private static string[] findGreeting(ref string user)
+        private static string[] generateGreeting(ref string user)
         {
             string text;
             string title;
@@ -54,13 +51,11 @@ namespace DB.Tools
         // private MessageQueue bugQM = null;
         private IAsyncResult bugresult = null;
 
-        private Interface Interface;
+        protected Interface Interface;
 
         private Pop msn = null;
 
-   
-
-        private static ArrayList getPathsToAttachments(ref System.Messaging.Message w)
+        private static ArrayList generatePathsToAttachments(ref System.Messaging.Message w)
         {
             ArrayList array = new ArrayList();
             Type tipo = w.Body.GetType();
@@ -80,7 +75,7 @@ namespace DB.Tools
             return array;
         }
 
-        private static string sendEmail(ref MessageQueue qMsg1, ref System.Messaging.Message w, string user)
+        private static string generateEmail(ref MessageQueue qMsg1, ref System.Messaging.Message w, string user)
         {
             //takes the Qmessage body (usually a path to a file)
             // retrieves the file and emails it!!
@@ -91,7 +86,7 @@ namespace DB.Tools
             string qPath = qMsg1.Path;
             string lbel = w.Label;
             byte[] messageContent = w.Extension;
-            ArrayList array = getPathsToAttachments(ref w);
+            ArrayList array = generatePathsToAttachments(ref w);
 
             string sendto = string.Empty;
             if (qPath.Contains("@"))
@@ -107,7 +102,7 @@ namespace DB.Tools
             return result;
         }
 
-        private void qMsg_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
+        private void queryMsgReceived(object sender, ReceiveCompletedEventArgs e)
         {
             if (e == null) return;
             //if sender is null means that the user did not requested this.
@@ -142,16 +137,16 @@ namespace DB.Tools
                 }
                 else
                 {
-                    string result = sendEmail(ref queue, ref AMessage, user);
+                    string result = generateEmail(ref queue, ref AMessage, user);
                     //    AMessage.Label = "OK";
                     //reportReceivedAsync(ref queue, ref AMessage);
                     //REPORT TO SEND NOW...
-                    reportResult(result, when);
+                    msgReportResult(result, when);
                 }
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -169,7 +164,7 @@ namespace DB.Tools
             string EmailTitle = string.Empty;
             if (!sent)
             {
-                Interface.IMain.AddException((Exception)w.Body);
+                Interface.IStore.AddException((Exception)w.Body);
                 EmailTitle = " was NOT sent";
             }
             else EmailTitle = " was sent";
@@ -203,16 +198,16 @@ namespace DB.Tools
                 }
                 catch (SystemException ex)
                 {
-                    Interface.IMain.AddException(ex);
+                    Interface.IStore.AddException(ex);
                 }
             }
 
-            reportResult(EmailTitle, when);
+            msgReportResult(EmailTitle, when);
 
             bugresult = qMsg1.BeginReceive();
         }
 
-        private void reportResult(string result, DateTime when)
+        private void msgReportResult(string result, DateTime when)
         {
             string whatsSending = "Status";
             string title = whatsSending + " NOT Sent!";

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB;
 using NPlot;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.Math;
 using DB.Tools;
 
@@ -84,7 +84,7 @@ namespace k0X
             {
                 this.Linaa.PopulateToDoes();
 
-                Dumb.FillABox(this.ToDoLabelBox, this.Linaa.ToDoesList, true, false);
+                UIControl.FillABox(this.ToDoLabelBox, this.Linaa.ToDoesList, true, false);
 
                 if (this.Linaa.ToDoesList.Count == 0) return;
             }
@@ -157,7 +157,7 @@ namespace k0X
 
                 this.Linaa.Save<LINAA.ToDoDataTable>();
 
-                Dumb.FillABox(this.ToDoLabelBox, this.Linaa.ToDoesList, true, false);
+                UIControl.FillABox(this.ToDoLabelBox, this.Linaa.ToDoesList, true, false);
             }
             catch (SystemException exception)
             {
@@ -176,9 +176,9 @@ namespace k0X
             if (!onlyOne.Checked) return;
 
             //when only one
-            LINAA.ToDoRow reft = Dumb.Cast<LINAA.ToDoRow>(this.ToDoDGV.Rows[e.RowIndex]);
+            LINAA.ToDoRow reft = Caster.Cast<LINAA.ToDoRow>(this.ToDoDGV.Rows[e.RowIndex]);
             reft.use = true;
-            IEnumerable<LINAA.ToDoRow> rows = Dumb.Cast<LINAA.ToDoRow>(this.ListBS.List.Cast<DataRowView>());
+            IEnumerable<LINAA.ToDoRow> rows = Caster.Cast<LINAA.ToDoRow>(this.ListBS.List.Cast<DataRowView>());
             rows = rows.SkipWhile(o => o.Iso.ToUpper().CompareTo(reft.Iso.ToUpper()) != 0);
             rows = rows.SkipWhile(o => o.Equals(reft));
             foreach (LINAA.ToDoRow t in rows) t._ref = false;
@@ -275,13 +275,13 @@ namespace k0X
                     avguncfil = showfilter + " AND " + MinimumFil;
                 }
 
-                Dumb.LinkBS(ref this.ListBS, this.Linaa.ToDo, listfil, listSort);
-                Dumb.LinkBS(ref this.RawBS, this.Linaa.ToDoData, rawfil, rawSort);
-                Dumb.LinkBS(ref this.AvgBS, this.Linaa.ToDoAvg, avguncfil, avgSort);
+                BS.LinkBS(ref this.ListBS, this.Linaa.ToDo, listfil, listSort);
+                BS.LinkBS(ref this.RawBS, this.Linaa.ToDoData, rawfil, rawSort);
+                BS.LinkBS(ref this.AvgBS, this.Linaa.ToDoAvg, avguncfil, avgSort);
                 Application.DoEvents();
-                Dumb.LinkBS(ref this.AvgUncBS, this.Linaa.ToDoAvgUnc, showfilter, avgUncSort);
-                Dumb.LinkBS(ref this.ResBS, this.Linaa.ToDoRes, showfilter, resSort);
-                Dumb.LinkBS(ref this.ResAvgBS, this.Linaa.ToDoResAvg, showfilter, resavgSort);
+                BS.LinkBS(ref this.AvgUncBS, this.Linaa.ToDoAvgUnc, showfilter, avgUncSort);
+                BS.LinkBS(ref this.ResBS, this.Linaa.ToDoRes, showfilter, resSort);
+                BS.LinkBS(ref this.ResAvgBS, this.Linaa.ToDoResAvg, showfilter, resavgSort);
             }
             catch (SystemException ex)
             {
@@ -294,16 +294,16 @@ namespace k0X
         {
             try
             {
-                string[] aux = Dumb.DeLinkBS(ref this.ListBS);
+                string[] aux = BS.DeLinkBS(ref this.ListBS);
                 listSort = aux[0];
                 listfil = aux[1];
-                aux = Dumb.DeLinkBS(ref this.RawBS);
+                aux = BS.DeLinkBS(ref this.RawBS);
                 rawSort = aux[0];
                 rawfil = aux[1];
-                aux = Dumb.DeLinkBS(ref this.AvgBS);
+                aux = BS.DeLinkBS(ref this.AvgBS);
                 avgSort = aux[0];
                 avgfil = aux[1];
-                aux = Dumb.DeLinkBS(ref this.AvgUncBS);
+                aux = BS.DeLinkBS(ref this.AvgUncBS);
                 avgUncSort = aux[0];
                 avguncfil = aux[1];
             }
@@ -479,7 +479,7 @@ namespace k0X
             if (sender.Equals(this.calculateThis))
             {
                 DataRowView v = (DataRowView)this.AvgBS.Current;
-                LINAA.ToDoAvgRow r = Dumb.Cast<LINAA.ToDoAvgRow>(v);
+                LINAA.ToDoAvgRow r = Caster.Cast<LINAA.ToDoAvgRow>(v);
                 List<LINAA.ToDoAvgRow> hs = new List<LINAA.ToDoAvgRow>();
                 hs.Add(r);
                 TD.IAvgs = hs;
@@ -495,7 +495,7 @@ namespace k0X
             //      DataView view = this.ListBS.List as DataView;
             //      string orgFil = view.RowFilter;
             //     view.RowFilter += " AND project IS NOT NULL AND project2 IS NOT NULL";
-            //     IEnumerable<LINAA.ToDoRow> active = Dumb.Cast<LINAA.ToDoRow>(view).ToList();
+            //     IEnumerable<LINAA.ToDoRow> active = Caster.Cast<LINAA.ToDoRow>(view).ToList();
             //     view.RowFilter = orgFil;
             //
 
@@ -546,7 +546,7 @@ namespace k0X
                 DataView view = this.ListBS.List as DataView;
                 string orgFil = view.RowFilter;
                 view.RowFilter += " AND project IS NOT NULL AND project2 IS NOT NULL";
-                TD.IList = Dumb.Cast<LINAA.ToDoRow>(view);
+                TD.IList = Caster.Cast<LINAA.ToDoRow>(view);
                 view.RowFilter = orgFil;
                 DeLink();
                 result += TD.Prepare(Convert.ToInt16(minPosBox.Text));  //VIP!!! Prepares the tables...

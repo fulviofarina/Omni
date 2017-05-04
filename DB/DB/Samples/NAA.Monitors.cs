@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
@@ -61,7 +62,7 @@ namespace DB
                         {
                             if (!m.IsMonitorCodeNull()) m.GeometryName = m.MonitorCode.ToUpper();
                         }
-                        else if (Dumb.IsLower(m.GeometryName.Substring(1)))
+                        else if (Rsx.Dumb.Dumb.IsLower(m.GeometryName.Substring(1)))
                         {
                             m.GeometryName = m.GeometryName.ToUpper();
                         }

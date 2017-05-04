@@ -1,5 +1,5 @@
 ﻿using System;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.CAM;
 
 namespace DB
@@ -18,7 +18,7 @@ namespace DB
         {
           double eta = ((100 * 100) / (minUnc * minUnc));
           p.ETAInMin = Convert.ToInt32(eta / ((p.Area / (ireader.CountTime / 60))));
-          p.ETA = Rsx.Dumb.ToReadableString(new TimeSpan(0, 0, p.ETAInMin, 0));
+          p.ETA = Dumb.ToReadableString(new TimeSpan(0, 0, p.ETAInMin, 0));
         }
       }
       catch (SystemException ex)

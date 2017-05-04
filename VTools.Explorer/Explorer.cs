@@ -21,7 +21,7 @@ namespace VTools
       {
         hs.Add(table.TableName);
       }
-      Rsx.Dumb.FillABox(Box, hs, true, false);
+      Rsx.Dumb.UIControl.FillABox(Box, hs, true, false);
       Box.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
       Box.Text = set.Tables.OfType<DataTable>().First().TableName;
 
@@ -42,7 +42,7 @@ namespace VTools
       try
       {
         this.CurrentTable = set.Tables[Box.Text];
-        Rsx.Dumb.LinkBS(ref this.BS, CurrentTable, filterbox.Text, sortBox.Text);
+        Rsx.Dumb.BS.LinkBS(ref this.BS, CurrentTable, filterbox.Text, sortBox.Text);
       }
       catch (SystemException ex)
       {

@@ -1,13 +1,13 @@
 ﻿using System;
 using DB.Properties;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
 
-        protected void handlersPreferences()
+        protected internal void handlersPreferences()
         {
             handlers.Add(Preferences.DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Preferences));

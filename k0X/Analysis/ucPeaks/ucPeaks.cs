@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB;
 using DB.UI;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.DGV;
 
 namespace k0X
@@ -227,7 +227,7 @@ namespace k0X
             DataRowView daugtherv = this.AvgPeakBS.Current as DataRowView;
             IEnumerable<DataRowView> view = (this.AvgPeakBS.List as DataView).Cast<DataRowView>();
 
-            IEnumerable<LINAA.IPeakAveragesRow> references = Dumb.Cast<LINAA.IPeakAveragesRow>(view);
+            IEnumerable<LINAA.IPeakAveragesRow> references = Caster.Cast<LINAA.IPeakAveragesRow>(view);
             LINAA.IPeakAveragesRow daughter = daugtherv.Row as LINAA.IPeakAveragesRow;
 
             DataTable table = this.Linaa.CalculateBranchFactor(ref daughter, ref references);
@@ -392,7 +392,7 @@ namespace k0X
             {
                 if (this.ToDoBS.Current == null) return;
 
-                LINAA.ToDoRow t = Rsx.Dumb.Cast<LINAA.ToDoRow>(this.ToDoBS.Current as DataRowView);
+                LINAA.ToDoRow t = Caster.Cast<LINAA.ToDoRow>(this.ToDoBS.Current as DataRowView);
                 this.Linaa.ToDoRes.Clear();
                 this.Linaa.ToDoResAvg.Clear();
                 IEnumerable<LINAA.MeasurementsRow> m1 = t.IRAvgRow.SubSamplesRow.GetMeasurementsRows();
@@ -597,7 +597,7 @@ namespace k0X
 
             if (row == null) return;
 
-            LINAA.IRequestsAveragesRow res = Dumb.Cast<LINAA.IRequestsAveragesRow>(row);
+            LINAA.IRequestsAveragesRow res = Caster.Cast<LINAA.IRequestsAveragesRow>(row);
 
             string isotope = res.NAARow.Iso;
             string text = "Nuclear Decay data for " + res.Radioisotope;
@@ -641,7 +641,7 @@ namespace k0X
                 }
             }
 
-            aux = Dumb.NavigateTo(text, uri);
+            aux = Rsx.Dumb.UIControl.NavigateTo(text, uri);
         }
 
         private WebBrowser aux = null;

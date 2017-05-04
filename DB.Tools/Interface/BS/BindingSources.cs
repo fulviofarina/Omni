@@ -1,5 +1,5 @@
 ﻿using System;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -11,16 +11,14 @@ namespace DB.Tools
     public partial class BindingSources
     {
         // private Interface Interface;
-        private string _ROWWITHERROR = "The selected Item has incomplete information, i.e. cells with errors or null values";
-
-     
+        protected string ROW_WITH_ERROR = "The selected Item has incomplete information, i.e. cells with errors or null values";
     }
 
     public partial class BindingSources
     {
-        private CheckerDelegate AChecker = null;
+        private CheckerDelegate aChecker = null;
 
-        private Interface Interface;
+        protected Interface Interface;
 
         private delegate bool CheckerDelegate();
 
@@ -30,42 +28,37 @@ namespace DB.Tools
 
     public partial class BindingSources
     {
-        private void matrix_CurrentChanged(object sender, EventArgs e)
+        private void currentChanged_Matrix(object sender, EventArgs e)
         {
             try
             {
-
                 //
                 LINAA.MatrixRow c = Interface.ICurrent.Matrix as LINAA.MatrixRow;
                 Update(c, true, false);
-
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
-
         }
 
-        private void channels_CurrentChanged(object sender, EventArgs e)
+        private void currentChanged_Channels(object sender, EventArgs e)
         {
             try
             {
-            
                 //
                 LINAA.ChannelsRow c = Interface.ICurrent.Channel as LINAA.ChannelsRow;
                 Update(c, true, false);
-
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
-            // Dumb.LinkBS(ref Interface.IBS.Irradiations, Interface.IDB.IrradiationRequests, filter,
+            // Dumb.BS.LinkBS(ref Interface.IBS.Irradiations, Interface.IDB.IrradiationRequests, filter,
             // sortColumn + " desc");
         }
 
-        private void preferences_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+        private void listChanged_Preferences(object sender, System.ComponentModel.ListChangedEventArgs e)
         {
             try
             {
@@ -87,27 +80,29 @@ namespace DB.Tools
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
             //throw new NotImplementedException();
         }
 
-        private void subSamples_CurrentChanged(object sender, EventArgs e)
+        private void currentChanged_SubSamples(object sender, EventArgs e)
         {
             try
             {
                 // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
                 SubSamplesRow r = Interface.ICurrent.SubSample as SubSamplesRow;
                 Update(r, true, false);
-         //       Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + r.SubSampleName + "'";
-           //      Interface.IBS.SelectedMatrix.Filter = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName + " = '" + r.SubSamplesID + "'";
-                // Interface.IBS.SelectedSubSample.ResetBindings(true);
+                // Interface.IBS.SelectedSubSample.Filter =
+                // Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + r.SubSampleName
+                // + "'"; Interface.IBS.SelectedMatrix.Filter =
+                // Interface.IDB.Matrix.SubSampleIDColumn.ColumnName + " = '" + r.SubSamplesID + "'"; Interface.IBS.SelectedSubSample.ResetBindings(true);
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
+
         /*
         /// <summary>
         /// A binding Current Changed event to update Binding sources
@@ -132,7 +127,7 @@ namespace DB.Tools
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -147,15 +142,16 @@ namespace DB.Tools
 
                     string filter = column + " = '" + 0.ToString() + "'";
 
-                    // Dumb.LinkBS(ref SSF, Interface.IDB.MatSSF, filter, sortCol);
+                    // Dumb.BS.LinkBS(ref SSF, Interface.IDB.MatSSF, filter, sortCol);
                 }
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
         */
+
         private void updateChannel<T>(T r, bool findItself)
         {
             LINAA.ChannelsRow u = r as LINAA.ChannelsRow;
@@ -169,16 +165,12 @@ namespace DB.Tools
             }
             if (Irradiations != null)
             {
-
-              
                 string filter;
-             
+
                 string chColumn = Interface.IDB.IrradiationRequests.ChannelNameColumn.ColumnName;
                 filter = chColumn + " = '" + u.ChannelName + "'";// + " OR " + chColumn + " IS NULL ";
 
                 Irradiations.Filter = filter;
-
-               
             }
         }
 
@@ -207,16 +199,14 @@ namespace DB.Tools
             }
             string filter = Interface.IDB.Matrix.MatrixIDColumn.ColumnName + " = '" + u.MatrixID + "'";
 
-            if (SelectedMatrix!=null)
+            if (SelectedMatrix != null)
             {
                 Interface.IBS.SelectedMatrix.Filter = filter;
             }
-            if (Compositions!=null)
+            if (Compositions != null)
             {
                 Interface.IBS.Compositions.Filter = filter;
             }
-
-
         }
 
         private void updateSubSample<T>(T r, bool doCascade, bool findItself)
@@ -233,10 +223,9 @@ namespace DB.Tools
                 if (SelectedSubSample != null)
                 {
                     Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + s.SubSampleName + "'";
-           
                 }
             }
-            AChecker = s.CheckUnit;
+            aChecker = s.CheckUnit;
             //now update the childs/parents of Units
             if (doCascade && s.UnitRow != null) Update<LINAA.UnitRow>(s.UnitRow);
         }
@@ -251,7 +240,7 @@ namespace DB.Tools
             MatSSF.UNIT = s; //this is key
 
             //the checker Method
-            AChecker = s.Check;
+            aChecker = s.Check;
 
             if (findItself && Units != null)
             {
@@ -274,7 +263,7 @@ namespace DB.Tools
             string sortCol = Interface.IDB.MatSSF.TargetIsotopeColumn.ColumnName;
 
             filter = column + " = '" + unitID + "'";
-            Dumb.LinkBS(ref SSF, Interface.IDB.MatSSF, filter, sortCol);
+            BS.LinkBS(ref SSF, Interface.IDB.MatSSF, filter, sortCol);
         }
 
         private void updateVialRabbit<T>(T r, bool findItself)

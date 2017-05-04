@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -18,8 +17,6 @@ namespace DB.UI
         {
             InitializeComponent();
 
-         
-
             System.EventHandler addNew = this.addNewVialChannel_Click;
 
             this.addChParBn.Click += addNew;
@@ -34,17 +31,15 @@ namespace DB.UI
             Dumb.FD(ref this.lINAA);
             Dumb.FD(ref this.ChannelBS);
             Dumb.FD(ref this.ContainerBS);
-            //  this.lINAA = Interface.Get() as LINAA;
+            // this.lINAA = Interface.Get() as LINAA;
 
             ChannelDGV.DataSource = Interface.IBS.Channels;
             ContainerDGV.DataSource = Interface.IBS.Rabbit;
 
             this.channelParBN.BindingSource = Interface.IBS.Channels;
             this.ContainerBN.BindingSource = Interface.IBS.Rabbit;
-
-
         }
-      
+
         /// <summary>
         /// DGV ITEM SELECTED
         /// </summary>
@@ -53,7 +48,6 @@ namespace DB.UI
             ///FIRST TIME AND ONLY
             set
             {
-             
                 this.ChannelDGV.RowHeaderMouseDoubleClick += value; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
 
                 this.ContainerDGV.RowHeaderMouseDoubleClick += value;// new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
@@ -64,31 +58,25 @@ namespace DB.UI
         /// when a DGV-item is selected, take the necessary rows to compose the unit
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
 
         private void addNewVialChannel_Click(object sender, EventArgs e)
         {
-
-         
-        //    DataRow r;
+            // DataRow r;
             if (!sender.Equals(this.addChParBn))
             {
                 LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
                 v.IsRabbit = true;
                 Interface.IDB.VialType.AddVialTypeRow(v);
                 Interface.IBS.Update(v);
-
             }
             //IS A CHANNEL
             else
             {
                 LINAA.ChannelsRow ch = Interface.IDB.Channels.NewChannelsRow();
                 Interface.IDB.Channels.AddChannelsRow(ch);
-                Interface.IBS.Update( ch);
+                Interface.IBS.Update(ch);
             }
-
-           
-
         }
     }
 }

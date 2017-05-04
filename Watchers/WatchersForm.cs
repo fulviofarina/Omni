@@ -218,7 +218,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -253,7 +253,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
             if (time > 0) SchTimer.Interval = time * 1000;
             SchTimer.Enabled = true;
@@ -290,7 +290,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
             return runing;
         }
@@ -317,7 +317,7 @@ namespace k0X
         {
             get
             {
-                return Rsx.Dumb.GetDirectories(Interface.IPreferences.CurrentPref.Spectra);
+                return Rsx.Dumb.IO.GetDirectories(Interface.IPreferences.CurrentPref.Spectra);
             }
         }
 

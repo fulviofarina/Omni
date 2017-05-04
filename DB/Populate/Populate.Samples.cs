@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.Math;
 
 //using DB.Interfaces;
@@ -28,7 +28,7 @@ namespace DB
 
             return ls;
         }
-        private void populateSelectedExpression(bool setexpression)
+        protected internal void populateSelectedExpression(bool setexpression)
         {
             string expression = string.Empty;
             if (setexpression)
@@ -60,7 +60,7 @@ namespace DB
                 this.tableUnit.AcceptChanges();
                 this.tableUnit.EndLoadData();
 
-                // this.MatSSF.Clear(); Hashtable bindings = Dumb.ArrayOfBindings(ref bs, "N4");
+                // this.MatSSF.Clear(); Hashtable bindings = Dumb.BS.ArrayOfBindings(ref bs, "N4");
             }
             catch (SystemException ex)
             {
@@ -175,7 +175,7 @@ namespace DB
                 else SetLabels(ref hsamples, project);
 
                 SetIrradiatioRequest(ref hsamples, (int)id);
-                hsamples = Dumb.GetRowsWithChanges(hsamples).OfType<SubSamplesRow>();
+                hsamples = Changes.GetRowsWithChanges(hsamples).OfType<SubSamplesRow>();
                 Save(ref hsamples);
 
                 IEnumerable<UnitRow> Urows = SetUnits(ref hsamples);

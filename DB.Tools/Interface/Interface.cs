@@ -3,19 +3,19 @@
     public partial class Interface
     {
         /// <summary>
-        /// For the adapters
+        /// Adapters interface
         /// </summary>
         public IAdapter IAdapter;
 
         /// <summary>
-        /// For the binding sources
+        /// binding Sources interface
         /// </summary>
         public BindingSources IBS;
 
         /// <summary>
-        /// Current DataRows
+        /// Current rows interface
         /// </summary>
-        public Current ICurrent;
+        public ICurrent ICurrent;
 
         /// <summary>
         /// The database tables
@@ -25,20 +25,20 @@
         /// <summary>
         /// Main stuff
         /// </summary>
-        public IMain IMain;
+     //   public IStore IStore;
 
         /// <summary>
-        /// The populator, by section
+        /// Populator interface
         /// </summary>
         public Populate IPopulate;
 
         /// <summary>
-        /// other interfaces of this cl
+        /// Preferences interface
         /// </summary>
         public IPreferences IPreferences;
 
         /// <summary>
-        /// The reporter class
+        /// The reporter interface
         /// </summary>
         public IReport IReport;
 
@@ -48,9 +48,9 @@
         public IStore IStore;
 
         /// <summary>
-        /// is it used?
+        /// is it used? not sure
         /// </summary>
-        private LINAA dataset = null;
+        protected LINAA dataset = null;
 
         /// <summary>
         /// Gets the LINAA database
@@ -66,7 +66,7 @@
         public Interface(ref LINAA aux)
         {
             dataset = aux;
-            IMain = (IMain)aux;
+      //      IStore = (IStore)aux;
             IAdapter = (IAdapter)aux;
             IStore = (IStore)aux;
             IDB = (IDB)aux;
@@ -77,8 +77,9 @@
             IBS = new BindingSources(ref inter);
             IReport = new Report(ref inter);
             IPopulate = new Populate(ref inter);
-            ICurrent = new Current(ref IBS, ref inter);
-            IPreferences = ICurrent;
+            Current current = new Current(ref IBS, ref inter);
+            ICurrent = current;
+            IPreferences = current;
 
             //attach interfaces of LINAA (DB)
         }

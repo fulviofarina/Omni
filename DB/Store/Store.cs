@@ -2,14 +2,104 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Xml;
+using System.Xml.Schema;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA : IStore
     {
+
+        public void UpdateIrradiationDates()
+        {
+            foreach (LINAA.MonitorsRow m in this.tableMonitors.Rows)
+            {
+                DateTime? dum0 = (DateTime?)this.QTA.GetOutReactorFromSubSampleDescription(m.MonName);
+                if (dum0 != null)
+                {
+                    if ((DateTime)dum0 > m.LastIrradiationDate)
+                    {
+                        m.LastIrradiationDate = (DateTime)dum0;
+                    }
+                }
+                Int32? dum1 = (Int32?)this.QTA.GetIrqIdFromSubSampleDescription(m.MonName);
+                if (dum1 != null)
+                {
+                    LINAA.IrradiationRequestsRow r = this.IrradiationRequests.FindByIrradiationRequestsID((int)dum1);
+                    if (r != null) m.LastProject = r.IrradiationCode;
+                }
+            }
+        }
+
+
+        public void Read(string filepath)
+        {
+            LINAA dt = null;
+
+            // file.EnforceConstraints = false;
+            XmlReader reader = null;
+            try
+            {
+                XmlReaderSettings set = new XmlReaderSettings();
+                set.CheckCharacters = false;
+                set.ConformanceLevel = ConformanceLevel.Auto;
+                set.DtdProcessing = DtdProcessing.Ignore;
+                set.IgnoreWhitespace = true;
+                set.ValidationFlags = XmlSchemaValidationFlags.None;
+                set.ValidationType = ValidationType.None;
+                reader = XmlReader.Create(filepath, set);
+
+                dt = new LINAA();
+
+                dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
+
+                this.Merge(dt);
+                //MergePreferences();
+                // this.PopulateSSFPreferences();
+            }
+            catch (Exception ex)
+            {
+                this.AddException(ex);
+            }
+
+            //return dt;
+        }
+
+
+        protected string folderPath = string.Empty;
+
+        protected bool useHandlers = false;
+
+        public string FolderPath
+        {
+            get { return folderPath; }
+            set { folderPath = value; }
+        }
+
+        public void AddException(Exception ex)
+        {
+            // this.PopulateColumnExpresions()
+            this.tableExceptions.AddExceptionsRow(ex);
+        }
+        public void CloneDataSet(ref LINAA set)
+        {
+            this.InitializeComponent();
+            this.Merge(set, false, MissingSchemaAction.Ignore);
+            this.PopulateColumnExpresions();
+            this.IRequestsAverages.Clear();
+            this.IPeakAverages.Clear();
+
+            DataTable table = IRequestsAverages;
+            cleanReadOnly(ref table);
+            table = IPeakAverages;
+            cleanReadOnly(ref table);
+
+            // this.notify;
+        }
+
         public IEnumerable<DataTable> GetTablesWithChanges()
         {
             IEnumerable<DataTable> tables = null;
@@ -18,12 +108,14 @@ namespace DB
             {
                 bool hasChanges = false;
                 IEnumerable<DataRow> rows = t.AsEnumerable();
-                IEnumerable<DataRow> rowsWithChanges = Dumb.GetRowsWithChanges(rows);
+                IEnumerable<DataRow> rowsWithChanges = Changes.GetRowsWithChanges(rows);
                 hasChanges = rowsWithChanges.Count() != 0;
                 return hasChanges;
             };
 
             return tables.Where(haschangesFunc);
         }
+
+      
     }
 }

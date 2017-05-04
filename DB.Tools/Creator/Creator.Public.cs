@@ -4,15 +4,19 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Properties;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.Generic;
 
 namespace DB.Tools
 {
     public partial class Creator
     {
+
+      
+
+
         /// <summary>
-        /// a method to call back
+        /// Method to call back
         /// </summary>
         public static Action CallBack
         {
@@ -21,7 +25,7 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// The last call back method
+        /// Another Call back method (last one)
         /// </summary>
         public static Action LastCallBack
         {
@@ -40,10 +44,7 @@ namespace DB.Tools
         {
             //restarting = false;
 
-
-
-         //   Rsx.Dumb.RestartPC();
-
+            // Rsx.Dumb.RestartPC();
 
             Cursor.Current = Cursors.WaitCursor;
 
@@ -62,7 +63,7 @@ namespace DB.Tools
             Interface.IBS.ApplyFilters();
             Cursor.Current = Cursors.Default;
 
-            Interface.IReport.Msg(loading, "Please wait...");
+            Interface.IReport.Msg(LOADING_DB, "Please wait...");
         }
 
         /// <summary>
@@ -73,17 +74,17 @@ namespace DB.Tools
             Cursor.Current = Cursors.WaitCursor;
 
             //assign folderpath (like a App\Local folder)
-            Interface.IMain.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            Interface.IMain.FolderPath += Resources.k0XFolder; //cambiar esto
+            Interface.IStore.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            Interface.IStore.FolderPath += Resources.k0XFolder; //cambiar esto
 
             //populate main directory at folderPath
             try
             {
-                Rsx.Dumb.MakeADirectory(Interface.IMain.FolderPath);
+                Rsx.Dumb.IO.MakeADirectory(Interface.IStore.FolderPath);
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);//                throw;
+                Interface.IStore.AddException(ex);//                throw;
             }
 
             //check for overriders
@@ -127,7 +128,7 @@ namespace DB.Tools
             {
                 string tablesToSave = string.Empty;
                 foreach (string s in tablesLs) tablesToSave += s + "\n";
-                string ask = askToSave + tablesToSave;
+                string ask = ASK_TO_SAVE + tablesToSave;
                 MessageBoxButtons mb = MessageBoxButtons.YesNoCancel;
                 MessageBoxIcon icon = MessageBoxIcon.Warning;
 
@@ -148,14 +149,47 @@ namespace DB.Tools
             return eCancel;
         }
 
+        /// <summary>
+        /// Seek Help
+        /// </summary>
         public static void Help()
         {
-            string path = Interface.IMain.FolderPath + DB.Properties.Resources.Features;
+            string path = Interface.IStore.FolderPath + DB.Properties.Resources.Features;
             if (!System.IO.File.Exists(path)) return;
 
-            Dumb.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
+           IO.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
         }
 
+        public static void InstallMSMQ()
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(MSMQ_INSTALL, MSMQ_INSTALL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                string workDir = Application.StartupPath + Resources.DevFiles;
+                bool is64 = Environment.Is64BitOperatingSystem;
+                string path = workDir + Resources.msmqx86;
+                if (is64) path = workDir + Resources.msmqx64;
+
+                //one process to create the VB SCRIPTS
+                Emailer.LoadScript(path, string.Empty, workDir);
+                //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
+                workDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                workDir += "\\Temp";
+                path = "/c " + workDir + "\\vb";
+                string cmd = "cmd";
+                Emailer.LoadScript(cmd, path + ".vbs", workDir);
+                Rsx.Dumb.IO.RestartPC();
+            }
+            catch (Exception ex)
+            {
+                Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IStore.AddException(ex);
+            }
+        }
+        /// <summary>
+        /// Load the list of methods to apply. It does not apply them until Run() is called
+        /// </summary>
         public static void LoadMethods(int populNr)
         {
             Cursor.Current = Cursors.WaitCursor;
@@ -203,7 +237,7 @@ namespace DB.Tools
         {
             Creator.mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
                                             //wow...
-                    Creator.lastCallBack?.Invoke();
+            Creator.lastCallBack?.Invoke();
         };
 
             //add save preferences
@@ -226,20 +260,23 @@ namespace DB.Tools
             // else throw new SystemException("No Populate Method was assigned");
         }
 
+        /// <summary>
+        /// Populates Solcoi, MatSSF and other resources
+        /// </summary>
         public static void PopulateResources(bool overriderFound)
         {
             string path = string.Empty;
             try
             {
-                path = Interface.IMain.FolderPath + Resources.Exceptions;
-                Rsx.Dumb.MakeADirectory(path, overriderFound);
+                path = Interface.IStore.FolderPath + Resources.Exceptions;
+                Rsx.Dumb.IO.MakeADirectory(path, overriderFound);
 
-                path = Interface.IMain.FolderPath + Resources.Backups;
-                Rsx.Dumb.MakeADirectory(path, overriderFound);
+                path = Interface.IStore.FolderPath + Resources.Backups;
+                Rsx.Dumb.IO.MakeADirectory(path, overriderFound);
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);//                throw;
+                Interface.IStore.AddException(ex);//                throw;
             }
 
             try
@@ -248,7 +285,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);//                throw;
+                Interface.IStore.AddException(ex);//                throw;
             }
 
             try
@@ -257,12 +294,12 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);//                throw;
+                Interface.IStore.AddException(ex);//                throw;
             }
         }
 
         /// <summary>
-        /// The methods are loaded already, just execute...
+        /// The methods should be loaded already, just execute...
         /// </summary>
         public static void Run()
         {
@@ -274,6 +311,9 @@ namespace DB.Tools
             // else throw new SystemException("No Populate Method was assigned");
         }
 
+        /// <summary>
+        /// Save the database in Full (remotely and locally)
+        /// </summary>
         public static bool SaveInFull(bool takechanges)
         {
             bool ok = false;
@@ -283,7 +323,7 @@ namespace DB.Tools
             //    WHAT IS THIS
             //WHAT IS THIS
             bool off = Interface.IPreferences.CurrentPref.Offline;
-            // string savePath = Interface.IMain.FolderPath + "lims.xml";
+            // string savePath = Interface.IStore.FolderPath + "lims.xml";
             // Interface.IStore.SaveSSF(off, savePath);
 
             Interface.IBS.EndEdit();
@@ -316,7 +356,7 @@ namespace DB.Tools
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
                 Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
 

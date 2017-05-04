@@ -94,7 +94,6 @@
     <Compile Include="Adapter\Adapter.Fields.cs" />
     <Compile Include="Adapter\Adapter.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
-    <Compile Include="Adapter\Adapter.Sample.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\DB.cs" />
     <Compile Include="DB\NAA.Exceptions.cs" />
@@ -112,7 +111,6 @@
     <Compile Include="Populate\Interfaces\IGeometry.cs" />
     <Compile Include="Populate\Interfaces\ISamples.cs" />
     <Compile Include="Populate\Interfaces\IExpressions.cs" />
-    <Compile Include="Main\IMain.cs" />
     <Compile Include="Adapter\IAdapter.cs" />
     <Compile Include="DB\IDB.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -137,7 +135,7 @@
     <Compile Include="Populate\Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Actions.cs" />
     <Compile Include="Populate\Populate.Components.cs" />
-    <Compile Include="Main\Main.cs" />
+    <Compile Include="Basura\Main.cs" />
     <Compile Include="DB\Project\NAA.Orders.cs" />
     <Compile Include="DB\Project\NAA.Channels.cs" />
     <Compile Include="DB\Project\NAA.Projects.cs" />

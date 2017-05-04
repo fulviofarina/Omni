@@ -33,7 +33,7 @@ namespace DB
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
         /// <returns></returns>
-        protected static bool IsTableOk<T>(ref T table)
+        protected internal static bool IsTableOk<T>(ref T table)
         {
             DataTable table2 = table as DataTable;
             if (table2 == null) return false;
@@ -41,7 +41,7 @@ namespace DB
             return true;
         }
 
-        protected void cleanReadOnly(ref DataTable table)
+        protected internal void cleanReadOnly(ref DataTable table)
         {
             // DataTable table = dt as DataTable;
             foreach (DataColumn column in table.Columns)
@@ -53,16 +53,16 @@ namespace DB
             }
         }
 
-      
-
-     
 
 
-       
 
-     
 
-        protected void rowChanged(object sender, DataRowChangeEventArgs e)
+
+
+
+
+
+        protected internal void rowChanged(object sender, DataRowChangeEventArgs e)
         {
             if (e.Action != DataRowAction.Add && e.Action != DataRowAction.Commit) return;
 
@@ -79,7 +79,7 @@ namespace DB
             }
         }
 
-        protected void setHandlers(bool activate, ref DataTable dt)
+        protected internal void setHandlers(bool activate, ref DataTable dt)
         {
             int dtindex = Tables.IndexOf(dt);
             int index = dTWithHandlers.IndexOf(dtindex);
@@ -101,7 +101,7 @@ namespace DB
                 dt.ColumnChanged -= han;
             }
         }
-        protected void setRowHandlers(ref DataTable table, bool activate)
+        protected internal void setRowHandlers(ref DataTable table, bool activate)
         {
             int dtindex = Tables.IndexOf(table);
             int index = dTWithHandlers.IndexOf(dtindex);
@@ -111,7 +111,7 @@ namespace DB
             else table.RowChanged -= rowChanged;
         }
 
-        private void setHandlers(bool activate)
+        protected internal void setHandlers(bool activate)
         {
             for (int i = 0; i < dTWithHandlers.Count; i++)
             {

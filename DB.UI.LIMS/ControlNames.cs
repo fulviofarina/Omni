@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DB.UI
+﻿namespace DB.UI
 {
     public static class ControlNames
     {

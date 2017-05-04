@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx;
+using Rsx.Dumb;
 
 //this works too good YEAH!!!
 
@@ -50,7 +51,7 @@ namespace DB.UI
                 {
                     if (hint.Add(cell.OwningRow.Index))
                     {
-                        tr = Dumb.Cast<DataRow>(cell.OwningRow);
+                        tr = Caster.Cast<DataRow>(cell.OwningRow);
 
                         tofind = tr.GetParentRow(relation);
                         if (tofind != null) FromRows.Add(tofind);
@@ -92,7 +93,7 @@ namespace DB.UI
             {
                 try
                 {
-                    DataRow fr = Dumb.Cast<DataRow>(fdgv);
+                    DataRow fr = Caster.Cast<DataRow>(fdgv);
 
                     if (fromRowList.Contains(fr))
                     {

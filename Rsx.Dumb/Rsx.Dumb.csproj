@@ -60,17 +60,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Table.cs" />
+    <Compile Include="Tables.cs" />
     <Compile Include="EC.cs" />
-    <Compile Include="Table.Changes.cs" />
+    <Compile Include="Changes.cs" />
     <Compile Include="Control.cs" />
-    <Compile Include="File.cs" />
+    <Compile Include="IO.cs" />
     <Compile Include="BS.cs" />
-    <Compile Include="Cast.cs" />
+    <Compile Include="Caster.cs" />
     <Compile Include="Hash.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Dumb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

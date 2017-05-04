@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.CAM;
 
 namespace DB

@@ -115,7 +115,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 

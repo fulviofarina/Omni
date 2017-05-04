@@ -8,12 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using DB;
 using DB.Reports;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.CAM;
 using Rsx.DGV;
 using DB.Tools;
 using Rsx.Generic;
-
+using Rsx.Dumb; using Rsx;
 namespace k0X
 {
     public interface IWatchDog
@@ -79,7 +79,7 @@ namespace k0X
 
         public static IList<string> GetMeasurements(string specpath, string project, string sample)
         {
-            IEnumerable<string> measurements = Rsx.Dumb.GetFileNames(specpath + project, ".CNF");
+            IEnumerable<string> measurements = Rsx.Dumb.IO.GetFileNames(specpath + project, ".CNF");
             if (measurements.Count() != 0) measurements = measurements.Where(m => m.Contains(sample));
             if (measurements.Count() != 0) measurements = measurements.Select(o => o.ToUpper());
             return measurements.ToList();
@@ -87,7 +87,7 @@ namespace k0X
 
         public static IList<string> GetSamples(string specpath, string project)
         {
-            IEnumerable<string> samples = Rsx.Dumb.GetFileNames(specpath + project, ".CNF");
+            IEnumerable<string> samples = Rsx.Dumb.IO.GetFileNames(specpath + project, ".CNF");
             if (samples.Count() != 0)
             {
                 samples = samples.Select(o => o.Substring(0, o.Length - 3).ToUpper());
@@ -116,7 +116,7 @@ namespace k0X
                     string dethead = dgv.Columns[c.ColumnIndex].HeaderText;
                     IEnumerable<LINAA.MeasurementsRow> aux = rows.Where(a => a.Detector.CompareTo(dethead) == 0);
                     aux = aux.OrderByDescending(o => o.Position);
-                    IList<short> pos = Rsx.Dumb.HashFrom<short>(aux, poscol);
+                    IList<short> pos = Hash.HashFrom<short>(aux, poscol);
                     string value = string.Empty;
                     foreach (short i in pos) value += i.ToString() + s.ToString();
                     if (value.Last().CompareTo(s) == 0) value = value.Substring(0, value.Length - 1);
@@ -132,8 +132,8 @@ namespace k0X
             basicmeasFilter = "Measurement LIKE " + project + "*";
             SampleFilter = "IrradiationRequestsID = '" + irrId + "'";
 
-            Rsx.Dumb.LinkBS(ref this.sampleBS, this.Linaa.SubSamples, SampleFilter, SampleSort);
-            Rsx.Dumb.LinkBS(ref this.measBS, this.Linaa.Measurements, basicmeasFilter, MeasSort);
+            Rsx.Dumb.BS.LinkBS(ref this.sampleBS, this.Linaa.SubSamples, SampleFilter, SampleSort);
+            Rsx.Dumb.BS.LinkBS(ref this.measBS, this.Linaa.Measurements, basicmeasFilter, MeasSort);
 
             measurementsDataGridView.Sort(this.startedCol, ListSortDirection.Descending);
 
@@ -202,7 +202,7 @@ namespace k0X
                 watcher.Path = rootpath; //start watching!
                 watcher.EnableRaisingEvents = true;
 
-                IList<System.IO.FileInfo> files = Rsx.Dumb.GetFiles(rootpath);
+                IList<System.IO.FileInfo> files = Rsx.Dumb.IO.GetFiles(rootpath);
                 files = files.Where(o => o.Extension.ToUpper().CompareTo(".CNF") == 0).ToList();
                 if (files.Count() != 0) AddMeasurements(ref files);
                 else Interface.IReport.Msg("File list is empty", "No measurement files were found for\n" + rootpath, false);
@@ -375,8 +375,8 @@ namespace k0X
             SampleSort = this.sampleBS.Sort;
             MeasFilter = this.measBS.Filter;
 
-            Rsx.Dumb.DeLinkBS(ref this.sampleBS);
-            Rsx.Dumb.DeLinkBS(ref this.measBS);
+            Rsx.Dumb.BS.DeLinkBS(ref this.sampleBS);
+            Rsx.Dumb.BS.DeLinkBS(ref this.measBS);
 
             Type tipo = typeof(T);
             IList<System.IO.FileInfo> ls = new List<System.IO.FileInfo>();
@@ -417,8 +417,8 @@ namespace k0X
 
         private void CallBack()
         {
-            Rsx.Dumb.LinkBS(ref this.sampleBS, this.Linaa.SubSamples, SampleFilter, SampleSort);
-            Rsx.Dumb.LinkBS(ref this.measBS, this.Linaa.Measurements, MeasFilter, MeasSort);
+            Rsx.Dumb.BS.LinkBS(ref this.sampleBS, this.Linaa.SubSamples, SampleFilter, SampleSort);
+            Rsx.Dumb.BS.LinkBS(ref this.measBS, this.Linaa.Measurements, MeasFilter, MeasSort);
 
             measurementsDataGridView.Sort(this.startedCol, ListSortDirection.Descending);
 
@@ -462,7 +462,7 @@ namespace k0X
         private void measurementsDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             DataGridViewRow r = measurementsDataGridView.Rows[e.RowIndex];
-            LINAA.MeasurementsRow m = Rsx.Dumb.Cast<LINAA.MeasurementsRow>(r);
+            LINAA.MeasurementsRow m = Caster.Cast<LINAA.MeasurementsRow>(r);
 
             if (m.IsAcquiring) r.DefaultCellStyle.BackColor = System.Drawing.Color.PapayaWhip;
             else
@@ -482,7 +482,7 @@ namespace k0X
         {
             DataGridViewRow r = sampleDGV.Rows[e.RowIndex];
             DataGridViewCellStyle style = r.DefaultCellStyle;
-            LINAA.SubSamplesRow s = Rsx.Dumb.Cast<LINAA.SubSamplesRow>(r);
+            LINAA.SubSamplesRow s = Caster.Cast<LINAA.SubSamplesRow>(r);
             IEnumerable<LINAA.MeasurementsRow> meas = s.GetMeasurementsRows();
             if (meas.Count(o => o.IsAcquiring) != 0) style.BackColor = System.Drawing.Color.PapayaWhip;
             else
@@ -496,7 +496,7 @@ namespace k0X
         {
             if (FilterMode.Text.CompareTo("Filter Mode") != 0) return;
 
-            IEnumerable<DataRowView> rows = Rsx.Dumb.Cast<DataRowView>(this.sampleDGV.SelectedRows.OfType<DataGridViewRow>());
+            IEnumerable<DataRowView> rows = Caster.Cast<DataRowView>(this.sampleDGV.SelectedRows.OfType<DataGridViewRow>());
 
             if (rows.Count() == 0)
             {
@@ -526,7 +526,7 @@ namespace k0X
             else
             {
                 string field = this.Linaa.Measurements.SampleColumn.ColumnName;
-                IList<string> samples = Rsx.Dumb.HashFrom<string>(rows, this.Linaa.SubSamples.SubSampleNameColumn.ColumnName);
+                IList<string> samples = Hash.HashFrom<string>(rows, this.Linaa.SubSamples.SubSampleNameColumn.ColumnName);
                 int x = samples.Count;
                 MeasFilter = basicmeasFilter;
                 if (x > 0) MeasFilter += " AND (";
@@ -577,7 +577,7 @@ namespace k0X
                     IList<string> measurements = GetMeasurements(currentPreference.Spectra, project, sample);
                     measurements = measurements.Where(o => o.CompareTo(filename) != 0).ToList();
 
-                    string newName = Rsx.Dumb.GetNextName(sample + det + pos, measurements, true);
+                    string newName = Dumb.GetNextName(sample + det + pos, measurements, true);
                     newName += ".CNF";
                     string path = e.FullPath.Replace(e.Name, null);
 

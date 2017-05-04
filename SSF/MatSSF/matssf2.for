@@ -382,9 +382,12 @@ C* Mass and self-shielding library read - start reading input data
       VOL = 0
       ZGB = 0
       CDL = 0
+C*
+C* Bell Factors     
       BEL0= 1.16
       BEL1= 1.30
       BEL2= 1.16
+C*
       GTH = 1
       DO I=1,MXE
         DO J=1,MXI

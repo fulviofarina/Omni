@@ -50,7 +50,7 @@
 		   this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 		   this.maxBox = new System.Windows.Forms.ToolStripTextBox();
 		   this.BN = new System.Windows.Forms.BindingNavigator(this.components);
-		   this.BS = new System.Windows.Forms.BindingSource(this.components);
+		   this.bs = new System.Windows.Forms.BindingSource(this.components);
 		   this.Linaa = new DB.LINAA();
 		   this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
 		   this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -83,7 +83,7 @@
 		   this.toolStrip1.SuspendLayout();
 		   ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
 		   this.BN.SuspendLayout();
-		   ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
+		   ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
 		   ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
 		   this.TLP.SuspendLayout();
 		   ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
@@ -187,7 +187,7 @@
 		   // BN
 		   // 
 		   this.BN.AddNewItem = null;
-		   this.BN.BindingSource = this.BS;
+		   this.BN.BindingSource = this.bs;
 		   this.BN.CountItem = this.bindingNavigatorCountItem;
 		   this.BN.DeleteItem = this.bindingNavigatorDeleteItem;
 		   this.BN.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -218,8 +218,8 @@
 		   // 
 		   // BS
 		   // 
-		   this.BS.DataMember = "Monitors";
-		   this.BS.DataSource = this.Linaa;
+		   this.bs.DataMember = "Monitors";
+		   this.bs.DataSource = this.Linaa;
 		   // 
 		   // Linaa
 		   // 
@@ -383,7 +383,7 @@
             this.GeometryName,
             this.MonitorsIDColumn,
             this.LastProject});
-		   this.DGV.DataSource = this.BS;
+		   this.DGV.DataSource = this.bs;
 		   dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
 		   dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
 		   dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -546,7 +546,7 @@
 		   ((System.ComponentModel.ISupportInitialize)(this.BN)).EndInit();
 		   this.BN.ResumeLayout(false);
 		   this.BN.PerformLayout();
-		   ((System.ComponentModel.ISupportInitialize)(this.BS)).EndInit();
+		   ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
 		   ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
 		   this.TLP.ResumeLayout(false);
 		   ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
@@ -561,7 +561,7 @@
         private System.Windows.Forms.TableLayoutPanel TSTLP;
         private System.Windows.Forms.TableLayoutPanel TLP;
         private DB.LINAA Linaa;
-        private System.Windows.Forms.BindingSource BS;
+        private System.Windows.Forms.BindingSource bs;
         private System.Windows.Forms.BindingNavigator BN;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;

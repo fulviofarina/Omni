@@ -47,7 +47,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BN = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-            this.BS = new System.Windows.Forms.BindingSource(this.components);
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -85,7 +85,7 @@
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
             this.BN.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.TLP.SuspendLayout();
@@ -95,7 +95,7 @@
             // BN
             // 
             this.BN.AddNewItem = null;
-            this.BN.BindingSource = this.BS;
+            this.BN.BindingSource = this.bs;
             this.BN.CountItem = this.bindingNavigatorCountItem;
             this.BN.DeleteItem = this.bindingNavigatorDeleteItem;
             this.BN.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -134,8 +134,8 @@
             // 
             // BS
             // 
-            this.BS.DataMember = "Geometry";
-            this.BS.DataSource = this.Linaa;
+            this.bs.DataMember = "Geometry";
+            this.bs.DataSource = this.Linaa;
             // 
             // Linaa
             // 
@@ -251,7 +251,7 @@
             this.MatrixName,
             this.MatrixDensity,
             this.CreationDateTimeColumn});
-            this.DGV.DataSource = this.BS;
+            this.DGV.DataSource = this.bs;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -511,7 +511,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BN)).EndInit();
             this.BN.ResumeLayout(false);
             this.BN.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.TLP.ResumeLayout(false);
@@ -525,7 +525,7 @@
         #endregion
 
 		private DB.LINAA Linaa;
-        private System.Windows.Forms.BindingSource BS;
+        private System.Windows.Forms.BindingSource bs;
         private System.Windows.Forms.BindingNavigator BN;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;

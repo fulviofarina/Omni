@@ -4,7 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -194,7 +194,7 @@ namespace DB.Tools
             if (!System.IO.File.Exists(File)) return File;
 
             //read file data
-            string lecture = Dumb.ReadFile(File);
+            string lecture =IO.ReadFile(File);
             IEnumerable<string> array = lecture.Split('\n');
             array = array.Where(o => !o.Equals("\r"));
             array = array.Select(o => o.Trim(null)).AsEnumerable();
@@ -220,7 +220,7 @@ namespace DB.Tools
             byte[] bites = UNIT.SSFTable;
 
             //write to file
-            Dumb.WriteBytesFile(ref bites, file);
+           IO.WriteFileBytes(ref bites, file);
             //read from file
             Table.ReadXml(file);
             //delete file
@@ -238,7 +238,7 @@ namespace DB.Tools
 
             File.Delete(startupPath + outputFile); //delete output
 
-            Dumb.Process(process, startupPath, exefile, String.Empty, Hide, true, 100000);
+            IO.Process(process, startupPath, exefile, String.Empty, Hide, true, 100000);
 
             return process.HasExited;
         }
@@ -255,7 +255,7 @@ namespace DB.Tools
             Table.WriteXml(file, XmlWriteMode.IgnoreSchema);
 
             //read bytes
-            byte[] bites = Dumb.ReadFileBytes(file);
+            byte[] bites =IO.ReadFileBytes(file);
 
             //asign
             UNIT.SSFTable = bites;

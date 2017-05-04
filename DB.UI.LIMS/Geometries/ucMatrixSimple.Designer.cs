@@ -34,6 +34,7 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        private System.Windows.Forms.ToolStripLabel contentLBL;
         private System.Windows.Forms.ToolStripTextBox contentNameBox;
 
         private System.Windows.Forms.ToolStrip contentTS;
@@ -44,6 +45,7 @@
 
         private System.Windows.Forms.BindingNavigator MatrixBN;
 
+        private System.Windows.Forms.BindingSource MatrixBS;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn;
@@ -66,15 +68,13 @@
        // private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 
         private System.Windows.Forms.TableLayoutPanel TLPMatrix;
-
-        private System.Windows.Forms.ToolStripLabel contentLBL;
-
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 
+        private ucComposition ucComposition1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn;
 
         private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn1;
@@ -552,7 +552,5 @@
         }
 
         #endregion
-        private System.Windows.Forms.BindingSource MatrixBS;
-        private ucComposition ucComposition1;
     }
 }

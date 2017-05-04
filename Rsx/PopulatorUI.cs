@@ -1,35 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Windows.Forms;
 
 namespace Rsx.SQL
 {
-   
-    /// <summary>
-    /// Provides the Methods for SQL Population that are  more suited for User Screen Instructions
-    /// </summary>
+  
+
     public partial class SQLUI
     {
-        protected static string chamgeConnectionString = "Change connection string?";
+        public static void ReplaceLocalDBDefaultPath(ref string localDB, string sqlServerFound)
+        {
+            //changed the database CONNECTION!!!
+            //from default
+            //to the server that you actually detected
 
-        protected static string changeConnection = "Would you like to mannually modify the current database connection string?\n\n"
-            + "This is not necessary unless a remote server redirection is desired";
-
-        protected static string defaultLocal = "(localdb)\\MSSQLLocalDB";
-        protected static string deniedTheInstall = "\n\nThe user denied the SQL Server (LocalDB) installation";
-        protected static string failureInstall = "\n\nInstallation of SQL LocalDB Failed!!!";
-        protected static string nocontinueWOSQL = "Cannot continue without a SQL Server connection";
-        protected static string okInstall = "\n\nInstallation of SQL LocalDB ran OK";
-        protected static string restartAfterSQLFAIL = "Installation of SQL LocalDB did not work";
-        protected static string restartAfterSQLOK = "Installation of the SQL Server went ok. Will attempt to populate the Database now...";
-        protected static string shouldInstallSQL = "Would you like to install the SQL Server (LocalDB)?";
-        protected static string sqlLocalDB = "SQL LocalDB Installation";
-        protected static string sqlStarted = "Installation of the SQL Server (LocalDB) will execute now.\n\nWhen finished please click OK to continue";
-        protected static string willInstall = "\n\nInstallation of the SQL Server LocalDB starting...";
-    }
-    public partial class SQLUI
-    {
+            if (localDB.Contains(LOCALDB_DEFAULT_PATH))
+            {
+                localDB = localDB.Replace(LOCALDB_DEFAULT_PATH, sqlServerFound);
+            }
+        }
         /// <summary>
         /// Shows the UI to change the connection String localDB and returns a copy to an equivalent
         /// DB qith Dev name
@@ -46,7 +35,7 @@ namespace Rsx.SQL
             connectionControl.Title = "LIMS Server";
             connectionControl.ConnectionString = localDB;
 
-            DialogResult result = MessageBox.Show(chamgeConnectionString, changeConnection, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult result = MessageBox.Show(CONNECTION_CHANGE, CONNECTION_CHANGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             if (result == DialogResult.Yes)
             {
@@ -73,9 +62,13 @@ namespace Rsx.SQL
             // return localDB;
         }
 
-        public static bool FindSQLInstances(ref string localDB, string developerFolder)
+        /// <summary>
+        /// Finds a SQL Server instances and installs if necessary with UI
+        /// Otherwise gives back the default LocalDB path
+        /// </summary>
+        public static string FindSQLOrInstall( string developerFolder)
         {
-            bool sqlFound = false;
+            string sqlFound = LOCALDB_DEFAULT_PATH; //set default path...
 
             List<string> ls = null;
             ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
@@ -87,9 +80,8 @@ namespace Rsx.SQL
             if (ls.Count == 0)
             {
                 MessageBoxIcon i = MessageBoxIcon.Question;
-                MessageBox.Show(sqlStarted, willInstall, btn, i);
+                MessageBox.Show(SQL_INSTALL_STARTED_TITLE, SQL_INSTALL_STARTED, btn, i);
                 //Install SQL
-
                 ok = InstallSQL(developerFolder);
 
                 i = MessageBoxIcon.Information;
@@ -99,44 +91,36 @@ namespace Rsx.SQL
                 if (ok)
                 {
                     //installed LocalDB ok... go ahead and make default database
-                    MessageBox.Show(restartAfterSQLOK, okInstall, btn, i);
-                    //make database for first time!! (at default place
-                    sqlFound = true;
+                    MessageBox.Show(SQL_INSTALL_OK_TITLE, SQL_INSTALL_OK, btn, i);
                 }
                 else
                 {
                     //could not install  LocalDB now WHAT??
                     //should work offline then...
-                    MessageBox.Show(restartAfterSQLFAIL, failureInstall, btn, i);
-                    sqlFound = false;
-
+                    MessageBox.Show(SQL_INSTALL_FAILURE_TITLE, SQL_INSTALL_FAILURE, btn, i);
                     //TODO: poner algo que hacer si quieres ir offline
+                    sqlFound = string.Empty;
                 }
             }
             else //there are other instances of SQL!!
             {
-                sqlFound = true;
-                //changed the database CONNECTION!!!
-                //from default
-                //to the server that you actually detected
-
-                if (localDB.Contains(defaultLocal))
-                {
-                    localDB = localDB.Replace(defaultLocal, ls[0]);
-                }
-
-                //now store the new developerDB path!!!! VERY IMPORTANT
+                //NOW CHANGE THE DAFAULT PATH!!!
+                //assign the FIRST SERVER FOUND!!!
+                sqlFound = ls[0];
             }
 
             return sqlFound;
         }
 
+        /// <summary>
+        /// Installs SQL with UI
+        /// </summary>
         public static bool InstallSQL(string path)
         {
             bool ok = false;
 
             //should install SQL?
-            DialogResult yesnot = MessageBox.Show(shouldInstallSQL, sqlLocalDB, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult yesnot = MessageBox.Show(SQL_INSTALL_ASK, SQL_INSTALL_ASK_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (yesnot == DialogResult.Yes)
             {
                 // string path =;
@@ -145,7 +129,7 @@ namespace Rsx.SQL
             }
             else
             {
-                MessageBox.Show(nocontinueWOSQL, deniedTheInstall, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(SQL_DENIED_INSTALL_TITLE, SQL_DENIED_INSTALL, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 // ok = false;
             }
 

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Windows.Forms;
 
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -17,12 +16,11 @@ namespace DB.UI
         /// <param name="sender"></param>
         /// <param name="e">     </param>
 
-
         private int lastIndex = -2;
 
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0 ) return;
+            if (e.RowIndex < 0) return;
             ///check if table has no rows
 
             try
@@ -33,7 +31,7 @@ namespace DB.UI
                     Interface.IReport.Msg("No Rows found in the DataGridView", "Error", false); //report
                     return;
                 }
-                DataRow row = Dumb.Cast<DataRow>(dgv.Rows[e.RowIndex]);
+                DataRow row = Caster.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
                 bool isToDoColumn = false;
 
@@ -47,48 +45,41 @@ namespace DB.UI
                     row[e.ColumnIndex] = !(bool)row[e.ColumnIndex];
                     // unit.ToDo = !unit.ToDo;
                 }
-                  bool isUnuit = row.GetType().Equals(typeof(LINAA.UnitRow));
-                    if (isUnuit && lastIndex!=e.RowIndex)
-                    {
+                bool isUnuit = row.GetType().Equals(typeof(LINAA.UnitRow));
+                if (isUnuit && lastIndex != e.RowIndex)
+                {
                     //so it does not select and reselect everytime;
                     lastIndex = e.RowIndex;
 
-                        LINAA.UnitRow unit = row as LINAA.UnitRow;
+                    LINAA.UnitRow unit = row as LINAA.UnitRow;
 
                     // if ((row as LINAA.UnitRow) == unit) return;
 
+                    //   Interface.IDB.MatSSF.Clear();
+                    //if it is a checheakble column box
+                    //then check it automatically
 
-                      //   Interface.IDB.MatSSF.Clear();
-                         //if it is a checheakble column box
-                        //then check it automatically
-                                  
+                    //update bindings
 
-                        //update bindings
+                    Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
 
-                        Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
-
-                        Interface.IBS.Update<LINAA.UnitRow>(unit, true, false);
-
-                    }
-                    else
-                    {
-                        //link to matrix, channel or vial,/rabbit data
-                        MatSSF.LinkToParent(ref row);
-                   string tipo =  row.GetType().ToString();
+                    Interface.IBS.Update<LINAA.UnitRow>(unit, true, false);
+                }
+                else
+                {
+                    //link to matrix, channel or vial,/rabbit data
+                    MatSSF.LinkToParent(ref row);
+                    string tipo = row.GetType().ToString();
 
                     Interface.IReport.Msg("Unit values updated with Template Item", "Updated!", false); //report
-
-
-
                 }
 
                 //then it will be updated
-
             }
             catch (System.Exception ex)
             {
-               // Interface.IReport.Msg(ex.StackTrace, ex.Message);
-                Interface.IMain.AddException(ex);
+                // Interface.IReport.Msg(ex.StackTrace, ex.Message);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -114,7 +105,6 @@ namespace DB.UI
 
             // this.unitDGV.RowHeaderMouseClick += DgvItemSelected; this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
             this.unitDGV.CellMouseClick += DgvItemSelected;
-            
         }
 
         private void setBindings()
@@ -123,7 +113,7 @@ namespace DB.UI
             BindingSource bs = Interface.IBS.Units;
 
             string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
-            Dumb.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
+            BS.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
             string text = "Text";
@@ -137,12 +127,9 @@ namespace DB.UI
             // Interface.IBS.Units = bs; //link to binding source
         }
 
-      
-
         public ucUnit()
         {
             InitializeComponent();
         }
-
     }
 }

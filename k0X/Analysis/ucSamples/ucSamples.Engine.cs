@@ -9,7 +9,7 @@ using DB;
 //using DB.Interfaces;
 using DB.Tools;
 using DB.UI;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -350,7 +350,7 @@ namespace k0X
             catch (SystemException ex)
             {
                 MessageBox.Show("Error loading preferences\n\n" + ex.Message + "\n\n" + ex.StackTrace);
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -497,24 +497,24 @@ namespace k0X
         protected void FillOverriders()
         {
             LINAA Linaa = (LINAA)Interface.Get();
-            IList<string> ls = Dumb.HashFrom<string>(Linaa.SubSamples.GthermalColumn);
-            Dumb.FillABox(this.Gtbox.ComboBox, ls, true, false);
+            IList<string> ls = Hash.HashFrom<string>(Linaa.SubSamples.GthermalColumn);
+            UIControl.FillABox(this.Gtbox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;
-            ls = Dumb.HashFrom<string>(Linaa.Geometry.GeometryNameColumn);
-            Dumb.FillABox(this.Geobox.ComboBox, ls, true, false);
+            ls = Hash.HashFrom<string>(Linaa.Geometry.GeometryNameColumn);
+            UIControl.FillABox(this.Geobox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;
-            ls = Dumb.HashFrom<string>(Linaa.Channels.AlphaColumn);
-            Dumb.FillABox(this.alphabox.ComboBox, ls, true, false);
+            ls = Hash.HashFrom<string>(Linaa.Channels.AlphaColumn);
+            UIControl.FillABox(this.alphabox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;
-            ls = Dumb.HashFrom<string>(Linaa.Channels.fColumn);
-            Dumb.FillABox(this.fbox.ComboBox, ls, true, false);
+            ls = Hash.HashFrom<string>(Linaa.Channels.fColumn);
+            UIControl.FillABox(this.fbox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;
-            ls = Dumb.HashFrom<string>(Linaa.SubSamples.FCColumn);
-            Dumb.FillABox(this.FCbox.ComboBox, ls, true, false);
+            ls = Hash.HashFrom<string>(Linaa.SubSamples.FCColumn);
+            UIControl.FillABox(this.FCbox.ComboBox, ls, true, false);
             ls.Clear();
             ls = null;
         }

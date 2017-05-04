@@ -7,6 +7,17 @@ namespace DB
 {
     public interface IStore
     {
+
+        string FolderPath
+        {
+            get;
+            set;
+        }
+
+
+        void AddException(Exception ex);
+        void Read(string filepath);
+        void CloneDataSet(ref LINAA set);
         // void AddException(Exception ex);
         void Delete<T>(ref IEnumerable<T> rows);
         IEnumerable<DataTable> GetTablesWithChanges();
@@ -16,18 +27,36 @@ namespace DB
 
         bool Save<T>();
 
+        /// <summary>
+        /// General Method
+        /// </summary>
         bool Save(string file);
 
+        /// <summary>
+        /// Saves Exceptions
+        /// </summary>
         string SaveExceptions();
 
+        /// <summary>
+        /// Saves to a File
+        /// </summary>
         bool SaveLocalCopy();
 
         //  void SavePreferences();
 
+        /// <summary>
+        /// Saves to Server
+        /// </summary>
         bool SaveRemote(ref IEnumerable<DataTable> tables, bool takeChanges);
 
+        /// <summary>
+        /// not used
+        /// </summary>
         void SaveSSF();
 
+        /// <summary>
+        /// not used
+        /// </summary>
         bool SaveSSF(bool offline, string file);
 
         //void LoadMonitorsFile(string file);

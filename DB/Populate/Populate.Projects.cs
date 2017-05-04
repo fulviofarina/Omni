@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA : IProjects
     {
-        protected internal ICollection<string> activeProjectsList;
-        protected internal IList<string> projectsList;
+        protected ICollection<string> activeProjectsList;
+        protected IList<string> projectsList;
 
         /// <summary>
         /// Gets a non-repeated list of Lab-Order References in the database
@@ -19,7 +19,7 @@ namespace DB
             get
             {
                 if (activeProjectsList != null) activeProjectsList.Clear();
-                activeProjectsList = Dumb.HashFrom<string>(tableIRequestsAverages.ProjectColumn, DB.Properties.Misc.Cd, string.Empty);
+                activeProjectsList = Hash.HashFrom<string>(tableIRequestsAverages.ProjectColumn, DB.Properties.Misc.Cd, string.Empty);
 
                 return activeProjectsList;
             }
@@ -33,7 +33,7 @@ namespace DB
             get
             {
                 if (projectsList != null) projectsList.Clear();
-                projectsList = Dumb.HashFrom<string>(this.tableIrradiationRequests.IrradiationCodeColumn);
+                projectsList = Hash.HashFrom<string>(this.tableIrradiationRequests.IrradiationCodeColumn);
                 return projectsList;
             }
         }

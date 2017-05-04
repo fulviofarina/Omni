@@ -13,21 +13,14 @@ namespace SSF
     {
         private static NotifyIcon con;
 
-     
-
         private static string TITLE = "SSF Calculations";
 
-    //    [STAThread]
+        // [STAThread]
         public static Form CreateSSFUserInterface()
         {
-
-         
-
             ucSSF ucSSF = null;
             ucSSF = new ucSSF();
             ucSSF.Set(ref LIMS.Interface);
-
-      
 
             IucPreferences preferences = LIMS.PreferencesUI();
             Form box = new AboutBox();
@@ -35,7 +28,6 @@ namespace SSF
 
             ucSSF.AttachCtrl(ref options);
             ucSSF.AttachCtrl(ref preferences);
-
 
             UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
             LIMS.CreateForm("Samples", ref control, false);
@@ -48,10 +40,10 @@ namespace SSF
             ucSSF.AttachCtrl(ref ucProjectBox);
             ucSSF.AttachCtrl(ref aBindingNavigator);
 
-
             Pop msn = LIMS.Interface.IReport.Msn;
             Form form = msn.ParentForm;//
             ucSSF.AttachCtrl(ref msn);
+            if (form == null) form = new Form();
             form.Opacity = 0;
             // form.Dispose(); form = new Form();
             form.AutoSizeMode = AutoSizeMode.GrowOnly;
@@ -66,16 +58,12 @@ namespace SSF
             form.MaximizeBox = false;
             form.ControlBox = true;
             form.StartPosition = FormStartPosition.CenterScreen;
-           
-        
-            //  form.Enabled = false;
+
+            // form.Enabled = false;
 
             Creator.CallBack = delegate
             {
-
-          
                 Application.DoEvents();
-          
 
                 bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
 
@@ -85,13 +73,11 @@ namespace SSF
                     lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
                 }
 
-                   ucProjectBox.Project = lastProject;
-                   ucProjectBox.Refresher();
+                ucProjectBox.Project = lastProject;
+                ucProjectBox.Refresher();
 
                 LIMS.Interface.IReport.SpeakLoadingFinished();
-
             };
-
 
             form.Controls.Add(ucSSF);
             form.FormClosing += Form_FormClosing;
@@ -99,16 +85,12 @@ namespace SSF
             form.Opacity = 100;
 
             return form;
-
-
-
         }
 
         /// <summary>
         /// Function meant to Create a LINAA database datatables and load itto store and display data
         /// </summary>
         /// <returns>Form created with the respective ucSSF inner control</returns>
-
 
         private static void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -128,19 +110,14 @@ namespace SSF
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-        
-
             Form toReturn = null;
 
             try
             {
-
-
                 //create database
                 Creator.Build(ref LIMS.Interface);
                 Creator.CheckDirectories();
                 LIMS.Interface.IPreferences.PopulatePreferences();
-
 
                 LIMS.Linaa = LIMS.Interface.Get();
                 LIMS.Form = new LIMS(); //make a new UI LIMS
@@ -149,14 +126,18 @@ namespace SSF
 
                 LIMS.UserControls = new List<object>();
 
-                LIMS.Interface.IReport.CheckMSMQ();
-
-
+                //FIRST SQL
                 UserControl IConn = new ucSQLConnection();
                 bool ok = Creator.PrepareSQL(ref IConn);
+                LIMS.Interface.IPreferences.CurrentPref.IsSQL = ok;
 
+                //NOW CHECK MSMQ MESSAGE QUEUE
+                bool isMsmq = LIMS.Interface.IReport.CheckMSMQ();
+                if (!isMsmq) Creator.InstallMSMQ();
+                LIMS.Interface.IPreferences.CurrentPref.IsMSMQ = isMsmq;
+
+                //CHECK RESTART FILE
                 LIMS.Interface.IReport.CheckRestartFile();
-
                 LIMS.Interface.IPreferences.SavePreferences();
 
                 if (ok) Creator.LoadMethods(0);
@@ -164,21 +145,15 @@ namespace SSF
 
                 toReturn = CreateSSFUserInterface();
 
-                    Creator.Run();
-        
-
+                Creator.Run();
 
                 Application.Run(toReturn);
-
-
             }
             catch (Exception ex)
             {
-         //       MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
+                // MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
             }
-        
         }
-
 
         /// <summary>
         /// Loads the Database, makes the ucControl

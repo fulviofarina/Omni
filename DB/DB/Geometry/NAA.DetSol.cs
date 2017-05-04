@@ -1,11 +1,11 @@
 ﻿using System;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
-        protected void handlersDetSol()
+        protected internal void handlersDetSol()
         {
             handlers.Add(DetectorsAbsorbers.DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));

@@ -107,7 +107,7 @@ namespace k0X
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle69 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle70 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BN = new System.Windows.Forms.BindingNavigator(this.components);
-            this.BS = new System.Windows.Forms.BindingSource(this.components);
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.DeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -350,7 +350,7 @@ namespace k0X
             this.interfWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.BN)).BeginInit();
             this.BN.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             this.TLP.SuspendLayout();
             this.xTableTS.SuspendLayout();
@@ -423,7 +423,7 @@ namespace k0X
             // 
             this.BN.AddNewItem = null;
             this.BN.BackColor = System.Drawing.Color.GhostWhite;
-            this.BN.BindingSource = this.BS;
+            this.BN.BindingSource = this.bs;
             this.BN.CountItem = this.bindingNavigatorCountItem;
             this.BN.DeleteItem = this.DeleteItem;
             this.BN.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -452,8 +452,8 @@ namespace k0X
             // 
             // BS
             // 
-            this.BS.DataMember = "Peaks";
-            this.BS.DataSource = this.Linaa;
+            this.bs.DataMember = "Peaks";
+            this.bs.DataSource = this.Linaa;
             // 
             // Linaa
             // 
@@ -2482,7 +2482,7 @@ namespace k0X
             this.kxRx,
             this.MD,
             this.iDDataGridViewTextBoxColumn});
-            this.PeaksDGV.DataSource = this.BS;
+            this.PeaksDGV.DataSource = this.bs;
             dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle55.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle55.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2706,7 +2706,7 @@ namespace k0X
             // 
             // irrEndDateTimePicker
             // 
-            this.irrEndDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.BS, "irrEnd", true));
+            this.irrEndDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bs, "irrEnd", true));
             this.irrEndDateTimePicker.Location = new System.Drawing.Point(185, -9);
             this.irrEndDateTimePicker.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.irrEndDateTimePicker.Name = "irrEndDateTimePicker";
@@ -2715,7 +2715,7 @@ namespace k0X
             // 
             // irrStartDateTimePicker
             // 
-            this.irrStartDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.BS, "irrStart", true));
+            this.irrStartDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bs, "irrStart", true));
             this.irrStartDateTimePicker.Location = new System.Drawing.Point(185, -34);
             this.irrStartDateTimePicker.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.irrStartDateTimePicker.Name = "irrStartDateTimePicker";
@@ -2724,7 +2724,7 @@ namespace k0X
             // 
             // gtTextBox
             // 
-            this.gtTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.BS, "Gt", true));
+            this.gtTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bs, "Gt", true));
             this.gtTextBox.Location = new System.Drawing.Point(97, -156);
             this.gtTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gtTextBox.Name = "gtTextBox";
@@ -2733,7 +2733,7 @@ namespace k0X
             // 
             // alphaTextBox
             // 
-            this.alphaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.BS, "alpha", true));
+            this.alphaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bs, "alpha", true));
             this.alphaTextBox.Location = new System.Drawing.Point(97, -79);
             this.alphaTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.alphaTextBox.Name = "alphaTextBox";
@@ -3156,7 +3156,7 @@ namespace k0X
             ((System.ComponentModel.ISupportInitialize)(this.BN)).EndInit();
             this.BN.ResumeLayout(false);
             this.BN.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             this.TLP.ResumeLayout(false);
             this.xTableTS.ResumeLayout(false);
@@ -3248,7 +3248,7 @@ namespace k0X
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
 		private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
         private System.Windows.Forms.BindingNavigator BN;
-        public System.Windows.Forms.BindingSource BS;
+        public System.Windows.Forms.BindingSource bs;
  
         private System.Windows.Forms.Button CApply;
         private System.Windows.Forms.Button CCancel;

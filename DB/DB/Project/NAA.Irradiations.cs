@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
 
-        protected void handlersIrradiations()
+        protected internal void handlersIrradiations()
         {
             handlers.Add(Channels.DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Channels));

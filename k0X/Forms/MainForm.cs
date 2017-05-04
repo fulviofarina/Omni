@@ -9,7 +9,7 @@ using DB.Tools;
 using DB.UI;
 
 using Msn;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -154,8 +154,8 @@ namespace k0X
 
         public void Link()
         {
-            Dumb.FillABox(this.Box, LIMS.Linaa.ProjectsList, true, false);
-            Dumb.FillABox(this.Box, LIMS.Linaa.OrdersList, false, false);
+            UIControl.FillABox(this.Box, LIMS.Linaa.ProjectsList, true, false);
+            UIControl.FillABox(this.Box, LIMS.Linaa.OrdersList, false, false);
 
             this.autoload.Checked = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
             this.fillbyHL.Checked = LIMS.Interface.IPreferences.CurrentPref.FillByHL;
@@ -188,7 +188,7 @@ namespace k0X
                     LIMS.UserControls.Add(ucPeriodic);
                 }
 
-                ucPeriodic.Projects = Dumb.HashFrom<string>(LIMS.Linaa.SubSamples.IrradiationCodeColumn);
+                ucPeriodic.Projects = Hash.HashFrom<string>(LIMS.Linaa.SubSamples.IrradiationCodeColumn);
             }
             else if (sender.Equals(this.MatSSFPanel))
             {
@@ -408,7 +408,9 @@ namespace k0X
                 UserControl IConn = new VTools.ucSQLConnection();
              //   dynamic connectionControl = IConn;
                 bool ok = Creator.PrepareSQL(ref IConn);
-              //  bool ok = Creator.PrepareSQL();
+                //  bool ok = Creator.PrepareSQL();
+                LIMS.Interface.IPreferences
+                 .CurrentPref.IsSQL = ok;
 
                 LIMS.Interface.IReport.CheckRestartFile();
 

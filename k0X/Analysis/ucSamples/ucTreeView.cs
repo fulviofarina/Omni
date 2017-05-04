@@ -7,7 +7,7 @@ using DB;
 using DB.UI;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -38,14 +38,14 @@ namespace k0X
                     }
                     catch (SystemException ex)
                     {
-                        ucSample.Interface.IMain.AddException(ex);
+                        ucSample.Interface.IStore.AddException(ex);
                     }
                 }
                 SetASampleNode(ucSample.sampleDescription.Checked, ref old);
             }
             catch (SystemException ex)
             {
-                ucSample.Interface.IMain.AddException(ex);
+                ucSample.Interface.IStore.AddException(ex);
             }
 
             Populating = false;

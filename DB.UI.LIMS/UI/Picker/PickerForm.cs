@@ -4,24 +4,22 @@ using System.Windows.Forms;
 
 namespace DB.UI
 {
-  public interface IPickerForm
-  {
-    IPicker IPicker { get; set; }
-    System.Windows.Forms.UserControl Module {  set; }
-  }
+    public interface IPickerForm
+    {
+        IPicker IPicker { get; set; }
+        System.Windows.Forms.UserControl Module { set; }
+    }
 
-  public partial class PickerForm : Form, IPickerForm
-  {
-    private UserControl DisplayedControl = null;
+    public partial class PickerForm : Form, IPickerForm
+    {
+        private UserControl DisplayedControl = null;
 
-    public UserControl Module
+        public UserControl Module
         {
-
             set
             {
                 DisplayedControl = value;
                 SetControl();
-
             }
         }
 
@@ -54,37 +52,37 @@ namespace DB.UI
 
         private IPicker picker = null;
 
-    public IPicker IPicker
-    {
-      get { return picker; }
-      set { picker = value; }
+        public IPicker IPicker
+        {
+            get { return picker; }
+            set { picker = value; }
+        }
+
+        public PickerForm()
+        {
+            InitializeComponent();
+        }
+
+        private void Take_Click(object sender, EventArgs e)
+        {
+            bool cancel = false;
+            if (sender.Equals(this.Take)) cancel = picker.Take();
+
+            if (cancel) return;
+
+            this.Visible = false;
+            DisplayedControl.Dispose();
+
+            picker.DeLinkDGVs();
+            picker = null;
+
+            this.Dispose();
+        }
+
+        private void PickerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Controls.Clear();
+            DisplayedControl.Dispose();
+        }
     }
-
-    public PickerForm()
-    {
-      InitializeComponent();
-    }
-
-    private void Take_Click(object sender, EventArgs e)
-    {
-      bool cancel = false;
-      if (sender.Equals(this.Take)) cancel = picker.Take();
-
-      if (cancel) return;
-
-      this.Visible = false;
-      DisplayedControl.Dispose();
-
-      picker.DeLinkDGVs();
-      picker = null;
-
-      this.Dispose();
-    }
-
-    private void PickerForm_FormClosing(object sender, FormClosingEventArgs e)
-    {
-      this.Controls.Clear();
-      DisplayedControl.Dispose();
-    }
-  }
 }

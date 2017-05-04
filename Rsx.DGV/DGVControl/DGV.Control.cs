@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-
+using Rsx.Dumb;
 namespace Rsx.DGV
 {
   public partial class Control
@@ -139,7 +139,7 @@ namespace Rsx.DGV
 
       DataTable dt = GetDataSource<DataTable>(ref dgv);
 
-      Dumb.CloneRows(ref dgv, ref dt);
+      Tables.CloneRows(ref dgv, ref dt);
 
       return "OK! Selected cells were cloned";
     }

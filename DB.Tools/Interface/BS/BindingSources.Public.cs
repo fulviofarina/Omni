@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using Rsx;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -19,11 +18,13 @@ namespace DB.Tools
 
         public BindingSource Matrix;
         public BindingSource Compositions;
+
         /// <summary>
-        /// not attached yet
         /// </summary>
         public BindingSource Monitors;
 
+        /// <summary>
+        /// </summary>
         public BindingSource MonitorsFlags;
 
         public BindingSource Preferences;
@@ -32,7 +33,14 @@ namespace DB.Tools
 
         public BindingSource Samples;
 
+        /// <summary>
+        /// Selected only
+        /// </summary>
         public BindingSource SelectedSubSample;
+
+        /// <summary>
+        /// Selected only
+        /// </summary>
         public BindingSource SelectedMatrix;
 
         public BindingSource SSF;
@@ -48,16 +56,19 @@ namespace DB.Tools
 
         public BindingSource Vial;
 
+        /// <summary>
+        /// Applies the Binding Source default filters
+        /// </summary>
         public void ApplyFilters()
         {
             string col = Interface.IDB.Preferences.WindowsUserColumn.ColumnName;
             Preferences.Filter = col + " = '" + Interface.IPreferences.WindowsUser + "'";
             SSFPreferences.Filter = Preferences.Filter;
 
-            // Dumb.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
+            // Dumb.BS.LinkBS(ref this.ChannelBS, Interface.IDB.Channels);
             string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
             string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
-            // Dumb.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
+            // Dumb.BS.LinkBS(ref this.VialBS, this.lINAA.VialType, column + " = " + "False", innerRadCol);
             Rabbit.Filter = column + " = " + "True";
             Vial.Filter = column + " = " + "False";
             Vial.Sort = innerRadCol;
@@ -65,19 +76,17 @@ namespace DB.Tools
 
             Geometry.Filter = string.Empty;
             Geometry.Sort = "CreationDateTime desc";
-            // Dumb.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
+            // Dumb.BS.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
 
-            //  Dumb.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+            // Dumb.BS.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
 
-            //  Dumb.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, );
+            // Dumb.BS.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, );
             string sortColumn;
             sortColumn = Interface.IDB.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
             Irradiations.Sort = sortColumn;
 
-
             Matrix.Filter = "SubSampleID IS NULL";
             Matrix.Sort = "MatrixName desc";
-            
         }
 
         /// <summary>
@@ -152,11 +161,11 @@ namespace DB.Tools
             DataRow row = r as DataRow;
             if (row.HasErrors)
             {
-                bool? seriousCellsWithErrors = !AChecker?.Invoke();
+                bool? seriousCellsWithErrors = !aChecker?.Invoke();
                 // if (row.GetColumnsInError())
                 if (seriousCellsWithErrors != null && (bool)seriousCellsWithErrors)
                 {
-                    Interface.IReport.Msg(_ROWWITHERROR, "Warning", false); ///cannot process because it has errors
+                    Interface.IReport.Msg(ROW_WITH_ERROR, "Warning", false); ///cannot process because it has errors
                 }
             }
         }
@@ -164,6 +173,7 @@ namespace DB.Tools
         public BindingSources()
         {
         }
+
         /// <summary>
         /// A Binding source for each table
         /// </summary>
@@ -197,7 +207,6 @@ namespace DB.Tools
 
             SubSamples = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
 
-
             Units = new BindingSource(Interface.Get(), Interface.IDB.Unit.TableName);
             // Units.CurrentChanged += units_CurrentChanged;
 
@@ -208,22 +217,18 @@ namespace DB.Tools
 
             setHandlers();
 
-
             // Units.ListChanged += units_ListChanged;
         }
 
         private void setHandlers()
         {
-            SubSamples.CurrentChanged += subSamples_CurrentChanged;
+            SubSamples.CurrentChanged += currentChanged_SubSamples;
 
-            SSFPreferences.ListChanged += preferences_ListChanged;
-            Preferences.ListChanged += preferences_ListChanged;
-            Channels.CurrentChanged += channels_CurrentChanged;
+            SSFPreferences.ListChanged += listChanged_Preferences;
+            Preferences.ListChanged += listChanged_Preferences;
+            Channels.CurrentChanged += currentChanged_Channels;
 
-
-            Matrix.CurrentChanged += matrix_CurrentChanged;
+            Matrix.CurrentChanged += currentChanged_Matrix;
         }
-
-      
     }
 }

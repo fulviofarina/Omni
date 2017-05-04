@@ -2,13 +2,12 @@
 using System.Windows.Forms;
 
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
     public partial class ucMatrixSimple : UserControl
     {
-  
         private Interface Interface = null;
 
         /// <summary>
@@ -31,25 +30,23 @@ namespace DB.UI
 
             matrixDGV.DataSource = Interface.IBS.Matrix;
             this.MatrixBN.BindingSource = Interface.IBS.Matrix;
-            string  column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
-      
-            Binding mlabel = Dumb.ABinding(ref Interface.IBS.Matrix, column);
+            string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
+
+            Binding mlabel = BS.ABinding(ref Interface.IBS.Matrix, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
 
             ucComposition1.Set(ref Interface, false);
 
             this.bindingNavigatorAddNewItem.Click += addNewVialChannel_Click;//  new System.EventHandler(this.addNewVialChannel_Click);
 
-        //    matrixDGV.MouseHover += dGV_MouseHover;
-
-          
+            // matrixDGV.MouseHover += dGV_MouseHover;
         }
 
         private void addNewVialChannel_Click(object sender, EventArgs e)
         {
             //IS A VIAL OR CONTAINER
-            BindingSource bs = this.MatrixBN.BindingSource;
-            bool isMatrix = bs.Equals(Interface.IBS.Matrix);
+            //   BindingSource bss = this.MatrixBN.BindingSource;
+            bool isMatrix = this.MatrixBN.BindingSource.Equals(Interface.IBS.Matrix);
 
             if (isMatrix)
             {
@@ -65,7 +62,6 @@ namespace DB.UI
             }
         }
 
- 
         /*
         private void dGV_MouseHover(object sender, EventArgs e)
         {
@@ -73,7 +69,7 @@ namespace DB.UI
             else this.MatrixBN.BindingSource = Interface.IBS.Compositions;
         }
         */
-     
+
         public ucMatrixSimple()
         {
             InitializeComponent();

@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
 using Rsx.DGV;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -34,9 +34,9 @@ namespace DB.UI
             solcois = new System.Collections.Hashtable();
             solcoinPath = this.Linaa.FolderPath + DB.Properties.Resources.SolCoiFolder;
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Solang);
+            Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.Solang);
 
-            // Rsx.Dumb.LinkBS(ref this.effiBS, this.Linaa.COIN);
+            // Rsx.Dumb.BS.LinkBS(ref this.effiBS, this.Linaa.COIN);
 
             ucDetectors = new ucDetectors();
             ucDetectors.Set(ref inter);
@@ -49,11 +49,11 @@ namespace DB.UI
             form.Populate(control);
             form.Text = "SOLCOI Panel";
 
-            IList<string> hs = Dumb.HashFrom<string>(this.Linaa.DetectorsCurves.RefGeometryColumn);
-            Dumb.FillABox(refBox, hs, true, false);
-            hs = Dumb.HashFrom<string>(this.Linaa.DetectorsCurves.RefPositionColumn);
+            IList<string> hs = Hash.HashFrom<string>(this.Linaa.DetectorsCurves.RefGeometryColumn);
+            UIControl.FillABox(refBox, hs, true, false);
+            hs = Hash.HashFrom<string>(this.Linaa.DetectorsCurves.RefPositionColumn);
 
-            Dumb.FillABox(refPosBox, hs, true, false);
+            UIControl.FillABox(refPosBox, hs, true, false);
 
             refBox.SelectedItem = refBox.Items[0];
             refPosBox.SelectedItem = refPosBox.Items[0];
@@ -128,8 +128,8 @@ namespace DB.UI
             try
             {
                 this.Linaa.TAM.COINTableAdapter.FillByDetectorGeometry(this.Linaa.COIN, this.deteffibox.Text, this.geoeffibox.Text);
-                Dumb.FillABox(isoeffibox, Dumb.HashFrom<string>(this.Linaa.COIN.IsotopeColumn), true, true);
-                Dumb.FillABox(energyeffibox, Dumb.HashFrom<string>(this.Linaa.COIN.EnergyColumn), true, false);
+                UIControl.FillABox(isoeffibox, Hash.HashFrom<string>(this.Linaa.COIN.IsotopeColumn), true, true);
+                UIControl.FillABox(energyeffibox, Hash.HashFrom<string>(this.Linaa.COIN.EnergyColumn), true, false);
                 if (this.Linaa.COIN.Count == 0) this.Linaa.PopulateCOIList();
             }
             catch (SystemException exception)
@@ -421,7 +421,6 @@ namespace DB.UI
             }
             catch (SystemException ex)
             {
-
                 this.Linaa.AddException(ex);
             }
         }
@@ -446,7 +445,7 @@ namespace DB.UI
             try
             {
                 solcoin.Gather(geoSolangbox.Text, 0, detSolangbox.Text, refBox.Text, Convert.ToInt16(refPosBox.Text));
-                solcoin.Energies = Dumb.HashFrom<double>(exp.Columns[this.Linaa.Solang.EnergyColumn.ColumnName]).ToArray();
+                solcoin.Energies = Hash.HashFrom<double>(exp.Columns[this.Linaa.Solang.EnergyColumn.ColumnName]).ToArray();
                 solcoin.DetectorDimension.VacuumGap = Convert.ToDouble(VGbox.Text);
                 solcoin.DetectorDimension.TopDeadLayerThickness = Convert.ToDouble(TDLbox.Text);
 
@@ -527,8 +526,8 @@ namespace DB.UI
         {
             System.Collections.Generic.ICollection<string> detectors = this.Linaa.DetectorsList.ToList();
 
-            Dumb.FillABox(detSolangbox, detectors, true, false);
-            Dumb.FillABox(deteffibox, detectors, true, false);
+            UIControl.FillABox(detSolangbox, detectors, true, false);
+            UIControl.FillABox(deteffibox, detectors, true, false);
 
             TVdet.Nodes.Clear();
 
@@ -544,12 +543,11 @@ namespace DB.UI
         private void RefreshGeometriesTV()
         {
             string geoname = this.Linaa.Geometry.GeometryNameColumn.ColumnName;
-          
+
             geoSolangbox.ComboBox.DisplayMember = geoname;
             geoSolangbox.ComboBox.DataSource = this.Linaa.Geometry;
             geoSolangbox.ComboBox.ValueMember = geoname;
 
-       
             geoeffibox.ComboBox.DisplayMember = geoname;
             geoeffibox.ComboBox.DataSource = this.Linaa.Geometry;
             geoeffibox.ComboBox.ValueMember = geoname;
@@ -626,11 +624,11 @@ namespace DB.UI
             foreach (string d in dirs)
             {
                 if (System.IO.File.Exists(d + "\\" + deal)) continue;
-                Dumb.Process(new Process(), d, deal, string.Empty, true, false, 0);
+                IO.Process(new Process(), d, deal, string.Empty, true, false, 0);
                 System.IO.File.Delete(d + "\\" + deal);
             }
 
-            Dumb.Process(new Process(), solcoinPath, "explorer.exe", solcoinPath, false, false, 1000);
+            IO.Process(new Process(), solcoinPath, "explorer.exe", solcoinPath, false, false, 1000);
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
@@ -652,7 +650,7 @@ namespace DB.UI
                 {
                     max = Convert.ToInt16(maxload.Text);
                 }
-                catch (SystemException )
+                catch (SystemException)
                 {
                     maxload.Text = max.ToString();
                 }

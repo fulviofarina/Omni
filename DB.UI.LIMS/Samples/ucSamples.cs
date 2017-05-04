@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
 
 namespace DB.UI
@@ -21,9 +21,9 @@ namespace DB.UI
 
             DGV.DataSource = Interface.IBS.Samples;
 
-     //       Dumb.LinkBS(ref this.BS, this.Linaa.Samples);
+     //       Dumb.BS.LinkBS(ref this.BS, this.Linaa.Samples);
 
-            Dumb.FillABox(orderbox, Interface.IPopulate.IOrders.OrdersList, true, false);
+            UIControl.FillABox(orderbox, Interface.IPopulate.IOrders.OrdersList, true, false);
         }
 
         private void orderbox_TextChanged(object sender, EventArgs e)
@@ -40,7 +40,7 @@ namespace DB.UI
                 }
                 catch (SystemException ex)
                 {
-                    Interface.IMain.AddException(ex);
+                    Interface.IStore.AddException(ex);
                //     MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace);
                 }
             }

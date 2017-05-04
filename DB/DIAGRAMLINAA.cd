@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.LINAA">
-    <Position X="0.5" Y="3" Width="3.75" />
+  <Class Name="DB.LINAA" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
     <NestedTypes>
       <Class Name="DB.LINAA.CustomerDataTable" Collapsed="true">
         <TypeIdentifier />
@@ -721,99 +724,92 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>1ev8H//9P119jUP//L/c8y+/v7//+b93d77//X/P//8=</HashCode>
+      <HashCode>3ev8H//1P119jWP//L/c82+/v7//+L93977//X/P//8=</HashCode>
       <FileName>Adapter\Adapter.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Interface Name="DB.IDB" Collapsed="true">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACEwAgIABQQhCQHAICiQQwAAArohAIgwAhAQKQABkWg=</HashCode>
+      <HashCode>ASEwAgIABQQhCQHAICiQQwAAArohAIgwAhAQKQABkWg=</HashCode>
       <FileName>DB\IDB.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="DB.IMain" Collapsed="true">
-    <Position X="3.75" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAAAAAAAACAgAAAACAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Main\IMain.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="DB.IDetSol" Collapsed="true">
-    <Position X="2" Y="2" Width="1.5" />
+    <Position X="2.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAABAAAAABAAQAAAAAAgAAAAAgAAACAAAA=</HashCode>
       <FileName>Populate\Interfaces\IDetSol.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="DB.IExpressions">
-    <Position X="4.5" Y="4.25" Width="1.5" />
+  <Interface Name="DB.IExpressions" Collapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IExpressions.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IGeometry" Collapsed="true">
-    <Position X="2" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIEAAKAAAQAgAAAAAAAAACAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIEAAKAAAQAgAAAAAAAAACAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IGeometry.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IIrradiations" Collapsed="true">
-    <Position X="3.75" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABQAAAAAAAAAAAAAAAIAAAAAAAAABAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IIrradiations.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="DB.INuclear">
-    <Position X="6.25" Y="3.5" Width="1.5" />
+  <Interface Name="DB.INuclear" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAASAAAAAAEAAQAAAIAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\INuclear.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IOrders" Collapsed="true">
-    <Position X="2" Y="1.25" Width="1.5" />
+    <Position X="4" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
       <FileName>Populate\Interfaces\IOrders.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IProjects" Collapsed="true">
-    <Position X="6.25" Y="2.75" Width="1.5" />
+    <Position X="5.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAEAAAAAMAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IProjects.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.ISamples" Collapsed="true">
-    <Position X="5.5" Y="1.25" Width="1.5" />
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAETAAEAgAAAAAAVAAEAAAAAABAAAAI=</HashCode>
       <FileName>Populate\Interfaces\ISamples.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="DB.ISchedAcqs">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+  <Interface Name="DB.ISchedAcqs" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAACAA=</HashCode>
       <FileName>Populate\Interfaces\ISchedAcqs.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.IToDoes" Collapsed="true">
-    <Position X="3.75" Y="2" Width="1.5" />
+    <Position X="5.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Populate\Interfaces\IToDoes.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="DB.IStore" Collapsed="true">
-    <Position X="4.5" Y="2.75" Width="1.5" />
+  <Interface Name="DB.IStore">
+    <Position X="4" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAEBAAAAAAAAAQEAAAEAAAAAAACAQAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAEBAAAAAAAAASEgAAEACAAAAACAQAAAIAA=</HashCode>
       <FileName>Store\IStore.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -20,7 +20,7 @@ namespace k0X
       f.WindowState = FormWindowState.Minimized;
       f.Show();
 
-      Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.SchAcqs, string.Empty, "StartOn desc");
+      Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.SchAcqs, string.Empty, "StartOn desc");
     }
 
     private void schAcqsBindingNavigatorSaveItem_Click(object sender, EventArgs e)

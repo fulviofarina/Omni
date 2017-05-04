@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Security.Principal;
 using DB.Properties;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -14,16 +12,14 @@ namespace DB.Tools
     /// This class gives the current row shown by a Binding Source
     /// </summary>
 
-  
-
     /// <summary>
     /// PRIVATE FUNCTIONS
     /// </summary>
     public partial class Current
     {
-        private PreferencesRow currentPref;
+        // private PreferencesRow currentPref;
 
-        private SSFPrefRow currentSSFPref;
+        // private SSFPrefRow currentSSFPref;
 
         /// <summary>
         /// Reads the preferences files
@@ -40,23 +36,21 @@ namespace DB.Tools
             //keep this this way, works fine
 
             //load into table
-            bool ok = Dumb.ReadTable(path, ref dt);
+            bool ok = Tables.ReadTable(path, ref dt);
 
             return ok;
         }
 
-        private Func<DataRow, bool> selector
+        protected Func<DataRow, bool> selector
         {
             get
             {
-                string label = "WindowsUser";
+                string label = WINDOWS_USER;
                 return p => p.Field<string>(label).CompareTo(WindowsUser) == 0;
             }
         }
 
-      
-
-
+        protected static string WINDOWS_USER = "WindowsUser";
 
         /// <summary>
         /// remove shitty preferences
@@ -89,12 +83,12 @@ namespace DB.Tools
         {
             if (typeof(T).Equals(typeof(PreferencesDataTable)))
             {
-                path = Interface.IMain.FolderPath + Resources.Preferences + ".xml";
+                path = Interface.IStore.FolderPath + Resources.Preferences + ".xml";
                 dt = Interface.IDB.Preferences;
             }
             else
             {
-                path = Interface.IMain.FolderPath + Resources.SSFPreferences + ".xml";
+                path = Interface.IStore.FolderPath + Resources.SSFPreferences + ".xml";
                 dt = Interface.IDB.SSFPref;
             }
         }
@@ -103,7 +97,7 @@ namespace DB.Tools
         /// Loads the Current Rows with data
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        private void loadCurrentPreferences<T>()
+        private void populateCurrentPreferences<T>()
         {
             DataTable dt = null;
             string path = string.Empty;
@@ -118,23 +112,21 @@ namespace DB.Tools
             {
                 // if (this.currentSSFPref == null) {
                 PreferencesRow original = row as PreferencesRow;
-            
+
                 PreferencesRow p = dt.LoadDataRow(original.ItemArray, true) as PreferencesRow;
                 p.WindowsUser = WindowsUser;
                 p.Check();
-                // }
-                //    p.Check();
+                // } p.Check();
             }
             else
             {
                 SSFPrefRow p = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
                 SSFPrefRow original = row as SSFPrefRow;
-               
+
                 p.WindowsUser = WindowsUser;
                 p.Check();
 
-                // }
-                // p.Check();
+                // } p.Check();
             }
         }
 

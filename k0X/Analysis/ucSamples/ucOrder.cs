@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
+using Rsx.Dumb;
 
 namespace k0X
 {
@@ -107,7 +108,7 @@ namespace k0X
         try
         {
           IEnumerable<LINAA.ProjectsRow> projectsRow = orderRow.GetProjectsRows();
-          IList<string> ls = Rsx.Dumb.HashFrom<string>(projectsRow, this.Linaa.Projects.ProjectColumn.ColumnName);
+          IList<string> ls = Hash.HashFrom<string>(projectsRow, this.Linaa.Projects.ProjectColumn.ColumnName);
           MainForm MBox = Application.OpenForms.OfType<MainForm>().First();
           foreach (string project in ls)
           {

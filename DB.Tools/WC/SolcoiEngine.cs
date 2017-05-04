@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
@@ -111,7 +111,7 @@ namespace DB.Tools
         /// </summary>
         private System.Collections.Hashtable[] PrepareSolang(bool DoSolang, ref IEnumerable<LINAA.SubSamplesRow> samples)
         {
-           Hashtable[] array = null;
+            Hashtable[] array = null;
             Hashtable solcoin_table = new Hashtable();
             Hashtable solcoin_tableRef = new Hashtable();
             array = new Hashtable[] { solcoin_tableRef, solcoin_table };
@@ -133,7 +133,7 @@ namespace DB.Tools
                     IEnumerable<LINAA.PeaksRow> peaks = LINAA.GetPeaksInNeedOf(DoSolang, false, iMeas);
                     if (peaks.Count() == 0) continue;
 
-                    System.Collections.Generic.ICollection<double> hs = Dumb.HashFrom<double>(peaks, energyCol);
+                    System.Collections.Generic.ICollection<double> hs = Hash.HashFrom<double>(peaks, energyCol);
                     String keyRef = 5 + "," + "REF" + "," + iMeas.Detector;
                     //add reference
                     if (solcoin_tableRef.ContainsKey(keyRef)) //reference already added, then update energies to include new ones

@@ -12,7 +12,7 @@ using DB;
 //using DB.Interfaces;
 using DB.Tools;
 using DB.UI;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -65,7 +65,7 @@ namespace k0X
                 }
                 catch (SystemException ex)
                 {
-                    Interface.IMain.AddException(ex);
+                    Interface.IStore.AddException(ex);
                 }
                 return iW;
             }

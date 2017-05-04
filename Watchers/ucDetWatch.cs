@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB;
 using Rsx.CAM;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
 
 namespace k0X
@@ -61,12 +62,12 @@ namespace k0X
             clone.IsoColumn.ReadOnly = false;
 
             this.datePicker.Value = this.datePicker.MinDate;
-            Rsx.Dumb.LinkBS(ref this.peakBS, this.peaksDT, string.Empty, "Area desc");
+            Rsx.Dumb.BS.LinkBS(ref this.peakBS, this.peaksDT, string.Empty, "Area desc");
 
             LINAA.k0NAADataTable k0naa = DB.Tools.WC.Populatek0NAA(true);
 
             this.Linaa.k0NAA.Merge(k0naa, false, MissingSchemaAction.AddWithKey);
-            this.elementsList = Rsx.Dumb.HashFrom<string>(Linaa.k0NAA.SymColumn);
+            this.elementsList = Rsx.Dumb.Hash.HashFrom<string>(Linaa.k0NAA.SymColumn);
             TVSym.Nodes.Clear();
             foreach (string e in this.elementsList)
             {
@@ -726,7 +727,7 @@ namespace k0X
             int preset = Convert.ToInt32(LSchAcq.PresetTime);
             TimeSpan sp = new TimeSpan(0, 0, 0, preset);
 
-            this.stopafterbox.Text = Rsx.Dumb.ToReadableString(sp);
+            this.stopafterbox.Text = Rsx.Dumb.Dumb.ToReadableString(sp);
 
             return lastsamPos;
         }
@@ -826,7 +827,7 @@ namespace k0X
             bool informed = false;
             try
             {
-                string stoprem = Rsx.Dumb.ToReadableString(stopinMin);
+                string stoprem = Dumb.ToReadableString(stopinMin);
                 string content = string.Empty;
                 string user = LSchAcq.User;
                 string msg = "\n\nAcquisition for this detector is about to finish in " + stoprem + "\n\n";
@@ -862,7 +863,7 @@ namespace k0X
 
         protected void InformProgress(int remains, TimeSpan stopinMin)
         {
-            string stoprem = Rsx.Dumb.ToReadableString(stopinMin);
+            string stoprem = Rsx.Dumb.Dumb.ToReadableString(stopinMin);
             string stlbl = "Progress " + LSchAcq.Progress + "%. ";
             if (remains == 1) stlbl += "Last meas. Saving in ";
             else stlbl += remains + " meas. to do. Saving in ";
@@ -1058,7 +1059,7 @@ namespace k0X
             foreach (string sym in elements)
             {
                 IEnumerable<LINAA.k0NAARow> isotopesnaa = Linaa.k0NAA.Where(LINAA.SelectorAnalyteBy<LINAA.k0NAARow>(sym, string.Empty, 0));
-                IList<Int32> isotopes = Rsx.Dumb.HashFrom<Int32>(isotopesnaa, Linaa.k0NAA.NAAIDColumn.ColumnName);
+                IList<Int32> isotopes = Rsx.Dumb.Hash.HashFrom<Int32>(isotopesnaa, Linaa.k0NAA.NAAIDColumn.ColumnName);
                 foreach (Int32 iso in isotopes)
                 {
                     try
@@ -1076,7 +1077,7 @@ namespace k0X
 
                     IEnumerable<LINAA.k0NAARow> energies = isotopesnaa.Where(o => o.NAAID == iso);
                     if (energies.Count() == 0) continue;
-                    IList<Int32> k0IDList = Rsx.Dumb.HashFrom<Int32>(energies, Linaa.k0NAA.IDColumn.ColumnName);
+                    IList<Int32> k0IDList = Rsx.Dumb.Hash.HashFrom<Int32>(energies, Linaa.k0NAA.IDColumn.ColumnName);
 
                     double windoe;
                     double energylow;
@@ -1497,9 +1498,9 @@ namespace k0X
             TimeSpan ct = new TimeSpan(0, 0, 0, Convert.ToInt32(reader.CountTime));
             TimeSpan preset = new TimeSpan(0, 0, 0, Convert.ToInt32(reader.PresetTime));
 
-            this.LiveTlbl.Text = "Live " + Rsx.Dumb.ToReadableString(lt);
-            this.RealTlbl.Text = "Real " + Rsx.Dumb.ToReadableString(ct);
-            this.prsTlbl.Text = "Preset " + Rsx.Dumb.ToReadableString(preset);
+            this.LiveTlbl.Text = "Live " + Rsx.Dumb.Dumb.ToReadableString(lt);
+            this.RealTlbl.Text = "Real " + Rsx.Dumb.Dumb.ToReadableString(ct);
+            this.prsTlbl.Text = "Preset " + Rsx.Dumb.Dumb.ToReadableString(preset);
 
             return IsDTHigh;
         }
@@ -1675,7 +1676,7 @@ namespace k0X
             string prefix = samplebox.Text + detBox.Text[0] + posbox.Text;
             prefix = prefix.ToUpper();
 
-            measbox.Text = Rsx.Dumb.GetNextName(prefix, meas, true);
+            measbox.Text = Rsx.Dumb.Dumb.GetNextName(prefix, meas, true);
 
             meas = null;
 
@@ -1799,7 +1800,7 @@ namespace k0X
 
         private void schedule_Click(object sender, EventArgs e)
         {
-            TimeSpan pre = Rsx.Dumb.ToReadableTimeSpan(stopafterbox.Text);
+            TimeSpan pre = Rsx.Dumb.Dumb.ToReadableTimeSpan(stopafterbox.Text);
             double preset = pre.TotalSeconds;
             if (preset == 0)
             {
@@ -1847,7 +1848,7 @@ namespace k0X
             RefreshSamples(false);
             if (System.IO.Directory.Exists(this.specPathbox.Text + probox.Text))
             {
-                Rsx.Dumb.Process(new System.Diagnostics.Process(), this.specPathbox.Text + probox.Text, "explorer.exe", this.specPathbox.Text + probox.Text, false, false, 0);
+                Rsx.Dumb.IO.Process(new System.Diagnostics.Process(), this.specPathbox.Text + probox.Text, "explorer.exe", this.specPathbox.Text + probox.Text, false, false, 0);
             }
             else
             {
@@ -1863,12 +1864,12 @@ namespace k0X
 
         private void Backup_Click(object sender, EventArgs e)
         {
-            Rsx.Dumb.Process(new System.Diagnostics.Process(), this.Linaa.FolderPath + DB.Properties.Resources.Backups, "explorer.exe", this.Linaa.FolderPath + DB.Properties.Resources.Backups, false, false, 0);
+            Rsx.Dumb.IO.Process(new System.Diagnostics.Process(), this.Linaa.FolderPath + DB.Properties.Resources.Backups, "explorer.exe", this.Linaa.FolderPath + DB.Properties.Resources.Backups, false, false, 0);
         }
 
         private void specPathlbl_Click(object sender, EventArgs e)
         {
-            Rsx.Dumb.Process(new System.Diagnostics.Process(), this.specPathbox.Text, "explorer.exe", this.specPathbox.Text, false, false, 0);
+            Rsx.Dumb.IO.Process(new System.Diagnostics.Process(), this.specPathbox.Text, "explorer.exe", this.specPathbox.Text, false, false, 0);
         }
 
         private void ETApply_Click(object sender, EventArgs e)

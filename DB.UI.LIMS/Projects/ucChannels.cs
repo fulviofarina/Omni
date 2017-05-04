@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using DB.Tools;
-
+using Rsx.Dumb;
 namespace DB.UI
 {
     public partial class ucChannels : UserControl
@@ -12,11 +12,11 @@ namespace DB.UI
 
         public void Set(ref Interface inter)
         {
-            Rsx.Dumb.FD(ref this.Linaa);
-            Rsx.Dumb.FD(ref this.BS);
+            Dumb.FD(ref this.Linaa);
+            Dumb.FD(ref this.BS);
             // this.Linaa = inter.Get();
             DGV.DataSource = inter.IBS.Channels;
-           // Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Channels);
+           // Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.Channels);
         }
     }
 }

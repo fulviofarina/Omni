@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA : IToDoes
     {
-        protected internal IList<string> toDoesList;
+        protected IList<string> toDoesList;
 
         public IList<string> ToDoesList
         {
@@ -18,7 +18,7 @@ namespace DB
                     toDoesList.Clear();
                     toDoesList = null;
                 }
-                toDoesList = Dumb.HashFrom<string>(this.tableToDo.labelColumn);
+                toDoesList = Hash.HashFrom<string>(this.tableToDo.labelColumn);
                 return toDoesList;
             }
         }

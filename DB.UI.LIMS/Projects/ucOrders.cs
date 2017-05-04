@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
 
 namespace DB.UI
@@ -16,7 +16,7 @@ namespace DB.UI
             Dumb.FD(ref this.Linaa);
             this.Linaa = inter.Get();
 
-            Rsx.Dumb.LinkBS(ref this.BS, this.Linaa.Orders);
+            Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.Orders);
         }
     }
 }

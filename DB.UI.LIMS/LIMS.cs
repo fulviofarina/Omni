@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using DB.UI.Properties;
 
 //using DB.Interfaces;
 using Rsx.DGV;
@@ -176,9 +175,10 @@ namespace DB.UI
 
         private void LIMS_Load(object sender, System.EventArgs e)
         {
-            //  if (Screen.AllScreens.Length == 2)
+            // if (Screen.AllScreens.Length == 2)
             {
-                //  this.Location = new System.Drawing.Point(Screen.AllScreens[1].WorkingArea.X + 100, Screen.AllScreens[1].WorkingArea.Y + 600);
+                // this.Location = new System.Drawing.Point(Screen.AllScreens[1].WorkingArea.X + 100,
+                // Screen.AllScreens[1].WorkingArea.Y + 600);
             }
         }
 

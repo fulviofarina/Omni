@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
@@ -66,13 +67,13 @@ namespace DB.Tools
             {
                 ta.FillByHLProject(meas, (int)proID);
 
-                arr = Rsx.Dumb.HashFrom<string>(meas.SampleColumn).ToArray();
+                arr = Rsx.Dumb.Hash.HashFrom<string>(meas.SampleColumn).ToArray();
             }
 
             meas.EndLoadData();
 
-            Rsx.Dumb.FD(ref meas);
-            Rsx.Dumb.FD(ref ta);
+            Dumb.FD(ref meas);
+            Dumb.FD(ref ta);
             return arr;
         }
 

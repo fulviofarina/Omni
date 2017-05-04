@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using static DB.LINAA;
 
 namespace DB.UI
@@ -86,7 +86,7 @@ namespace DB.UI
         {
             this.filter = Interface.IBS.SubSamples.Filter;
             this.sort = Interface.IBS.SubSamples.Sort;
-            Dumb.DeLinkBS(ref Interface.IBS.SubSamples);
+            BS.DeLinkBS(ref Interface.IBS.SubSamples);
             // ucContent.DeLink();
         }
 
@@ -122,8 +122,8 @@ namespace DB.UI
             DataTable dtk0 = WC.Populatek0NAA(true);
             DataTable dtNAA = WC.PopulateNAA(true);
 
-            Dumb.MergeTable(ref dtk0, ref Linaa);
-            Dumb.MergeTable(ref dtNAA, ref Linaa);
+            Tables.MergeTable(ref dtk0, ref Linaa);
+            Tables.MergeTable(ref dtNAA, ref Linaa);
 
             w.SelectedSamples = samplesToPredict;//.ToList();
 
@@ -166,8 +166,8 @@ namespace DB.UI
             DataTable dtk0 = WC.Populatek0NAA(true);
             DataTable dtNAA = WC.PopulateNAA(true);
 
-            Dumb.MergeTable(ref dtk0, ref newLina);
-            Dumb.MergeTable(ref dtNAA, ref newLina);
+            Tables.MergeTable(ref dtk0, ref newLina);
+            Tables.MergeTable(ref dtNAA, ref newLina);
 
             w.SelectedSamples = send.ToList();
 
@@ -236,7 +236,7 @@ namespace DB.UI
         {
             Interface = inter;
             Dumb.FD(ref Linaa);
-            Dumb.FD(ref this.BS);
+            Dumb.FD(ref this.bs);
 
             this.DGV.DataSource = Interface.IBS.SubSamples;
             this.BN.BindingSource = Interface.IBS.SubSamples;
@@ -266,7 +266,7 @@ namespace DB.UI
                 MessageBox.Show("Please fill in the irradiations date/times for this sample in order to propagate it to the others");
                 return;
             }
-            IEnumerable<SubSamplesRow> others = Dumb.Cast<SubSamplesRow>(Interface.IBS.SubSamples.List as DataView);
+            IEnumerable<SubSamplesRow> others = Caster.Cast<SubSamplesRow>(Interface.IBS.SubSamples.List as DataView);
             others = others.Where(o => o != current).ToList();
             foreach (SubSamplesRow s in others)
             {

@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.DGV;
 
 namespace k0X
@@ -84,8 +84,8 @@ namespace k0X
         rows = this.Samples.SelectMany(o => o.GetIRequestsAveragesRows());
         if (rows == null || rows.Count() == 0)
         {
-          IEnumerable<DataRowView> view = Dumb.Cast<DataRowView>(this.BS.List as DataView);
-          rows = Dumb.Cast<DataRow>(view);
+          IEnumerable<DataRowView> view = Caster.Cast<DataRowView>(this.bs.List as DataView);
+          rows = Caster.Cast<DataRow>(view);
           field = "Sym";
         }
       }
@@ -93,7 +93,7 @@ namespace k0X
       {
         rows = this.Sample.GetIRequestsAveragesRows();
       }
-      eles = Dumb.HashFrom<string>(rows, field);
+      eles = Hash.HashFrom<string>(rows, field);
       return eles;
     }
 
@@ -150,7 +150,7 @@ namespace k0X
         projectFilter = "Project <> '*'";
       }
 
-      return Dumb.HashFrom<string>(this.Samples, "SubSampleName");
+      return Hash.HashFrom<string>(this.Samples, "SubSampleName");
     }
 
     protected internal int[] isoPeak;
@@ -174,10 +174,10 @@ namespace k0X
 
     public void LoadData()
     {
-      this.BS.Filter = this.CurrentFilter + " AND Selected = 'TRUE'";
-      this.BS.Sort = "T0 desc";
+      this.bs.Filter = this.CurrentFilter + " AND Selected = 'TRUE'";
+      this.bs.Sort = "T0 desc";
 
-      if (this.BS.Count != 0)
+      if (this.bs.Count != 0)
       {
         Field_Click(this.Yi, EventArgs.Empty);
         Field_Click(this.Xij, EventArgs.Empty);
@@ -234,35 +234,35 @@ namespace k0X
 
     internal void LinkBS(String Filter, bool attach)
     {
-      if (attach || this.BS.DataSource == null || this.BS.DataMember == null)
+      if (attach || this.bs.DataSource == null || this.bs.DataMember == null)
       {
-        Dumb.LinkBS(ref this.BS, this.Linaa.Peaks);
+        BS.LinkBS(ref this.bs, this.Linaa.Peaks);
       }
       if (Filter.Equals(string.Empty))
       {
-        this.BS.Filter = "Sym is NULL";
+        this.bs.Filter = "Sym is NULL";
       }
-      else this.BS.Filter = Filter + " AND Selected = 'TRUE'";
-      this.BS.Sort = this.Zi.Text + " asc, " + this.Yi.Text + " asc, " + this.Linaa.Peaks.T0Column.ColumnName + " asc";
+      else this.bs.Filter = Filter + " AND Selected = 'TRUE'";
+      this.bs.Sort = this.Zi.Text + " asc, " + this.Yi.Text + " asc, " + this.Linaa.Peaks.T0Column.ColumnName + " asc";
 
       this.Linaa.Peaks.EndLoadData();
-      this.BS.ResumeBinding();
+      this.bs.ResumeBinding();
     }
 
     internal void DeLinkBS(bool dettach)
     {
-      this.BS.SuspendBinding();
+      this.bs.SuspendBinding();
       this.Linaa.Peaks.BeginLoadData();
 
-      if (dettach) Dumb.DeLinkBS(ref this.BS);
+      if (dettach) BS.DeLinkBS(ref this.bs);
     }
 
     internal void LinkOtherBS(String Filter, bool attach)
     {
       if (attach || AvgIsotopesBS.DataSource == null || AvgIsotopesBS.DataMember == null)
       {
-        Dumb.LinkBS(ref AvgElementBS, this.Linaa.IRequestsAverages);
-        Dumb.LinkBS(ref AvgIsotopesBS, this.Linaa.IRequestsAverages);
+        BS.LinkBS(ref AvgElementBS, this.Linaa.IRequestsAverages);
+        BS.LinkBS(ref AvgIsotopesBS, this.Linaa.IRequestsAverages);
 
         if (this.Gtbox.TextBox.DataBindings.Count == 0)
         {
@@ -292,7 +292,7 @@ namespace k0X
 
       if (attach || AvgPeakBS.DataSource == null)
       {
-        Dumb.LinkBS(ref AvgPeakBS, this.Linaa.IPeakAverages);
+        BS.LinkBS(ref AvgPeakBS, this.Linaa.IPeakAverages);
       }
 
       if (Filter.Contains("Sym"))
@@ -340,9 +340,9 @@ namespace k0X
         this.Gtbox.TextBox.DataBindings.Clear();
         this.Gebox.TextBox.DataBindings.Clear();
 
-        Dumb.DeLinkBS(ref this.AvgIsotopesBS);
-        Dumb.DeLinkBS(ref this.AvgPeakBS);
-        Dumb.DeLinkBS(ref this.AvgElementBS);
+        BS.DeLinkBS(ref this.AvgIsotopesBS);
+        BS.DeLinkBS(ref this.AvgPeakBS);
+        BS.DeLinkBS(ref this.AvgElementBS);
       }
     }
 
@@ -483,7 +483,7 @@ namespace k0X
       IList<LINAA.PeaksRow> nonintercummu = new List<LINAA.PeaksRow>();
       foreach (DataGridViewRow r in this.AvgPeakDGV.Rows)
       {
-        LINAA.IPeakAveragesRow peak = Dumb.Cast<LINAA.IPeakAveragesRow>(r);
+        LINAA.IPeakAveragesRow peak = Caster.Cast<LINAA.IPeakAveragesRow>(r);
         double highEnergy = (peak.Energy + 0.7);
         double lowEnergy = (peak.Energy - 0.7);
         IEnumerable<LINAA.PeaksRow> Inter = Interpeaks.Where(o => o.Sample.Equals(peak.Sample) && !o.Iso.Equals(peak.Radioisotope) && o.Energy >= lowEnergy && o.Energy <= highEnergy).ToList();

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
-        protected void handlersSamples()
+        protected internal void handlersSamples()
         {
             handlers.Add(Standards.DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Standards));

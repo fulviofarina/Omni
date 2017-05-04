@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
@@ -517,11 +517,11 @@ namespace DB.Tools
             }
 
             cOINProcess = new Process();
-            time += Dumb.Process(cOINProcess, Files.DirectoryPath, "solcoina.exe", arguments, Hide, true, 1000000);
-            time += Dumb.Process(cOINProcess, Files.DirectoryPath, "solcoinb.exe", arguments, Hide, true, 1000000);
-            time += Dumb.Process(cOINProcess, Files.DirectoryPath, "solcoinc.exe", arguments, Hide, true, 1000000);
-            time += Dumb.Process(cOINProcess, Files.DirectoryPath, "solcoind.exe", arguments, Hide, true, 1000000);
-            time += Dumb.Process(cOINProcess, Files.DirectoryPath, "solcoine.exe", arguments, Hide, true, 1000000);
+            time += IO.Process(cOINProcess, Files.DirectoryPath, "solcoina.exe", arguments, Hide, true, 1000000);
+            time += IO.Process(cOINProcess, Files.DirectoryPath, "solcoinb.exe", arguments, Hide, true, 1000000);
+            time += IO.Process(cOINProcess, Files.DirectoryPath, "solcoinc.exe", arguments, Hide, true, 1000000);
+            time += IO.Process(cOINProcess, Files.DirectoryPath, "solcoind.exe", arguments, Hide, true, 1000000);
+            time += IO.Process(cOINProcess, Files.DirectoryPath, "solcoine.exe", arguments, Hide, true, 1000000);
 
             return time;
         }
@@ -547,7 +547,7 @@ namespace DB.Tools
 
             string arguments = " " + Files.Input;
             File.Delete(Files.DirectoryPath + Files.SolidAngles);
-            time = Dumb.Process(solangProcess, Files.DirectoryPath, file, arguments, Hide, true, 1000000);
+            time = IO.Process(solangProcess, Files.DirectoryPath, file, arguments, Hide, true, 1000000);
             return time;
         }
 

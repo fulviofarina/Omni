@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
-using DB.Properties;
-using Rsx;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -36,8 +32,8 @@ namespace DB.Tools
         {
             get
             {
-                currentSSFPref = Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
-                return currentSSFPref;
+                // currentSSFPref = Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
+                return Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
             }
         }
 
@@ -48,11 +44,14 @@ namespace DB.Tools
         {
             get
             {
-                currentPref = Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
-                return currentPref;
+                // currentPref = Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
+                return Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
             }
         }
 
+        /// <summary>
+        /// Populates the preferences
+        /// </summary>
         public void PopulatePreferences()
         {
             try
@@ -63,11 +62,11 @@ namespace DB.Tools
                     //cleaning
                     cleanPreferences<PreferencesDataTable>();    //important
                 }
-                loadCurrentPreferences<PreferencesDataTable>();
+                populateCurrentPreferences<PreferencesDataTable>();
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
             try
             {
@@ -77,11 +76,11 @@ namespace DB.Tools
                     //cleaning
                     cleanPreferences<SSFPrefDataTable>();    //important
                 }
-                loadCurrentPreferences<SSFPrefDataTable>();
+                populateCurrentPreferences<SSFPrefDataTable>();
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -96,6 +95,9 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Saves the preferences
+        /// </summary>
         public void SavePreferences()
         {
             try
@@ -106,7 +108,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
@@ -130,6 +132,4 @@ namespace DB.Tools
         }
         */
     }
-
-  
 }

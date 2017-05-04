@@ -623,7 +623,7 @@ namespace DB.Tools
             fit.XLog = MyMath.ListFrom(this.Linaa.ToDoAvg.XColumn, 1, filter, true);
             fit.Alphas = MyMath.ListFrom(this.Linaa.ToDoAvg.alphaColumn, 1, filter, true);
             fit.Qo = MyMath.ListFrom(this.Linaa.ToDoAvg.Qo1Column, 1, filter, true);
-            fit.Isotopes = Rsx.Dumb.HashFrom<string>(this.Linaa.ToDoAvg, this.Linaa.ToDoAvg.IsoColumn.ColumnName, filter, true);
+            fit.Isotopes = Rsx.Dumb.Hash.HashFrom<string>(this.Linaa.ToDoAvg, this.Linaa.ToDoAvg.IsoColumn.ColumnName, filter, true);
         }
 
         private void Push(ref IEnumerable<LINAA.ToDoAvgRow> rows)

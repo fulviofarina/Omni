@@ -5,8 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.DGV;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -32,7 +33,7 @@ namespace k0X
         }
         else if (!box.Equals(Xij) && !box.Equals(XijTip))
         {
-          DataView view = BS.List as DataView;
+          DataView view = bs.List as DataView;
           MakeSelectReject(ref view, ref SRDGV);
         }
         else Refresh_Click(sender, e);
@@ -61,7 +62,7 @@ namespace k0X
       bool energyCol = dgv.Columns[e.ColumnIndex].HeaderText.CompareTo(this.Linaa.Peaks.EnergyColumn.ColumnName) == 0;
       if (energyCol)
       {
-        LINAA.IPeakAveragesRow r = Dumb.Cast<LINAA.IPeakAveragesRow>((DataRowView)this.AvgPeakBS.Current);
+        LINAA.IPeakAveragesRow r = Caster.Cast<LINAA.IPeakAveragesRow>((DataRowView)this.AvgPeakBS.Current);
         this.FindGammaCorrections(r.Radioisotope, r.Energy, r.Sample);
         this.MainTab.SelectTab(this.InterferencesTab);
       }
@@ -79,7 +80,7 @@ namespace k0X
 
     protected void SRDGV_MouseHover(object sender, EventArgs e)
     {
-      this.SaveItem.Enabled = Rsx.Dumb.HasChanges(this.Linaa.Peaks);
+      this.SaveItem.Enabled = Rsx.Dumb.Changes.HasChanges(this.Linaa.Peaks);
     }
 
     protected void AnyDGV_KeyDown(object sender, KeyEventArgs e)
@@ -232,11 +233,11 @@ namespace k0X
 
       DB.LINAA.PeaksRow tag = (DB.LINAA.PeaksRow)this.CurrentDGV.CurrentCell.Tag;
 
-      IEnumerable<DataRowView> view = this.BS.List.Cast<DataRowView>();
+      IEnumerable<DataRowView> view = this.bs.List.Cast<DataRowView>();
 
       DataRowView vi = view.FirstOrDefault(v => v.Row.Equals(tag));
 
-      this.BS.Position = this.BS.List.IndexOf(vi);
+      this.bs.Position = this.bs.List.IndexOf(vi);
 
       this.fbox.Text = tag.SubSamplesRow.f.ToString();
       this.alphabox.Text = tag.SubSamplesRow.Alpha.ToString();

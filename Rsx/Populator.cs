@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Data.Linq;
 
 namespace Rsx.SQL
@@ -9,14 +10,14 @@ namespace Rsx.SQL
     /// </summary>
     public partial class SQL
     {
-        protected static string localDBFilePath = "\\Microsoft SQL Server\\120\\Tools\\Binn\\";
+        protected static string LOCALDB_PATH = "\\Microsoft SQL Server\\120\\Tools\\Binn\\";
         // + "Click NO if you want to proceed with the default connection string.\n\nClick Cancel to
         // avoid the population of the Database";
 
-        protected static string sqlDBEXE = "SqlLocalDB.exe";
+        protected static string SQL_LOCALDB_EXE = "SqlLocalDB.exe";
 
-        protected static string sqlPack32 = "localdbx32.msi";
-        protected static string sqlPack64 = "localdbx64.msi";
+        protected static string SQL_LOCALDB_PACK32 = "localdbx32.msi";
+        protected static string SQL_LOCALDB_PACK64 = "localdbx64.msi";
     }
 
     /// <summary>
@@ -39,16 +40,23 @@ namespace Rsx.SQL
             {
                 try
                 {
+                    //DbConnection db = destiny.Connection;
+                    destiny.Connection.Close();
+                    //  destiny.Connection.
                     // destiny.Connection.Close();
                     destiny.DeleteDatabase();
                     // destiny.Connection.Open();
                 }
                 catch (Exception)
                 {
+
+
                 }
             }
             return destiny.DatabaseExists();
         }
+
+       
 
         /// <summary>
         /// Inserts on Submits a SQL DataTable from one place to another
@@ -65,19 +73,23 @@ namespace Rsx.SQL
             ita.Context.SubmitChanges();
         }
 
-        /// <summary> Installs the SQL version given the prerequisite folder path where the files are
-        /// located These files must be named "localdbx32.msi" and "localdbx64.msi"
-        ///
-        /// <param name="prerequisitePath"></param>
+
+        /// <summary>
+        /// Installs SQL Server LOCALDB with the given pre-requisite filePath resources
+        /// </summary>
+        /// <param name="prerequisitePath">the files must be called according to sqlPack32 and sqlPack64 strings</param>
         public static void InstallSQL(string prerequisitePath)
         {
             bool is64 = Environment.Is64BitOperatingSystem;
-            string localdbexpressPack = sqlPack32;
-            if (is64) localdbexpressPack = sqlPack64;
+            string localdbexpressPack = SQL_LOCALDB_PACK32;
+            if (is64) localdbexpressPack = SQL_LOCALDB_PACK64;
 
             System.Diagnostics.Process.Start(prerequisitePath + "\\" + localdbexpressPack);
         }
 
+        /// <summary>
+        /// Reinicia el servidor LOCALDB
+        /// </summary>
         public static bool RestartSQLLocalDBServer()
         {
             // string start = "start ";
@@ -89,15 +101,15 @@ namespace Rsx.SQL
             if (is64) path = path.Replace(" (x86)", null);
 
             // else
-            string workDir = path + localDBFilePath;
-            path = workDir + sqlDBEXE;
+            string workDir = path + LOCALDB_PATH;
+            path = workDir + SQL_LOCALDB_EXE;
 
             bool exist = System.IO.File.Exists(path);
 
             if (!exist) return exist;
 
             //CREATE BATE FILE
-            path = sqlDBEXE;
+            path = SQL_LOCALDB_EXE;
             string tmp = "\\Temp\\";
             string content = "start /B " + path + " start";
             string batFile = "sql.bat";

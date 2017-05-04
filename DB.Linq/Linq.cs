@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Linq;
+﻿using System.Data.Linq;
 
 using Rsx.SQL;
 
 namespace DB.Linq
 {
-  
-
- 
     public partial class LinqDataContext
     {
         public static void CloneSQLDatabase(ref DataContext original, ref DataContext destiny)
@@ -126,6 +121,8 @@ namespace DB.Linq
             exist = original.DatabaseExists();
             CloneSQLDatabase(ref original, ref destiny);
 
+            original.Connection.Close();
+            destiny.Connection.Close();
             return exist;
         }
     }

@@ -1,36 +1,32 @@
 ﻿//using DB.Interfaces;
 
-using System.Collections;
-
 namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        protected Hashtable adapters;
-
         public void DisposeSolCoinAdapters()
         {
-            //   if (tAM?.CompositionsTableAdapter != null)
+            // if (tAM?.CompositionsTableAdapter != null)
             {
                 tAM?.CompositionsTableAdapter.Connection.Close();
                 tAM?.CompositionsTableAdapter.Dispose();
             }
-            //  if (tAM?.MatrixTableAdapter != null)
+            // if (tAM?.MatrixTableAdapter != null)
             {
                 tAM?.MatrixTableAdapter.Connection.Close();
                 tAM?.MatrixTableAdapter.Dispose();
             }
-            //  if (tAM?.VialTypeTableAdapter != null)
+            // if (tAM?.VialTypeTableAdapter != null)
             {
                 tAM?.VialTypeTableAdapter.Connection.Close();
                 tAM?.VialTypeTableAdapter.Dispose();
             }
-            //  if (tAM?.GeometryTableAdapter != null)
+            // if (tAM?.GeometryTableAdapter != null)
             {
                 tAM?.GeometryTableAdapter.Connection.Close();
                 tAM?.GeometryTableAdapter.Dispose();
             }
-            //  if (tAM?.MUESTableAdapter != null)
+            // if (tAM?.MUESTableAdapter != null)
             {
                 tAM?.MUESTableAdapter.Connection.Close();
                 tAM?.MUESTableAdapter.Dispose();
@@ -40,28 +36,28 @@ namespace DB
                 tAM?.DetectorsAbsorbersTableAdapter.Connection.Close();
                 tAM?.DetectorsAbsorbersTableAdapter.Dispose();
             }
-            //  if (tAM?.DetectorsDimensionsTableAdapter != null)
+            // if (tAM?.DetectorsDimensionsTableAdapter != null)
             {
                 tAM?.DetectorsDimensionsTableAdapter.Connection.Close();
                 tAM?.DetectorsDimensionsTableAdapter.Dispose();
             }
-            //  if (tAM?.HoldersTableAdapter != null)
+            // if (tAM?.HoldersTableAdapter != null)
             {
                 tAM?.HoldersTableAdapter.Connection.Close();
                 tAM?.HoldersTableAdapter.Dispose();
             }
-            //  if (tAM?.DetectorsCurvesTableAdapter != null)
+            // if (tAM?.DetectorsCurvesTableAdapter != null)
             {
                 tAM?.DetectorsCurvesTableAdapter.Connection.Close();
                 tAM?.DetectorsCurvesTableAdapter.Dispose();
             }
-            //  if (tAM?.SolangTableAdapter != null)
+            // if (tAM?.SolangTableAdapter != null)
             {
                 tAM?.SolangTableAdapter.Connection.Close();
                 tAM?.SolangTableAdapter.Dispose();
             }
 
-            //  if (tAM?.COINTableAdapter != null)
+            // if (tAM?.COINTableAdapter != null)
             {
                 tAM?.COINTableAdapter.Connection.Close();
                 tAM?.COINTableAdapter.Dispose();

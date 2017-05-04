@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA : IOrders
     {
-        protected internal ICollection<string> ordersList;
+        protected ICollection<string> ordersList;
 
         /// <summary>
         /// Gets a non-repeated list of Lab-Order References in the database
@@ -18,7 +18,7 @@ namespace DB
             get
             {
                 if (ordersList != null) ordersList.Clear();
-                ordersList = Dumb.HashFrom<string>(this.tableOrders.LabOrderRefColumn);
+                ordersList = Hash.HashFrom<string>(this.tableOrders.LabOrderRefColumn);
 
                 return ordersList;
             }

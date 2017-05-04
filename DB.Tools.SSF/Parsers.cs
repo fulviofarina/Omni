@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
@@ -34,15 +34,15 @@ namespace DB.Tools
                 string invcmUnit = "[1/cm]";
 
                 aux = "Material density";
-                Dumb.SetField(ref Mdens, ref array, aux, densityUnit);
+                Tables.SetField(ref Mdens, ref array, aux, densityUnit);
                 aux = "G-thermal";
-                Dumb.SetField(ref Gt, ref array, aux, string.Empty);
+                Tables.SetField(ref Gt, ref array, aux, string.Empty);
                 aux = "Mean chord length";
-                Dumb.SetField(ref MCL, ref array, aux, cmUnit);
+                Tables.SetField(ref MCL, ref array, aux, cmUnit);
                 aux = "Escape x.sect.";
-                Dumb.SetField(ref EXS, ref array, aux, invcmUnit);
+                Tables.SetField(ref EXS, ref array, aux, invcmUnit);
                 aux = "Potential x.sect.";
-                Dumb.SetField(ref PXS, ref array, aux, invcmUnit);
+                Tables.SetField(ref PXS, ref array, aux, invcmUnit);
             }
             catch (SystemException ex)
             {

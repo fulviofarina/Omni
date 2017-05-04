@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.Math;
 
 namespace DB.Tools

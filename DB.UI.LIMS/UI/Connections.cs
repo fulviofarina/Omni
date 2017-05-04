@@ -6,10 +6,9 @@ namespace DB.UI
     public partial class Connections : Form
     {
         private DB.LINAA.PreferencesRow pref;
-        //   private DB.UI.SQLConnection ucSQLHLCom = new SQLConnection();
-        //    private DB.UI.SQLConnection ucSQLLIMSCom = new SQLConnection();
-        // private bool saveChanges = false;
-      
+        // private DB.UI.SQLConnection ucSQLHLCom = new SQLConnection(); private DB.UI.SQLConnection
+        // ucSQLLIMSCom = new SQLConnection(); private bool saveChanges = false;
+
         private void Connections_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ucSQLLIMSCom.ConnectionString.Equals(string.Empty))
@@ -29,9 +28,6 @@ namespace DB.UI
                 string spectra = this.SpectraRBT.Text.ToUpper();
                 if (!spectra[spectra.Length - 1].ToString().Equals("\\")) spectra += "\\";
                 pref.Spectra = spectra;
-
-               
-            
             }
             catch (SystemException ex)
             {
@@ -50,7 +46,6 @@ namespace DB.UI
                 this.SpectraSvrRBT.Text = pref.SpectraSvr.ToUpper();
 
                 this.SpectraRBT.Text = pref.Spectra.ToUpper();
-
             }
             catch (SystemException ex)
             {
@@ -60,7 +55,7 @@ namespace DB.UI
         public Connections(ref LINAA.PreferencesRow preferences)
         {
             InitializeComponent();
-          
+
             pref = preferences;
         }
     }

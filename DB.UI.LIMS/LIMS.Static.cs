@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
+using Rsx.Dumb;
 using VTools;
 using static Rsx.DGV.Control;
 
@@ -11,8 +12,8 @@ namespace DB.UI
 {
     public partial class LIMS
     {
+        private static Form aboutBox;
 
-        private static  Form aboutBox;
         public static IucOptions OptionsUI(ref Form AboutBox)
         {
             IucOptions options = new ucOptions();
@@ -21,12 +22,11 @@ namespace DB.UI
             options.AboutBoxAction = delegate
             {
                 aboutBox.Show();
-              //  box.Show();
+                // box.Show();
             };
             options.ConnectionBox = delegate
             {
                 LIMS.Connections();
-
             };
             options.SaveClick = delegate
             {
@@ -53,25 +53,22 @@ namespace DB.UI
             return preferences;
         }
 
-
-        //  public static System.Collections.Generic.IList<object> UserControls;
+        // public static System.Collections.Generic.IList<object> UserControls;
 
         public static void ShowToUser()
         {
-
             LIMS.Form.Visible = true;
             LIMS.Form.Opacity = 100;
-           
+
             LIMS.Form.BringToFront();
         }
 
         public static void ShowPreferences(bool show)
         {
-
             try
             {
                 UserControl c = LIMS.UserControls.OfType<ucPreferences>().FirstOrDefault();
-               
+
                 c.ParentForm.Visible = show;
                 c.ParentForm.Opacity = 100;
                 c.ParentForm.TopMost = show;
@@ -79,12 +76,10 @@ namespace DB.UI
             }
             catch (Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
-
-
-
         }
+
         public static T FindLastControl<T>(string name)
         {
             Func<T, bool> finder = o =>
@@ -122,7 +117,7 @@ namespace DB.UI
             form.MaximizeBox = true;
             form.Populate(control);
             form.Text = title;
-            form.Visible =show;
+            form.Visible = show;
         }
 
         public static UserControl CreateUI(string controlHeader, object[] args)
@@ -166,7 +161,7 @@ namespace DB.UI
             cv.RowDeletedMethod = deleteRow;
             cv.SaveMethod = LIMS.Interface.IStore.Save;
 
-            DataGridView[] dgvs = Rsx.Dumb.GetChildControls<DataGridView>(control).ToArray();
+            DataGridView[] dgvs = UIControl.GetChildControls<DataGridView>(control).ToArray();
 
             if (dgvs.Count() != 0)
             {
@@ -177,7 +172,7 @@ namespace DB.UI
                 dgvs = null;
             }
 
-            ToolStripButton[] items = Rsx.Dumb.GetChildControls<ToolStrip>(control)
+            ToolStripButton[] items = UIControl.GetChildControls<ToolStrip>(control)
                 .SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
             cv.CreateEvents(ref items);
             items = null;
@@ -265,7 +260,7 @@ namespace DB.UI
                         ucSubSamples.ucContent = CreateUI(ControlNames.SubSamplesContent) as ucSSContent;
 
                         ucSubSamples.Set(ref LIMS.Interface);
-                        //   ucSubSamples.ucContent.Set(ref LIMS.Interface);
+                        // ucSubSamples.ucContent.Set(ref LIMS.Interface);
 
                         cellpainter = ucSubSamples.ucContent.PaintCells;
                         shouldpaintCell = ucSubSamples.ucContent.ShouldPaint;
@@ -281,12 +276,11 @@ namespace DB.UI
                     {
                         ucSSContent ucSSContent = new ucSSContent();
 
-                        //     ucSSContent.Set(ref LIMS.Interface);
+                        // ucSSContent.Set(ref LIMS.Interface);
 
                         cellpainter = ucSSContent.PaintCells;
                         shouldpaintCell = ucSSContent.ShouldPaint;
-                        //     refresher = ucSSContent.RefreshSubSamples;
-                        //   addedRow = ucSSContent.RowAdded;
+                        // refresher = ucSSContent.RefreshSubSamples; addedRow = ucSSContent.RowAdded;
                         control = ucSSContent as UserControl;
                         break;
                     }
@@ -345,33 +339,28 @@ namespace DB.UI
 
         public static void Connections()
         {
-
             LINAA.PreferencesRow prefe = LIMS.Interface.IPreferences.CurrentPref;
             if (prefe == null)
             {
                 LIMS.Interface.IReport.Msg("Preferences object is null!", "Cannot load preferences!", false);
-                return ;
+                return;
             }
             Connections cform = new Connections(ref prefe);
             cform.ShowDialog();
-          
-                  if ((prefe as DataRow).RowState != DataRowState.Modified) return ;
 
-                  DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                  if (res == System.Windows.Forms.DialogResult.No)
-                  {
-                      LIMS.Linaa.Preferences.RejectChanges();
-                    
-                  }
-                  else
-                  {
-                      prefe.Check();
-                      LIMS.Interface.IPreferences.SavePreferences();
-                    Application.Restart();
+            if ((prefe as DataRow).RowState != DataRowState.Modified) return;
+
+            DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == System.Windows.Forms.DialogResult.No)
+            {
+                LIMS.Linaa.Preferences.RejectChanges();
             }
-             
-
-         
+            else
+            {
+                prefe.Check();
+                LIMS.Interface.IPreferences.SavePreferences();
+                Application.Restart();
+            }
         }
 
         public static void Explore()
@@ -379,7 +368,7 @@ namespace DB.UI
             System.Data.DataSet set = Linaa;
             VTools.Explorer explorer = new VTools.Explorer(ref set);
 
-            //   Rsx.DGV.Control.Refresher refresher = explorer.RefreshTable;
+            // Rsx.DGV.Control.Refresher refresher = explorer.RefreshTable;
             Rsx.DGV.Control ctr = new Rsx.DGV.Control(explorer.RefreshTable, Interface.IReport.Msg, ref IFind);
             DataGridView[] dgv = new DataGridView[] { explorer.DGV };
 
@@ -404,10 +393,8 @@ namespace DB.UI
         {
             try
             {
-                //   this.Linaa.ToDoRes.Clear();
-                //  this.Linaa.ToDoResAvg.Clear();
-                //  this.Linaa.ToDoAvg.Clear();
-                //  this.Linaa.ToDoData.Clear();
+                // this.Linaa.ToDoRes.Clear(); this.Linaa.ToDoResAvg.Clear();
+                // this.Linaa.ToDoAvg.Clear(); this.Linaa.ToDoData.Clear();
 
                 Linaa.WriteXml(file, System.Data.XmlWriteMode.WriteSchema);
                 Interface.IReport.Msg("Workspace was saved on " + file, "Saved Workspace!", true);
@@ -415,7 +402,6 @@ namespace DB.UI
             catch (SystemException)
             {
                 Interface.IReport.Msg("Workspace was NOT saved on " + file, "Not Saved Workspace!", false);
-
             }
         }
 
@@ -423,7 +409,7 @@ namespace DB.UI
         /// For setting the item on the Picker Form
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
         public static void SetItem(object sender, System.EventArgs e)
         {
             //get the dgv associated to the tsmi
@@ -436,7 +422,7 @@ namespace DB.UI
             if (tsmi.Tag is DataColumn)
             {
                 DataColumn col = tsmi.Tag as DataColumn;
-                //     LINAA.DetectorsAbsorbersRow abs = ((LINAA.DetectorsAbsorbersRow)((System.Data.DataRowView)dgv.CurrentRow.DataBoundItem).Row);
+                // LINAA.DetectorsAbsorbersRow abs = ((LINAA.DetectorsAbsorbersRow)((System.Data.DataRowView)dgv.CurrentRow.DataBoundItem).Row);
 
                 //GET the DGV COLUMN
                 DataGridViewColumn dgvcol = dgv.Columns
@@ -481,7 +467,7 @@ namespace DB.UI
         /// <summary>
         /// Destroys the ouput, and puts the input on the output
         /// </summary>
-        /// <param name="inpu"></param>
+        /// <param name="inpu">  </param>
         /// <param name="output"></param>
         public static void SwapLinaa(ref LINAA inpu, ref LINAA output)
         {

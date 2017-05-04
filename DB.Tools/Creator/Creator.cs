@@ -2,18 +2,11 @@
 using System.IO;
 using System.Windows.Forms;
 using DB.Properties;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.Generic;
 
 namespace DB.Tools
 {
-    public partial class Creator
-    {
-        private static string askToSave = "Changes in the database have not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
-
-        private static string loading = "Database loading in progress";
-    }
-
     public partial class Creator
     {
         private static Interface Interface = null;
@@ -24,6 +17,15 @@ namespace DB.Tools
         // private static int toPopulate = 0;
 
         private static Loader worker = null;
+        private static string MSMQ_INSTALL_TITLE = "Important";
+
+
+
+        private static string MSMQ_INSTALL = "This program will install Microsoft Message Queue Server\n\n"
+        // msg += "You'll need to hold the Window's Logo Key and press R\n\n"; msg +=
+        // "Write 'optionalfeatures' in the box and press Enter\n\nSelect the MSMQ
+        // package and click OK\n\n";
+       + "Wait for the installation to finish\n\nYou will need to restart the system afterwards.\nThank you\n";
 
         /// <summary>
         /// disposes the worker that loads the data
@@ -32,18 +34,21 @@ namespace DB.Tools
 
     public partial class Creator
     {
+        /// <summary>
+        /// populates MatSSF resources only
+        /// </summary>
         private static void populateMatSSFResource(bool overriderFound)
         {
-            string matssf = Interface.IMain.FolderPath + Resources.SSFFolder;
+            string matssf = Interface.IStore.FolderPath + Resources.SSFFolder;
             bool nossf = !Directory.Exists(matssf);
             if (nossf || overriderFound)
             {
                 Directory.CreateDirectory(matssf);
                 string resourcePath = Application.StartupPath + Resources.DevFiles
                     + Resources.SSFResource + ".bak";
-                string startexecutePath = Interface.IMain.FolderPath + Resources.SSFFolder;
+                string startexecutePath = Interface.IStore.FolderPath + Resources.SSFFolder;
                 string destFile = startexecutePath + Resources.SSFResource + ".CAB";
-                unpackResource(resourcePath, destFile, startexecutePath, true);
+                IO.UnpackCABFile(resourcePath, destFile, startexecutePath, true);
             }
         }
 
@@ -51,19 +56,19 @@ namespace DB.Tools
         {
             string path;
             //override preferences
-            path = Interface.IMain.FolderPath + Resources.Preferences + ".xml";
+            path = Interface.IStore.FolderPath + Resources.Preferences + ".xml";
             string developerPath = Application.StartupPath + Resources.DevFiles + Resources.Preferences + ".xml";
             populateReplaceFile(path, developerPath);
 
-            path = Interface.IMain.FolderPath + Resources.SSFPreferences + ".xml";
+            path = Interface.IStore.FolderPath + Resources.SSFPreferences + ".xml";
             developerPath = Application.StartupPath + Resources.DevFiles + Resources.SSFPreferences + ".xml";
             populateReplaceFile(path, developerPath);
 
-            path = Interface.IMain.FolderPath + Resources.WCalc;
+            path = Interface.IStore.FolderPath + Resources.WCalc;
             developerPath = Application.StartupPath + Resources.DevFiles + Resources.WCalc;
             populateReplaceFile(path, developerPath);
 
-            path = Interface.IMain.FolderPath + Resources.XCOMEnergies;
+            path = Interface.IStore.FolderPath + Resources.XCOMEnergies;
             developerPath = Application.StartupPath + Resources.DevFiles + Resources.XCOMEnergies;
             populateReplaceFile(path, developerPath);
 
@@ -80,11 +85,11 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);//                throw;
+                Interface.IStore.AddException(ex);//                throw;
             }
 
             path = Application.StartupPath + Resources.DevFiles + Resources.Features;
-            string currentpath = Interface.IMain.FolderPath + Resources.Features;
+            string currentpath = Interface.IStore.FolderPath + Resources.Features;
             bool features = populateReplaceFile(currentpath, path);
             if (features) Help();
 
@@ -104,47 +109,37 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);//                throw;
+                Interface.IStore.AddException(ex);//                throw;
             }
 
             return File.Exists(path);
         }
 
+        /// <summary>
+        /// populates Solcoi resources only
+        /// </summary>
         private static void populateSolCoiResource(bool overriderFound)
         {
-            string solcoi = Interface.IMain.FolderPath + Resources.SolCoiFolder;
+            string solcoi = Interface.IStore.FolderPath + Resources.SolCoiFolder;
             bool nosolcoi = !Directory.Exists(solcoi);
 
             if (nosolcoi || overriderFound)
             {
                 Directory.CreateDirectory(solcoi);
-                string startexecutePath = Interface.IMain.FolderPath + Resources.SolCoiFolder;
+                string startexecutePath = Interface.IStore.FolderPath + Resources.SolCoiFolder;
 
                 string resourcePath = Application.StartupPath + Resources.DevFiles
                     + Resources.CurvesResource + ".bak";
                 string destFile = startexecutePath + Resources.CurvesResource + ".bak";
-                unpackResource(resourcePath, destFile, startexecutePath, false);
+                IO.UnpackCABFile(resourcePath, destFile, startexecutePath, false);
 
                 resourcePath = Application.StartupPath + Resources.DevFiles
                     + Resources.SolCoiResource + ".bak";
                 destFile = startexecutePath + Resources.SolCoiResource + ".bak";
-                unpackResource(resourcePath, destFile, startexecutePath, false);
+                IO.UnpackCABFile(resourcePath, destFile, startexecutePath, false);
             }
         }
 
-        private static void unpackResource(string resourcePath, string destFile, string startExecutePath, bool unpack)
-        {
-            if (File.Exists(resourcePath))
-            {
-                File.Copy(resourcePath, destFile);
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //conservar esto para unzippear
-                if (unpack)
-                {
-                    Dumb.Process(process, startExecutePath, "expand.exe", destFile + " -F:* " + startExecutePath, false, true, 100000);
-                    File.Delete(destFile);
-                }
-            }
-        }
+       
     }
 }

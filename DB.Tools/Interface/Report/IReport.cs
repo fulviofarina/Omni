@@ -1,32 +1,33 @@
-﻿using System.Messaging;
-using Msn;
+﻿using Msn;
 
 namespace DB
 {
     public interface IReport
     {
-        // NotifyIcon Notify { set; get; }
         Pop Msn { get; set; }
+
         string RestartFile { get; }
-        bool CheckRestartFile();
+
         void AskToRestart();
-        void SendToRestartRoutine(string texto);
+
+        bool CheckMSMQ();
+
+        bool CheckRestartFile();
+
         void GenerateBugReport();
 
         void GenerateReport(string labelReport, object path, string extra, string module, string email);
 
-        void Msg(string msg, string title, bool ok = true);
+        void GenerateUserInfoReport();
 
-        void SpeakLoadingFinished();
-        bool CheckMSMQ();
-     //   MessageQueue getMessageQueue(string QUEUE_PATH);
-        // void Msg(string msg, string title);
+        void Msg(string msg, string title, bool ok=true);
+
         void ReportProgress(int percentage);
+
+        void SendToRestartRoutine(string texto);
 
         void Speak(string text);
 
-       
-
-        void GenerateUserInfoReport();
+        void SpeakLoadingFinished();
     }
 }

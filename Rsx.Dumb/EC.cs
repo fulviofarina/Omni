@@ -7,9 +7,7 @@ using System.Windows.Forms;
 ///FULVIO
 namespace Rsx
 {
-    /// <summary>
-    /// STATIC CLASS FOR CHECKING ROWS & CONTROLS FOR ERRORS
-    /// </summary>
+    /// <summary> STATIC CLASS FOR CHECKING ROWS & CONTROLS FOR ERRORS </summary>
     public static partial class EC
     {
         public static IEnumerable<DataRow> NotNulls(IEnumerable<DataRow> array, String Field)
@@ -62,20 +60,18 @@ namespace Rsx
             {
                 bool errors = false;
 
-          //  if (s != null)
-          //  {
-          DataRow r = s as DataRow;
+                // if (s != null) {
+                DataRow r = s as DataRow;
 
                 if (!IsNuDelDetch(r))
                 {
-              //   if (r.RowState != DataRowState.Detached && r.RowState != DataRowState.Deleted)
-              // {
-              errors = r.HasErrors;
-              // }
-          }
+                    // if (r.RowState != DataRowState.Detached && r.RowState != DataRowState.Deleted) {
+                    errors = r.HasErrors;
+                    // }
+                }
 
-          // }
-          return errors;
+                // }
+                return errors;
             };
 
             return rows.Where<T>(find).ToList<T>();
@@ -90,7 +86,7 @@ namespace Rsx
         /// Puts Null Error in the given column value of the given row (row,column)
         /// </summary>
         /// <param name="column"></param>
-        /// <param name="row"></param>
+        /// <param name="row">   </param>
         public static bool CheckNull(DataColumn column, DataRow row)
         {
             row.SetColumnError(column, null);
@@ -131,7 +127,7 @@ namespace Rsx
             }
             else if (t.Equals(typeof(byte[])))
             {
-               if (row.IsNull(column)) row.SetColumnError(column, "NULL!");
+                if (row.IsNull(column)) row.SetColumnError(column, "NULL!");
             }
             string error = row.GetColumnError(column);
 
@@ -161,7 +157,7 @@ namespace Rsx
         /// Forces the check-up of a Data Row according to the DataColumnChangeEventHandler given
         /// </summary>
         /// <typeparam name="T">DatTable, DataRow[] or DataRow</typeparam>
-        /// <param name="table2">object to check</param>
+        /// <param name="table2">       object to check</param>
         /// <param name="columnChecker">DataColumnChangeEventHandler to use for checking</param>
         public static void CheckRows<T>(T table2, DataColumnChangeEventHandler columnChecker)
         {
@@ -203,15 +199,14 @@ namespace Rsx
 
         public static void SetRowError(DataRow row, DataColumn column, Exception ex)
         {
-            //  if (IsNuDelDetch(row)) return;
-            //  if (column == null) return;
+            // if (IsNuDelDetch(row)) return; if (column == null) return;
 
             row.SetColumnError(column, ExceptionMsg(ex));
         }
 
         public static void SetRowError(DataRow row, Exception ex)
         {
-            //  if (IsNuDelDetch(row)) return;
+            // if (IsNuDelDetch(row)) return;
 
             row.RowError = ExceptionMsg(ex);
         }

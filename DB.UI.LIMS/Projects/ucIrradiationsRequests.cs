@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.UI
 {
@@ -50,7 +50,7 @@ namespace DB.UI
                 this.channelBox.Text = this.channelBox.Items[0].ToString();
             }
 
-       //     Dumb.LinkBS(ref this.BS, Interface.IDB.IrradiationRequests, filter, sortColumn + " desc");
+       //     Dumb.BS.LinkBS(ref this.BS, Interface.IDB.IrradiationRequests, filter, sortColumn + " desc");
 
           
          //   this.channelBox.TextChanged += (this.channelBox_SelectedIndexChanged);
@@ -85,7 +85,7 @@ namespace DB.UI
 
             if (ir.ChannelsRow==null)
             {
-                LINAA.ChannelsRow c = Dumb.Cast<LINAA.ChannelsRow>(this.channelBox.ComboBox.SelectedItem);
+                LINAA.ChannelsRow c = Caster.Cast<LINAA.ChannelsRow>(this.channelBox.ComboBox.SelectedItem);
              
                 ir.ChannelsRow = c;
 

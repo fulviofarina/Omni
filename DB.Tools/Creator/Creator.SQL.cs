@@ -7,38 +7,6 @@ using Rsx.SQL;
 
 namespace DB.Tools
 {
-    public partial class Creator
-    {
-   //     private static string defaultLocal = "(localdb)\\MSSQLLocalDB";
-
-
-        private static string aboutToPopulate = "The program will now populate the Database for the first time\n\nWould you like to proceed?\n\n" +
-            "Click NO to avoid the database population";
-
-        private static string aboutToPopulateTitle = "Database population starting...";
-      //  private static string chamgeConnectionString = "Would you like to change the Connection string?";
-      //  private static string changeConnection = "Would you like to modify the Connection string?\n\n";
-        private static string checkingSQL = "Checking the database connections";
-        private static string couldNotConnect = "Connection to the database failed";
-      //  private static string failureInstall = "\n\nInstallation of SQL LocalDB Failed!!!";
-
-        private static string noConnectionDetected = "The current database connection is not ok.\n\n" +
-            "The reasons might be:\n\n" +
-               "1) The program database does not exist (first time users)\n\n"+
-            "2) The SQL Server is down/stopped\n\n" +
-            "3) The SQL Server is not installed on this computer\n\n" +
-            "4) The Connection string to the database is wrong.\n\n\n" +
-            "This program will attempt to:\n\n" +
-            "1) Restart the server\n" +
-            "2) Detect other SQL Server instances when present or,\n" +
-            "3) Reinstall the SQL Server and the program database.\n\n\n" +
-            "You will have the option to change the connection string (if desired)";
-     //   private static string deniedTheInstall = "\n\nThe user denied the SQL Express installation";
-
-      //
-        // + "Click NO if you want to proceed with the default connection string.\n\nClick Cancel to
-        // avoid the population of the Database";
-    }
 
     public partial class Creator
     {
@@ -51,7 +19,7 @@ namespace DB.Tools
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            Interface.IReport.Msg(checkingSQL, "Please wait while testing the SQL connection...");
+            Interface.IReport.Msg(CHECKING_SQL, CHECKING_SQL_TITLE);
 
             Interface.IAdapter.InitializeComponent();
             Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
@@ -60,11 +28,10 @@ namespace DB.Tools
 
             bool sqlFound = false;
 
-     
             string localDB = Properties.Settings.Default.localDB;
 
             string developerDB = Properties.Settings.Default.developerDB;
-
+            string defaultConnection = string.Empty;
             bool ok = Interface.IAdapter.IsMainConnectionOk;
             //No connections
             while (!ok)
@@ -76,106 +43,138 @@ namespace DB.Tools
                 //restarting the server didn't work, plan B
                 if (ok) continue;
 
-                Cursor.Current = Cursors.Default;
-             
                 //show no connection Intro
                 //could not connect
-              //  MessageBoxButtons btn = MessageBoxButtons.OK;
-                MessageBox.Show(noConnectionDetected, couldNotConnect, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //  MessageBoxButtons btn = MessageBoxButtons.OK;
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                string path  = Application.StartupPath + DB.Properties.Resources.DevFiles;
-                sqlFound = SQLUI.FindSQLInstances(ref localDB, path);
+                Cursor.Current = Cursors.WaitCursor;
 
-                //IMPORTANTE, así crea cualquier database con DEV delante
-                developerDB = SQLUI.ChangeConnectionString(ref connectionUsrControl, ref localDB);
-
-                Interface.IPreferences.CurrentPref.LIMS = localDB;
-          
-                //should populate the database?
+                //provide path to SQL files for deploy (installation)
+                string path = Application.StartupPath + DB.Properties.Resources.DevFiles;
+                string sqlServerFound = SQLUI.FindSQLOrInstall(path);
+                //IMPORTANTE, cambia el string el usuario o el default!
+                sqlFound = !string.IsNullOrEmpty(sqlServerFound);
                 if (sqlFound)
                 {
-                    //ask to populate or Not
-                    DialogResult result = MessageBox.Show(aboutToPopulate, aboutToPopulateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    //populate new database...
-                    if (result == DialogResult.Yes)
-                    {
-                        makeDatabase = true;
-                        //set developer database string
-                        Interface.IPreferences.CurrentPref.LIMS = developerDB;
-                    }
-
-                    ok = true;
+                    SQLUI.ReplaceLocalDBDefaultPath(ref localDB, sqlServerFound);
+                    //store later
                 }
+                //2
+                //offer user to change database string anyway!!!
+                developerDB = SQLUI.ChangeConnectionString(ref connectionUsrControl, ref localDB);
+                //3
+                //set local database as default
+                defaultConnection = localDB;
+                //chequea si ya tiene servidores SQL
 
-                //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
-                Properties.Settings.Default["developerDB"] = developerDB;
-                Properties.Settings.Default["localDB"] = localDB;
+                //ask to populate or Not
+                Cursor.Current = Cursors.Default;
 
-                Interface.IPreferences.CurrentPref.Check();
+                DialogResult result = MessageBox
+                    .Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //populate new database...
+                if (result == DialogResult.Yes)
+                {
+                    makeDatabase = true;
+                    //set developer database string
+                    defaultConnection = developerDB;
+                }
+                else
+                {
+                    //just in case...
+                    makeDatabase = false;
+                    //TODO: populate?
+                }
+                Cursor.Current = Cursors.WaitCursor;
+
+                Interface.IPreferences.CurrentPref.LIMS = defaultConnection;
+                // Interface.IPreferences.SavePreferences();
+                if (makeDatabase)
+                {
+                    makeDatabase = LinqDataContext.PopulateSQL(developerDB, true);
+                }
+                Interface.IAdapter.SetConnections(localDB, developerDB, defaultConnection);
+
+                Interface.IAdapter.RestartAdaptersConnections();
 
                 Cursor.Current = Cursors.WaitCursor;
             }
 
             if (makeDatabase)
             {
-                Interface.IAdapter.DisposeAdapters();
-                Interface.IAdapter.InitializeComponent();
-            }
-
-            Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
-
-            if (makeDatabase)
-            {
                 //now populate developer Database first and send data there
                 //afterwards, you copy what you need to copy to USER Database...
                 //    bool makeDatabase = false;
-                makeDatabase = LinqDataContext.PopulateSQL(developerDB, true);
-
-            }
-
-            if (makeDatabase)
-            {
 
                 //MAE A COPY INTO THE DEVELOPER DB SQL
-                Interface.IMain.Read(Interface.IMain.FolderPath + DB.Properties.Resources.Linaa);
+                Interface.IStore.Read(Interface.IStore.FolderPath + DB.Properties.Resources.Linaa);
                 DataSet set = Interface.Get();
                 IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
                 //save
                 Interface.IStore.SaveRemote(ref tables, true);
-                //again, restore the string to the User STRING
+
                 Interface.IAdapter.DisposeAdapters();
                 //now clone to the USER!!!
                 //o do something more selective!
                 //DEVELOPER MODE COPY
-                ok = LinqDataContext.PopulateSQL(localDB, false, developerDB);
-                SQL.DeleteDatabase(developerDB);
-
+                ok = LinqDataContext.PopulateSQL(localDB, true, developerDB);
+                //again, restore the string to the User STRING
                 Interface.IPreferences.CurrentPref.LIMS = localDB;
-                //SAVE AGAIN!!!
-                Interface.IPreferences.CurrentPref.Check();
-                //again restart Adapters...
             }
 
-            Interface.IPreferences.CurrentPref.IsSQL = ok;
+            //always delete the developer database if it got stucked next restart...
+            SQL.DeleteDatabase(developerDB);
 
-            Interface.IPreferences.SavePreferences();
-       
+            //SAVE AGAIN!!!
+
+            Interface.IPreferences.CurrentPref.Check();
+            // Interface.IPreferences.SavePreferences();
+
+            //again restart Adapters...
+            Interface.IAdapter.InitializeComponent();
+            Interface.IAdapter.InitializeAdapters();
 
             Cursor.Current = Cursors.Default;
 
-            if (makeDatabase)
-            {
-                Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
-                Rsx.Dumb.RestartPC();
-                Application.ExitThread();
-            }
+            // if (makeDatabase) { Rsx.Dumb.RestartPC(); Application.ExitThread(); }
+
+            Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
 
             return ok;
         }
-
-      
-
-
-
     }
+    public partial class Creator
+    {
+        // private static string defaultLocal = "(localdb)\\MSSQLLocalDB";
+        protected static string CHECKING_SQL_TITLE = "Please wait while testing the SQL connection...";
+
+        protected static string ABOUT_TO_POPULATE = "The program will now populate the Database for the first time\n\nWould you like to proceed?\n\nThis might take some time, please be patient\n\n" +
+            "Click NO to avoid the database population";
+
+        protected static string ABOUT_TO_POPULATE_TITLE = "Database population starting...";
+        protected static string ASK_TO_SAVE = "Changes in the database have not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
+
+        // private static string chamgeConnectionString = "Would you like to change the Connection
+        // string?"; private static string changeConnection = "Would you like to modify the
+        // Connection string?\n\n";
+        protected static string CHECKING_SQL = "Checking the database connections";
+
+        protected static string LOADING_DB = "Database loading in progress";
+        protected static string NO_CONNECTION = "The current database connection is not ok.\n\n" +
+            "The reasons might be:\n\n" +
+               "1) The program database does not exist (first time users)\n" +
+            "2) The SQL Server is down/stopped\n" +
+            "3) The SQL Server is not installed on this computer\n" +
+            "4) The Connection string to the database is wrong.\n\n\n" +
+            "This program will attempt to:\n\n" +
+            "1) Restart the server\n" +
+            "2) Detect other SQL Server instances when present or,\n" +
+            "3) Reinstall the SQL Server and the program database.\n\n" +
+            "You will have the option to change the connection string (if desired)";
+
+        protected static string NO_CONNECTION_TITLE = "Connection to the database failed";
+    }
+
 }

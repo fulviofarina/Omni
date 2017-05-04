@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -15,7 +16,7 @@ namespace DB.UI
 
         public void Set(ref Interface inter)
         {
-            Rsx.Dumb.FD(ref this.Linaa);
+            Dumb.FD(ref this.Linaa);
             this.Linaa = inter.Get();
 
             this.setContactLayerMatrixToolStripMenuItem.Tag = this.Linaa.DetectorsAbsorbers.ContactLayerMatrixIDColumn;
@@ -86,10 +87,10 @@ namespace DB.UI
 
         private void MainTab_Selected(object sender, TabControlEventArgs e)
         {
-            if (MainTab.SelectedTab == this.Curves) Rsx.Dumb.LinkBS(ref BS, this.Linaa.DetectorsCurves);
-            else if (MainTab.SelectedTab == this.AbsorbersTab) Rsx.Dumb.LinkBS(ref BS, this.Linaa.DetectorsAbsorbers);
-            else if (MainTab.SelectedTab == this.DimensionsTab) Rsx.Dumb.LinkBS(ref BS, this.Linaa.DetectorsDimensions);
-            else if (MainTab.SelectedTab == this.HoldersTab) Rsx.Dumb.LinkBS(ref BS, this.Linaa.Holders);
+            if (MainTab.SelectedTab == this.Curves) Rsx.Dumb.BS.LinkBS(ref BS, this.Linaa.DetectorsCurves);
+            else if (MainTab.SelectedTab == this.AbsorbersTab) Rsx.Dumb.BS.LinkBS(ref BS, this.Linaa.DetectorsAbsorbers);
+            else if (MainTab.SelectedTab == this.DimensionsTab) Rsx.Dumb.BS.LinkBS(ref BS, this.Linaa.DetectorsDimensions);
+            else if (MainTab.SelectedTab == this.HoldersTab) Rsx.Dumb.BS.LinkBS(ref BS, this.Linaa.Holders);
 
             DataGridView dgv = MainTab.SelectedTab.Controls.OfType<TableLayoutPanel>().First().Controls.OfType<DataGridView>().First();
             dgv.DataSource = BS;

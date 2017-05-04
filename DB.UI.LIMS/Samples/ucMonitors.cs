@@ -3,7 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
 
 namespace DB.UI
@@ -25,7 +25,7 @@ namespace DB.UI
 
             Dumb.FD(ref this.Linaa);
            // Dumb.FD(ref this.Linaa);
-            Dumb.FD(ref BS);
+            Dumb.FD(ref bs);
 
             DGV.DataSource = Interface.IBS.Monitors;
 
@@ -74,7 +74,7 @@ namespace DB.UI
             }
             Interface.IBS.Monitors.Sort = sortCode;
             Interface.IBS.Monitors.Filter = filterCode;
-         //   Rsx.Dumb.LinkBS(ref Interface.IBS.Monitors, this.Linaa.Monitors, filterCode, sortCode);
+         //   Rsx.Dumb.BS.LinkBS(ref Interface.IBS.Monitors, this.Linaa.Monitors, filterCode, sortCode);
         }
 
         public void RowAdded(ref DataRow row)
@@ -84,7 +84,7 @@ namespace DB.UI
             minBox.Text = string.Empty;
             maxBox.Text = string.Empty;
             System.Collections.Generic.IEnumerable<DataRowView> views = Interface.IBS.Monitors.List.OfType<DataRowView>();
-            System.Collections.Generic.IEnumerable<LINAA.MonitorsRow> mons = Dumb.Cast<LINAA.MonitorsRow>(views).Where(o => !o.IsMonNameNull());
+            System.Collections.Generic.IEnumerable<LINAA.MonitorsRow> mons = Caster.Cast<LINAA.MonitorsRow>(views).Where(o => !o.IsMonNameNull());
             mons = mons.OrderByDescending(o => o.MonName);
 
             if (mons.Count() >= 1)
@@ -115,7 +115,7 @@ namespace DB.UI
             if (e.ColumnIndex == this.DecayDaysColumn.Index)
             {
                 Color colorToPut = Color.MistyRose;
-                LINAA.MonitorsRow mon = Dumb.Cast<LINAA.MonitorsRow>(r);
+                LINAA.MonitorsRow mon = Caster.Cast<LINAA.MonitorsRow>(r);
                 if (mon.IsIsLockedNull()) mon.IsLocked = false;
                 if (mon.MonitorsFlagsRow != null)
                 {
@@ -151,7 +151,7 @@ namespace DB.UI
             else if (e.ColumnIndex == this.GeometryName.Index)
             {
                 Color colorToPut = Color.MistyRose;
-                LINAA.MonitorsRow mon = Dumb.Cast<LINAA.MonitorsRow>(r);
+                LINAA.MonitorsRow mon = Caster.Cast<LINAA.MonitorsRow>(r);
                 string text = string.Empty;
                 if (mon.GeometryRow == null)
                 {

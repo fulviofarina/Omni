@@ -55,7 +55,7 @@ namespace VTools
                    List<string> ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
                    ls.AddRange( SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
 
-                    Rsx.Dumb.FillABox(hsrv, ls, true, false);
+                    Rsx.Dumb.UIControl.FillABox(hsrv, ls, true, false);
 
 
 

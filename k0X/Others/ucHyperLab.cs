@@ -3,9 +3,9 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
-
+using Rsx.Dumb; using Rsx;
 //using Rsx.CAM;
 
 namespace k0X
@@ -48,14 +48,14 @@ namespace k0X
         
             this.GaTA.Fill(this.Linaa.Gammas);
 
-            Dumb.FillABox(projectbox, this.Linaa.ProjectsList, true, false);
+            UIControl.FillABox(projectbox, this.Linaa.ProjectsList, true, false);
 
             this.Linaa.TAM.Connection.ConnectionString = DB.Properties.Settings.Default.HLSNMNAAConnectionString;
             HLTA = new DB.LINAATableAdapters.PeaksHLTableAdapter();
 
-            Dumb.LinkBS(ref this.measBS, this.Linaa.Measurements, string.Empty, "MeasurementStart desc");
-            Dumb.LinkBS(ref this.peaksBS, this.Linaa.PeaksHL, string.Empty, "Energy desc");
-            Dumb.LinkBS(ref this.gammasBS, this.Linaa.Gammas, string.Empty, "Intensity desc");
+            BS.LinkBS(ref this.measBS, this.Linaa.Measurements, string.Empty, "MeasurementStart desc");
+            BS.LinkBS(ref this.peaksBS, this.Linaa.PeaksHL, string.Empty, "Energy desc");
+            BS.LinkBS(ref this.gammasBS, this.Linaa.Gammas, string.Empty, "Intensity desc");
 
             AuxiliarForm form = new AuxiliarForm();
             UserControl control = this;
@@ -74,7 +74,7 @@ namespace k0X
 
                 if (sender.Equals(this.projectbox))
                 {
-                    Dumb.FillABox(samplebox, Dumb.HashFrom<string>(this.Linaa.Measurements.SampleColumn), true, false);
+                    UIControl.FillABox(samplebox, Hash.HashFrom<string>(this.Linaa.Measurements.SampleColumn), true, false);
                 }
             }
             catch (System.Exception ex)
@@ -123,7 +123,7 @@ namespace k0X
                 solcoin.StoreSolidAngles = true;
                 //  detectorNode.Tag = solcoin;
 
-                solcoin.Energies = Dumb.HashFrom<double>(this.Linaa.PeaksHL.EnergyColumn).ToArray();
+                solcoin.Energies = Hash.HashFrom<double>(this.Linaa.PeaksHL.EnergyColumn).ToArray();
 
                 solcoin.DoAll(false);
                 solcoin.Merge();
@@ -180,7 +180,7 @@ namespace k0X
                         table.Dispose();
                     }
                 }
-                Dumb.LinkBS(ref this.gammasBS, GaTA.GetPossibleIsotopes(peak.Energy, 1));
+                BS.LinkBS(ref this.gammasBS, GaTA.GetPossibleIsotopes(peak.Energy, 1));
             }
         }
 
@@ -268,7 +268,7 @@ namespace k0X
             {
                 filter = "Detector = '" + e.Node.Text + "'";
             }
-            Dumb.LinkBS(ref this.measBS, this.Linaa.Measurements, filter, "MeasurementStart desc");
+            BS.LinkBS(ref this.measBS, this.Linaa.Measurements, filter, "MeasurementStart desc");
         }
     }
 }

@@ -21,6 +21,7 @@ namespace DB.Tools
         private TreeView tv = null;
         private List<BackgroundWorker> workers;
         private List<BackgroundWorker> workersCancelled;
+
         private enum R
         {
             SampleMeasStatus = 5,

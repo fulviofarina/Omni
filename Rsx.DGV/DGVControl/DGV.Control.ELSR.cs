@@ -28,7 +28,7 @@ namespace Rsx.DGV
 
         bool suspended = bs.IsBindingSuspended;
 
-        //Rsx.Dumb.DeLinkBS(ref bs);
+        //Rsx.Dumb.BS.DeLinkBS(ref bs);
       }
       return new string[] { filter, sort };
     }
@@ -41,7 +41,7 @@ namespace Rsx.DGV
         bs.ResumeBinding();
         bool suspended = bs.IsBindingSuspended;
 
-        //Rsx.Dumb.LinkBS(ref bs, dt, filter, sort);
+        //Rsx.Dumb.BS.LinkBS(ref bs, dt, filter, sort);
       }
     }
 

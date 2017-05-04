@@ -64,6 +64,7 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PopulatorUI.Strings.cs" />
     <Compile Include="PopulatorUI.cs" />
     <Compile Include="Populator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

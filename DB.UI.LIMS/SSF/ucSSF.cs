@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -7,22 +6,20 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Properties;
 using DB.Tools;
+using Rsx.Dumb;
 using VTools;
-using Rsx;
 using static DB.LINAA;
 
 namespace DB.UI
 {
     public partial class ucSSF : UserControl
     {
-
         private static Size currentSize;
-    
+
         private bool cancelCalculations = false;
         private Interface Interface = null;
         private Action<int> resetProgress;
         private Action showProgress;
-
 
         /// <summary>
         /// Attachs the respectivo SuperControls to the SSF Control
@@ -33,7 +30,6 @@ namespace DB.UI
         {
             try
             {
-
                 Control destiny = null;
                 if (pro.GetType().Equals(typeof(ucProjectBox)))
                 {
@@ -46,31 +42,24 @@ namespace DB.UI
                          bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                          this.CalcBtn.Enabled = ThereIsData;
                          ucSSFData.Disabler(ThereIsData);
-                       //  this.ucSSFData.Enabled = Interface.IBS.SubSamples.Count!=0;
-
+                         // this.ucSSFData.Enabled = Interface.IBS.SubSamples.Count!=0;
                      };
-                   
                 }
                 else if (pro.GetType().Equals(typeof(ucOptions)))
                 {
                     IucOptions options = pro as IucOptions;
                     showProgress = options.ShowProgress;
                     resetProgress = options.ResetProgress;
-                    //   projBox.HideChildControl = Hide;
+                    // projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel2;
                 }
-
-
                 else if (pro.GetType().Equals(typeof(ucSubSamples)))
                 {
                     Control p = pro as Control;
                     p.Dock = DockStyle.Fill;
                     destiny = this.SamplesTab;
 
-
                     //ucSubSamples c = p as ucSubSamples;
-                    
-
                 }
                 else
                 {
@@ -78,20 +67,17 @@ namespace DB.UI
                 }
 
                 destiny?.Controls.Add(pro as Control);
-
             }
             catch (Exception ex)
             {
-                               Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
-
         }
 
         public void Calculate(object sender, EventArgs e)
         {
-
             Interface.IBS.EndEdit();
-          //  this.ValidateChildren();
+            // this.ValidateChildren();
 
             Cursor.Current = Cursors.WaitCursor;
 
@@ -108,12 +94,10 @@ namespace DB.UI
 
             this.Tab.SelectedTab = this.CalcTab;
 
-
             //actual position
-                 int position = Interface.IBS.SubSamples.Position;
+            int position = Interface.IBS.SubSamples.Position;
 
-            MatSSF.StartupPath = Interface.IMain.FolderPath + Resources.SSFFolder;
-
+            MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
 
             IList<UnitRow> units = null;
             bool shoulLoop = Interface.IPreferences.CurrentSSFPref.Loop;
@@ -133,46 +117,37 @@ namespace DB.UI
             resetProgress?.Invoke(2 + (units.Count * 5));
 
             //1
-            if (units.Count==0)
+            if (units.Count == 0)
             {
                 Interface.IReport.Msg("Select the Units to calculate with the 'Do?' checkbox", "Oops, nothing was selected");
-
             }
             //loop through all samples to work to
             foreach (UnitRow item in units)
             {
-
-           
                 //update position in BS
                 Interface.IBS.Update<LINAA.UnitRow>(item);
 
-                //   if (cancelCalculations) continue;
+                // if (cancelCalculations) continue;
                 ucSSFData.CalculateUnit(showProgress, ref cancelCalculations);
 
-
                 string file = MatSSF.StartupPath + MatSSF.InputFile;
-                Dumb.LoadFilesIntoBoxes(showProgress, ref inputbox, file);
-
+                IO.LoadFilesIntoBoxes(showProgress, ref inputbox, file);
 
                 file = MatSSF.StartupPath + MatSSF.OutputFile;
-                Dumb.LoadFilesIntoBoxes(showProgress, ref outputBox, file);
-
-
+                IO.LoadFilesIntoBoxes(showProgress, ref outputBox, file);
             }
 
             Interface.IBS.SubSamples.Position = position;
-
 
             this.CalcBtn.Enabled = true;
 
             cancelCalculations = false;
 
-          //  Creator.SaveInFull(true);
-      
+            // Creator.SaveInFull(true);
 
             this.cancelBtn.Enabled = false;
 
-            //    HideShowAll(true);
+            // HideShowAll(true);
 
             Cursor.Current = Cursors.Default;
         }
@@ -192,17 +167,14 @@ namespace DB.UI
             {
                 SSFPlitter.Visible = true;
                 this.Size = currentSize;
-            
             }
-            else  
+            else
             {
                 this.Size = new Size((int)(DaCONTAINER.Panel1.Width * 0.66), DaCONTAINER.Panel1.Height);
                 SSFPlitter.Visible = false;
             }
 
             DaCONTAINER.Panel2Collapsed = !hidden;
-       
-
         }
 
         /// <summary>
@@ -213,9 +185,7 @@ namespace DB.UI
             Interface = inter;
             try
             {
-
                 MatSSF.Table = Interface.IDB.MatSSF;
-
 
                 ucMS.Set(ref Interface);
                 ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
@@ -226,31 +196,28 @@ namespace DB.UI
 
                 ucVcc.Set(ref Interface);
                 ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-           
+
                 //link to bindings
 
                 ucUnit.Set(ref Interface);
-             
 
                 ucSSFData.Set(ref Interface);
 
-               
-
                 //set calculation options
-             //   Interface.IBS.EndEdit();
+                //   Interface.IBS.EndEdit();
 
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
             catch (System.Exception ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             cancelCalculations = true;
-         //   this.cancelBtn.Enabled = false;
+            // this.cancelBtn.Enabled = false;
         }
 
         public ucSSF()
@@ -259,9 +226,6 @@ namespace DB.UI
 
             currentSize = this.Size;
             this.cancelBtn.Enabled = false;
-
         }
-
-       
     }
 }

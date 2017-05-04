@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -26,11 +25,10 @@ namespace DB.UI
             Dumb.FD(ref this.VialBS);
             this.VialBN.BindingSource = Interface.IBS.Vial;
 
-
             //rabbit column
             //string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
             //string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
-            //Dumb.LinkBS(ref this.VialBS, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+            //Dumb.BS.LinkBS(ref this.VialBS, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
 
             this.vialDGV.DataSource = Interface.IBS.Vial;  //= this.VialBS;
 
@@ -38,7 +36,7 @@ namespace DB.UI
 
             this.bnVialAddItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
         }
-     
+
         /// <summary>
         /// DGV ITEM SELECTED
         /// </summary>
@@ -47,8 +45,6 @@ namespace DB.UI
             ///FIRST TIME AND ONLY
             set
             {
-            
-
                 this.vialDGV.RowHeaderMouseDoubleClick += value; // new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvItemSelected);
             }
         }
@@ -57,14 +53,14 @@ namespace DB.UI
         /// when a DGV-item is selected, take the necessary rows to compose the unit
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
 
         private void addNewVialChannel_Click(object sender, EventArgs e)
         {
             //IS A VIAL OR CONTAINER
-                LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
-                v.IsRabbit = true;
-                Interface.IDB.VialType.AddVialTypeRow(v);
+            LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
+            v.IsRabbit = true;
+            Interface.IDB.VialType.AddVialTypeRow(v);
             Interface.IBS.Update(v);
         }
     }

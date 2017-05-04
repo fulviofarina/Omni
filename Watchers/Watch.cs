@@ -6,7 +6,7 @@ using DB;
 using DB.Tools;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace k0X
 {
@@ -101,7 +101,7 @@ namespace k0X
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
 
             if (lsCommands != null)
@@ -120,7 +120,7 @@ namespace k0X
                     }
                     catch (SystemException ex)
                     {
-                        Interface.IMain.AddException(ex);
+                        Interface.IStore.AddException(ex);
                     }
                 }
             }
@@ -220,7 +220,7 @@ namespace k0X
             catch (SystemException ex)
             {
 
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
             }
         }
 

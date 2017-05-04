@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
 
 namespace DB.UI
@@ -25,7 +25,7 @@ namespace DB.UI
 /*
         public void DeLink()
         {
-            Dumb.DeLinkBS(ref this.BS);
+            Dumb.BS.DeLinkBS(ref this.BS);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace DB.UI
         /// </summary>
         public void Link(string Filter, string Sort)
         {
-            Dumb.LinkBS(ref this.BS, this.Linaa.SubSamples, Filter, Sort);
+            Dumb.BS.LinkBS(ref this.BS, this.Linaa.SubSamples, Filter, Sort);
         }
         */
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
-using Rsx;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -15,9 +15,9 @@ namespace DB.UI
 
         public void Set(ref Interface inter)
         {
-            Dumb.DeLinkBS(ref this.BS);
-            Rsx.Dumb.FD(ref this.Linaa);
-            Rsx.Dumb.FD(ref this.BS);
+            BS.DeLinkBS(ref this.bs);
+            Dumb.FD(ref this.Linaa);
+            Dumb.FD(ref this.bs);
 
             this.DGV.DataSource = inter.IBS.Geometry;
 
@@ -27,8 +27,6 @@ namespace DB.UI
                 Std = new System.Data.DataColumn("Std", typeof(bool), "IIF(Count(Child(Geometry_Standards).MonitorCode)>0, 1,0)");
                 this.Linaa.Geometry.Columns.Add(Std);
             }
-
-      
         }
 
         /*
@@ -37,7 +35,8 @@ namespace DB.UI
             bool coon = Std != null;
             if (coon)
             {
-                //  Std = new System.Data.DataColumn("Std", typeof(bool), "IIF(Count(Child(Geometry_Standards).MonitorCode)>0, 1,0)");
+                // Std = new System.Data.DataColumn("Std", typeof(bool),
+                // "IIF(Count(Child(Geometry_Standards).MonitorCode)>0, 1,0)");
                 this.Linaa.Geometry.Columns.Remove(Std);
             }
 

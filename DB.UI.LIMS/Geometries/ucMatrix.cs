@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-using Rsx;
-using VTools;
 using DB.Tools;
+using Rsx;
+using Rsx.Dumb;
+using VTools;
 
 namespace DB.UI
 {
@@ -25,7 +26,9 @@ namespace DB.UI
         {
             InitializeComponent();
         }
+
         private Interface Interface;
+
         public void Set(ref Interface inter)
         {
             this.SuspendLayout();
@@ -43,8 +46,8 @@ namespace DB.UI
             WCalcPath = this.Linaa.FolderPath + DB.Properties.Resources.WCalc;
             webBrowser.Url = new Uri(WCalcPath);
 
-            Dumb.LinkBS(ref this.BS, this.Linaa.Matrix, string.Empty, defaultFilter);
-            Dumb.LinkBS(ref this.compoBS, this.Linaa.Compositions, string.Empty, afterAddfilter);
+            BS.LinkBS(ref this.bs, this.Linaa.Matrix, string.Empty, defaultFilter);
+            BS.LinkBS(ref this.compoBS, this.Linaa.Compositions, string.Empty, afterAddfilter);
 
             PostRefresh(null, EventArgs.Empty);
 
@@ -64,13 +67,13 @@ namespace DB.UI
 
         public void PostRefresh(object sender, EventArgs e)
         {
-            Binding binding = new Binding("Text", this.BS, this.Linaa.Matrix.MatrixCompositionColumn.ColumnName);
+            Binding binding = new Binding("Text", this.bs, this.Linaa.Matrix.MatrixCompositionColumn.ColumnName);
             rtbox.DataBindings.Add(binding);
         }
 
         private void XCOM_Click(object sender, EventArgs e)
         {
-            this.BS.EndEdit();
+            this.bs.EndEdit();
             this.compoBS.EndEdit();
             this.Validate();
 
@@ -80,11 +83,11 @@ namespace DB.UI
 
             if (loop.Checked)
             {
-                this.BS.MoveLast();
-                position = this.BS.Position;
-                this.BS.MoveFirst();
+                this.bs.MoveLast();
+                position = this.bs.Position;
+                this.bs.MoveFirst();
             }
-            else position = this.BS.Position;
+            else position = this.bs.Position;
 
             bool XcomCalled = sender.Equals(XCOM);
 
@@ -106,7 +109,8 @@ namespace DB.UI
 
                     if (ASCIIOutput.Checked)
                     {
-                        //  m.SetColumnError(this.Linaa.Matrix.MatrixDensityColumn, null);       //nullifies the error in Density column because density is not necessary
+                        // m.SetColumnError(this.Linaa.Matrix.MatrixDensityColumn, null); //nullifies
+                        // the error in Density column because density is not necessary
                         progress.Maximum += 2;
                         string startupPath = System.Windows.Forms.Application.StartupPath;
 
@@ -121,7 +125,7 @@ namespace DB.UI
                         }
 
                         progress.PerformStep();
-                        Dumb.Process(new System.Diagnostics.Process(), startupPath + "\\", "notepad.exe", m.MatrixName.Trim() + ".txt", false, false, 1000);
+                        IO.Process(new System.Diagnostics.Process(), startupPath + "\\", "notepad.exe", m.MatrixName.Trim() + ".txt", false, false, 1000);
                         progress.PerformStep();
                     }
                     else
@@ -161,16 +165,15 @@ namespace DB.UI
 
                             LINAA.ElementsDataTable ele = this.Linaa.Elements;
 
-                            //  Dumb.AcceptChanges(ref ros);
+                            // Dumb.AcceptChanges(ref ros);
                             IList<string[]> ls = DB.Tools.XCOM.ExtractComposition(responde, ref ele);
 
                             progress.PerformStep();
                             Application.DoEvents();
 
-                            //   IList<LINAA.CompositionsRow> add = null;
-                            //   .MatrixID, ref ls, ref add
-                        //    m.CodeOrAddComposition(ref ls);
-                            m.CodeOrAddComposition( ls);
+                            // IList<LINAA.CompositionsRow> add = null; .MatrixID, ref ls, ref add
+                            // m.CodeOrAddComposition(ref ls);
+                            m.CodeOrAddComposition(ls);
 
                             progress.PerformStep();
                             Application.DoEvents();
@@ -179,8 +182,8 @@ namespace DB.UI
 
                     if (plotting) graph_Click(sender, e);
 
-                    if (this.BS.Position == position) break;
-                    else this.BS.MoveNext();
+                    if (this.bs.Position == position) break;
+                    else this.bs.MoveNext();
                 }
                 catch (SystemException ex)
                 {
@@ -261,7 +264,7 @@ namespace DB.UI
 
         private void ASCIIInput_Click(object sender, EventArgs e)
         {
-            Dumb.Process(new System.Diagnostics.Process(), System.Windows.Forms.Application.StartupPath, "notepad.exe", this.Linaa.FolderPath + DB.Properties.Resources.XCOMEnergies, false, true, 100000);
+            IO.Process(new System.Diagnostics.Process(), System.Windows.Forms.Application.StartupPath, "notepad.exe", this.Linaa.FolderPath + DB.Properties.Resources.XCOMEnergies, false, true, 100000);
         }
 
         private void graph_Click(object sender, EventArgs e)
@@ -296,7 +299,7 @@ namespace DB.UI
          }
           */
 
-        //    GetCompositionFromXCOM(this.Matrix);
+        // GetCompositionFromXCOM(this.Matrix);
 
         /*
 
@@ -378,13 +381,13 @@ namespace DB.UI
             get
             {
                 LINAA.MatrixRow matrix = null;
-                DataRowView rv = this.BS.Current as DataRowView;
+                DataRowView rv = this.bs.Current as DataRowView;
                 if (rv != null) matrix = rv.Row as LINAA.MatrixRow;
                 return matrix;
             }
         }
 
-        //	private ToolStripLabel label = new ToolStripLabel();
+        // private ToolStripLabel label = new ToolStripLabel();
 
         /*
          private void CMS_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -438,7 +441,7 @@ namespace DB.UI
                 if (!plotting) return;
                 double eh = Convert.ToDouble(this.energyEnd.Text);
                 double el = Convert.ToDouble(this.energyStart.Text);
-                DB.LINAA.MUESDataTable mues = this.Linaa.TAM.MUESTableAdapter.GetDataByMatrixIDAndEnergy( el, eh, Matrix.MatrixID);
+                DB.LINAA.MUESDataTable mues = this.Linaa.TAM.MUESTableAdapter.GetDataByMatrixIDAndEnergy(el, eh, Matrix.MatrixID);
                 DataColumn ene = mues.EnergyColumn;
                 DataColumn mu = mues.MUColumn;
 

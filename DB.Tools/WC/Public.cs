@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using Rsx.Math;
 
 namespace DB.Tools
@@ -352,7 +352,7 @@ namespace DB.Tools
             popul.WorkerReportsProgress = true;
             AddWorker(ref popul);
 
-            IList<string> ls = Dumb.HashFrom<string>(selectedSamples.ToList(), samplesCol);
+            IList<string> ls = Hash.HashFrom<string>(selectedSamples.ToList(), samplesCol);
 
             count = ls.Count;
             progress.Maximum += count + 1;

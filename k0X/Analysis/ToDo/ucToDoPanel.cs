@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB;
 using DB.UI;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 using DB.Tools;
 
 namespace k0X
@@ -31,8 +31,8 @@ namespace k0X
 
             this.ToDoMenu.Items.Insert(0, ucToDoData.ToDoLabelBox);
 
-            Dumb.FillABox(panel1box, Linaa.ProjectsList, true, false);
-            Dumb.FillABox(panel2box, Linaa.ProjectsList, true, false);
+            UIControl.FillABox(panel1box, Linaa.ProjectsList, true, false);
+            UIControl.FillABox(panel2box, Linaa.ProjectsList, true, false);
 
             AuxiliarForm form = new AuxiliarForm();
             form.Text = "ToDo Panel - Simple View";
@@ -140,7 +140,7 @@ namespace k0X
         {
             if (ucToDoData.ListBS.Count != 0)
             {
-                LINAA.ToDoRow t = Dumb.Cast<LINAA.ToDoRow>(ucToDoData.ListBS.Current as System.Data.DataRowView);
+                LINAA.ToDoRow t = Caster.Cast<LINAA.ToDoRow>(ucToDoData.ListBS.Current as System.Data.DataRowView);
 
                 if (EC.IsNuDelDetch(t.IRAvgRow)) return;
                 if (EC.IsNuDelDetch(t.IRAvgRow2)) return;

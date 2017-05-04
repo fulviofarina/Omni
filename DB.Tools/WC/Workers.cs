@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Properties;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
@@ -33,12 +33,12 @@ namespace DB.Tools
 
             foreach (LINAA.SubSamplesRow s in samples)
             {
-                if (Dumb.HasChanges(s.GetPeaksRows()))
+                if (Changes.HasChanges(s.GetPeaksRows()))
                 {
                     object[] samDelSave = new object[] { s, false, true };
                     worker.ReportProgress((int)R.PeaksDelSave, samDelSave);  //(s,del,save)
                 }
-                if (Dumb.HasChanges(s))
+                if (Changes.HasChanges(s))
                 {
                     worker.ReportProgress((int)R.SampleStatus, s); //saves changes TIP
                 }
@@ -142,8 +142,8 @@ namespace DB.Tools
                     u.ChCfg = fluxtypo.ToString();
                     u.Name = iS.SubSampleName;
 
-                 //   u.Content = iS.MatrixRow.MatrixComposition;
-                    // u.Mass = iS.Net; u.Diameter = (iS.Radius * 2); u.Length = iS.FillHeight;
+                    // u.Content = iS.MatrixRow.MatrixComposition; u.Mass = iS.Net; u.Diameter =
+                    // (iS.Radius * 2); u.Length = iS.FillHeight;
 
                     MatSSF.StartupPath = Linaa.FolderPath + Resources.SSFFolder;
 
@@ -334,7 +334,7 @@ namespace DB.Tools
                         //DO NOT USE FILTER ELEMENTS!!!!!
 
                         IEnumerable<DataRow> compos = mat.GetCompositionsRows();
-                        elementsIfAny = Dumb.HashFrom<string>(compos, composCol);
+                        elementsIfAny = Hash.HashFrom<string>(compos, composCol);
                         elementsIfAny = elementsIfAny.Select(o => o.Trim()).ToList();
                         compos = null;
                     }
@@ -488,7 +488,7 @@ namespace DB.Tools
                         LINAA.SubSamplesRow s = res as LINAA.SubSamplesRow;
                         IEnumerable<LINAA.MatSSFRow> ssfs = s.UnitRow.GetMatSSFRows();
                         Interface.IStore.Delete(ref ssfs);
-                        Dumb.AcceptChanges(ref ssfs);
+                        Changes.AcceptChanges(ref ssfs);
                     }
                     break;
 
@@ -552,11 +552,11 @@ namespace DB.Tools
                         else
                         {
                             aux = oldpeaks;
-                            Dumb.AcceptChanges(ref aux);
+                            Changes.AcceptChanges(ref aux);
                             aux = oldipeaks;
-                            Dumb.AcceptChanges(ref aux);
+                            Changes.AcceptChanges(ref aux);
                             aux = oldirs;
-                            Dumb.AcceptChanges(ref aux);
+                            Changes.AcceptChanges(ref aux);
                         }
                     }
                     break;
@@ -565,7 +565,7 @@ namespace DB.Tools
                     {
                         DataTable table = e.UserState as DataTable;
 
-                        Dumb.MergeTable(ref table, ref Linaa);
+                        Tables.MergeTable(ref table, ref Linaa);
                         Dumb.FD(ref table);
                     }
                     break;
@@ -587,14 +587,14 @@ namespace DB.Tools
                 case (int)R.RowsAccept:
                     {
                         System.Collections.Generic.IEnumerable<DataRow> oldpeaks = e.UserState as System.Collections.Generic.IEnumerable<DataRow>;
-                        Dumb.AcceptChanges(ref oldpeaks);   //new method
+                        Changes.AcceptChanges(ref oldpeaks);   //new method
                     }
                     break;
 
                 case (int)R.AddException:    // peaks	merge
                     {
                         SystemException x = e.UserState as SystemException;
-                        if (x != null) Interface.IMain.AddException(x);
+                        if (x != null) Interface.IStore.AddException(x);
                     }
                     break;
 
@@ -651,7 +651,7 @@ namespace DB.Tools
 
                         if (res[0] != null)
                         {
-                            Interface.IMain.AddException(res[0] as SystemException);
+                            Interface.IStore.AddException(res[0] as SystemException);
                         }
                         int sum = (int)res[1];
                         progress.Value += sum;

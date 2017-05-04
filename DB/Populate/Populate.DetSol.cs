@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB
 {
     public partial class LINAA : IDetSol
     {
-    
+
 
         /// <summary>
         /// Gets a non-repeated list of Detectors in the database
         /// </summary>
-        protected internal ICollection<string> detectorsList;
+        protected ICollection<string> detectorsList;
 
         public ICollection<string> DetectorsList
         {
             get
             {
                 if (detectorsList != null) detectorsList.Clear();
-                detectorsList = Dumb.HashFrom<string>(this.DetectorsDimensions.DetectorColumn);  //list of detectors
+                detectorsList = Hash.HashFrom<string>(this.DetectorsDimensions.DetectorColumn);  //list of detectors
                 return detectorsList;
             }
             set { detectorsList = value; }

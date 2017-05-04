@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
+using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.UI
@@ -17,6 +17,7 @@ namespace DB.UI
 
         // private static Size currentSize;
         private Hashtable unitBindings, sampleBindings;
+
         // private Action<int> resetProgress; private Action showProgress;
 
         /// <summary>
@@ -48,15 +49,11 @@ namespace DB.UI
                     paintColumns();
                 };
                 pref.SetRoundingBinding(ref unitBindings, ref sampleBindings);
-              
-                destiny = null;
-               
 
+                destiny = null;
             }
             destiny?.Controls.Add(pro as Control);
         }
-
-     
 
         public void CalculateUnit(Action showProgress, ref bool cancelCalculations)
         {
@@ -74,7 +71,6 @@ namespace DB.UI
                 bool isOK = MatSSF.UNIT.Check(); //has Unit errors??
                 isOK = MatSSF.UNIT.SubSamplesRow.CheckUnit() && isOK; //has Sample Errors?
 
-
                 if (isOK)
                 {
                     Interface.IReport.Msg("Input data is OK for Unit " + MatSSF.UNIT.Name, "Checking data...");
@@ -91,7 +87,6 @@ namespace DB.UI
                     doSSF = true;
                     //throw new SystemException("No Calculation Method has been selected. Check the Preferences!");
                 }
-
 
                 // MatSSF.Table.Clear();
 
@@ -120,7 +115,8 @@ namespace DB.UI
 
                         if (MatSSF.Table.Count == 0)
                         {
-                           // Interface.IReport.Msg("MatSSF ran OK for Unit " + MatSSF.UNIT.Name, "Reading MatSSF Output file");
+                            // Interface.IReport.Msg("MatSSF ran OK for Unit " + MatSSF.UNIT.Name,
+                            // "Reading MatSSF Output file");
 
                             throw new SystemException("Problems Reading MATSSF Output for Unit " + MatSSF.UNIT.Name + "\n");
                         }
@@ -163,7 +159,7 @@ namespace DB.UI
             }
             catch (SystemException ex)
             {
-                Interface.IMain.AddException(ex);
+                Interface.IStore.AddException(ex);
                 Interface.IReport.Msg(ex.Message, "ERROR", false);
             }
         }
@@ -200,15 +196,13 @@ namespace DB.UI
                 Interface.IBS.SelectedSubSample.CurrentChanged += delegate
                 {
                     this.sampleDGV.Refresh();
-                   // this.sampleDGV.Select();
+                    // this.sampleDGV.Select();
                 };
-               
 
                 //link to bindings
                 sampleBindings = setSampleBindings();
                 unitBindings = setUnitBindings();
 
-           
                 setEnabledBindings();
 
                 ucComposition1.Set(ref Interface);
@@ -218,24 +212,18 @@ namespace DB.UI
 
                 paintColumns();
 
-
                 errorProvider1.DataMember = Interface.IDB.Unit.TableName;
                 errorProvider1.DataSource = Interface.IBS.Units;
                 errorProvider2.DataMember = Interface.IDB.SubSamples.TableName;
                 errorProvider2.DataSource = Interface.IBS.SubSamples;
 
-
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
             catch (System.Exception ex)
             {
-                Interface.IMain.AddException(ex);
-                  }
+                Interface.IStore.AddException(ex);
+            }
         }
-
-    
-
-     
 
         private void paintColumns()
         {
@@ -274,13 +262,12 @@ namespace DB.UI
             columna.DefaultCellStyle.SelectionBackColor = colors;
             columna.DefaultCellStyle.SelectionForeColor = color2;
         }
-   
-        
+
         /*
         private void setCheckBindings()
         {
             string column;
-            Hashtable checkBindings = Dumb.ArrayOfBindings(ref Interface.IBS.SSFPreferences, string.Empty, "Checked");
+            Hashtable checkBindings = Dumb.BS.ArrayOfBindings(ref Interface.IBS.SSFPreferences, string.Empty, "Checked");
 
             column = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
             Binding renabled = checkBindings[column] as Binding; //new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
@@ -309,6 +296,7 @@ namespace DB.UI
             // return column;
         }
         */
+
         private void setEnabledBindings()
         {
             string column;
@@ -334,8 +322,6 @@ namespace DB.UI
 
             this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
 
-
-           
             /*
             //types
             this.cfgB.ComboBox.DisplayMember = Interface.IDB.Channels.FluxTypeColumn.ColumnName;
@@ -356,7 +342,7 @@ namespace DB.UI
 
             SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
 
-            samplebindings = Dumb.ArrayOfBindings(ref bsSample, rounding);
+            samplebindings = BS.ArrayOfBindings(ref bsSample, rounding);
             string column;
 
             // this.sampleDGV.DataBindings.Add(new Binding("Columns.", Interface.IBS.SSFPreferences, "DoMatSSF"));
@@ -411,7 +397,7 @@ namespace DB.UI
             BindingSource bs = Interface.IBS.Units; //link to binding source;
             Hashtable bindings = null;
 
-            bindings = Dumb.ArrayOfBindings(ref bs, rounding);
+            bindings = BS.ArrayOfBindings(ref bs, rounding);
 
             column = Unit.ChDiameterColumn.ColumnName;
             this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
@@ -424,7 +410,6 @@ namespace DB.UI
             column = Unit.ChCfgColumn.ColumnName;
             this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
 
-
             column = Unit.kepiColumn.ColumnName;
             this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
             column = Unit.kthColumn.ColumnName;
@@ -432,6 +417,7 @@ namespace DB.UI
 
             return bindings;
         }
+
         // CheckBox check = new CheckBox();
         public ucSSFData()
         {

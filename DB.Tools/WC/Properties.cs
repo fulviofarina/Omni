@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 //using DB.Interfaces;
-using Rsx;
+using Rsx.Dumb; using Rsx;
 
 namespace DB.Tools
 {
