@@ -35,7 +35,7 @@ namespace DB
 
         bool IsMainConnectionOk { get; }
         string Exception { get; }
-        void RestartAdaptersConnections();
-        void SetConnections(string localDB, string developerDB, string defaultConnection);
+     
+        void SetConnections(/*string localDB, string developerDB, */ string defaultConnection);
     }
 }

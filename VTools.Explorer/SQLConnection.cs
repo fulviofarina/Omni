@@ -47,23 +47,27 @@ namespace VTools
                     boxes.Add(this.hlogin);
                     boxes.Add(this.hpass);
                     boxes.Add(this.timeoutboxHL);
+                    boxes.Add(this.enlistBox);
+                    boxes.Add(this.poolingBox);
 
-                    SQL.ConnectionString sq = new SQL.ConnectionString(HyperLabRTB.Text);
-
-                    hsrv.Text = sq.Server;
-
+                  
                    List<string> ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
                    ls.AddRange( SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
-
                     Rsx.Dumb.UIControl.FillABox(hsrv, ls, true, false);
 
+                    SQL.ConnectionString sq = new SQL.ConnectionString(HyperLabRTB.Text);
+                    //set what to do when user updates boxes
+                    sq.SetUI(ref boxes);
 
 
+                    hsrv.Text = sq.Server;
                     hdb.Text = sq.DB;
                     securityInfoHL.Text = sq.SecurityInfo;
                     hlogin.Text = sq.Login;
                     hpass.Text = sq.Password;
                     timeoutboxHL.Text = sq.Timeout;
+                    poolingBox.Text = sq.Pooling;
+                    enlistBox.Text = sq.Enlist;
 
                     hsrv.Tag = sq.ServerTag;
                     hdb.Tag = sq.DBTag;
@@ -71,7 +75,8 @@ namespace VTools
                     hlogin.Tag = sq.LoginTag;
                     hpass.Tag = sq.PasswordTag;
                     timeoutboxHL.Tag = sq.TimeoutTag;
-
+                    poolingBox.Tag = sq.PoolingTag;
+                    enlistBox.Tag = sq.EnlistTag;
 
                     //make handler to update the BOX
                     EventHandler handler = delegate
@@ -92,8 +97,7 @@ namespace VTools
                         }
                     }
 
-                    //set what to do when user updates boxes
-                    sq.SetUI( ref boxes);
+                 
                 }
                 catch (SystemException ex)
                 {

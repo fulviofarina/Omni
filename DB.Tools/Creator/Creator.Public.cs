@@ -164,22 +164,7 @@ namespace DB.Tools
         {
             try
             {
-                DialogResult result = MessageBox.Show(MSMQ_INSTALL, MSMQ_INSTALL_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-                string workDir = Application.StartupPath + Resources.DevFiles;
-                bool is64 = Environment.Is64BitOperatingSystem;
-                string path = workDir + Resources.msmqx86;
-                if (is64) path = workDir + Resources.msmqx64;
-
-                //one process to create the VB SCRIPTS
-                Emailer.LoadScript(path, string.Empty, workDir);
-                //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
-                workDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                workDir += "\\Temp";
-                path = "/c " + workDir + "\\vb";
-                string cmd = "cmd";
-                Emailer.LoadScript(cmd, path + ".vbs", workDir);
-                Rsx.Dumb.IO.RestartPC();
+                IO.InstallMSMQ(false);
             }
             catch (Exception ex)
             {

@@ -106,6 +106,12 @@
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rsx.Dumb\Rsx.Dumb.csproj">
+      <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
+      <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

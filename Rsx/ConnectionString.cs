@@ -1,51 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
-using Microsoft.SqlServer.Management.Smo;
-using Microsoft.SqlServer.Management.Smo.Wmi;
-using Microsoft.Win32;
 
 namespace Rsx.SQL
 {
-
     public partial class SQL
     {
         public class ConnectionString
         {
             public string DBTag = "Initial Catalog";
-            public string DB;
+            public string Enlist = "False";
+            public string EnlistTag = "Enlist";
             public string Login;
             public string LoginTag = "UserID";
-            public string PasswordTag = "Password";
             public string Password;
-            public string SecurityInfoTag = "Persist Security Info";
+            public string PasswordTag = "Password";
+            public string Pooling = "False";
+            public string PoolingTag = "Pooling";
             public string SecurityInfo = "True";
+            public string SecurityInfoTag = "Persist Security Info";
             public string ServerTag = "Data Source";
-            public string Server;
             public string TimeoutTag = "Connect Timeout";
-            public string Timeout = "10";
-
             public string WindowsIdentityTag = "Integrated Security";
             public string WindowsIdentityValue = "True";
             private IList<dynamic> boxes = null;
-
-            // private string "Integrated Security = True"
-            public void SetUI(ref IList<dynamic> Boxes)
+            private SqlConnection sql = null;
+            public string DB
             {
-                boxes = Boxes;
-
-              
+                get
+                {
+                    return sql.Database;
+                }
             }
-
             public string GetUpdatedConnectionString
 
             {
                 get
                 {
                     string formed = string.Empty;
-
+                
                     //use the tags
                     foreach (dynamic t in boxes)
                     {
@@ -64,44 +57,66 @@ namespace Rsx.SQL
                 }
             }
 
+            public string Server
+            {
+                get
+                {
+                    return sql.DataSource;
+                }
+            }
+
+            public string Timeout
+            {
+                get
+                {
+                    return sql.ConnectionTimeout.ToString();
+                }
+            }
+            // private string "Integrated Security = True"
+            public void SetUI(ref IList<dynamic> Boxes)
+            {
+                boxes = Boxes;
+            }
             /// <summary>
             /// Makes a Connection String Structure, you can use the fields already
             /// </summary>
             /// <param name="connectionString"></param>
             public ConnectionString(string connectionString)
             {
-                string[] hstring = connectionString.Split(';');
+                sql = new SqlConnection(connectionString);
 
-                string[] arr = hstring;
+                string[] arr = connectionString.Split(';');
 
-                Server = arr[0].Split('=')[1];
-
-                // ServerTag = arr[0].Split('=')[0];
-
-                DB = arr[1].Split('=')[1];
-
-                // DBTag = arr[1].Split('=')[0];
-
-                // SecurityInfoTag = arr[2].Split('=')[0];
-                SecurityInfo = arr[2].Split('=')[1];
-
-                int starter = 3;
-                if (hstring.Count() == 6)
+                for (int i = 0; i < arr.Count(); i++)
                 {
-                    Login = arr[starter].Split('=')[1];
-                    Password = arr[starter + 1].Split('=')[1];
-                    // LoginTag = arr[starter].Split('=')[0]; PasswordTag = arr[starter + 1].Split('=')[0];
-                    starter += 2;
+                    string auxiliarTag = arr[i].Split('=')[0];
+                    string value = arr[i].Split('=')[1];
+                    if (auxiliarTag.Contains(SecurityInfoTag))
+                    {
+                        SecurityInfo = value;
+                    }
+                    else if (auxiliarTag.Contains(LoginTag))
+                    {
+                        Login = value;
+                    }
+                    else if (auxiliarTag.Contains(PasswordTag))
+                    {
+                        Password = value;
+                    }
+                    else if (auxiliarTag.Contains(EnlistTag))
+                    {
+                        Enlist = value;
+                    }
+                    else if (auxiliarTag.Contains(PoolingTag))
+                    {
+                        Pooling = value;
+                    }
+                    else if (auxiliarTag.Contains(WindowsIdentityTag))
+                    {
+                        WindowsIdentityValue = value;
+                    }
                 }
-                else
-                {
-                    WindowsIdentityValue = arr[starter +1].Split('=')[1];
-                }
-                Timeout = arr[starter].Split('=')[1];
-                // TimeoutTag = arr[starter].Split('=')[0];
             }
         }
-
     }
-  
 }

@@ -1,56 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Rsx.Dumb">
-    <Position X="2.25" Y="0.5" Width="2.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Class Name="Rsx.Dumb.IO">
-        <TypeIdentifier>
-          <NewMemberFileName>IO.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Rsx.Dumb.Changes" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Changes.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Rsx.Dumb.Table" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Table.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Rsx.Dumb.Caster" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Caster.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Rsx.Dumb.BS" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>BS.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Rsx.Dumb.UIControl" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Control.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
+  <Class Name="Rsx.Dumb.BS">
+    <Position X="3.25" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAEAAAAAAABAAAACAAIAQAQEQACAABAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAgAAARAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BS.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Rsx.EC" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+  <Class Name="Rsx.Dumb.Caster">
+    <Position X="6.5" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Caster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.Changes">
+    <Position X="6.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAIAAAEBAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Changes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.UIControl">
+    <Position X="3.75" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAKAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Control.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.Dumb">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAAAAAAABAAAACAAAAAAQEAACAABAAAAAAAA=</HashCode>
+      <FileName>Dumb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.Hash">
+    <Position X="0.5" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAQAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Hash.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.IO">
+    <Position X="3.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAFEAAAAQAAAAgCAAAAAQAAAFAAAAAACgAgQAAE=</HashCode>
+      <FileName>IO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.Tables">
+    <Position X="9.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AMAAAAgAgAAAAQAAAAAAkEAAAAEAAgAACAAGEAAAABA=</HashCode>
+      <FileName>Tables.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.EC">
+    <Position X="6.5" Y="4.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAgYAAAAQAAAAAAAAEgAAAAAABAAIgAAACAAEIAA=</HashCode>
       <FileName>EC.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Rsx.Encryption.AESThenHMAC" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="Rsx.Encryption.AESThenHMAC">
+    <Position X="9.25" Y="6.5" Width="3.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAABAAAAAQAAAgIAAQQABAAgAAAAEAAAAAE=</HashCode>
       <FileName>Encryption.cs</FileName>

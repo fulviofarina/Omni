@@ -26,10 +26,8 @@ namespace DB.Tools
 
             bool makeDatabase = false;
 
-            bool sqlFound = false;
-
+         
             string localDB = Properties.Settings.Default.localDB;
-
             string developerDB = Properties.Settings.Default.developerDB;
             string defaultConnection = string.Empty;
             bool ok = Interface.IAdapter.IsMainConnectionOk;
@@ -38,8 +36,10 @@ namespace DB.Tools
             {
                 //restart server SQL
                 ok = SQL.RestartSQLLocalDBServer();
-                //check connection again after restarting server
+
                 ok = Interface.IAdapter.IsMainConnectionOk;
+                //check connection again after restarting server
+                //    ok = Interface.IAdapter.IsMainConnectionOk;
                 //restarting the server didn't work, plan B
                 if (ok) continue;
 
@@ -55,7 +55,7 @@ namespace DB.Tools
                 string path = Application.StartupPath + DB.Properties.Resources.DevFiles;
                 string sqlServerFound = SQLUI.FindSQLOrInstall(path);
                 //IMPORTANTE, cambia el string el usuario o el default!
-                sqlFound = !string.IsNullOrEmpty(sqlServerFound);
+                bool  sqlFound = !string.IsNullOrEmpty(sqlServerFound);
                 if (sqlFound)
                 {
                     SQLUI.ReplaceLocalDBDefaultPath(ref localDB, sqlServerFound);
@@ -95,33 +95,20 @@ namespace DB.Tools
                 {
                     makeDatabase = LinqDataContext.PopulateSQL(developerDB, true);
                 }
-                Interface.IAdapter.SetConnections(localDB, developerDB, defaultConnection);
 
-                Interface.IAdapter.RestartAdaptersConnections();
+                Interface.IAdapter.DisposeAdapters();
+
+                Interface.IAdapter.SetConnections(/*localDB, developerDB,*/ defaultConnection);
+
+                Interface.IAdapter.InitializeComponent();
+                Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
 
                 Cursor.Current = Cursors.WaitCursor;
             }
 
             if (makeDatabase)
             {
-                //now populate developer Database first and send data there
-                //afterwards, you copy what you need to copy to USER Database...
-                //    bool makeDatabase = false;
-
-                //MAE A COPY INTO THE DEVELOPER DB SQL
-                Interface.IStore.Read(Interface.IStore.FolderPath + DB.Properties.Resources.Linaa);
-                DataSet set = Interface.Get();
-                IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
-                //save
-                Interface.IStore.SaveRemote(ref tables, true);
-
-                Interface.IAdapter.DisposeAdapters();
-                //now clone to the USER!!!
-                //o do something more selective!
-                //DEVELOPER MODE COPY
-                ok = LinqDataContext.PopulateSQL(localDB, true, developerDB);
-                //again, restore the string to the User STRING
-                Interface.IPreferences.CurrentPref.LIMS = localDB;
+                ok = cloneDatabase(localDB, developerDB);
             }
 
             //always delete the developer database if it got stucked next restart...
@@ -142,6 +129,30 @@ namespace DB.Tools
 
             Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
 
+            return ok;
+        }
+
+        private static bool cloneDatabase(string localDB, string developerDB)
+        {
+            bool ok;
+            //now populate developer Database first and send data there
+            //afterwards, you copy what you need to copy to USER Database...
+            //    bool makeDatabase = false;
+
+            //MAE A COPY INTO THE DEVELOPER DB SQL
+            Interface.IStore.Read(Interface.IStore.FolderPath + DB.Properties.Resources.Linaa);
+            DataSet set = Interface.Get();
+            IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
+            //save
+            Interface.IStore.SaveRemote(ref tables, true);
+
+            Interface.IAdapter.DisposeAdapters();
+            //now clone to the USER!!!
+            //o do something more selective!
+            //DEVELOPER MODE COPY
+            ok = LinqDataContext.PopulateSQL(localDB, true, developerDB);
+            //again, restore the string to the User STRING
+            Interface.IPreferences.CurrentPref.LIMS = localDB;
             return ok;
         }
     }

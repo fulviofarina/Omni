@@ -82,46 +82,7 @@ namespace Rsx
 
       return cont;
     }
-        public static void LoadScript(string path, string argument, string workDir)
-        {
-            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-            info.WorkingDirectory = workDir;
-            info.CreateNoWindow = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            info.UseShellExecute = false;
-            System.Diagnostics.Process pro = new System.Diagnostics.Process();
-            info.Arguments = argument;
-            info.FileName = path;
-            //   info.Verb = "runas";
-            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            pro.StartInfo = info;
-            pro.OutputDataReceived += Pro_OutputDataReceived;
-            pro.ErrorDataReceived += Pro_ErrorDataReceived;
-            pro.Start();
-            pro.BeginErrorReadLine();
-            pro.BeginOutputReadLine();
-            pro.WaitForExit();
-        }
-        private static void Pro_ErrorDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                string data = e.Data;
-            }
-
-            // throw new NotImplementedException();
-        }
-
-        private static void Pro_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                string data = e.Data;
-            }
-            //  throw new NotImplementedException();
-        }
-        /// <summary>
+      /// <summary>
         /// Initializes a MessageQueue with binary formatter, with the input path and input OnReceive handler.
         /// </summary>
         /// <param name="path"></param>

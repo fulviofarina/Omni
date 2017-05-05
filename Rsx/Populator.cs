@@ -78,13 +78,17 @@ namespace Rsx.SQL
         /// Installs SQL Server LOCALDB with the given pre-requisite filePath resources
         /// </summary>
         /// <param name="prerequisitePath">the files must be called according to sqlPack32 and sqlPack64 strings</param>
-        public static void InstallSQL(string prerequisitePath)
+        public static string InstallSQL(string prerequisitePath)
         {
             bool is64 = Environment.Is64BitOperatingSystem;
             string localdbexpressPack = SQL_LOCALDB_PACK32;
             if (is64) localdbexpressPack = SQL_LOCALDB_PACK64;
+            System.IO.File.WriteAllText(prerequisitePath + "sqlInstall.bat", "msiexec /package \"" + prerequisitePath + localdbexpressPack + "\" /le log.txt");
+            Rsx.Dumb.IO.Process("cmd", "/c " + "sqlInstall.bat", prerequisitePath);
+            string logFile = System.IO.File.ReadAllText( prerequisitePath + "log.txt");
 
-            System.Diagnostics.Process.Start(prerequisitePath + "\\" + localdbexpressPack);
+            return logFile;
+
         }
 
         /// <summary>

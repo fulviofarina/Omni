@@ -159,12 +159,6 @@
     <Content Include="Files\curves.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Files\msmqx64.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\msmqx86.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Files\Overrider" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

@@ -31,6 +31,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:1"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:FALSE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -47,6 +55,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:1"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:FALSE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -64,6 +80,26 @@
         }
         "SimpleFile"
         {
+            "{9243E9F4-90C0-4AA4-B246-D2DF4DAA49DC}:_4D4D74B754B449DEA195A8E8E47BA59F"
+            {
+            "SourcePath" = "8:..\\SSF\\MatSSF\\MATSSF_XSR.TXT"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9243E9F4-90C0-4AA4-B246-D2DF4DAA49DC}:_4FC0664780874B58B1087212B8D4C496"
             {
             "SourcePath" = "8:..\\SSF\\MatSSF\\MATSSF.CFG"
@@ -84,9 +120,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9243E9F4-90C0-4AA4-B246-D2DF4DAA49DC}:_B1B711B9E00F42F783504A9A6C67E813"
+            "{9243E9F4-90C0-4AA4-B246-D2DF4DAA49DC}:_9C652C5E32AF4D3E8A19E4F19410B893"
             {
-            "SourcePath" = "8:..\\SSF\\MatSSF\\MATSSF_XSR.TXT"
+            "SourcePath" = "8:..\\SSF\\MatSSF\\matssf2.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9243E9F4-90C0-4AA4-B246-D2DF4DAA49DC}:_B2839D5658924E868A33D23FDC454497"
+            {
+            "SourcePath" = "8:..\\SSF\\MatSSF\\matssf2.for"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:"

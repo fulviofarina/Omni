@@ -126,15 +126,21 @@ namespace SSF
 
                 LIMS.UserControls = new List<object>();
 
+                //FIRST THIS IN CASE i NEED TO RESTART AGAIN IN SQL INSTALL
+                bool isMsmq = LIMS.Interface.IReport.CheckMSMQ();
+
+                if (!isMsmq)
+                {
+                    Creator.InstallMSMQ();
+                }
+                LIMS.Interface.IPreferences.CurrentPref.IsMSMQ = isMsmq;
+
                 //FIRST SQL
                 UserControl IConn = new ucSQLConnection();
                 bool ok = Creator.PrepareSQL(ref IConn);
                 LIMS.Interface.IPreferences.CurrentPref.IsSQL = ok;
 
-                //NOW CHECK MSMQ MESSAGE QUEUE
-                bool isMsmq = LIMS.Interface.IReport.CheckMSMQ();
-                if (!isMsmq) Creator.InstallMSMQ();
-                LIMS.Interface.IPreferences.CurrentPref.IsMSMQ = isMsmq;
+              
 
                 //CHECK RESTART FILE
                 LIMS.Interface.IReport.CheckRestartFile();

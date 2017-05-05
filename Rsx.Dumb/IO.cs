@@ -13,24 +13,120 @@ namespace Rsx.Dumb
  
         public static partial class IO
         {
-            private static string RESTART_PC_TITLE = "Restart the computer";
+        private static string MSMQ_INSTALL_TITLE = "MSMQ Activation...";
+
+
+
+        private static string MSMQ_INSTALL = "This program will activate Microsoft Message Queue (MSMQ)\n\n"
+        // msg += "You'll need to hold the Window's Logo Key and press R\n\n"; msg +=
+        // "Write 'optionalfeatures' in the box and press Enter\n\nSelect the MSMQ
+        // package and click OK\n\n";
+       + "Please wait for the installation to finish.\n" + 
+            "Two pop-ups will appear to activate the feature.\n\n"+
+            "Changes will take effect after the next system restart.\n\n"+ 
+            "\t\tThank you\n";
+
+
+        private static string RESTART_PC_TITLE = "Restart the computer";
 
             private static string RESTART_PC = "The computer will restart in 10 minutes to validate the changes.\n\n" +
                 "PLEASE SAVE ANY PENDING WORK\n\n" + CLICK_OK_TO_RESTART;
 
             private static string CLICK_OK_TO_RESTART = "Click OK to Restart the computer with no further delay or\n\nClick Cancel to abort the scheduled shutdown";
 
+        public static void InstallMSMQ(bool setRestart = true)
+        {
+
+            DialogResult result = MessageBox.Show(MSMQ_INSTALL, MSMQ_INSTALL_TITLE, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+            if (result == DialogResult.Cancel) return;
+
+            bool is64 = Environment.Is64BitOperatingSystem;
+            string msmq = "msmq";
+            string architecture = "x86";
+            string content = Resource.msmqx86;
+         
+            if (is64)
+            {
+                architecture = "x64";
+                content = Resource.msmqx64;
+            }
+
+            //make bat file
+            string  workDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            workDir += "\\Temp";
+            string path = workDir + msmq + architecture + ".bat";
+            System.IO.File.WriteAllText(path, content);
+            //run bat files that create the VB SCRIPTS
+            IO.Process(path, string.Empty, workDir);
+
+            //run vb.vbs script!!
+            string scriptFile = "vb.vbs";
+            //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
+       
+            path = "/c " + workDir + "\\" + scriptFile;
+            string cmd = "cmd.exe";
+            IO.Process(cmd, path, workDir);
+
+            //scheduled 10 minutes restart
+            if (setRestart ) IO.RestartPC();
+
         }
+    }
         public static partial class IO
         {
-            /// <summary>
-            /// unpack a Resource
-            /// </summary>
-            public static void UnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack)
+
+        public static void Process(string path, string argument, string workDir)
+        {
+
+           
+
+            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+            info.WorkingDirectory = workDir;
+            info.CreateNoWindow = true;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            info.UseShellExecute = false;
+            System.Diagnostics.Process pro = new System.Diagnostics.Process();
+            info.Arguments = argument;
+            info.FileName = path;
+            //   info.Verb = "runas";
+            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            pro.StartInfo = info;
+            pro.OutputDataReceived += Pro_OutputDataReceived;
+            pro.ErrorDataReceived += Pro_ErrorDataReceived;
+            pro.Start();
+            pro.BeginErrorReadLine();
+            pro.BeginOutputReadLine();
+            pro.WaitForExit();
+        }
+        private static void Pro_ErrorDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                string data = e.Data;
+            }
+
+            // throw new NotImplementedException();
+        }
+
+        private static void Pro_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                string data = e.Data;
+            }
+            //  throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// unpack a Resource
+        /// </summary>
+        public static void UnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack)
             {
                 if (File.Exists(resourcePath))
                 {
-                    File.Copy(resourcePath, destFile);
+                 if (resourcePath.CompareTo(destFile)!=0)   File.Copy(resourcePath, destFile);
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     //conservar esto para unzippear
                     if (unpack)

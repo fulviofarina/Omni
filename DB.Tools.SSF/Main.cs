@@ -11,6 +11,46 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
+
+        public void MakeScript(string[] units)
+        {
+            string content = string.Empty;
+            int counter = 1;
+            foreach (string item in units)
+            {
+                content += "dim a" + counter.ToString() + "\n";
+                content += "a" +counter.ToString() + "\" = \"" +
+                    "matssf.exe{ENTER}"+ item + "{ENTER}"+ item + ".txt{ENTER}\n";
+            }
+content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
+            foreach (string item in units)
+            {
+
+                content += "WshShell.SendKeys a" + counter.ToString() + "\n";
+              
+            }
+
+            string workDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            workDir += "\\Temp";
+            string scriptFile = "ssf.vbs";
+            string basepath = workDir + "\\"+ scriptFile;
+
+            System.IO.File.WriteAllText(basepath, content);
+
+            //run bat files that create the VB SCRIPTS
+            //   IO.Process(path, string.Empty, workDir);
+
+            //run vb.vbs script!!
+            //     string scriptFile = "vb.vbs";
+            //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
+
+            basepath = "/c " + basepath;
+            string cmd = "cmd.exe";
+            IO.Process(cmd, basepath, workDir);
+
+
+
+        }
         /// <summary>
         /// This is the table for the epithermal self-shielding factors
         /// </summary>
@@ -131,7 +171,7 @@ namespace DB.Tools
         /// <summary>
         /// Generates the INPUT File for MatSSF
         /// </summary>
-        public static bool INPUT()
+        public static bool INPUT(bool bell)
         {
             bool success = false;
             IList<string[]> ls = UNIT.SubSamplesRow.MatrixRow.StripComposition(UNIT.SubSamplesRow.MatrixRow.MatrixComposition);
@@ -144,6 +184,12 @@ namespace DB.Tools
             {
                 buffer += "\n";
                 buffer += UNIT.SubSamplesRow.Net + "\n" + diamet + "\n" + lenfgt + "\n" + config;
+                if (bell)
+                {
+                    buffer += UNIT.BellFactor;
+                    buffer += "0.5";
+                }
+                buffer += "0.93";
                 buffer += "\n";
                 buffer += "\n";
             }

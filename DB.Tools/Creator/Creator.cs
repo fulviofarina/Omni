@@ -17,17 +17,7 @@ namespace DB.Tools
         // private static int toPopulate = 0;
 
         private static Loader worker = null;
-        private static string MSMQ_INSTALL_TITLE = "Important";
-
-
-
-        private static string MSMQ_INSTALL = "This program will install Microsoft Message Queue Server\n\n"
-        // msg += "You'll need to hold the Window's Logo Key and press R\n\n"; msg +=
-        // "Write 'optionalfeatures' in the box and press Enter\n\nSelect the MSMQ
-        // package and click OK\n\n";
-       + "Wait for the installation to finish\n\nYou will need to restart the system afterwards.\nThank you\n";
-
-        /// <summary>
+       /// <summary>
         /// disposes the worker that loads the data
         /// </summary>
     }
@@ -49,6 +39,11 @@ namespace DB.Tools
                 string startexecutePath = Interface.IStore.FolderPath + Resources.SSFFolder;
                 string destFile = startexecutePath + Resources.SSFResource + ".CAB";
                 IO.UnpackCABFile(resourcePath, destFile, startexecutePath, true);
+
+             //   destFile = startexecutePath + "MATSSF_XSR.ZIP";
+             //   resourcePath = destFile;
+
+               // IO.UnpackCABFile(resourcePath, destFile, startexecutePath, true);
             }
         }
 

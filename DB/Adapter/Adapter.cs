@@ -9,27 +9,19 @@ namespace DB
     {
 
 
-        public void SetConnections(string localDB, string developerDB, string defaultConnection)
+        public void SetConnections(/*string localDB, string developerDB,*/ string defaultConnection)
         {
 
             //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
-            Properties.Settings.Default["developerDB"] = developerDB;
-            Properties.Settings.Default["localDB"] = localDB;
+          //  Properties.Settings.Default["developerDB"] = developerDB;
+       //     Properties.Settings.Default["localDB"] = localDB;
             Properties.Settings.Default["NAAConnectionString"] = defaultConnection;
 
             Properties.Settings.Default.Save();
 
         
         }
-        public void RestartAdaptersConnections()
-        {
-
-    
-
-            DisposeAdapters();
-            InitializeComponent();
-            InitializeAdapters(); //why was this after the next code? //check
-        }
+     
 
 
         public string ChangeConnection
