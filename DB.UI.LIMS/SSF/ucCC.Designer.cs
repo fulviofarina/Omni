@@ -2,15 +2,8 @@
 {
     partial class ucCC
     {
-        private System.Windows.Forms.DataGridViewTextBoxColumn A1;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn A2;
 
         private System.Windows.Forms.ToolStripButton addChParBn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn alphaDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn BellFactor;
 
         private System.Windows.Forms.ToolStripButton bnChannelAddItem;
 
@@ -19,8 +12,6 @@
         private System.Windows.Forms.BindingSource ChannelBS;
 
         private System.Windows.Forms.DataGridView ChannelDGV;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn channelNameDataGridViewTextBoxColumn;
 
         private System.Windows.Forms.BindingNavigator channelParBN;
 
@@ -51,26 +42,8 @@
 
         private System.Windows.Forms.ContextMenuStrip dgvCMS;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn FC;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn fluxTypeDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn irReqCodeDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn kepiDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn kthDataGridViewTextBoxColumn;
-
         private DB.LINAA lINAA;
 
-   
-        private System.Windows.Forms.DataGridViewTextBoxColumn pEpi;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn pTh;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn reactorDataGridViewTextBoxColumn;
 
      
 
@@ -171,14 +144,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLPShapes = new System.Windows.Forms.TableLayoutPanel();
             this.ChParSC = new System.Windows.Forms.SplitContainer();
             this.channelParTS = new System.Windows.Forms.ToolStrip();
@@ -198,20 +171,6 @@
             this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.ChannelDGV = new System.Windows.Forms.DataGridView();
-            this.channelNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.irReqCodeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kepiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fluxTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BellFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.alphaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.reactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.A1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.A2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContainerDGV = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -237,11 +196,6 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
-          //  this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          //  this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          //  this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          //  this.matrixDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          //  this.xCOMDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.toolStrip12 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
@@ -249,6 +203,20 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.channelNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.irReqCodeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kepiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fluxTypeDGVColumn = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.BellFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.alphaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.A1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.A2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPShapes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChParSC)).BeginInit();
             this.ChParSC.Panel1.SuspendLayout();
@@ -499,7 +467,7 @@
             this.irReqCodeDataGridViewTextBoxColumn,
             this.kthDataGridViewTextBoxColumn,
             this.kepiDataGridViewTextBoxColumn,
-            this.fluxTypeDataGridViewTextBoxColumn,
+            this.fluxTypeDGVColumn,
             this.BellFactor,
             this.alphaDataGridViewTextBoxColumn,
             this.fDataGridViewTextBoxColumn,
@@ -536,115 +504,6 @@
             this.ChannelDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ChannelDGV.Size = new System.Drawing.Size(904, 213);
             this.ChannelDGV.TabIndex = 11;
-            // 
-            // channelNameDataGridViewTextBoxColumn
-            // 
-            this.channelNameDataGridViewTextBoxColumn.DataPropertyName = "ChannelName";
-            this.channelNameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.channelNameDataGridViewTextBoxColumn.Name = "channelNameDataGridViewTextBoxColumn";
-            this.channelNameDataGridViewTextBoxColumn.Width = 78;
-            // 
-            // irReqCodeDataGridViewTextBoxColumn
-            // 
-            this.irReqCodeDataGridViewTextBoxColumn.DataPropertyName = "IrReqCode";
-            this.irReqCodeDataGridViewTextBoxColumn.HeaderText = "IrReqCode";
-            this.irReqCodeDataGridViewTextBoxColumn.Name = "irReqCodeDataGridViewTextBoxColumn";
-            this.irReqCodeDataGridViewTextBoxColumn.Visible = false;
-            this.irReqCodeDataGridViewTextBoxColumn.Width = 114;
-            // 
-            // kthDataGridViewTextBoxColumn
-            // 
-            this.kthDataGridViewTextBoxColumn.DataPropertyName = "kth";
-            this.kthDataGridViewTextBoxColumn.HeaderText = "kth";
-            this.kthDataGridViewTextBoxColumn.Name = "kthDataGridViewTextBoxColumn";
-            this.kthDataGridViewTextBoxColumn.Width = 58;
-            // 
-            // kepiDataGridViewTextBoxColumn
-            // 
-            this.kepiDataGridViewTextBoxColumn.DataPropertyName = "kepi";
-            this.kepiDataGridViewTextBoxColumn.HeaderText = "kepi";
-            this.kepiDataGridViewTextBoxColumn.Name = "kepiDataGridViewTextBoxColumn";
-            this.kepiDataGridViewTextBoxColumn.Width = 66;
-            // 
-            // fluxTypeDataGridViewTextBoxColumn
-            // 
-            this.fluxTypeDataGridViewTextBoxColumn.DataPropertyName = "FluxType";
-            this.fluxTypeDataGridViewTextBoxColumn.HeaderText = "MatSSF Mode";
-            this.fluxTypeDataGridViewTextBoxColumn.Name = "fluxTypeDataGridViewTextBoxColumn";
-            this.fluxTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fluxTypeDataGridViewTextBoxColumn.Width = 138;
-            // 
-            // BellFactor
-            // 
-            this.BellFactor.DataPropertyName = "BellFactor";
-            this.BellFactor.HeaderText = "BellFactor";
-            this.BellFactor.Name = "BellFactor";
-            this.BellFactor.Width = 107;
-            // 
-            // alphaDataGridViewTextBoxColumn
-            // 
-            this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
-            this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
-            this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
-            this.alphaDataGridViewTextBoxColumn.Width = 77;
-            // 
-            // fDataGridViewTextBoxColumn
-            // 
-            this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
-            this.fDataGridViewTextBoxColumn.HeaderText = "f";
-            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
-            this.fDataGridViewTextBoxColumn.Width = 41;
-            // 
-            // FC
-            // 
-            this.FC.DataPropertyName = "FC";
-            this.FC.HeaderText = "FC";
-            this.FC.Name = "FC";
-            this.FC.Width = 53;
-            // 
-            // reactorDataGridViewTextBoxColumn
-            // 
-            this.reactorDataGridViewTextBoxColumn.DataPropertyName = "Reactor";
-            this.reactorDataGridViewTextBoxColumn.HeaderText = "Reactor";
-            this.reactorDataGridViewTextBoxColumn.Name = "reactorDataGridViewTextBoxColumn";
-            this.reactorDataGridViewTextBoxColumn.Visible = false;
-            this.reactorDataGridViewTextBoxColumn.Width = 92;
-            // 
-            // A1
-            // 
-            this.A1.DataPropertyName = "A1";
-            dataGridViewCellStyle3.Format = "N3";
-            this.A1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.A1.HeaderText = "A1";
-            this.A1.Name = "A1";
-            this.A1.Width = 52;
-            // 
-            // A2
-            // 
-            this.A2.DataPropertyName = "A2";
-            dataGridViewCellStyle4.Format = "N3";
-            this.A2.DefaultCellStyle = dataGridViewCellStyle4;
-            this.A2.HeaderText = "A2";
-            this.A2.Name = "A2";
-            this.A2.Width = 55;
-            // 
-            // pTh
-            // 
-            this.pTh.DataPropertyName = "pTh";
-            dataGridViewCellStyle5.Format = "N3";
-            this.pTh.DefaultCellStyle = dataGridViewCellStyle5;
-            this.pTh.HeaderText = "pTh";
-            this.pTh.Name = "pTh";
-            this.pTh.Width = 63;
-            // 
-            // pEpi
-            // 
-            this.pEpi.DataPropertyName = "pEpi";
-            dataGridViewCellStyle6.Format = "N3";
-            this.pEpi.DefaultCellStyle = dataGridViewCellStyle6;
-            this.pEpi.HeaderText = "pEpi";
-            this.pEpi.Name = "pEpi";
-            this.pEpi.Width = 67;
             // 
             // ContainerDGV
             // 
@@ -922,18 +781,6 @@
             this.toolStrip6.TabIndex = 2;
             this.toolStrip6.Text = "toolStrip6";
             // 
-            // matrixIDDataGridViewTextBoxColumn
-            // 
-      //
-            // 
-            // matrixCompositionDataGridViewTextBoxColumn
-            // 
-         //
-            // 
-            // xCOMDataGridViewCheckBoxColumn
-            // 
-        //
-            // 
             // cDataGridViewCheckBoxColumn
             // 
             this.cDataGridViewCheckBoxColumn.DataPropertyName = "C";
@@ -998,6 +845,116 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // channelNameDataGridViewTextBoxColumn
+            // 
+            this.channelNameDataGridViewTextBoxColumn.DataPropertyName = "ChannelName";
+            this.channelNameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.channelNameDataGridViewTextBoxColumn.Name = "channelNameDataGridViewTextBoxColumn";
+            this.channelNameDataGridViewTextBoxColumn.Width = 78;
+            // 
+            // irReqCodeDataGridViewTextBoxColumn
+            // 
+            this.irReqCodeDataGridViewTextBoxColumn.DataPropertyName = "IrReqCode";
+            this.irReqCodeDataGridViewTextBoxColumn.HeaderText = "IrReqCode";
+            this.irReqCodeDataGridViewTextBoxColumn.Name = "irReqCodeDataGridViewTextBoxColumn";
+            this.irReqCodeDataGridViewTextBoxColumn.Visible = false;
+            this.irReqCodeDataGridViewTextBoxColumn.Width = 114;
+            // 
+            // kthDataGridViewTextBoxColumn
+            // 
+            this.kthDataGridViewTextBoxColumn.DataPropertyName = "kth";
+            this.kthDataGridViewTextBoxColumn.HeaderText = "kth";
+            this.kthDataGridViewTextBoxColumn.Name = "kthDataGridViewTextBoxColumn";
+            this.kthDataGridViewTextBoxColumn.Width = 58;
+            // 
+            // kepiDataGridViewTextBoxColumn
+            // 
+            this.kepiDataGridViewTextBoxColumn.DataPropertyName = "kepi";
+            this.kepiDataGridViewTextBoxColumn.HeaderText = "kepi";
+            this.kepiDataGridViewTextBoxColumn.Name = "kepiDataGridViewTextBoxColumn";
+            this.kepiDataGridViewTextBoxColumn.Width = 66;
+            // 
+            // fluxTypeDGVColumn
+            // 
+            this.fluxTypeDGVColumn.DataPropertyName = "FluxType";
+            this.fluxTypeDGVColumn.HeaderText = "MatSSF Mode";
+            this.fluxTypeDGVColumn.Name = "fluxTypeDGVColumn";
+            this.fluxTypeDGVColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.fluxTypeDGVColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.fluxTypeDGVColumn.Width = 138;
+            // 
+            // BellFactor
+            // 
+            this.BellFactor.DataPropertyName = "BellFactor";
+            this.BellFactor.HeaderText = "BellFactor";
+            this.BellFactor.Name = "BellFactor";
+            this.BellFactor.Width = 107;
+            // 
+            // alphaDataGridViewTextBoxColumn
+            // 
+            this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
+            this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
+            this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
+            this.alphaDataGridViewTextBoxColumn.Width = 77;
+            // 
+            // fDataGridViewTextBoxColumn
+            // 
+            this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
+            this.fDataGridViewTextBoxColumn.HeaderText = "f";
+            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
+            this.fDataGridViewTextBoxColumn.Width = 41;
+            // 
+            // FC
+            // 
+            this.FC.DataPropertyName = "FC";
+            this.FC.HeaderText = "FC";
+            this.FC.Name = "FC";
+            this.FC.Width = 53;
+            // 
+            // reactorDataGridViewTextBoxColumn
+            // 
+            this.reactorDataGridViewTextBoxColumn.DataPropertyName = "Reactor";
+            this.reactorDataGridViewTextBoxColumn.HeaderText = "Reactor";
+            this.reactorDataGridViewTextBoxColumn.Name = "reactorDataGridViewTextBoxColumn";
+            this.reactorDataGridViewTextBoxColumn.Visible = false;
+            this.reactorDataGridViewTextBoxColumn.Width = 92;
+            // 
+            // A1
+            // 
+            this.A1.DataPropertyName = "A1";
+            dataGridViewCellStyle3.Format = "N3";
+            this.A1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.A1.HeaderText = "A1";
+            this.A1.Name = "A1";
+            this.A1.Width = 52;
+            // 
+            // A2
+            // 
+            this.A2.DataPropertyName = "A2";
+            dataGridViewCellStyle4.Format = "N3";
+            this.A2.DefaultCellStyle = dataGridViewCellStyle4;
+            this.A2.HeaderText = "A2";
+            this.A2.Name = "A2";
+            this.A2.Width = 55;
+            // 
+            // pTh
+            // 
+            this.pTh.DataPropertyName = "pTh";
+            dataGridViewCellStyle5.Format = "N3";
+            this.pTh.DefaultCellStyle = dataGridViewCellStyle5;
+            this.pTh.HeaderText = "pTh";
+            this.pTh.Name = "pTh";
+            this.pTh.Width = 63;
+            // 
+            // pEpi
+            // 
+            this.pEpi.DataPropertyName = "pEpi";
+            dataGridViewCellStyle6.Format = "N3";
+            this.pEpi.DefaultCellStyle = dataGridViewCellStyle6;
+            this.pEpi.HeaderText = "pEpi";
+            this.pEpi.Name = "pEpi";
+            this.pEpi.Width = 67;
+            // 
             // ucCC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -1051,5 +1008,20 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn channelNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn irReqCodeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kthDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kepiDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn fluxTypeDGVColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BellFactor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn alphaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn reactorDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn A1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn A2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pTh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pEpi;
     }
 }

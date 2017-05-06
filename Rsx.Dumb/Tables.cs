@@ -160,20 +160,22 @@ namespace Rsx.Dumb
             /// <param name="file">            the name of the file to temporaryly create</param>
             /// <param name="auxiliar">        array of bytes with datatable content</param>
             /// <param name="DestinyDataTable">table where data should be loaded</param>
-            public static void ReadDTBytes<T>(string file, ref byte[] auxiliar, ref T DestinyDataTable)
+            public static void ReadDTBytes<T>(string startupPath, ref byte[] auxiliar, ref T DestinyDataTable)
             {
+                string file = startupPath + Guid.NewGuid().ToString() + ".xml";
+
                IO.WriteFileBytes(ref auxiliar, file);
                 DataTable toLoad = DestinyDataTable as DataTable;
 
                 // toLoad.BeginLoadData();
 
-                DataTable table = new DataTable();
-                XmlReadMode m = XmlReadMode.IgnoreSchema;
-                m = table.ReadXml(file); // XmlReadMode.IgnoreSchema ;
-                m = XmlReadMode.IgnoreSchema;
+                //DataTable table = new DataTable();
+                //XmlReadMode m = XmlReadMode.IgnoreSchema;
+                 toLoad.ReadXml(file); // XmlReadMode.IgnoreSchema ;
+              //  m = XmlReadMode.IgnoreSchema;
                 // FillErrorEventHandler hanlder = fillhandler;
 
-                toLoad.Merge(table, true, MissingSchemaAction.AddWithKey);
+               // toLoad.Merge(table, true, MissingSchemaAction.AddWithKey);
                 // toLoad.EndLoadData();
                 toLoad.AcceptChanges();
 
@@ -182,21 +184,40 @@ namespace Rsx.Dumb
                 // auxiliar = null;
             }
 
-            public static byte[] MakeDTBytes<T, T2>(ref IEnumerable<T> answ, ref T2 adt, string afile)
-            {
-                IEnumerable<DataRow> rows = answ as IEnumerable<DataRow>;
-                DataTable dt = adt as DataTable;
+            public static byte[] MakeDTBytes<T2>( ref T2 dataTable, string startupPAth)
+        {
+            string afile = startupPAth + Guid.NewGuid().ToString() + ".xml";
 
-                foreach (DataRow a in rows) dt.LoadDataRow(a.ItemArray, LoadOption.OverwriteChanges);
-                dt.WriteXml(afile, XmlWriteMode.WriteSchema, true);
-                dt.Clear();
-                dt.Dispose();
-                byte[] arr = IO.ReadFileBytes(afile);
-                System.IO.File.Delete(afile);
-                return arr;
-            }
+            File.Delete(afile);
 
-            public static DataTable DGVToTable(DataGridView dgv)
+            DataTable dt = dataTable as DataTable;
+            dt.WriteXml(afile, XmlWriteMode.WriteSchema, true);
+          //  dt.Clear();
+         //   dt.Dispose();
+            byte[] arr = IO.ReadFileBytes(afile);
+            System.IO.File.Delete(afile);
+            return arr;
+        }
+
+        // USE THISSSSSSS
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="rowsInput"></param>
+        /// <param name="dataTable"></param>
+        /// <returns></returns>
+        private static DataTable LoadTableWith<T, T2>(IEnumerable<T> rowsInput, T2 dataTable)
+        {
+            IEnumerable<DataRow> rows = rowsInput as IEnumerable<DataRow>;
+            DataTable dt = dataTable as DataTable;
+
+            foreach (DataRow a in rows) dt.LoadDataRow(a.ItemArray, LoadOption.OverwriteChanges);
+            return dt;
+        }
+
+        public static DataTable DGVToTable(DataGridView dgv)
             {
                 System.Data.DataTable table = new System.Data.DataTable();
 

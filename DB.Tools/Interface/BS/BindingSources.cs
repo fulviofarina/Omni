@@ -1,6 +1,9 @@
 ﻿using System;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
 using static DB.LINAA;
+using System.Windows.Forms;
+using System.Data;
 
 namespace DB.Tools
 {
@@ -12,6 +15,8 @@ namespace DB.Tools
     {
         // private Interface Interface;
         protected string ROW_WITH_ERROR = "The selected Item has incomplete information, i.e. cells with errors or null values";
+
+      
     }
 
     public partial class BindingSources
@@ -154,6 +159,8 @@ namespace DB.Tools
 
         private void updateChannel<T>(T r, bool findItself)
         {
+            if (EC.IsNuDelDetch(r as DataRow)) return;
+
             LINAA.ChannelsRow u = r as LINAA.ChannelsRow;
             if (findItself && Channels != null)
             {
@@ -163,19 +170,25 @@ namespace DB.Tools
                 //BindingSource rabbitBS = Interface.IBS.Rabbit;
                 Channels.Position = Channels.Find(column, id);
             }
+            string filter;
+
             if (Irradiations != null)
             {
-                string filter;
-
                 string chColumn = Interface.IDB.IrradiationRequests.ChannelNameColumn.ColumnName;
                 filter = chColumn + " = '" + u.ChannelName + "'";// + " OR " + chColumn + " IS NULL ";
-
                 Irradiations.Filter = filter;
+            }
+          
+            if (SelectedMatrix != null)
+            {
+                filter = Interface.IDB.Channels.ChannelsIDColumn.ColumnName + " = '" + u.ChannelsID + "'";
+                Interface.IBS.SelectedChannel.Filter = filter;
             }
         }
 
         private void updateIrradiationRequest<T>(T r, bool findItself)
         {
+            if (EC.IsNuDelDetch(r as DataRow)) return;
             LINAA.IrradiationRequestsRow u = r as LINAA.IrradiationRequestsRow;
             if (findItself && Irradiations != null)
             {
@@ -188,6 +201,7 @@ namespace DB.Tools
 
         private void updateMatrix<T>(T r, bool findItself)
         {
+            if (EC.IsNuDelDetch(r as DataRow)) return;
             LINAA.MatrixRow u = r as LINAA.MatrixRow;
             if (findItself && Matrix != null)
             {
@@ -211,6 +225,8 @@ namespace DB.Tools
 
         private void updateSubSample<T>(T r, bool doCascade, bool findItself)
         {
+            if (EC.IsNuDelDetch(r as DataRow)) return;
+
             LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
             // LINAA.UnitRow s = r as LINAA.UnitRow; LINAA.UnitRow u = s.UnitRow as LINAA.UnitRow;
             if (SubSamples != null)
@@ -226,48 +242,70 @@ namespace DB.Tools
                 }
             }
             aChecker = s.CheckUnit;
+            DataRow row = s.UnitRow;
             //now update the childs/parents of Units
-            if (doCascade && s.UnitRow != null) Update<LINAA.UnitRow>(s.UnitRow);
+            if (doCascade)
+            {
+                Update<UnitRow>(row as UnitRow);
+            }
+          
         }
 
         private void updateUnit<T>(T r, bool doCascade, bool findItself)
         {
+
+            if (EC.IsNuDelDetch(r as DataRow) ) return;
+
+            LINAA.UnitRow s = r as LINAA.UnitRow;
+
             string unitID = string.Empty;
             string filter = string.Empty;
 
-            LINAA.UnitRow s = r as LINAA.UnitRow;
             unitID = s.UnitID.ToString();
             MatSSF.UNIT = s; //this is key
 
             //the checker Method
-            aChecker = s.Check;
+            aChecker = s.CheckErrors;
 
             if (findItself && Units != null)
             {
                 string unitValID = (s.Table as LINAA.UnitDataTable).UnitIDColumn.ColumnName;
                 Units.Position = Units.Find(unitValID, s.UnitID);
             }
-
+            DataRow row = s.SubSamplesRow;
             //do childs parents or not?
-            if (doCascade && s.SubSamplesRow != null)
+            if (doCascade && !EC.IsNuDelDetch(row))
             {
-                Update<LINAA.VialTypeRow>(s.SubSamplesRow.VialTypeRow);
-                Update<LINAA.ChannelsRow>(s.SubSamplesRow.IrradiationRequestsRow.ChannelsRow);
-                Update<LINAA.MatrixRow>(s.SubSamplesRow.MatrixRow);
-                Update<LINAA.VialTypeRow>(s.SubSamplesRow.VialTypeRowByChCapsule_SubSamples);
+                row = s.SubSamplesRow.VialTypeRow;
+                Update<LINAA.VialTypeRow>(row as VialTypeRow);
+                row = s.SubSamplesRow.IrradiationRequestsRow.ChannelsRow;
+                Update<LINAA.ChannelsRow>(row as ChannelsRow);
+                row = s.SubSamplesRow.MatrixRow;
+                Update<LINAA.MatrixRow>(row as MatrixRow);
+                row = s.SubSamplesRow.VialTypeRowByChCapsule_SubSamples;
+                Update<LINAA.VialTypeRow>(row as VialTypeRow);
+       
             }
 
-            MatSSF.ReadXML();
+           LINAA.MatSSFDataTable dt = new MatSSFDataTable(false);
+            byte[] arr = s.SSFTable;
+            Tables.ReadDTBytes(MatSSF.StartupPath, ref arr, ref dt);
+           // MatSSF.ReadXML();
 
             string column = Interface.IDB.MatSSF.UnitIDColumn.ColumnName;
             string sortCol = Interface.IDB.MatSSF.TargetIsotopeColumn.ColumnName;
 
+           // MatSSF.Table = dt;
             filter = column + " = '" + unitID + "'";
-            BS.LinkBS(ref SSF, Interface.IDB.MatSSF, filter, sortCol);
+            //   MatSSF.Table = dt;
+            BS.DeLinkBS(ref SSF);
+            BS.LinkBS(ref SSF, dt, filter, sortCol);
         }
 
         private void updateVialRabbit<T>(T r, bool findItself)
         {
+            if (EC.IsNuDelDetch(r as DataRow)) return;
+
             LINAA.VialTypeRow u = r as LINAA.VialTypeRow;
             if (findItself)
             {

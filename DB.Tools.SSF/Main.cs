@@ -11,31 +11,41 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
-
-        public void MakeScript(string[] units)
+       
+        public static bool RUN(string[] units,  bool hide = true)
         {
             string content = string.Empty;
+          //  string matSSFEXE = "matssf2.exe";
             int counter = 1;
+            string terminate = "\n";
+            counter = 1;
             foreach (string item in units)
             {
-                content += "dim a" + counter.ToString() + "\n";
-                content += "a" +counter.ToString() + "\" = \"" +
-                    "matssf.exe{ENTER}"+ item + "{ENTER}"+ item + ".txt{ENTER}\n";
+                content += "dim a" + counter.ToString() + terminate;
+                content += "a" +counter.ToString() +" = \"" +
+                    item + "{ENTER}"+ item + ".txt{ENTER}" + "\"" + terminate;
+
+                counter++;
             }
-content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
+content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")"+ terminate;
+            content += "Set U = CreateObject(\"Shell.Application\")" + terminate;
+        //    content += "Set WshShell = Wscript.CreateObject("Wscript.Shell")
+content += "U.ShellExecute \"matssf2.exe\", \"\", \"\", \"runas\", 1"+terminate;
+            counter = 1;
+
             foreach (string item in units)
             {
 
-                content += "WshShell.SendKeys a" + counter.ToString() + "\n";
-              
+                content += "WshShell.SendKeys a" + counter.ToString() + terminate;
+                counter++;
             }
 
-            string workDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            workDir += "\\Temp";
-            string scriptFile = "ssf.vbs";
-            string basepath = workDir + "\\"+ scriptFile;
+            string workDir = StartupPath;
+          //  workDir += "\\Temp";
+            string scriptFile = "ssf";
+            string basepath = workDir + "\\"+ scriptFile ;
 
-            System.IO.File.WriteAllText(basepath, content);
+            File.WriteAllText(basepath+ ".vbs", content);
 
             //run bat files that create the VB SCRIPTS
             //   IO.Process(path, string.Empty, workDir);
@@ -44,13 +54,26 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
             //     string scriptFile = "vb.vbs";
             //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
 
-            basepath = "/c " + basepath;
-            string cmd = "cmd.exe";
-            IO.Process(cmd, basepath, workDir);
+            content = "cmd /c ssf.vbs";
+            File.WriteAllText(basepath+ ".bat", content);
 
+            foreach (string item in units)
+            {
+                //basepath = "/c " + basepath + ".bat";
+                string cmd = "cmd";
+                string[] ioFile = new string[] { item, item + ".txt" };
+                IO.Process(cmd, "/c matssf2.exe", workDir, ioFile);
+            }
 
+         
+         
+            return true;
 
         }
+
+     
+
+
         /// <summary>
         /// This is the table for the epithermal self-shielding factors
         /// </summary>
@@ -61,7 +84,7 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
         /// </summary>
         public static LINAA.UnitRow UNIT = null;
 
-        private static string exefile = "matssf.exe";
+        private static string exefile = "matssf2.exe";
         private static string inputFile = "MATSSF_INP.TXT";
         private static string outputFile = "MATSSF_LST.TXT";
         private static string startupPath = string.Empty;
@@ -71,6 +94,10 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
         /// </summary>
         public static string InputFile
         {
+            set
+            {
+                inputFile = value;
+            }
             get
             {
                 return inputFile;
@@ -82,6 +109,10 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
         /// </summary>
         public static string OutputFile
         {
+            set
+            {
+                outputFile = value;
+            }
             get
             {
                 return outputFile;
@@ -171,25 +202,21 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
         /// <summary>
         /// Generates the INPUT File for MatSSF
         /// </summary>
-        public static bool INPUT(bool bell)
+        public static bool INPUT(bool defaultVal)
         {
             bool success = false;
             IList<string[]> ls = UNIT.SubSamplesRow.MatrixRow.StripComposition(UNIT.SubSamplesRow.MatrixRow.MatrixComposition);
             string buffer = UNIT.SubSamplesRow.MatrixRow.StripMoreComposition(ref ls);
-            string config = getChannelCfg();
+            string config = getChannelCfg(defaultVal);
 
             double lenfgt = UNIT.SubSamplesRow.FillHeight;
             double diamet = UNIT.SubSamplesRow.Radius * 2;
             if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
             {
                 buffer += "\n";
-                buffer += UNIT.SubSamplesRow.Net + "\n" + diamet + "\n" + lenfgt + "\n" + config;
-                if (bell)
-                {
-                    buffer += UNIT.BellFactor;
-                    buffer += "0.5";
-                }
-                buffer += "0.93";
+                buffer += UNIT.SubSamplesRow.Net + "\n" + diamet + "\n" + lenfgt + "\n" 
+                    + config;
+                      
                 buffer += "\n";
                 buffer += "\n";
             }
@@ -198,6 +225,7 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
 
             string fulFile = startupPath + inputFile;
 
+            System.IO.File.Delete(startupPath + outputFile + ".txt");
             System.IO.File.Delete(fulFile); //delete fromRow
 
             success = writeFile(buffer, fulFile);
@@ -208,36 +236,16 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
         /// <summary>
         /// Link the Unit Row to the Parent Matrix, Vial, Channel, Rabbit
         /// </summary>
-        public static void LinkToParent(ref DataRow row)
-        {
-            bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
-            bool isMatrix = row.GetType().Equals(typeof(MatrixRow));
-            if (isChannel)
-            {
-                ChannelsRow c = row as ChannelsRow;
-                UNIT.SetChannel(ref c);
-            }
-            else if (!isMatrix)
-            {
-                LINAA.VialTypeRow v = row as VialTypeRow;
-                if (!v.IsRabbit) UNIT.SubSamplesRow.VialTypeRow = v;
-                else UNIT.SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
-            }
-            else
-            {
-                MatrixRow m = row as MatrixRow;
-                UNIT.SubSamplesRow.MatrixID = m.MatrixID;
-            }
-        }
+     
 
         /// <summary>
         /// Generates the OUTPUT File for MatSSF
         /// </summary>
-        public static String OUTPUT()
+        public static bool   OUTPUT(string unitName)
         {
-            string File = startupPath + outputFile;
+            string File = startupPath + unitName + ".txt";
 
-            if (!System.IO.File.Exists(File)) return File;
+        
 
             //read file data
             string lecture =IO.ReadFile(File);
@@ -247,12 +255,17 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
             //fill the unit data
             fillUnitWithText(ref array);
             //fill the matssf table
-            fillTable(array.ToList());
+            LINAA.MatSSFDataTable table = fillTable(array.ToList());
+
+            UNIT.SSFTable =   Tables.MakeDTBytes(ref table, startupPath);
+
             array = null;
+            bool isOk = table.Count != 0;
 
-            return File;
+            Dumb.FD(ref table);
+            return isOk;
         }
-
+        /*
         /// <summary>
         /// Reads the MatSSF datatable from an xml file
         /// </summary>
@@ -261,12 +274,12 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
             Table.Clear();
             if (UNIT.IsSSFTableNull()) return false;
             //file to save as
-            string file = startupPath + UNIT.Name;
+            string file = startupPath + Guid.NewGuid().ToString() + ".xml";
             //get bytes
             byte[] bites = UNIT.SSFTable;
 
             //write to file
-           IO.WriteFileBytes(ref bites, file);
+            IO.WriteFileBytes(ref bites, file);
             //read from file
             Table.ReadXml(file);
             //delete file
@@ -274,7 +287,8 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
 
             return true;
         }
-
+        */
+        /*
         /// <summary>
         /// Runs the MatSSF program
         /// </summary>
@@ -288,15 +302,18 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
 
             return process.HasExited;
         }
-
+        */
+        /*
         /// <summary>
         /// Writes the MatSSF datatable to an xml file and assigns it to the row object
         /// </summary>
         public static bool WriteXML()
         {
-            string file = startupPath + UNIT.Name;
+            string file = startupPath + Guid.NewGuid().ToString() + ".xml";
 
             File.Delete(file);
+
+     
             //write to file
             Table.WriteXml(file, XmlWriteMode.IgnoreSchema);
 
@@ -304,12 +321,13 @@ content+= "Set WshShell = Wscript.CreateObject(\"Wscript.Shell\")\n";
             byte[] bites =IO.ReadFileBytes(file);
 
             //asign
-            UNIT.SSFTable = bites;
+           
 
             //delete file
             File.Delete(file);
 
             return true;
         }
+        */
     }
 }

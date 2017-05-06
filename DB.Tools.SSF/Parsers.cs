@@ -53,19 +53,26 @@ namespace DB.Tools
         }
      
 
-        private static void fillTable(IList<string> list)
+        private static LINAA.MatSSFDataTable fillTable(IList<string> list)
         {
             string[] content = null;
 
             string separator = "------------------------------------------------------------------------";
             int sep = list.IndexOf(separator);
             list = list.Skip(sep + 1).ToList();
-            IEnumerable<LINAA.MatSSFRow> ssfs = UNIT.GetMatSSFRows();
+        //    IEnumerable<LINAA.MatSSFRow> ssfs = UNIT.GetMatSSFRows();
 
-            foreach (LINAA.MatSSFRow m in ssfs)
+         //   foreach (LINAA.MatSSFRow m in ssfs)
             {
-                m.Delete();
+          //      if (EC.IsNuDelDetch(m)) continue;
+           //     m.Delete();
             }
+          //  ssfs = null;
+         //   Table.AcceptChanges();
+            //     Table.AcceptChanges();
+
+            LINAA.MatSSFDataTable table = new LINAA.MatSSFDataTable(false);
+          
 
             foreach (string item in list)
             {
@@ -85,21 +92,39 @@ namespace DB.Tools
                         ZEl[0] = ZEl[0].Trim();// Z
                         ZEl[1] = ZEl[1].Trim(); // Element
 
-                        setMatSSFRow(content, ZEl);
+                        //find
+                        LINAA.SubSamplesRow sample = UNIT.SubSamplesRow;
+                        LINAA.MatSSFRow  m = table.NewMatSSFRow();
+                        m.UnitID = UNIT.UnitID;
+                        table.AddMatSSFRow(m);
+
+                        if (sample != null) m.SubSamplesID = sample.SubSamplesID;
+                        else m.SubSamplesID = 0;
+
+                        setMatSSFRow(content, ZEl, ref m);
                     }
                 }
                 catch (SystemException ex)
                 {
                 }
             }
+
+
+
+            return table;
         }
 
-        private static string getChannelCfg()
+        private static string getChannelCfg(bool defaultVal)
         {
             string chCfg = string.Empty;
 
-            chCfg = UNIT.ChCfg[0] + "," + UNIT.ChDiameter + "," + UNIT.ChLength;
-
+            chCfg = UNIT.ChCfg[0] + "\n" + UNIT.ChDiameter + "\n" + UNIT.ChLength+ "\n";
+            if (!defaultVal)
+            {
+                chCfg += UNIT.BellFactor + "\n";
+                chCfg += UNIT.nFactor + "\n";
+                chCfg += UNIT.WGt + "\n";
+            }
             return chCfg;
         }
         /*
@@ -148,38 +173,17 @@ namespace DB.Tools
             return buffer;
         }
         */
-        private static void setMatSSFRow(string[] content, string[] ZEl)
+        private static void  setMatSSFRow(string[] content, string[] ZEl, ref LINAA.MatSSFRow m)
         {
-            LINAA.MatSSFRow m = null;
+          
             string radioisotope = ZEl[1] + "-" + (Convert.ToInt32(ZEl[2]) + 1).ToString();
             string targetIsotope = ZEl[1] + "-" + ZEl[2];
 
-            //find
-            LINAA.SubSamplesRow sample = UNIT.SubSamplesRow;
-
-            m = Table.FirstOrDefault(o => o.UnitID == UNIT.UnitID && targetIsotope.Equals(o.TargetIsotope));
-            if (m == null && sample != null)
-            {
-                int sampleID = sample.SubSamplesID;
-                m = Table.FirstOrDefault(o => o.SubSamplesID == sampleID && targetIsotope.Equals(o.TargetIsotope));
-            }
-
-            if (m == null)
-            {
-                m = Table.NewMatSSFRow();
-                m.UnitID = UNIT.UnitID;
-
-                Table.AddMatSSFRow(m);
-
-                if (sample != null) m.SubSamplesID = sample.SubSamplesID;
-                else m.SubSamplesID = 0;
-            }
-
             m.RadioIsotope = radioisotope;
             m.TargetIsotope = targetIsotope;
-            m.SSF = -1;
+        //    m.SSF = -1;
 
-            m.GFast = -1;
+        //    m.GFast = -1;
             m.SigB = Convert.ToDouble(content[3]);
             m.Weight = Convert.ToDouble(content[1]);
             m.ND = Convert.ToDouble(content[2]);
@@ -189,6 +193,7 @@ namespace DB.Tools
                 m.GFast = Convert.ToDouble(content[5]);
             }
             else if (content.Length == 5) m.GFast = Convert.ToDouble(content[4]);
+           
         }
 
         private static bool writeFile(string buffer, string fileInput)

@@ -194,7 +194,7 @@ namespace DB.Tools
             }
             catch (Exception ex)
             {
-                // this.Msg(ex.InnerException.Message, ex.Message, false);
+                 this.Msg(ex.InnerException.Message, ex.Message, false);
                 Interface.IStore.AddException(ex);
             }
         }
@@ -223,7 +223,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
+               // Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
                 Interface.IStore.AddException(ex);
             }
         }
@@ -342,7 +342,7 @@ namespace DB.Tools
         {
             if (Interface.IDB.Exceptions.Count != 0)
             {
-                Speak("Loading finished! However... some errors were found");
+                Speak("Loading finished! Some bugs were found.\n I will notify the programmer");
             }
             else Speak("Loading finished!");
         }

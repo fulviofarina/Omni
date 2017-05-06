@@ -1,20 +1,88 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
-using Rsx.Dumb; using Rsx;
+using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA
     {
-        partial class MonitorsDataTable
+        public partial class MonitorsRow : IRow
         {
-            public MonitorsRow FindByMonName(string MonName)
+            public void Check(DataColumn Column)
             {
-                string field = this.MonNameColumn.ColumnName;
-                MonitorsRow old = this.FirstOrDefault(LINAA.SelectorByField<MonitorsRow>(MonName.Trim().ToUpper(), field));
-                return old;
+                if (Column == this.tableMonitors.MonGrossMass1Column || Column == this.tableMonitors.MonGrossMass2Column)
+                {
+                    bool one = EC.CheckNull(this.tableMonitors.MonGrossMass1Column, this);
+                    bool two = EC.CheckNull(this.tableMonitors.MonGrossMass2Column, this);
+
+                    if (one || two) return;
+
+                    if (one || two) return;
+
+                    double diff = Math.Abs(MonGrossMass1 - MonGrossMass2) * 100;
+
+                    double pent = 0.03;
+
+                    SetColumnError(this.tableMonitors.MonGrossMassAvgColumn, null);
+                    if ((diff / MonGrossMass1) > pent)
+                    {
+                        SetColumnError(this.tableMonitors.MonGrossMassAvgColumn, "Difference between weights is higher than 0.03%\nPlease check");
+                    }
+                    else if ((diff / MonGrossMass2) > pent)
+                    {
+                        SetColumnError(this.tableMonitors.MonGrossMassAvgColumn, "Difference between weights is higher than 0.03%\nPlease check");
+                    }
+                }
+                else if (Column == this.tableMonitors.MonNameColumn)
+                {
+                    if (EC.CheckNull(this.tableMonitors.MonNameColumn, this)) return;
+
+                    if (Dumb.IsLower(MonName.Substring(1)))
+                    {
+                        MonName = MonName.ToUpper();
+                    }
+                    else MonitorCode = MonName.Substring(0, MonName.Length - 3);
+                }
+                else if (Column == this.tableMonitors.GeometryNameColumn)
+                {
+                    if (EC.CheckNull(Column, this))
+                    {
+                        if (!IsMonitorCodeNull()) GeometryName = MonitorCode.ToUpper();
+                    }
+                    else if (Dumb.IsLower(GeometryName.Substring(1)))
+                    {
+                        GeometryName = GeometryName.ToUpper();
+                    }
+                }
+                else if (Column == this.tableMonitors.LastIrradiationDateColumn)
+                {
+                    if (IsLastIrradiationDateNull()) LastIrradiationDate = new DateTime(1999, 1, 1);
+                    NumberOfDays = (DateTime.Today - LastIrradiationDate).Days;
+                }
+                else if (Column == this.tableMonitors.LastMassDateColumn)
+                {
+                    if (IsLastMassDateNull()) LastMassDate = new DateTime(1999, 1, 1);
+                    Difference = (DateTime.Today - LastMassDate).Days;
+                }
+            }
+
+            public void SetParent(ref DataRow row)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        partial class MonitorsDataTable : IColumn
+        {
+            public IEnumerable<DataColumn> NonNullables
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
             }
 
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
@@ -23,66 +91,20 @@ namespace DB
                 {
                     MonitorsRow m = e.Row as MonitorsRow;
 
-                    if (e.Column == this.MonGrossMass1Column || e.Column == this.MonGrossMass2Column)
-                    {
-                        bool one = EC.CheckNull(this.MonGrossMass1Column, e.Row);
-                        bool two = EC.CheckNull(this.MonGrossMass2Column, e.Row);
-
-                        if (one || two) return;
-
-                        if (one || two) return;
-
-                        double diff = Math.Abs(m.MonGrossMass1 - m.MonGrossMass2) * 100;
-
-                        double pent = 0.03;
-
-                        m.SetColumnError(this.MonGrossMassAvgColumn, null);
-                        if ((diff / m.MonGrossMass1) > pent)
-                        {
-                            m.SetColumnError(this.MonGrossMassAvgColumn, "Difference between weights is higher than 0.03%\nPlease check");
-                        }
-                        else if ((diff / m.MonGrossMass2) > pent)
-                        {
-                            m.SetColumnError(this.MonGrossMassAvgColumn, "Difference between weights is higher than 0.03%\nPlease check");
-                        }
-                    }
-                    else if (e.Column == this.MonNameColumn)
-                    {
-                        if (EC.CheckNull(this.MonNameColumn, m)) return;
-
-                        if (Dumb.IsLower(m.MonName.Substring(1)))
-                        {
-                            m.MonName = m.MonName.ToUpper();
-                        }
-                        else m.MonitorCode = m.MonName.Substring(0, m.MonName.Length - 3);
-                    }
-                    else if (e.Column == this.columnGeometryName)
-                    {
-                        if (EC.CheckNull(e.Column, e.Row))
-                        {
-                            if (!m.IsMonitorCodeNull()) m.GeometryName = m.MonitorCode.ToUpper();
-                        }
-                        else if (Rsx.Dumb.Dumb.IsLower(m.GeometryName.Substring(1)))
-                        {
-                            m.GeometryName = m.GeometryName.ToUpper();
-                        }
-                    }
-                    else if (e.Column == this.LastIrradiationDateColumn)
-                    {
-                        if (m.IsLastIrradiationDateNull()) m.LastIrradiationDate = new DateTime(1999, 1, 1);
-                        m.NumberOfDays = (DateTime.Today - m.LastIrradiationDate).Days;
-                    }
-                    else if (e.Column == this.LastMassDateColumn)
-                    {
-                        if (m.IsLastMassDateNull()) m.LastMassDate = new DateTime(1999, 1, 1);
-                        m.Difference = (DateTime.Today - m.LastMassDate).Days;
-                    }
+                    m.Check(e.Column);
                 }
                 catch (SystemException ex)
                 {
                     (this.DataSet as LINAA).AddException(ex);
                     EC.SetRowError(e.Row, e.Column, ex);
                 }
+            }
+
+            public MonitorsRow FindByMonName(string MonName)
+            {
+                string field = this.MonNameColumn.ColumnName;
+                MonitorsRow old = this.FirstOrDefault(LINAA.SelectorByField<MonitorsRow>(MonName.Trim().ToUpper(), field));
+                return old;
             }
         }
     }

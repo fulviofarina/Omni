@@ -58,10 +58,19 @@ namespace DB.UI
         private void addNewVialChannel_Click(object sender, EventArgs e)
         {
             //IS A VIAL OR CONTAINER
-            LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
-            v.IsRabbit = true;
-            Interface.IDB.VialType.AddVialTypeRow(v);
-            Interface.IBS.Update(v);
+            try
+            {
+                LINAA.VialTypeRow v = Interface.IDB.VialType.NewVialTypeRow();
+                v.IsRabbit = true;
+                Interface.IDB.VialType.AddVialTypeRow(v);
+                Interface.IBS.Update(v);
+            }
+            catch (Exception ex)
+            {
+
+                Interface.IStore.AddException(ex);
+            }
+           
         }
     }
 }

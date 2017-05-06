@@ -18,5 +18,6 @@
         public const string MonitorsFlags = "Monitors Flags";
         public const string SubSamplesContent = "SubSamples Content";
         public const string Preferences = "Preferences";
+        public const string Units = "Units";
     }
 }

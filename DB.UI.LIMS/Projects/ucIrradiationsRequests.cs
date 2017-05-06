@@ -80,7 +80,10 @@ namespace DB.UI
 
         public void RowAdded(ref DataRow row)
         {
+            try
+            {
 
+           
             LINAA.IrradiationRequestsRow ir = row as LINAA.IrradiationRequestsRow;
 
             if (ir.ChannelsRow==null)
@@ -92,7 +95,12 @@ namespace DB.UI
                 Interface.IBS.Update(ir);
 
             }
+            }
+            catch (Exception ex)
+            {
 
+                Interface.IStore.AddException(ex);
+            }
         }
 
         public bool ShouldPaintCell(object sender, DataGridViewCellPaintingEventArgs e)

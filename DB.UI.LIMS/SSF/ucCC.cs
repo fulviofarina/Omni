@@ -38,7 +38,26 @@ namespace DB.UI
 
             this.channelParBN.BindingSource = Interface.IBS.Channels;
             this.ContainerBN.BindingSource = Interface.IBS.Rabbit;
+
+
+            this.ChannelDGV.CellClick += ChannelDGV_CellClick;
+      //      DataGridViewButtonColumn col = this.fluxTypeDGVColumn as DataGridViewButtonColumn; // . Button;
+
+
         }
+
+        private void ChannelDGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != fluxTypeDGVColumn.Index) return;
+           
+            LINAA.ChannelsRow row = Caster.Cast<LINAA.ChannelsRow>(Interface.IBS.SelectedChannel.Current );
+
+            if (row.FluxType.Contains("0")) row.FluxType = MatSSF.Types[1];
+            else if (row.FluxType.Contains("1")) row.FluxType = MatSSF.Types[2];
+            else row.FluxType = MatSSF.Types[0];
+        }
+
+
 
         /// <summary>
         /// DGV ITEM SELECTED

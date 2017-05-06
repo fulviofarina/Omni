@@ -105,10 +105,7 @@ namespace DB.UI
 
         public static IList<object> UserControls = null;
 
-        public static UserControl CreateUI(string controlHeader)
-        {
-            return CreateUI(controlHeader, null);
-        }
+     
 
         public static void CreateForm(string title, ref UserControl control, bool show = true)
         {
@@ -120,7 +117,7 @@ namespace DB.UI
             form.Visible = show;
         }
 
-        public static UserControl CreateUI(string controlHeader, object[] args)
+        public static UserControl CreateUI(string controlHeader, object[] args=null)
         {
             UserControl control = null;
             Rsx.DGV.Control.Refresher refresher = null;
@@ -168,13 +165,13 @@ namespace DB.UI
                 cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
 
                 //create events
-                cv.CreateEvents(ref dgvs);
+                cv.CreateDGVEvents(ref dgvs);
                 dgvs = null;
             }
 
             ToolStripButton[] items = UIControl.GetChildControls<ToolStrip>(control)
                 .SelectMany(o => o.Items.OfType<ToolStripButton>()).ToArray();
-            cv.CreateEvents(ref items);
+            cv.CreateButtonEvents(ref items);
             items = null;
 
             control.Tag = cv;   //sets the CV as a TAG for the control
@@ -332,6 +329,22 @@ namespace DB.UI
                         refresher = Interface.IPopulate.IOrders.PopulateOrders;
                         break;
                     }
+                case ControlNames.Units:
+                    {
+                        ucUnit ucUnit = new ucUnit();
+                        control = ucUnit as UserControl;
+                        ucUnit.Set(ref LIMS.Interface);
+                        //    Rsx.DGV.IFind finder = new Rsx.DGV.ucSearch();
+                    //    Rsx.DGV.IDGVControl ctrl = cv; // new Rsx.DGV.Control(null, Interface.IReport.Msg, ref finder);
+
+                      //  ctrl.ICreate.DGVs = new DataGridView[] { this.unitDGV, this.SSFDGV };
+                       // Saver = Interface.IStore.Save;
+                       // ctrl.ICreate.UsrControl = this;
+                        //ctrl.ICreate.CreateDGVEvents();
+
+                        // refresher = Interface.IPopulate.IOrders.PopulateOrders;
+                        break;
+                    }
                 default:
                     break;
             }
@@ -374,7 +387,7 @@ namespace DB.UI
 
             ctr.SetContext("Explorer", ref dgv, LIMS.Form.CMS);
 
-            ctr.CreateEvents(ref dgv);
+            ctr.CreateDGVEvents(ref dgv);
 
             ctr.SaveMethod = Linaa.Save;
             ctr.SetSaver(explorer.saveBtton);

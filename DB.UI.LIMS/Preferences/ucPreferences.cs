@@ -114,7 +114,8 @@ namespace DB.UI
             this.autoLoadCheckBox.DataBindings.Add(prefbindings["AutoLoad"] as Binding);
             this.offlineCheckBox.DataBindings.Add(prefbindings["Offline"] as Binding);
             this.showSampleDescriptionCheckBox.DataBindings.Add(prefbindings["ShowSampleDescription"] as Binding);
-
+            this.advancedEditorCheckBox.DataBindings.Add(prefbindings["AdvancedEditor"] as Binding);
+    
             //text binding
             Hashtable bindings2 = BS.ArrayOfBindings(ref bs, string.Empty);
 
@@ -140,6 +141,8 @@ namespace DB.UI
             this.calcMassCheckBox.DataBindings.Add(bindings["CalcMass"] as Binding);
             this.loopCheckBox.DataBindings.Add(bindings["Loop"] as Binding);
             this.showMatSSFCheckBox.DataBindings.Add(bindings["ShowMatSSF"] as Binding);
+            string column = Interface.IDB.SSFPref.OverridesColumn.ColumnName;
+            this.overridesCheckBox.DataBindings.Add(bindings[column] as Binding);
 
             Binding b2 = new Binding("Text", bs, Interface.IDB.SSFPref.RoundingColumn.ColumnName, true, DataSourceUpdateMode.OnPropertyChanged);
             this.roundingTextBox.DataBindings.Add(b2);

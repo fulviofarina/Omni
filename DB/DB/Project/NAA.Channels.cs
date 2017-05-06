@@ -2,23 +2,151 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx;
+
+namespace DB
+{
+    /// <summary>
+    /// IMP{ORTATAAAAAANTE HACER ESTO FINO IMPLEMENTAR
+    /// </summary>
+    internal interface IColumn
+    {
+        void DataColumnChanged(object sender, DataColumnChangeEventArgs e);
+
+        IEnumerable<DataColumn> NonNullables
+        {
+            get;
+        }
+    }
+
+    internal interface IRow
+    {
+        void Check(DataColumn Column);
+        void SetParent(ref DataRow row);
+    }
+}
 
 namespace DB
 {
     public partial class LINAA
     {
-        partial class ChannelsDataTable
+        partial class ChannelsRow : IRow
+        {
+
+            public void SetParent(ref DataRow row)
+            {
+                throw new NotImplementedException();
+            }
+            public void Check(DataColumn Column)
+            {
+                bool nu = EC.CheckNull(Column, this);
+
+                if (Column == this.tableChannels.ChannelNameColumn)
+                {
+                    if (nu)
+                    {
+                        ChannelName = "New Channel";
+                    }
+                }
+                else if (Column == this.tableChannels.pEpiColumn)
+                {
+                    if (nu) pEpi = 0.82;
+                }
+                else if (Column == this.tableChannels.pEpiColumn)
+                {
+                    if (nu) pTh = 0.964;
+                }
+                else if (Column == this.tableChannels.A1Column)
+                {
+                    if (nu) A1 = 1;
+                }
+                else if (Column == this.tableChannels.A2Column)
+                {
+                    if (nu) A2 = 0.06;
+                }
+                else if (Column == this.tableChannels.FluxTypeColumn)
+                {
+                    if (nu) FluxType = 0.ToString();
+                 
+                        if (EC.CheckNull(this.tableChannels.WGtColumn, this) || this.tableChannels.overriders)
+                        {
+                            if (FluxType.Contains(2.ToString()))
+                            {
+                                WGt = 0.67;
+                                //   BellFactor = 1.16;
+                            }
+                            else if (FluxType.Contains(1.ToString()))
+                            {
+                                WGt = 0.93;
+                                //  BellFactor = 1.30;
+                            }
+                            else
+                            {
+                                WGt = 1;
+                                // BellFactor = 1.16;
+                            }
+                        }
+
+                        if (EC.CheckNull(this.tableChannels.BellFactorColumn, this) || this.tableChannels.overriders)
+                        {
+                            if (FluxType.Contains(2.ToString()))
+                            {
+                                //  WGt = 0.67;
+                                BellFactor = 1.16;
+                            }
+                            else if (FluxType.Contains(1.ToString()))
+                            {
+                                //   WGt = 0.93;
+                                BellFactor = 1.30;
+                            }
+                            else
+                            {
+                                //   WGt = 1;
+                                BellFactor = 1.16;
+                            }
+                        }
+                    
+                }
+                    
+                
+                else if (Column == this.tableChannels.WGtColumn)
+                {
+                    if (nu) WGt = 1;
+                }
+                else if (Column == this.tableChannels.BellFactorColumn)
+                {
+                    if (nu) BellFactor = 1.16;
+                }
+                else if (Column == this.tableChannels.nFactorColumn)
+                {
+                    if (nu) nFactor = 0.5;
+                }
+            }
+        }
+
+        partial class ChannelsDataTable : IColumn
         {
             private IEnumerable<DataColumn> nonNullables;
-
+            public bool overriders
+            {
+                //TODO: windows user instead
+                get
+                {
+                    // LINAA set = this.DataSet as LINAA;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
+                }
+            }
             public IEnumerable<DataColumn> NonNullables
             {
                 get
                 {
                     if (nonNullables == null)
                     {
-                        nonNullables = new DataColumn[] { this.columnAlpha, this.columnf, this.columnReactor, this.columnkth, this.columnkepi , columnIrReqCode, columnpEpi, columnpTh, columnA1, columnA2};
+                        nonNullables = new DataColumn[] { this.columnAlpha, this.columnf,
+                            this.columnReactor, this.columnkth, this.columnkepi ,
+                            columnIrReqCode,this.FluxTypeColumn,
+                            columnpEpi, columnpTh, columnA1, columnA2,
+                        columnBellFactor, columnWGt, columnnFactor};
                     }
                     return nonNullables;
                 }
@@ -26,40 +154,14 @@ namespace DB
 
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
+                ChannelsRow ch = e.Row as ChannelsRow;
+
                 try
                 {
                     if (NonNullables.Contains(e.Column))
                     {
-                        ChannelsRow ch = e.Row as ChannelsRow;
-
-                        bool nu = EC.CheckNull(e.Column, e.Row);
-                        if (e.Column == this.columnChannelName)
-                        {
-                            if (nu)
-                            {
-                            
-                                ch.ChannelName = "New Channel";
-                            }
-                        }
-                        else if (e.Column == this.columnpEpi)
-                        {
-                            if (nu) ch.pEpi = 0.82;
-                        }
-                        else if (e.Column == this.columnpTh)
-                        {
-                            if (nu) ch.pTh = 0.964;
-                        }
-                        else if (e.Column == this.columnA1)
-                        {
-                            if (nu) ch.A1 = 1;
-                        }
-                        else if (e.Column == this.columnA2)
-                        {
-                            if (nu) ch.A2 = 0.06;
-                        }
-                        return;
+                        ch.Check(e.Column);
                     }
-                   
                 }
                 catch (SystemException ex)
                 {

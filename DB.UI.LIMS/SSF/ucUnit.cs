@@ -17,7 +17,7 @@ namespace DB.UI
         /// <param name="e">     </param>
 
         private int lastIndex = -2;
-
+        private int lastColInder = -2;
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -33,18 +33,7 @@ namespace DB.UI
                 }
                 DataRow row = Caster.Cast<DataRow>(dgv.Rows[e.RowIndex]);
 
-                bool isToDoColumn = false;
-
-                if (e.ColumnIndex >= 0)
-                {
-                    isToDoColumn = row[e.ColumnIndex].GetType().Equals(typeof(bool));
-                }
-                if (isToDoColumn)
-                {
-                    //invert the bool or check state
-                    row[e.ColumnIndex] = !(bool)row[e.ColumnIndex];
-                    // unit.ToDo = !unit.ToDo;
-                }
+              
                 bool isUnuit = row.GetType().Equals(typeof(LINAA.UnitRow));
                 if (isUnuit && lastIndex != e.RowIndex)
                 {
@@ -68,7 +57,7 @@ namespace DB.UI
                 else
                 {
                     //link to matrix, channel or vial,/rabbit data
-                    MatSSF.LinkToParent(ref row);
+                    MatSSF.UNIT.SetParent(ref row);
                     string tipo = row.GetType().ToString();
 
                     Interface.IReport.Msg("Unit values updated with Template Item", "Updated!", false); //report
@@ -100,11 +89,96 @@ namespace DB.UI
             SSFDGV.DataSource = Interface.IBS.SSF;
 
             // this.lINAA = Interface.Get() as LINAA;
-
+           
             setBindings();
 
             // this.unitDGV.RowHeaderMouseClick += DgvItemSelected; this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
-            this.unitDGV.CellMouseClick += DgvItemSelected;
+            this.unitDGV.CellMouseClick += cellMouseClick;
+            //  this.SSFDGV.CellMouseClick += cellMouseClick;
+         
+        
+           
+            this.unitDGV.ColumnHeaderMouseClick += columnHeaderMouseClick;
+            this.SSFDGV.ColumnHeaderMouseClick += columnHeaderMouseClick;
+
+         //   this.unitDGV.CellToolTipTextNeeded += cellToolTipTextNeeded;
+         //   this.SSFDGV.CellToolTipTextNeeded += cellToolTipTextNeeded;
+            //     this.unitDGV.MouseHover += UnitDGV_MouseHover;
+        }
+        /*
+        private void cellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+
+            bool isSameCol = lastColInder == e.ColumnIndex;
+            if (isSameCol) return;
+            if (e.RowIndex != -1) return;
+            lastColInder = e.ColumnIndex;
+            DataGridView dgv = sender as DataGridView;
+            SpeakToolTip(ref dgv, lastColInder);
+            //  columnHeaderMouseClick(sender,);
+            // throw new System.NotImplementedException();
+        }
+        */
+        private  void columnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //  bool isSameCol = (lastColInder == e.ColumnIndex);
+            DataGridView dgv = sender as DataGridView;
+            int index = e.ColumnIndex;
+
+            SpeakToolTip(ref dgv, index);
+        }
+
+        private void SpeakToolTip(ref DataGridView dgv, int index)
+        {
+            try
+            {
+                DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
+                string toolTip = cell.ToolTipText;
+                if (string.IsNullOrEmpty(toolTip)) return;
+                //   if (e.RowIndex != -1) return;
+                Interface.IReport.Speak(toolTip);
+            }
+            catch (System.Exception ex)
+            {
+
+                //  throw;
+            }
+        }
+
+
+        private void cellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+
+            bool isToDoColumn = false;
+            DataGridView dgv = sender as DataGridView;
+            if (e.ColumnIndex >= 0)
+            {
+                isToDoColumn = dgv.Columns[e.ColumnIndex].ValueType.Equals(typeof(bool));
+            }
+            if (isToDoColumn)
+            {
+                //invert the bool or check state
+                dgv[e.ColumnIndex, e.RowIndex].Value = !bool.Parse(dgv[e.ColumnIndex, e.RowIndex].Value.ToString());
+
+                dgv.RefreshEdit();
+                // unit.ToDo = !unit.ToDo;
+            }
+            /*
+            else if (e.RowIndex==-1)
+            {
+             //   if (!isSameCol)
+                {
+                    DataGridViewColumn colum = dgv.Columns[e.ColumnIndex];
+                    if (!string.IsNullOrEmpty(colum.ToolTipText))
+                    {
+                        Interface.IReport.Speak(colum.ToolTipText);
+                    }
+                }
+                    // if (e.ColumnIndex == this.g)
+            }
+            */
+
         }
 
         private void setBindings()

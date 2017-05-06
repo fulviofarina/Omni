@@ -143,6 +143,7 @@ namespace DB.Tools
                     //REPORT TO SEND NOW...
                     msgReportResult(result, when);
                 }
+
             }
             catch (SystemException ex)
             {
@@ -202,9 +203,16 @@ namespace DB.Tools
                 }
             }
 
+       
+            bugresult = qMsg1.BeginReceive();
+
+
+
+            //LAST because it throws and exception...
+            //DONT MOVE
             msgReportResult(EmailTitle, when);
 
-            bugresult = qMsg1.BeginReceive();
+
         }
 
         private void msgReportResult(string result, DateTime when)
@@ -219,11 +227,12 @@ namespace DB.Tools
                 sending = true;
             }
 
-            this.Msg(result + "\n\nAt " + when.ToString(), title, sending);
+    //   //     this.Msg(result + "\n\nAt " + when.ToString(), title, sending);
 
             if (!sending)
             {
-                throw new SystemException("Failure sending email - Async email failed");
+                string msg = title +"\n\n"+ "Failure sending email - Async email failed";
+                throw new SystemException(msg);
             }
         }
     }

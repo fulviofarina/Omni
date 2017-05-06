@@ -40,6 +40,10 @@ namespace SSF
             ucSSF.AttachCtrl(ref ucProjectBox);
             ucSSF.AttachCtrl(ref aBindingNavigator);
 
+            ucUnit units = LIMS.CreateUI(ControlNames.Units) as ucUnit;
+
+            ucSSF.AttachCtrl(ref units);
+
             Pop msn = LIMS.Interface.IReport.Msn;
             Form form = msn.ParentForm;//
             ucSSF.AttachCtrl(ref msn);

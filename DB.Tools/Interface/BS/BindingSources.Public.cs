@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
 using System.Windows.Forms;
 using static DB.LINAA;
@@ -11,7 +12,7 @@ namespace DB.Tools
     public partial class BindingSources
     {
         public BindingSource Channels;
-
+        public BindingSource SelectedChannel;
         public BindingSource Geometry;
 
         public BindingSource Irradiations;
@@ -89,25 +90,62 @@ namespace DB.Tools
             Matrix.Sort = "MatrixName desc";
         }
 
+      
+       
+        public void SuspendBindings()
+        {
+            foreach ( BindingSource b in bindings.Values)
+            {
+                try
+                {
+                    b.SuspendBinding();
+                }
+                catch (Exception ex)
+                {
+
+                    Interface.IStore.AddException(ex);
+                }
+               
+
+            }
+        }
+        public void ResumeBindings()
+        {
+            foreach (BindingSource b in bindings.Values)
+            {
+                try
+                {
+                    b.ResumeBinding();
+                }
+                catch (Exception ex)
+                {
+
+                    Interface.IStore.AddException(ex);
+                }
+
+            }
+        }
         /// <summary>
         /// EndEdit for each binding source
         /// </summary>
         public void EndEdit()
         {
-            Matrix?.EndEdit();
-            Compositions?.EndEdit();
-            Units?.EndEdit();
-            Vial?.EndEdit();
-            Geometry?.EndEdit();
-            Rabbit?.EndEdit();
-            Channels?.EndEdit();
-            Irradiations?.EndEdit();
-            SubSamples?.EndEdit();
-            SelectedSubSample?.EndEdit();
-            SelectedMatrix?.EndEdit();
-            SSF?.EndEdit();
-        }
+          
+                foreach (BindingSource b in bindings.Values)
+                {
+                    try
+                    {
+                        b.EndEdit();
+                    }
+                    catch (Exception ex)
+                    {
 
+                        Interface.IStore.AddException(ex);
+                    }
+
+                }
+
+        }
         /// <summary>
         /// Updates the binding sources positions!!!
         /// </summary>
@@ -174,46 +212,110 @@ namespace DB.Tools
         {
         }
 
+        protected Hashtable bindings;
+
         /// <summary>
         /// A Binding source for each table
         /// </summary>
         public BindingSources(ref Interface inter)
         {
             Interface = inter;
+            LINAA set = inter.Get();
 
-            Preferences = new BindingSource(Interface.Get(), Interface.IDB.Preferences.TableName);
-            Compositions = new BindingSource(Interface.Get(), inter.IDB.Compositions.TableName);
+            bindings = new Hashtable();
 
-            SSFPreferences = new BindingSource(Interface.Get(), Interface.IDB.SSFPref.TableName);
+            string name = Interface.IDB.Preferences.TableName;
+            Preferences = new BindingSource(set,name );
+            bindings.Add(name, Preferences);
 
-            Channels = new BindingSource(Interface.Get(), Interface.IDB.Channels.TableName);
+            name = inter.IDB.Compositions.TableName;
+            Compositions = new BindingSource(set,name );
+            bindings.Add(name, Compositions);
 
-            Matrix = new BindingSource(Interface.Get(), Interface.IDB.Matrix.TableName);
-            Rabbit = new BindingSource(Interface.Get(), Interface.IDB.VialType.TableName);
+            name = Interface.IDB.SSFPref.TableName;
+            SSFPreferences = new BindingSource(set, name);
+            bindings.Add(name, SSFPreferences);
 
-            Vial = new BindingSource(Interface.Get(), Interface.IDB.VialType.TableName);
+            name = Interface.IDB.Channels.TableName;
+            Channels = new BindingSource(set, name);
+            bindings.Add(name, Channels);
 
-            Irradiations = new BindingSource(Interface.Get(), Interface.IDB.IrradiationRequests.TableName);
+            name = Interface.IDB.Matrix.TableName;
+            Matrix = new BindingSource(set,name );
+            bindings.Add(name, Matrix);
 
-            Geometry = new BindingSource(Interface.Get(), Interface.IDB.Geometry.TableName);
 
-            Standards = new BindingSource(Interface.Get(), Interface.IDB.Standards.TableName);
+            name = Interface.IDB.VialType.TableName ;
+            Rabbit = new BindingSource(set, name);
+            bindings.Add(name+"Rabbit", Rabbit);
 
-            Monitors = new BindingSource(Interface.Get(), Interface.IDB.Monitors.TableName);
 
-            MonitorsFlags = new BindingSource(Interface.Get(), Interface.IDB.MonitorsFlags.TableName);
+            name = Interface.IDB.VialType.TableName;
+            Vial = new BindingSource(set,name);
+            bindings.Add(name, Vial);
 
-            Samples = new BindingSource(Interface.Get(), Interface.IDB.Samples.TableName);
 
-            SubSamples = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
+            name = Interface.IDB.IrradiationRequests.TableName;
+            Irradiations = new BindingSource(set, name);
+            bindings.Add(name, Irradiations);
 
-            Units = new BindingSource(Interface.Get(), Interface.IDB.Unit.TableName);
+
+            name = Interface.IDB.Geometry.TableName;
+            Geometry = new BindingSource(set,name );
+            bindings.Add(name, Geometry);
+
+
+            name = Interface.IDB.Standards.TableName;
+            Standards = new BindingSource(set, name);
+            bindings.Add(name, Standards);
+
+
+            name = Interface.IDB.Monitors.TableName;
+            Monitors = new BindingSource(set, name);
+            bindings.Add(name, Monitors);
+
+
+            name = Interface.IDB.MonitorsFlags.TableName;
+            MonitorsFlags = new BindingSource(set,name );
+            bindings.Add(name, MonitorsFlags);
+
+
+            name = Interface.IDB.Samples.TableName;
+            Samples = new BindingSource(set, name);
+            bindings.Add(name, Samples);
+
+
+            name = Interface.IDB.SubSamples.TableName;
+            SubSamples = new BindingSource(set, name);
+            bindings.Add(name, SubSamples);
+
+
+            name = Interface.IDB.Unit.TableName;
+            Units = new BindingSource(set, name);
+            bindings.Add(name, Units);
+
             // Units.CurrentChanged += units_CurrentChanged;
+            name =   Interface.IDB.MatSSF.TableName;
+            SSF = new BindingSource(set, name);
+            bindings.Add(name, SSF);
 
-            SSF = new BindingSource(Interface.Get(), Interface.IDB.MatSSF.TableName);
-            SelectedMatrix = new BindingSource(Interface.Get(), Interface.IDB.Matrix.TableName);
+
+            name =  Interface.IDB.Channels.TableName;
+            SelectedChannel = new BindingSource(set,name);
+            bindings.Add("Selected"+name, SelectedChannel);
+
+
+            name = Interface.IDB.Matrix.TableName;
+            SelectedMatrix = new BindingSource(set, name);
+            bindings.Add("Selected" + name, SelectedMatrix);
+
+
             // Units.BindingComplete += Units_BindingComplete;
-            SelectedSubSample = new BindingSource(Interface.Get(), Interface.IDB.SubSamples.TableName);
+            name =  Interface.IDB.SubSamples.TableName;
+            SelectedSubSample = new BindingSource(set,name);
+            bindings.Add("Selected" + name, SelectedSubSample);
+
+
 
             setHandlers();
 

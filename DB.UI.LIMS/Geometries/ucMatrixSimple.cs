@@ -46,6 +46,11 @@ namespace DB.UI
         {
             //IS A VIAL OR CONTAINER
             //   BindingSource bss = this.MatrixBN.BindingSource;
+
+            try
+            {
+
+           
             bool isMatrix = this.MatrixBN.BindingSource.Equals(Interface.IBS.Matrix);
 
             if (isMatrix)
@@ -59,6 +64,12 @@ namespace DB.UI
                 LINAA.CompositionsRow c = Interface.IDB.Compositions.NewCompositionsRow();
                 Interface.IDB.Compositions.AddCompositionsRow(c);
                 c.MatrixID = (Interface.ICurrent.Matrix as LINAA.MatrixRow).MatrixID;
+            }
+            }
+            catch (Exception ex)
+            {
+
+                Interface.IStore.AddException(ex);
             }
         }
 

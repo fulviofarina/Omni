@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA
     {
-        partial class UnitDataTable
+        partial class UnitDataTable : IColumn
         {
             private DataColumn[] changeables;
             private DataColumn[] nonNullables;
@@ -23,9 +24,10 @@ namespace DB
                             this.columnChDiameter, this.columnChLength,
                             this.columnkth,this.columnkepi,
                             this.columnChCfg,
-                            this.columnBellFactor//,
-                         // this.columnLastCalc, this.columnLastChanged, this.columnToDo,
-                         //   this.columnContent
+                            this.columnBellFactor,
+                            this.WGtColumn,
+                            this.nFactorColumn//,
+                         // this.columnLastCalc, this.columnLastChanged, this.columnToDo, this.columnContent
                         };
                         // this.columnSSFTable};
                     }
@@ -33,7 +35,7 @@ namespace DB
                 }
             }
 
-            public DataColumn[] NonNullables
+            public IEnumerable<DataColumn> NonNullables
             {
                 get
                 {
@@ -45,8 +47,8 @@ namespace DB
                             this.columnChCfg,
                             this.columnLastCalc,
                            this.columnLastChanged,
-                      // this.columnToDo,
-                          //  this.columnContent,
+                           this.columnWGt,
+                           this.nFactorColumn,
                                   this.columnBellFactor,
                               this.columnSSFTable
                         };
@@ -55,6 +57,18 @@ namespace DB
                 }
             }
 
+            /// <summary>
+            /// fix this to use windows user
+            /// </summary>
+            public bool overriders
+            {
+                //TODO: windows user instead
+                get
+                {
+                    // LINAA set = this.DataSet as LINAA;
+                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
+                }
+            }
 
             /// <summary>
             /// I think it is perfect like this, don't mess it up
@@ -63,7 +77,6 @@ namespace DB
             /// <param name="e">     </param>
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                //this.ColumnChanging += UnitDataTable_ColumnChanging;
                 DataColumn c = e.Column;
                 if (!NonNullables.Contains(c)) return;
 
@@ -72,103 +85,7 @@ namespace DB
 
                 try
                 {
-                    // bool isZero = false;
-
-                    // bool nullo = EC.CheckNull(c, row);
-
-                    bool nullo = EC.CheckNull(e.Column, e.Row);// string.IsNullOrEmpty(e.Row.GetColumnError(e.Column));
-
-                    // if (NonNullables.Contains(e.Column)) EC.CheckNull(e.Column, e.Row);
-                    /*      if (c == this.columnLastChanged)
-                          {
-                                  if (r.IsLastCalcNull()) return;
-                                  if (r.IsLastChangedNull()) return;
-                                  double tot = r.LastChanged.Subtract(r.LastCalc).TotalSeconds;
-                                  //positive means needs to be calculated
-                                  if (tot > 2)
-                                  {
-                                      r.ToDo = true;
-                                  }
-                                  else if (tot != 0) //negative has been calculated
-                                  {
-                                      r.ToDo = false;
-                                  }
-
-                          // }
-
-                              //negative if calculated after it has changed (which is good)
-                          }
-                          else
-                          {
-                              */
-                    if (nullo)
-                    {
-                        if (this.BellFactorColumn == c)
-                        {
-                            if (nullo)
-                            {
-                                r.BellFactor = 1;
-                            }
-                        }
-                        else if (this.kepiColumn == c)
-                        {
-                            if (nullo)
-                            {
-                                r.kepi = 1;
-                            }
-                        }
-                        else if (this.kthColumn == c)
-                        {
-                            if (nullo)
-                            {
-                                r.kth = 0.6;
-                            }
-                        }
-                        else if (this.ChCfgColumn == c)
-                        {
-                            if (nullo)
-                            {
-                                r.ChCfg = "0";
-                            }
-                        }
-                        else if (this.ChDiameterColumn == c)
-                        {
-                            // if (Convert.ToDouble(e.ProposedValue) == 0) e.ProposedValue = 1 ;
-                            if (nullo)
-                            {
-                                r.ChDiameter = 100;
-                            }
-                        }
-                        else if (this.ChLengthColumn == c)
-                        {
-                            if (nullo)
-                            {
-                                r[c] = 100;
-                            }
-                        }
-                        else if (c == this.SSFTableColumn)
-                        {
-                            if (r.IsSSFTableNull())
-                            {
-                                r.ToDo = true;
-                                // r.LastChanged = DateTime.Now; //update the time
-                            }
-                            // else r.ToDo = false;
-                        }
-                        /*
-                        else if (c == this.ContentColumn)
-                        {
-                            if (nullo)
-                            {
-                                r.Content = "#Al (50%), #Gd (50%) "; // "Please assign a Matrix/Content to this Unit";
-                                                                     // r.LastChanged = DateTime.Now;
-                                                                     // //update the time
-                            }
-                            // else r.ToDo = false;
-                        }
-                        */
-                    }
-                    //}
+                    r.Check(c);
                 }
                 catch (SystemException ex)
                 {
@@ -179,7 +96,6 @@ namespace DB
 
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
-
                 if (!Changeables.Contains(e.Column)) return;
 
                 DataRow row = e.Row;
@@ -187,7 +103,6 @@ namespace DB
 
                 try
                 {
-                  
                     bool change = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) != 0);
 
                     if (change)
@@ -203,17 +118,170 @@ namespace DB
             }
         }
 
-        partial class UnitRow
+        partial class UnitRow : IRow
         {
-            public bool Check()
+            public  void SetParent(ref DataRow row)
             {
-                //      bool ok = true;
-                //columns in error
+                if (EC.IsNuDelDetch(row)) return;
+                bool isChannel = row.GetType().Equals(typeof(ChannelsRow));
+                bool isMatrix = row.GetType().Equals(typeof(MatrixRow));
+                if (isChannel)
+                {
+                    ChannelsRow c = row as ChannelsRow;
+                    SetChannel(ref c);
+                }
+                else if (!isMatrix)
+                {
+                    LINAA.VialTypeRow v = row as VialTypeRow;
+                    SetVial(ref v);
+                }
+                else
+                {
+                    MatrixRow m = row as MatrixRow;
+                    SetMatrix(ref m);
+                }
+            }
 
+            private void SetMatrix(ref MatrixRow m)
+            {
+                   if (EC.IsNuDelDetch(m)) return;
+                if (EC.IsNuDelDetch(SubSamplesRow)) return;
+                SubSamplesRow.MatrixID = m.MatrixID;
+            }
+
+            private void SetVial(ref VialTypeRow v)
+            {
+                if (EC.IsNuDelDetch(v)) return;
+                if (EC.IsNuDelDetch(SubSamplesRow)) return;
+                if (!v.IsIsRabbitNull() && !v.IsRabbit) SubSamplesRow.VialTypeRow = v;
+                else
+                {
+                  
+                    SubSamplesRow.VialTypeRowByChCapsule_SubSamples = v;
+                }
+                }
+
+            public void Check(DataColumn c)
+            {
+                bool nullo = EC.CheckNull(c, this);// string.IsNullOrEmpty(e.Row.GetColumnError(e.Column));
+
+                if (nullo)
+                {
+                    if (this.tableUnit.BellFactorColumn == c)
+                    {
+                        if (nullo)
+                        {
+                            BellFactor = 1;
+                        }
+                    }
+                    else if (this.tableUnit.kepiColumn == c)
+                    {
+                        if (nullo)
+                        {
+                            kepi = 1;
+                        }
+                    }
+                    else if (this.tableUnit.kthColumn == c)
+                    {
+                        if (nullo)
+                        {
+                            kth = 0.6;
+                        }
+                    }
+                    else if (this.tableUnit.ChCfgColumn == c)
+                    {
+                        if (nullo)
+                        {
+                            ChCfg = "0";
+                        }
+                    }
+                    else if (this.tableUnit.ChDiameterColumn == c)
+                    {
+                        // if (Convert.ToDouble(e.ProposedValue) == 0) e.ProposedValue = 1 ;
+                        if (nullo)
+                        {
+                            ChDiameter = 100;
+                        }
+                    }
+                    else if (this.tableUnit.ChLengthColumn == c)
+                    {
+                        if (nullo)
+                        {
+                            ChLength = 100;
+                        }
+                    }
+                    else if (c == this.tableUnit.SSFTableColumn)
+                    {
+                        if (IsSSFTableNull())
+                        {
+                            ToDo = true;
+                            // r.LastChanged = DateTime.Now; //update the time
+                        }
+                        // else r.ToDo = false;
+                    }
+                    else if (c == this.tableUnit.ChCfgColumn)
+                    {
+                        if (nullo) ChCfg = "0";
+                        else
+                        {
+                            // bool nullFluxType = (EC.CheckNull(this.tableChannels.FluxTypeColumn, this));
+                            if (EC.CheckNull(this.tableUnit.WGtColumn, this) || this.tableUnit.overriders)
+                            {
+                                if (ChCfg.Contains("2"))
+                                {
+                                    WGt = 0.67;
+                                    // BellFactor = 1.16;
+                                }
+                                else if (ChCfg.Contains("1"))
+                                {
+                                    WGt = 0.93;
+                                    // BellFactor = 1.30;
+                                }
+                                else
+                                {
+                                    WGt = 1;
+                                    // BellFactor = 1.16;
+                                }
+                            }
+                            if (EC.CheckNull(this.tableUnit.BellFactorColumn, this) || this.tableUnit.overriders)
+                            {
+                                if (ChCfg.Contains("2"))
+                                {
+                                    // WGt = 0.67;
+                                    BellFactor = 1.16;
+                                }
+                                else if (ChCfg.Contains("1"))
+                                {
+                                    // WGt = 0.93;
+                                    BellFactor = 1.30;
+                                }
+                                else
+                                {
+                                    // WGt = 1;
+                                    BellFactor = 1.16;
+                                }
+                            }
+                        }
+                    }
+                    else if (c == this.tableUnit.WGtColumn)
+                    {
+                        if (nullo) WGt = 1;
+                    }
+                    else if (c == this.tableUnit.BellFactorColumn)
+                    {
+                        if (nullo) BellFactor = 1.16;
+                    }
+                    else if (c == this.tableUnit.nFactorColumn)
+                    {
+                        if (nullo) nFactor = 0.5;
+                    }
+                }
+            }
+
+            public bool CheckErrors()
+            {
                 DataColumn[] colsInE = this.GetColumnsInError();
                 int count = colsInE.Intersect(this.tableUnit.Changeables).Count();
-
-                // List<DataColumn> cols = colsInE.ToList(); string co = count.ToString();
 
                 return count == 0;
             }
@@ -297,7 +365,10 @@ namespace DB
                 this.kepi = c.kepi;
                 this.ChCfg = c.FluxType;
                 this.BellFactor = c.BellFactor;
-                this.SubSamplesRow.FC =c.FC;
+                this.SubSamplesRow.FC = c.FC;
+                this.WGt = c.WGt;
+                this.nFactor = c.nFactor;
+            
             }
 
             /// <summary>

@@ -149,9 +149,9 @@ namespace DB.Tools
 
                     MatSSF.UNIT = u;
 
-                    MatSSF.INPUT();
+                    MatSSF.INPUT(true);
 
-                    if (DB.Tools.MatSSF.RUN(!showMatssf))  // MatSSF Runned good?
+                 //   if (DB.Tools.MatSSF.RUN(!showMatssf))  // MatSSF Runned good?
                     {
                         LINAA.MatSSFDataTable ssfDT = new LINAA.MatSSFDataTable(false);
                         ssfDT.Constraints.Clear();
@@ -159,8 +159,8 @@ namespace DB.Tools
                         // MatSSF.Sample = iS;
                         MatSSF.Table = ssfDT;
 
-                        String FileOut = MatSSF.OUTPUT();
-                        MatSSF.WriteXML();
+                    //    String FileOut = MatSSF.OUTPUT();
+                     //   MatSSF.WriteXML();
                         //now read OutPut from calculation and store it into the MatSSF data table
                         worker.ReportProgress((int)R.SSFSet, iS);   //delete previous
                         worker.ReportProgress((int)R.MergeTable, ssfDT);   //delete previous

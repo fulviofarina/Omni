@@ -34,6 +34,23 @@ namespace Rsx.Dumb
 
             private static string CLICK_OK_TO_RESTART = "Click OK to Restart the computer with no further delay or\n\nClick Cancel to abort the scheduled shutdown";
 
+
+        public static void WatchFolder (string path, string extension, ref Action<object,FileSystemEventArgs> callBack)
+        {
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = path;
+         
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.CreationTime
+                                   | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcher.Filter = "*." + extension;
+            watcher.Changed += new FileSystemEventHandler( callBack);
+            watcher.EnableRaisingEvents = true;
+
+
+        }
+
+      
+
         public static void InstallMSMQ(bool setRestart = true)
         {
 
@@ -76,29 +93,52 @@ namespace Rsx.Dumb
         public static partial class IO
         {
 
-        public static void Process(string path, string argument, string workDir)
+        public static void Process(string path, string argument, string workDir, string[] writeConsoleContent=null, bool hide = true)
         {
 
-           
 
-            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+            try
+            {
+
+           
+            ProcessStartInfo info = new ProcessStartInfo();
             info.WorkingDirectory = workDir;
             info.CreateNoWindow = true;
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
             info.UseShellExecute = false;
-            System.Diagnostics.Process pro = new System.Diagnostics.Process();
+          Process pro = new Process();
             info.Arguments = argument;
             info.FileName = path;
             //   info.Verb = "runas";
-            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            if (!hide) info.WindowStyle = ProcessWindowStyle.Normal;
             pro.StartInfo = info;
+                info.RedirectStandardInput = true;
+              
             pro.OutputDataReceived += Pro_OutputDataReceived;
             pro.ErrorDataReceived += Pro_ErrorDataReceived;
             pro.Start();
             pro.BeginErrorReadLine();
             pro.BeginOutputReadLine();
-            pro.WaitForExit();
+          //  pro.WaitForExit();
+
+            if (writeConsoleContent!=null)
+            {
+                foreach (string item in writeConsoleContent)
+                {
+                    pro.StandardInput.WriteLine(item);
+                }
+
+            }
+
+                pro.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         private static void Pro_ErrorDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
         {
@@ -222,21 +262,40 @@ namespace Rsx.Dumb
                 return span;
             }
 
-            public static string ReadFile(string File)
+        public static string ReadFile(string File)
+        {
+            int counter = 1;
+            Exception ex = new Exception();
+            string lecture = string.Empty;
+            System.IO.FileStream fraw = null;
+            System.IO.StreamReader raw = null;
+            while (ex != null)
             {
-                System.IO.FileStream fraw = new System.IO.FileStream(File, System.IO.FileMode.Open);
-                System.IO.StreamReader raw = new System.IO.StreamReader(fraw);
+                try
+                {
+                    fraw = new System.IO.FileStream(File, System.IO.FileMode.Open, FileAccess.Read);
+                    raw = new System.IO.StreamReader(fraw);
 
-                string lecture = raw.ReadToEnd();
-                fraw.Close();
-                fraw.Dispose();
-                fraw = null;
-                raw.Close();
-                raw.Dispose();
-                raw = null;
-                return lecture;
+                    ex = null;
+                }
+                catch (Exception ex2)
+                {
+
+                    ex = ex2;
+                }
+                counter++;
+
+                if (counter == 200) return lecture;
             }
-
+            lecture = raw.ReadToEnd();
+            fraw.Close();
+            fraw.Dispose();
+            fraw = null;
+            raw.Close();
+            raw.Dispose();
+            raw = null;
+            return lecture;
+        }
             public static void LoadFilesIntoBoxes(Action showProgress, ref RichTextBox input, string file)
             {
                 //load files

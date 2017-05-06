@@ -28,9 +28,9 @@ namespace Msn
             pre += title;
 
             Msg(msg, pre, icon);
-            Show();
+        
 
-            Application.DoEvents();
+         //   Application.DoEvents();
         }
 
         public void ReportProgress(int percentage)
@@ -173,16 +173,25 @@ namespace Msn
 
         public void Msg(string msg, string title, System.Windows.Forms.ToolTipIcon icon)
         {
-            try
+          
+
+       //     if (InvokeRequired)
             {
-                this.textBoxDescription.Text = msg;
-                this.title.Text = title;
+                Action dele = delegate
+                {
+
+                    this.textBoxDescription.Text = msg;
+                    this.title.Text = title;
+                    Show();
+                    Application.DoEvents();
+                };
+                this.BeginInvoke(dele);
             }
-            catch (Exception)
-            {
+                //catch (Exception)
+            //{
 
                 
-            }            
+            //}            
         
         }
 

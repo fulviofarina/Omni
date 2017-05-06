@@ -33,7 +33,7 @@ namespace DB
                 //    if (this.IsSQLNull()) SQL = Settings.Default.SSFSQL;
                 //  else Settings.Default["SSFSQL"] = SQL;
                 if (IsShowOtherNull()) ShowOther = false;
-
+                if (IsOverridesNull()) Overrides = false;
                 //   if (IsAutoLoadNull()) AutoLoad = true;
 
                 if (IsShowMatSSFNull()) ShowMatSSF = false;
