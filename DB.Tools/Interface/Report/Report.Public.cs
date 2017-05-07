@@ -340,11 +340,15 @@ namespace DB.Tools
 
         public void SpeakLoadingFinished()
         {
+            //if (Interface.IDB.Exceptions.Count != 0)
+            //{
+              //  Speak("Loading finished! Some bugs were found.\n I will notify the programmer");
+            //}
+             Speak("Loading finished!");
             if (Interface.IDB.Exceptions.Count != 0)
             {
-                Speak("Loading finished! Some bugs were found.\n I will notify the programmer");
+              Msg("Some exceptions were found.\n I will send a report","Loading finished!");
             }
-            else Speak("Loading finished!");
         }
 
         /// <summary>

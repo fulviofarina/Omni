@@ -121,12 +121,14 @@ namespace Rsx.DGV
 
     public void SetContext(string controlHeader, ref DataGridView[] dgvs, ContextMenuStrip cms)
     {
-      foreach (DataGridView dgv in dgvs)
-      {
-        dgv.Name = controlHeader; //control header where it is coming from
-        dgv.ContextMenuStrip = cms;
-        dgv.Tag = this;  //set the cv as tag of the DGV
-      }
+            dGVs = dgvs;
+            if (dGVs == null) return ;
+            foreach (DataGridView dgv in dgvs)
+            {
+                dgv.Name = controlHeader; //control header where it is coming from
+                dgv.ContextMenuStrip = cms;
+                dgv.Tag = this;  //set the cv as tag of the DGV
+            }
     }
 
     public void CreateButtonEvents(ref ToolStripButton[] items)
@@ -141,11 +143,7 @@ namespace Rsx.DGV
       items2 = null;
     }
 
-        public bool CreateDGVEvents(ref DataGridView[] dgvs)
-        {
-            dGVs = dgvs;
-            return CreateDGVEvents();
-        }
+        
     public bool CreateDGVEvents()
     {
 

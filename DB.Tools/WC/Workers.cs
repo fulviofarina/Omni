@@ -137,7 +137,7 @@ namespace DB.Tools
 
                         unitDT.AddUnitRow(u);
                     }
-                    u.ChDiameter = (iS.VialTypeRow.InnerRadius * 2);
+                    u.ChRadius = (iS.VialTypeRow.InnerRadius);
                     u.ChLength = iS.VialTypeRow.MaxFillHeight;
                     u.ChCfg = fluxtypo.ToString();
                     u.Name = iS.SubSampleName;

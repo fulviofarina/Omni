@@ -89,9 +89,9 @@
             this.toolStripLabel14 = new System.Windows.Forms.ToolStripLabel();
             this.nameB = new System.Windows.Forms.ToolStripComboBox();
             this.sampleDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.barTLP = new System.Windows.Forms.TableLayoutPanel();
             this.gross1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.radiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -103,6 +103,10 @@
             this.comparatorDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SampleBS = new System.Windows.Forms.BindingSource(this.components);
+            this.toolStripLabel15 = new System.Windows.Forms.ToolStripLabel();
+            this.samp1lbl = new System.Windows.Forms.ToolStripTextBox();
+            this.samp2lbl = new System.Windows.Forms.ToolStripTextBox();
+            this.samp3lbl = new System.Windows.Forms.ToolStripTextBox();
             this.ucComposition1 = new DB.UI.ucComposition();
             this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
@@ -183,13 +187,14 @@
             // UnitSSFSC.Panel1
             // 
             this.UnitSSFSC.Panel1.Controls.Add(this.inputTLP);
-            this.UnitSSFSC.Size = new System.Drawing.Size(758, 854);
-            this.UnitSSFSC.SplitterDistance = 696;
+            this.UnitSSFSC.Size = new System.Drawing.Size(702, 854);
+            this.UnitSSFSC.SplitterDistance = 683;
             this.UnitSSFSC.SplitterWidth = 8;
             this.UnitSSFSC.TabIndex = 11;
             // 
             // inputTLP
             // 
+            this.inputTLP.AutoSize = true;
             this.inputTLP.BackColor = System.Drawing.SystemColors.Control;
             this.inputTLP.ColumnCount = 1;
             this.inputTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -205,30 +210,29 @@
             this.inputTLP.Controls.Add(this.toolStrip1, 0, 3);
             this.inputTLP.Controls.Add(this.unitSC, 0, 0);
             this.inputTLP.Controls.Add(this.sampleDGV, 0, 4);
-            this.inputTLP.Controls.Add(this.tableLayoutPanel1, 0, 1);
+            this.inputTLP.Controls.Add(this.barTLP, 0, 2);
             this.inputTLP.Controls.Add(this.ucComposition1, 0, 13);
             this.inputTLP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inputTLP.Location = new System.Drawing.Point(0, 0);
             this.inputTLP.Margin = new System.Windows.Forms.Padding(4);
             this.inputTLP.Name = "inputTLP";
             this.inputTLP.RowCount = 15;
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.308387F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.793416F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.277871F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.671215F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.960485F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.020961F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.733535F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.41177F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.41177F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.416788F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.416788F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.415184F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.41177F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.33436F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.415695F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.inputTLP.Size = new System.Drawing.Size(758, 696);
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.004104F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.005639F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.375932F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.783234F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.528277F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.778776F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.199679F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.198968F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.198969F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.197284F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.197284F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.194549F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.779368F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.77471F));
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.783234F));
+            this.inputTLP.Size = new System.Drawing.Size(702, 683);
             this.inputTLP.TabIndex = 4;
             // 
             // toolStrip6
@@ -245,10 +249,10 @@
             this.toolStripLabel12,
             this.nFactorBox});
             this.toolStrip6.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip6.Location = new System.Drawing.Point(0, 311);
+            this.toolStrip6.Location = new System.Drawing.Point(0, 317);
             this.toolStrip6.Name = "toolStrip6";
             this.toolStrip6.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip6.Size = new System.Drawing.Size(758, 30);
+            this.toolStrip6.Size = new System.Drawing.Size(702, 28);
             this.toolStrip6.TabIndex = 23;
             this.toolStrip6.Text = "toolStrip10";
             // 
@@ -258,7 +262,7 @@
             this.toolStripLabel11.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel11.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
             this.toolStripLabel11.Name = "toolStripLabel11";
-            this.toolStripLabel11.Size = new System.Drawing.Size(50, 27);
+            this.toolStripLabel11.Size = new System.Drawing.Size(50, 25);
             this.toolStripLabel11.Text = "WGt";
             // 
             // WGtBox
@@ -269,14 +273,14 @@
             this.WGtBox.Margin = new System.Windows.Forms.Padding(92, 0, 1, 0);
             this.WGtBox.Name = "WGtBox";
             this.WGtBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.WGtBox.Size = new System.Drawing.Size(191, 30);
+            this.WGtBox.Size = new System.Drawing.Size(170, 28);
             this.WGtBox.Text = "0.5";
             this.WGtBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 28);
             // 
             // toolStripLabel12
             // 
@@ -284,7 +288,7 @@
             this.toolStripLabel12.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel12.Margin = new System.Windows.Forms.Padding(1, 1, 0, 2);
             this.toolStripLabel12.Name = "toolStripLabel12";
-            this.toolStripLabel12.Size = new System.Drawing.Size(81, 27);
+            this.toolStripLabel12.Size = new System.Drawing.Size(81, 25);
             this.toolStripLabel12.Text = "n Factor";
             // 
             // nFactorBox
@@ -292,10 +296,10 @@
             this.nFactorBox.AcceptsReturn = true;
             this.nFactorBox.AcceptsTab = true;
             this.nFactorBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nFactorBox.Margin = new System.Windows.Forms.Padding(76, 0, 1, 0);
+            this.nFactorBox.Margin = new System.Windows.Forms.Padding(75, 0, 1, 0);
             this.nFactorBox.Name = "nFactorBox";
             this.nFactorBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.nFactorBox.Size = new System.Drawing.Size(191, 30);
+            this.nFactorBox.Size = new System.Drawing.Size(170, 28);
             this.nFactorBox.Text = "1";
             this.nFactorBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -313,10 +317,10 @@
             this.toolStripLabel10,
             this.pEpiBox});
             this.toolStrip5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip5.Location = new System.Drawing.Point(0, 371);
+            this.toolStrip5.Location = new System.Drawing.Point(0, 373);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip5.Size = new System.Drawing.Size(758, 30);
+            this.toolStrip5.Size = new System.Drawing.Size(702, 28);
             this.toolStrip5.TabIndex = 22;
             this.toolStrip5.Text = "toolStrip10";
             // 
@@ -326,7 +330,7 @@
             this.toolStripLabel3.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel3.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(44, 27);
+            this.toolStripLabel3.Size = new System.Drawing.Size(44, 25);
             this.toolStripLabel3.Text = "pTh";
             // 
             // pThBox
@@ -337,14 +341,14 @@
             this.pThBox.Margin = new System.Windows.Forms.Padding(98, 0, 1, 0);
             this.pThBox.Name = "pThBox";
             this.pThBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.pThBox.Size = new System.Drawing.Size(191, 30);
+            this.pThBox.Size = new System.Drawing.Size(170, 28);
             this.pThBox.Text = "0.5";
             this.pThBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
             // 
             // toolStripLabel10
             // 
@@ -352,7 +356,7 @@
             this.toolStripLabel10.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel10.Margin = new System.Windows.Forms.Padding(1, 1, 0, 2);
             this.toolStripLabel10.Name = "toolStripLabel10";
-            this.toolStripLabel10.Size = new System.Drawing.Size(49, 27);
+            this.toolStripLabel10.Size = new System.Drawing.Size(49, 25);
             this.toolStripLabel10.Text = "pEpi";
             // 
             // pEpiBox
@@ -360,10 +364,10 @@
             this.pEpiBox.AcceptsReturn = true;
             this.pEpiBox.AcceptsTab = true;
             this.pEpiBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pEpiBox.Margin = new System.Windows.Forms.Padding(108, 0, 1, 0);
+            this.pEpiBox.Margin = new System.Windows.Forms.Padding(106, 0, 1, 0);
             this.pEpiBox.Name = "pEpiBox";
             this.pEpiBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.pEpiBox.Size = new System.Drawing.Size(191, 30);
+            this.pEpiBox.Size = new System.Drawing.Size(170, 28);
             this.pEpiBox.Text = "1";
             this.pEpiBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -381,10 +385,10 @@
             this.toolStripLabel7,
             this.kepiB});
             this.chCfgTS.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.chCfgTS.Location = new System.Drawing.Point(0, 341);
+            this.chCfgTS.Location = new System.Drawing.Point(0, 345);
             this.chCfgTS.Name = "chCfgTS";
             this.chCfgTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.chCfgTS.Size = new System.Drawing.Size(758, 30);
+            this.chCfgTS.Size = new System.Drawing.Size(702, 28);
             this.chCfgTS.TabIndex = 19;
             this.chCfgTS.Text = "toolStrip10";
             // 
@@ -394,7 +398,7 @@
             this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel1.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(43, 27);
+            this.toolStripLabel1.Size = new System.Drawing.Size(43, 25);
             this.toolStripLabel1.Text = "kTh";
             // 
             // kthB
@@ -405,14 +409,14 @@
             this.kthB.Margin = new System.Windows.Forms.Padding(98, 0, 1, 0);
             this.kthB.Name = "kthB";
             this.kthB.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.kthB.Size = new System.Drawing.Size(191, 30);
+            this.kthB.Size = new System.Drawing.Size(170, 28);
             this.kthB.Text = "0.5";
             this.kthB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator20
             // 
             this.toolStripSeparator20.Name = "toolStripSeparator20";
-            this.toolStripSeparator20.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator20.Size = new System.Drawing.Size(6, 28);
             // 
             // toolStripLabel7
             // 
@@ -420,7 +424,7 @@
             this.toolStripLabel7.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel7.Margin = new System.Windows.Forms.Padding(1, 1, 0, 2);
             this.toolStripLabel7.Name = "toolStripLabel7";
-            this.toolStripLabel7.Size = new System.Drawing.Size(48, 27);
+            this.toolStripLabel7.Size = new System.Drawing.Size(48, 25);
             this.toolStripLabel7.Text = "kEpi";
             // 
             // kepiB
@@ -431,7 +435,7 @@
             this.kepiB.Margin = new System.Windows.Forms.Padding(109, 0, 1, 0);
             this.kepiB.Name = "kepiB";
             this.kepiB.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.kepiB.Size = new System.Drawing.Size(191, 30);
+            this.kepiB.Size = new System.Drawing.Size(170, 28);
             this.kepiB.Text = "1";
             this.kepiB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -449,10 +453,10 @@
             this.toolStripLabel5,
             this.cfgB});
             this.toolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip4.Location = new System.Drawing.Point(0, 281);
+            this.toolStrip4.Location = new System.Drawing.Point(0, 289);
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip4.Size = new System.Drawing.Size(758, 30);
+            this.toolStrip4.Size = new System.Drawing.Size(702, 28);
             this.toolStrip4.TabIndex = 18;
             this.toolStrip4.Text = "toolStrip10";
             // 
@@ -462,7 +466,7 @@
             this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel6.Margin = new System.Windows.Forms.Padding(1, 1, 0, 2);
             this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(99, 27);
+            this.toolStripLabel6.Size = new System.Drawing.Size(99, 25);
             this.toolStripLabel6.Text = "Bell factor";
             // 
             // bellfactorBox
@@ -473,14 +477,14 @@
             this.bellfactorBox.Margin = new System.Windows.Forms.Padding(44, 0, 1, 0);
             this.bellfactorBox.Name = "bellfactorBox";
             this.bellfactorBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bellfactorBox.Size = new System.Drawing.Size(191, 30);
+            this.bellfactorBox.Size = new System.Drawing.Size(170, 28);
             this.bellfactorBox.Text = "1";
             this.bellfactorBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 28);
             // 
             // toolStripLabel5
             // 
@@ -488,16 +492,16 @@
             this.toolStripLabel5.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel5.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(62, 27);
-            this.toolStripLabel5.Text = "Mode";
+            this.toolStripLabel5.Size = new System.Drawing.Size(131, 25);
+            this.toolStripLabel5.Text = "Configuration";
             // 
             // cfgB
             // 
             this.cfgB.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cfgB.Margin = new System.Windows.Forms.Padding(94, 0, 1, 0);
+            this.cfgB.Margin = new System.Windows.Forms.Padding(24, 0, 1, 0);
             this.cfgB.Name = "cfgB";
             this.cfgB.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cfgB.Size = new System.Drawing.Size(190, 30);
+            this.cfgB.Size = new System.Drawing.Size(170, 28);
             this.cfgB.Text = "0";
             // 
             // chTS
@@ -513,10 +517,10 @@
             this.chlenghtlabel,
             this.chlenB});
             this.chTS.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.chTS.Location = new System.Drawing.Point(0, 251);
+            this.chTS.Location = new System.Drawing.Point(0, 261);
             this.chTS.Name = "chTS";
             this.chTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.chTS.Size = new System.Drawing.Size(758, 30);
+            this.chTS.Size = new System.Drawing.Size(702, 28);
             this.chTS.TabIndex = 17;
             this.chTS.Text = "toolStrip3";
             // 
@@ -525,30 +529,31 @@
             this.chdiameterlabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.chdiameterlabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chdiameterlabel.Name = "chdiameterlabel";
-            this.chdiameterlabel.Size = new System.Drawing.Size(143, 27);
-            this.chdiameterlabel.Text = "Diameter (mm)";
+            this.chdiameterlabel.Size = new System.Drawing.Size(120, 25);
+            this.chdiameterlabel.Text = "Radius (mm)";
             // 
             // chdiamB
             // 
             this.chdiamB.AcceptsReturn = true;
             this.chdiamB.AcceptsTab = true;
             this.chdiamB.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chdiamB.Margin = new System.Windows.Forms.Padding(24, 0, 1, 0);
             this.chdiamB.Name = "chdiamB";
             this.chdiamB.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.chdiamB.Size = new System.Drawing.Size(191, 30);
+            this.chdiamB.Size = new System.Drawing.Size(170, 28);
             this.chdiamB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 28);
             // 
             // chlenghtlabel
             // 
             this.chlenghtlabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.chlenghtlabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chlenghtlabel.Name = "chlenghtlabel";
-            this.chlenghtlabel.Size = new System.Drawing.Size(122, 27);
+            this.chlenghtlabel.Size = new System.Drawing.Size(122, 25);
             this.chlenghtlabel.Text = "Lenght (mm)";
             // 
             // chlenB
@@ -559,7 +564,7 @@
             this.chlenB.Margin = new System.Windows.Forms.Padding(35, 0, 1, 0);
             this.chlenB.Name = "chlenB";
             this.chlenB.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.chlenB.Size = new System.Drawing.Size(191, 30);
+            this.chlenB.Size = new System.Drawing.Size(170, 28);
             this.chlenB.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // toolStrip8
@@ -570,10 +575,10 @@
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.descriplbl,
             this.descripBox});
-            this.toolStrip8.Location = new System.Drawing.Point(0, 83);
+            this.toolStrip8.Location = new System.Drawing.Point(0, 41);
             this.toolStrip8.Name = "toolStrip8";
             this.toolStrip8.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip8.Size = new System.Drawing.Size(758, 22);
+            this.toolStrip8.Size = new System.Drawing.Size(702, 41);
             this.toolStrip8.TabIndex = 15;
             this.toolStrip8.Text = "toolStrip8";
             // 
@@ -581,19 +586,20 @@
             // 
             this.descriplbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.descriplbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriplbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.descriplbl.ForeColor = System.Drawing.Color.Green;
             this.descriplbl.Margin = new System.Windows.Forms.Padding(0, 1, 19, 2);
             this.descriplbl.Name = "descriplbl";
-            this.descriplbl.Size = new System.Drawing.Size(110, 19);
+            this.descriplbl.Size = new System.Drawing.Size(110, 38);
             this.descriplbl.Text = "Description";
+            this.descriplbl.ToolTipText = "Provide some description for the sample";
             // 
             // descripBox
             // 
-            this.descripBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.descripBox.BackColor = System.Drawing.Color.DimGray;
             this.descripBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descripBox.ForeColor = System.Drawing.Color.Lime;
             this.descripBox.Name = "descripBox";
-            this.descripBox.Size = new System.Drawing.Size(560, 22);
+            this.descripBox.Size = new System.Drawing.Size(520, 41);
             // 
             // toolStrip2
             // 
@@ -603,11 +609,11 @@
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel8});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 656);
+            this.toolStrip2.Location = new System.Drawing.Point(0, 643);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip2.Size = new System.Drawing.Size(758, 40);
+            this.toolStrip2.Size = new System.Drawing.Size(702, 40);
             this.toolStrip2.TabIndex = 14;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -629,25 +635,27 @@
             this.toolStrip7.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.samp3lbl,
             this.toolStripLabel9});
             this.toolStrip7.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip7.Location = new System.Drawing.Point(0, 401);
             this.toolStrip7.Name = "toolStrip7";
             this.toolStrip7.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip7.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip7.Size = new System.Drawing.Size(758, 30);
+            this.toolStrip7.Size = new System.Drawing.Size(702, 32);
             this.toolStrip7.TabIndex = 13;
             this.toolStrip7.Text = "toolStrip2";
             // 
             // toolStripLabel9
             // 
+            this.toolStripLabel9.AutoToolTip = true;
             this.toolStripLabel9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLabel9.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.toolStripLabel9.Margin = new System.Windows.Forms.Padding(0, 1, 12, 2);
+            this.toolStripLabel9.ForeColor = System.Drawing.Color.Cyan;
+            this.toolStripLabel9.Margin = new System.Windows.Forms.Padding(80, 1, 12, 2);
             this.toolStripLabel9.Name = "toolStripLabel9";
-            this.toolStripLabel9.Size = new System.Drawing.Size(121, 25);
-            this.toolStripLabel9.Text = "Composition";
+            this.toolStripLabel9.Size = new System.Drawing.Size(216, 25);
+            this.toolStripLabel9.Text = "Sample composition for";
             // 
             // toolStrip3
             // 
@@ -657,25 +665,28 @@
             this.toolStrip3.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.samp2lbl,
             this.toolStripLabel4});
             this.toolStrip3.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip3.Location = new System.Drawing.Point(0, 226);
+            this.toolStrip3.Location = new System.Drawing.Point(0, 233);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip3.Size = new System.Drawing.Size(758, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(702, 28);
             this.toolStrip3.TabIndex = 11;
             this.toolStrip3.Text = "toolStrip2";
             // 
             // toolStripLabel4
             // 
+            this.toolStripLabel4.AutoToolTip = true;
             this.toolStripLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.toolStripLabel4.Margin = new System.Windows.Forms.Padding(0, 1, 17, 2);
+            this.toolStripLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.toolStripLabel4.Margin = new System.Windows.Forms.Padding(80, 1, 12, 2);
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(151, 25);
-            this.toolStripLabel4.Text = "Source variables";
+            this.toolStripLabel4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripLabel4.Size = new System.Drawing.Size(279, 25);
+            this.toolStripLabel4.Text = "Neutron Source parameters for";
             // 
             // toolStrip1
             // 
@@ -685,13 +696,15 @@
             this.toolStrip1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel2});
+            this.toolStripLabel2,
+            this.samp1lbl,
+            this.toolStripLabel15});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(0, 105);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 111);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip1.Size = new System.Drawing.Size(758, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(702, 32);
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip2";
             // 
@@ -702,8 +715,7 @@
             this.toolStripLabel2.ForeColor = System.Drawing.Color.Yellow;
             this.toolStripLabel2.Margin = new System.Windows.Forms.Padding(0, 1, 12, 2);
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(156, 25);
-            this.toolStripLabel2.Text = "Sample variables";
+            this.toolStripLabel2.Size = new System.Drawing.Size(0, 0);
             // 
             // unitSC
             // 
@@ -715,8 +727,8 @@
             // unitSC.Panel1
             // 
             this.unitSC.Panel1.Controls.Add(this.nameToolStrip);
-            this.unitSC.Size = new System.Drawing.Size(746, 31);
-            this.unitSC.SplitterDistance = 421;
+            this.unitSC.Size = new System.Drawing.Size(690, 29);
+            this.unitSC.SplitterDistance = 378;
             this.unitSC.SplitterWidth = 7;
             this.unitSC.TabIndex = 8;
             // 
@@ -731,7 +743,7 @@
             this.nameToolStrip.Location = new System.Drawing.Point(0, 0);
             this.nameToolStrip.Name = "nameToolStrip";
             this.nameToolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.nameToolStrip.Size = new System.Drawing.Size(421, 31);
+            this.nameToolStrip.Size = new System.Drawing.Size(378, 29);
             this.nameToolStrip.TabIndex = 2;
             this.nameToolStrip.Text = "toolStrip5";
             // 
@@ -741,17 +753,18 @@
             this.toolStripLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.toolStripLabel14.Margin = new System.Windows.Forms.Padding(0, 1, 19, 2);
             this.toolStripLabel14.Name = "toolStripLabel14";
-            this.toolStripLabel14.Size = new System.Drawing.Size(64, 28);
-            this.toolStripLabel14.Text = "Name";
+            this.toolStripLabel14.Size = new System.Drawing.Size(75, 26);
+            this.toolStripLabel14.Text = "Sample";
+            this.toolStripLabel14.ToolTipText = "Name automatically generated, but you can change it";
             // 
             // nameB
             // 
             this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameB.ForeColor = System.Drawing.Color.White;
-            this.nameB.Margin = new System.Windows.Forms.Padding(41, 0, 1, 0);
+            this.nameB.Margin = new System.Windows.Forms.Padding(30, 0, 1, 0);
             this.nameB.Name = "nameB";
-            this.nameB.Size = new System.Drawing.Size(250, 31);
+            this.nameB.Size = new System.Drawing.Size(230, 29);
             // 
             // sampleDGV
             // 
@@ -765,7 +778,7 @@
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Gold;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -797,7 +810,7 @@
             this.sampleDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.sampleDGV.EnableHeadersVisualStyles = false;
             this.sampleDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.sampleDGV.Location = new System.Drawing.Point(6, 136);
+            this.sampleDGV.Location = new System.Drawing.Point(6, 149);
             this.sampleDGV.Margin = new System.Windows.Forms.Padding(6);
             this.sampleDGV.MultiSelect = false;
             this.sampleDGV.Name = "sampleDGV";
@@ -809,21 +822,8 @@
             this.inputTLP.SetRowSpan(this.sampleDGV, 2);
             this.sampleDGV.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.sampleDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.sampleDGV.Size = new System.Drawing.Size(746, 84);
+            this.sampleDGV.Size = new System.Drawing.Size(690, 78);
             this.sampleDGV.TabIndex = 16;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 46);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 34);
-            this.tableLayoutPanel1.TabIndex = 20;
             // 
             // errorProvider1
             // 
@@ -832,6 +832,19 @@
             // errorProvider2
             // 
             this.errorProvider2.ContainerControl = this;
+            // 
+            // barTLP
+            // 
+            this.barTLP.ColumnCount = 2;
+            this.barTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.barTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.barTLP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.barTLP.Location = new System.Drawing.Point(3, 85);
+            this.barTLP.Name = "barTLP";
+            this.barTLP.RowCount = 1;
+            this.barTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.barTLP.Size = new System.Drawing.Size(696, 23);
+            this.barTLP.TabIndex = 20;
             // 
             // gross1DataGridViewTextBoxColumn
             // 
@@ -919,13 +932,52 @@
             this.SampleBS.DataMember = "SubSamples";
             this.SampleBS.DataSource = typeof(DB.LINAA);
             // 
+            // toolStripLabel15
+            // 
+            this.toolStripLabel15.AutoToolTip = true;
+            this.toolStripLabel15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLabel15.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripLabel15.ForeColor = System.Drawing.Color.Yellow;
+            this.toolStripLabel15.Margin = new System.Windows.Forms.Padding(67, 1, 12, 2);
+            this.toolStripLabel15.Name = "toolStripLabel15";
+            this.toolStripLabel15.Size = new System.Drawing.Size(186, 25);
+            this.toolStripLabel15.Text = "Sample variables for";
+            // 
+            // samp1lbl
+            // 
+            this.samp1lbl.BackColor = System.Drawing.Color.Gray;
+            this.samp1lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.samp1lbl.ForeColor = System.Drawing.Color.Yellow;
+            this.samp1lbl.Name = "samp1lbl";
+            this.samp1lbl.Size = new System.Drawing.Size(79, 32);
+            this.samp1lbl.Text = "Sample";
+            // 
+            // samp2lbl
+            // 
+            this.samp2lbl.BackColor = System.Drawing.Color.Gray;
+            this.samp2lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.samp2lbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.samp2lbl.Name = "samp2lbl";
+            this.samp2lbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.samp2lbl.Size = new System.Drawing.Size(79, 32);
+            this.samp2lbl.Text = "Sample";
+            // 
+            // samp3lbl
+            // 
+            this.samp3lbl.BackColor = System.Drawing.Color.Gray;
+            this.samp3lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.samp3lbl.ForeColor = System.Drawing.Color.Cyan;
+            this.samp3lbl.Name = "samp3lbl";
+            this.samp3lbl.Size = new System.Drawing.Size(79, 32);
+            this.samp3lbl.Text = "Sample";
+            // 
             // ucComposition1
             // 
             this.ucComposition1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucComposition1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucComposition1.Location = new System.Drawing.Point(3, 434);
+            this.ucComposition1.Location = new System.Drawing.Point(3, 436);
             this.ucComposition1.Name = "ucComposition1";
-            this.ucComposition1.Size = new System.Drawing.Size(752, 219);
+            this.ucComposition1.Size = new System.Drawing.Size(696, 204);
             this.ucComposition1.TabIndex = 21;
             // 
             // ucSSFData
@@ -936,11 +988,12 @@
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 14F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ucSSFData";
-            this.Size = new System.Drawing.Size(758, 854);
+            this.Size = new System.Drawing.Size(702, 854);
             this.dgvCMS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
             this.UnitSSFSC.Panel1.ResumeLayout(false);
+            this.UnitSSFSC.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UnitSSFSC)).EndInit();
             this.UnitSSFSC.ResumeLayout(false);
             this.inputTLP.ResumeLayout(false);
@@ -1027,17 +1080,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator20;
         private System.Windows.Forms.ToolStripLabel toolStripLabel7;
         private System.Windows.Forms.ToolStripTextBox kepiB;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gross1DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn radiusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fillHeightDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn calcDensityDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn volDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn alphaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dryNetDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn comparatorDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ucComposition ucComposition1;
         private System.Windows.Forms.ToolStrip toolStrip5;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
@@ -1051,5 +1093,20 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel12;
         private System.Windows.Forms.ToolStripTextBox nFactorBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gross1DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn radiusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fillHeightDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn calcDensityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn volDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn alphaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dryNetDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn comparatorDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.TableLayoutPanel barTLP;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel15;
+        private System.Windows.Forms.ToolStripTextBox samp3lbl;
+        private System.Windows.Forms.ToolStripTextBox samp2lbl;
+        private System.Windows.Forms.ToolStripTextBox samp1lbl;
     }
 }

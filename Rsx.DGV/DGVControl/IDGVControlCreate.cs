@@ -13,7 +13,7 @@ namespace Rsx.DGV
    
         void CreateButtonEvents(ref ToolStripButton[] items);
         bool CreateDGVEvents();
-        bool CreateDGVEvents(ref DataGridView[] dgvs);
+      //  bool CreateDGVEvents(ref DataGridView[] dgvs);
        
       
         void SetContext(string controlHeader, ref DataGridView[] dgvs, ContextMenuStrip cms);

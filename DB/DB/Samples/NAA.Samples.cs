@@ -706,10 +706,11 @@ namespace DB
                 }
                 else
                 {
+                    //SET THE RABBIT
                     UnitRow u = UnitRow;
                     if (!EC.IsNuDelDetch(u))
                     {
-                        u.SetRabbitContainer(ref v);
+                        u.SetParent(ref v);
                     }
                 }
             }

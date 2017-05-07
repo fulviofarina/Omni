@@ -146,7 +146,7 @@ namespace DB.UI
                     Interface.IBS.Update<LINAA.UnitRow>(MatSSF.UNIT);
                     string msg = "Finished for Unit " + MatSSF.UNIT.Name;
                     Interface.IReport.Msg(msg, "Done");
-                    Interface.IReport.Speak(msg);
+                //    Interface.IReport.Speak(msg);
 
                 };
 
@@ -604,6 +604,8 @@ namespace DB.UI
             this.nameB.ComboBox.DataSource = bsSample;
 
             this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+           
             // column = SSamples.VolColumn.ColumnName;
             // this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
             // this.volLbl.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
@@ -629,7 +631,7 @@ namespace DB.UI
             Hashtable bindings = BS.ArrayOfBindings(ref bs, rounding);
 
             string column;
-            column = Unit.ChDiameterColumn.ColumnName;
+            column = Unit.ChRadiusColumn.ColumnName;
             this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
 
             column = Unit.ChLengthColumn.ColumnName;

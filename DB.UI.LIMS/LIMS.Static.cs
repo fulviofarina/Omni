@@ -117,7 +117,7 @@ namespace DB.UI
             form.Visible = show;
         }
 
-        public static UserControl CreateUI(string controlHeader, object[] args=null)
+        public static UserControl CreateUI(string controlHeader, object[] args=null, bool noDGVControl = false)
         {
             UserControl control = null;
             Rsx.DGV.Control.Refresher refresher = null;
@@ -142,6 +142,8 @@ namespace DB.UI
             }
             UserControls.Add(control);
 
+            if (noDGVControl) return control;
+                
             //create the DGV controller... and
             //set methods...
             Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref LIMS.IFind);
@@ -165,8 +167,8 @@ namespace DB.UI
                 cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
 
                 //create events
-                cv.CreateDGVEvents(ref dgvs);
-                dgvs = null;
+                cv.CreateDGVEvents();
+          //      dgvs = null;
             }
 
             ToolStripButton[] items = UIControl.GetChildControls<ToolStrip>(control)
@@ -176,6 +178,10 @@ namespace DB.UI
 
             control.Tag = cv;   //sets the CV as a TAG for the control
             cv.UsrControl = control; //set the control as a tag for the CV
+
+
+
+
 
             return control;
         }
@@ -387,7 +393,7 @@ namespace DB.UI
 
             ctr.SetContext("Explorer", ref dgv, LIMS.Form.CMS);
 
-            ctr.CreateDGVEvents(ref dgv);
+            ctr.CreateDGVEvents();
 
             ctr.SaveMethod = Linaa.Save;
             ctr.SetSaver(explorer.saveBtton);

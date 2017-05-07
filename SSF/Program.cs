@@ -18,16 +18,11 @@ namespace SSF
         // [STAThread]
         public static Form CreateSSFUserInterface()
         {
-            ucSSF ucSSF = null;
-            ucSSF = new ucSSF();
-            ucSSF.Set(ref LIMS.Interface);
+         
 
             IucPreferences preferences = LIMS.PreferencesUI();
-            Form box = new AboutBox();
-            IucOptions options = LIMS.OptionsUI(ref box);
-
-            ucSSF.AttachCtrl(ref options);
-            ucSSF.AttachCtrl(ref preferences);
+            Form aboutbox = new AboutBox();
+            IucOptions options = LIMS.OptionsUI(ref aboutbox);
 
             UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
             LIMS.CreateForm("Samples", ref control, false);
@@ -37,35 +32,61 @@ namespace SSF
             ucProjectBox = ucSubSamples.projectbox;
             BindingNavigator aBindingNavigator = ucSubSamples.BN;
 
+            ucUnit units = LIMS.CreateUI(ControlNames.Units,null,true) as ucUnit;
+
+            ucSSF ucSSF =new ucSSF();
+            ucSSF.Set(ref LIMS.Interface);
+
+
+            ucSSF.AttachCtrl(ref options);
+            ucSSF.AttachCtrl(ref preferences);
+
             ucSSF.AttachCtrl(ref ucProjectBox);
             ucSSF.AttachCtrl(ref aBindingNavigator);
 
-            ucUnit units = LIMS.CreateUI(ControlNames.Units) as ucUnit;
-
             ucSSF.AttachCtrl(ref units);
+
 
             Pop msn = LIMS.Interface.IReport.Msn;
             Form form = msn.ParentForm;//
-            ucSSF.AttachCtrl(ref msn);
-            if (form == null) form = new Form();
-            form.Opacity = 0;
-            // form.Dispose(); form = new Form();
-            form.AutoSizeMode = AutoSizeMode.GrowOnly;
-            form.AutoSize = true;
-            IntPtr Hicon = Properties.Resources.Logo.GetHicon();
-            Icon myIcon = Icon.FromHandle(Hicon);
-            form.Icon = myIcon;
-            form.Text = TITLE;
-            form.TopMost = false;
-            form.ShowInTaskbar = true;
-            form.ShowIcon = true;
-            form.MaximizeBox = false;
-            form.ControlBox = true;
-            form.StartPosition = FormStartPosition.CenterScreen;
 
-            // form.Enabled = false;
 
             Creator.CallBack = delegate
+            {
+
+             
+
+              
+
+                if (form == null) form = new Form();
+              
+             
+                form.AutoSizeMode = AutoSizeMode.GrowOnly;
+                form.AutoSize = true;
+                IntPtr Hicon = Properties.Resources.Logo.GetHicon();
+                Icon myIcon = Icon.FromHandle(Hicon);
+                form.Icon = myIcon;
+                form.Text = TITLE;
+                form.TopMost = false;
+                form.ShowInTaskbar = true;
+                form.ShowIcon = true;
+                form.MaximizeBox = false;
+                form.ControlBox = true;
+                form.StartPosition = FormStartPosition.CenterScreen;
+
+                form.FormClosing += Form_FormClosing;
+
+                form.Opacity = 0;
+                ucSSF.AttachCtrl(ref msn);
+                form.Controls.Add(ucSSF);
+                form.Opacity = 100;
+
+               
+
+            };
+            // form.Enabled = false;
+
+            Creator.LastCallBack = delegate
             {
                 Application.DoEvents();
 
@@ -80,13 +101,12 @@ namespace SSF
                 ucProjectBox.Project = lastProject;
                 ucProjectBox.Refresher();
 
+                Application.DoEvents();
+
                 LIMS.Interface.IReport.SpeakLoadingFinished();
             };
 
-            form.Controls.Add(ucSSF);
-            form.FormClosing += Form_FormClosing;
-
-            form.Opacity = 100;
+      
 
             return form;
         }
@@ -161,6 +181,7 @@ namespace SSF
             }
             catch (Exception ex)
             {
+
                 // MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
             }
         }

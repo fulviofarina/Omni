@@ -11,8 +11,24 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
-       
-        public static bool RUN(string[] units,  bool hide = true)
+        public static bool RUN(string[] units, bool hide = true)
+        {
+            string workDir = StartupPath;
+            //  workDir += "\\Temp";
+            string scriptFile = "ssf";
+            string basepath = workDir + "\\" + scriptFile;
+
+            foreach (string item in units)
+            {
+                //basepath = "/c " + basepath + ".bat";
+                string cmd = "cmd";
+                string[] ioFile = new string[] { item, item + ".txt" };
+                IO.Process(cmd, "/c matssf2.exe", workDir, ioFile);
+            }
+            return true;
+        }
+  /*
+   *      public static bool RUN(string[] units,  bool hide = true)
         {
             string content = string.Empty;
           //  string matSSFEXE = "matssf2.exe";
@@ -47,23 +63,13 @@ content += "U.ShellExecute \"matssf2.exe\", \"\", \"\", \"runas\", 1"+terminate;
 
             File.WriteAllText(basepath+ ".vbs", content);
 
-            //run bat files that create the VB SCRIPTS
-            //   IO.Process(path, string.Empty, workDir);
-
-            //run vb.vbs script!!
-            //     string scriptFile = "vb.vbs";
-            //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
+           
+             //now execute the VB scripts 1 and 2 for Container and Server MSMQ installation
 
             content = "cmd /c ssf.vbs";
             File.WriteAllText(basepath+ ".bat", content);
 
-            foreach (string item in units)
-            {
-                //basepath = "/c " + basepath + ".bat";
-                string cmd = "cmd";
-                string[] ioFile = new string[] { item, item + ".txt" };
-                IO.Process(cmd, "/c matssf2.exe", workDir, ioFile);
-            }
+   
 
          
          
@@ -71,7 +77,7 @@ content += "U.ShellExecute \"matssf2.exe\", \"\", \"\", \"runas\", 1"+terminate;
 
         }
 
-     
+     */
 
 
         /// <summary>
@@ -244,8 +250,7 @@ content += "U.ShellExecute \"matssf2.exe\", \"\", \"\", \"runas\", 1"+terminate;
         public static bool   OUTPUT(string unitName)
         {
             string File = startupPath + unitName + ".txt";
-
-        
+      
 
             //read file data
             string lecture =IO.ReadFile(File);
@@ -255,7 +260,7 @@ content += "U.ShellExecute \"matssf2.exe\", \"\", \"\", \"runas\", 1"+terminate;
             //fill the unit data
             fillUnitWithText(ref array);
             //fill the matssf table
-            LINAA.MatSSFDataTable table = fillTable(array.ToList());
+            LINAA.MatSSFDataTable table = UNIT.FillSSFTable(array.ToList());
 
             UNIT.SSFTable =   Tables.MakeDTBytes(ref table, startupPath);
 

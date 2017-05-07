@@ -69,7 +69,7 @@ namespace DB
                 }
             }
 
-            public void SetParent(ref DataRow row)
+            public void SetParent<T>(ref T rowParent)
             {
                 throw new NotImplementedException();
             }

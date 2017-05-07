@@ -22,7 +22,7 @@ namespace DB
     internal interface IRow
     {
         void Check(DataColumn Column);
-        void SetParent(ref DataRow row);
+        void SetParent<T>(ref T rowParent);
     }
 }
 
@@ -33,7 +33,7 @@ namespace DB
         partial class ChannelsRow : IRow
         {
 
-            public void SetParent(ref DataRow row)
+            public void SetParent<T>(ref T row)
             {
                 throw new NotImplementedException();
             }

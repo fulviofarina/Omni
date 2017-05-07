@@ -144,7 +144,7 @@ namespace DB
                     u.SampleID = s.SubSamplesID;
                     this.tableUnit.AddUnitRow(u);
                     ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
-                    u.SetChannel(ref c);
+                    u.SetParent(ref c);
                     list.Add(u);
                 }
             }
