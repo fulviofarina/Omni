@@ -80,7 +80,7 @@ namespace DB
                     {
                         nonNullable = new DataColumn[]{columnSubSampleName,
                      columnSubSampleCreationDate,columnSubSampleDescription,columnVol,
-                     columnFC, columnCapsuleName, columnMatrixName};
+                     columnFC, columnCapsuleName, columnMatrixName };
                     }
 
                     return nonNullable;
@@ -108,7 +108,7 @@ namespace DB
                     //e.Row.SetColumnError(e.Column, null);
                     LINAA.SubSamplesRow subs = e.Row as LINAA.SubSamplesRow; //cast
 
-                    bool sameValue = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) == 0);
+            //        bool sameValue = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) == 0);
 
                     if (NonNullable.Contains(e.Column)) EC.CheckNull(e.Column, e.Row);
                     else if (e.Column == this.DirectSolcoiColumn)
@@ -134,7 +134,7 @@ namespace DB
                     }
                     else if (e.Column == this.CalcDensityColumn)
                     {
-                        // subs.ValueChanged();
+                        if (subs.IsCalcDensityNull()) subs.CalcDensity = 0;
 
                         if (calMass) subs.CalculateMass();
                         if (calRad)
@@ -321,9 +321,9 @@ namespace DB
             /// <param name="AddifNull"> true for adding the row if not found</param>
             /// <param name="IrrReqID">  irradiation request id to set for the sample only if added</param>
             /// <returns>A non-null SampleRow if AddIfNull is true, otherwise can be null</returns>
-            public SubSamplesRow FindBySample(string sampleName, bool AddifNull, int? IrrReqID)
+            public SubSamplesRow FindBySample(string sampleName, bool AddifNull=false, int? IrrReqID=null)
             {
-                SubSamplesRow sample = this.FindBySample(sampleName);
+                SubSamplesRow sample = this.findBySampleName(sampleName);
                 if (sample == null)
                 {
                     sample = this.NewSubSamplesRow();
@@ -340,7 +340,7 @@ namespace DB
             /// </summary>
             /// <param name="sampleName">name of sample to find</param>
             /// <returns>A SampleRow or null</returns>
-            public SubSamplesRow FindBySample(string sampleName)
+            private SubSamplesRow findBySampleName(string sampleName)
             {
                 string field = this.SubSampleNameColumn.ColumnName;
                 string fieldVal = sampleName.Trim().ToUpper();

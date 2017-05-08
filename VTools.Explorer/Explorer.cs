@@ -43,6 +43,13 @@ namespace VTools
       {
         this.CurrentTable = set.Tables[Box.Text];
         Rsx.Dumb.BS.LinkBS(ref this.BS, CurrentTable, filterbox.Text, sortBox.Text);
+                foreach (DataGridViewColumn item in DGV.Columns)
+                {
+                    if (item.ValueType.Equals(typeof(byte[])))
+                        {
+                        DGV.Columns.RemoveAt(item.Index);
+                    }
+                }
       }
       catch (SystemException ex)
       {

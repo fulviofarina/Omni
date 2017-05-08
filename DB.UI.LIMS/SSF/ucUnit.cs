@@ -17,7 +17,7 @@ namespace DB.UI
         /// <param name="e">     </param>
 
         private int lastIndex = -2;
-        private int lastColInder = -2;
+   //     private int lastColInder = -2;
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -42,13 +42,8 @@ namespace DB.UI
 
                     LINAA.UnitRow unit = row as LINAA.UnitRow;
 
-                    // if ((row as LINAA.UnitRow) == unit) return;
-
                     //   Interface.IDB.MatSSF.Clear();
-                    //if it is a checheakble column box
-                    //then check it automatically
-
-                    //update bindings
+               
 
                     Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
 
@@ -94,6 +89,7 @@ namespace DB.UI
 
             // this.unitDGV.RowHeaderMouseClick += DgvItemSelected; this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
             this.unitDGV.CellMouseClick += cellMouseClick;
+            this.unitDGV.CellMouseClick += DgvItemSelected;
             //  this.SSFDGV.CellMouseClick += cellMouseClick;
          
         

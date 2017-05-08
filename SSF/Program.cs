@@ -18,7 +18,8 @@ namespace SSF
         // [STAThread]
         public static Form CreateSSFUserInterface()
         {
-         
+
+      
 
             IucPreferences preferences = LIMS.PreferencesUI();
             Form aboutbox = new AboutBox();
@@ -38,13 +39,7 @@ namespace SSF
             ucSSF.Set(ref LIMS.Interface);
 
 
-            ucSSF.AttachCtrl(ref options);
-            ucSSF.AttachCtrl(ref preferences);
-
-            ucSSF.AttachCtrl(ref ucProjectBox);
-            ucSSF.AttachCtrl(ref aBindingNavigator);
-
-            ucSSF.AttachCtrl(ref units);
+        
 
 
             Pop msn = LIMS.Interface.IReport.Msn;
@@ -54,9 +49,9 @@ namespace SSF
             Creator.CallBack = delegate
             {
 
-             
 
-              
+               
+
 
                 if (form == null) form = new Form();
               
@@ -77,11 +72,21 @@ namespace SSF
                 form.FormClosing += Form_FormClosing;
 
                 form.Opacity = 0;
+
+                LIMS.Interface.IBS.StartBinding();
+                LIMS.Interface.IBS.ApplyFilters();
+
                 ucSSF.AttachCtrl(ref msn);
+                ucSSF.AttachCtrl(ref options);
+                ucSSF.AttachCtrl(ref preferences);
+                ucSSF.AttachCtrl(ref ucProjectBox);
+                ucSSF.AttachCtrl(ref aBindingNavigator);
+                ucSSF.AttachCtrl(ref units);
+
                 form.Controls.Add(ucSSF);
                 form.Opacity = 100;
 
-               
+            
 
             };
             // form.Enabled = false;
@@ -90,6 +95,7 @@ namespace SSF
             {
                 Application.DoEvents();
 
+           
                 bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
 
                 string lastProject = string.Empty;

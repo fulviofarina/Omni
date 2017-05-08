@@ -270,7 +270,7 @@ namespace DB.UI
 
                         refresher = ucSubSamples.projectbox.Refresher;
                         addedRow = ucSubSamples.RowAdded;
-                        deletedRow = ucSubSamples.RowDeleted;
+                  //      deletedRow = ucSubSamples.RowDeleted;
                         control = (UserControl)ucSubSamples;
 
                         break;

@@ -384,7 +384,10 @@ namespace DB.UI
             }
 
             nameToolStrip.Enabled = enable;
-            this.ucComposition1.Enabled = enable;
+            this.ucComposition1.Controls[0].Visible = enable;
+
+            this.sampleDGV.Enabled = enable;
+
         }
 
         /// <summary>
@@ -401,11 +404,11 @@ namespace DB.UI
                 sampleDGV.DataSource = Interface.IBS.SelectedSubSample;
 
                 //otherwise this shit shows weird text over text
-                Interface.IBS.SelectedSubSample.CurrentChanged += delegate
-                {
-                    this.sampleDGV.Refresh();
+          //      Interface.IBS.SelectedSubSample.CurrentChanged += delegate
+             //   {
+                 //   this.sampleDGV.Refresh();
                     // this.sampleDGV.Select();
-                };
+            //    };
 
                 //link to bindings
                 sampleBindings = setSampleBindings();
@@ -605,7 +608,13 @@ namespace DB.UI
 
             this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-           
+            Binding b1 = BS.ABinding(ref bsSample, column);
+            this.samp1lbl.TextBox.DataBindings.Add(b1);
+            Binding b2 = BS.ABinding(ref bsSample, column);
+            this.samp2lbl.TextBox.DataBindings.Add(b2);
+            Binding b3 = BS.ABinding(ref bsSample, column);
+            this.samp3lbl.TextBox.DataBindings.Add(b3);
+
             // column = SSamples.VolColumn.ColumnName;
             // this.volLbl.TextBox.DataBindings.Add(samplebindings[column] as Binding);
             // this.volLbl.TextBox.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;

@@ -57,9 +57,9 @@ namespace DB
                 /// this.tableUnit.Clear();
                 this.TAM.UnitTableAdapter.FillByIrrReqID(dt, irrReqId);
                 this.tableUnit.Merge(dt, false, MissingSchemaAction.AddWithKey);
-                this.tableUnit.AcceptChanges();
+             
                 this.tableUnit.EndLoadData();
-
+                this.tableUnit.AcceptChanges();
                 // this.MatSSF.Clear(); Hashtable bindings = Dumb.BS.ArrayOfBindings(ref bs, "N4");
             }
             catch (SystemException ex)
@@ -125,6 +125,7 @@ namespace DB
                     // s.IrradiationCode = project;
                     EC.CheckNull(this.SubSamples.SubSampleNameColumn, s);
                 }
+            //    s.CalcDensity = 0;
             }
         }
 
@@ -340,6 +341,7 @@ namespace DB
                 this.IRequestsAverages.BeginLoadData();
                 this.IPeakAverages.BeginLoadData();
                 this.SubSamples.BeginLoadData();
+                this.Unit.BeginLoadData();
             }
             else
             {
@@ -347,7 +349,7 @@ namespace DB
                 this.Peaks.EndLoadData();
                 this.Samples.EndLoadData();
                 this.SubSamples.EndLoadData();
-
+                this.Unit.EndLoadData();
                 this.IRequestsAverages.EndLoadData();
                 this.IPeakAverages.EndLoadData();
             }
@@ -393,8 +395,8 @@ namespace DB
                 tableMonitors.Clear();
                 TAM.MonitorsTableAdapter.DeleteNulls();
                 TAM.MonitorsTableAdapter.Fill(tableMonitors);
-                this.tableMonitors.EndLoadData();
                 tableMonitors.AcceptChanges();
+                this.tableMonitors.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -402,10 +404,7 @@ namespace DB
             }
         }
 
-        public void PopulateSampleRadioisotopes()
-        {
-            //LINAATableAdapters.IRequestsAveragesTableAdapter irsTa = new LINAATableAdapters.IRequestsAveragesTableAdapter();
-        }
+    
 
         public void PopulateStandards()
         {
@@ -423,6 +422,7 @@ namespace DB
                 this.AddException(ex);
             }
         }
+    // / /
 
         public void PopulateSubSamples(Int32 IrReqID)
         {
@@ -449,8 +449,12 @@ namespace DB
                     return;
                 }
 
-                AddSamples(ref newsamples);
+                this.tableSubSamples.BeginLoadData();
+                this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
+                this.tableSubSamples.EndLoadData();
+                this.tableSubSamples.AcceptChanges();
 
+                PopulateUnitsByProject(IrReqID);
                 // this.tableSubSamples.TableNewRow -= new DataTableNewRowEventHandler(this.tableSubSamples.SubSamplesDataTable_TableNewRow);
             }
             catch (SystemException ex)
@@ -459,12 +463,5 @@ namespace DB
             }
         }
 
-        public void AddSamples(ref SubSamplesDataTable newsamples)
-        {
-            this.tableSubSamples.BeginLoadData();
-            this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
-            this.tableSubSamples.EndLoadData();
-            this.tableSubSamples.AcceptChanges();
-        }
     }
 }

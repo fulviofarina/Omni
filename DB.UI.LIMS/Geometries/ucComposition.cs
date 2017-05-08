@@ -10,7 +10,7 @@ namespace DB.UI
     {
         private bool advanced = true;
         private Interface Interface = null;
-
+        BindingSource bsCompositions = null;
         /// <summary>
         /// DGV ITEM SELECTED
         /// </summary>
@@ -24,14 +24,20 @@ namespace DB.UI
                 Dumb.FD(ref this.Linaa);
                 Dumb.FD(ref this.bs);
 
-                this.compositionDGV.DataSource = Interface.IBS.Compositions;
+                //take respective BS
+               bsCompositions = Interface.IBS.SelectedCompositions;
+                BindingSource Bind = Interface.IBS.SelectedMatrix;
+                if (!selectedMatrix)
+                {
+                    Bind = Interface.IBS.Matrix;
+                    bsCompositions = Interface.IBS.Compositions;
+                }
 
-                BindingSource bs = Interface.IBS.SelectedMatrix;
-                if (!selectedMatrix) bs = Interface.IBS.Matrix;
 
+                this.compositionDGV.DataSource = bsCompositions;
                 string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
 
-                Binding mcompoBin = BS.ABinding(ref bs, column);
+                Binding mcompoBin = BS.ABinding(ref Bind, column);
 
                 this.matrixRTB.DataBindings.Add(mcompoBin);
 
@@ -48,6 +54,7 @@ namespace DB.UI
 
         private void focus(object sender, EventArgs e)
         {
+
             SC.Panel2Collapsed = advanced;
             SC.Panel1Collapsed = !advanced;
 

@@ -60,6 +60,14 @@ namespace DB.Tools
             }
         }
 
+        public DataRow Irradiation
+        {
+            get
+            {
+                return (bs.Irradiations.Current as DataRowView)?.Row;
+            }
+        }
+
         /// <summary>
         /// Current Row
         /// </summary>

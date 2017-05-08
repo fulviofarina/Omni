@@ -20,6 +20,10 @@ namespace DB.Tools
         public BindingSource Matrix;
         public BindingSource Compositions;
 
+        public BindingSource SelectedIrradiation;
+        public BindingSource Projects;
+        public BindingSource Orders;
+      //  public BindingSource IrradiationRequests;
         /// <summary>
         /// </summary>
         public BindingSource Monitors;
@@ -33,7 +37,7 @@ namespace DB.Tools
         public BindingSource Rabbit;
 
         public BindingSource Samples;
-
+        public BindingSource SelectedCompositions;
         /// <summary>
         /// Selected only
         /// </summary>
@@ -77,16 +81,27 @@ namespace DB.Tools
 
             Geometry.Filter = string.Empty;
             Geometry.Sort = "CreationDateTime desc";
-            // Dumb.BS.LinkBS(ref Rabbit, Interface.IDB.VialType, column + " = " + "True", innerRadCol);
 
-            // Dumb.BS.LinkBS(ref Vial, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
+       //    Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " IS NULL" ;
+       //     Interface.IBS.SelectedMatrix.Filter = Interface.IDB.Matrix.MatrixIDColumn.ColumnName+ " IS NULL";
 
-            // Dumb.BS.LinkBS(ref Geometry, Interface.IDB.Geometry, string.Empty, );
-            string sortColumn;
-            sortColumn = Interface.IDB.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
-            Irradiations.Sort = sortColumn;
+
+            string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
+            Interface.IBS.SubSamples.Sort = sort;
+
+            sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
+            Interface.IBS.Units.Sort = sort;
+
+
+
+             sort = Interface.IDB.IrradiationRequests.IrradiationStartDateTimeColumn.ColumnName;
+            Irradiations.Sort = sort;
 
             Matrix.Filter = "SubSampleID IS NULL";
+            SelectedMatrix.Filter = Matrix.Filter;
+            SelectedCompositions.Sort = Interface.IDB.Compositions.IDColumn.ColumnName + " desc";
+            Compositions.Sort = Interface.IDB.Compositions.IDColumn.ColumnName + " desc";
+
             Matrix.Sort = "MatrixName desc";
         }
 
@@ -155,7 +170,7 @@ namespace DB.Tools
         public void Update<T>(T r, bool doCascade = true, bool findItself = true)
         {
             Type tipo = typeof(T);
-            if (r == null) return;
+         //  
 
             bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
             bool isUnit = tipo.Equals(typeof(UnitRow));
@@ -177,25 +192,26 @@ namespace DB.Tools
             else if (isMatrix)
             {
                 //
-                updateMatrix(r, findItself);
+                updateMatrix(r, doCascade,findItself);
             }
             else if (tipo.Equals(typeof(VialTypeRow)))
             {
                 //
-                updateVialRabbit(r, findItself);
+                updateVialRabbit(r, doCascade, findItself);
             }
             else if (tipo.Equals(typeof(ChannelsRow)))
             {
                 //
-                updateChannel(r, findItself);
+                updateChannel(r, doCascade, findItself);
             }
             else if (tipo.Equals(typeof(IrradiationRequestsRow)))
             {
                 //
-                updateIrradiationRequest(r, findItself);
+                updateIrradiationRequest(r, doCascade, findItself);
             }
             //now check the errors!!!
             //   if (columnsThatShouldBeOk == null) return;
+            if (Rsx.EC.IsNuDelDetch(r as DataRow)) return;
             DataRow row = r as DataRow;
             if (row.HasErrors)
             {
@@ -244,6 +260,17 @@ namespace DB.Tools
             Matrix = new BindingSource(set,name );
             bindings.Add(name, Matrix);
 
+        //    name = Interface.IDB.IrradiationRequests.TableName;
+       //     IrradiationRequests = new BindingSource(set, name);
+       //     bindings.Add(name, IrradiationRequests);
+
+            name = Interface.IDB.Projects.TableName;
+            Projects = new BindingSource(set, name);
+            bindings.Add(name, Projects);
+
+            name = Interface.IDB.Orders.TableName;
+            Orders = new BindingSource(set, name);
+            bindings.Add(name, Orders);
 
             name = Interface.IDB.VialType.TableName ;
             Rabbit = new BindingSource(set, name);
@@ -259,6 +286,7 @@ namespace DB.Tools
             Irradiations = new BindingSource(set, name);
             bindings.Add(name, Irradiations);
 
+         
 
             name = Interface.IDB.Geometry.TableName;
             Geometry = new BindingSource(set,name );
@@ -304,7 +332,9 @@ namespace DB.Tools
             SelectedChannel = new BindingSource(set,name);
             bindings.Add("Selected"+name, SelectedChannel);
 
-
+            name = inter.IDB.Compositions.TableName;
+            SelectedCompositions = new BindingSource(set, name);
+            bindings.Add("Selected" + name, SelectedCompositions);
             name = Interface.IDB.Matrix.TableName;
             SelectedMatrix = new BindingSource(set, name);
             bindings.Add("Selected" + name, SelectedMatrix);
@@ -315,22 +345,15 @@ namespace DB.Tools
             SelectedSubSample = new BindingSource(set,name);
             bindings.Add("Selected" + name, SelectedSubSample);
 
+            name = Interface.IDB.IrradiationRequests.TableName;
+            SelectedIrradiation = new BindingSource(set, name);
+            bindings.Add("Selected" + name, Irradiations);
 
-
-            setHandlers();
+        
 
             // Units.ListChanged += units_ListChanged;
         }
 
-        private void setHandlers()
-        {
-            SubSamples.CurrentChanged += currentChanged_SubSamples;
-
-            SSFPreferences.ListChanged += listChanged_Preferences;
-            Preferences.ListChanged += listChanged_Preferences;
-            Channels.CurrentChanged += currentChanged_Channels;
-
-            Matrix.CurrentChanged += currentChanged_Matrix;
-        }
+      
     }
 }

@@ -7,40 +7,13 @@ namespace DB.UI
 {
     public partial class ucProjectBox : UserControl
     {
-        public ucProjectBox()
-        {
-            InitializeComponent();
-        }
+        private Action callBack;
 
         private Action hideChildControl;
 
         private Interface Interface;
+
         private bool offline = false;
-
-        public bool Offline
-        {
-            get { return offline; }
-            set { offline = value; }
-        }
-
-        public bool CanSelectProject
-        {
-            set { projectbox.Enabled = value; }
-        }
-
-        public string Project
-        {
-            get { return projectbox.Text; }
-            set { projectbox.Text = value; }
-        }
-
-        public Action HideChildControl
-        {
-            set
-            {
-                hideChildControl = value;
-            }
-        }
 
         public Action CallBack
         {
@@ -55,34 +28,53 @@ namespace DB.UI
             }
         }
 
+        public bool CanSelectProject
+        {
+            set { projectbox.Enabled = value; }
+        }
+
+        public Action HideChildControl
+        {
+            set
+            {
+                hideChildControl = value;
+            }
+        }
+
+        public bool Offline
+        {
+            get { return offline; }
+            set { offline = value; }
+        }
+
+        public string Project
+        {
+            get { return projectbox.Text; }
+            set { projectbox.Text = value; }
+        }
+
         public void Refresher()
         {
             this.KeyUpPressed(this.projectbox, new KeyEventArgs(Keys.Enter));
         }
 
-        // private
-        public Int32 IrrReqID = 0;
-
         /// <summary>
         /// Refreshed the selected project
         /// </summary>
-
-        private Action callBack;
-
         /// </summary> <param name="inter"></param>
         public void Set(ref Interface inter)
         {
             Interface = inter;
-
-            // callBack = CallBack;
 
             projectbox.Items.AddRange(Interface.IPopulate.IProjects.ProjectsList.ToArray());
 
             this.projectbox.KeyUp += KeyUpPressed;
         }
 
-        // EventHandler refresher;
-
+        /// <summary>
+        /// This could be outside since it does not depend on anything
+        /// </summary>
+        /// <param name="ProjectOrOrder"></param>
         private void KeyUpPressed(object sender, KeyEventArgs e)
         {
             if ((e.KeyValue < 47 || e.KeyValue > 105) && e.KeyCode != Keys.Enter) return;
@@ -97,31 +89,38 @@ namespace DB.UI
 
             if (this.projectbox.Enabled == false) return;
 
-            if (isAProjectOrOrder) this.projectbox.Enabled = false;
+            bool makeProject = e.KeyCode == Keys.Enter;
+            //eactivate box because it entered
+            makeProject = makeProject && !isAProjectOrOrder;
 
-            if (!isAProjectOrOrder && e.KeyCode == Keys.Enter)
+            if (isAProjectOrOrder || makeProject) this.projectbox.Enabled = false;
+
+            if (makeProject)
             {
-                this.projectbox.Enabled = false;
-                Interface.IPopulate.MakeAProjectOrOrder(ProjectOrOrder);
-            }
-            else if (isAProjectOrOrder)
-            {
-                Interface.IPopulate.LoadProject(ProjectOrOrder, ref IrrReqID);
+             
+                Interface.IPopulate.CreateProject( ProjectOrOrder);
+                isAProjectOrOrder = true;
             }
 
+            if (isAProjectOrOrder)
+            {
+              
+                Interface.IPopulate.LoadProject(ProjectOrOrder);
+            }
             this.projectbox.Enabled = true;
 
             callBack?.Invoke();
         }
 
-        /// <summary>
-        /// This could be outside since it does not depend on anything
-        /// </summary>
-        /// <param name="ProjectOrOrder"></param>
-
         private void projectlabel_Click(object sender, EventArgs e)
         {
             hideChildControl?.Invoke();
         }
+
+        public ucProjectBox()
+        {
+            InitializeComponent();
+        }
+   
     }
 }

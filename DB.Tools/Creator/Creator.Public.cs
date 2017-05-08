@@ -60,7 +60,8 @@ namespace DB.Tools
 
             Interface.IDB.PopulateColumnExpresions();
 
-            Interface.IBS.ApplyFilters();
+           
+          
             Cursor.Current = Cursors.Default;
 
             Interface.IReport.Msg(LOADING_DB, "Please wait...");

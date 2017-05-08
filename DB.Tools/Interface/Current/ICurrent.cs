@@ -6,6 +6,7 @@ namespace DB.Tools
     public interface ICurrent
     {
         DataRow Channel { get; }
+        DataRow Irradiation { get;  }
         bool IsSpectraPathOk { get; }
         DataRow Matrix { get; }
         DataRow SubSample { get; }

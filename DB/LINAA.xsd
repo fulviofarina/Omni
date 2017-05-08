@@ -7574,7 +7574,7 @@ SELECT UnitID, SampleID, Gt, ChRadius, ChLength, ChCfg, MCL, EXS, PXS, ToDo, ChT
       <xs:selector xpath=".//IrradiationRequests" />
       <xs:field xpath="ChannelsID" />
     </xs:keyref>
-    <xs:keyref name="Matrix_SubSamples" refer="Matrix_Constraint1" msprop:rel_Generator_UserChildTable="SubSamples" msprop:rel_Generator_ChildPropName="GetSubSamplesRows" msprop:rel_Generator_UserRelationName="Matrix_SubSamples" msprop:rel_Generator_ParentPropName="MatrixRow" msprop:rel_Generator_RelationVarName="relationMatrix_SubSamples" msprop:rel_Generator_UserParentTable="Matrix" msdata:DeleteRule="SetNull">
+    <xs:keyref name="Matrix_SubSamples" refer="Matrix_Constraint1" msprop:rel_Generator_UserChildTable="SubSamples" msprop:rel_Generator_ChildPropName="GetSubSamplesRows" msprop:rel_Generator_UserRelationName="Matrix_SubSamples" msprop:rel_Generator_RelationVarName="relationMatrix_SubSamples" msprop:rel_Generator_UserParentTable="Matrix" msprop:rel_Generator_ParentPropName="MatrixRow" msdata:AcceptRejectRule="Cascade" msdata:DeleteRule="SetNull">
       <xs:selector xpath=".//SubSamples" />
       <xs:field xpath="MatrixID" />
     </xs:keyref>
@@ -7602,7 +7602,7 @@ SELECT UnitID, SampleID, Gt, ChRadius, ChLength, ChCfg, MCL, EXS, PXS, ToDo, ChT
       <xs:selector xpath=".//MatSSF" />
       <xs:field xpath="UnitID" />
     </xs:keyref>
-    <xs:keyref name="SubSamples_Unit" refer="SubSamples_Constraint1" msprop:rel_Generator_UserChildTable="Unit" msprop:rel_Generator_ChildPropName="GetUnitRows" msprop:rel_Generator_UserRelationName="SubSamples_Unit" msprop:rel_Generator_RelationVarName="relationSubSamples_Unit" msprop:rel_Generator_UserParentTable="SubSamples" msprop:rel_Generator_ParentPropName="SubSamplesRow" msdata:AcceptRejectRule="Cascade">
+    <xs:keyref name="SubSamples_Unit" refer="SubSamples_Constraint1" msprop:rel_Generator_UserChildTable="Unit" msprop:rel_Generator_ChildPropName="GetUnitRows" msprop:rel_Generator_UserRelationName="SubSamples_Unit" msprop:rel_Generator_ParentPropName="SubSamplesRow" msprop:rel_Generator_RelationVarName="relationSubSamples_Unit" msprop:rel_Generator_UserParentTable="SubSamples" msdata:AcceptRejectRule="Cascade">
       <xs:selector xpath=".//Unit" />
       <xs:field xpath="SampleID" />
     </xs:keyref>

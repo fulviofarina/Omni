@@ -53,18 +53,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NPlot.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometries\ucCompositionv2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Geometries\ucCompositionv2.Designer.cs">
+      <DependentUpon>ucCompositionv2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Geometries\ucComposition.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -254,6 +265,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Geometries\ucCompositionv2.resx">
+      <DependentUpon>ucCompositionv2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Geometries\ucComposition.resx">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </EmbeddedResource>

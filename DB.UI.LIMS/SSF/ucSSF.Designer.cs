@@ -35,8 +35,6 @@
 
         private System.Windows.Forms.TabPage outputTab;
 
-        private System.Windows.Forms.TabPage SamplesTab;
-
         private System.Windows.Forms.SplitContainer SCMENU;
 
         private System.Windows.Forms.SaveFileDialog SFD;
@@ -133,19 +131,18 @@
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
             this.ucUnit = new DB.UI.ucUnit();
-            this.MatrixTab = new System.Windows.Forms.TabPage();
-            this.ucMS = new DB.UI.ucMatrixSimple();
-            this.ShapeTab = new System.Windows.Forms.TabPage();
-            this.ucVcc = new DB.UI.ucV();
-            this.ChannelTab = new System.Windows.Forms.TabPage();
-            this.ucCC1 = new DB.UI.ucCC();
-            this.SamplesTab = new System.Windows.Forms.TabPage();
             this.FilesTabMain = new System.Windows.Forms.TabPage();
             this.FilesTab = new System.Windows.Forms.TabControl();
             this.outputTab = new System.Windows.Forms.TabPage();
             this.outputBox = new System.Windows.Forms.RichTextBox();
             this.inputTab = new System.Windows.Forms.TabPage();
             this.inputbox = new System.Windows.Forms.RichTextBox();
+            this.MatrixTab = new System.Windows.Forms.TabPage();
+            this.ucMS = new DB.UI.ucMatrixSimple();
+            this.ShapeTab = new System.Windows.Forms.TabPage();
+            this.ucVcc = new DB.UI.ucV();
+            this.ChannelTab = new System.Windows.Forms.TabPage();
+            this.ucCC1 = new DB.UI.ucCC();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DaCONTAINER = new System.Windows.Forms.SplitContainer();
             this.dgvCMS.SuspendLayout();
@@ -171,13 +168,13 @@
             this.SCMENU.SuspendLayout();
             this.Tab.SuspendLayout();
             this.CalcTab.SuspendLayout();
-            this.MatrixTab.SuspendLayout();
-            this.ShapeTab.SuspendLayout();
-            this.ChannelTab.SuspendLayout();
             this.FilesTabMain.SuspendLayout();
             this.FilesTab.SuspendLayout();
             this.outputTab.SuspendLayout();
             this.inputTab.SuspendLayout();
+            this.MatrixTab.SuspendLayout();
+            this.ShapeTab.SuspendLayout();
+            this.ChannelTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DaCONTAINER)).BeginInit();
@@ -390,7 +387,6 @@
             this.Tab.Controls.Add(this.MatrixTab);
             this.Tab.Controls.Add(this.ShapeTab);
             this.Tab.Controls.Add(this.ChannelTab);
-            this.Tab.Controls.Add(this.SamplesTab);
             this.Tab.Controls.Add(this.FilesTabMain);
             this.Tab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tab.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -422,6 +418,74 @@
             this.ucUnit.Name = "ucUnit";
             this.ucUnit.Size = new System.Drawing.Size(882, 744);
             this.ucUnit.TabIndex = 0;
+            // 
+            // FilesTabMain
+            // 
+            this.FilesTabMain.Controls.Add(this.FilesTab);
+            this.FilesTabMain.Location = new System.Drawing.Point(4, 37);
+            this.FilesTabMain.Name = "FilesTabMain";
+            this.FilesTabMain.Padding = new System.Windows.Forms.Padding(3);
+            this.FilesTabMain.Size = new System.Drawing.Size(888, 750);
+            this.FilesTabMain.TabIndex = 7;
+            this.FilesTabMain.Text = "Files";
+            this.FilesTabMain.UseVisualStyleBackColor = true;
+            // 
+            // FilesTab
+            // 
+            this.FilesTab.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.FilesTab.Controls.Add(this.outputTab);
+            this.FilesTab.Controls.Add(this.inputTab);
+            this.FilesTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FilesTab.Location = new System.Drawing.Point(3, 3);
+            this.FilesTab.Name = "FilesTab";
+            this.FilesTab.SelectedIndex = 0;
+            this.FilesTab.Size = new System.Drawing.Size(882, 744);
+            this.FilesTab.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.FilesTab.TabIndex = 0;
+            this.FilesTab.Visible = false;
+            // 
+            // outputTab
+            // 
+            this.outputTab.Controls.Add(this.outputBox);
+            this.outputTab.Location = new System.Drawing.Point(4, 37);
+            this.outputTab.Name = "outputTab";
+            this.outputTab.Padding = new System.Windows.Forms.Padding(3);
+            this.outputTab.Size = new System.Drawing.Size(874, 703);
+            this.outputTab.TabIndex = 0;
+            this.outputTab.Text = "Output";
+            this.outputTab.UseVisualStyleBackColor = true;
+            // 
+            // outputBox
+            // 
+            this.outputBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputBox.Location = new System.Drawing.Point(3, 3);
+            this.outputBox.Margin = new System.Windows.Forms.Padding(2);
+            this.outputBox.Name = "outputBox";
+            this.outputBox.Size = new System.Drawing.Size(868, 697);
+            this.outputBox.TabIndex = 3;
+            this.outputBox.Text = "";
+            // 
+            // inputTab
+            // 
+            this.inputTab.Controls.Add(this.inputbox);
+            this.inputTab.Location = new System.Drawing.Point(4, 37);
+            this.inputTab.Name = "inputTab";
+            this.inputTab.Size = new System.Drawing.Size(874, 703);
+            this.inputTab.TabIndex = 2;
+            this.inputTab.Text = "Input";
+            this.inputTab.UseVisualStyleBackColor = true;
+            // 
+            // inputbox
+            // 
+            this.inputbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inputbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputbox.Location = new System.Drawing.Point(0, 0);
+            this.inputbox.Margin = new System.Windows.Forms.Padding(2);
+            this.inputbox.Name = "inputbox";
+            this.inputbox.Size = new System.Drawing.Size(874, 703);
+            this.inputbox.TabIndex = 2;
+            this.inputbox.Text = "";
             // 
             // MatrixTab
             // 
@@ -485,83 +549,6 @@
             this.ucCC1.Name = "ucCC1";
             this.ucCC1.Size = new System.Drawing.Size(882, 744);
             this.ucCC1.TabIndex = 0;
-            // 
-            // SamplesTab
-            // 
-            this.SamplesTab.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SamplesTab.Location = new System.Drawing.Point(4, 37);
-            this.SamplesTab.Name = "SamplesTab";
-            this.SamplesTab.Size = new System.Drawing.Size(888, 750);
-            this.SamplesTab.TabIndex = 6;
-            this.SamplesTab.Text = "Samples";
-            this.SamplesTab.UseVisualStyleBackColor = true;
-            // 
-            // FilesTabMain
-            // 
-            this.FilesTabMain.Controls.Add(this.FilesTab);
-            this.FilesTabMain.Location = new System.Drawing.Point(4, 37);
-            this.FilesTabMain.Name = "FilesTabMain";
-            this.FilesTabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.FilesTabMain.Size = new System.Drawing.Size(888, 750);
-            this.FilesTabMain.TabIndex = 7;
-            this.FilesTabMain.Text = "Files";
-            this.FilesTabMain.UseVisualStyleBackColor = true;
-            // 
-            // FilesTab
-            // 
-            this.FilesTab.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.FilesTab.Controls.Add(this.outputTab);
-            this.FilesTab.Controls.Add(this.inputTab);
-            this.FilesTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FilesTab.Location = new System.Drawing.Point(3, 3);
-            this.FilesTab.Name = "FilesTab";
-            this.FilesTab.SelectedIndex = 0;
-            this.FilesTab.Size = new System.Drawing.Size(882, 744);
-            this.FilesTab.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.FilesTab.TabIndex = 0;
-            // 
-            // outputTab
-            // 
-            this.outputTab.Controls.Add(this.outputBox);
-            this.outputTab.Location = new System.Drawing.Point(4, 37);
-            this.outputTab.Name = "outputTab";
-            this.outputTab.Padding = new System.Windows.Forms.Padding(3);
-            this.outputTab.Size = new System.Drawing.Size(874, 703);
-            this.outputTab.TabIndex = 0;
-            this.outputTab.Text = "Output";
-            this.outputTab.UseVisualStyleBackColor = true;
-            // 
-            // outputBox
-            // 
-            this.outputBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.outputBox.Location = new System.Drawing.Point(3, 3);
-            this.outputBox.Margin = new System.Windows.Forms.Padding(2);
-            this.outputBox.Name = "outputBox";
-            this.outputBox.Size = new System.Drawing.Size(868, 697);
-            this.outputBox.TabIndex = 3;
-            this.outputBox.Text = "";
-            // 
-            // inputTab
-            // 
-            this.inputTab.Controls.Add(this.inputbox);
-            this.inputTab.Location = new System.Drawing.Point(4, 37);
-            this.inputTab.Name = "inputTab";
-            this.inputTab.Size = new System.Drawing.Size(874, 703);
-            this.inputTab.TabIndex = 2;
-            this.inputTab.Text = "Input";
-            this.inputTab.UseVisualStyleBackColor = true;
-            // 
-            // inputbox
-            // 
-            this.inputbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inputbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inputbox.Location = new System.Drawing.Point(0, 0);
-            this.inputbox.Margin = new System.Windows.Forms.Padding(2);
-            this.inputbox.Name = "inputbox";
-            this.inputbox.Size = new System.Drawing.Size(874, 703);
-            this.inputbox.TabIndex = 2;
-            this.inputbox.Text = "";
             // 
             // splitContainer1
             // 
@@ -627,13 +614,13 @@
             this.Tab.ResumeLayout(false);
             this.CalcTab.ResumeLayout(false);
             this.CalcTab.PerformLayout();
-            this.MatrixTab.ResumeLayout(false);
-            this.ShapeTab.ResumeLayout(false);
-            this.ChannelTab.ResumeLayout(false);
             this.FilesTabMain.ResumeLayout(false);
             this.FilesTab.ResumeLayout(false);
             this.outputTab.ResumeLayout(false);
             this.inputTab.ResumeLayout(false);
+            this.MatrixTab.ResumeLayout(false);
+            this.ShapeTab.ResumeLayout(false);
+            this.ChannelTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.DaCONTAINER.Panel1.ResumeLayout(false);

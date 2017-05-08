@@ -4,6 +4,7 @@ using Rsx;
 using static DB.LINAA;
 using System.Windows.Forms;
 using System.Data;
+using System.Linq;
 
 namespace DB.Tools
 {
@@ -18,6 +19,7 @@ namespace DB.Tools
 
       
     }
+  
 
     public partial class BindingSources
     {
@@ -33,6 +35,22 @@ namespace DB.Tools
 
     public partial class BindingSources
     {
+       
+
+        public void StartBinding()
+        {
+            SubSamples.CurrentChanged += currentChanged_SubSamples;
+            //  SubSamples.CurrentItemChanged += SubSamples_CurrentItemChanged;
+         //   SubSamples.ListChanged += SubSamples_ListChanged;
+            SSFPreferences.ListChanged += listChanged_Preferences;
+            Preferences.ListChanged += listChanged_Preferences;
+            Channels.CurrentChanged += currentChanged_Channels;
+            Irradiations.CurrentChanged += currentChanged_Irradiations;
+            Matrix.CurrentChanged += currentChanged_Matrix;
+        }
+
+       
+
         private void currentChanged_Matrix(object sender, EventArgs e)
         {
             try
@@ -96,11 +114,23 @@ namespace DB.Tools
             {
                 // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
                 SubSamplesRow r = Interface.ICurrent.SubSample as SubSamplesRow;
+              
+             
+
                 Update(r, true, false);
-                // Interface.IBS.SelectedSubSample.Filter =
-                // Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + r.SubSampleName
-                // + "'"; Interface.IBS.SelectedMatrix.Filter =
-                // Interface.IDB.Matrix.SubSampleIDColumn.ColumnName + " = '" + r.SubSamplesID + "'"; Interface.IBS.SelectedSubSample.ResetBindings(true);
+                  }
+            catch (Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+        }
+        private void currentChanged_Irradiations(object sender, EventArgs e)
+        {
+            try
+            {
+                // DataRowView r = Interface.IBS.SubSamples.Current as DataRowView;
+                IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
+                Update(r, true, false);
             }
             catch (Exception ex)
             {
@@ -157,7 +187,7 @@ namespace DB.Tools
         }
         */
 
-        private void updateChannel<T>(T r, bool findItself)
+        private void updateChannel<T>(T r, bool doCascade, bool findItself)
         {
             if (EC.IsNuDelDetch(r as DataRow)) return;
 
@@ -172,21 +202,22 @@ namespace DB.Tools
             }
             string filter;
 
-            if (Irradiations != null)
+          
+            if (SelectedIrradiation != null)
             {
                 string chColumn = Interface.IDB.IrradiationRequests.ChannelNameColumn.ColumnName;
                 filter = chColumn + " = '" + u.ChannelName + "'";// + " OR " + chColumn + " IS NULL ";
-                Irradiations.Filter = filter;
+                SelectedIrradiation.Filter = filter;
             }
           
-            if (SelectedMatrix != null)
+            if (SelectedChannel != null)
             {
                 filter = Interface.IDB.Channels.ChannelsIDColumn.ColumnName + " = '" + u.ChannelsID + "'";
                 Interface.IBS.SelectedChannel.Filter = filter;
             }
         }
 
-        private void updateIrradiationRequest<T>(T r, bool findItself)
+        private void updateIrradiationRequest<T>(T r, bool doCascade=true, bool findItself=false)
         {
             if (EC.IsNuDelDetch(r as DataRow)) return;
             LINAA.IrradiationRequestsRow u = r as LINAA.IrradiationRequestsRow;
@@ -197,11 +228,58 @@ namespace DB.Tools
                 int id = u.IrradiationRequestsID;
                 Irradiations.Position = Irradiations.Find(column, id);
             }
+
+            string filter = string.Empty;
+            if (SelectedIrradiation != null)
+            {
+                string chColumn = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName;
+                filter = chColumn + " = '" + u.IrradiationRequestsID + "'";// + " OR " + chColumn + " IS NULL ";
+                SelectedIrradiation.Filter = filter;
+            }
+
+            if (doCascade)
+            {
+                int IrrReqID = u.IrradiationRequestsID;
+
+                Interface.IPopulate.ISamples.PopulateSubSamples(IrrReqID);
+         
+       
+
+                filter = Interface.IDB.SubSamples.IrradiationRequestsIDColumn.ColumnName + " = '" + IrrReqID + "'";
+
+                Interface.IBS.SubSamples.Filter = filter;
+
+                Interface.IBS.SubSamples.ResetBindings(false);
+
+         //.       Interface.IBS.SelectedSubSample.Filter = filter;// Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " IS NULL";
+
+          //      Interface.IBS.SelectedSubSample.ResetBindings(true);
+
+                //   Interface.IBS.SelectedMatrix.Filter = Interface.IDB.Matrix.MatrixIDColumn.ColumnName+ " IS NULL";
+
+                //reset the selected bindings.. everything changed..
+
+
+                filter = Interface.IDB.Unit.IrrReqIDColumn.ColumnName + " = '" + IrrReqID + "'";
+          
+                Interface.IBS.Units.Filter = filter;
+            
+
+                Interface.IPreferences.CurrentPref.LastIrradiationProject = u.IrradiationCode;
+                Interface.IPreferences.SavePreferences();
+                Interface.IReport.Speak("Loaded project " + u.IrradiationCode);
+            }
         }
 
-        private void updateMatrix<T>(T r, bool findItself)
+        private void updateMatrix<T>(T r, bool doCascade=true, bool findItself=false)
         {
-            if (EC.IsNuDelDetch(r as DataRow)) return;
+            if (EC.IsNuDelDetch(r as DataRow))
+            {
+             //   SelectedMatrix.RemoveFilter();
+              //  Matrix.RemoveFilter();
+              // SelectedSubSample.RemoveFilter();
+                return;
+            }
             LINAA.MatrixRow u = r as LINAA.MatrixRow;
             if (findItself && Matrix != null)
             {
@@ -213,34 +291,44 @@ namespace DB.Tools
             }
             string filter = Interface.IDB.Matrix.MatrixIDColumn.ColumnName + " = '" + u.MatrixID + "'";
 
-            if (SelectedMatrix != null)
-            {
-                Interface.IBS.SelectedMatrix.Filter = filter;
-            }
-            if (Compositions != null)
-            {
-                Interface.IBS.Compositions.Filter = filter;
-            }
+            Compositions.Filter = filter;
+            Compositions.Sort = Interface.IDB.Compositions.IDColumn.ColumnName + " desc";
+
+
+
+
         }
 
         private void updateSubSample<T>(T r, bool doCascade, bool findItself)
         {
-            if (EC.IsNuDelDetch(r as DataRow)) return;
+            //delink childs frist!!!
 
+            BS.DeLinkBS(ref SSF);
+            if (EC.IsNuDelDetch(r as DataRow))
+            {
+                //THIS IS SO FUCKING NECESSARY BECAUSE WHEN THE LIST IS EMPTIED
+                //THE DATAGRIDVIEW GIVES ERROR
+                //UNLESS THE BINDING IS SUSPENDED!
+                //DONT DELETE FULVIO FROM FUTURE
+            //    SelectedSubSample.SuspendBinding();
+                return;
+            }
             LINAA.SubSamplesRow s = r as LINAA.SubSamplesRow;
             // LINAA.UnitRow s = r as LINAA.UnitRow; LINAA.UnitRow u = s.UnitRow as LINAA.UnitRow;
-            if (SubSamples != null)
-            {
-                if (findItself && SubSamples != null)
+         //   if (SubSamples != null)
+          //  {
+                if (findItself )
                 {
                     string unitValID = (s.Table as LINAA.SubSamplesDataTable).SubSamplesIDColumn.ColumnName;
                     SubSamples.Position = SubSamples.Find(unitValID, s.SubSamplesID);
                 }
-                if (SelectedSubSample != null)
-                {
-                    Interface.IBS.SelectedSubSample.Filter = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName + " = '" + s.SubSampleName + "'";
-                }
-            }
+            //        if (SelectedSubSample != null)
+            // {
+            string filColumn = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
+
+            SelectedSubSample.Filter = filColumn + " = '" + s.SubSampleName + "'";
+              //  }
+         //   }
             aChecker = s.CheckUnit;
             DataRow row = s.UnitRow;
             //now update the childs/parents of Units
@@ -254,8 +342,14 @@ namespace DB.Tools
         private void updateUnit<T>(T r, bool doCascade, bool findItself)
         {
 
-            if (EC.IsNuDelDetch(r as DataRow) ) return;
+        
 
+            if (EC.IsNuDelDetch(r as DataRow))
+            {
+                
+                return;
+
+            }
             LINAA.UnitRow s = r as LINAA.UnitRow;
 
             string unitID = string.Empty;
@@ -281,7 +375,12 @@ namespace DB.Tools
                 row = s.SubSamplesRow.IrradiationRequestsRow.ChannelsRow;
                 Update<LINAA.ChannelsRow>(row as ChannelsRow);
                 row = s.SubSamplesRow.MatrixRow;
-                Update<LINAA.MatrixRow>(row as MatrixRow);
+
+                filter = Interface.IDB.Matrix.MatrixIDColumn.ColumnName + " = '" + s.SubSamplesRow.MatrixID + "'";
+                SelectedMatrix.Filter = filter;
+                SelectedCompositions.Filter = filter;
+      
+
                 row = s.SubSamplesRow.VialTypeRowByChCapsule_SubSamples;
                 Update<LINAA.VialTypeRow>(row as VialTypeRow);
        
@@ -298,11 +397,11 @@ namespace DB.Tools
            // MatSSF.Table = dt;
             filter = column + " = '" + unitID + "'";
             //   MatSSF.Table = dt;
-            BS.DeLinkBS(ref SSF);
+        
             BS.LinkBS(ref SSF, dt, filter, sortCol);
         }
 
-        private void updateVialRabbit<T>(T r, bool findItself)
+        private void updateVialRabbit<T>(T r, bool doCascade, bool findItself)
         {
             if (EC.IsNuDelDetch(r as DataRow)) return;
 

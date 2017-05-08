@@ -65,14 +65,6 @@
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.SC = new System.Windows.Forms.SplitContainer();
             this.compositionDGV = new System.Windows.Forms.DataGridView();
-            this.elementDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uncDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uncUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.weightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.formulaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.matrixRTB = new System.Windows.Forms.RichTextBox();
@@ -84,6 +76,14 @@
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.elementDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uncDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uncUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.weightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.formulaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC)).BeginInit();
             this.SC.Panel1.SuspendLayout();
@@ -134,10 +134,10 @@
             this.compositionDGV.AllowUserToAddRows = false;
             this.compositionDGV.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Transparent;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             this.compositionDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.compositionDGV.AutoGenerateColumns = false;
@@ -170,7 +170,7 @@
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.compositionDGV.DefaultCellStyle = dataGridViewCellStyle3;
@@ -194,67 +194,7 @@
             this.compositionDGV.Size = new System.Drawing.Size(700, 276);
             this.compositionDGV.TabIndex = 8;
             // 
-            // elementDataGridViewTextBoxColumn
-            // 
-            this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
-            this.elementDataGridViewTextBoxColumn.HeaderText = "Element";
-            this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
-            this.elementDataGridViewTextBoxColumn.Width = 92;
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
-            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            this.quantityDataGridViewTextBoxColumn.Width = 95;
-            // 
-            // uncDataGridViewTextBoxColumn
-            // 
-            this.uncDataGridViewTextBoxColumn.DataPropertyName = "Unc";
-            this.uncDataGridViewTextBoxColumn.HeaderText = "Unc";
-            this.uncDataGridViewTextBoxColumn.Name = "uncDataGridViewTextBoxColumn";
-            this.uncDataGridViewTextBoxColumn.Visible = false;
-            this.uncDataGridViewTextBoxColumn.Width = 61;
-            // 
-            // quantityUnitDataGridViewTextBoxColumn
-            // 
-            this.quantityUnitDataGridViewTextBoxColumn.DataPropertyName = "QuantityUnit";
-            this.quantityUnitDataGridViewTextBoxColumn.HeaderText = "Unit";
-            this.quantityUnitDataGridViewTextBoxColumn.Name = "quantityUnitDataGridViewTextBoxColumn";
-            this.quantityUnitDataGridViewTextBoxColumn.Width = 63;
-            // 
-            // uncUnitDataGridViewTextBoxColumn
-            // 
-            this.uncUnitDataGridViewTextBoxColumn.DataPropertyName = "UncUnit";
-            this.uncUnitDataGridViewTextBoxColumn.HeaderText = "UncUnit";
-            this.uncUnitDataGridViewTextBoxColumn.Name = "uncUnitDataGridViewTextBoxColumn";
-            this.uncUnitDataGridViewTextBoxColumn.Visible = false;
-            this.uncUnitDataGridViewTextBoxColumn.Width = 91;
-            // 
-            // weightDataGridViewTextBoxColumn
-            // 
-            this.weightDataGridViewTextBoxColumn.DataPropertyName = "Weight";
-            this.weightDataGridViewTextBoxColumn.HeaderText = "Weight";
-            this.weightDataGridViewTextBoxColumn.Name = "weightDataGridViewTextBoxColumn";
-            this.weightDataGridViewTextBoxColumn.Width = 86;
-            // 
-            // formulaDataGridViewTextBoxColumn
-            // 
-            this.formulaDataGridViewTextBoxColumn.DataPropertyName = "Formula";
-            this.formulaDataGridViewTextBoxColumn.HeaderText = "Formula";
-            this.formulaDataGridViewTextBoxColumn.Name = "formulaDataGridViewTextBoxColumn";
-            this.formulaDataGridViewTextBoxColumn.Width = 92;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.Visible = false;
-            this.nameDataGridViewTextBoxColumn.Width = 76;
-            // 
-            // BS
+            // bs
             // 
             this.bs.DataMember = "Compositions";
             this.bs.DataSource = this.Linaa;
@@ -339,6 +279,68 @@
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
+            // 
+            // elementDataGridViewTextBoxColumn
+            // 
+            this.elementDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
+            this.elementDataGridViewTextBoxColumn.HeaderText = "Element or Formula";
+            this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.quantityDataGridViewTextBoxColumn.Width = 95;
+            // 
+            // uncDataGridViewTextBoxColumn
+            // 
+            this.uncDataGridViewTextBoxColumn.DataPropertyName = "Unc";
+            this.uncDataGridViewTextBoxColumn.HeaderText = "Unc";
+            this.uncDataGridViewTextBoxColumn.Name = "uncDataGridViewTextBoxColumn";
+            this.uncDataGridViewTextBoxColumn.Visible = false;
+            this.uncDataGridViewTextBoxColumn.Width = 61;
+            // 
+            // quantityUnitDataGridViewTextBoxColumn
+            // 
+            this.quantityUnitDataGridViewTextBoxColumn.DataPropertyName = "QuantityUnit";
+            this.quantityUnitDataGridViewTextBoxColumn.HeaderText = "Unit";
+            this.quantityUnitDataGridViewTextBoxColumn.Name = "quantityUnitDataGridViewTextBoxColumn";
+            this.quantityUnitDataGridViewTextBoxColumn.Width = 63;
+            // 
+            // uncUnitDataGridViewTextBoxColumn
+            // 
+            this.uncUnitDataGridViewTextBoxColumn.DataPropertyName = "UncUnit";
+            this.uncUnitDataGridViewTextBoxColumn.HeaderText = "UncUnit";
+            this.uncUnitDataGridViewTextBoxColumn.Name = "uncUnitDataGridViewTextBoxColumn";
+            this.uncUnitDataGridViewTextBoxColumn.Visible = false;
+            this.uncUnitDataGridViewTextBoxColumn.Width = 91;
+            // 
+            // weightDataGridViewTextBoxColumn
+            // 
+            this.weightDataGridViewTextBoxColumn.DataPropertyName = "Weight";
+            this.weightDataGridViewTextBoxColumn.HeaderText = "Weight";
+            this.weightDataGridViewTextBoxColumn.Name = "weightDataGridViewTextBoxColumn";
+            this.weightDataGridViewTextBoxColumn.Visible = false;
+            this.weightDataGridViewTextBoxColumn.Width = 86;
+            // 
+            // formulaDataGridViewTextBoxColumn
+            // 
+            this.formulaDataGridViewTextBoxColumn.DataPropertyName = "Formula";
+            this.formulaDataGridViewTextBoxColumn.HeaderText = "Formula";
+            this.formulaDataGridViewTextBoxColumn.Name = "formulaDataGridViewTextBoxColumn";
+            this.formulaDataGridViewTextBoxColumn.Visible = false;
+            this.formulaDataGridViewTextBoxColumn.Width = 92;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.Visible = false;
+            this.nameDataGridViewTextBoxColumn.Width = 76;
             // 
             // ucComposition
             // 

@@ -44,6 +44,7 @@ namespace DB.UI
                      {
                          bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                          this.CalcBtn.Enabled = ThereIsData;
+                         Disabler(ThereIsData);
                          ucSSFData.Disabler(ThereIsData);
                          // this.ucSSFData.Enabled = Interface.IBS.SubSamples.Count!=0;
                      };
@@ -56,14 +57,7 @@ namespace DB.UI
                     // projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel2;
                 }
-                else if (pro.GetType().Equals(typeof(ucSubSamples)))
-                {
-                    Control p = pro as Control;
-                    p.Dock = DockStyle.Fill;
-                    destiny = this.SamplesTab;
-
-                    //ucSubSamples c = p as ucSubSamples;
-                }
+              
                 else if (pro.GetType().Equals(typeof(ucUnit)))
                 {
                     //link to bindings
@@ -97,6 +91,14 @@ namespace DB.UI
             {
                 Interface.IStore.AddException(ex);
             }
+        }
+
+        private void Disabler(bool thereIsData)
+        {
+            this.CalcBtn.Visible = thereIsData;
+            this.cancelBtn.Visible = thereIsData;
+         //   this.ucUnit.Visible = thereIsData;
+            //this.SSFPlitter.Panel2. = thereIsData;
         }
 
         public void Calculate(object sender, EventArgs e)
