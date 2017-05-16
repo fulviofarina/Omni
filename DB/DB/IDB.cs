@@ -6,7 +6,7 @@ namespace DB
     public interface IDB
     {
         void PopulateColumnExpresions();
-        LINAA.AcquisitionsDataTable Acquisitions { get; }
+     //   LINAA.AcquisitionsDataTable Acquisitions { get; }
         LINAA.BlanksDataTable Blanks { get; }
         LINAA.ChannelsDataTable Channels { get; }
         LINAA.COINDataTable COIN { get; }

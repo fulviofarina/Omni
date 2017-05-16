@@ -385,7 +385,7 @@
             // 
             // TAM
             // 
-            this.TAM.AcquisitionsTableAdapter = null;
+      //      this.TAM.AcquisitionsTableAdapter = null;
             this.TAM.BackupDataSetBeforeUpdate = false;
             this.TAM.BlanksTableAdapter = null;
             this.TAM.ChannelsTableAdapter = null;

@@ -44,8 +44,8 @@
             this.UnitSSFSC = new System.Windows.Forms.SplitContainer();
             this.inputTLP = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.samp1lbl = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.samp1lbl = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel11 = new System.Windows.Forms.ToolStripLabel();
             this.WGtBox = new System.Windows.Forms.ToolStripTextBox();
@@ -82,11 +82,11 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.samp3lbl = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel9 = new System.Windows.Forms.ToolStripLabel();
+            this.samp3lbl = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.samp2lbl = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.samp2lbl = new System.Windows.Forms.ToolStripTextBox();
             this.unitSC = new System.Windows.Forms.SplitContainer();
             this.nameToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel14 = new System.Windows.Forms.ToolStripLabel();
@@ -104,9 +104,9 @@
             this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SampleBS = new System.Windows.Forms.BindingSource(this.components);
             this.barTLP = new System.Windows.Forms.TableLayoutPanel();
+            this.ucComposition1 = new DB.UI.ucComposition();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ucComposition1 = new DB.UI.ucComposition();
             this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
@@ -252,18 +252,6 @@
             this.toolStrip1.TabIndex = 24;
             this.toolStrip1.Text = "toolStrip2";
             // 
-            // samp1lbl
-            // 
-            this.samp1lbl.AutoToolTip = true;
-            this.samp1lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.samp1lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.samp1lbl.ForeColor = System.Drawing.Color.Yellow;
-            this.samp1lbl.Margin = new System.Windows.Forms.Padding(294, 0, 1, 0);
-            this.samp1lbl.Name = "samp1lbl";
-            this.samp1lbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.samp1lbl.Size = new System.Drawing.Size(79, 32);
-            this.samp1lbl.Text = "Sample";
-            // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.AutoToolTip = true;
@@ -275,6 +263,18 @@
             this.toolStripLabel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.toolStripLabel2.Size = new System.Drawing.Size(186, 29);
             this.toolStripLabel2.Text = "Sample variables for";
+            // 
+            // samp1lbl
+            // 
+            this.samp1lbl.AutoToolTip = true;
+            this.samp1lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.samp1lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.samp1lbl.ForeColor = System.Drawing.Color.Yellow;
+            this.samp1lbl.Margin = new System.Windows.Forms.Padding(294, 0, 1, 0);
+            this.samp1lbl.Name = "samp1lbl";
+            this.samp1lbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.samp1lbl.Size = new System.Drawing.Size(79, 32);
+            this.samp1lbl.Text = "Sample";
             // 
             // toolStrip6
             // 
@@ -694,17 +694,6 @@
             this.toolStrip7.TabIndex = 13;
             this.toolStrip7.Text = "toolStrip2";
             // 
-            // samp3lbl
-            // 
-            this.samp3lbl.AutoToolTip = true;
-            this.samp3lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.samp3lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.samp3lbl.ForeColor = System.Drawing.Color.Cyan;
-            this.samp3lbl.Margin = new System.Windows.Forms.Padding(278, 0, 1, 0);
-            this.samp3lbl.Name = "samp3lbl";
-            this.samp3lbl.Size = new System.Drawing.Size(79, 32);
-            this.samp3lbl.Text = "Sample";
-            // 
             // toolStripLabel9
             // 
             this.toolStripLabel9.AutoToolTip = true;
@@ -715,6 +704,17 @@
             this.toolStripLabel9.Name = "toolStripLabel9";
             this.toolStripLabel9.Size = new System.Drawing.Size(216, 29);
             this.toolStripLabel9.Text = "Sample composition for";
+            // 
+            // samp3lbl
+            // 
+            this.samp3lbl.AutoToolTip = true;
+            this.samp3lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.samp3lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.samp3lbl.ForeColor = System.Drawing.Color.Cyan;
+            this.samp3lbl.Margin = new System.Windows.Forms.Padding(278, 0, 1, 0);
+            this.samp3lbl.Name = "samp3lbl";
+            this.samp3lbl.Size = new System.Drawing.Size(79, 32);
+            this.samp3lbl.Text = "Sample";
             // 
             // toolStrip3
             // 
@@ -734,17 +734,6 @@
             this.toolStrip3.TabIndex = 11;
             this.toolStrip3.Text = "toolStrip2";
             // 
-            // samp2lbl
-            // 
-            this.samp2lbl.AutoToolTip = true;
-            this.samp2lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.samp2lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.samp2lbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.samp2lbl.Margin = new System.Windows.Forms.Padding(216, 0, 1, 0);
-            this.samp2lbl.Name = "samp2lbl";
-            this.samp2lbl.Size = new System.Drawing.Size(79, 32);
-            this.samp2lbl.Text = "Sample";
-            // 
             // toolStripLabel4
             // 
             this.toolStripLabel4.AutoToolTip = true;
@@ -755,6 +744,17 @@
             this.toolStripLabel4.Name = "toolStripLabel4";
             this.toolStripLabel4.Size = new System.Drawing.Size(279, 29);
             this.toolStripLabel4.Text = "Neutron Source parameters for";
+            // 
+            // samp2lbl
+            // 
+            this.samp2lbl.AutoToolTip = true;
+            this.samp2lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.samp2lbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.samp2lbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.samp2lbl.Margin = new System.Windows.Forms.Padding(216, 0, 1, 0);
+            this.samp2lbl.Name = "samp2lbl";
+            this.samp2lbl.Size = new System.Drawing.Size(79, 32);
+            this.samp2lbl.Text = "Sample";
             // 
             // unitSC
             // 
@@ -967,14 +967,6 @@
             this.barTLP.Size = new System.Drawing.Size(696, 25);
             this.barTLP.TabIndex = 20;
             // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
-            // 
-            // errorProvider2
-            // 
-            this.errorProvider2.ContainerControl = this;
-            // 
             // ucComposition1
             // 
             this.ucComposition1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -985,6 +977,14 @@
             this.ucComposition1.Name = "ucComposition1";
             this.ucComposition1.Size = new System.Drawing.Size(696, 204);
             this.ucComposition1.TabIndex = 21;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            this.errorProvider2.ContainerControl = this;
             // 
             // ucSSFData
             // 

@@ -4,7 +4,9 @@ using System.Data;
 using System.Linq;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
+using DB.Properties;
 
 namespace DB
 {
@@ -126,7 +128,7 @@ namespace DB
             bool ok = false;
             try
             {
-                string LIMSPath = folderPath + DB.Properties.Resources.Linaa;
+                string LIMSPath = folderPath + Resources.Backups+Resources.Linaa;
                 string aux = "." + DateTime.Now.DayOfYear.ToString();
                 string LIMSDayPath = LIMSPath.Replace(".xml", aux + ".xml");
 
@@ -234,7 +236,7 @@ namespace DB
             else if (t.Equals(typeof(DetectorsAbsorbersRow))) this.tAM.DetectorsAbsorbersTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsCurvesRow))) this.tAM.DetectorsCurvesTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsDimensionsRow))) this.tAM.DetectorsDimensionsTableAdapter.Update(schs);
-            else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
+       //     else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
             else if (t.Equals(typeof(HoldersRow))) this.tAM.HoldersTableAdapter.Update(schs);
             else if (t.Equals(typeof(MatrixRow))) this.tAM.MatrixTableAdapter.Update(schs);
         //    else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);

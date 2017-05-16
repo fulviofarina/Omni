@@ -151,7 +151,7 @@
     <comment>put extension .xml</comment>
   </data>
   <data name="Linaa" xml:space="preserve">
-    <value>Backups\LIMS.xml</value>
+    <value>LIMS.xml</value>
   </data>
   <data name="LinaaChanges" xml:space="preserve">
     <value>Backups\LIMS.Changes.xml</value>
@@ -194,13 +194,5 @@
   </data>
   <data name="DevFiles" xml:space="preserve">
     <value>\Files\</value>
-  </data>
-  <data name="msmqx86" xml:space="preserve">
-    <value>msmqx86.bat</value>
-    <comment>script 1 for MSMQ</comment>
-  </data>
-  <data name="msmqx64" xml:space="preserve">
-    <value>msmqx64.bat</value>
-    <comment>script 1 for MSMQ</comment>
   </data>
 </root>

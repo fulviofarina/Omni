@@ -177,6 +177,8 @@ namespace DB.Tools
                     qm = null;
                 }
 
+                Interface.IPreferences.CurrentPref.IsMSMQ = ok;
+
             }
             catch (Exception ex2)
             {

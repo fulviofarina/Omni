@@ -133,7 +133,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backups\LIMS.xml.
+        ///   Looks up a localized string similar to LIMS.xml.
         /// </summary>
         public static string Linaa {
             get {
@@ -165,24 +165,6 @@ namespace DB.Properties {
         public static string MCNPXFolder {
             get {
                 return ResourceManager.GetString("MCNPXFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to msmqx64.bat.
-        /// </summary>
-        public static string msmqx64 {
-            get {
-                return ResourceManager.GetString("msmqx64", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to msmqx86.bat.
-        /// </summary>
-        public static string msmqx86 {
-            get {
-                return ResourceManager.GetString("msmqx86", resourceCulture);
             }
         }
         

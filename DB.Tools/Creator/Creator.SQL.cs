@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Linq;
+using DB.Properties;
 using Rsx.SQL;
 
 namespace DB.Tools
@@ -27,7 +28,7 @@ namespace DB.Tools
             bool makeDatabase = false;
 
          
-            string localDB = Properties.Settings.Default.localDB;
+            string userDB = Properties.Settings.Default.localDB;
             string developerDB = Properties.Settings.Default.developerDB;
             string defaultConnection = string.Empty;
             bool ok = Interface.IAdapter.IsMainConnectionOk;
@@ -58,15 +59,15 @@ namespace DB.Tools
                 bool  sqlFound = !string.IsNullOrEmpty(sqlServerFound);
                 if (sqlFound)
                 {
-                    SQLUI.ReplaceLocalDBDefaultPath(ref localDB, sqlServerFound);
+                    SQLUI.ReplaceLocalDBDefaultPath(ref userDB, sqlServerFound);
                     //store later
                 }
                 //2
                 //offer user to change database string anyway!!!
-                developerDB = SQLUI.ChangeConnectionString(ref connectionUsrControl, ref localDB);
+                developerDB = SQLUI.ChangeConnectionString(ref connectionUsrControl, ref userDB);
                 //3
                 //set local database as default
-                defaultConnection = localDB;
+                defaultConnection = userDB;
                 //chequea si ya tiene servidores SQL
 
                 //ask to populate or Not
@@ -98,36 +99,33 @@ namespace DB.Tools
 
                 Interface.IAdapter.DisposeAdapters();
 
-                Interface.IAdapter.SetConnections(/*localDB, developerDB,*/ defaultConnection);
+                Interface.IAdapter.SetConnections(defaultConnection);
 
                 Interface.IAdapter.InitializeComponent();
                 Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
 
-                Cursor.Current = Cursors.WaitCursor;
+               // Cursor.Current = Cursors.WaitCursor;
             }
 
             if (makeDatabase)
             {
-                ok = cloneDatabase(localDB, developerDB);
+                ok = cloneDatabase(userDB, developerDB);
             }
 
             //always delete the developer database if it got stucked next restart...
             SQL.DeleteDatabase(developerDB);
 
-            //SAVE AGAIN!!!
+            //SAVE SETTINGS!!!
 
             Interface.IPreferences.CurrentPref.Check();
-            // Interface.IPreferences.SavePreferences();
-
             //again restart Adapters...
             Interface.IAdapter.InitializeComponent();
             Interface.IAdapter.InitializeAdapters();
 
             Cursor.Current = Cursors.Default;
-
-            // if (makeDatabase) { Rsx.Dumb.RestartPC(); Application.ExitThread(); }
-
             Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
+
+            Interface.IPreferences.CurrentPref.IsSQL = ok;
 
             return ok;
         }
@@ -140,7 +138,8 @@ namespace DB.Tools
             //    bool makeDatabase = false;
 
             //MAE A COPY INTO THE DEVELOPER DB SQL
-            Interface.IStore.Read(Interface.IStore.FolderPath + DB.Properties.Resources.Linaa);
+            string filePath =  Application.StartupPath+ Resources.DevFiles+ Resources.Linaa;
+            Interface.IStore.Read(filePath);
             DataSet set = Interface.Get();
             IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
             //save

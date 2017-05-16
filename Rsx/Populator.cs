@@ -97,7 +97,7 @@ namespace Rsx.SQL
         public static bool RestartSQLLocalDBServer()
         {
             // string start = "start ";
-            bool hide = false;
+            bool hide = true;
             bool is64 = Environment.Is64BitOperatingSystem;
 
             string path = string.Empty;
@@ -116,7 +116,7 @@ namespace Rsx.SQL
             path = SQL_LOCALDB_EXE;
             string tmp = "\\Temp\\";
             string content = "start /B " + path + " start";
-            string batFile = "sql.bat";
+            string batFile = "sqlStart.bat";
             string batPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + tmp;
             System.IO.File.WriteAllText(batPath + batFile, content);
 

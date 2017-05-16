@@ -163,18 +163,16 @@ namespace SSF
                 {
                     Creator.InstallMSMQ();
                 }
-                LIMS.Interface.IPreferences.CurrentPref.IsMSMQ = isMsmq;
-
+               
                 //FIRST SQL
                 UserControl IConn = new ucSQLConnection();
                 bool ok = Creator.PrepareSQL(ref IConn);
-                LIMS.Interface.IPreferences.CurrentPref.IsSQL = ok;
+             
 
-              
-
+                LIMS.Interface.IPreferences.SavePreferences();
                 //CHECK RESTART FILE
                 LIMS.Interface.IReport.CheckRestartFile();
-                LIMS.Interface.IPreferences.SavePreferences();
+                
 
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
@@ -187,8 +185,9 @@ namespace SSF
             }
             catch (Exception ex)
             {
-
-                // MessageBox.Show("Program Error: " + ex.Message + "\n\n" + ex.StackTrace);
+                LIMS.Interface.IStore.AddException(ex);
+                LIMS.Interface.IStore.SaveExceptions();
+                MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
             }
         }
 
