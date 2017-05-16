@@ -34,12 +34,6 @@
 
         private System.Windows.Forms.DataGridView ContainerDGV;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-
         private System.Windows.Forms.ContextMenuStrip dgvCMS;
 
         private DB.LINAA lINAA;
@@ -172,9 +166,6 @@
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.ChannelDGV = new System.Windows.Forms.DataGridView();
             this.ContainerDGV = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContainerBS = new System.Windows.Forms.BindingSource(this.components);
             this.channelSC = new System.Windows.Forms.SplitContainer();
             this.channelTS = new System.Windows.Forms.ToolStrip();
@@ -205,18 +196,23 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.channelNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.irReqCodeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kepiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fluxTypeDGVColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BellFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.alphaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.reactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.A1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.A2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WGt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kepiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pTh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.A1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.A2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.alphaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPShapes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChParSC)).BeginInit();
             this.ChParSC.Panel1.SuspendLayout();
@@ -306,8 +302,8 @@
             this.toolStripLabel8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel8.ForeColor = System.Drawing.Color.Blue;
             this.toolStripLabel8.Name = "toolStripLabel8";
-            this.toolStripLabel8.Size = new System.Drawing.Size(173, 18);
-            this.toolStripLabel8.Text = "Channel Configuration";
+            this.toolStripLabel8.Size = new System.Drawing.Size(234, 18);
+            this.toolStripLabel8.Text = "Neutron source configurations";
             // 
             // channelParBN
             // 
@@ -465,18 +461,20 @@
             this.ChannelDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.channelNameDataGridViewTextBoxColumn,
             this.irReqCodeDataGridViewTextBoxColumn,
-            this.kthDataGridViewTextBoxColumn,
-            this.kepiDataGridViewTextBoxColumn,
             this.fluxTypeDGVColumn,
             this.BellFactor,
-            this.alphaDataGridViewTextBoxColumn,
-            this.fDataGridViewTextBoxColumn,
-            this.FC,
-            this.reactorDataGridViewTextBoxColumn,
+            this.WGt,
+            this.nFactor,
+            this.kthDataGridViewTextBoxColumn,
+            this.kepiDataGridViewTextBoxColumn,
+            this.pTh,
+            this.pEpi,
             this.A1,
             this.A2,
-            this.pTh,
-            this.pEpi});
+            this.fDataGridViewTextBoxColumn,
+            this.alphaDataGridViewTextBoxColumn,
+            this.FC,
+            this.reactorDataGridViewTextBoxColumn});
             this.TLPShapes.SetColumnSpan(this.ChannelDGV, 2);
             this.ChannelDGV.DataSource = this.ChannelBS;
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -556,29 +554,6 @@
             this.ContainerDGV.Size = new System.Drawing.Size(904, 218);
             this.ContainerDGV.TabIndex = 7;
             // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "VialTypeRef";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 78;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "InnerRadius";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Radius";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ToolTipText = "in mm";
-            this.dataGridViewTextBoxColumn6.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "MaxFillHeight";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Lenght";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ToolTipText = "in mm";
-            this.dataGridViewTextBoxColumn12.Width = 86;
-            // 
             // ContainerBS
             // 
             this.ContainerBS.DataMember = "VialType";
@@ -623,8 +598,8 @@
             this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel4.ForeColor = System.Drawing.Color.Blue;
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(156, 18);
-            this.toolStripLabel4.Text = "Channel Dimensions";
+            this.toolStripLabel4.Size = new System.Drawing.Size(211, 18);
+            this.toolStripLabel4.Text = "Neutron source dimensions";
             // 
             // ContainerBN
             // 
@@ -848,31 +823,20 @@
             // channelNameDataGridViewTextBoxColumn
             // 
             this.channelNameDataGridViewTextBoxColumn.DataPropertyName = "ChannelName";
-            this.channelNameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.channelNameDataGridViewTextBoxColumn.HeaderText = "Label";
             this.channelNameDataGridViewTextBoxColumn.Name = "channelNameDataGridViewTextBoxColumn";
-            this.channelNameDataGridViewTextBoxColumn.Width = 78;
+            this.channelNameDataGridViewTextBoxColumn.ToolTipText = "A label for the neutron source configuration";
+            this.channelNameDataGridViewTextBoxColumn.Width = 74;
             // 
             // irReqCodeDataGridViewTextBoxColumn
             // 
             this.irReqCodeDataGridViewTextBoxColumn.DataPropertyName = "IrReqCode";
-            this.irReqCodeDataGridViewTextBoxColumn.HeaderText = "IrReqCode";
+            this.irReqCodeDataGridViewTextBoxColumn.DividerWidth = 4;
+            this.irReqCodeDataGridViewTextBoxColumn.HeaderText = "Prefix";
             this.irReqCodeDataGridViewTextBoxColumn.Name = "irReqCodeDataGridViewTextBoxColumn";
-            this.irReqCodeDataGridViewTextBoxColumn.Visible = false;
-            this.irReqCodeDataGridViewTextBoxColumn.Width = 114;
-            // 
-            // kthDataGridViewTextBoxColumn
-            // 
-            this.kthDataGridViewTextBoxColumn.DataPropertyName = "kth";
-            this.kthDataGridViewTextBoxColumn.HeaderText = "kth";
-            this.kthDataGridViewTextBoxColumn.Name = "kthDataGridViewTextBoxColumn";
-            this.kthDataGridViewTextBoxColumn.Width = 58;
-            // 
-            // kepiDataGridViewTextBoxColumn
-            // 
-            this.kepiDataGridViewTextBoxColumn.DataPropertyName = "kepi";
-            this.kepiDataGridViewTextBoxColumn.HeaderText = "kepi";
-            this.kepiDataGridViewTextBoxColumn.Name = "kepiDataGridViewTextBoxColumn";
-            this.kepiDataGridViewTextBoxColumn.Width = 66;
+            this.irReqCodeDataGridViewTextBoxColumn.ToolTipText = "a project\'s prefix codename to automatically assign this neutron source to the pr" +
+    "oject";
+            this.irReqCodeDataGridViewTextBoxColumn.Width = 81;
             // 
             // fluxTypeDGVColumn
             // 
@@ -881,34 +845,116 @@
             this.fluxTypeDGVColumn.Name = "fluxTypeDGVColumn";
             this.fluxTypeDGVColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.fluxTypeDGVColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.fluxTypeDGVColumn.ToolTipText = "Default MatSSF Mode for this neutron source";
             this.fluxTypeDGVColumn.Width = 138;
             // 
             // BellFactor
             // 
             this.BellFactor.DataPropertyName = "BellFactor";
-            this.BellFactor.HeaderText = "BellFactor";
+            this.BellFactor.HeaderText = "Bell Factor";
             this.BellFactor.Name = "BellFactor";
-            this.BellFactor.Width = 107;
+            this.BellFactor.ToolTipText = "Default Bell factor for this neutron source";
+            this.BellFactor.Width = 111;
             // 
-            // alphaDataGridViewTextBoxColumn
+            // WGt
             // 
-            this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
-            this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
-            this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
-            this.alphaDataGridViewTextBoxColumn.Width = 77;
+            this.WGt.DataPropertyName = "WGt";
+            this.WGt.HeaderText = "WGt";
+            this.WGt.Name = "WGt";
+            this.WGt.ToolTipText = "Default WGt factor for this neutron source";
+            this.WGt.Width = 67;
+            // 
+            // nFactor
+            // 
+            this.nFactor.DataPropertyName = "nFactor";
+            this.nFactor.DividerWidth = 4;
+            this.nFactor.HeaderText = "nFactor";
+            this.nFactor.Name = "nFactor";
+            this.nFactor.ToolTipText = "Default n-factor for this neutron source";
+            this.nFactor.Width = 93;
+            // 
+            // kthDataGridViewTextBoxColumn
+            // 
+            this.kthDataGridViewTextBoxColumn.DataPropertyName = "kth";
+            this.kthDataGridViewTextBoxColumn.HeaderText = "kth";
+            this.kthDataGridViewTextBoxColumn.Name = "kthDataGridViewTextBoxColumn";
+            this.kthDataGridViewTextBoxColumn.ToolTipText = "Default k-thermal factor for this neutron source";
+            this.kthDataGridViewTextBoxColumn.Width = 58;
+            // 
+            // kepiDataGridViewTextBoxColumn
+            // 
+            this.kepiDataGridViewTextBoxColumn.DataPropertyName = "kepi";
+            this.kepiDataGridViewTextBoxColumn.HeaderText = "kepi";
+            this.kepiDataGridViewTextBoxColumn.Name = "kepiDataGridViewTextBoxColumn";
+            this.kepiDataGridViewTextBoxColumn.ToolTipText = "Default k-epithermal factor for this neutron source";
+            this.kepiDataGridViewTextBoxColumn.Width = 66;
+            // 
+            // pTh
+            // 
+            this.pTh.DataPropertyName = "pTh";
+            dataGridViewCellStyle3.Format = "N3";
+            this.pTh.DefaultCellStyle = dataGridViewCellStyle3;
+            this.pTh.HeaderText = "pTh";
+            this.pTh.Name = "pTh";
+            this.pTh.ToolTipText = "Default p-thermal factor for this neutron source";
+            this.pTh.Width = 63;
+            // 
+            // pEpi
+            // 
+            this.pEpi.DataPropertyName = "pEpi";
+            dataGridViewCellStyle4.Format = "N3";
+            this.pEpi.DefaultCellStyle = dataGridViewCellStyle4;
+            this.pEpi.HeaderText = "pEpi";
+            this.pEpi.Name = "pEpi";
+            this.pEpi.ToolTipText = "Default p-epithermal factor for this neutron source";
+            this.pEpi.Width = 67;
+            // 
+            // A1
+            // 
+            this.A1.DataPropertyName = "A1";
+            dataGridViewCellStyle5.Format = "N3";
+            this.A1.DefaultCellStyle = dataGridViewCellStyle5;
+            this.A1.HeaderText = "A1";
+            this.A1.Name = "A1";
+            this.A1.Visible = false;
+            this.A1.Width = 52;
+            // 
+            // A2
+            // 
+            this.A2.DataPropertyName = "A2";
+            dataGridViewCellStyle6.Format = "N3";
+            this.A2.DefaultCellStyle = dataGridViewCellStyle6;
+            this.A2.HeaderText = "A2";
+            this.A2.Name = "A2";
+            this.A2.Visible = false;
+            this.A2.Width = 55;
             // 
             // fDataGridViewTextBoxColumn
             // 
             this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
             this.fDataGridViewTextBoxColumn.HeaderText = "f";
             this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
+            this.fDataGridViewTextBoxColumn.ToolTipText = "f value for this neutron source under the Høgdahl convention";
+            this.fDataGridViewTextBoxColumn.Visible = false;
             this.fDataGridViewTextBoxColumn.Width = 41;
+            // 
+            // alphaDataGridViewTextBoxColumn
+            // 
+            this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
+            this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
+            this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
+            this.alphaDataGridViewTextBoxColumn.ToolTipText = "Alpha value for this neutron source under the Høgdahl convention";
+            this.alphaDataGridViewTextBoxColumn.Visible = false;
+            this.alphaDataGridViewTextBoxColumn.Width = 77;
             // 
             // FC
             // 
             this.FC.DataPropertyName = "FC";
             this.FC.HeaderText = "FC";
             this.FC.Name = "FC";
+            this.FC.ToolTipText = "Default Comparator Factor for this neutron source according to the k0-standardiza" +
+    "tion";
+            this.FC.Visible = false;
             this.FC.Width = 53;
             // 
             // reactorDataGridViewTextBoxColumn
@@ -919,41 +965,29 @@
             this.reactorDataGridViewTextBoxColumn.Visible = false;
             this.reactorDataGridViewTextBoxColumn.Width = 92;
             // 
-            // A1
+            // dataGridViewTextBoxColumn3
             // 
-            this.A1.DataPropertyName = "A1";
-            dataGridViewCellStyle3.Format = "N3";
-            this.A1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.A1.HeaderText = "A1";
-            this.A1.Name = "A1";
-            this.A1.Width = 52;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "VialTypeRef";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Label";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ToolTipText = "A label for the neutron source dimensions";
+            this.dataGridViewTextBoxColumn3.Width = 74;
             // 
-            // A2
+            // dataGridViewTextBoxColumn6
             // 
-            this.A2.DataPropertyName = "A2";
-            dataGridViewCellStyle4.Format = "N3";
-            this.A2.DefaultCellStyle = dataGridViewCellStyle4;
-            this.A2.HeaderText = "A2";
-            this.A2.Name = "A2";
-            this.A2.Width = 55;
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "InnerRadius";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Radius";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ToolTipText = "Neutron source radius in milimeters";
+            this.dataGridViewTextBoxColumn6.Width = 83;
             // 
-            // pTh
+            // dataGridViewTextBoxColumn12
             // 
-            this.pTh.DataPropertyName = "pTh";
-            dataGridViewCellStyle5.Format = "N3";
-            this.pTh.DefaultCellStyle = dataGridViewCellStyle5;
-            this.pTh.HeaderText = "pTh";
-            this.pTh.Name = "pTh";
-            this.pTh.Width = 63;
-            // 
-            // pEpi
-            // 
-            this.pEpi.DataPropertyName = "pEpi";
-            dataGridViewCellStyle6.Format = "N3";
-            this.pEpi.DefaultCellStyle = dataGridViewCellStyle6;
-            this.pEpi.HeaderText = "pEpi";
-            this.pEpi.Name = "pEpi";
-            this.pEpi.Width = 67;
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "MaxFillHeight";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Length";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ToolTipText = "Neutron source length in milimeters";
+            this.dataGridViewTextBoxColumn12.Width = 86;
             // 
             // ucCC
             // 
@@ -1008,20 +1042,24 @@
         }
 
         #endregion
-
         private System.Windows.Forms.DataGridViewTextBoxColumn channelNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn irReqCodeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kthDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kepiDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn fluxTypeDGVColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn BellFactor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn alphaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn reactorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn A1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn A2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WGt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nFactor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kthDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kepiDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pTh;
         private System.Windows.Forms.DataGridViewTextBoxColumn pEpi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn A1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn A2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn alphaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn reactorDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
     }
 }

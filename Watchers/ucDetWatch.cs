@@ -485,8 +485,8 @@ namespace k0X
                 if (!sample.Equals(string.Empty) && !project.Equals(string.Empty))
                 {
                     //get current sample
-                    int? id = this.Linaa.IrradiationRequests.FindIrrReqID(project);
-                    this.currentSample = this.Linaa.SubSamples.FindBySample(sample, true, id);
+                    int? id = this.Linaa.FindIrrReqID(project);
+                    this.currentSample = this.Linaa.FindBySample(sample, true, id);
                     if (!IsNDD(this.currentSample))
                     {
                         this.currentSample.SetDetectorPosition(det, project);

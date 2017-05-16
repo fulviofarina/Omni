@@ -300,7 +300,7 @@ namespace k0X
 
         protected void Preferences(bool load)
         {
-            LINAA.IrradiationRequestsRow irr = Interface.IDB.IrradiationRequests.FindByIrradiationCode(ISubS.projectbox.Project);
+            LINAA.IrradiationRequestsRow irr = Interface.IPopulate.IIrradiations.FindByIrradiationCode(ISubS.projectbox.Project);
 
             try
             {
@@ -561,7 +561,7 @@ namespace k0X
                     if (samsToAddSpec != null)
                     {
                         samsToAddSpec = new HashSet<string>(samsToAddSpec);
-                        IEnumerable<LINAA.SubSamplesRow> samples =   Interface.IPopulate.ISamples.CreateSamplesNamesFrom(ref samsToAddSpec);
+                        IEnumerable<LINAA.SubSamplesRow> samples =   Interface.IPopulate.ISamples.AddSamplesFromNames(ref samsToAddSpec);
                       
                         int added = Interface.IPopulate.ISamples.AddSamples(project, ref samples);
                         samsToAddSpec = null;
@@ -569,7 +569,7 @@ namespace k0X
                 }
             }
 
-            this.samples = Interface.IPopulate.IProjects.FindByProject(project);
+            this.samples = Interface.IPopulate.ISamples.FindByProject(project);
 
             Interface.IStore.Save(ref this.samples);
         }

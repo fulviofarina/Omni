@@ -29,9 +29,10 @@ namespace DB.UI
             Dumb.FD(ref this.MatrixBS);
 
             matrixDGV.DataSource = Interface.IBS.Matrix;
+            this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.MatrixBN.BindingSource = Interface.IBS.Matrix;
-            string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
 
+            string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
             Binding mlabel = BS.ABinding(ref Interface.IBS.Matrix, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
 
@@ -51,20 +52,11 @@ namespace DB.UI
             {
 
            
-            bool isMatrix = this.MatrixBN.BindingSource.Equals(Interface.IBS.Matrix);
-
-            if (isMatrix)
-            {
+     
                 LINAA.MatrixRow v = Interface.IDB.Matrix.NewMatrixRow();
                 Interface.IDB.Matrix.AddMatrixRow(v);
                 Interface.IBS.Update(v);
-            }
-            else
-            {
-                LINAA.CompositionsRow c = Interface.IDB.Compositions.NewCompositionsRow();
-                Interface.IDB.Compositions.AddCompositionsRow(c);
-                c.MatrixID = (Interface.ICurrent.Matrix as LINAA.MatrixRow).MatrixID;
-            }
+          
             }
             catch (Exception ex)
             {
@@ -73,13 +65,6 @@ namespace DB.UI
             }
         }
 
-        /*
-        private void dGV_MouseHover(object sender, EventArgs e)
-        {
-            if (sender.Equals(this.matrixDGV)) this.MatrixBN.BindingSource = Interface.IBS.Matrix;
-            else this.MatrixBN.BindingSource = Interface.IBS.Compositions;
-        }
-        */
 
         public ucMatrixSimple()
         {

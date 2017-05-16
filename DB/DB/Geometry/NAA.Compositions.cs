@@ -9,13 +9,6 @@ namespace DB
     {
         public partial class CompositionsDataTable
         {
-            /// <summary>
-            /// Creates a IList of CompositionsRow from a given MatrixRow
-            /// </summary>
-            /// <param name="aux">MatrixRow as input</param>
-            /// <returns>the IList of Compositions Rows</returns>
-          
-
         
 
             public CompositionsRow AddCompositionsRow(int matrixID, string element, double formulaweight, double quantity)
@@ -54,6 +47,6 @@ namespace DB
             }
         }
 
-        //Requires attention on DataColumn Changing Handlers
+     
     }
 }

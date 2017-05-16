@@ -59,13 +59,28 @@ namespace DB.Tools
         {
             string chCfg = string.Empty;
 
-            chCfg = UNIT.ChCfg[0] + "\n" + (2*UNIT.ChRadius) + "\n" + UNIT.ChLength+ "\n";
+            chCfg = UNIT.ChCfg[0] + "\n" + (2*UNIT.ChRadius*0.1) + "\n" + (UNIT.ChLength*0.1)+ "\n";
             if (!defaultVal)
             {
-                chCfg += UNIT.BellFactor + "\n";
-                chCfg += UNIT.nFactor + "\n";
-                chCfg += UNIT.WGt + "\n";
+                chCfg += UNIT.BellFactor;
+              //  chCfg += UNIT.nFactor + "\n";
+              //  chCfg += UNIT.WGt + "\n";
             }
+            chCfg += "\n";
+            if (!defaultVal)
+            {
+              //  chCfg += UNIT.BellFactor + "\n";
+                chCfg += UNIT.nFactor;
+              //  chCfg += UNIT.WGt + "\n";
+            }
+            chCfg += "\n";
+            if (!defaultVal)
+            {
+              //  chCfg += UNIT.BellFactor + "\n";
+               // chCfg += UNIT.nFactor + "\n";
+                chCfg += UNIT.WGt;
+            }
+            chCfg += "\n";
             return chCfg;
         }
         /*

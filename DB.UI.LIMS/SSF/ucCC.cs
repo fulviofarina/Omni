@@ -35,6 +35,8 @@ namespace DB.UI
 
             ChannelDGV.DataSource = Interface.IBS.Channels;
             ContainerDGV.DataSource = Interface.IBS.Rabbit;
+            this.ContainerDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+            this.ChannelDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
             this.channelParBN.BindingSource = Interface.IBS.Channels;
             this.ContainerBN.BindingSource = Interface.IBS.Rabbit;
@@ -50,7 +52,7 @@ namespace DB.UI
         {
             if (e.ColumnIndex != fluxTypeDGVColumn.Index) return;
            
-            LINAA.ChannelsRow row = Caster.Cast<LINAA.ChannelsRow>(Interface.IBS.SelectedChannel.Current );
+            LINAA.ChannelsRow row = (LINAA.ChannelsRow)(Interface.ICurrent.Channel );
 
             if (row.FluxType.Contains("0")) row.FluxType = MatSSF.Types[1];
             else if (row.FluxType.Contains("1")) row.FluxType = MatSSF.Types[2];

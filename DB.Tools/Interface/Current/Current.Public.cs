@@ -48,6 +48,7 @@ namespace DB.Tools
                 return (bs.Channels.Current as DataRowView)?.Row;
             }
         }
+    
 
         /// <summary>
         /// Current Rows

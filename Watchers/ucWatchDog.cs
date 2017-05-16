@@ -167,8 +167,8 @@ namespace k0X
         //    Interface.IReport.Notify = lims.IReport.Notify;
 
             project = Project.ToUpper();
-            irrId = lims.IDB.IrradiationRequests.FindIrrReqID(project);
-            samples = lims.IDB.SubSamples.FindByIrReqID(irrId).ToList();
+            irrId = lims.IPopulate.IIrradiations.FindIrrReqID(project);
+            samples = lims.IPopulate.ISamples.FindByIrReqID(irrId).ToList();
             meas = samples.SelectMany(s => s.GetMeasurementsRows()).ToList();
 
             Dirbox.Text = lims.IPreferences.CurrentPref.Spectra + project;

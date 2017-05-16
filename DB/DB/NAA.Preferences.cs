@@ -20,13 +20,14 @@ namespace DB
         {
             public void Check()
             {
-            //    if (this.IsLastUnitIDNull()) LastUnitID = -1;
+                //    if (this.IsLastUnitIDNull()) LastUnitID = -1;
+           //     if (this.IsWindowsUserNull()) WindowsUser = string.Empty;
                 if (this.IsCalcDensityNull()) CalcDensity = true;
                 if (this.IsCalcMassNull()) CalcMass = false;
                 if (IsAAFillHeightNull()) AAFillHeight = false;
                 if (IsAARadiusNull()) AARadius = false;
-
-                if (this.IsDoCKNull()) DoCK = false;
+                if (IsCalibrationNull()) Calibration = false;
+                if (this.IsDoCKNull()) DoCK = true;
                 if (this.IsDoMatSSFNull()) DoMatSSF = true;
                 if (this.IsLoopNull()) Loop = true;
                 if (this.IsRoundingNull()) Rounding = "N3";
@@ -40,7 +41,7 @@ namespace DB
 
         //        this.AcceptChanges();
 
-                Settings.Default.Save();
+              //  Settings.Default.Save();
             }
         }
 

@@ -12,7 +12,7 @@ namespace DB.Tools
 {
     public partial class Report : IReport
     {
-             
+
         /*
         public partial class MSMQInstaller
         {
@@ -40,7 +40,19 @@ namespace DB.Tools
             }
         }
         */
+        public void ReportToolTip(object sender, EventArgs ev)
+        {
+            //  bool isSameCol = (lastColInder == e.ColumnIndex);
+            DataGridView dgv = sender as DataGridView;
+            DataGridViewCellMouseEventArgs e = ev as DataGridViewCellMouseEventArgs;
+            int index = e.ColumnIndex;
+            DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
+            string toolTip = cell.ToolTipText;
+            if (string.IsNullOrEmpty(toolTip)) return;
+            Msg(toolTip, "This column represents");
+            Speak(toolTip);
 
+        }
         public string RestartFile
         {
             get

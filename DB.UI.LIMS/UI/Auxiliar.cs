@@ -27,6 +27,7 @@ namespace DB.UI
             {
                 LIMS.Interface.IPreferences.SavePreferences();
                 e.Cancel = true;
+              
             }
             if (!e.Cancel)
             {

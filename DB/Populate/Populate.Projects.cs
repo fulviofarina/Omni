@@ -2,12 +2,33 @@
 using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
+using System.Linq;
 
 namespace DB
 {
     public partial class LINAA : IProjects
     {
+
+
+        public ProjectsRow FindBy(int? IrReqId, int? orderID, bool addIfNull)
+        {
+            LINAA.ProjectsRow pro = null;
+            if (IrReqId == null || orderID == null) return pro;
+            pro = this.tableProjects.FirstOrDefault(p => p.IrradiationRequestsID == IrReqId && p.OrdersID == orderID);
+            if (pro == null && addIfNull)
+            {
+                pro = this.tableProjects.NewProjectsRow();
+                pro.IrradiationRequestsID = (int)IrReqId;
+                pro.OrdersID = (int)orderID;
+                this.tableProjects.AddProjectsRow(pro);
+            }
+
+            return pro;
+        }
+
+
         protected ICollection<string> activeProjectsList;
         protected IList<string> projectsList;
 
@@ -39,11 +60,6 @@ namespace DB
         }
 
         //
-
-        public IList<LINAA.SubSamplesRow> FindByProject(string project)
-        {
-            return this.tableSubSamples.FindByProject(project);
-        }
 
         public void PopulateProjects()
         {

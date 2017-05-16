@@ -17,7 +17,6 @@ namespace DB.UI
         /// <param name="e">     </param>
 
         private int lastIndex = -2;
-   //     private int lastColInder = -2;
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -42,9 +41,6 @@ namespace DB.UI
 
                     LINAA.UnitRow unit = row as LINAA.UnitRow;
 
-                    //   Interface.IDB.MatSSF.Clear();
-               
-
                     Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
 
                     Interface.IBS.Update<LINAA.UnitRow>(unit, true, false);
@@ -53,9 +49,9 @@ namespace DB.UI
                 {
                     //link to matrix, channel or vial,/rabbit data
                     MatSSF.UNIT.SetParent(ref row);
-                    string tipo = row.GetType().ToString();
+                  //  string tipo = row.GetType().ToString();
 
-                    Interface.IReport.Msg("Unit values updated with Template Item", "Updated!", false); //report
+                    Interface.IReport.Msg("Sample values updated with Template item", "Updated!", false); //report
                 }
 
                 //then it will be updated
@@ -83,63 +79,18 @@ namespace DB.UI
             unitDGV.DataSource = Interface.IBS.Units;
             SSFDGV.DataSource = Interface.IBS.SSF;
 
-            // this.lINAA = Interface.Get() as LINAA;
-           
             setBindings();
 
-            // this.unitDGV.RowHeaderMouseClick += DgvItemSelected; this.unitDGV.SelectionChanged += UnitDGV_SelectionChanged;
             this.unitDGV.CellMouseClick += cellMouseClick;
             this.unitDGV.CellMouseClick += DgvItemSelected;
-            //  this.SSFDGV.CellMouseClick += cellMouseClick;
-         
-        
-           
-            this.unitDGV.ColumnHeaderMouseClick += columnHeaderMouseClick;
-            this.SSFDGV.ColumnHeaderMouseClick += columnHeaderMouseClick;
 
-         //   this.unitDGV.CellToolTipTextNeeded += cellToolTipTextNeeded;
-         //   this.SSFDGV.CellToolTipTextNeeded += cellToolTipTextNeeded;
-            //     this.unitDGV.MouseHover += UnitDGV_MouseHover;
+            this.unitDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+            this.SSFDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+      
         }
-        /*
-        private void cellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
-        {
+    
+    
 
-            bool isSameCol = lastColInder == e.ColumnIndex;
-            if (isSameCol) return;
-            if (e.RowIndex != -1) return;
-            lastColInder = e.ColumnIndex;
-            DataGridView dgv = sender as DataGridView;
-            SpeakToolTip(ref dgv, lastColInder);
-            //  columnHeaderMouseClick(sender,);
-            // throw new System.NotImplementedException();
-        }
-        */
-        private  void columnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //  bool isSameCol = (lastColInder == e.ColumnIndex);
-            DataGridView dgv = sender as DataGridView;
-            int index = e.ColumnIndex;
-
-            SpeakToolTip(ref dgv, index);
-        }
-
-        private void SpeakToolTip(ref DataGridView dgv, int index)
-        {
-            try
-            {
-                DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
-                string toolTip = cell.ToolTipText;
-                if (string.IsNullOrEmpty(toolTip)) return;
-                //   if (e.RowIndex != -1) return;
-                Interface.IReport.Speak(toolTip);
-            }
-            catch (System.Exception ex)
-            {
-
-                //  throw;
-            }
-        }
 
 
         private void cellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -148,6 +99,7 @@ namespace DB.UI
 
             bool isToDoColumn = false;
             DataGridView dgv = sender as DataGridView;
+            if (dgv.Rows.Count == 0) return;
             if (e.ColumnIndex >= 0)
             {
                 isToDoColumn = dgv.Columns[e.ColumnIndex].ValueType.Equals(typeof(bool));
@@ -160,20 +112,7 @@ namespace DB.UI
                 dgv.RefreshEdit();
                 // unit.ToDo = !unit.ToDo;
             }
-            /*
-            else if (e.RowIndex==-1)
-            {
-             //   if (!isSameCol)
-                {
-                    DataGridViewColumn colum = dgv.Columns[e.ColumnIndex];
-                    if (!string.IsNullOrEmpty(colum.ToolTipText))
-                    {
-                        Interface.IReport.Speak(colum.ToolTipText);
-                    }
-                }
-                    // if (e.ColumnIndex == this.g)
-            }
-            */
+            
 
         }
 

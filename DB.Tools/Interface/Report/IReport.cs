@@ -1,11 +1,12 @@
-﻿using Msn;
+﻿using System;
+using Msn;
 
 namespace DB
 {
     public interface IReport
     {
         Pop Msn { get; set; }
-
+        void ReportToolTip(object sender, EventArgs ev);
         string RestartFile { get; }
 
         void AskToRestart();

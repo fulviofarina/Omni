@@ -24,11 +24,7 @@
 
         private System.Windows.Forms.ToolStripButton bnVialAddItem;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn bottomThicknessDataGridViewTextBoxColumn;
-
         private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
 
         /// <summary> 
         /// Required designer variable.
@@ -36,12 +32,6 @@
         private System.ComponentModel.IContainer components = null;
 
         private System.Windows.Forms.ContextMenuStrip dgvCMS;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn distanceDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn innerRadiusDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewCheckBoxColumn isRabbitDataGridViewCheckBoxColumn;
 
         private DB.LINAA lINAA;
 
@@ -53,13 +43,9 @@
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn maxFillHeightDataGridViewTextBoxColumn;
-
         private System.Windows.Forms.SplitContainer shapeSC;
 
         private System.Windows.Forms.ToolStrip shapeTS;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn sideThicknessDataGridViewTextBoxColumn;
 
         // private System.Windows.Forms.DataGridView dataGridView1;
         //  private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
@@ -106,10 +92,6 @@
 
         private System.Windows.Forms.ToolStripLabel VialTypelabel;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn vialTypeRefDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn volDataGridViewTextBoxColumn;
-
      //   private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn;
 
         /// <summary> 
@@ -138,19 +120,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucV));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLPShapes = new System.Windows.Forms.TableLayoutPanel();
             this.vialDGV = new System.Windows.Forms.DataGridView();
-            this.vialTypeRefDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.innerRadiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sideThicknessDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bottomThicknessDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.distanceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maxFillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.commentsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isRabbitDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.VialBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.shapeSC = new System.Windows.Forms.SplitContainer();
@@ -177,16 +150,22 @@
             this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-           // this.xCOMDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-        //    this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-         //   this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.toolStrip12 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.vialTypeRefDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.innerRadiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sideThicknessDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bottomThicknessDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.distanceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maxFillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.commentsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isRabbitDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.TLPShapes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VialBS)).BeginInit();
@@ -200,8 +179,6 @@
             this.VialBN.SuspendLayout();
             this.dgvCMS.SuspendLayout();
             this.toolStrip6.SuspendLayout();
-          //  ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-       //     this.splitContainer4.SuspendLayout();
             this.toolStrip12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.Panel1.SuspendLayout();
@@ -291,71 +268,6 @@
             this.vialDGV.Size = new System.Drawing.Size(784, 427);
             this.vialDGV.TabIndex = 9;
             // 
-            // vialTypeRefDataGridViewTextBoxColumn
-            // 
-            this.vialTypeRefDataGridViewTextBoxColumn.DataPropertyName = "VialTypeRef";
-            this.vialTypeRefDataGridViewTextBoxColumn.HeaderText = "Label";
-            this.vialTypeRefDataGridViewTextBoxColumn.Name = "vialTypeRefDataGridViewTextBoxColumn";
-            this.vialTypeRefDataGridViewTextBoxColumn.ToolTipText = "A Label for this Container";
-            // 
-            // innerRadiusDataGridViewTextBoxColumn
-            // 
-            this.innerRadiusDataGridViewTextBoxColumn.DataPropertyName = "InnerRadius";
-            this.innerRadiusDataGridViewTextBoxColumn.HeaderText = "Radius (mm)";
-            this.innerRadiusDataGridViewTextBoxColumn.Name = "innerRadiusDataGridViewTextBoxColumn";
-            this.innerRadiusDataGridViewTextBoxColumn.ToolTipText = "(Inner) Radius of the Container (in mm)";
-            // 
-            // sideThicknessDataGridViewTextBoxColumn
-            // 
-            this.sideThicknessDataGridViewTextBoxColumn.DataPropertyName = "SideThickness";
-            this.sideThicknessDataGridViewTextBoxColumn.HeaderText = "SideThickness";
-            this.sideThicknessDataGridViewTextBoxColumn.Name = "sideThicknessDataGridViewTextBoxColumn";
-            this.sideThicknessDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // bottomThicknessDataGridViewTextBoxColumn
-            // 
-            this.bottomThicknessDataGridViewTextBoxColumn.DataPropertyName = "BottomThickness";
-            this.bottomThicknessDataGridViewTextBoxColumn.HeaderText = "BottomThickness";
-            this.bottomThicknessDataGridViewTextBoxColumn.Name = "bottomThicknessDataGridViewTextBoxColumn";
-            this.bottomThicknessDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // distanceDataGridViewTextBoxColumn
-            // 
-            this.distanceDataGridViewTextBoxColumn.DataPropertyName = "Distance";
-            this.distanceDataGridViewTextBoxColumn.HeaderText = "Distance";
-            this.distanceDataGridViewTextBoxColumn.Name = "distanceDataGridViewTextBoxColumn";
-            this.distanceDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // maxFillHeightDataGridViewTextBoxColumn
-            // 
-            this.maxFillHeightDataGridViewTextBoxColumn.DataPropertyName = "MaxFillHeight";
-            this.maxFillHeightDataGridViewTextBoxColumn.HeaderText = "Length (mm)";
-            this.maxFillHeightDataGridViewTextBoxColumn.Name = "maxFillHeightDataGridViewTextBoxColumn";
-            this.maxFillHeightDataGridViewTextBoxColumn.ToolTipText = "Lenght or Filll Height of the Container (in mm)";
-            // 
-            // volDataGridViewTextBoxColumn
-            // 
-            this.volDataGridViewTextBoxColumn.DataPropertyName = "Vol";
-            dataGridViewCellStyle3.Format = "N3";
-            this.volDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.volDataGridViewTextBoxColumn.HeaderText = "Vol (cm3)";
-            this.volDataGridViewTextBoxColumn.Name = "volDataGridViewTextBoxColumn";
-            this.volDataGridViewTextBoxColumn.ReadOnly = true;
-            this.volDataGridViewTextBoxColumn.ToolTipText = "Volumen of this Container (in cm3)";
-            // 
-            // commentsDataGridViewTextBoxColumn
-            // 
-            this.commentsDataGridViewTextBoxColumn.DataPropertyName = "Comments";
-            this.commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
-            this.commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
-            // 
-            // isRabbitDataGridViewCheckBoxColumn
-            // 
-            this.isRabbitDataGridViewCheckBoxColumn.DataPropertyName = "IsRabbit";
-            this.isRabbitDataGridViewCheckBoxColumn.HeaderText = "IsRabbit";
-            this.isRabbitDataGridViewCheckBoxColumn.Name = "isRabbitDataGridViewCheckBoxColumn";
-            this.isRabbitDataGridViewCheckBoxColumn.Visible = false;
-            // 
             // VialBS
             // 
             this.VialBS.DataMember = "VialType";
@@ -411,8 +323,8 @@
             this.VialTypelabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VialTypelabel.ForeColor = System.Drawing.Color.MidnightBlue;
             this.VialTypelabel.Name = "VialTypelabel";
-            this.VialTypelabel.Size = new System.Drawing.Size(131, 29);
-            this.VialTypelabel.Text = "Vials Dimensions";
+            this.VialTypelabel.Size = new System.Drawing.Size(168, 29);
+            this.VialTypelabel.Text = "Container dimensions";
             // 
             // VialBN
             // 
@@ -598,10 +510,6 @@
             this.matrixDensityDataGridViewTextBoxColumn.Name = "matrixDensityDataGridViewTextBoxColumn";
             this.matrixDensityDataGridViewTextBoxColumn.Width = 117;
             // 
-            // xCOMDataGridViewCheckBoxColumn
-            // 
-          //
-            // 
             // cDataGridViewCheckBoxColumn
             // 
             this.cDataGridViewCheckBoxColumn.DataPropertyName = "C";
@@ -609,10 +517,6 @@
             this.cDataGridViewCheckBoxColumn.Name = "cDataGridViewCheckBoxColumn";
             this.cDataGridViewCheckBoxColumn.ReadOnly = true;
             this.cDataGridViewCheckBoxColumn.Width = 23;
-            // 
-            // tableLayoutPanel3
-            // 
-        //
             // 
             // toolStrip12
             // 
@@ -670,6 +574,72 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // vialTypeRefDataGridViewTextBoxColumn
+            // 
+            this.vialTypeRefDataGridViewTextBoxColumn.DataPropertyName = "VialTypeRef";
+            this.vialTypeRefDataGridViewTextBoxColumn.HeaderText = "Label";
+            this.vialTypeRefDataGridViewTextBoxColumn.Name = "vialTypeRefDataGridViewTextBoxColumn";
+            this.vialTypeRefDataGridViewTextBoxColumn.ToolTipText = "A Label for the sample container";
+            // 
+            // innerRadiusDataGridViewTextBoxColumn
+            // 
+            this.innerRadiusDataGridViewTextBoxColumn.DataPropertyName = "InnerRadius";
+            this.innerRadiusDataGridViewTextBoxColumn.HeaderText = "Radius (mm)";
+            this.innerRadiusDataGridViewTextBoxColumn.Name = "innerRadiusDataGridViewTextBoxColumn";
+            this.innerRadiusDataGridViewTextBoxColumn.ToolTipText = "(Inner) Radius of the Container (in milimeters)";
+            // 
+            // sideThicknessDataGridViewTextBoxColumn
+            // 
+            this.sideThicknessDataGridViewTextBoxColumn.DataPropertyName = "SideThickness";
+            this.sideThicknessDataGridViewTextBoxColumn.HeaderText = "SideThickness";
+            this.sideThicknessDataGridViewTextBoxColumn.Name = "sideThicknessDataGridViewTextBoxColumn";
+            this.sideThicknessDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // bottomThicknessDataGridViewTextBoxColumn
+            // 
+            this.bottomThicknessDataGridViewTextBoxColumn.DataPropertyName = "BottomThickness";
+            this.bottomThicknessDataGridViewTextBoxColumn.HeaderText = "BottomThickness";
+            this.bottomThicknessDataGridViewTextBoxColumn.Name = "bottomThicknessDataGridViewTextBoxColumn";
+            this.bottomThicknessDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // distanceDataGridViewTextBoxColumn
+            // 
+            this.distanceDataGridViewTextBoxColumn.DataPropertyName = "Distance";
+            this.distanceDataGridViewTextBoxColumn.HeaderText = "Distance";
+            this.distanceDataGridViewTextBoxColumn.Name = "distanceDataGridViewTextBoxColumn";
+            this.distanceDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // maxFillHeightDataGridViewTextBoxColumn
+            // 
+            this.maxFillHeightDataGridViewTextBoxColumn.DataPropertyName = "MaxFillHeight";
+            this.maxFillHeightDataGridViewTextBoxColumn.HeaderText = "Length (mm)";
+            this.maxFillHeightDataGridViewTextBoxColumn.Name = "maxFillHeightDataGridViewTextBoxColumn";
+            this.maxFillHeightDataGridViewTextBoxColumn.ToolTipText = "Length or Filll Height of the Container (in milimeters)";
+            // 
+            // volDataGridViewTextBoxColumn
+            // 
+            this.volDataGridViewTextBoxColumn.DataPropertyName = "Vol";
+            dataGridViewCellStyle3.Format = "N3";
+            this.volDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.volDataGridViewTextBoxColumn.HeaderText = "Vol (cm3)";
+            this.volDataGridViewTextBoxColumn.Name = "volDataGridViewTextBoxColumn";
+            this.volDataGridViewTextBoxColumn.ReadOnly = true;
+            this.volDataGridViewTextBoxColumn.ToolTipText = "Volume of this sample container (in cubic centimeters)";
+            // 
+            // commentsDataGridViewTextBoxColumn
+            // 
+            this.commentsDataGridViewTextBoxColumn.DataPropertyName = "Comments";
+            this.commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
+            this.commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
+            this.commentsDataGridViewTextBoxColumn.ToolTipText = "Some comments for this sample container";
+            // 
+            // isRabbitDataGridViewCheckBoxColumn
+            // 
+            this.isRabbitDataGridViewCheckBoxColumn.DataPropertyName = "IsRabbit";
+            this.isRabbitDataGridViewCheckBoxColumn.HeaderText = "IsRabbit";
+            this.isRabbitDataGridViewCheckBoxColumn.Name = "isRabbitDataGridViewCheckBoxColumn";
+            this.isRabbitDataGridViewCheckBoxColumn.Visible = false;
+            // 
             // ucV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -697,8 +667,6 @@
             this.dgvCMS.ResumeLayout(false);
             this.toolStrip6.ResumeLayout(false);
             this.toolStrip6.PerformLayout();
-         //   ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-         //   this.splitContainer4.ResumeLayout(false);
             this.toolStrip12.ResumeLayout(false);
             this.toolStrip12.PerformLayout();
             this.splitContainer5.Panel1.ResumeLayout(false);
@@ -712,5 +680,15 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn vialTypeRefDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn innerRadiusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sideThicknessDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bottomThicknessDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn distanceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn maxFillHeightDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn volDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isRabbitDataGridViewCheckBoxColumn;
     }
 }

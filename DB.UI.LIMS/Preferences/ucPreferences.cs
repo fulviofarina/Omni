@@ -68,24 +68,22 @@ namespace DB.UI
         /// </summary>
         /// <param name="unitsTable"> </param>
         /// <param name="sampleTable"></param>
-        public void SetRoundingBinding(ref Hashtable unitsTable, ref Hashtable sampleTable)
+        public void SetRoundingBinding(ref Hashtable bindings)
         {
             //the bindings to round
-            Hashtable bindings, samplebindings;
-            bindings = unitsTable;
-            samplebindings = sampleTable;
-
+            Hashtable units = bindings;
+         //   Hashtable samples = samplebindings;
             //Do the update when this control losses focus
             this.LostFocus += delegate
               {
                   try
                   {
                       IPreferences ip = Interface.IPreferences;
-
+                  
                       string format = this.roundingTextBox.Text;
                       if (format.Length < 2) return;
-                      BS.ChangeBindingsFormat(format, ref bindings);
-                      BS.ChangeBindingsFormat(format, ref samplebindings);
+                      BS.ChangeBindingsFormat(format, ref units);
+                  //    BS.ChangeBindingsFormat(format, ref samples);
 
                       Interface.IPreferences.CurrentSSFPref.Rounding = format;
 
@@ -131,20 +129,39 @@ namespace DB.UI
 
             Hashtable bindings = BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
 
-            this.aARadiusCheckBox.DataBindings.Add(bindings["AARadius"] as Binding);
-
-            this.showOtherCheckBox.DataBindings.Add(bindings["ShowOther"] as Binding);
-            this.aAFillHeightCheckBox.DataBindings.Add(bindings["AAFillHeight"] as Binding);
-            this.doMatSSFCheckBox.DataBindings.Add(bindings["DoMatSSF"] as Binding);
-            this.doCKCheckBox.DataBindings.Add(bindings["DoCK"] as Binding);
-            this.calcDensityCheckBox.DataBindings.Add(bindings["CalcDensity"] as Binding);
-            this.calcMassCheckBox.DataBindings.Add(bindings["CalcMass"] as Binding);
-            this.loopCheckBox.DataBindings.Add(bindings["Loop"] as Binding);
-            this.showMatSSFCheckBox.DataBindings.Add(bindings["ShowMatSSF"] as Binding);
             string column = Interface.IDB.SSFPref.OverridesColumn.ColumnName;
             this.overridesCheckBox.DataBindings.Add(bindings[column] as Binding);
 
-            Binding b2 = new Binding("Text", bs, Interface.IDB.SSFPref.RoundingColumn.ColumnName, true, DataSourceUpdateMode.OnPropertyChanged);
+            column = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
+            this.aARadiusCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.ShowOtherColumn.ColumnName;
+            this.showOtherCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName;
+            this.aAFillHeightCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.DoMatSSFColumn.ColumnName;
+            this.doMatSSFCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.DoCKColumn.ColumnName;
+            this.doCKCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
+            this.calcDensityCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.CalcMassColumn.ColumnName;
+            this.calcMassCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.LoopColumn.ColumnName;
+            this.loopCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+            column = Interface.IDB.SSFPref.ShowMatSSFColumn.ColumnName;
+            this.showMatSSFCheckBox.DataBindings.Add(bindings[column] as Binding);
+
+
+
+            Binding b2 = BS.ABinding(ref bs, Interface.IDB.SSFPref.RoundingColumn.ColumnName);
             this.roundingTextBox.DataBindings.Add(b2);
         }
 

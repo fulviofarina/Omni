@@ -66,9 +66,9 @@ namespace k0X
     {
       try
       {
-        int? IrReqId = this.Linaa.IrradiationRequests.FindIrrReqID(ucsamp.Name);
+        int? IrReqId = this.Linaa.FindIrrReqID(ucsamp.Name);
 
-        LINAA.ProjectsRow project = this.Linaa.Projects.FindBy(IrReqId, orderRow.OrdersID, true);
+        LINAA.ProjectsRow project = this.Linaa.FindBy(IrReqId, orderRow.OrdersID, true);
 
         this.Linaa.Save<LINAA.ProjectsDataTable>();
 

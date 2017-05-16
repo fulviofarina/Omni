@@ -20,21 +20,7 @@ namespace DB
 
         partial class IrradiationRequestsDataTable
         {
-            public int? FindIrrReqID(String project)
-            {
-                int? IrrReqID = null;
-
-                LINAA.IrradiationRequestsRow irr = this.FindByIrradiationCode(project);
-                if (irr != null) IrrReqID = irr.IrradiationRequestsID;
-
-                return IrrReqID;
-            }
-
-            public IrradiationRequestsRow FindByIrradiationCode(string project)
-            {
-                project = project.ToUpper();
-                return this.FirstOrDefault(i => i.IrradiationCode.CompareTo(project) == 0);
-            }
+        
 
             private IEnumerable<DataColumn> nonNullables;
 

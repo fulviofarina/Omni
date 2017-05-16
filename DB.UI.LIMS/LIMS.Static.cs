@@ -186,7 +186,7 @@ namespace DB.UI
             return control;
         }
 
-        private static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader loader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref AdderEraser addedRow, ref EventHandler preRefresh, ref AdderEraser deletedRow)
+        private static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader stringOrFileLoader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref AdderEraser addedRow, ref EventHandler preRefresh, ref AdderEraser deletedRow)
         {
             switch (controlHeader)
             {
@@ -242,7 +242,7 @@ namespace DB.UI
                         postRefresh = mon.PostRefresh;
                         shouldpaintCell = mon.ShouldPaintCell;
                         cellpainter = mon.PaintCell;
-                        loader = Interface.IPopulate.ISamples.LoadMonitorsFile;
+                        stringOrFileLoader = Interface.IPopulate.ISamples.PopulatedMonitors;
                         addedRow = mon.RowAdded;
 
                         break;

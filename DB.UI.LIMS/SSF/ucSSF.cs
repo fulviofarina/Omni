@@ -70,7 +70,7 @@ namespace DB.UI
 
                     ucMS.Set(ref Interface);
                     ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-
+                  
                     // OTHER CONTROLS
                     ucCC1.Set(ref Interface);
                     ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;

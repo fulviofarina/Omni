@@ -68,7 +68,7 @@ namespace DB
                 {
                     if (nu) FluxType = 0.ToString();
                  
-                        if (EC.CheckNull(this.tableChannels.WGtColumn, this) || this.tableChannels.overriders)
+                        if (EC.CheckNull(this.tableChannels.WGtColumn, this) || this.tableChannels.defaultValue)
                         {
                             if (FluxType.Contains(2.ToString()))
                             {
@@ -87,7 +87,7 @@ namespace DB
                             }
                         }
 
-                        if (EC.CheckNull(this.tableChannels.BellFactorColumn, this) || this.tableChannels.overriders)
+                        if (EC.CheckNull(this.tableChannels.BellFactorColumn, this) || this.tableChannels.defaultValue)
                         {
                             if (FluxType.Contains(2.ToString()))
                             {
@@ -127,13 +127,13 @@ namespace DB
         partial class ChannelsDataTable : IColumn
         {
             private IEnumerable<DataColumn> nonNullables;
-            public bool overriders
+            public bool defaultValue
             {
                 //TODO: windows user instead
                 get
                 {
                     // LINAA set = this.DataSet as LINAA;
-                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
+                    return !(this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
                 }
             }
             public IEnumerable<DataColumn> NonNullables

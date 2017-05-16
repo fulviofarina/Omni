@@ -161,11 +161,11 @@ namespace DB
             }
 
             // if (tAM.MatSSFTableAdapter != null)
-            {
-                tAM.MatSSFTableAdapter?.Connection.Close();
+       //     {
+        //        tAM.MatSSFTableAdapter?.Connection.Close();
 
-                tAM.MatSSFTableAdapter?.Dispose();
-            }
+          //      tAM.MatSSFTableAdapter?.Dispose();
+         //   }
             // if (tAM.MonitorsFlagsTableAdapter != null)
             {
                 tAM.MonitorsFlagsTableAdapter?.Connection.Close();
@@ -193,7 +193,7 @@ namespace DB
                 tAM.SubSamplesTableAdapter?.Dispose();
             }
 
-            tAM.MatSSFTableAdapter = null;
+        //    tAM.MatSSFTableAdapter = null;
             tAM.UnitTableAdapter = null;
             tAM.MonitorsFlagsTableAdapter = null;
             tAM.MonitorsTableAdapter = null;
@@ -249,8 +249,8 @@ namespace DB
 
         protected internal static void initializeSampleAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
         {
-            tAM.MatSSFTableAdapter = new LINAATableAdapters.MatSSFTableAdapter();
-            adapters.Add(tAM.MatSSFTableAdapter, tAM.MatSSFTableAdapter);
+        //    tAM.MatSSFTableAdapter = new LINAATableAdapters.MatSSFTableAdapter();
+        //    adapters.Add(tAM.MatSSFTableAdapter, tAM.MatSSFTableAdapter);
             tAM.UnitTableAdapter = new LINAATableAdapters.UnitTableAdapter();
             adapters.Add(tAM.UnitTableAdapter, tAM.UnitTableAdapter);
             tAM.MonitorsFlagsTableAdapter = new LINAATableAdapters.MonitorsFlagsTableAdapter();

@@ -2,12 +2,28 @@
 using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
+using System.Linq;
 
 namespace DB
 {
     public partial class LINAA : IOrders
     {
+
+        public Int32? FindOrderID(String LabOrderRef)
+        {
+            Int32? OrderID = null;
+
+            string Orders = this.tableOrders.LabOrderRefColumn.ColumnName;
+            Func<OrdersRow, bool> finder = LINAA.SelectorByField<OrdersRow>(LabOrderRef, Orders);
+            LINAA.OrdersRow r = this.tableOrders.FirstOrDefault(finder);
+            if (r != null) OrderID = r.OrdersID;
+
+            return OrderID;
+        }
+
+
         protected ICollection<string> ordersList;
 
         /// <summary>
@@ -24,10 +40,7 @@ namespace DB
             }
         }
 
-        public Int32? FindOrderID(string LabOrdRef)
-        {
-            return this.tableOrders.FindOrderID(LabOrdRef);
-        }
+      
 
         public void PopulateOrders()
         {

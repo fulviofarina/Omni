@@ -23,18 +23,12 @@ namespace DB.UI
             Interface = LinaaInterface;
             Dumb.FD<LINAA>(ref this.lINAA);
             Dumb.FD(ref this.VialBS);
+     
+            this.vialDGV.DataSource = Interface.IBS.Vial;  //= this.VialBS;
             this.VialBN.BindingSource = Interface.IBS.Vial;
 
-            //rabbit column
-            //string column = Interface.IDB.VialType.IsRabbitColumn.ColumnName;
-            //string innerRadCol = Interface.IDB.VialType.InnerRadiusColumn.ColumnName + " asc";
-            //Dumb.BS.LinkBS(ref this.VialBS, Interface.IDB.VialType, column + " = " + "False", innerRadCol);
-
-            this.vialDGV.DataSource = Interface.IBS.Vial;  //= this.VialBS;
-
-            System.EventHandler addNew = this.addNewVialChannel_Click;
-
-            this.bnVialAddItem.Click += addNew;//  new System.EventHandler(this.addNewVialChannel_Click);
+            this.vialDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+            this.bnVialAddItem.Click += this.addNewVialChannel_Click;//  new System.EventHandler(this.addNewVialChannel_Click);
         }
 
         /// <summary>

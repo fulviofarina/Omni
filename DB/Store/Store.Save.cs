@@ -237,8 +237,8 @@ namespace DB
             else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
             else if (t.Equals(typeof(HoldersRow))) this.tAM.HoldersTableAdapter.Update(schs);
             else if (t.Equals(typeof(MatrixRow))) this.tAM.MatrixTableAdapter.Update(schs);
-            else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
-            else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.MatSSFTableAdapter.Update(schs);
+        //    else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
+            else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.RefMaterialsTableAdapter.Update(schs);
             else if (t.Equals(typeof(UnitRow)))
             {
                 this.tAM.UnitTableAdapter.Update(schs);

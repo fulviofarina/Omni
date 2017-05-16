@@ -10,6 +10,6 @@ namespace DB.UI
 
         void Set(ref Interface inter);
 
-        void SetRoundingBinding(ref Hashtable unitsTable, ref Hashtable sampleTable);
+        void SetRoundingBinding(ref Hashtable unitsTable);
     }
 }

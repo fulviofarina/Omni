@@ -25,7 +25,7 @@ namespace DB.UI
                 Dumb.FD(ref this.bs);
 
                 //take respective BS
-               bsCompositions = Interface.IBS.SelectedCompositions;
+                bsCompositions = Interface.IBS.SelectedCompositions;
                 BindingSource Bind = Interface.IBS.SelectedMatrix;
                 if (!selectedMatrix)
                 {
@@ -33,13 +33,10 @@ namespace DB.UI
                     bsCompositions = Interface.IBS.Compositions;
                 }
 
-
                 this.compositionDGV.DataSource = bsCompositions;
-                string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
+             //   this.compositionDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
-                Binding mcompoBin = BS.ABinding(ref Bind, column);
-
-                this.matrixRTB.DataBindings.Add(mcompoBin);
+                setBindings(ref Bind);
 
                 this.matrixRTB.MouseLeave += focus;
                 this.compositionDGV.MouseHover += focus;
@@ -50,6 +47,14 @@ namespace DB.UI
             {
                 Interface.IStore.AddException(ex);
             }
+        }
+
+        private void setBindings(ref BindingSource Bind)
+        {
+            string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
+            Binding mcompoBin = BS.ABinding(ref Bind, column);
+            this.matrixRTB.DataBindings.Add(mcompoBin);
+         
         }
 
         private void focus(object sender, EventArgs e)

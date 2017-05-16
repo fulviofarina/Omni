@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 //using DB.Interfaces;
 
@@ -6,6 +7,22 @@ namespace DB
 {
     public partial class LINAA : IIrradiations
     {
+
+        public int? FindIrrReqID(String project)
+        {
+            int? IrrReqID = null;
+
+            LINAA.IrradiationRequestsRow irr = this.FindByIrradiationCode(project);
+            if (irr != null) IrrReqID = irr.IrradiationRequestsID;
+
+            return IrrReqID;
+        }
+
+        public IrradiationRequestsRow FindByIrradiationCode(string project)
+        {
+            project = project.ToUpper();
+            return this.tableIrradiationRequests.FirstOrDefault(i => i.IrradiationCode.CompareTo(project) == 0);
+        }
 
         /// <summary>
         /// Adds a new row and returns it with basic dat aon it
@@ -31,10 +48,7 @@ namespace DB
 
             return i;
         }
-        public Int32? FindIrrReqID(string project)
-        {
-            return this.tableIrradiationRequests.FindIrrReqID(project);
-        }
+     
 
      
         public void PopulateChannels()

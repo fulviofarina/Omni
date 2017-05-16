@@ -45,12 +45,13 @@ namespace DB.Tools
         {
             get
             {
+                string WINDOWS_USER = "WindowsUser";
                 string label = WINDOWS_USER;
                 return p => p.Field<string>(label).CompareTo(WindowsUser) == 0;
             }
         }
 
-        protected static string WINDOWS_USER = "WindowsUser";
+     //   protected static string WINDOWS_USER = "WindowsUser";
 
         /// <summary>
         /// remove shitty preferences
@@ -105,28 +106,39 @@ namespace DB.Tools
             findTableAndPath<T>(out dt, out path);
 
             DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
-            if (row == null) row = dt.NewRow();
-
+            bool add = false;
+            if (row == null)
+            {
+                row = dt.NewRow();
+                add = true;
+            }
             Type tipo = typeof(T);
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
                 // if (this.currentSSFPref == null) {
-                PreferencesRow original = row as PreferencesRow;
+                PreferencesRow p = row as PreferencesRow;
 
-                PreferencesRow p = dt.LoadDataRow(original.ItemArray, true) as PreferencesRow;
+                //  PreferencesRow p = dt.LoadDataRow(original.ItemArray,false) as PreferencesRow;
                 p.WindowsUser = WindowsUser;
                 p.Check();
+
                 // } p.Check();
             }
             else
             {
-                SSFPrefRow p = dt.LoadDataRow(row.ItemArray, true) as SSFPrefRow;
-                SSFPrefRow original = row as SSFPrefRow;
+                //                     SSFPrefRow p = dt.LoadDataRow(row.ItemArray, false) as SSFPrefRow;
+                SSFPrefRow p = row as SSFPrefRow;
 
                 p.WindowsUser = WindowsUser;
                 p.Check();
 
+                //    dt.ImportRow(row);
                 // } p.Check();
+            }
+
+            if (add)
+            {
+                dt.LoadDataRow(row.ItemArray,true);
             }
         }
 

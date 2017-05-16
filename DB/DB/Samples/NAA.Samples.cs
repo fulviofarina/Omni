@@ -291,89 +291,6 @@ namespace DB
                 }
             }
 
-            public IEnumerable<SubSamplesRow> FindByIrReqID(int? IrReqID)
-            {
-                IEnumerable<SubSamplesRow> old = null;
-                string IrReqField = this.IrradiationRequestsIDColumn.ColumnName;
-                old = this.Where(LINAA.SelectorByField<SubSamplesRow>(IrReqID, IrReqField));
-                return old.ToList();
-            }
-
-            public IList<SubSamplesRow> FindByProject(string project)
-            {
-                IList<SubSamplesRow> old = null;
-                string cd = DB.Properties.Misc.Cd;
-                string IrReqField = this.IrradiationCodeColumn.ColumnName;
-                project = project.Replace(cd, null);
-                old = this.Where(LINAA.SelectorByField<SubSamplesRow>(project, IrReqField)).ToList();
-                IEnumerable<SubSamplesRow> oldCD = this.Where(LINAA.SelectorByField<SubSamplesRow>(project + cd, IrReqField));
-
-                old = old.Union(oldCD).ToList();
-
-                return old;
-            }
-
-            /// <summary>
-            /// Finds the SampleRow with given sample name, or adds it if not found and specifically
-            /// requested, using the IrrReqID given
-            /// </summary>
-            /// <param name="sampleName">name of sample to find</param>
-            /// <param name="AddifNull"> true for adding the row if not found</param>
-            /// <param name="IrrReqID">  irradiation request id to set for the sample only if added</param>
-            /// <returns>A non-null SampleRow if AddIfNull is true, otherwise can be null</returns>
-            public SubSamplesRow FindBySample(string sampleName, bool AddifNull=false, int? IrrReqID=null)
-            {
-                SubSamplesRow sample = this.findBySampleName(sampleName);
-                if (sample == null)
-                {
-                    sample = this.NewSubSamplesRow();
-                    if (IrrReqID != null) sample.IrradiationRequestsID = (int)IrrReqID;
-                    sample.SubSampleName = sampleName;
-                    sample.SubSampleCreationDate = DateTime.Now;
-                    this.AddSubSamplesRow(sample);
-                }
-                return sample;
-            }
-
-            /// <summary>
-            /// Finds the SampleRow with given sample name
-            /// </summary>
-            /// <param name="sampleName">name of sample to find</param>
-            /// <returns>A SampleRow or null</returns>
-            private SubSamplesRow findBySampleName(string sampleName)
-            {
-                string field = this.SubSampleNameColumn.ColumnName;
-                string fieldVal = sampleName.Trim().ToUpper();
-                return this.FirstOrDefault(LINAA.SelectorByField<SubSamplesRow>(fieldVal, field));
-            }
-
-            /*
-            // private DataColumn[] geometric;
-            private DataColumn[] masses;
-
-            public DataColumn[] Masses
-            {
-                get
-                {
-                    if (masses == null)
-                    {
-                        masses = new DataColumn[] {
-                     columnGross1,columnGross2 ,columnGrossAvg };
-                    }
-
-                    return masses;
-                }
-            }
-            */
-
-            public bool Override(String Alpha, String f, String Geo, String Gt, bool asSamples)
-            {
-                foreach (LINAA.SubSamplesRow row in this)
-                {
-                    row.Override(Alpha, f, Geo, Gt, asSamples);
-                }
-                return this.HasErrors;
-            }
         }
 
         partial class SubSamplesRow
@@ -997,23 +914,8 @@ namespace DB
             }
             */
 
-            /// <summary>
-            /////////////////////////////////////////////////////////////////
-            /// </summary>
-            /// <returns></returns>
-            //////////////////////////////////////////////////////////////
-
-            /// <summary>
-            /// </summary>
-            /// <param name="alpha">    </param>
-            /// <param name="efe">      </param>
-            /// <param name="Geo">      </param>
-            /// <param name="Gt">       </param>
-            /// <param name="asSamples"></param>
-            /// <returns></returns>
-            internal void ValueChanged()
-            {
-            }
+    
+         
         }
     }
 }

@@ -105,7 +105,7 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);
             }
-            //throw new NotImplementedException();
+          
         }
 
         private void currentChanged_SubSamples(object sender, EventArgs e)

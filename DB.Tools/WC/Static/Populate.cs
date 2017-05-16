@@ -221,28 +221,7 @@ namespace DB.Tools
             return meas;
         }
 
-        public static LINAA.MatSSFDataTable PopulateMatSSF(int? IrReq)
-        {
-            // this.tableMatSSF.BeginLoadData();
-
-            LINAA.MatSSFDataTable ssf = new LINAA.MatSSFDataTable(false);
-            LINAATableAdapters.MatSSFTableAdapter ta = new LINAATableAdapters.MatSSFTableAdapter();
-            ssf.Constraints.Clear();
-            ta.FillByIrReqId(ssf, IrReq);
-            HashSet<string> key = new HashSet<string>();
-            IEnumerable<LINAA.MatSSFRow> rows = ssf.OrderByDescending(m => m.MatSSFID).Where(m => !key.Add(m.SubSamplesID + "," + m.TargetIsotope));
-            rows = rows.ToList();
-            foreach (LINAA.MatSSFRow m in rows)
-            {
-                ta.DeleteBy(m.MatSSFID);
-            }
-            ssf.Clear();
-
-            ta.FillByIrReqId(ssf, IrReq);
-
-            return ssf;
-        }
-
+    
         private static void ContingencySetCOINSolid(bool coin, ref LINAA.GeometryRow reference, ref IEnumerable<LINAA.MeasurementsRow> measforContingency)
         {
             foreach (LINAA.MeasurementsRow m in measforContingency)

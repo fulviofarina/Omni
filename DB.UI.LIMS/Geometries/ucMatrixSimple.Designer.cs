@@ -27,8 +27,6 @@
 
         private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn;
 
-        private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn1;
-
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -50,15 +48,11 @@
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
-
         private System.Windows.Forms.DataGridView matrixDGV;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixIDDataGridViewTextBoxColumn;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn1;
 
      //   private System.Windows.Forms.SplitContainer splitContainer4;
 
@@ -76,8 +70,6 @@
 
         private ucComposition ucComposition1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn;
-
-        private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn1;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -108,17 +100,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMatrixSimple));
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.matrixDGV = new System.Windows.Forms.DataGridView();
-            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xCOMDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.contentTS = new System.Windows.Forms.ToolStrip();
             this.contentLBL = new System.Windows.Forms.ToolStripLabel();
             this.contentNameBox = new System.Windows.Forms.ToolStripTextBox();
             this.MatrixBN = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -129,6 +116,8 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+            this.ucComposition1 = new DB.UI.ucComposition();
             this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,7 +129,10 @@
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.ucComposition1 = new DB.UI.ucComposition();
+            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xCOMDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
@@ -232,42 +224,6 @@
             this.matrixDGV.Size = new System.Drawing.Size(360, 445);
             this.matrixDGV.TabIndex = 7;
             // 
-            // matrixNameDataGridViewTextBoxColumn1
-            // 
-            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
-            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "Label";
-            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
-            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for this Matrix";
-            // 
-            // matrixDensityDataGridViewTextBoxColumn1
-            // 
-            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density (g/cm3)";
-            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
-            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or Known Density for this Matrix (in g/cm3)";
-            this.matrixDensityDataGridViewTextBoxColumn1.Width = 136;
-            // 
-            // xCOMDataGridViewCheckBoxColumn1
-            // 
-            this.xCOMDataGridViewCheckBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.xCOMDataGridViewCheckBoxColumn1.DataPropertyName = "XCOM";
-            this.xCOMDataGridViewCheckBoxColumn1.HeaderText = "XCOM";
-            this.xCOMDataGridViewCheckBoxColumn1.Name = "xCOMDataGridViewCheckBoxColumn1";
-            this.xCOMDataGridViewCheckBoxColumn1.ReadOnly = true;
-            this.xCOMDataGridViewCheckBoxColumn1.ToolTipText = "Photon Mass Attenuation Coefficients Found";
-            this.xCOMDataGridViewCheckBoxColumn1.Width = 61;
-            // 
-            // cDataGridViewCheckBoxColumn1
-            // 
-            this.cDataGridViewCheckBoxColumn1.DataPropertyName = "C";
-            this.cDataGridViewCheckBoxColumn1.HeaderText = "C";
-            this.cDataGridViewCheckBoxColumn1.Name = "cDataGridViewCheckBoxColumn1";
-            this.cDataGridViewCheckBoxColumn1.ReadOnly = true;
-            this.cDataGridViewCheckBoxColumn1.Visible = false;
-            this.cDataGridViewCheckBoxColumn1.Width = 24;
-            // 
             // MatrixBS
             // 
             this.MatrixBS.DataMember = "Matrix";
@@ -319,7 +275,7 @@
             // 
             // MatrixBN
             // 
-            this.MatrixBN.AddNewItem = this.bindingNavigatorAddNewItem;
+            this.MatrixBN.AddNewItem = null;
             this.MatrixBN.BackColor = System.Drawing.SystemColors.Menu;
             this.MatrixBN.BindingSource = this.MatrixBS;
             this.MatrixBN.CountItem = this.bindingNavigatorCountItem;
@@ -350,15 +306,6 @@
             this.MatrixBN.Size = new System.Drawing.Size(366, 42);
             this.MatrixBN.TabIndex = 1;
             this.MatrixBN.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 39);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
             // bindingNavigatorCountItem
             // 
@@ -437,6 +384,24 @@
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 42);
+            // 
+            // bindingNavigatorAddNewItem
+            // 
+            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 39);
+            this.bindingNavigatorAddNewItem.Text = "Add new";
+            // 
+            // ucComposition1
+            // 
+            this.ucComposition1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucComposition1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucComposition1.Location = new System.Drawing.Point(369, 45);
+            this.ucComposition1.Name = "ucComposition1";
+            this.ucComposition1.Size = new System.Drawing.Size(334, 445);
+            this.ucComposition1.TabIndex = 8;
             // 
             // dgvCMS
             // 
@@ -517,14 +482,42 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
-            // ucComposition1
+            // matrixNameDataGridViewTextBoxColumn1
             // 
-            this.ucComposition1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucComposition1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucComposition1.Location = new System.Drawing.Point(369, 45);
-            this.ucComposition1.Name = "ucComposition1";
-            this.ucComposition1.Size = new System.Drawing.Size(334, 445);
-            this.ucComposition1.TabIndex = 8;
+            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
+            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "Label";
+            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
+            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for the Matrix";
+            // 
+            // matrixDensityDataGridViewTextBoxColumn1
+            // 
+            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density (g/cm3)";
+            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
+            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or Known Density for this Matrix (in g/cm3)";
+            this.matrixDensityDataGridViewTextBoxColumn1.Width = 136;
+            // 
+            // xCOMDataGridViewCheckBoxColumn1
+            // 
+            this.xCOMDataGridViewCheckBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.xCOMDataGridViewCheckBoxColumn1.DataPropertyName = "XCOM";
+            this.xCOMDataGridViewCheckBoxColumn1.HeaderText = "XCOM";
+            this.xCOMDataGridViewCheckBoxColumn1.Name = "xCOMDataGridViewCheckBoxColumn1";
+            this.xCOMDataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.xCOMDataGridViewCheckBoxColumn1.ToolTipText = "Photon Mass Attenuation Coefficients Found";
+            this.xCOMDataGridViewCheckBoxColumn1.Visible = false;
+            this.xCOMDataGridViewCheckBoxColumn1.Width = 61;
+            // 
+            // cDataGridViewCheckBoxColumn1
+            // 
+            this.cDataGridViewCheckBoxColumn1.DataPropertyName = "C";
+            this.cDataGridViewCheckBoxColumn1.HeaderText = "C";
+            this.cDataGridViewCheckBoxColumn1.Name = "cDataGridViewCheckBoxColumn1";
+            this.cDataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.cDataGridViewCheckBoxColumn1.Visible = false;
+            this.cDataGridViewCheckBoxColumn1.Width = 24;
             // 
             // ucMatrixSimple
             // 
@@ -552,5 +545,10 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn1;
     }
 }

@@ -23,7 +23,7 @@ namespace DB.Tools
                 //basepath = "/c " + basepath + ".bat";
                 string cmd = "cmd";
                 string[] ioFile = new string[] { item, item + ".txt" };
-                IO.Process(cmd, "/c matssf2.exe", workDir, ioFile);
+                IO.Process(cmd, "/c " + exefile, workDir, ioFile, hide);
             }
             return true;
         }
@@ -83,7 +83,7 @@ content += "U.ShellExecute \"matssf2.exe\", \"\", \"\", \"runas\", 1"+terminate;
         /// <summary>
         /// This is the table for the epithermal self-shielding factors
         /// </summary>
-        public static LINAA.MatSSFDataTable Table = null;
+     //   public static LINAA.MatSSFDataTable Table = null;
 
         /// <summary>
         /// This is the main row with the data

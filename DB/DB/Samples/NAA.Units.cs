@@ -52,6 +52,8 @@ namespace DB
                             this.columnkth,this.columnkepi,
                             this.columnChCfg,
                             this.columnBellFactor,
+                            this.pEpiColumn,
+                            this.pThColumn,
                             this.WGtColumn,
                             this.nFactorColumn  };
                           }
@@ -74,6 +76,8 @@ namespace DB
                            this.columnWGt,
                            this.nFactorColumn,
                                   this.columnBellFactor,
+                                  this.pEpiColumn,
+                                  this.pThColumn,
                               this.columnSSFTable
                         };
                     }
@@ -84,13 +88,13 @@ namespace DB
             /// <summary>
             /// fix this to use windows user
             /// </summary>
-            public bool overriders
+            public bool defaultValue
             {
                 //TODO: windows user instead
                 get
                 {
                     // LINAA set = this.DataSet as LINAA;
-                    return (this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
+                    return !(this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
                 }
             }
 
@@ -149,8 +153,7 @@ namespace DB
             {
                 bool nullo = EC.CheckNull(c, this);// string.IsNullOrEmpty(e.Row.GetColumnError(e.Column));
 
-                if (nullo)
-                {
+              
                     if (this.tableUnit.BellFactorColumn == c)
                     {
                         if (nullo)
@@ -172,13 +175,7 @@ namespace DB
                             kth = 0.6;
                         }
                     }
-                    else if (this.tableUnit.ChCfgColumn == c)
-                    {
-                        if (nullo)
-                        {
-                            ChCfg = "0";
-                        }
-                    }
+          
                     else if (this.tableUnit.ChRadiusColumn == c)
                     {
                         // if (Convert.ToDouble(e.ProposedValue) == 0) e.ProposedValue = 1 ;
@@ -209,7 +206,7 @@ namespace DB
                         else
                         {
                             // bool nullFluxType = (EC.CheckNull(this.tableChannels.FluxTypeColumn, this));
-                            if (EC.CheckNull(this.tableUnit.WGtColumn, this) || this.tableUnit.overriders)
+                            if (EC.CheckNull(this.tableUnit.WGtColumn, this) || this.tableUnit.defaultValue)
                             {
                                 if (ChCfg.Contains("2"))
                                 {
@@ -227,7 +224,7 @@ namespace DB
                                     // BellFactor = 1.16;
                                 }
                             }
-                            if (EC.CheckNull(this.tableUnit.BellFactorColumn, this) || this.tableUnit.overriders)
+                            if (EC.CheckNull(this.tableUnit.BellFactorColumn, this) || this.tableUnit.defaultValue)
                             {
                                 if (ChCfg.Contains("2"))
                                 {
@@ -259,7 +256,15 @@ namespace DB
                     {
                         if (nullo) nFactor = 0.5;
                     }
-                }
+                    else if (c == this.tableUnit.pThColumn)
+                    {
+                        if (nullo) pTh = 0.964;
+                    }
+                    else if (c == this.tableUnit.pEpiColumn)
+                    {
+                        if (nullo) pEpi = 0.82;
+                    }
+               // }
             }
 
             public bool CheckErrors()
@@ -283,15 +288,18 @@ namespace DB
 
                 foreach (string item in fileContent)
                 {
-                    if (string.IsNullOrWhiteSpace(item)) continue;
-
+                  
                     try
                     {
+                        if (string.IsNullOrWhiteSpace(item)) continue;
+                        if (item.CompareTo(separator) == 0) continue;
                         content = item.Substring(10).Trim().Split(' ');
                         content = content.Where(o => !string.IsNullOrWhiteSpace(o)).ToArray();
                         // Z, the element and A data
                         string[] ZEl = item.Substring(0, 10).Split('-');
+                        if (ZEl.Count() < 2) continue;
                         ZEl[2] = ZEl[2].Trim();
+                        if (string.IsNullOrEmpty(ZEl[2])) continue;
                         Int16 A = Convert.ToInt16(ZEl[2]);
                         //interested only in the isotopes
                         if (A > 0)
@@ -309,7 +317,7 @@ namespace DB
                     catch (SystemException ex)
                     {
                         (this.tableUnit.DataSet as LINAA).AddException(ex);
-                        EC.SetRowError(this, ex);
+                      //  EC.SetRowError(this, ex);
                     }
                   
                 
@@ -432,6 +440,8 @@ namespace DB
                 this.SubSamplesRow.FC = c.FC;
                 this.WGt = c.WGt;
                 this.nFactor = c.nFactor;
+                this.pTh = c.pTh;
+                this.pEpi = c.pEpi;
 
             }
 

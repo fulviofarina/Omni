@@ -402,7 +402,7 @@
             this.TAM.IrradiationRequestsTableAdapter = null;
             this.TAM.k0NAATableAdapter = null;
             this.TAM.MatrixTableAdapter = null;
-            this.TAM.MatSSFTableAdapter = null;
+       //     this.TAM.MatSSFTableAdapter = null;
             this.TAM.MeasurementsTableAdapter = null;
             this.TAM.MonitorsFlagsTableAdapter = null;
             this.TAM.MonitorsTableAdapter = null;

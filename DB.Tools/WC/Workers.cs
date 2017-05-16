@@ -157,7 +157,7 @@ namespace DB.Tools
                         ssfDT.Constraints.Clear();
                         LINAA.SubSamplesRow aux = iS;
                         // MatSSF.Sample = iS;
-                        MatSSF.Table = ssfDT;
+                   //     MatSSF.Table = ssfDT;
 
                     //    String FileOut = MatSSF.OUTPUT();
                      //   MatSSF.WriteXML();
@@ -417,18 +417,27 @@ namespace DB.Tools
             SystemException ex = null;
             System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
             int? id = Interface.IPopulate.IIrradiations.FindIrrReqID(this.Name);
-            try
-            {
-                LINAA.MatSSFDataTable ssf = PopulateMatSSF(id);
-                worker.ReportProgress((int)R.MergeTable, ssf); //tip
-            }
-            catch (SystemException x)
-            {
-                ex = x;
-            }
+          
 
             foreach (string subsample in ls)
             {
+                try
+                {
+                    LINAA.MatSSFDataTable ssf = new LINAA.MatSSFDataTable(false);
+                   
+                    ////REPONER ESTO!!!
+                   // byte[] arr = Interface.IPopulate.ISamples. .SSFTable;
+                    //Tables.ReadDTBytes(MatSSF.StartupPath, ref arr, ref ssf);
+
+                    //      LINAA.MatSSFDataTable ssf = ;
+                    worker.ReportProgress((int)R.MergeTable, ssf); //tip
+                }
+                catch (SystemException x)
+                {
+                    ex = x;
+                }
+
+
                 ex = null;
                 try
                 {
