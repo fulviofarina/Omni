@@ -97,6 +97,10 @@
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\DB.cs" />
     <Compile Include="DB\NAA.Exceptions.cs" />
+    <Compile Include="DB\Samples\NAA.Samples.Row.cs" />
+    <Compile Include="LINAA.cs">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -118,6 +122,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="DB\Samples\Interfaces\ISampleRow.cs" />
     <Compile Include="Store\IStore.cs" />
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -3,11 +3,38 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx.Dumb;
+using System.Drawing;
 namespace Rsx.DGV
 {
   public partial class Control
   {
-    public static DataGridViewSelectedCellCollection CellsInClipBoard
+        public static void PaintColumn(bool readOnly, ref DataGridViewColumn columna,  Color[] arrayOfBackColors=null,  Color[] arrayOfForeColors=null)
+        {
+
+            columna.ReadOnly = readOnly;
+            if (readOnly)
+            {
+                columna.DefaultCellStyle.BackColor = arrayOfBackColors[0];
+                columna.DefaultCellStyle.ForeColor = arrayOfForeColors[0];
+
+                columna.DefaultCellStyle.SelectionBackColor = arrayOfBackColors[0];
+                columna.DefaultCellStyle.SelectionForeColor = arrayOfForeColors[0];
+            }
+          else
+            {
+                columna.DefaultCellStyle.BackColor = arrayOfBackColors[2];
+                columna.DefaultCellStyle.ForeColor = arrayOfForeColors[2];
+                columna.DefaultCellStyle.SelectionBackColor = arrayOfBackColors[1];
+                columna.DefaultCellStyle.SelectionForeColor = arrayOfForeColors[1];
+            }
+   
+            
+            columna.DefaultCellStyle.Font = new Font(columna.DataGridView.DefaultCellStyle.Font, FontStyle.Bold);
+           // columna.DataGridView.Invalidate(true);
+
+        }
+
+        public static DataGridViewSelectedCellCollection CellsInClipBoard
     {
       get { return Control.currentCol; }
       set { Control.currentCol = value; }

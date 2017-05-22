@@ -148,19 +148,18 @@ namespace DB
             return ok;
         }
 
-        public bool SaveRemote(ref IEnumerable<DataTable> tables, bool takeChanges)
+        public bool SaveRemote(ref IEnumerable<DataTable> tables)
         {
             bool ok = false;
             try
             {
-                if (takeChanges)
-                {
+             
                     foreach (System.Data.DataTable t in tables)
                     {
                         IEnumerable<DataRow> rows = t.AsEnumerable();
                         Save(ref rows);
                     }
-                }
+                
 
                 ok = true;
             }
@@ -230,6 +229,14 @@ namespace DB
             }
             else if (t.Equals(typeof(MonitorsFlagsRow))) this.tAM.MonitorsFlagsTableAdapter.Update(schs);
             else if (t.Equals(typeof(StandardsRow))) this.tAM.StandardsTableAdapter.Update(schs);
+            else if (t.Equals(typeof(MatrixRow))) this.tAM.MatrixTableAdapter.Update(schs);
+            //    else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
+            else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.RefMaterialsTableAdapter.Update(schs);
+            else if (t.Equals(typeof(UnitRow)))
+            {
+                this.tAM.UnitTableAdapter.Update(schs);
+            }
+
             else if (t.Equals(typeof(GeometryRow))) this.tAM.GeometryTableAdapter.Update(schs);
             else if (t.Equals(typeof(IrradiationRequestsRow))) this.tAM.IrradiationRequestsTableAdapter.Update(schs);
             else if (t.Equals(typeof(ChannelsRow))) this.tAM.ChannelsTableAdapter.Update(schs);
@@ -238,14 +245,7 @@ namespace DB
             else if (t.Equals(typeof(DetectorsDimensionsRow))) this.tAM.DetectorsDimensionsTableAdapter.Update(schs);
        //     else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
             else if (t.Equals(typeof(HoldersRow))) this.tAM.HoldersTableAdapter.Update(schs);
-            else if (t.Equals(typeof(MatrixRow))) this.tAM.MatrixTableAdapter.Update(schs);
-        //    else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
-            else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.RefMaterialsTableAdapter.Update(schs);
-            else if (t.Equals(typeof(UnitRow)))
-            {
-                this.tAM.UnitTableAdapter.Update(schs);
-            }
-            else if (t.Equals(typeof(MeasurementsRow)))
+             else if (t.Equals(typeof(MeasurementsRow)))
             {
                 this.tAM.MeasurementsTableAdapter.SetForLIMS();// Connection.ConnectionString = DB.Properties.Settings.Default.NAAConnectionString;
                 this.tAM.MeasurementsTableAdapter.Update(schs);
@@ -255,6 +255,44 @@ namespace DB
             else if (t.Equals(typeof(YieldsRow)))
             {
                 this.tAM.YieldsTableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(ReactionsRow)))
+            {
+                this.tAM.ReactionsTableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(SigmasRow)))
+            {
+                this.tAM.SigmasTableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(SigmasSalRow)))
+            {
+                this.tAM.SigmasSalTableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(NAARow)))
+            {
+                this.tAM.NAATableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(k0NAARow)))
+            {
+                this.tAM.k0NAATableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(pValuesRow)))
+            {
+                this.tAM.pValuesTableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(ElementsRow)))
+            {
+                this.tAM.ElementsTableAdapter.Update(schs);
+            }
+            else if (t.Equals(typeof(tStudentRow)))
+            {
+                this.tAM.tStudentTableAdapter.Update(schs);
+            }
+           
+         
+            else if (t.Equals(typeof(BlanksRow)))
+            {
+                this.tAM.BlanksTableAdapter.Update(schs);
             }
             else if (t.Equals(typeof(CompositionsRow)))
             {
@@ -559,7 +597,7 @@ namespace DB
 
             try
             {
-                ta.DeleteNulls();
+               
 
                 IEnumerable<SubSamplesRow> deleteIR = (samps).Where(ir => ir.RowState == DataRowState.Deleted);
 
@@ -594,6 +632,7 @@ namespace DB
                         int? monId = null;
                         int? blkId = null;
                         int? chCapsID = null;
+                        int? irrID = null;
                         DateTime? inre = null;
                         DateTime? outre = null;
 
@@ -607,7 +646,7 @@ namespace DB
                         if (!i.IsBlankIDNull()) blkId = (int?)i.BlankID;
                         if (!i.IsInReactorNull()) inre = (DateTime?)i.InReactor;
                         if (!i.IsOutReactorNull()) outre = (DateTime?)i.OutReactor;
-
+                        if (!i.IsIrradiationRequestsIDNull()) irrID = (int?)i.IrradiationRequestsID;
                         if (added)
                         {
                             ta.Insert(i.SubSampleName, i.SubSampleDescription, i.SubSampleCreationDate, sampsID, capsID, i.GeometryName, matId, i.Gross1, i.Gross2, i.Tare, i.MoistureContent, i.FillHeight, i.IrradiationRequestsID, monId, refId, stdId, blkId, i.Gthermal, i.Radius, i.DirectSolcoi, inre, outre, i.FC, i.ENAA, chCapsID, i.CalcDensity, i.Vol);

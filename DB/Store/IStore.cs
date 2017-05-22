@@ -47,7 +47,7 @@ namespace DB
         /// <summary>
         /// Saves to Server
         /// </summary>
-        bool SaveRemote(ref IEnumerable<DataTable> tables, bool takeChanges);
+        bool SaveRemote(ref IEnumerable<DataTable> tables);
 
         /// <summary>
         /// not used

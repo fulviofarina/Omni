@@ -10,10 +10,11 @@ namespace DB
 {
     public interface ISamples
     {
-     //   void AddSamples(ref SubSamplesDataTable newsamples);
+        //   void AddSamples(ref SubSamplesDataTable newsamples);
+        SubSamplesRow AddSamples(string project, bool monitor = false);
         int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool monitors = false);
-        IEnumerable<LINAA.SubSamplesRow> AddSamplesFromNames(ref IEnumerable<string> hsamples);
-
+        IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples);
+     //   MatrixRow AddOrUpdateMatrix(ref MatrixRow toClone, ref SubSamplesRow s, bool add = false);
         DataTable CalculateBranchFactor(ref IPeakAveragesRow daugther, ref IEnumerable<IPeakAveragesRow> references);
         void PopulateUnitsByProject(int irrReqId);
         void PopulatedMonitors(string file);

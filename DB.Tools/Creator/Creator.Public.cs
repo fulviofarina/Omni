@@ -4,17 +4,13 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Properties;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 using Rsx.Generic;
 
 namespace DB.Tools
 {
     public partial class Creator
     {
-
-      
-
-
         /// <summary>
         /// Method to call back
         /// </summary>
@@ -42,38 +38,58 @@ namespace DB.Tools
         /// <param name="handler">referenced handler to a method to run after completition</param>
         public static void Build(ref Interface inter)
         {
-            //restarting = false;
-
-            // Rsx.Dumb.RestartPC();
-
             Cursor.Current = Cursors.WaitCursor;
 
             if (inter != null)
             {
                 inter.IAdapter.DisposeAdapters();
-                // Dumb.FD<LINAA>(ref Linaa);
             }
             LINAA LINAA = new LINAA();
             inter = new Interface(ref LINAA);
 
             Interface = inter;
+       
 
+          //en este orden
+            checkDirectories();
+
+            Interface.IReport.Msg(LOADING_DB, "Initializing...");
+            Application.DoEvents();
             Interface.IDB.PopulateColumnExpresions();
-
-           
-          
+            Interface.IPreferences.PopulatePreferences();
+    
             Cursor.Current = Cursors.Default;
-
-            Interface.IReport.Msg(LOADING_DB, "Please wait...");
         }
 
         /// <summary>
         /// Checks if the due directories exist
         /// </summary>
-        public static void CheckDirectories()
+        private static void checkDirectories()
         {
             Cursor.Current = Cursors.WaitCursor;
 
+            Interface.IReport.Msg(LOADING_DB, "Checking directories...");
+            Application.DoEvents();
+
+            //check basic directory
+            populateBaseDirectory();
+            //check for overriders
+            bool overriderFound = populateOverriders();
+
+            Help();
+
+            //populate resources
+            Interface.IReport.Msg(LOADING_DB, "Checking resources...");
+            Application.DoEvents();
+            populateResources(overriderFound);
+
+            //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
+
+            Cursor.Current = Cursors.Default;
+        }
+
+        private static void populateBaseDirectory()
+        {
             //assign folderpath (like a App\Local folder)
             Interface.IStore.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Interface.IStore.FolderPath += Resources.k0XFolder; //cambiar esto
@@ -87,18 +103,6 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);//                throw;
             }
-
-            //check for overriders
-            bool overriderFound = populateOverriders();
-
-            //populate resources
-            PopulateResources(overriderFound);
-
-            //perform basic loading
-
-            //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
-
-            Cursor.Current = Cursors.Default;
         }
 
         /// <summary>
@@ -155,30 +159,41 @@ namespace DB.Tools
         /// </summary>
         public static void Help()
         {
-            string path = Interface.IStore.FolderPath + DB.Properties.Resources.Features;
-            if (!System.IO.File.Exists(path)) return;
-
-           IO.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
+            string path = Application.StartupPath + Resources.DevFiles + Resources.Features;
+            string currentpath = Interface.IStore.FolderPath + Resources.Features;
+            bool features = populateReplaceFile(currentpath, path);
+            if (!features) return;
+        //    if (!System.IO.File.Exists(path)) return;
+            IO.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
         }
 
         public static void InstallMSMQ()
         {
             try
             {
+                Interface.IReport.Msg(LOADING_DB, "Installing MSMQ...");
+
+                Application.DoEvents();
+
                 IO.InstallMSMQ(false);
             }
             catch (Exception ex)
             {
-                Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
+                // Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
                 Interface.IStore.AddException(ex);
             }
         }
+
         /// <summary>
         /// Load the list of methods to apply. It does not apply them until Run() is called
         /// </summary>
         public static void LoadMethods(int populNr)
         {
             Cursor.Current = Cursors.WaitCursor;
+
+            Interface.IReport.Msg(LOADING_DB, "Setting methods...");
+
+            Application.DoEvents();
 
             LINAA Linaa = Interface.Get();
 
@@ -210,6 +225,9 @@ namespace DB.Tools
              Linaa.PopulateElements,
        Linaa.PopulateReactions,
          Linaa.PopulatepValues,
+         Linaa.PopulatetStudent,
+        Linaa.PopulateNAA,
+        Linaa.Populatek0NAA,
                  Linaa.PopulateSigmas,
                    Linaa.PopulateSigmasSal,
                    Linaa.PopulateYields,
@@ -241,6 +259,10 @@ namespace DB.Tools
                 worker.Set(populators, callback, reporter);
             }
 
+            Interface.IReport.Msg(LOADING_DB, "Ok methods...");
+
+            Application.DoEvents();
+
             Cursor.Current = Cursors.Default;
 
             // else throw new SystemException("No Populate Method was assigned");
@@ -249,14 +271,44 @@ namespace DB.Tools
         /// <summary>
         /// Populates Solcoi, MatSSF and other resources
         /// </summary>
-        public static void PopulateResources(bool overriderFound)
+        private static void populateResources(bool overriderFound)
         {
             string path = string.Empty;
+            string developerPath = string.Empty;
+
+            try
+            {
+                path = Interface.IStore.FolderPath + Resources.XCOMEnergies;
+                developerPath = Application.StartupPath + Resources.DevFiles + Resources.XCOMEnergies;
+                populateReplaceFile(path, developerPath);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);//                throw;
+            }
+
+            try
+            {
+                path = Interface.IStore.FolderPath + Resources.WCalc;
+                developerPath = Application.StartupPath + Resources.DevFiles + Resources.WCalc;
+                populateReplaceFile(path, developerPath);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);//                throw;
+            }
+
             try
             {
                 path = Interface.IStore.FolderPath + Resources.Exceptions;
                 Rsx.Dumb.IO.MakeADirectory(path, overriderFound);
-
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);//                throw;
+            }
+            try
+            {
                 path = Interface.IStore.FolderPath + Resources.Backups;
                 Rsx.Dumb.IO.MakeADirectory(path, overriderFound);
             }
@@ -328,7 +380,7 @@ namespace DB.Tools
                 bool savedremotely = true;
                 if (!off)
                 {
-                    savedremotely = Interface.IStore.SaveRemote(ref tables, takechanges);
+                    savedremotely = Interface.IStore.SaveRemote(ref tables);
                     Interface.IReport.Msg("Saved into SQL database", "Saved!");
                 }
 

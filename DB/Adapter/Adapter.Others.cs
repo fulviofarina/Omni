@@ -96,6 +96,16 @@ namespace DB
             tAM.NAATableAdapter?.Connection.Close();
 
             tAM.NAATableAdapter?.Dispose();
+
+            tAM.tStudentTableAdapter?.Connection.Close();
+            tAM.tStudentTableAdapter?.Dispose();
+
+          //  tAM.LINES_FISTableAdapter?.Connection.Close();
+          //  tAM.LINES_FISTableAdapter?.Dispose();
+
+         //   tAM.LINESTableAdapter?.Connection.Close();
+         //   tAM.LINESTableAdapter?.Dispose();
+
             //  }
             //if (tAM.pValuesTableAdapter != null)
             //  {
@@ -125,6 +135,7 @@ namespace DB
             tAM.pValuesTableAdapter = null;
             tAM.k0NAATableAdapter = null;
             tAM.SchAcqsTableAdapter = null;
+            tAM.tStudentTableAdapter = null;
         }
 
         protected internal static void disposePeaksAdapters(ref LINAATableAdapters.TableAdapterManager TAM)
@@ -235,6 +246,12 @@ namespace DB
             adapters.Add(tAM.SchAcqsTableAdapter, tAM.SchAcqsTableAdapter);
             tAM.YieldsTableAdapter = new LINAATableAdapters.YieldsTableAdapter();
             adapters.Add(tAM.YieldsTableAdapter, tAM.YieldsTableAdapter);
+            tAM.tStudentTableAdapter = new LINAATableAdapters.tStudentTableAdapter();
+            adapters.Add(tAM.tStudentTableAdapter, tAM.tStudentTableAdapter);
+        //    tAM.LINESTableAdapter = new LINAATableAdapters.LINESTableAdapter();
+          //  adapters.Add(tAM.LINESTableAdapter, tAM.LINESTableAdapter);
+           // tAM.LINES_FISTableAdapter = new LINAATableAdapters.LINES_FISTableAdapter();
+          //  adapters.Add(tAM.LINES_FISTableAdapter, tAM.LINES_FISTableAdapter);
         }
 
         protected internal static void initializePeaksAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)

@@ -269,7 +269,7 @@ namespace DB.UI
                         shouldpaintCell = ucSubSamples.ucContent.ShouldPaint;
 
                         refresher = ucSubSamples.projectbox.Refresher;
-                        addedRow = ucSubSamples.RowAdded;
+                   //     addedRow = ucSubSamples.RowAdded;
                   //      deletedRow = ucSubSamples.RowDeleted;
                         control = (UserControl)ucSubSamples;
 
@@ -359,18 +359,14 @@ namespace DB.UI
         public static void Connections()
         {
             LINAA.PreferencesRow prefe = LIMS.Interface.IPreferences.CurrentPref;
-            if (prefe == null)
-            {
-                LIMS.Interface.IReport.Msg("Preferences object is null!", "Cannot load preferences!", false);
-                return;
-            }
+          
             Connections cform = new Connections(ref prefe);
             cform.ShowDialog();
 
             if ((prefe as DataRow).RowState != DataRowState.Modified) return;
 
-            DialogResult res = MessageBox.Show("Save changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == System.Windows.Forms.DialogResult.No)
+            DialogResult res = MessageBox.Show("Would you like to Save/Accept the connection changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.No)
             {
                 LIMS.Linaa.Preferences.RejectChanges();
             }

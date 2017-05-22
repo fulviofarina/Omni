@@ -10,6 +10,7 @@ namespace DB.Tools
         bool IsSpectraPathOk { get; }
         DataRow Matrix { get; }
         DataRow SubSample { get; }
+        DataRow SubSampleMatrix { get; }
         IEnumerable<DataRow> SubSamples { get; }
         DataRow Unit { get; }
         IEnumerable<DataRow> Units { get; }

@@ -87,6 +87,8 @@ namespace DB.UI
             this.filter = Interface.IBS.SubSamples.Filter;
             this.sort = Interface.IBS.SubSamples.Sort;
             BS.DeLinkBS(ref Interface.IBS.SubSamples);
+
+            
             // ucContent.DeLink();
         }
 
@@ -179,34 +181,7 @@ namespace DB.UI
         /// to do when a sample is added
         /// </summary>
         /// <param name="row"></param>
-        public void RowAdded(ref DataRow row)
-        {
-            this.bindingNavigatorAddNewItem.Enabled = false;
-         //   Interface.IBS.SubSamples.SuspendBinding();
-        //    Interface.IBS.Units.SuspendBinding();
-
-       //     int IrrReqID = projectbox.IrrReqID;
-            string project = projectbox.Project;
-
-            
-            IList<SubSamplesRow> list = new List<SubSamplesRow>();
-            list.Add((SubSamplesRow)row);
-            IEnumerable<SubSamplesRow> samples = list;
-
-            Interface.IPopulate.ISamples.AddSamples(project, ref samples, false);
-
-        //    Interface.IBS.SubSamples.ResumeBinding();
-         //   Interface.IBS.Units.ResumeBinding();
-
-
-            this.bindingNavigatorAddNewItem.Enabled = true;
-
-            projectbox.CallBack?.Invoke();
-
-           
-            //  Interface.IBS.Update(row, true, true);
-
-        }
+      
 
         /*
         public void RowDeleted(ref DataRow row)
@@ -252,9 +227,15 @@ namespace DB.UI
             {
                 if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
             };
+
+
+            Interface.IBS.SubSamples.AddingNew += delegate
+             {
+                 projectbox.CallBack?.Invoke();
+             };
             //other callBACKS CAN BE ADDED TO THIS ONE BY OTHER CONTROLS
 
-          //  Interface.IBS.SubSamples = this.BS;
+            //  Interface.IBS.SubSamples = this.BS;
         }
 
         /// <summary>
@@ -301,7 +282,7 @@ namespace DB.UI
 
             //these two functions work flawlessly for selecting the rowHeader in the
             //dgv and for updating of child row positions
-        
+            BN.DataBindings.Clear();
 
             reportBtton.Visible = false;
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx;
 
 namespace DB
 {
@@ -25,7 +25,8 @@ namespace DB
                         {
                             this.columnMatrixDensity,
                             this.columnMatrixName,
-                            this.columnMatrixComposition
+                            this.columnMatrixComposition,
+                            this.columnMatrixDate
                         };
                     }
                     return nonNullables;
@@ -38,62 +39,31 @@ namespace DB
 
                 if (!NonNullables.Contains(col)) return;
 
-                LINAA linaa = this.DataSet as LINAA;
-
                 LINAA.MatrixRow m = e.Row as LINAA.MatrixRow;
-
                 try
                 {
-                    EC.CheckNull(col, e.Row);
+                    m.Check(col);
+                }
+                catch (SystemException ex)
+                {
+                    EC.SetRowError(e.Row, e.Column, ex);
+                    (this.DataSet as LINAA).AddException(ex);
+                }
+            }
 
-                    if (col == this.columnMatrixDensity)
-                    {
-                        if (m.Renew)
-                        {
-                            linaa.TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-
-                            populateMUESList?.Invoke();
-                            m.Renew = false;
-                        }
-
-                        //  m.MatrixComposition= m.MatrixComposition.Replace('%', ' ');
-                        //   m.MatrixComposition=  m.MatrixComposition.Replace(',', ' ');
-                        //   return;
-
-                      //  Tabify(m);
-                        //  return;
-                        //
-                    }
-                    else if (col == this.columnMatrixComposition)
-                    {
-
-                      //  return;
-
-                        // EC.CheckNull(col, e.Row);
-                        IEnumerable<LINAA.CompositionsRow> compos = m.GetCompositionsRows();
-                        if (compos.Count() != 0)
-                        {
-                            if (EC.HasErrors(compos))
-                            {
-                                throw new SystemException("The composition rows have errors");
-                                //EC.SetRowError(e.Row, e.Column, ex);
-                            }
-                        }
-                        if (m.HasErrors) return;
-                        if (compos.Count() == 0 || m.Renew)
-                        {
-                            if (m.Renew)
-                            {
-                                linaa.Delete(ref compos);
-                                linaa.Save(ref compos);
-                                linaa.TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-                                populateMUESList?.Invoke();
-                                // EC.AcceptChanges(ref compos);
-                            }
-                            m.CodeOrAddComposition(null, false);
-                            m.Renew = false;
-                        }
-                    }
+            /// <summary>
+            /// Gets a non-repeated list of matrices IDs from wich their mass attenuation
+            /// coefficients were stored in the database
+            /// </summary>
+            public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
+            {
+                int col = e.Column.Ordinal;
+                object propo = e.ProposedValue; //new value
+                object val = e.Row[e.Column]; //old value
+                MatrixRow m = (MatrixRow)e.Row;
+                try
+                {
+                    m.Checking(e.Column, propo, val);
                 }
                 catch (SystemException ex)
                 {
@@ -105,128 +75,21 @@ namespace DB
             /// <summary>
             /// Retabifies the Matrix Composition
             /// </summary>
-            private  void Tabify()
+            private void Tabify()
             {
                 foreach (MatrixRow item in this.Rows)
                 {
-
                     IList<string[]> stripped = item.StripComposition(item.MatrixComposition);
 
-                    item.CodeOrAddComposition(stripped, true);
+                    item.AddOrUpdateComposition(stripped, true);
                 }
-           
-            }
-
-            /// <summary>
-            /// Gets a non-repeated list of matrices IDs from wich their mass attenuation
-            /// coefficients were stored in the database
-            /// </summary>
-            public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
-            {
-                //quitar
-             //  return;
-
-                MatrixRow m = (MatrixRow)e.Row;
-                int col = e.Column.Ordinal;
-                object propo = e.ProposedValue; //new value
-                object val = e.Row[e.Column]; //old value
-                if (propo == null) return; //if null go away
-                if (val == null) return; //idem
-                try
-                {
-                    //if the density or the composition is changing
-                    //and the values are different
-
-                    if (col == this.columnMatrixDensity.Ordinal)
-                    {
-                        double density = (double)propo;
-                        double old = (double)val;
-                        if (old != density) m.Renew = true;
-                    }
-                    else if (col == this.MatrixCompositionColumn.Ordinal)
-                    {
-                        string newcomposition = (string)propo;
-                        string oldcomposition = (string)val;
-                        if (oldcomposition.CompareTo(newcomposition) != 0) m.Renew = true;
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(e.Row, e.Column, ex);
-                    (this.DataSet as LINAA).AddException(ex);
-                }
-            }
-
-            public MatrixRow FindAMatrix(ref MatrixRow toClone, ref SubSamplesRow s)
-            {
-                int id = s.SubSamplesID;
-                MatrixRow m = this.Where(o => !o.IsSubSampleIDNull()).FirstOrDefault(o => o.SubSampleID == id);
-                if (m == null)
-                {
-                    m = this.NewMatrixRow();
-                    this.AddMatrixRow(m);
-
-                    m.SubSampleID = id; //the ID to identify
-                //    m.MatrixID = id; //repite ID de la muestra
-                }
-                if (m.MatrixID != s.MatrixID) s.MatrixID = m.MatrixID; //repite ahora asocia (LINK)
-               m.MatrixDensity = toClone.MatrixDensity;
-                m.MatrixComposition = toClone.MatrixComposition;
-                m.MatrixName = toClone.MatrixName;
-
-                return m;
             }
         }
 
-        partial class MatrixRow
+        partial class MatrixRow : IRow
         {
-
             private bool renew = false;
 
-            public bool Renew
-            {
-                get { return renew; }
-                set { renew = value; }
-            }
-
-           
-            public void CodeOrAddComposition( IList<string[]> ls=null , bool code = true)
-            {
-               
-                if (!code || ls == null) ls = StripComposition(MatrixComposition);
-                //to store matrix composition
-                string fullComposition = string.Empty;
-
-                //ilst of element and Quantity
-                foreach (string[] formCompo in ls)
-                {
-                    string element;
-                    double quantity;
-                        double formulaweight;
-                    //decompose
-                    elementQuantity(formCompo, out element, out quantity, out formulaweight);
-
-                    //CODE COMPOSITION
-                    if (code)
-                    {
-                        fullComposition += "#" + element.Trim() + "   (" + quantity + ")   ";
-                        continue;
-                    }
-
-                    //ADD?
-                    LINAA.CompositionsRow c = null; //prepare
-                    CompositionsDataTable dt = (this.Table.DataSet as LINAA).Compositions;
-                    c = dt.AddCompositionsRow(MatrixID, element, formulaweight, quantity);
-
-                }
-             
-                if (code)
-                {
-                //    fullComposition = fullComposition.Remove(fullComposition.Length - 1, 1);
-                    this.MatrixComposition = fullComposition;
-                }
-             
-            }
             public static void DecomposeFormula(string formula, ref List<string> elements, ref List<string> moles)
             {
                 System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("[0-9]");
@@ -238,6 +101,128 @@ namespace DB
                 result = re2.Split(formula);
                 foreach (string s in result) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
             }
+
+            public void Check(DataColumn col)
+            {
+                LINAA linaa = this.Table.DataSet as LINAA;
+
+                bool nulo = EC.CheckNull(col, this);
+
+                if (col == this.tableMatrix.MatrixDensityColumn)
+                {
+                    if (renew)
+                    {
+                        linaa.TAM.MUESTableAdapter.DeleteByMatrixID(MatrixID);
+
+                        linaa.Matrix.populateMUESList?.Invoke();
+                    }
+                }
+                else if (col == this.tableMatrix.MatrixDateColumn)
+                {
+                    if (nulo || renew)
+                    {
+                        MatrixDate = DateTime.Now;
+                    }
+                }
+                else if (col == this.tableMatrix.MatrixCompositionColumn)
+                {
+                    IEnumerable<CompositionsRow> compos = GetCompositionsRows();
+                
+
+                    if (compos.Count() == 0 || renew)
+                    {
+                        if (renew)
+                        {
+                            linaa.Delete(ref compos);
+                            linaa.Save(ref compos);
+                            linaa.TAM.MUESTableAdapter.DeleteByMatrixID(MatrixID);
+                            linaa.Matrix.populateMUESList?.Invoke();
+                        }
+                        AddOrUpdateComposition(null, false);
+                    }
+
+
+                    if (compos.Count() != 0)
+                    {
+                        if (EC.HasErrors(compos))
+                        {
+                            throw new SystemException("The composition rows have errors");
+                        }
+                    }
+
+
+                }
+            }
+
+            public void Checking(DataColumn col, object propo, object val)
+            {
+                renew = false;
+
+                if (DBNull.Value == propo) return; //if null go away
+                if (val == DBNull.Value) return; //idem
+
+                //if the density or the composition is changing
+                //and the values are different
+
+                if (col == this.tableMatrix.MatrixDensityColumn)
+                {
+                    double density = (double)propo;
+                    double old = (double)val;
+                    if (old != density)
+                    {
+                        renew = true;
+                    }
+                }
+                else if (col == tableMatrix.MatrixCompositionColumn)
+                {
+                    string newcomposition = (string)propo;
+                    string oldcomposition = (string)val;
+                    if (oldcomposition.Trim().CompareTo(newcomposition.Trim()) != 0)
+                    {
+                        renew = true;
+                    }
+                }
+            }
+
+            public void AddOrUpdateComposition(IList<string[]> ls = null, bool code = true)
+            {
+                if (!code || ls == null) ls = StripComposition(MatrixComposition);
+                //to store matrix composition
+                string fullComposition = string.Empty;
+
+                //ilst of element and Quantity
+                foreach (string[] formCompo in ls)
+                {
+                    string element;
+                    double quantity;
+                    double formulaweight;
+                    //decompose
+                    element = formCompo[0];
+                    formulaweight = 0;
+                    quantity = Convert.ToDouble(formCompo[1]);
+
+              //      elementQuantity(formCompo, out element, out quantity, out formulaweight);
+
+                    //CODE COMPOSITION
+                    if (code)
+                    {
+                        fullComposition += "#" + element.Trim() + "   (" + quantity + ")   ";
+                        continue;
+                    }
+
+                    //ADD?
+                    LINAA.CompositionsRow c = null; //prepare
+                    CompositionsDataTable dt = (this.Table.DataSet as LINAA).Compositions;
+                    c = dt.AddCompositionsRow(MatrixID, element, formulaweight, quantity, SubSampleID);
+                }
+
+                if (code)
+                {
+                    // fullComposition = fullComposition.Remove(fullComposition.Length - 1, 1);
+                    this.MatrixComposition = fullComposition;
+                }
+            }
+
             /*
             public IList<string[]> StripCompositionOld(string composition)
             {
@@ -266,6 +251,12 @@ namespace DB
             }
 
             */
+
+            public void SetParent<T>(ref T rowParent)
+            {
+                throw new NotImplementedException();
+            }
+
             public IList<string[]> StripComposition(string composition)
             {
                 IList<string[]> ls = null;
@@ -293,14 +284,11 @@ namespace DB
                     ls.Add(formCompo);
                 }
 
-
                 //STRING WAS DECODED INTO THE LIST ls
                 StripMoreComposition(ref ls);
 
                 return ls;
             }
-
-        
 
             /// <summary>
             /// Strips the formula into elements and moles
@@ -308,10 +296,8 @@ namespace DB
             /// <param name="ls"></param>
             public string StripMoreComposition(ref IList<string[]> ls)
             {
-
                 string buffer = string.Empty;
                 //matSSF buffer will cointain the snippet for the Matrix Content in MatSSF
-
 
                 foreach (string[] formulaQuantity in ls)
                 {
@@ -339,12 +325,7 @@ namespace DB
                 return buffer;
             }
 
-            private static void elementQuantity(string[] formCompo, out string element, out double quantity, out double formulaweight)
-            {
-                element = formCompo[0];
-                formulaweight = 0;
-                quantity = Convert.ToDouble(formCompo[1]);
-            }
+          
         }
     }
 }

@@ -152,7 +152,7 @@ namespace DB.Linq
             dt = original.GetTable<tStudent>();
             ita = destiny.GetTable(typeof(tStudent));
             SQL.InsertDataTable(ref dt, ref ita);
-
+            /*
             dt = original.GetTable<LINE>();
             ita = destiny.GetTable(typeof(LINE));
             SQL.InsertDataTable(ref dt, ref ita);
@@ -160,16 +160,10 @@ namespace DB.Linq
             dt = original.GetTable<LINES_FI>();
             ita = destiny.GetTable(typeof(LINES_FI));
             SQL.InsertDataTable(ref dt, ref ita);
-
+            */
             dt = original.GetTable<pValue>();
             ita = destiny.GetTable(typeof(pValue));
             SQL.InsertDataTable(ref dt, ref ita);
-
-            dt = original.GetTable<tStudent>();
-            ita = destiny.GetTable(typeof(tStudent));
-            SQL.InsertDataTable(ref dt, ref ita);
-
-
 
 
             dt = original.GetTable<Reaction>();

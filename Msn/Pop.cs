@@ -10,10 +10,7 @@ namespace Msn
         {
 
         }
-        public void Msg(string msg, string title)
-        {
-            Msg(msg, title, true);
-        }
+       
 
         public void Msg(string msg, string title, bool ok)
         {
@@ -58,7 +55,7 @@ namespace Msn
             Application.DoEvents();
         }
 
-        public int DisplayInterval = 8000;
+        public int DisplayInterval = 16000;
         protected System.Speech.Synthesis.SpeechSynthesizer lorito;
         //   protected SpeechLib.SpVoice lorito;
 
@@ -185,7 +182,7 @@ namespace Msn
                     Show();
                     Application.DoEvents();
                 };
-                this.BeginInvoke(dele);
+                 Invoke(dele);
             }
                 //catch (Exception)
             //{

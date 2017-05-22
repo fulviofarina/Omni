@@ -40,6 +40,51 @@ namespace DB
                 this.AddException(ex);
             }
         }
+        public void PopulatetStudent()
+        {
+            try
+            {
+                this.tabletStudent.BeginLoadData();
+                this.tabletStudent.Clear();
+                this.TAM.tStudentTableAdapter.Fill(this.tabletStudent);
+                this.tabletStudent.AcceptChanges();
+                this.tabletStudent.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+        public void PopulateNAA()
+        {
+            try
+            {
+                this.tableNAA.BeginLoadData();
+                this.tableNAA.Clear();
+                this.TAM.NAATableAdapter.Fill(this.tableNAA);
+                this.tableNAA.AcceptChanges();
+                this.tableNAA.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+        public void Populatek0NAA()
+        {
+            try
+            {
+                this.tablek0NAA.BeginLoadData();
+                this.tablek0NAA.Clear();
+                this.TAM.k0NAATableAdapter.Fill(this.tablek0NAA);
+                this.tablek0NAA.AcceptChanges();
+                this.tablek0NAA.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
 
         public void PopulateReactions()
         {

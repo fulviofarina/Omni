@@ -22,7 +22,7 @@ namespace DB
             {
                 //    if (this.IsLastUnitIDNull()) LastUnitID = -1;
            //     if (this.IsWindowsUserNull()) WindowsUser = string.Empty;
-                if (this.IsCalcDensityNull()) CalcDensity = true;
+                if (this.IsCalcDensityNull()) CalcDensity = false;
                 if (this.IsCalcMassNull()) CalcMass = false;
                 if (IsAAFillHeightNull()) AAFillHeight = false;
                 if (IsAARadiusNull()) AARadius = false;

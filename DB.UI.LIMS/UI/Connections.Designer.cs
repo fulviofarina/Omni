@@ -130,9 +130,6 @@
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Connections";
-            this.Text = "Connections";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Connections_FormClosing);
-            this.Load += new System.EventHandler(this.Connections_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

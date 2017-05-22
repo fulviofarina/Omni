@@ -3,7 +3,10 @@ using System.Windows.Forms;
 
 namespace Rsx.DGV
 {
-  public class CalendarColumn : DataGridViewColumn
+
+
+
+    public class CalendarColumn : DataGridViewColumn
   {
     public CalendarColumn()
         : base(new CalendarCell())

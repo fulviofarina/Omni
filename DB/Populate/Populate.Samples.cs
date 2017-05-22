@@ -12,34 +12,58 @@ namespace DB
 {
     public partial class LINAA : ISamples
     {
-        public int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool monitors = false)
+
+        public SubSamplesRow AddSamples(string project, bool monitor = false)
+        {
+            LINAA.SubSamplesRow s = null;
+            s = SubSamples.NewSubSamplesRow();
+            SubSamples.AddSubSamplesRow(s);
+
+
+            IList<SubSamplesRow> list = new List<SubSamplesRow>();
+            list.Add(s);
+            IEnumerable<SubSamplesRow> samples = list;
+
+            AddSamples(project, ref samples, monitor);
+            return s;
+        }
+
+        public int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> samplesToImport, bool monitors = false)
         {
             int added = 0;
-            if (hsamples.Count() == 0) return added;
-
-            // bool cd = false;
-            project = project.ToUpper().Trim();
-            int? id = this.FindIrrReqID(project);
 
             try
             {
+
+              
+                if (samplesToImport.Count() == 0) return added;
+
+                // bool cd = false;
+                project = project.ToUpper().Trim();
+                int? id = this.FindIrrReqID(project);
+
                 //find the ones that are already here
-                IEnumerable<SubSamplesRow> samples = SubSamples.OfType<SubSamplesRow>()
+                IEnumerable<SubSamplesRow> samplesInTable = SubSamples.OfType<SubSamplesRow>()
                     .Where(o => o.RowState != DataRowState.Deleted);
-                samples = samples.Where(o => !o.IsIrradiationRequestsIDNull() && o.IrradiationRequestsID == id);
+                samplesInTable = samplesInTable.Where(o => !o.IsIrradiationRequestsIDNull() && o.IrradiationRequestsID == id);
                 ///hsamples.un =
-                hsamples = hsamples.Union(samples);
+                samplesToImport = samplesToImport.Union(samplesInTable);
                 //hsamples = samples;
 
-                if (monitors) addMonitors(ref hsamples, project);
-                else setLabels(ref hsamples, project);
+                if (monitors) addMonitors(ref samplesToImport, project);
+                else setLabels(ref samplesToImport, project);
 
-                setIrradiatioRequest(ref hsamples, (int)id);
-                hsamples = Changes.GetRowsWithChanges(hsamples).OfType<SubSamplesRow>();
-                Save(ref hsamples);
+                setIrradiatioRequest(ref samplesToImport, (int)id);
 
-                IEnumerable<UnitRow> Urows = setUnits(ref hsamples);
-                Save(ref Urows);
+                samplesToImport = Changes.GetRowsWithChanges(samplesToImport).OfType<SubSamplesRow>();
+
+                added = samplesToImport.Count();
+
+                Save(ref samplesToImport);
+
+                IEnumerable<UnitRow> units = samplesToImport.Select(o => o.UnitRow).ToArray();
+                Save(ref units);
+              
             }
             catch (SystemException ex)
             {
@@ -49,7 +73,7 @@ namespace DB
             return added;
         }
 
-        public IEnumerable<LINAA.SubSamplesRow> AddSamplesFromNames(ref IEnumerable<string> hsamples)
+        public IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples)
         {
             IList<LINAA.SubSamplesRow> ls = new List<SubSamplesRow>();
             // if (hsamples.Count() == 0) return added;
@@ -59,6 +83,7 @@ namespace DB
                 LINAA.SubSamplesRow s = this.SubSamples.NewSubSamplesRow();
                 this.SubSamples.AddSubSamplesRow(s);
                 s.SubSampleName = sname;
+
                 ls.Add(s);
             }
 
@@ -355,11 +380,20 @@ namespace DB
             {
                 // this.tableSubSamples.TableNewRow += new DataTableNewRowEventHandler(this.tableSubSamples.SubSamplesDataTable_TableNewRow);
 
-                TAM.SubSamplesTableAdapter.DeleteNulls();
+              
+                //
+                // IN THIS ORDER
+                //
+                //
+                PopulateUnitsByProject(IrReqID);
 
-                LINAA.SubSamplesDataTable newsamples = new SubSamplesDataTable(false);
+
+                //2
+                TAM.SubSamplesTableAdapter.DeleteNulls();
+                LINAA.SubSamplesDataTable newsamples = new SubSamplesDataTable();
                 TAM.SubSamplesTableAdapter.FillBy(newsamples, IrReqID);
 
+                /*
                 string uniquefield = newsamples.SubSampleNameColumn.ColumnName;
                 string Indexfield = newsamples.SubSamplesIDColumn.ColumnName;
                 TAMDeleteMethod remov = this.tAM.SubSamplesTableAdapter.Delete;
@@ -373,13 +407,13 @@ namespace DB
                     PopulateSubSamples(IrReqID);
                     return;
                 }
-
+                */
                 this.tableSubSamples.BeginLoadData();
                 this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
                 this.tableSubSamples.EndLoadData();
                 this.tableSubSamples.AcceptChanges();
 
-                PopulateUnitsByProject(IrReqID);
+             
                 // this.tableSubSamples.TableNewRow -= new DataTableNewRowEventHandler(this.tableSubSamples.SubSamplesDataTable_TableNewRow);
             }
             catch (SystemException ex)

@@ -47,7 +47,7 @@ namespace Rsx.SQL
                     destiny.DeleteDatabase();
                     // destiny.Connection.Open();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
 
@@ -84,7 +84,7 @@ namespace Rsx.SQL
             string localdbexpressPack = SQL_LOCALDB_PACK32;
             if (is64) localdbexpressPack = SQL_LOCALDB_PACK64;
             System.IO.File.WriteAllText(prerequisitePath + "sqlInstall.bat", "msiexec /package \"" + prerequisitePath + localdbexpressPack + "\" /le log.txt");
-            Rsx.Dumb.IO.Process("cmd", "/c " + "sqlInstall.bat", prerequisitePath);
+            Rsx.Dumb.IO.Process("cmd", "/c " + "sqlInstall.bat", prerequisitePath,true);
             string logFile = System.IO.File.ReadAllText( prerequisitePath + "log.txt");
 
             return logFile;

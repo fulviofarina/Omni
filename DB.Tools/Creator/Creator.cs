@@ -59,14 +59,7 @@ namespace DB.Tools
             developerPath = Application.StartupPath + Resources.DevFiles + Resources.SSFPreferences + ".xml";
             populateReplaceFile(path, developerPath);
 
-            path = Interface.IStore.FolderPath + Resources.WCalc;
-            developerPath = Application.StartupPath + Resources.DevFiles + Resources.WCalc;
-            populateReplaceFile(path, developerPath);
-
-            path = Interface.IStore.FolderPath + Resources.XCOMEnergies;
-            developerPath = Application.StartupPath + Resources.DevFiles + Resources.XCOMEnergies;
-            populateReplaceFile(path, developerPath);
-
+        
             // path = folderPath + Resources.SolCoiFolder;
 
             bool overriderFound = false;
@@ -83,10 +76,7 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);//                throw;
             }
 
-            path = Application.StartupPath + Resources.DevFiles + Resources.Features;
-            string currentpath = Interface.IStore.FolderPath + Resources.Features;
-            bool features = populateReplaceFile(currentpath, path);
-            if (features) Help();
+       
 
             return overriderFound;
         }

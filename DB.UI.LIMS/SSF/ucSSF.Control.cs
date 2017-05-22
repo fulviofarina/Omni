@@ -13,13 +13,8 @@ namespace DB.UI
 {
     public partial class ucSSFData : UserControl
     {
-        // private bool cancelCalculations = false;
+      
         private Interface Interface = null;
-
-        // private static Size currentSize;
-        private Hashtable unitBindings;
-
-        // private Action<int> resetProgress; private Action showProgress;
 
         /// <summary>
         /// Attachs the respectivo SuperControls to the SSF Control
@@ -44,277 +39,24 @@ namespace DB.UI
             }
             else if (pro.GetType().Equals(typeof(ucPreferences)))
             {
-                IucPreferences pref = pro as IucPreferences;
-                pref.CheckChanged = delegate
-                {
-                    paintColumns();
-                };
-                pref.SetRoundingBinding(ref unitBindings);
-
-                destiny = null;
+                ucNS.AttachCtrl(ref pro);
             }
             destiny?.Controls.Add(pro as Control);
         }
 
-        private Action showProgress;
-
-        public void CalculateUnit(Action ShowProgress, ref bool cancelCalculations)
-        {
-            try
-            {
-                showProgress = ShowProgress;
-
-                //1
-                bool isOK = MatSSF.UNIT.CheckErrors(); //has Unit errors??
-                isOK = MatSSF.UNIT.SubSamplesRow.CheckUnit() && isOK; //has Sample Errors?
-
-                if (isOK)
-                {
-                    Interface.IReport.Msg("Input data is OK for Unit " + MatSSF.UNIT.Name, "Checking data...");
-                }
-                else
-                {
-                    throw new SystemException("Input data is NOT OK for Unit " + MatSSF.UNIT.Name);
-                }
-
-                showProgress?.Invoke();
-                MatSSF.InputFile = MatSSF.UNIT.Name;
-                MatSSF.OutputFile = MatSSF.UNIT.Name;
-                MatSSF.INPUT(!Interface.IPreferences.CurrentSSFPref.Overrides);
-                //2
-                showProgress?.Invoke();
-
-                Interface.IReport.Msg("Input metadata generated for Unit " + MatSSF.UNIT.Name, "Starting calculations...");
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);
-                Interface.IReport.Msg(ex.Message, "ERROR", false);
-            }
-        }
-
-        public void Watcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-
-         //   Interface.IBS.SuspendBindings();
-            int percent = 50;
-            try
-            {
-                bool runOk = false;
-                IPreferences ip = Interface.IPreferences;
-
-                bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
-
-                bool doCk = (ip.CurrentSSFPref.DoCK);
-
-                bool doSSF = (ip.CurrentSSFPref.DoMatSSF);
-
-                string sampleName = e.Name.Replace(".txt", null);
-                MatSSF.UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
-
-                Action progress = delegate
-                {
-                    showProgress?.Invoke();
-                    Application.DoEvents();
-                };
-
-                Action dele5 = delegate
-                {
-                    Application.DoEvents();
-                    Interface.IStore.Save<LINAA.SubSamplesDataTable>();
-                    Interface.IStore.Save<LINAA.UnitDataTable>();
-                    Interface.IBS.Update<LINAA.UnitRow>(MatSSF.UNIT);
-
-                    string msg = "Finished for Unit " + MatSSF.UNIT.Name;
-                    Interface.IReport.Msg(msg, "Done");
-                };
-
-                runOk = MatSSF.OUTPUT(sampleName);
-                //50
-                percent += 10;
-
-                this.BeginInvoke(progress);
-
-                if (!runOk)
-                {
-                    Action hanged = delegate
-                    {
-                        Application.DoEvents();
-                        Interface.IReport.Msg("MatSSF calculations hanged for Unit " + MatSSF.UNIT.Name + "\n", "Something wrong loading MatSSF");
-                        throw new SystemException("Problems Reading MATSSF Output for Unit " + MatSSF.UNIT.Name + "\n");
-                    };
-
-                    this.BeginInvoke(hanged);
-                }
-                else
-                {
-                    Action okTodo = delegate
-                    {
-                        Application.DoEvents();
-                        Interface.IReport.Msg("MatSSF calculations done for Unit " + MatSSF.UNIT.Name, "MatSSF Calculations");
-                    };
-                    this.BeginInvoke(okTodo);
-                }
-                //60
-                percent += 10;
-                if (doCk)
-                {
-                    LINAA.MatSSFDataTable table = Interface.IDB.MatSSF;
-                    byte[] array = MatSSF.UNIT.SSFTable;
-                    Tables.ReadDTBytes(MatSSF.StartupPath, ref array, ref table);
-                    MatSSF.CHILEAN();
-                }
-
-                this.BeginInvoke(progress);
-
-                Action newDelegate = delegate
-                {
-                    Application.DoEvents();
-                    Interface.IReport.Msg("CKS calculations done for Unit " + MatSSF.UNIT.Name, "CKS Calculations");
-                };
-
-                percent += 15;
-                this.BeginInvoke(newDelegate);
-                this.BeginInvoke(progress);
-
-                this.BeginInvoke(dele5);
-                //70
-                percent += 15;
-                this.BeginInvoke(progress);
-            }
-            catch (Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-
-            Cursor.Current = Cursors.Default;
-        }
-
-        /*
-        public  void Watcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            Interface.IBS.SuspendBindings();
-            int percent = 50;
-            try
-            {
-                Action progress = delegate
-                {
-                    showProgress?.Invoke();
-                    Application.DoEvents();
-                    Interface.IReport.ReportProgress(percent);
-                    Application.DoEvents();
-                };
-
-                    Action dele5 = delegate
-                {
-                    Application.DoEvents();
-                    Interface.IStore.Save<LINAA.SubSamplesDataTable>();
-                    Interface.IStore.Save<LINAA.UnitDataTable>();
-                    Interface.IBS.Update<LINAA.UnitRow>(MatSSF.UNIT);
-                    Interface.IReport.Msg("Finished for Unit " + MatSSF.UNIT.Name, "Done");
-                };
-
-                bool runOk = false;
-            IPreferences ip = Interface.IPreferences;
-
-            bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
-
-            bool doCk = (ip.CurrentSSFPref.DoCK);
-
-            bool doSSF = (ip.CurrentSSFPref.DoMatSSF);
-
-            string sampleName = e.Name.Replace(".txt", null);
-            MatSSF.UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
-
-               runOk =MatSSF.OUTPUT(sampleName);
-                //50
-                percent += 10;
-                // if (!string.IsNullOrEmpty(result)) runOk = true;
-                this.BeginInvoke(progress);
-                // MatSSF.OUTPUT();
-
-                if (!runOk)
-                {
-                    // Interface.IReport.Msg("MatSSF ran OK for Unit " + MatSSF.UNIT.Name, "Reading
-                    // MatSSF Output file"); Interface.IReport.Msg("MatSSF calculations hanged for
-                    // Unit " + MatSSF.UNIT.Name + "\n", "Something wrong loading MatSSF");
-                    Action hanged = delegate
-                    {
-                        Application.DoEvents();
-                        Interface.IReport.Msg("MatSSF calculations hanged for Unit " + MatSSF.UNIT.Name + "\n", "Something wrong loading MatSSF");
-                    };
-
-                    this.BeginInvoke(hanged);
-
-                    // throw new SystemException("MatSSF hanged for Unit " + MatSSF.UNIT.Name + "\n");
-                    throw new SystemException("Problems Reading MATSSF Output for Unit " + MatSSF.UNIT.Name + "\n");
-
-                    // errorB.Text += "MATSSF is still calculating stuff...\n";
-                }
-                else
-                {
-                    Action okTodo = delegate
-                    {
-                        Application.DoEvents();
-                        Interface.IReport.Msg("MatSSF calculations done for Unit " + MatSSF.UNIT.Name, "MatSSF Calculations");
-                    };
-
-                    this.BeginInvoke(okTodo);
-                     //
-                }
-                //60
-                percent += 10;
-                if (doCk )
-            {
-                    LINAA.MatSSFDataTable table = Interface.IDB.MatSSF;
-                     byte[] array =  MatSSF.UNIT.SSFTable;
-                Tables.ReadDTBytes(MatSSF.StartupPath,ref array, ref table);
-                MatSSF.CHILEAN();
-            }
-
-                this.BeginInvoke(progress);
-                Action newDelegate = delegate
-                {
-                    Application.DoEvents();
-                    Interface.IReport.Msg("CKS calculations done for Unit " + MatSSF.UNIT.Name, "CKS Calculations");
-                };
-
-                percent += 10;
-                this.BeginInvoke(newDelegate);
-                this.BeginInvoke(progress);
-
-                this.BeginInvoke(dele5);
-                //70
-                percent += 10;
-                this.BeginInvoke(progress);
-            }
-            catch (Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-
-            Cursor.Current = Cursors.Default;
-           // Interface.IBS.ResumeBindings();
-        }
-        */
+   
 
         public void Disabler(bool enable)
         {
             //turns off or disables the controls.
             //necessary protection for user interface
-            IEnumerable<ToolStrip> strips = inputTLP.Controls.OfType<ToolStrip>();
-
-            foreach (var item in strips)
-            {
-                item.Enabled = enable;
-            }
+            ucSubMS.Enabled = enable;
+            ucNS.Enabled = enable;
 
             nameToolStrip.Enabled = enable;
-            this.ucComposition1.Controls[0].Visible = enable;
+         //   this.ucComposition1.Controls[0].Visible = enable;
 
-            this.sampleDGV.Enabled = enable;
+         //   this.sampleDGV.Enabled = enable;
         }
 
         /// <summary>
@@ -326,36 +68,22 @@ namespace DB.UI
 
             try
             {
-                Dumb.FD(ref this.SampleBS);
-
-                sampleDGV.DataSource = Interface.IBS.SelectedSubSample;
-
-                //otherwise this shit shows weird text over text
-                //      Interface.IBS.SelectedSubSample.CurrentChanged += delegate
-                //   {
-                //   this.sampleDGV.Refresh();
-                // this.sampleDGV.Select();
-                //    };
-
-                //link to bindings
+          
                 setSampleBindings();
-                unitBindings = setUnitBindings();
+                ucNS.Set(ref inter);
+                ucSubMS.Set(ref inter,true);
 
-                setEnabledBindings();
 
-                ucComposition1.Set(ref Interface);
+                this.sampleCompoLbl.Click += viewChanged;
+                this.imgBtn.Click += viewChanged;
+                sampleCompoLbl.PerformClick();
 
-                DataGridViewColumn col = this.volDataGridViewTextBoxColumn;
-                paintColumn(true, ref col);
 
-                paintColumns();
+                this.SampleLBL.Click += sampleSelectClick;
+                this.descriplbl.Click += sampleSelectClick;
 
-                errorProvider1.DataMember = Interface.IDB.Unit.TableName;
-                errorProvider1.DataSource = Interface.IBS.Units;
-                errorProvider2.DataMember = Interface.IDB.SubSamples.TableName;
-                errorProvider2.DataSource = Interface.IBS.SubSamples;
 
-                Interface.IReport.Msg("Database", "Units were loaded!");
+                //    Interface.IReport.Msg("Database", "Units were loaded!");
             }
             catch (System.Exception ex)
             {
@@ -363,212 +91,160 @@ namespace DB.UI
             }
         }
 
-        private void paintColumns()
-        {
-            bool readOnly = Interface.IPreferences.CurrentSSFPref.AAFillHeight;
-            DataGridViewColumn columna = this.fillHeightDataGridViewTextBoxColumn;
-            paintColumn(readOnly, ref columna);
-
-            // Interface.IPreferences.CurrentSSFPref.EndEdit();
-            columna = this.gross1DataGridViewTextBoxColumn;
-            readOnly = Interface.IPreferences.CurrentSSFPref.CalcMass;
-            paintColumn(readOnly, ref columna);
-
-            readOnly = Interface.IPreferences.CurrentSSFPref.AARadius;
-            columna = this.radiusDataGridViewTextBoxColumn;
-            paintColumn(readOnly, ref columna);
-
-            readOnly = Interface.IPreferences.CurrentSSFPref.CalcDensity;
-            columna = this.calcDensityDataGridViewTextBoxColumn;
-            paintColumn(readOnly, ref columna);
-        }
-
-        private static void paintColumn(bool readOnly, ref DataGridViewColumn columna)
-        {
-            Color color2 = Color.Yellow;
-            Color colors = Color.Gray;
-            // Color colors2 = Color.White;
-            if (!readOnly)
-            {
-                colors = Color.White;
-                color2 = Color.Black;
-                // colors2 = Color.Gray;
-            }
-            columna.ReadOnly = readOnly;
-            columna.DefaultCellStyle.BackColor = colors;
-            columna.DefaultCellStyle.ForeColor = color2;
-            columna.DefaultCellStyle.SelectionBackColor = colors;
-            columna.DefaultCellStyle.SelectionForeColor = color2;
-        }
-
-        /*
-        private void setCheckBindings()
-        {
-            string column;
-            Hashtable checkBindings = Dumb.BS.ArrayOfBindings(ref Interface.IBS.SSFPreferences, string.Empty, "Checked");
-
-            column = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
-            Binding renabled = checkBindings[column] as Binding; //new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AARadiusColumn.ColumnName);
-
-           // checkBox1.Visible = true;
-            checkBox1.DataBindings.Add(renabled);
-            checkBox1.CheckedChanged += checkedChanged;
-
-            //this.radiusDataGridViewTextBoxColumn.TextBox.DataBindings.Add(renabled);
-            column = Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName;
-            Binding renabled2 = checkBindings[column] as Binding;//new Binding("ReadOnly", Interface.IDB.SSFPref, Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName);
-            checkBox2.DataBindings.Add(renabled2);
-            checkBox2.CheckedChanged += checkedChanged;
-            // this.lenghtbox.TextBox.DataBindings.Add(renabled2);
-            column = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
-            Binding renabled3 = checkBindings[column] as Binding;
-            checkBox3.DataBindings.Add(renabled3);
-            checkBox3.CheckedChanged += checkedChanged;
-            //this.densityB.TextBox.DataBindings.Add(renabled3);
-            column = Interface.IDB.SSFPref.CalcMassColumn.ColumnName;
-            Binding renabled4 = checkBindings[column] as Binding;
-            checkBox4.DataBindings.Add(renabled4);
-            checkBox4.CheckedChanged += checkedChanged;
-            // this.massB.TextBox.DataBindings.Add(renabled4);
-
-            // return column;
-        }
-        */
-
-        private void setEnabledBindings()
-        {
-            string column;
-
-            BindingSource bs = Interface.IBS.SSFPreferences;
-
-
-            column = Interface.IDB.SSFPref.DoCKColumn.ColumnName;
-
-            Binding renabled5 = new Binding("Enabled", bs, column);
-            Binding other = new Binding("Enabled", bs, column);
-
-          
-            this.kthB.TextBox.DataBindings.Add(renabled5);
-            this.kepiB.TextBox.DataBindings.Add(other);
-
-            column = Interface.IDB.SSFPref.OverridesColumn.ColumnName;
-            Binding other10 = new Binding("Enabled", bs, column);
-            Binding other11 = new Binding("Enabled", bs, column);
-
-            this.pEpiBox.TextBox.DataBindings.Add(other10);
-            this.pThBox.TextBox.DataBindings.Add(other11);
-
-
-
-            column = Interface.IDB.SSFPref.DoMatSSFColumn.ColumnName;
-            Binding other3 = new Binding("Enabled", bs, column);
-          
-            Binding other2 = new Binding("Enabled", bs, column);
-            Binding renabled6 = new Binding("Enabled", bs, column);
-
-            this.chlenB.TextBox.DataBindings.Add(renabled6);
-            this.chdiamB.TextBox.DataBindings.Add(other2);
-            this.cfgB.ComboBox.DataBindings.Add(other3);
-
-
-            column = Interface.IDB.SSFPref.OverridesColumn.ColumnName;
-            Binding other4 = new Binding("Enabled", bs, column);
-            Binding other5 = new Binding("Enabled", bs, column);
-            Binding other6 = new Binding("Enabled", bs, column);
-
-            this.bellfactorBox.TextBox.DataBindings.Add(other4);
-            this.WGtBox.TextBox.DataBindings.Add(other5);
-            this.nFactorBox.TextBox.DataBindings.Add(other6);
-
-            this.cfgB.ComboBox.Items.AddRange(MatSSF.Types);
-        }
+     
 
         private void setSampleBindings()
         {
-        //    string rounding = "N4";
-          //  rounding = Interface.IPreferences.CurrentSSFPref.Rounding;
 
             BindingSource bsSample = Interface.IBS.SubSamples;
-
             SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
+
+            ToolStripComboBox namebox = this.nameB;
+            ToolStripComboBox descriptionbox = this.descripBox;
 
             string column;
             column = SSamples.SubSampleNameColumn.ColumnName;
-
-            Binding b0 = BS.ABinding(ref bsSample, column);
-            this.nameB.ComboBox.DataBindings.Add(b0);
-             this.nameB.ComboBox.DisplayMember = column;
-            this.nameB.ComboBox.ValueMember = column;
-            this.nameB.ComboBox.DataSource = bsSample;
-
-            this.nameB.AutoCompleteSource = AutoCompleteSource.ListItems;
-
             Binding b1 = BS.ABinding(ref bsSample, column);
-            this.samp1lbl.TextBox.DataBindings.Add(b1);
-            Binding b2 = BS.ABinding(ref bsSample, column);
-            this.samp2lbl.TextBox.DataBindings.Add(b2);
-            Binding b3 = BS.ABinding(ref bsSample, column);
-            this.samp3lbl.TextBox.DataBindings.Add(b3);
+            nameB.ComboBox.DataBindings.Add(b1);
+
+         //   BS.BindAComboBox(ref bsSample, ref namebox, column);
+
+            column = SSamples.SubSampleDescriptionColumn.ColumnName;
+            Binding b0 = BS.ABinding(ref bsSample, column);
+            descripBox.ComboBox.DataBindings.Add(b0);
+
+        //    BS.BindAComboBox(ref bsSample, ref descripBox, column);
+
+        }
 
        
-            column = SSamples.SubSampleDescriptionColumn.ColumnName;
-            Binding b4 = BS.ABinding(ref bsSample, column);
-            this.descripBox.TextBox.DataBindings.Add(b4);
 
-       //     return samplebindings;
-        }
 
-        private Hashtable setUnitBindings()
-        {
-            string rounding = "N3";
-            rounding = Interface.IPreferences.CurrentSSFPref?.Rounding;
-
-            //units
-            UnitDataTable Unit = Interface.IDB.Unit;
-            BindingSource bs = Interface.IBS.Units; //link to binding source;
-            Hashtable bindings = BS.ArrayOfBindings(ref bs, rounding);
-
-            string column;
-            column = Unit.ChRadiusColumn.ColumnName;
-            this.chdiamB.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.ChLengthColumn.ColumnName;
-            this.chlenB.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.BellFactorColumn.ColumnName;
-            this.bellfactorBox.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.WGtColumn.ColumnName;
-            this.WGtBox.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.nFactorColumn.ColumnName;
-            this.nFactorBox.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.ChCfgColumn.ColumnName;
-            this.cfgB.ComboBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.kepiColumn.ColumnName;
-            this.kepiB.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Unit.kthColumn.ColumnName;
-            this.kthB.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-           // BindingSource bschannel = Interface.IBS.SelectedChannel;
-          //  Hashtable channelBindings = BS.ArrayOfBindings(ref bschannel);
-
-            column = Interface.IDB.Unit.pThColumn.ColumnName;
-            this.pThBox.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            column = Interface.IDB.Unit.pEpiColumn.ColumnName;
-            this.pEpiBox.TextBox.DataBindings.Add(bindings[column] as Binding);
-
-            return bindings;
-        }
 
         // CheckBox check = new CheckBox();
         public ucSSFData()
         {
             InitializeComponent();
+
+        
+            
+        }
+
+        TabPage on;
+        public TabPage On
+        {
+
+            set
+            {
+                on = value;
+            }
+        }
+        TabPage off;
+        public TabPage Off
+        {
+
+            set
+            {
+                off = value;
+            }
+        }
+
+
+        private void sampleSelectClick(object sender, EventArgs e)
+        {
+
+            ToolStripLabel lbl = sender as ToolStripLabel;
+            ToolStripComboBox cbox = null;
+            //    if (lbl.Equals())
+            string[] items = Interface.ICurrent.SubSamples
+               .OfType<SubSamplesRow>()
+               .Where(o => !o.IsSubSampleNameNull())
+               .Select(o=> o.SubSampleName)
+               .ToArray();
+
+            if (lbl.Equals(this.SampleLBL))
+            {
+                cbox = this.nameB;
+            }
+            else
+            {
+                cbox = this.descripBox;
+                items = Interface.ICurrent.SubSamples
+               .OfType<SubSamplesRow>()
+                      .Where(o => !o.IsSubSampleDescriptionNull())
+               .Select(o => o.SubSampleDescription)
+               .ToArray();
+            }
+
+            cbox.Items.Clear();
+
+            if (!cbox.DroppedDown && items.Count()!=0 )
+            {
+                cbox.AutoCompleteMode = AutoCompleteMode.Suggest;
+                cbox.AutoCompleteSource = AutoCompleteSource.ListItems;
+                cbox.Items.AddRange(items);
+            }
+
+            cbox.DroppedDown = !cbox.IsOnDropDown;
+      
+        }
+
+        protected bool assigned = false;
+         protected string compo = "COMPOSITION";
+        protected string geom = "GEOMETRY";
+
+
+        public void ViewChanged(object sender, EventArgs e)
+        {
+            
+            bool.TryParse(sender.ToString(), out assigned);
+
+            TabPage page = setLabelView(compo, geom);
+
+        }
+
+        private void viewChanged(object sender, EventArgs e)
+        {
+
+            TabPage page = setLabelView(compo, geom);
+
+            TabControl ctrl = (page.Parent as TabControl);
+            ctrl.SelectedTab = page;
+            if (ctrl.Parent.GetType().Equals(typeof(TabPage)))
+            {
+                page = (ctrl.Parent as TabPage);
+                (page.Parent as TabControl).SelectedTab = page;//.Show();//Focus();
+            }
+
+        }
+
+        private TabPage setLabelView(string compo, string geom)
+        {
+
+            TwoSectionSC.Panel1Collapsed = assigned;
+            TwoSectionSC.Panel2Collapsed = !assigned;
+            assigned = !assigned;
+
+            TabPage page = on;
+
+            Image img = Properties.Resources.Geometries;
+            Color clr = Color.Orange;
+            if (sampleCompoLbl.Text.Contains(compo))
+            {
+                sampleCompoLbl.Text = sampleCompoLbl.Text.Replace(compo, geom);
+            }
+
+            else
+            {
+                sampleCompoLbl.Text = sampleCompoLbl.Text.Replace(geom, compo);
+                img = Properties.Resources.Matrices;
+                clr = Color.Cyan;
+                page = off;
+
+            }
+
+            this.imgBtn.Image = img;
+            return page;
         }
     }
 }

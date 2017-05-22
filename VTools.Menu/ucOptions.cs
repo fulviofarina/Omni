@@ -126,14 +126,23 @@ namespace VTools
                 explorer = value;
             }
         }
-        public void  ShowProgress()
+     
+        public EventHandler ShowProgress
         {
-            Application.DoEvents();
-                this.progressBar.PerformStep();
-            Application.DoEvents();
 
+
+            get
+            {
+                EventHandler pros = delegate
+                {
+                    Application.DoEvents();
+                    this.progressBar.PerformStep();
+                    Application.DoEvents();
+                };
+                return pros;
+            }
         }
-
+     
 
         public void ResetProgress (int max)
         {

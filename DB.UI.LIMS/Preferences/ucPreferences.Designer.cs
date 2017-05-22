@@ -36,6 +36,10 @@
             System.Windows.Forms.Label roundingLabel;
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.advancedEditorCheckBox = new System.Windows.Forms.CheckBox();
+            this.showSampleDescriptionCheckBox = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.fillBySpectraCheckBox = new System.Windows.Forms.CheckBox();
             this.fillByHLCheckBox = new System.Windows.Forms.CheckBox();
             this.windowBTextBox = new System.Windows.Forms.TextBox();
             this.windowATextBox = new System.Windows.Forms.TextBox();
@@ -56,14 +60,10 @@
             this.aAFillHeightCheckBox = new System.Windows.Forms.CheckBox();
             this.aARadiusCheckBox = new System.Windows.Forms.CheckBox();
             this.showOtherCheckBox = new System.Windows.Forms.CheckBox();
-            this.PrefBS = new System.Windows.Forms.BindingSource(this.components);
-            this.SSFPref = new System.Windows.Forms.BindingSource(this.components);
             this.overridesCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.fillBySpectraCheckBox = new System.Windows.Forms.CheckBox();
-            this.showSampleDescriptionCheckBox = new System.Windows.Forms.CheckBox();
-            this.advancedEditorCheckBox = new System.Windows.Forms.CheckBox();
+            this.PrefBS = new System.Windows.Forms.BindingSource(this.components);
+            this.SSFPref = new System.Windows.Forms.BindingSource(this.components);
             minAreaLabel = new System.Windows.Forms.Label();
             maxUncLabel = new System.Windows.Forms.Label();
             windowALabel = new System.Windows.Forms.Label();
@@ -203,12 +203,53 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(304, 615);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // advancedEditorCheckBox
+            // 
+            this.advancedEditorCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.advancedEditorCheckBox.Location = new System.Drawing.Point(3, 530);
+            this.advancedEditorCheckBox.Name = "advancedEditorCheckBox";
+            this.advancedEditorCheckBox.Size = new System.Drawing.Size(298, 24);
+            this.advancedEditorCheckBox.TabIndex = 18;
+            this.advancedEditorCheckBox.Text = "Advanced Editor";
+            this.advancedEditorCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // showSampleDescriptionCheckBox
+            // 
+            this.showSampleDescriptionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.showSampleDescriptionCheckBox.Location = new System.Drawing.Point(3, 500);
+            this.showSampleDescriptionCheckBox.Name = "showSampleDescriptionCheckBox";
+            this.showSampleDescriptionCheckBox.Size = new System.Drawing.Size(298, 24);
+            this.showSampleDescriptionCheckBox.TabIndex = 17;
+            this.showSampleDescriptionCheckBox.Text = "Show Sample Description";
+            this.showSampleDescriptionCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.ForeColor = System.Drawing.Color.Lime;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(298, 21);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Main Preferences";
+            // 
+            // fillBySpectraCheckBox
+            // 
+            this.fillBySpectraCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fillBySpectraCheckBox.Location = new System.Drawing.Point(3, 449);
+            this.fillBySpectraCheckBox.Name = "fillBySpectraCheckBox";
+            this.fillBySpectraCheckBox.Size = new System.Drawing.Size(298, 45);
+            this.fillBySpectraCheckBox.TabIndex = 14;
+            this.fillBySpectraCheckBox.Text = "Fill by Spectra";
+            this.fillBySpectraCheckBox.UseVisualStyleBackColor = true;
+            // 
             // fillByHLCheckBox
             // 
             this.fillByHLCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fillByHLCheckBox.Location = new System.Drawing.Point(3, 419);
             this.fillByHLCheckBox.Name = "fillByHLCheckBox";
-            this.fillByHLCheckBox.Size = new System.Drawing.Size(281, 24);
+            this.fillByHLCheckBox.Size = new System.Drawing.Size(298, 24);
             this.fillByHLCheckBox.TabIndex = 13;
             this.fillByHLCheckBox.Text = "Fill by HL";
             this.fillByHLCheckBox.UseVisualStyleBackColor = true;
@@ -247,7 +288,7 @@
             this.offlineCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.offlineCheckBox.Location = new System.Drawing.Point(3, 296);
             this.offlineCheckBox.Name = "offlineCheckBox";
-            this.offlineCheckBox.Size = new System.Drawing.Size(281, 35);
+            this.offlineCheckBox.Size = new System.Drawing.Size(298, 35);
             this.offlineCheckBox.TabIndex = 4;
             this.offlineCheckBox.Text = "Offline";
             this.offlineCheckBox.UseVisualStyleBackColor = true;
@@ -258,7 +299,7 @@
             this.autoLoadCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoLoadCheckBox.Location = new System.Drawing.Point(3, 248);
             this.autoLoadCheckBox.Name = "autoLoadCheckBox";
-            this.autoLoadCheckBox.Size = new System.Drawing.Size(281, 42);
+            this.autoLoadCheckBox.Size = new System.Drawing.Size(298, 42);
             this.autoLoadCheckBox.TabIndex = 3;
             this.autoLoadCheckBox.Text = "Auto-Load";
             this.autoLoadCheckBox.UseVisualStyleBackColor = true;
@@ -269,7 +310,7 @@
             this.doSolangCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doSolangCheckBox.Location = new System.Drawing.Point(3, 337);
             this.doSolangCheckBox.Name = "doSolangCheckBox";
-            this.doSolangCheckBox.Size = new System.Drawing.Size(281, 35);
+            this.doSolangCheckBox.Size = new System.Drawing.Size(298, 35);
             this.doSolangCheckBox.TabIndex = 1;
             this.doSolangCheckBox.Text = "Do SolCoi";
             this.doSolangCheckBox.UseVisualStyleBackColor = true;
@@ -280,7 +321,7 @@
             this.showSolangCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.showSolangCheckBox.Location = new System.Drawing.Point(3, 378);
             this.showSolangCheckBox.Name = "showSolangCheckBox";
-            this.showSolangCheckBox.Size = new System.Drawing.Size(281, 35);
+            this.showSolangCheckBox.Size = new System.Drawing.Size(298, 35);
             this.showSolangCheckBox.TabIndex = 2;
             this.showSolangCheckBox.Text = "Show SolCoi";
             this.showSolangCheckBox.UseVisualStyleBackColor = true;
@@ -366,6 +407,8 @@
             // 
             // doCKCheckBox
             // 
+            this.doCKCheckBox.Checked = true;
+            this.doCKCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.doCKCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doCKCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doCKCheckBox.Location = new System.Drawing.Point(3, 268);
@@ -377,6 +420,8 @@
             // 
             // doMatSSFCheckBox
             // 
+            this.doMatSSFCheckBox.Checked = true;
+            this.doMatSSFCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.doMatSSFCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doMatSSFCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doMatSSFCheckBox.Location = new System.Drawing.Point(3, 219);
@@ -388,6 +433,8 @@
             // 
             // calcDensityCheckBox
             // 
+            this.calcDensityCheckBox.Checked = true;
+            this.calcDensityCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.calcDensityCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.calcDensityCheckBox.Location = new System.Drawing.Point(3, 23);
             this.calcDensityCheckBox.Name = "calcDensityCheckBox";
@@ -398,6 +445,8 @@
             // 
             // aAFillHeightCheckBox
             // 
+            this.aAFillHeightCheckBox.Checked = true;
+            this.aAFillHeightCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.aAFillHeightCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aAFillHeightCheckBox.Location = new System.Drawing.Point(3, 121);
             this.aAFillHeightCheckBox.Name = "aAFillHeightCheckBox";
@@ -408,6 +457,8 @@
             // 
             // aARadiusCheckBox
             // 
+            this.aARadiusCheckBox.Checked = true;
+            this.aARadiusCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.aARadiusCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aARadiusCheckBox.Location = new System.Drawing.Point(3, 72);
             this.aARadiusCheckBox.Name = "aARadiusCheckBox";
@@ -427,17 +478,8 @@
             this.showOtherCheckBox.Text = "Show Other Content";
             this.showOtherCheckBox.UseVisualStyleBackColor = true;
             // 
-            // PrefBS
-            // 
-            this.PrefBS.DataSource = typeof(DB.LINAA.PreferencesDataTable);
-            // 
-            // SSFPref
-            // 
-            this.SSFPref.DataSource = typeof(DB.LINAA.SSFPrefDataTable);
-            // 
             // overridesCheckBox
             // 
-      //      this.overridesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.SSFPref, "Overrides", true));
             this.overridesCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.overridesCheckBox.Location = new System.Drawing.Point(3, 366);
             this.overridesCheckBox.Name = "overridesCheckBox";
@@ -457,48 +499,13 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "SSF Preferences";
             // 
-            // label2
+            // PrefBS
             // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.ForeColor = System.Drawing.Color.Lime;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(281, 21);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Main Preferences";
+            this.PrefBS.DataSource = typeof(DB.LINAA.PreferencesDataTable);
             // 
-            // fillBySpectraCheckBox
+            // SSFPref
             // 
-            this.fillBySpectraCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fillBySpectraCheckBox.Location = new System.Drawing.Point(3, 449);
-            this.fillBySpectraCheckBox.Name = "fillBySpectraCheckBox";
-            this.fillBySpectraCheckBox.Size = new System.Drawing.Size(281, 45);
-            this.fillBySpectraCheckBox.TabIndex = 14;
-            this.fillBySpectraCheckBox.Text = "Fill by Spectra";
-            this.fillBySpectraCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // showSampleDescriptionCheckBox
-            // 
-          //  this.showSampleDescriptionCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.PrefBS, "ShowSampleDescription", true));
-            this.showSampleDescriptionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.showSampleDescriptionCheckBox.Location = new System.Drawing.Point(3, 500);
-            this.showSampleDescriptionCheckBox.Name = "showSampleDescriptionCheckBox";
-            this.showSampleDescriptionCheckBox.Size = new System.Drawing.Size(281, 24);
-            this.showSampleDescriptionCheckBox.TabIndex = 17;
-            this.showSampleDescriptionCheckBox.Text = "Show Sample Description";
-            this.showSampleDescriptionCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // advancedEditorCheckBox
-            // 
-     //       this.advancedEditorCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.PrefBS, "AdvancedEditor", true));
-            this.advancedEditorCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.advancedEditorCheckBox.Location = new System.Drawing.Point(3, 530);
-            this.advancedEditorCheckBox.Name = "advancedEditorCheckBox";
-            this.advancedEditorCheckBox.Size = new System.Drawing.Size(281, 24);
-            this.advancedEditorCheckBox.TabIndex = 18;
-            this.advancedEditorCheckBox.Text = "Advanced Editor";
-            this.advancedEditorCheckBox.UseVisualStyleBackColor = true;
+            this.SSFPref.DataSource = typeof(DB.LINAA.SSFPrefDataTable);
             // 
             // ucPreferences
             // 

@@ -146,14 +146,14 @@ namespace DB.Tools
                     // (iS.Radius * 2); u.Length = iS.FillHeight;
 
                     MatSSF.StartupPath = Linaa.FolderPath + Resources.SSFFolder;
+                   
+              //      MatSSF.UNIT = u;
 
-                    MatSSF.UNIT = u;
-
-                    MatSSF.INPUT(true);
+                  //  MatSSF.INPUT(true);
 
                  //   if (DB.Tools.MatSSF.RUN(!showMatssf))  // MatSSF Runned good?
                     {
-                        LINAA.MatSSFDataTable ssfDT = new LINAA.MatSSFDataTable(false);
+                        LINAA.MatSSFDataTable ssfDT = new LINAA.MatSSFDataTable();
                         ssfDT.Constraints.Clear();
                         LINAA.SubSamplesRow aux = iS;
                         // MatSSF.Sample = iS;

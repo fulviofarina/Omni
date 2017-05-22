@@ -14,6 +14,6 @@ namespace VTools
         Action SaveClick { set; }
         void ResetProgress(int max);
         void Set();
-        void ShowProgress();
+        EventHandler ShowProgress { get; }
     }
 }

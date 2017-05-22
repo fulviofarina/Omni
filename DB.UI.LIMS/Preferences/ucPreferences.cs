@@ -10,15 +10,63 @@ namespace DB.UI
     {
         private Interface Interface;
         // 
+
+        private EventHandler checkChanged;
         public EventHandler CheckChanged
+        {
+           
+            set
+            {
+                this.aARadiusCheckBox.Click += value;
+                this.aAFillHeightCheckBox.Click += value;
+                this.calcDensityCheckBox.Click += value;
+               this.calcMassCheckBox.Click += value;
+
+                checkChanged = value;
+
+
+            }
+            get
+            {
+
+                return checkChanged;
+            }
+        }
+        private EventHandler checkChanged2;
+        public EventHandler CheckChanged2
+        {
+          
+            set
+            {
+               // this.doMatSSFCheckBox.CheckStateChanged += value;
+                this.doCKCheckBox.Click += value;
+
+                checkChanged2 = value;
+
+
+            }
+            get
+            {
+
+                return checkChanged2;
+            }
+        }
+        private EventHandler checkChanged3;
+        public EventHandler CheckChanged3
         {
 
             set
             {
-                this.aARadiusCheckBox.CheckedChanged += value;
-                this.aAFillHeightCheckBox.CheckedChanged += value;
-                this.calcDensityCheckBox.CheckedChanged += value;
-                this.calcMassCheckBox.CheckedChanged += value;
+                this.doMatSSFCheckBox.Click += value;
+                // this.doCKCheckBox.CheckStateChanged += value;
+
+                checkChanged3 = value;
+
+            }
+            get
+            {
+
+                return checkChanged3;
             }
         }
 
@@ -28,13 +76,7 @@ namespace DB.UI
 
             try
             {
-             //   this.PrefBS.DataSource = Interface.Get();
-             //   this.SSFPref.DataSource = Interface.Get();
-              //  this.PrefBS.DataMember = Interface.IDB.Preferences.TableName;
-              //  this.SSFPref.DataMember = Interface.IDB.SSFPref.TableName;
-
-         //       Interface.IBS.Preferences = this.PrefBS;
-           //     Interface.IBS.SSFPreferences = this.SSFPref;
+          
 
                 setSSFPreferencesbindings();
 
@@ -52,8 +94,7 @@ namespace DB.UI
                 this.showSampleDescriptionCheckBox.Enabled = false;
                
 
-           //     this.PrefBS.ResetBindings(true);
-             //   this.SSFPref.ResetBindings(true);
+      
             }
             catch (Exception ex)
             {
@@ -72,8 +113,6 @@ namespace DB.UI
         {
             //the bindings to round
             Hashtable units = bindings;
-         //   Hashtable samples = samplebindings;
-            //Do the update when this control losses focus
             this.LostFocus += delegate
               {
                   try
@@ -83,11 +122,9 @@ namespace DB.UI
                       string format = this.roundingTextBox.Text;
                       if (format.Length < 2) return;
                       BS.ChangeBindingsFormat(format, ref units);
-                  //    BS.ChangeBindingsFormat(format, ref samples);
-
+          
                       Interface.IPreferences.CurrentSSFPref.Rounding = format;
-
-                      //save preferences
+               
                       Interface.IPreferences.SavePreferences();
                   }
                   catch (Exception ex)

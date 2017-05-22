@@ -22,8 +22,8 @@ namespace DB.Tools
         protected static string EMAIL_DEFAULT = "k0x.help@gmail.com";
         protected static string BUG_REPORT_EMPTY = "Nothing seems 'buggy' this time ;)";
         protected static string REPORT_PROBLEMS = "Problems while generating Report!";
-        protected static string SHOULD_RESTART = "Do you want to restart the program now?";
-        protected static string START_OR_EXIT = "Restart or Exit?";
+      //  protected static string SHOULD_RESTART = "Do you want to restart the program now?";
+      //  protected static string START_OR_EXIT = "Restart or Exit?";
         protected static string RESTARTING_OK = "Restarting succeeded...";
 
         /// <summary>

@@ -119,20 +119,7 @@ namespace DB.Tools
             return true;
         }
 
-        /// <summary>
-        /// Ask the user to restart the computer
-        /// </summary>
-        public void AskToRestart()
-        {
-            MessageBoxIcon i = MessageBoxIcon.Information;
-            //restart or not??
-            DialogResult yesnot = MessageBox.Show(SHOULD_RESTART, START_OR_EXIT, MessageBoxButtons.YesNo, i);
-            if (yesnot == DialogResult.Yes)
-            {
-                Application.Restart();
-            }
-            else System.Environment.Exit(-1);
-        }
+      
 
         /// <summary>
         /// not used

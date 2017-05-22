@@ -39,11 +39,16 @@ namespace Rsx.Dumb
         {
             FileSystemWatcher watcher = new FileSystemWatcher();
             watcher.Path = path;
-         
-            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.CreationTime
-                                   | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            watcher.Filter = "*." + extension;
-            watcher.Changed += new FileSystemEventHandler( callBack);
+
+            //  watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.CreationTime
+            //                          | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+            watcher.NotifyFilter = NotifyFilters.FileName;
+                        //        | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+            watcher.Filter = "*" + extension;
+         //   watcher.Changed += new FileSystemEventHandler( callBack);
+            watcher.Created += new FileSystemEventHandler(callBack);
             watcher.EnableRaisingEvents = true;
 
 
@@ -75,7 +80,7 @@ namespace Rsx.Dumb
             string path = workDir + msmq + architecture + ".bat";
             System.IO.File.WriteAllText(path, content);
             //run bat files that create the VB SCRIPTS
-            IO.Process(path, string.Empty, workDir);
+            IO.Process(path, string.Empty, workDir, true);
 
             //run vb.vbs script!!
             string scriptFile = "vb.vbs";
@@ -83,7 +88,7 @@ namespace Rsx.Dumb
        
             path = "/c " + workDir + "\\" + scriptFile;
             string cmd = "cmd.exe";
-            IO.Process(cmd, path, workDir);
+            IO.Process(cmd, path, workDir, true);
 
             //scheduled 10 minutes restart
             if (setRestart ) IO.RestartPC();
@@ -93,71 +98,71 @@ namespace Rsx.Dumb
         public static partial class IO
         {
 
-        public static void Process(string path, string argument, string workDir, string[] writeConsoleContent=null, bool hide = true)
+        public static Process Process(string path, string argument, string workDir, bool start,  bool hide = true, DataReceivedEventHandler receivedHandler =null, EventHandler exited=null)
         {
-
-
-            try
+            //   int id = 0;
+            Process pro = Process(path, argument, workDir, hide, ref receivedHandler, exited);
+         //   int id = pro.Id;
+            if (start)
             {
+                pro.Start();
 
-           
+                pro.BeginErrorReadLine();
+                pro.BeginOutputReadLine();
+
+                pro.WaitForExit();
+            }
+         
+
+
+
+            return pro;
+
+        }
+
+        public static Process Process(string path, string argument, string workDir, bool hide, ref DataReceivedEventHandler receivedHandler, EventHandler exited)
+        {
+            Process pro = new Process();
             ProcessStartInfo info = new ProcessStartInfo();
             info.WorkingDirectory = workDir;
             info.CreateNoWindow = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
             info.UseShellExecute = false;
-          Process pro = new Process();
             info.Arguments = argument;
             info.FileName = path;
             //   info.Verb = "runas";
             info.WindowStyle = ProcessWindowStyle.Hidden;
             if (!hide) info.WindowStyle = ProcessWindowStyle.Normal;
+
             pro.StartInfo = info;
-                info.RedirectStandardInput = true;
-              
-            pro.OutputDataReceived += Pro_OutputDataReceived;
-            pro.ErrorDataReceived += Pro_ErrorDataReceived;
-            pro.Start();
-            pro.BeginErrorReadLine();
-            pro.BeginOutputReadLine();
-          //  pro.WaitForExit();
+            info.RedirectStandardInput = true;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
 
-            if (writeConsoleContent!=null)
+            if (receivedHandler == null)
             {
-                foreach (string item in writeConsoleContent)
-                {
-                    pro.StandardInput.WriteLine(item);
-                }
-
+                receivedHandler = defaultOutputMode;
             }
 
-                pro.WaitForExit();
-            }
-            catch (Exception ex)
+            pro.OutputDataReceived += defaultOutputMode;
+            pro.ErrorDataReceived += defaultOutputMode;
+
+            if (exited != null)
             {
-
-                throw;
+                pro.Exited += exited;
+                pro.EnableRaisingEvents = true;
             }
+
+            return pro;
         }
-        private static void Pro_ErrorDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+
+        private static void defaultOutputMode(object sender, DataReceivedEventArgs e)
         {
-            if (e.Data != null)
-            {
-                string data = e.Data;
-            }
-
-            // throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        private static void Pro_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                string data = e.Data;
-            }
-            //  throw new NotImplementedException();
-        }
+
+
+
 
         /// <summary>
         /// unpack a Resource
@@ -262,9 +267,10 @@ namespace Rsx.Dumb
                 return span;
             }
 
+  
         public static string ReadFile(string File)
         {
-            int counter = 1;
+          //  int counter = 1;
             Exception ex = new Exception();
             string lecture = string.Empty;
             System.IO.FileStream fraw = null;
@@ -273,20 +279,25 @@ namespace Rsx.Dumb
             {
                 try
                 {
+                    ex = null;
                     fraw = new System.IO.FileStream(File, System.IO.FileMode.Open, FileAccess.Read);
                     raw = new System.IO.StreamReader(fraw);
-
-                    ex = null;
+               
                 }
                 catch (Exception ex2)
                 {
-
+                    //sleep 2 seconds...
                     ex = ex2;
-                }
-                counter++;
+                    return lecture;
+                    //    System.Threading.Thread.Sleep(2000);
+                    // System.Threading.Thread.Sleep()
 
-                if (counter == 200) return lecture;
+                }
+              //  counter++;
+
+             //   if (counter == 2) return lecture;
             }
+            
             lecture = raw.ReadToEnd();
             fraw.Close();
             fraw.Dispose();

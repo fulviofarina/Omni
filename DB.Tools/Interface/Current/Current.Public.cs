@@ -26,6 +26,7 @@ namespace DB.Tools
                 return (bs.Matrix.Current as DataRowView)?.Row;
             }
         }
+     
 
         /// <summary>
         /// Current Row
@@ -38,6 +39,13 @@ namespace DB.Tools
             }
         }
 
+        public DataRow SubSampleMatrix
+        {
+            get
+            {
+                return (bs.SelectedMatrix.Current as DataRowView)?.Row;
+            }
+        }
         /// <summary>
         /// Current Row
         /// </summary>

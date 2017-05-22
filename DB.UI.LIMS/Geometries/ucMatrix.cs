@@ -173,7 +173,7 @@ namespace DB.UI
 
                             // IList<LINAA.CompositionsRow> add = null; .MatrixID, ref ls, ref add
                             // m.CodeOrAddComposition(ref ls);
-                            m.CodeOrAddComposition(ls);
+                            m.AddOrUpdateComposition(ls);
 
                             progress.PerformStep();
                             Application.DoEvents();

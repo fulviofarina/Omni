@@ -19,11 +19,7 @@ namespace DB.UI
 
         private bool cancelCalculations = false;
         private Interface Interface = null;
-        private Action<int> resetProgress;
-        private Action showProgress;
-
-
-     
+     //   private Action<int> resetProgress;
         /// <summary>
         /// Attachs the respectivo SuperControls to the SSF Control
         /// </summary>
@@ -41,23 +37,25 @@ namespace DB.UI
                     projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel1;
                     projBox.CallBack += delegate
-                     {
-                         bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
-                         this.CalcBtn.Enabled = ThereIsData;
-                         Disabler(ThereIsData);
-                         ucSSFData.Disabler(ThereIsData);
-                         // this.ucSSFData.Enabled = Interface.IBS.SubSamples.Count!=0;
-                     };
+                    {
+                        refreshProject();
+                    };
                 }
                 else if (pro.GetType().Equals(typeof(ucOptions)))
                 {
                     IucOptions options = pro as IucOptions;
-                    showProgress = options.ShowProgress;
-                    resetProgress = options.ResetProgress;
+                    MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
+                    //SET A METHOD TO CALL BACK!!!!
+                    EventHandler callBack = delegate
+                    {
+                        this.ucUnit.PaintRows();
+                    };
+                    MatSSF = new MatSSF();
+                    MatSSF.Set(ref Interface, callBack, options.ResetProgress,options.ShowProgress);
+
                     // projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel2;
                 }
-              
                 else if (pro.GetType().Equals(typeof(ucUnit)))
                 {
                     //link to bindings
@@ -66,11 +64,11 @@ namespace DB.UI
                     ucUnit = pro as ucUnit;
                     ucUnit.Dock = DockStyle.Fill;
                     destiny = this.CalcTab;
-                //    ucUnit.Set(ref Interface);
+                    // ucUnit.Set(ref Interface);
 
                     ucMS.Set(ref Interface);
                     ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-                  
+
                     // OTHER CONTROLS
                     ucCC1.Set(ref Interface);
                     ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
@@ -78,11 +76,15 @@ namespace DB.UI
                     ucVcc.Set(ref Interface);
                     ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
 
-                  
                 }
                 else
                 {
-                    ucSSFData.AttachCtrl(ref pro);
+
+                 
+               
+                    ucSSFControl.AttachCtrl(ref pro);
+                    ucUnit.AttachCtrl(ref pro);
+                 
                 }
 
                 destiny?.Controls.Add(pro as Control);
@@ -93,13 +95,18 @@ namespace DB.UI
             }
         }
 
-        private void Disabler(bool thereIsData)
+        private void refreshProject()
         {
-            this.CalcBtn.Visible = thereIsData;
-            this.cancelBtn.Visible = thereIsData;
-         //   this.ucUnit.Visible = thereIsData;
-            //this.SSFPlitter.Panel2. = thereIsData;
+            bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
+            this.CalcBtn.Enabled = ThereIsData;
+            this.CalcBtn.Visible = ThereIsData;
+            this.cancelBtn.Visible = ThereIsData;
+            ucSSFControl.Disabler(ThereIsData);
+            ucUnit.PaintRows();
+        
         }
+
+     
 
         public void Calculate(object sender, EventArgs e)
         {
@@ -108,131 +115,27 @@ namespace DB.UI
 
             Cursor.Current = Cursors.WaitCursor;
 
-            cancelCalculations = false;
-
-            resetProgress?.Invoke(3);
+          
 
             this.CalcBtn.Enabled = false;
-
             this.cancelBtn.Enabled = true;
-
             this.Visible = true;
             this.ParentForm.Visible = true;
 
             this.Tab.SelectedTab = this.CalcTab;
 
-            //actual position
-            int position = Interface.IBS.SubSamples.Position;
-
-        
-
-            IList<UnitRow> units = null;
-            bool shoulLoop = Interface.IPreferences.CurrentSSFPref.Loop;
-            if (shoulLoop)
-            {
-                //take currents
-                units = Interface.ICurrent.Units.OfType<LINAA.UnitRow>()
-                    .Where(o => o.ToDo).ToList();
-            }
-            else
-            {
-                //take only current
-                units = new List<UnitRow>();
-                units.Add(Interface.ICurrent.Unit as UnitRow);
-            }
-
-            resetProgress?.Invoke(2 + (units.Count * 5));
-
-            //1
-            if (units.Count == 0)
-            {
-                Interface.IReport.Msg("Select the Units to calculate with the 'Do?' checkbox", "Oops, nothing was selected");
-            }
-            //loop through all samples to work to
-            foreach (UnitRow item in units)
-            {
-                //update position in BS
-                Interface.IBS.Update<LINAA.UnitRow>(item);
-
-                // if (cancelCalculations) continue;
-                ucSSFData.CalculateUnit(showProgress, ref cancelCalculations);
-               
-                string file = MatSSF.StartupPath + item.Name;
-                IO.LoadFilesIntoBoxes(showProgress, ref inputbox, file);
-
-            //    file = MatSSF.StartupPath + item.Name + ".txt";
-              //  IO.LoadFilesIntoBoxes(showProgress, ref outputBox, file);
-            }
-            Interface.IBS.SubSamples.Position = position;
-
-            if (cancelCalculations)
-            { Interface.IReport.Msg("Cancelled", "Calculations not initiated!");
-              return;
-            }
-          
-                Interface.IReport.Msg("Running...", "Calculations running");
-                Interface.IReport.Speak("Calculations running.\nPlease be patient");
-            Application.DoEvents();
-    
-
-            IPreferences ip = Interface.IPreferences;
-
-            bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
-
-            bool doCk = (ip.CurrentSSFPref.DoCK);
-            bool doSSF = (ip.CurrentSSFPref.DoMatSSF);
-
-            //at least activate MatSSF!!!
-            if (!doSSF && !doCk)
-            {
-                ip.CurrentSSFPref.DoMatSSF = true;
-                doSSF = true;
-                //throw new SystemException("No Calculation Method has been selected. Check the Preferences!");
-            }
-
-          
-            bool runOk = false;
-            // MatSSF.Table.Clear();
-            if (doSSF && !cancelCalculations)
-            {
-                string[] fileNames = units.Select(o => o.Name).ToArray(); 
-                runOk = MatSSF.RUN(fileNames, hide);
-            }
-            //4
-            showProgress?.Invoke();
-
-
-        //    Interface.IBS.SSF = null;
-
-         
-
-
-            /*
-            foreach (UnitRow item in units)
-            {
-           
-                string file;
-
-                file = MatSSF.StartupPath + item.Name + ".txt";
-                IO.LoadFilesIntoBoxes(showProgress, ref outputBox, file);
-            }
-            */
-
-
-       
+            MatSSF.Calculate();
 
             this.CalcBtn.Enabled = true;
-
-            cancelCalculations = false;
-
+     
             // Creator.SaveInFull(true);
-
             this.cancelBtn.Enabled = false;
 
-            // HideShowAll(true);
-
             Cursor.Current = Cursors.Default;
+
         }
+
+
 
         /// <summary>
         /// A function to show hide this control and mimetize
@@ -259,6 +162,11 @@ namespace DB.UI
             DaCONTAINER.Panel2Collapsed = !hidden;
         }
 
+   
+
+   
+
+        protected MatSSF MatSSF;
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
         /// </summary>
@@ -267,15 +175,22 @@ namespace DB.UI
             Interface = inter;
             try
             {
-           //     MatSSF.Table = Interface.IDB.MatSSF;
 
-               
+                ucSSFControl.On = this.CalcTab;
+                ucSSFControl.Off = this.MatrixTab;
+                ucSSFControl.Set(ref Interface);
 
-                ucSSFData.Set(ref Interface);
-
-                MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
-                Action<object, FileSystemEventArgs> callBack = ucSSFData.Watcher_Changed;
-                IO.WatchFolder(MatSSF.StartupPath, "txt", ref callBack);
+                this.templatesTabCtrl.Selected += delegate
+                {
+                    if (templatesTabCtrl.SelectedTab == MatrixTab)
+                    {
+                        ucSSFControl.ViewChanged(true,EventArgs.Empty);
+                    }
+                 else
+                    { 
+                        ucSSFControl.ViewChanged(false, EventArgs.Empty);
+                    }
+                };
 
                 //set calculation options
                 //   Interface.IBS.EndEdit();
@@ -287,6 +202,8 @@ namespace DB.UI
                 Interface.IStore.AddException(ex);
             }
         }
+
+     
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {

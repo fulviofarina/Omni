@@ -9,7 +9,7 @@ namespace DB
         void ReportToolTip(object sender, EventArgs ev);
         string RestartFile { get; }
 
-        void AskToRestart();
+      //  void AskToRestart();
 
         bool CheckMSMQ();
 

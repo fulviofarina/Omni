@@ -93,7 +93,7 @@ namespace DB
             }
         }
 
-        public LINAATableAdapters.TableAdapterManager TAM
+        public TableAdapterManager TAM
         {
             get { return tAM; }
             set { tAM = value; }

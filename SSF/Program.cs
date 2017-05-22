@@ -38,24 +38,23 @@ namespace SSF
             ucSSF ucSSF =new ucSSF();
             ucSSF.Set(ref LIMS.Interface);
 
-
-        
-
-
             Pop msn = LIMS.Interface.IReport.Msn;
-            Form form = msn.ParentForm;//
-
+            Form form = null;//
+            form = new Form();
+            form.Opacity = 0;
 
             Creator.CallBack = delegate
             {
 
+                ucSSF.AttachCtrl(ref units);
+                ucSSF.AttachCtrl(ref preferences);
+                ucSSF.AttachCtrl(ref aBindingNavigator);
+                ucSSF.AttachCtrl(ref ucProjectBox);
+                ucSSF.AttachCtrl(ref options);
 
+                Application.DoEvents();
                
 
-
-                if (form == null) form = new Form();
-              
-             
                 form.AutoSizeMode = AutoSizeMode.GrowOnly;
                 form.AutoSize = true;
                 IntPtr Hicon = Properties.Resources.Logo.GetHicon();
@@ -68,48 +67,54 @@ namespace SSF
                 form.MaximizeBox = false;
                 form.ControlBox = true;
                 form.StartPosition = FormStartPosition.CenterScreen;
-
                 form.FormClosing += Form_FormClosing;
-
-                form.Opacity = 0;
-
-                LIMS.Interface.IBS.StartBinding();
-                LIMS.Interface.IBS.ApplyFilters();
-
-                ucSSF.AttachCtrl(ref msn);
-                ucSSF.AttachCtrl(ref options);
-                ucSSF.AttachCtrl(ref preferences);
-                ucSSF.AttachCtrl(ref ucProjectBox);
-                ucSSF.AttachCtrl(ref aBindingNavigator);
-                ucSSF.AttachCtrl(ref units);
-
+                form.SetDesktopLocation(Screen.PrimaryScreen.WorkingArea.X, Screen.PrimaryScreen.WorkingArea.Y);
+                ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
+               
+                form.AutoSizeMode = AutoSizeMode.GrowOnly;
                 form.Controls.Add(ucSSF);
-                form.Opacity = 100;
-
-            
 
             };
             // form.Enabled = false;
 
             Creator.LastCallBack = delegate
             {
-                Application.DoEvents();
 
-           
                 bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
-
                 string lastProject = string.Empty;
                 if (autoload)
                 {
                     lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
                 }
+                else LIMS.Interface.IReport.SpeakLoadingFinished();
 
+        //       
+
+                //ESTE ORDEN ES FUNDAMENTAL!!!
+                Application.DoEvents();
+
+                LIMS.Interface.IBS.ApplyFilters();
+                LIMS.Interface.IBS.StartBinding();
+
+                ////2
+                Application.DoEvents();
+             
+
+
+                //3
                 ucProjectBox.Project = lastProject;
                 ucProjectBox.Refresher();
 
-                Application.DoEvents();
+                Form frm2 = msn.ParentForm;
+                frm2.Visible = false;
+                ucSSF.AttachCtrl(ref msn);
+                frm2.Dispose();
 
-                LIMS.Interface.IReport.SpeakLoadingFinished();
+                form.Opacity = 100;
+
+                             
+
+
             };
 
       
@@ -146,9 +151,7 @@ namespace SSF
             {
                 //create database
                 Creator.Build(ref LIMS.Interface);
-                Creator.CheckDirectories();
-                LIMS.Interface.IPreferences.PopulatePreferences();
-
+             
                 LIMS.Linaa = LIMS.Interface.Get();
                 LIMS.Form = new LIMS(); //make a new UI LIMS
                 LIMS.Form.ShowInTaskbar = false;
@@ -157,22 +160,21 @@ namespace SSF
                 LIMS.UserControls = new List<object>();
 
                 //FIRST THIS IN CASE i NEED TO RESTART AGAIN IN SQL INSTALL
-                bool isMsmq = LIMS.Interface.IReport.CheckMSMQ();
+                LIMS.Interface.IReport.Msg("Set up", "Checking MSMQ...");
+                Application.DoEvents();
 
+                bool isMsmq = LIMS.Interface.IReport.CheckMSMQ();
                 if (!isMsmq)
                 {
                     Creator.InstallMSMQ();
                 }
-               
                 //FIRST SQL
                 UserControl IConn = new ucSQLConnection();
                 bool ok = Creator.PrepareSQL(ref IConn);
              
-
                 LIMS.Interface.IPreferences.SavePreferences();
                 //CHECK RESTART FILE
                 LIMS.Interface.IReport.CheckRestartFile();
-                
 
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
@@ -182,6 +184,10 @@ namespace SSF
                 Creator.Run();
 
                 Application.Run(toReturn);
+
+            
+
+              
             }
             catch (Exception ex)
             {

@@ -86,6 +86,10 @@
     <Compile Include="Interface\Report\Report.cs" />
     <Compile Include="Interface\Interface.cs" />
     <Compile Include="Interface\Preferences\IPreferences.cs" />
+    <Compile Include="SSF\Main.cs" />
+    <Compile Include="SSF\Fields.cs" />
+    <Compile Include="SSF\Engine.cs" />
+    <Compile Include="SSF\Parsers.cs" />
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
     <Compile Include="WC\Properties.cs" />
@@ -101,10 +105,6 @@
     <ProjectReference Include="..\DB.Linq\DB.Linq.csproj">
       <Project>{4f5b1a09-8cfe-41ba-a1b1-5eeaecedd329}</Project>
       <Name>DB.Linq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
-      <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
-      <Name>DB.Tools.SSF</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Omni\Rsx.Dumb\Rsx.Dumb.csproj">
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
@@ -144,6 +144,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CLASSDIAGRAM.cd" />
+    <None Include="SSF\DIAGRAMSSF.cd" />
+    <None Include="SSF\MatSSF\MATSSF.CFG" />
+    <None Include="SSF\MatSSF\MATSSF.DAT" />
+    <None Include="SSF\MatSSF\matssf.for" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SSF\MatSSF\MATSSF_INP.TXT" />
+    <Content Include="SSF\MatSSF\MATSSF_LST.TXT" />
+    <Content Include="SSF\MatSSF\MATSSF_XSR.TXT" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,14 +6,12 @@ namespace DB.UI
     public partial class Connections : Form
     {
         private DB.LINAA.PreferencesRow pref;
-        // private DB.UI.SQLConnection ucSQLHLCom = new SQLConnection(); private DB.UI.SQLConnection
-        // ucSQLLIMSCom = new SQLConnection(); private bool saveChanges = false;
-
+  
         private void Connections_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ucSQLLIMSCom.ConnectionString.Equals(string.Empty))
             {
-                DialogResult res = MessageBox.Show("The LIMS database needs to be provided... Try again?", "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                DialogResult res = MessageBox.Show("A connection to the LIMS database needs to be provided... Try again?", "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (res == System.Windows.Forms.DialogResult.No) this.Dispose();
                 else return;
             }
@@ -57,6 +55,11 @@ namespace DB.UI
             InitializeComponent();
 
             pref = preferences;
+            this.Text = "Connections";
+            this.FormClosing += this.Connections_FormClosing;
+            this.Load += this.Connections_Load;
+
+         
         }
     }
 }

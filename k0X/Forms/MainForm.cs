@@ -401,10 +401,7 @@ namespace k0X
 
                 //Build
                 Creator.Build(ref LIMS.Interface);
-                Creator.CheckDirectories();
-                //    Creator.CheckPreferences();
-                LIMS.Interface.IPreferences.PopulatePreferences();
-
+      
                 UserControl IConn = new VTools.ucSQLConnection();
              //   dynamic connectionControl = IConn;
                 bool ok = Creator.PrepareSQL(ref IConn);

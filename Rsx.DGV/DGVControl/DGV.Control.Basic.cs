@@ -137,10 +137,12 @@ namespace Rsx.DGV
       foreach (ToolStripButton i in items2) SetSaver(i);
 
       items2 = null;
-
+/*
       items2 = items.Where(i => i.Text.Contains("Add")).ToArray();
       foreach (ToolStripButton i in items2) SetAdder(i);
       items2 = null;
+      */
+
     }
 
         

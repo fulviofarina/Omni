@@ -6,7 +6,9 @@ namespace DB.UI
 {
     public interface IucPreferences
     {
-        EventHandler CheckChanged { set; }
+        EventHandler CheckChanged { set; get; }
+        EventHandler CheckChanged2 { set; get; }
+        EventHandler CheckChanged3 { set; get; }
 
         void Set(ref Interface inter);
 

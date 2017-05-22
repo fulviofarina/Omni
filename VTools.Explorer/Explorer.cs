@@ -43,7 +43,8 @@ namespace VTools
       {
         this.CurrentTable = set.Tables[Box.Text];
         Rsx.Dumb.BS.LinkBS(ref this.BS, CurrentTable, filterbox.Text, sortBox.Text);
-                foreach (DataGridViewColumn item in DGV.Columns)
+                IEnumerable<DataGridViewColumn> cols = DGV.Columns.OfType<DataGridViewColumn>().ToArray();
+                foreach (DataGridViewColumn item in cols)
                 {
                     if (item.ValueType.Equals(typeof(byte[])))
                         {

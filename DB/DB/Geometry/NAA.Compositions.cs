@@ -11,7 +11,7 @@ namespace DB
         {
         
 
-            public CompositionsRow AddCompositionsRow(int matrixID, string element, double formulaweight, double quantity)
+            public CompositionsRow AddCompositionsRow(int matrixID, string element, double formulaweight, double quantity, int subsampleID)
             {
                 CompositionsRow c = null;
                 try
@@ -30,12 +30,12 @@ namespace DB
                     //   c.Formula = formula;
                     c.MatrixID = matrixID;
                     c.Quantity = quantity;
-                    c.Weight = formulaweight;
+                  //  c.Weight = formulaweight;
                     c.Element = element;
                     c.Unc = 0;
-                    c.UncUnit = "%";
+                    //c.UncUnit = "%";
                     c.QuantityUnit = "%";
-
+                    c.SubSampleID = subsampleID;
                     if (add) AddCompositionsRow(c);
                 }
                 catch (SystemException ex)

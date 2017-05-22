@@ -20,8 +20,10 @@ namespace DB.Tools
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            Interface.IReport.Msg(CHECKING_SQL, CHECKING_SQL_TITLE);
+            Interface.IReport.Msg("Set up", "Checking SQL...");
+            Application.DoEvents();
 
+         
             Interface.IAdapter.InitializeComponent();
             Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
 
@@ -32,9 +34,12 @@ namespace DB.Tools
             string developerDB = Properties.Settings.Default.developerDB;
             string defaultConnection = string.Empty;
             bool ok = Interface.IAdapter.IsMainConnectionOk;
+            int counter = 1;
             //No connections
             while (!ok)
             {
+                Interface.IReport.Msg(CHECKING_SQL + " " + counter.ToString(), CHECKING_SQL_TITLE);
+                counter++;
                 //restart server SQL
                 ok = SQL.RestartSQLLocalDBServer();
 
@@ -110,10 +115,11 @@ namespace DB.Tools
             if (makeDatabase)
             {
                 ok = cloneDatabase(userDB, developerDB);
+                //always delete the developer database if it got stucked next restart...
+                SQL.DeleteDatabase(developerDB);
             }
 
-            //always delete the developer database if it got stucked next restart...
-            SQL.DeleteDatabase(developerDB);
+       
 
             //SAVE SETTINGS!!!
 
@@ -138,12 +144,18 @@ namespace DB.Tools
             //    bool makeDatabase = false;
 
             //MAE A COPY INTO THE DEVELOPER DB SQL
-            string filePath =  Application.StartupPath+ Resources.DevFiles+ Resources.Linaa;
+//read the backup file
+            string filePath = Interface.IStore.FolderPath + Resources.Backups + Resources.Linaa;
+            //if it does not exist, then read the developer file
+            if (!System.IO.File.Exists(filePath))
+            {
+                filePath = Application.StartupPath + Resources.DevFiles + Resources.Linaa;
+            }
             Interface.IStore.Read(filePath);
             DataSet set = Interface.Get();
             IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
             //save
-            Interface.IStore.SaveRemote(ref tables, true);
+            Interface.IStore.SaveRemote(ref tables);
 
             Interface.IAdapter.DisposeAdapters();
             //now clone to the USER!!!
