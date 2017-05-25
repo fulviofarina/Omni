@@ -55,7 +55,10 @@ namespace k0X
 
             this.detBox.Items.Clear();
             this.detBox.Items.AddRange(main.DetectorsList);
+
             ROItimer.Enabled = false;
+
+
             peaksDT = new LINAA.PeaksDataTable(false);
             clone = new LINAA.PeaksDataTable(false);
             clone.SymColumn.ReadOnly = false;
@@ -113,7 +116,7 @@ namespace k0X
         public string SetCommand(string cmd, string email)
         {
             executingCmd = true;
-            string msg = string.Empty;
+           
 
             if (cmd.Contains(Properties.Cmds.START)) SpectrumStart();
             else if (cmd.Contains(Properties.Cmds.CLEAR)) SpectrumClear();
@@ -149,6 +152,7 @@ namespace k0X
             timerAux_Tick(timerAux, EventArgs.Empty);
             Application.DoEvents();
 
+            string msg = string.Empty;
             msg += "Exceution of command " + cmd + " completed\nUpdated information about the ";
             string extra = string.Empty;
             if (Rsx.EC.IsNuDelDetch(LSchAcq))
@@ -485,8 +489,8 @@ namespace k0X
                 if (!sample.Equals(string.Empty) && !project.Equals(string.Empty))
                 {
                     //get current sample
-                    int? id = this.Linaa.FindIrrReqID(project);
-                    this.currentSample = this.Linaa.FindBySample(sample, true, id);
+                    int? id = this.Linaa.FindIrradiationID(project);
+                    this.currentSample = this.Linaa.FindSample(sample, true, id);
                     if (!IsNDD(this.currentSample))
                     {
                         this.currentSample.SetDetectorPosition(det, project);
@@ -1108,7 +1112,16 @@ namespace k0X
                                 peak = this.clone.FirstOrDefault(o => !o.Isk0IDNull() && (o.k0ID == k0ID));
                                 if (IsNDD(peak))
                                 {
-                                    peak = this.clone.NewPeaksRow(k0ID, energy, ref this.currentSample, ref this.currentMeas);
+
+                                    LINAA.PeaksRow peakRow = this.clone.NewPeaksRow();
+                                    this.clone.AddPeaksRow(peakRow);
+                                    // peak.Selected = true;
+                                    peak.SetBasic(k0ID, energy);
+                                    // peak.Sym = sym; peak.Iso = iso;
+                                    peak.SetParent(ref currentSample);
+                                    peak.SetParent(ref currentMeas);
+
+                                    //   peak = (this.clone.DataSet as LINAA).NewPeaksRow(k0ID, energy, ref this.currentSample, ref this.currentMeas);
                                 }
 
                                 LINAA.SetROIInfo(ref peak, ref ireader, minUnc, bkgCh, energylow, energyhigh);
@@ -1130,6 +1143,8 @@ namespace k0X
 
             e.Result = parms;
         }
+
+      
 
         protected void CalculateSolCoin(HashSet<double> Fullenergylist)
         {

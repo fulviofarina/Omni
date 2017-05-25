@@ -8,6 +8,17 @@ namespace DB
 {
     public partial class LINAA
     {
+
+        public partial class VialTypeRow
+        {
+
+            public new bool HasErrors()
+            {
+                DataColumn[] colsInE = this.GetColumnsInError();
+                return colsInE.Intersect(this.tableVialType.NonNullables).Count() != 0;
+            }
+
+        }
         partial class VialTypeDataTable
         {
             private IEnumerable<DataColumn> nonNullables;

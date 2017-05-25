@@ -3,117 +3,157 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Rsx;
-using Rsx.Dumb;
 using Rsx.Math;
 
 //using DB.Interfaces;
 
 namespace DB
 {
+    /// <summary>
+    /// THIS IS QUITE CLEAN
+    /// </summary>
     public partial class LINAA : ISamples
     {
-
-        public SubSamplesRow AddSamples(string project, bool monitor = false)
+        //THIS CLASS IS QUITE CLEAN SOME THINGS TO DO
+        public SubSamplesRow AddSamples(ref IrradiationRequestsRow ir, string sampleName = "", bool save = true)
         {
-            LINAA.SubSamplesRow s = null;
-            s = SubSamples.NewSubSamplesRow();
-            SubSamples.AddSubSamplesRow(s);
+            string project = ir.IrradiationCode.Trim().ToUpper();
+            return AddSamples(project, sampleName, save);
+        }
 
-
+        public SubSamplesRow AddSamples(string project, string sampleName = "", bool save = true)
+        {
             IList<SubSamplesRow> list = new List<SubSamplesRow>();
+            SubSamplesRow s = AddSamples(sampleName);
             list.Add(s);
             IEnumerable<SubSamplesRow> samples = list;
-
-            AddSamples(project, ref samples, monitor);
+            AddSamples(project, ref samples);
             return s;
         }
 
-        public int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> samplesToImport, bool monitors = false)
+        public SubSamplesRow AddSamples(string sampleName = "")
         {
-            int added = 0;
-
-            try
-            {
-
-              
-                if (samplesToImport.Count() == 0) return added;
-
-                // bool cd = false;
-                project = project.ToUpper().Trim();
-                int? id = this.FindIrrReqID(project);
-
-                //find the ones that are already here
-                IEnumerable<SubSamplesRow> samplesInTable = SubSamples.OfType<SubSamplesRow>()
-                    .Where(o => o.RowState != DataRowState.Deleted);
-                samplesInTable = samplesInTable.Where(o => !o.IsIrradiationRequestsIDNull() && o.IrradiationRequestsID == id);
-                ///hsamples.un =
-                samplesToImport = samplesToImport.Union(samplesInTable);
-                //hsamples = samples;
-
-                if (monitors) addMonitors(ref samplesToImport, project);
-                else setLabels(ref samplesToImport, project);
-
-                setIrradiatioRequest(ref samplesToImport, (int)id);
-
-                samplesToImport = Changes.GetRowsWithChanges(samplesToImport).OfType<SubSamplesRow>();
-
-                added = samplesToImport.Count();
-
-                Save(ref samplesToImport);
-
-                IEnumerable<UnitRow> units = samplesToImport.Select(o => o.UnitRow).ToArray();
-                Save(ref units);
-              
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);
-            }
-
-            return added;
+            LINAA.SubSamplesRow s = null;
+            s = this.SubSamples.NewSubSamplesRow();
+            s.SetName(sampleName);
+            this.SubSamples.AddSubSamplesRow(s);
+            return s;
         }
 
-        public IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples)
+        public IEnumerable<LINAA.SubSamplesRow> AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> samplesToImport, bool save = true)
+        {
+            // project = project.ToUpper().Trim();
+
+            IrradiationRequestsRow ir = this.FindIrradiationByCode(project);
+
+            samplesToImport = AddSamples(ref ir, ref samplesToImport, save);
+            return samplesToImport;
+        }
+
+        private IEnumerable<SubSamplesRow> AddSamples(ref IrradiationRequestsRow ir, ref IEnumerable<SubSamplesRow> samplesToImport, bool save = true)
+        {
+            IEnumerable<SubSamplesRow> samplesInTable = this.FindSamplesByIrrReqID(ir.IrradiationRequestsID);
+            //join them if any
+            if (samplesToImport != null && samplesToImport.Count() != 0)
+            {
+                samplesToImport = samplesToImport.Union(samplesInTable);
+            }
+            else samplesToImport = samplesInTable;
+
+            string project = ir.GetIrradiationCode();
+            int _lastSampleNr = GetLastSampleNr(ref samplesToImport, project);
+
+            //set irr request BASIC
+            foreach (LINAA.SubSamplesRow s in samplesToImport)
+            {
+                s.SetParent(ref ir);
+            }
+            //set monitors
+            foreach (LINAA.SubSamplesRow s in samplesToImport)
+            {
+                bool attachMon = EC.IsNuDelDetch(s.MonitorsRow);
+                //attach monitor
+                if (attachMon)
+                {
+                    string monName = s.GetMonitorNameFromSampleName();
+                    //find monitor if any
+                    LINAA.MonitorsRow mon = this.FindMonitorByName(monName);
+                    s.SetParent(ref mon);
+                }
+                s.SetName(ref _lastSampleNr);
+            }
+
+            /*
+            //set vials
+            foreach (LINAA.SubSamplesRow s in samplesToImport)
+            {
+                //attach vial
+                bool attachRabbit = (EC.IsNuDelDetch(s.ChCapsuleRow));
+                attachRabbit = attachRabbit && !EC.IsNuDelDetch(s.IrradiationRequestsRow);
+                if (attachRabbit)
+                {
+                    string channel = s.IrradiationRequestsRow.ChannelsRow.ChannelName;
+                    IEnumerable<VialTypeRow> capsules = FindCapsules(channel);
+                    LINAA.VialTypeRow c = capsules.FirstOrDefault();
+                    s.SetParent(ref c);
+
+                //    s.ChCapsuleRow;
+                }
+
+            }
+            */
+
+
+            Save(ref samplesToImport);
+
+            AddUnits(ref samplesToImport);
+
+
+
+
+            return samplesToImport;
+        }
+
+        private int GetLastSampleNr(ref IEnumerable<SubSamplesRow> samplesToImport, string project)
+        {
+            string _projectNr = System.Text.RegularExpressions.Regex.Replace(project, "[a-z]", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            string[] samplesNames = GetSampleNames(ref samplesToImport, _projectNr);
+            int[] _samplesNrs = GetSampleNames(samplesNames);
+            int _lastSampleNr = GetLastSampleNr(_samplesNrs);
+            return _lastSampleNr;
+        }
+
+
+        public void AddUnits(ref IEnumerable<SubSamplesRow> samplesToImport)
+        {
+            foreach (LINAA.SubSamplesRow s in samplesToImport)
+            {
+                //attach unit
+                bool attachUnit = EC.IsNuDelDetch(s.UnitRow);
+                if (attachUnit)
+                {
+                    UnitRow u = this.Unit.NewUnitRow();
+                    this.Unit.AddUnitRow(u);
+                    LINAA.SubSamplesRow sample = s;
+                    u.SetParent(ref sample);
+                 
+                }
+            }
+            IEnumerable<UnitRow> units = samplesToImport.Select(o => o.UnitRow);
+            Save(ref units);
+
+        }
+
+        public IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples, string project, bool salve = true)
         {
             IList<LINAA.SubSamplesRow> ls = new List<SubSamplesRow>();
-            // if (hsamples.Count() == 0) return added;
-
             foreach (string sname in hsamples)
             {
-                LINAA.SubSamplesRow s = this.SubSamples.NewSubSamplesRow();
-                this.SubSamples.AddSubSamplesRow(s);
-                s.SubSampleName = sname;
-
+                SubSamplesRow s = AddSamples(sname);
                 ls.Add(s);
             }
-
-            return ls;
-        }
-
-        public void BeginEndLoadData(bool load)
-        {
-            if (load)
-            {
-                this.Measurements.BeginLoadData();
-                this.Peaks.BeginLoadData();
-                this.Samples.BeginLoadData();
-                this.IRequestsAverages.BeginLoadData();
-                this.IPeakAverages.BeginLoadData();
-                this.SubSamples.BeginLoadData();
-                this.Unit.BeginLoadData();
-            }
-            else
-            {
-                this.Measurements.EndLoadData();
-                this.Peaks.EndLoadData();
-                this.Samples.EndLoadData();
-                this.SubSamples.EndLoadData();
-                this.Unit.EndLoadData();
-                this.IRequestsAverages.EndLoadData();
-                this.IPeakAverages.EndLoadData();
-            }
-
-            populateSelectedExpression(!load);
+            IEnumerable<SubSamplesRow> samps = ls;
+            return AddSamples(project, ref samps, salve);
         }
 
         /// <summary>
@@ -209,26 +249,27 @@ namespace DB
             return table;
         }
 
-        public IEnumerable<SubSamplesRow> FindByIrReqID(int? IrReqID)
+        public MonitorsRow FindMonitorByName(string MonName)
         {
-            IEnumerable<SubSamplesRow> old = null;
-            string IrReqField = this.tableSubSamples.IrradiationRequestsIDColumn.ColumnName;
-            old = this.tableSubSamples.Where(LINAA.SelectorByField<SubSamplesRow>(IrReqID, IrReqField));
-            return old.ToList();
+            string field = this.Monitors.MonNameColumn.ColumnName;
+            return this.Monitors.FirstOrDefault(LINAA.SelectorByField<MonitorsRow>(MonName.Trim().ToUpper(), field));
         }
 
-        public IList<SubSamplesRow> FindByProject(string project)
+        public IEnumerable<SubSamplesRow> FindByProject(string project)
         {
-            IList<SubSamplesRow> old = null;
+            IEnumerable<SubSamplesRow> old = null;
             string cd = DB.Properties.Misc.Cd;
             string IrReqField = this.tableSubSamples.IrradiationCodeColumn.ColumnName;
             project = project.Replace(cd, null);
-            old = this.tableSubSamples.Where(LINAA.SelectorByField<SubSamplesRow>(project, IrReqField)).ToList();
-            IEnumerable<SubSamplesRow> oldCD = this.tableSubSamples.Where(LINAA.SelectorByField<SubSamplesRow>(project + cd, IrReqField));
+            old = this.tableSubSamples
+                .Where(LINAA.SelectorByField<SubSamplesRow>(project, IrReqField))
+                .ToList();
+            IEnumerable<SubSamplesRow> oldCD = this.tableSubSamples
+                .Where(LINAA.SelectorByField<SubSamplesRow>(project + cd, IrReqField));
 
-            old = old.Union(oldCD).ToList();
+            old = old.Union(oldCD);
 
-            return old;
+            return old.ToList();
         }
 
         /// <summary>
@@ -239,18 +280,138 @@ namespace DB
         /// <param name="AddifNull"> true for adding the row if not found</param>
         /// <param name="IrrReqID">  irradiation request id to set for the sample only if added</param>
         /// <returns>A non-null SampleRow if AddIfNull is true, otherwise can be null</returns>
-        public SubSamplesRow FindBySample(string sampleName, bool AddifNull = false, int? IrrReqID = null)
+        public SubSamplesRow FindSample(string sampleName, bool AddifNull = false, int? IrrReqID = null)
         {
-            SubSamplesRow sample = this.findBySampleName(sampleName);
-            if (sample == null)
+            SubSamplesRow sample = FindSample(sampleName);
+
+            if (sample == null && AddifNull)
             {
                 sample = this.tableSubSamples.NewSubSamplesRow();
-                if (IrrReqID != null) sample.IrradiationRequestsID = (int)IrrReqID;
-                sample.SubSampleName = sampleName;
-                sample.SubSampleCreationDate = DateTime.Now;
+                sample.SetIrradiationRequestID(IrrReqID);
                 this.tableSubSamples.AddSubSamplesRow(sample);
             }
+            sample.SetName(sampleName);
+            //  sample.SubSampleName = sampleName;
+            sample.SetCreationDate();
+           
             return sample;
+        }
+
+        private SubSamplesRow FindSample(string sampleName)
+        {
+            string field = this.tableSubSamples.SubSampleNameColumn.ColumnName;
+            string fieldVal = sampleName.Trim().ToUpper();
+            SubSamplesRow sample = this.tableSubSamples
+                .FirstOrDefault(LINAA.SelectorByField<SubSamplesRow>(fieldVal, field));
+            return sample;
+        }
+
+
+        public IEnumerable<VialTypeRow> FindCapsules(string coment)
+        {
+            return this.VialType.Where(o => !o.IsVialTypeRefNull() && o.Comments.ToUpper().Contains(coment));
+        }
+
+        /*
+public IEnumerable<SubSamplesRow> FindSamplesByIrrReqID(int? id)
+{
+   //find the ones that are already here
+   IEnumerable<SubSamplesRow> samplesInTable = SubSamples.OfType<SubSamplesRow>()
+       .Where(o =>!EC.IsNuDelDetch(o));
+   samplesInTable = samplesInTable.Where(o => !o.IsIrradiationRequestsIDNull() && o.IrradiationRequestsID == id);
+   ///hsamples.un =
+   return samplesInTable;
+}
+*/
+
+       
+
+        public int GetLastSampleNr(int[] _samplesNrs)
+        {
+            int _lastSampleNr = 1;
+            // while (!_samplesNrs.Add(_lastSampleNr)) _lastSampleNr++;
+            if (_samplesNrs.Count() != 0)
+            {
+                _lastSampleNr = _samplesNrs.Max() + 1;
+            }
+
+            return _lastSampleNr;
+        }
+
+        private static int[] GetSampleNames(string[] samplesNames)
+        {
+            return samplesNames.Select(o => Convert.ToInt32(o)).ToArray();
+        }
+
+        public  string[] GetSampleNames(ref IEnumerable<SubSamplesRow> samples, string _projectNr)
+        {
+            string[] samplesNames = samples.Where(o => o.MonitorsRow == null)
+                .Where(o => !o.IsSubSampleNameNull())
+                .Select(o => o.SubSampleName).ToArray();
+            samplesNames = samplesNames.Select(o => o.Replace(_projectNr, null))
+            .ToArray();
+            return samplesNames;
+        }
+
+        public IEnumerable<SubSamplesRow> FindSamplesByIrrReqID(int? IrReqID)
+        {
+            IEnumerable<SubSamplesRow> old = null;
+            string IrReqField = this.tableSubSamples.IrradiationRequestsIDColumn.ColumnName;
+            old = this.tableSubSamples
+                .Where(LINAA.SelectorByField<SubSamplesRow>(IrReqID, IrReqField));
+            return old.ToList();
+        }
+
+        public bool Override(String Alpha, String f, String Geo, String Gt, bool asSamples)
+        {
+            foreach (LINAA.SubSamplesRow row in this.tableSubSamples)
+            {
+                row.SetOverride(Alpha, f, Geo, Gt, asSamples);
+            }
+            return this.HasErrors;
+        }
+    }
+
+    public partial class LINAA : ISamples
+    {
+        //
+        public void BeginEndLoadData(bool load)
+        {
+            if (load)
+            {
+                this.Measurements.BeginLoadData();
+                this.Peaks.BeginLoadData();
+                this.Samples.BeginLoadData();
+                this.IRequestsAverages.BeginLoadData();
+                this.IPeakAverages.BeginLoadData();
+                this.SubSamples.BeginLoadData();
+                this.Unit.BeginLoadData();
+            }
+            else
+            {
+                this.Measurements.EndLoadData();
+                this.Peaks.EndLoadData();
+                this.Samples.EndLoadData();
+                this.SubSamples.EndLoadData();
+                this.Unit.EndLoadData();
+                this.IRequestsAverages.EndLoadData();
+                this.IPeakAverages.EndLoadData();
+            }
+
+            populateSelectedExpression(!load);
+        }
+
+        public Action[] PMStd()
+        {
+            Action[] populatorArray = null;
+
+            populatorArray = new Action[]   {
+        PopulateStandards,
+       PopulateMonitors,
+         PopulateMonitorFlags,
+         };
+
+            return populatorArray;
         }
 
         public void PopulatedMonitors(string file)
@@ -261,7 +422,7 @@ namespace DB
 
             foreach (LINAA.MonitorsRow i in importing)
             {
-                LINAA.MonitorsRow l = this.tableMonitors.FindByMonName(i.MonName); //local monitor
+                LINAA.MonitorsRow l = this.FindMonitorByName(i.MonName); //local monitor
                 if (l == null)
                 {
                     l = this.tableMonitors.NewMonitorsRow();
@@ -299,29 +460,6 @@ namespace DB
                     }
                 }
             }
-        }
-
-        public bool Override(String Alpha, String f, String Geo, String Gt, bool asSamples)
-        {
-            foreach (LINAA.SubSamplesRow row in this.tableSubSamples)
-            {
-                row.Override(Alpha, f, Geo, Gt, asSamples);
-            }
-            return this.HasErrors;
-        }
-
-        //
-        public Action[] PMStd()
-        {
-            Action[] populatorArray = null;
-
-            populatorArray = new Action[]   {
-        PopulateStandards,
-       PopulateMonitors,
-         PopulateMonitorFlags,
-         };
-
-            return populatorArray;
         }
 
         public void PopulateMonitorFlags()
@@ -378,43 +516,33 @@ namespace DB
         {
             try
             {
-                // this.tableSubSamples.TableNewRow += new DataTableNewRowEventHandler(this.tableSubSamples.SubSamplesDataTable_TableNewRow);
-
-              
-                //
                 // IN THIS ORDER
-                //
-                //
                 PopulateUnitsByProject(IrReqID);
-
 
                 //2
                 TAM.SubSamplesTableAdapter.DeleteNulls();
                 LINAA.SubSamplesDataTable newsamples = new SubSamplesDataTable();
-                TAM.SubSamplesTableAdapter.FillBy(newsamples, IrReqID);
+                TAM.SubSamplesTableAdapter.FillByID(newsamples, IrReqID);
 
                 /*
-                string uniquefield = newsamples.SubSampleNameColumn.ColumnName;
-                string Indexfield = newsamples.SubSamplesIDColumn.ColumnName;
-                TAMDeleteMethod remov = this.tAM.SubSamplesTableAdapter.Delete;
-                bool duplicates = removeDuplicates(newsamples, uniquefield, Indexfield, ref remov);
+                    string uniquefield = newsamples.SubSampleNameColumn.ColumnName;
+                    string Indexfield = newsamples.SubSamplesIDColumn.ColumnName;
+                    TAMDeleteMethod remov = this.tAM.SubSamplesTableAdapter.Delete;
+                    bool duplicates = removeDuplicates(newsamples, uniquefield, Indexfield, ref remov);
 
-                if (duplicates)
-                {
-                    newsamples.Clear();
-                    newsamples.Dispose();
-                    newsamples = null;
-                    PopulateSubSamples(IrReqID);
-                    return;
-                }
-                */
+                    if (duplicates)
+                    {
+                        newsamples.Clear();
+                        newsamples.Dispose();
+                        newsamples = null;
+                        PopulateSubSamples(IrReqID);
+                        return;
+                    }
+              */
                 this.tableSubSamples.BeginLoadData();
                 this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
-                this.tableSubSamples.EndLoadData();
                 this.tableSubSamples.AcceptChanges();
-
-             
-                // this.tableSubSamples.TableNewRow -= new DataTableNewRowEventHandler(this.tableSubSamples.SubSamplesDataTable_TableNewRow);
+                this.tableSubSamples.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -455,127 +583,6 @@ namespace DB
             Peaks.SelectedColumn.Expression = expression;
         }
 
-        private void addMonitors(ref IEnumerable<LINAA.SubSamplesRow> samples, string project)
-        {
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                if (s.MonitorsRow == null)
-                {
-                    string sampleNrOrMon = s.SubSampleName.ToString().Replace(project.Substring(1), null);
-                    LINAA.MonitorsRow mon = this.Monitors.FindByMonName(sampleNrOrMon);
-                    if (mon != null) s.MonitorsRow = mon;
-                }
-                if (s.VialTypeRow == null && s.IrradiationRequestsRow != null)
-                {
-                    string channel = s.IrradiationRequestsRow.ChannelName;
-                    IEnumerable<VialTypeRow> capsules = this.VialType.Where(o => !o.IsVialTypeRefNull() && o.Comments.ToUpper().Contains(channel));  //the capsule for the channel
-                    if (capsules.Count() != 0)
-                    {
-                        LINAA.VialTypeRow c = capsules.FirstOrDefault();
-                        if (c != null) s.VialTypeRow = c;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Finds the SampleRow with given sample name
-        /// </summary>
-        /// <param name="sampleName">name of sample to find</param>
-        /// <returns>A SampleRow or null</returns>
-        private SubSamplesRow findBySampleName(string sampleName)
-        {
-            string field = this.tableSubSamples.SubSampleNameColumn.ColumnName;
-            string fieldVal = sampleName.Trim().ToUpper();
-            return this.tableSubSamples.FirstOrDefault(LINAA.SelectorByField<SubSamplesRow>(fieldVal, field));
-        }
-
-        /*
-        // private DataColumn[] geometric;
-        private DataColumn[] masses;
-
-        public DataColumn[] Masses
-        {
-            get
-            {
-                if (masses == null)
-                {
-                    masses = new DataColumn[] {
-                 columnGross1,columnGross2 ,columnGrossAvg };
-                }
-
-                return masses;
-            }
-        }
-        */
-        private void setIrradiatioRequest(ref IEnumerable<LINAA.SubSamplesRow> samples, int IrrReqID)
-        {
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                s.IrradiationRequestsID = IrrReqID;
-            }
-        }
-        private void setLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project)
-        {
-            string _projectNr = System.Text.RegularExpressions.Regex.Replace(project, "[a-z]", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-
-            int[] _samplesNrs = null;
-
-            // _samplesNrs = samples.Where(o => o.MonitorsRow == null) .Where(o =>
-            // !o.IsSubSampleNameNull()) .SelectMany(o => o.SubSampleName.Replace(_projectNr, null))
-
-            string[] samplesNames = samples.Where(o => o.MonitorsRow == null)
-                .Where(o => !o.IsSubSampleNameNull())
-                .Select(o => o.SubSampleName).ToArray();
-            samplesNames = samplesNames.Select(o => o.Replace(_projectNr, null))
-            .ToArray();
-
-            _samplesNrs = samplesNames.Select(o => Convert.ToInt32(o)).ToArray();
-
-            int _lastSampleNr = 1;
-            // while (!_samplesNrs.Add(_lastSampleNr)) _lastSampleNr++;
-            if (_samplesNrs.Count() != 0) _lastSampleNr = _samplesNrs.Max() + 1;
-
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                if (s.MonitorsRow == null)
-                {
-                    if (s.IsSubSampleNameNull())
-                    {
-                        if (_lastSampleNr >= 10) s.SubSampleName = _projectNr + _lastSampleNr.ToString();
-                        else s.SubSampleName = _projectNr + "0" + _lastSampleNr.ToString();
-                        _lastSampleNr++;
-                    }
-                    // s.IrradiationCode = project;
-                    EC.CheckNull(this.SubSamples.SubSampleNameColumn, s);
-                }
-                // s.CalcDensity = 0;
-            }
-        }
-
-        private IList<UnitRow> setUnits(ref IEnumerable<LINAA.SubSamplesRow> samples)
-        {
-            IList<UnitRow> list = new List<UnitRow>();
-
-            foreach (LINAA.SubSamplesRow s in samples)
-            {
-                if (s.GetUnitRows().Count() == 0)
-                {
-                    UnitRow u = this.tableUnit.NewUnitRow();
-                    u.ToDo = true;
-                    u.LastCalc = DateTime.Now;
-                    u.LastChanged = DateTime.Now.AddMinutes(1);
-                    u.IrrReqID = s.IrradiationRequestsID;
-                    u.SampleID = s.SubSamplesID;
-                    this.tableUnit.AddUnitRow(u);
-                    ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
-                    u.SetParent(ref c);
-                    list.Add(u);
-                }
-            }
-
-            return list;
-        }
-        // / /
+     
     }
 }

@@ -52,12 +52,12 @@ namespace DB
         /// <summary>
         /// not used
         /// </summary>
-        void SaveSSF();
+       // void SaveSSF();
 
         /// <summary>
         /// not used
         /// </summary>
-        bool SaveSSF(bool offline, string file);
+       // bool SaveSSF(bool offline, string file);
 
         //void LoadMonitorsFile(string file);
         void UpdateIrradiationDates();

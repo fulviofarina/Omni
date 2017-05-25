@@ -560,7 +560,7 @@ namespace DB.UI
                 //add a node for each geometry
 
                 TreeNode tnode = new TreeNode();
-                if (!geo.HasErrors && !geo.MatrixRow.HasErrors)
+                if (!geo.HasErrors && !geo.MatrixRow.HasErrors())
                 {
                     tnode.Text = geo.GeometryName;
                     tnode.ToolTipText = "Matrix: " + geo.MatrixName.Trim() + "\nVial: " + geo.VialTypeRef.Trim();

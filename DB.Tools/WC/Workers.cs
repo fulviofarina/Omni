@@ -416,7 +416,7 @@ namespace DB.Tools
             IList<string> ls = e.Argument as IList<string>;
             SystemException ex = null;
             System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
-            int? id = Interface.IPopulate.IIrradiations.FindIrrReqID(this.Name);
+            int? id = Interface.IPopulate.IIrradiations.FindIrradiationID(this.Name);
           
 
             foreach (string subsample in ls)

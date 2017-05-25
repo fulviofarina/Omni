@@ -10,18 +10,18 @@ namespace DB
 {
     public interface ISamples
     {
-        //   void AddSamples(ref SubSamplesDataTable newsamples);
-        SubSamplesRow AddSamples(string project, bool monitor = false);
-        int AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool monitors = false);
-        IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples);
-     //   MatrixRow AddOrUpdateMatrix(ref MatrixRow toClone, ref SubSamplesRow s, bool add = false);
+        SubSamplesRow AddSamples(ref IrradiationRequestsRow ir,string sampleName = "", bool save = true);
+        SubSamplesRow AddSamples(string project, string sampleName = "", bool save = true);
+        IEnumerable<LINAA.SubSamplesRow> AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool save =true);
+        IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples, string project, bool save = true);
+ 
         DataTable CalculateBranchFactor(ref IPeakAveragesRow daugther, ref IEnumerable<IPeakAveragesRow> references);
         void PopulateUnitsByProject(int irrReqId);
         void PopulatedMonitors(string file);
-        SubSamplesRow FindBySample(string sampleName, bool AddifNull = false, int? IrrReqID = null);
+        SubSamplesRow FindSample(string sampleName, bool AddifNull = false, int? IrrReqID = null);
         void BeginEndLoadData(bool load);
-        IEnumerable<SubSamplesRow> FindByIrReqID(int? IrReqID);
-        IList<SubSamplesRow> FindByProject(string project);
+        IEnumerable<SubSamplesRow> FindSamplesByIrrReqID(int? IrReqID);
+        IEnumerable<SubSamplesRow> FindByProject(string project);
         bool Override(String Alpha, String f, String Geo, String Gt, bool asSamples);
         void PopulateMonitorFlags();
 
@@ -31,10 +31,6 @@ namespace DB
 
         void PopulateSubSamples(Int32 IrReqID);
 
-     //   void setIrradiatioRequest(ref IEnumerable<SubSamplesRow> samples, int IrrReqID);
-
-      //  void SetLabels(ref IEnumerable<SubSamplesRow> samples, string project);
-
-       // IList<UnitRow> setUnits(ref IEnumerable<SubSamplesRow> samples);
+   
     }
 }

@@ -9,21 +9,7 @@ namespace DB
     /// <summary>
     /// IMP{ORTATAAAAAANTE HACER ESTO FINO IMPLEMENTAR
     /// </summary>
-    internal interface IColumn
-    {
-        void DataColumnChanged(object sender, DataColumnChangeEventArgs e);
-
-        IEnumerable<DataColumn> NonNullables
-        {
-            get;
-        }
-    }
-
-    internal interface IRow
-    {
-        void Check(DataColumn Column);
-        void SetParent<T>(ref T rowParent);
-    }
+   
 }
 
 namespace DB
@@ -32,8 +18,13 @@ namespace DB
     {
         partial class ChannelsRow : IRow
         {
-
-            public void SetParent<T>(ref T row)
+            public new bool HasErrors()
+            {
+                DataColumn[] colsInE = this.GetColumnsInError();
+                return colsInE.Intersect(this.tableChannels.NonNullables)
+                    .Count() != 0;
+            }
+            public void SetParent<T>(ref T row, object[] args = null)
             {
                 throw new NotImplementedException();
             }
@@ -52,7 +43,7 @@ namespace DB
                 {
                     if (nu) pEpi = 0.82;
                 }
-                else if (Column == this.tableChannels.pEpiColumn)
+                else if (Column == this.tableChannels.pThColumn)
                 {
                     if (nu) pTh = 0.964;
                 }

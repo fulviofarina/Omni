@@ -13,7 +13,7 @@ namespace DB.UI
     public partial class ucSSContent : UserControl
     {
         private DateTime minDate = DateTime.Now;
-
+        
         public ucSSContent()
         {
             InitializeComponent();

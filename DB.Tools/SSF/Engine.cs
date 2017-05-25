@@ -146,8 +146,8 @@ namespace DB.Tools
 
             UNIT.Clean();
             // 1 CHECK ERRORS
-            bool isOK = UNIT.CheckErrors(); //has Unit errors??
-            isOK = UNIT.SubSamplesRow.CheckUnit() && isOK; //has Sample Errors?
+            bool isOK = UNIT.HasErrors(); //has Unit errors??
+            isOK = UNIT.SubSamplesRow.HasBasicErrors() && isOK; //has Sample Errors?
 
             string inputDataOK = "Input row data is OK for Sample ";
 
@@ -238,14 +238,27 @@ namespace DB.Tools
             Interface.IReport.Speak(msg);
 
             string[] unitsNames = units.Select(o => o.Name).ToArray();
-            foreach (string item in unitsNames)
+            for (int i = 0; i<unitsNames.Count(); i++)
             {
+                string item = unitsNames[i];
+
                 try
                 {
+                 
                     string newMatssfEXEFile = exefile + item + ".exe";
-                    System.IO.File.Copy(startupPath + exefile, startupPath + newMatssfEXEFile, true);
-                    //runAProcess(hide, item, );
-                    Interface.IReport.Msg("Code cloning OK", "Code cloned...");
+                    if (File.Exists(startupPath + item + inPutExt))
+                    {
+                        System.IO.File.Copy(startupPath + exefile, startupPath + newMatssfEXEFile, true);
+                        //runAProcess(hide, item, );
+                        Interface.IReport.Msg("Code cloning OK", "Code cloned...");
+                    }
+                    else
+                    {
+                        //remove from list
+                        units.RemoveAt(i);
+                    }
+
+
                 }
                 catch (Exception ex)
                 {
@@ -255,11 +268,18 @@ namespace DB.Tools
                 }
             }
 
+            //refresh
+            unitsNames = units.Select(o => o.Name).ToArray();
+
+
             foreach (string item in unitsNames)
             {
                 try
                 {
                     RunAProcess(hide, item, exefile + item + ".exe");
+
+
+
                     Interface.IReport.Msg("MatSSF execution OK", "MatSSF Code executed...");
                 }
                 catch (Exception ex)

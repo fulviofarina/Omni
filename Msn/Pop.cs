@@ -14,26 +14,31 @@ namespace Msn
 
         public void Msg(string msg, string title, bool ok)
         {
-            string pre = string.Empty;
+          //  string pre = string.Empty;
             System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
-            if (ok)
+            string pre = "OK";
+            if (!ok)
             {
-                pre = "OK - ";
-                icon = System.Windows.Forms.ToolTipIcon.Info;
+                pre = "=(";
+               
+                
             }
-            else pre = "FAILED - ";
-            pre += title;
+             this.iconic.Image = Notifier.MakeBitMap(pre, seg, Color.White);
 
-            Msg(msg, pre, icon);
+
+            // else pre = "FAILED - ";
+            //  pre += title;
+
+            Msg(msg, title, icon);
         
 
          //   Application.DoEvents();
         }
+        protected Font seg = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
 
         public void ReportProgress(int percentage)
         {
-            Font seg = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
-
+        
             this.iconic.Image = Notifier.MakeBitMap(percentage.ToString() + "%", seg, Color.White);
             //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
 

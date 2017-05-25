@@ -8,20 +8,19 @@ namespace DB
     public partial class LINAA : IIrradiations
     {
 
-        public int? FindIrrReqID(String project)
+        public int? FindIrradiationID(String project)
         {
             int? IrrReqID = null;
 
-            LINAA.IrradiationRequestsRow irr = this.FindByIrradiationCode(project);
+            LINAA.IrradiationRequestsRow irr = this.FindIrradiationByCode(project.Trim().ToUpper());
             if (irr != null) IrrReqID = irr.IrradiationRequestsID;
-
             return IrrReqID;
         }
 
-        public IrradiationRequestsRow FindByIrradiationCode(string project)
+        public IrradiationRequestsRow FindIrradiationByCode(string project)
         {
-            project = project.ToUpper();
-            return this.tableIrradiationRequests.FirstOrDefault(i => i.IrradiationCode.CompareTo(project) == 0);
+            return this.tableIrradiationRequests
+                .FirstOrDefault(i => i.IrradiationCode.CompareTo(project.Trim().ToUpper()) == 0);
         }
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace DB
         public IrradiationRequestsRow AddIrradiation(string project)
         {
             string projetNoCd = project.Trim().ToUpper();
-           
+
             if (projetNoCd.Length > 2)
             {
                 if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(DB.Properties.Misc.Cd) == 0)
@@ -48,9 +47,11 @@ namespace DB
 
             return i;
         }
-     
 
-     
+    }
+    public partial class LINAA : IIrradiations
+    {
+
         public void PopulateChannels()
         {
             try

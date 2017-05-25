@@ -9,6 +9,9 @@ namespace DB
 {
     public partial class LINAA
     {
+        /// <summary>
+        /// Cleaned
+        /// </summary>
         public partial class SubSamplesDataTable
         {
             private DataColumn[] nonNullable;
@@ -21,7 +24,7 @@ namespace DB
                 {
                     if (nonNullable == null)
                     {
-                        nonNullable = new DataColumn[]{columnSubSampleName,
+                        nonNullable = new DataColumn[]{ columnSubSampleName,
                      columnSubSampleCreationDate,columnSubSampleDescription,columnVol,
                      columnFC, columnCapsuleName, columnMatrixName };
                     }
@@ -46,22 +49,24 @@ namespace DB
             public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
 
-                LINAA.SubSamplesRow subs = e.Row as LINAA.SubSamplesRow; //cast
-                if (NonNullable.Contains(e.Column))
+             
+                DataRow row = e.Row;
+                DataColumn column = e.Column;
+
+
+                if (NonNullable.Contains(column))
                 {
-                    EC.CheckNull(e.Column, e.Row);
+                    EC.CheckNull(column, row);
                     return;
                 }
-
-                SSFPrefRow pref = (this.DataSet as LINAA).SSFPref.FirstOrDefault();
-
                 try
                 {
-                    subs.Check(e.Column, pref.CalcMass, pref.AARadius, pref.AAFillHeight, pref.CalcDensity);
+                    LINAA.SubSamplesRow subs = row as LINAA.SubSamplesRow; //cast
+                    subs.Check(column);
                 }
                 catch (SystemException ex)
                 {
-                    EC.SetRowError(e.Row, e.Column, ex);
+                    EC.SetRowError(row, column, ex);
                     (this.DataSet as LINAA).AddException(ex);
                 }
             }

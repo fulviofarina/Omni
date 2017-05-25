@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using Rsx;
 
 namespace DB
 {
@@ -38,9 +39,12 @@ namespace DB
             any = x =>
             {
                 DataRow r = x as DataRow;
-                if (!r.IsNull(field))
+                if (!EC.IsNuDelDetch(r))
                 {
-                    if (r.Field<object>(field).Equals(value)) return true;
+                    if (!r.IsNull(field))
+                    {
+                        if (r.Field<object>(field).Equals(value)) return true;
+                    }
                 }
                 return false;
             };

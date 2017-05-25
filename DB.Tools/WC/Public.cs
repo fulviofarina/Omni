@@ -104,7 +104,7 @@ namespace DB.Tools
                 }
                 if (!uncsOnly) s.RowError = string.Empty;
                 bool GoodOverride = true;
-                if (!uncsOnly) GoodOverride = s.Override(alpha, f, geo, gt, asSamples);
+                if (!uncsOnly) GoodOverride = s.SetOverride(alpha, f, geo, gt, asSamples);
                 if (GoodOverride)
                 {
                     IEnumerable<LINAA.IRequestsAveragesRow> isos = s.GetIRequestsAveragesRows();

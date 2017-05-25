@@ -13,7 +13,7 @@ namespace DB
     public partial class LINAA : IStore
     {
 
-   
+
 
         public bool Save<T>()
         {
@@ -84,7 +84,6 @@ namespace DB
             if (useHandlers)
             {
                 setHandlers(true, ref dt);
-
                 useHandlers = false;
             }
             else
@@ -128,7 +127,7 @@ namespace DB
             bool ok = false;
             try
             {
-                string LIMSPath = folderPath + Resources.Backups+Resources.Linaa;
+                string LIMSPath = folderPath + Resources.Backups + Resources.Linaa;
                 string aux = "." + DateTime.Now.DayOfYear.ToString();
                 string LIMSDayPath = LIMSPath.Replace(".xml", aux + ".xml");
 
@@ -153,13 +152,13 @@ namespace DB
             bool ok = false;
             try
             {
-             
-                    foreach (System.Data.DataTable t in tables)
-                    {
-                        IEnumerable<DataRow> rows = t.AsEnumerable();
-                        Save(ref rows);
-                    }
-                
+
+                foreach (System.Data.DataTable t in tables)
+                {
+                    IEnumerable<DataRow> rows = t.AsEnumerable();
+                    Save(ref rows);
+                }
+
 
                 ok = true;
             }
@@ -170,44 +169,9 @@ namespace DB
             return ok;
         }
 
-        public void SaveSSF()
-        {
-            try
-            {
-                Save<LINAA.MatrixDataTable>();
-                Save<LINAA.VialTypeDataTable>();
-                Save<LINAA.UnitDataTable>();
-                Save<LINAA.ChannelsDataTable>();
-            }
-            catch (SystemException ex)
-            {
-                // Msg(ex.StackTrace, ex.Message);
-                this.AddException(ex);
-            }
-        }
 
-        public bool SaveSSF(bool offline, string file)
-        {
-            bool save = false;
-
-            if (!offline)
-            {
-                SaveSSF();
-            }
-            else
-            {
-                //writes the xml file (Offline)
-                Save(file);
-            }
-
-            save = true;
-
-            return save;
-        }
-
-    
-
-        protected internal void saveOthers<T>(ref IEnumerable<T> rows)
+ 
+        private  void saveOthers<T>(ref IEnumerable<T> rows)
         {
             Type t = rows.First().GetType();
             ///deleted now (2 may 2012)
@@ -218,6 +182,8 @@ namespace DB
             {
                 IEnumerable<SubSamplesRow> samps = schs.Cast<SubSamplesRow>();
                 saveSamples(ref samps);
+              //  IEnumerable<UnitRow> units = samps.SelectMany(o => o.GetUnitRows()).ToArray();//.UnitRow).ToArray();
+              //  saveOthers(ref units);
             }
             else if (t.Equals(typeof(SchAcqsRow))) this.tAM.SchAcqsTableAdapter.Update(schs);
             else if (t.Equals(typeof(OrdersRow))) this.tAM.OrdersTableAdapter.Update(schs);
@@ -299,6 +265,10 @@ namespace DB
                 this.tAM.CompositionsTableAdapter.Update(schs);
                 // string path = folderPath + DB.Properties.Resources.Backups + "Compositions.xml";
                 // this.tableCompositions.AcceptChanges(); this.tableCompositions.WriteXml(path);
+            }
+            else if (t.Equals(typeof(ExceptionsRow)))
+            {
+                SaveExceptions();
             }
             else throw new SystemException("Not implemented. Save<> Method");
         }
@@ -420,7 +390,37 @@ namespace DB
         }
         */
 
-        protected internal void savePeaks(ref IEnumerable<IRequestsAveragesRow> irequests)
+        private  bool savePeaks<T>(ref IEnumerable<T> rows)
+        {
+            bool wasPeaks = false;
+            Type t = typeof(T);
+
+            if (t.Equals(typeof(IPeakAveragesRow)))
+            {
+                IEnumerable<IPeakAveragesRow> ipeaks = rows.Cast<IPeakAveragesRow>();
+                this.savePeaksAvg(ref ipeaks);
+                wasPeaks = true;
+            }
+            else if (t.Equals(typeof(IRequestsAveragesRow)))
+            {
+                IEnumerable<IRequestsAveragesRow> ires = rows.Cast<IRequestsAveragesRow>();
+                this.savePeaksIrrAvg(ref ires);
+                wasPeaks = true;
+            }
+            else if (t.Equals(typeof(PeaksRow)))
+            {
+                IEnumerable<PeaksRow> peaks = rows.Cast<PeaksRow>();
+                this.savePeaksRow(ref peaks);
+                wasPeaks = true;
+            }
+
+            return wasPeaks;
+        }
+    }
+    public partial class LINAA
+    {
+
+        protected internal void savePeaksIrrAvg(ref IEnumerable<IRequestsAveragesRow> irequests)
         {
             LINAATableAdapters.IRequestsAveragesTableAdapter ta = new LINAATableAdapters.IRequestsAveragesTableAdapter();
 
@@ -469,7 +469,7 @@ namespace DB
             ta = null;
         }
 
-        protected internal void savePeaks(ref IEnumerable<IPeakAveragesRow> iavgs)
+        protected internal void savePeaksAvg(ref IEnumerable<IPeakAveragesRow> iavgs)
         {
             LINAATableAdapters.IPeakAveragesTableAdapter ta = new LINAATableAdapters.IPeakAveragesTableAdapter();
             try
@@ -517,7 +517,7 @@ namespace DB
             ta = null;
         }
 
-        protected internal void savePeaks(ref IEnumerable<PeaksRow> peaks)
+        protected internal void savePeaksRow(ref IEnumerable<PeaksRow> peaks)
         {
             LINAATableAdapters.PeaksTableAdapter ta = new LINAATableAdapters.PeaksTableAdapter();
 
@@ -564,33 +564,30 @@ namespace DB
             ta = null;
         }
 
-        protected internal bool savePeaks<T>(ref IEnumerable<T> rows)
+        protected internal void saveSamples(ref IEnumerable<SubSamplesRow> samps)
         {
-            bool wasPeaks = false;
-            Type t = typeof(T);
+          //  LINAATableAdapters.SubSamplesTableAdapter ta = new LINAATableAdapters.SubSamplesTableAdapter();
 
-            if (t.Equals(typeof(IPeakAveragesRow)))
+            try
             {
-                IEnumerable<IPeakAveragesRow> ipeaks = rows.Cast<IPeakAveragesRow>();
-                this.savePeaks(ref ipeaks);
-                wasPeaks = true;
+
+             //   SubSamples.EndLoadData();
+
+                TAM.SubSamplesTableAdapter.Update(samps.ToArray());
+
+              
+
             }
-            else if (t.Equals(typeof(IRequestsAveragesRow)))
+            catch (SystemException ex)
             {
-                IEnumerable<IRequestsAveragesRow> ires = rows.Cast<IRequestsAveragesRow>();
-                this.savePeaks(ref ires);
-                wasPeaks = true;
-            }
-            else if (t.Equals(typeof(PeaksRow)))
-            {
-                IEnumerable<PeaksRow> peaks = rows.Cast<PeaksRow>();
-                this.savePeaks(ref peaks);
-                wasPeaks = true;
+                this.AddException(ex);
             }
 
-            return wasPeaks;
+          //  ta.Dispose();
+          //  ta = null;
         }
 
+        /*
         protected internal void saveSamples(ref IEnumerable<SubSamplesRow> samps)
         {
             LINAATableAdapters.SubSamplesTableAdapter ta = new LINAATableAdapters.SubSamplesTableAdapter();
@@ -677,5 +674,8 @@ namespace DB
             ta.Dispose();
             ta = null;
         }
+
+
+        */
     }
 }

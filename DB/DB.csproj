@@ -96,16 +96,21 @@
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\DB.cs" />
+    <Compile Include="DB\Geometry\NAA.Geometry.Row.cs" />
+    <Compile Include="DB\Geometry\NAA.Matrix.Row.cs" />
     <Compile Include="DB\NAA.Exceptions.cs" />
+    <Compile Include="DB\Samples\NAA.Measurements.Row.cs" />
+    <Compile Include="DB\Samples\NAA.MonitorsRow..cs" />
+    <Compile Include="DB\Samples\NAA.Samples.Row.Internal.cs" />
     <Compile Include="DB\Samples\NAA.Samples.Row.cs" />
-    <Compile Include="LINAA.cs">
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="DB\Samples\NAA.Units.Row.cs" />
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Populate\Interfaces\IColumn.cs" />
+    <Compile Include="Populate\Interfaces\IRow.cs" />
     <Compile Include="Populate\Interfaces\IIrradiations.cs" />
     <Compile Include="Populate\Interfaces\IProjects.cs" />
     <Compile Include="Populate\Interfaces\IOrders.cs" />
@@ -122,7 +127,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Samples\Interfaces\ISampleRow.cs" />
     <Compile Include="Store\IStore.cs" />
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>

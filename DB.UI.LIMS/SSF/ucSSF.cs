@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -36,6 +37,25 @@ namespace DB.UI
 
                     projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel1;
+
+                    //  BindingList<int> list = new BindingList<int>();
+                    // list.Add(Interface.IBS.SubSamples.Count );
+
+                    //  cancelBtn.DataBindings.Add(new Binding("Enabled", list, string.Empty));
+
+                    //PRUEBA
+                    /*
+                    BindingList<Notif> list = new BindingList<Notif>();
+                    list.Add(new Notif(ref Interface) { bsActive = true });
+
+                    Binding b0 = new Binding("Enabled", list,"bsActive");
+                    Binding b1 = new Binding("Enabled", list, "bsActive");
+                    Binding b2 = new Binding("Enabled", list, string.Empty);
+                    Binding b3 = new Binding("Enabled", list, string.Empty);
+                    cancelBtn.DataBindings.Add(b0);
+                    this.CalcBtn.DataBindings.Add(b1);
+                   */
+
                     projBox.CallBack += delegate
                     {
                         refreshProject();
@@ -80,8 +100,10 @@ namespace DB.UI
                 else
                 {
 
-                 
-               
+                  
+
+
+
                     ucSSFControl.AttachCtrl(ref pro);
                     ucUnit.AttachCtrl(ref pro);
                  
@@ -94,13 +116,41 @@ namespace DB.UI
                 Interface.IStore.AddException(ex);
             }
         }
+        /*
+        [LookupBindingProperties]
+        public class Notif
+        {
+            protected Interface Interface;
 
+
+            public Notif(ref Interface inter)
+            {
+                Interface = inter;
+            }
+            
+            public bool bsActive
+            {
+
+                get
+                {
+                    return Interface.IBS.SubSamples.Count != 0;
+                }
+                set
+                {
+
+                    
+                }
+            }
+        }
+        */
         private void refreshProject()
         {
+
             bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
             this.CalcBtn.Enabled = ThereIsData;
             this.CalcBtn.Visible = ThereIsData;
             this.cancelBtn.Visible = ThereIsData;
+
             ucSSFControl.Disabler(ThereIsData);
             ucUnit.PaintRows();
         

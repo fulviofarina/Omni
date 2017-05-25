@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using static DB.LINAA;
@@ -15,47 +13,47 @@ namespace DB.Tools
     {
         public BindingSource Channels;
 
-        /// <summary>
-        /// Selected only
-        /// </summary>
-        public BindingSource SelectedChannel;
+        public BindingSource Compositions;
 
         public BindingSource Geometry;
 
         public BindingSource Irradiations;
 
         public BindingSource Matrix;
-        public BindingSource Compositions;
-
-        /// <summary>
-        /// Selected only
-        /// </summary>
-        public BindingSource SelectedIrradiation;
-
-        public BindingSource Projects;
-        public BindingSource Orders;
 
         public BindingSource Monitors;
 
         public BindingSource MonitorsFlags;
 
+        public BindingSource Orders;
+
         public BindingSource Preferences;
+
+        public BindingSource Projects;
 
         public BindingSource Rabbit;
 
         public BindingSource Samples;
+
+        /// <summary>
+        /// Selected only
+        /// </summary>
+        public BindingSource SelectedChannel;
         public BindingSource SelectedCompositions;
 
         /// <summary>
         /// Selected only
         /// </summary>
-        public BindingSource SelectedSubSample;
-
+        public BindingSource SelectedIrradiation;
         /// <summary>
         /// Selected only
         /// </summary>
         public BindingSource SelectedMatrix;
 
+        /// <summary>
+        /// Selected only
+        /// </summary>
+        public BindingSource SelectedSubSample;
         public BindingSource SSF;
 
         public BindingSource SSFPreferences;
@@ -68,6 +66,10 @@ namespace DB.Tools
         public BindingSource Units;
 
         public BindingSource Vial;
+
+        protected Hashtable bindings;
+
+       
 
         /// <summary>
         /// Applies the Binding Source default filters
@@ -116,13 +118,94 @@ namespace DB.Tools
             Matrix.Sort = "MatrixID desc";
         }
 
-        public void SuspendBindings()
+        private void checkCompulsoryErrors<T>(T r)
+        {
+            if (Rsx.EC.IsNuDelDetch(r as DataRow)) return;
+            DataRow row = r as DataRow;
+            if (row.HasErrors)
+            {
+                bool? seriousCellsWithErrors = !aChecker?.Invoke();
+                // if (row.GetColumnsInError())
+                if (seriousCellsWithErrors != null && (bool)seriousCellsWithErrors)
+                {
+                    Interface.IReport.Msg(ROW_WITH_ERROR, "Warning", false); ///cannot process because it has errors
+                }
+            }
+            else
+            {
+                Interface.IReport.Msg(ROW_OK, "Checked!", true); ///cannot process because it has errors
+
+            }
+
+            aChecker = null;
+        }
+
+        public void Checker<T>(T r)
+        {
+            Type tipo = typeof(T);
+
+            bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
+            bool isUnit = tipo.Equals(typeof(UnitRow));
+            bool isMatrix = tipo.Equals(typeof(MatrixRow));
+            //to check later the columns that should be ok
+
+            aChecker = null;
+            // Action Checker = null; DataColumn[] columnsThatShouldBeOk = null;
+            if (isSubSample)
+            {
+                SubSamplesRow s = r as SubSamplesRow;
+                aChecker += s.HasBasicErrors;
+                aChecker += s.UnitRow.HasErrors;
+            }
+            else if (isUnit)
+            {
+                UnitRow u = r as UnitRow;
+                aChecker += u.HasErrors;
+                aChecker += u.SubSamplesRow.HasBasicErrors;
+            }
+            else if (isMatrix)
+            {
+                MatrixRow m = r as MatrixRow;
+                aChecker += m.HasErrors;
+                //     aChecker+= m.Check;
+                //
+                //updateMatrix(r, doCascade, findItself, selectedBS);
+            }
+            else if (tipo.Equals(typeof(VialTypeRow)))
+            {
+                //
+                VialTypeRow v = r as VialTypeRow;
+                aChecker += v.HasErrors;
+                // updateVialRabbit(r, doCascade, findItself);
+            }
+            else if (tipo.Equals(typeof(ChannelsRow)))
+            {
+                ChannelsRow c = r as ChannelsRow;
+                aChecker += c.HasErrors;
+
+                // updateChannel(r, doCascade, findItself);
+            }
+            else if (tipo.Equals(typeof(IrradiationRequestsRow)))
+            {
+                //
+                IrradiationRequestsRow i = r as IrradiationRequestsRow;
+                aChecker += i.HasErrors;
+                // updateIrradiationRequest(r, doCascade, findItself);
+            }
+            //now check the errors!!!
+            checkCompulsoryErrors(r);
+        }
+
+        /// <summary>
+        /// EndEdit for each binding source
+        /// </summary>
+        public void EndEdit()
         {
             foreach (BindingSource b in bindings.Values)
             {
                 try
                 {
-                    b.SuspendBinding();
+                    b.EndEdit();
                 }
                 catch (Exception ex)
                 {
@@ -146,16 +229,48 @@ namespace DB.Tools
             }
         }
 
-        /// <summary>
-        /// EndEdit for each binding source
-        /// </summary>
-        public void EndEdit()
+        public void StartBinding()
+        {
+         
+            SSFPreferences.ListChanged += listChanged_Preferences;
+            Preferences.ListChanged += listChanged_Preferences;
+
+
+            SubSamples.CurrentChanged += currentChanged;
+            Channels.CurrentChanged += currentChanged;
+            Irradiations.CurrentChanged += currentChanged;
+            Matrix.CurrentChanged += currentChanged;
+            Vial.CurrentChanged += currentChanged;
+            Rabbit.CurrentChanged += currentChanged;
+
+
+
+            SelectedMatrix.CurrentChanged += currentChanged;
+
+
+            Matrix.AddingNew += addingNew;
+            Channels.AddingNew += addingNew;
+            Rabbit.AddingNew += addingNew;
+            Vial.AddingNew += addingNew;
+            Irradiations.AddingNew += addingNew;
+            SubSamples.AddingNew += addingNew;
+
+         
+            // SelectedMatrix.AddingNew += addingNew;
+
+            
+            // Vial.ListChanged += listChanged_RabbitVial; .. Channels.ListChanged += listChanged_Channels;
+
+           
+        }
+
+        public void SuspendBindings()
         {
             foreach (BindingSource b in bindings.Values)
             {
                 try
                 {
-                    b.EndEdit();
+                    b.SuspendBinding();
                 }
                 catch (Exception ex)
                 {
@@ -163,7 +278,6 @@ namespace DB.Tools
                 }
             }
         }
-
         /// <summary>
         /// Updates the binding sources positions!!!
         /// </summary>
@@ -173,7 +287,6 @@ namespace DB.Tools
         public void Update<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
         {
             Type tipo = typeof(T);
-            //
 
             bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
             bool isUnit = tipo.Equals(typeof(UnitRow));
@@ -184,13 +297,15 @@ namespace DB.Tools
             if (isSubSample)
             {
                 //take columns that should be ok
-                // columnsThatShouldBeOk = Interface.IDB.SubSamples.NonNullableUnit;
                 updateSubSample(r, doCascade, findItself);
             }
             else if (isUnit)
             {
                 // columnsThatShouldBeOk = Interface.IDB.Unit.Changeables;
                 updateUnit(r, doCascade, findItself);
+
+                //the checker Method
+                //       aChecker += s.CheckErrors;
             }
             else if (isMatrix)
             {
@@ -212,59 +327,14 @@ namespace DB.Tools
                 //
                 updateIrradiationRequest(r, doCascade, findItself);
             }
+
+            Checker(r);
             //now check the errors!!!
-            //   if (columnsThatShouldBeOk == null) return;
-            if (Rsx.EC.IsNuDelDetch(r as DataRow)) return;
-            DataRow row = r as DataRow;
-            if (row.HasErrors)
-            {
-                bool? seriousCellsWithErrors = !aChecker?.Invoke();
-                // if (row.GetColumnsInError())
-                if (seriousCellsWithErrors != null && (bool)seriousCellsWithErrors)
-                {
-                    Interface.IReport.Msg(ROW_WITH_ERROR, "Warning", false); ///cannot process because it has errors
-                }
-            }
+            //   CheckCompulsoryErrors(r);
         }
-
-        public void StartBinding()
-        {
-            SubSamples.CurrentChanged += currentChanged_SubSamples;
-            SSFPreferences.ListChanged += listChanged_Preferences;
-            Preferences.ListChanged += listChanged_Preferences;
-
-            Channels.CurrentChanged += currentChanged_Channels;
-            Channels.AddingNew += addingNew;
-
-            Irradiations.CurrentChanged += currentChanged_Irradiations;
-
-
-            Matrix.CurrentChanged += currentChanged_Matrix;
-            Matrix.AddingNew += addingNew;
-
-            SelectedMatrix.CurrentChanged += currentChanged_Matrix;
-            SelectedMatrix.AddingNew += addingNew;
-
-          
-
-            Rabbit.AddingNew += addingNew;
-        //    Vial.ListChanged += listChanged_RabbitVial;
-            //  ..  Channels.ListChanged += listChanged_Channels;
-         
-            Vial.AddingNew += addingNew;
-
-
-            SubSamples.AddingNew += addingNew;
-        }
-
-     
-
         public BindingSources()
         {
         }
-
-        protected Hashtable bindings;
-
         /// <summary>
         /// A Binding source for each table
         /// </summary>
@@ -351,11 +421,21 @@ namespace DB.Tools
             SSF = new BindingSource(set, name);
             bindings.Add(name, SSF);
 
-            name = Interface.IDB.Channels.TableName;
+            SelectedBindingSources();
+
+            // Units.ListChanged += units_ListChanged;
+        }
+
+        private void SelectedBindingSources()
+        {
+
+            LINAA set = Interface.Get();
+
+            string name = Interface.IDB.Channels.TableName;
             SelectedChannel = new BindingSource(set, name);
             bindings.Add("Selected" + name, SelectedChannel);
 
-            name = inter.IDB.Compositions.TableName;
+            name = Interface.IDB.Compositions.TableName;
             SelectedCompositions = new BindingSource(set, name);
             bindings.Add("Selected" + name, SelectedCompositions);
             name = Interface.IDB.Matrix.TableName;
@@ -370,8 +450,7 @@ namespace DB.Tools
             name = Interface.IDB.IrradiationRequests.TableName;
             SelectedIrradiation = new BindingSource(set, name);
             bindings.Add("Selected" + name, Irradiations);
-
-            // Units.ListChanged += units_ListChanged;
+           
         }
     }
 }

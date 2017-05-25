@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Data;
+using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
-        partial class PeaksRow
+
+        partial class PeaksRow : IRow
         {
             public double UncSq = 0;
             public double w = 0;
@@ -13,36 +16,46 @@ namespace DB
             public double wX2 = 0;
 
             public int ETAInMin = 0;
-        }
 
-        partial class PeaksDataTable
-        {
-            public LINAA.PeaksRow NewPeaksRow(Int32 k0Id, double energy, ref SubSamplesRow s, ref MeasurementsRow m)
+            public void SetBasic(int k0ID, double energy)
             {
-                LINAA.PeaksRow peak = this.NewPeaksRow();
-                this.AddPeaksRow(peak);
-                //  peak.Selected = true;
-                peak.Ready = false;
-                peak.ID = k0Id;
-                peak.Energy = energy;
-                //	peak.Sym = sym;
-                //	peak.Iso = iso;
-
-                if (!Rsx.EC.IsNuDelDetch(s))
-                {
-                    peak.IrradiationID = s.IrradiationRequestsID;
-                    peak.SampleID = s.SubSamplesID;
-                }
-                if (!Rsx.EC.IsNuDelDetch(m))
-                {
-                    peak.MeasurementID = m.MeasurementID;
-                    //  peak.Measurement = m.Measurement;
-                }
-
-                return peak;
+                Ready = false;
+                ID = k0ID;
+                Energy = energy;
             }
 
+            public void Check(DataColumn Column)
+            {
+                throw new NotImplementedException();
+            }
 
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                Type t = typeof(T);
+                if (!EC.IsNuDelDetch(rowParent as DataRow)) return;
+                if (t.Equals(typeof(SubSamplesRow)))
+                {
+                    SubSamplesRow s = rowParent as SubSamplesRow;
+                    IrradiationID = s.IrradiationRequestsID;
+                    SampleID = s.SubSamplesID;
+
+                    // peak.Measurement = m.Measurement;
+
+                    // MatrixRow = rowParent as MatrixRow;
+                }
+                else if (t.Equals(typeof(MeasurementsRow)))
+                {
+                    MeasurementsRow m = rowParent as MeasurementsRow;
+                    MeasurementID = m.MeasurementID;
+                    // VialTypeRow = rowParent as VialTypeRow;
+                }
+              
+                else throw new NotImplementedException();
+
+                // throw new NotImplementedException();
+            }
         }
+
+      
     }
 }

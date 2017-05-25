@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Creator\Creator.SQL.cs" />
     <Compile Include="Creator\Creator.Public.cs" />
+    <Compile Include="Interface\BS\BindingSources.Update.cs" />
     <Compile Include="Interface\BS\BindingSources.Public.cs" />
     <Compile Include="Interface\BS\BindingSources.cs" />
     <Compile Include="Interface\Current\Current.Public.cs" />

@@ -2,26 +2,76 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using System.Text.RegularExpressions;
+using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
-
-        protected internal void handlersIrradiations()
+        public partial class IrradiationRequestsRow
         {
-            handlers.Add(Channels.DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Channels));
+            public new bool HasErrors()
+            {
+                DataColumn[] colsInE = this.GetColumnsInError();
+                return colsInE.Intersect(this.tableIrradiationRequests.NonNullables)
+                    .Count() != 0;
+            }
 
-            handlers.Add(IrradiationRequests.DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(IrradiationRequests));
+            protected internal LINAA db
+            {
+                get
+                {
+                    return this.Table.DataSet as LINAA;
+                }
+            }
+
+            protected string _projectNr
+            {
+                get
+                {
+                    return Regex.Replace(IrradiationCode, "[a-z]", String.Empty, RegexOptions.IgnoreCase);
+                }
+            }
+
+            public void Check(DataColumn column)
+            {
+                bool nu = EC.CheckNull(column, this);
+                if (column == this.tableIrradiationRequests.IrradiationCodeColumn && !nu)
+                {
+                    SetChannel();
+                }
+            }
+
+            internal ChannelsRow GetChannel()
+            {
+                ChannelsRow ch = null;
+                if (!_projectNr.Equals(string.Empty))
+                {
+                    string code = IrradiationCode.Replace(_projectNr, null);
+                    ch = db.Channels.FirstOrDefault(o => o.IrReqCode.ToUpper().CompareTo(code) == 0);
+                }
+
+                return ch;
+            }
+
+            internal string GetIrradiationCode()
+            {
+                string code = string.Empty;
+                if (!IsIrradiationCodeNull()) return IrradiationCode.Trim().ToUpper();
+                else return code;
+            }
+            internal void SetChannel()
+            {
+                if (EC.IsNuDelDetch(ChannelsRow))
+                {
+                    ChannelsRow = GetChannel();
+                }
+            }
         }
 
         partial class IrradiationRequestsDataTable
         {
-        
-
             private IEnumerable<DataColumn> nonNullables;
 
             public IEnumerable<DataColumn> NonNullables
@@ -43,28 +93,24 @@ namespace DB
                     IrradiationRequestsRow r = e.Row as IrradiationRequestsRow;
                     if (NonNullables.Contains(e.Column))
                     {
-                        bool nu = EC.CheckNull(e.Column, e.Row);
-                        if (e.Column == this.columnIrradiationCode && !nu)
-                        {
-                            r.Number = Convert.ToInt32(r.IrradiationCode.Substring(r.IrradiationCode.Length - 2));
-                            if (r.ChannelsRow == null)
-                            {
-                                string _projectNr = System.Text.RegularExpressions.Regex.Replace(r.IrradiationCode, "[a-z]", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-                                if (!_projectNr.Equals(string.Empty))
-                                {
-                                    string code = r.IrradiationCode.Replace(_projectNr, null);
-                                    r.ChannelsRow = (this.DataSet as LINAA).Channels.FirstOrDefault(o => o.IrReqCode.ToUpper().CompareTo(code) == 0);
-                                }
-                            }
-                        }
-                        // return;
+                        r.Check(e.Column);
                     }
                 }
                 catch (SystemException ex)
                 {
-                    e.Row.SetColumnError(e.Column, ex.Message);
+                    (this.DataSet as LINAA).AddException(ex);
+                    EC.SetRowError(e.Row, e.Column, ex);
                 }
             }
+        }
+
+        protected internal void handlersIrradiations()
+        {
+            handlers.Add(Channels.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Channels));
+
+            handlers.Add(IrradiationRequests.DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(IrradiationRequests));
         }
     }
 }

@@ -33,6 +33,7 @@ namespace DB.UI
             {
                bs = Interface.IBS.SelectedMatrix;
                 matrixDGV.RowHeadersVisible = false;
+                MatrixBN.Visible = false;
             }
             else
             {

@@ -35,20 +35,20 @@
             this.inputTLP = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.descriplbl = new System.Windows.Forms.ToolStripLabel();
+            this.descripBox = new System.Windows.Forms.ToolStripComboBox();
             this.infoTS = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.unitSC = new System.Windows.Forms.SplitContainer();
             this.nameToolStrip = new System.Windows.Forms.ToolStrip();
             this.SampleLBL = new System.Windows.Forms.ToolStripLabel();
+            this.nameB = new System.Windows.Forms.ToolStripComboBox();
             this.barTLP = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
             this.sampleCompoLbl = new System.Windows.Forms.ToolStripLabel();
-            this.TwoSectionSC = new System.Windows.Forms.SplitContainer();
             this.imgBtn = new System.Windows.Forms.ToolStripButton();
+            this.TwoSectionSC = new System.Windows.Forms.SplitContainer();
             this.ucNS = new DB.UI.ucSSFControlNS();
             this.ucSubMS = new DB.UI.ucMatrixSimple();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.nameB = new System.Windows.Forms.ToolStripComboBox();
-            this.descripBox = new System.Windows.Forms.ToolStripComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UnitSSFSC)).BeginInit();
@@ -157,6 +157,14 @@
             this.descriplbl.Text = "Description";
             this.descriplbl.ToolTipText = "Provide some description for the sample";
             // 
+            // descripBox
+            // 
+            this.descripBox.BackColor = System.Drawing.Color.DimGray;
+            this.descripBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descripBox.ForeColor = System.Drawing.Color.Lime;
+            this.descripBox.Name = "descripBox";
+            this.descripBox.Size = new System.Drawing.Size(520, 33);
+            // 
             // infoTS
             // 
             this.infoTS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -175,6 +183,14 @@
             this.infoTS.Size = new System.Drawing.Size(702, 37);
             this.infoTS.TabIndex = 14;
             this.infoTS.Text = "toolStrip2";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.AutoToolTip = true;
+            this.toolStripLabel1.ForeColor = System.Drawing.Color.Violet;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(201, 34);
+            this.toolStripLabel1.Text = "Run-time Information";
             // 
             // unitSC
             // 
@@ -218,6 +234,15 @@
             this.SampleLBL.Text = "Sample";
             this.SampleLBL.ToolTipText = "Name automatically generated, but you can change it";
             // 
+            // nameB
+            // 
+            this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameB.ForeColor = System.Drawing.Color.White;
+            this.nameB.Margin = new System.Windows.Forms.Padding(30, 0, 1, 0);
+            this.nameB.Name = "nameB";
+            this.nameB.Size = new System.Drawing.Size(230, 33);
+            // 
             // barTLP
             // 
             this.barTLP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -237,7 +262,7 @@
             // 
             // toolStrip7
             // 
-            this.toolStrip7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStrip7.BackColor = System.Drawing.Color.Transparent;
             this.toolStrip7.CanOverflow = false;
             this.toolStrip7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip7.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -257,12 +282,27 @@
             // 
             this.sampleCompoLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.sampleCompoLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sampleCompoLbl.ForeColor = System.Drawing.Color.Cyan;
-            this.sampleCompoLbl.Margin = new System.Windows.Forms.Padding(1, 1, 2, 2);
+            this.sampleCompoLbl.ForeColor = System.Drawing.Color.Fuchsia;
+            this.sampleCompoLbl.IsLink = true;
+            this.sampleCompoLbl.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
+            this.sampleCompoLbl.LinkColor = System.Drawing.Color.Fuchsia;
+            this.sampleCompoLbl.Margin = new System.Windows.Forms.Padding(1, 1, 250, 2);
             this.sampleCompoLbl.Name = "sampleCompoLbl";
             this.sampleCompoLbl.Size = new System.Drawing.Size(193, 25);
             this.sampleCompoLbl.Text = "COMPOSITION VIEW";
             this.sampleCompoLbl.ToolTipText = "Click here to change the sample View";
+            this.sampleCompoLbl.VisitedLinkColor = System.Drawing.Color.Fuchsia;
+            // 
+            // imgBtn
+            // 
+            this.imgBtn.AutoToolTip = false;
+            this.imgBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.imgBtn.Image = global::DB.UI.Properties.Resources.Matrices;
+            this.imgBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.imgBtn.Name = "imgBtn";
+            this.imgBtn.Size = new System.Drawing.Size(23, 25);
+            this.imgBtn.Text = "toolStripButton1";
+            this.imgBtn.ToolTipText = "Click here to change the sample View";
             // 
             // TwoSectionSC
             // 
@@ -280,17 +320,6 @@
             this.TwoSectionSC.Size = new System.Drawing.Size(690, 550);
             this.TwoSectionSC.SplitterDistance = 336;
             this.TwoSectionSC.TabIndex = 14;
-            // 
-            // imgBtn
-            // 
-            this.imgBtn.AutoToolTip = false;
-            this.imgBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.imgBtn.Image = global::DB.UI.Properties.Resources.Matrices;
-            this.imgBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.imgBtn.Name = "imgBtn";
-            this.imgBtn.Size = new System.Drawing.Size(23, 25);
-            this.imgBtn.Text = "toolStripButton1";
-            this.imgBtn.ToolTipText = "Click here to change the sample View";
             // 
             // ucNS
             // 
@@ -310,31 +339,6 @@
             this.ucSubMS.Name = "ucSubMS";
             this.ucSubMS.Size = new System.Drawing.Size(350, 550);
             this.ucSubMS.TabIndex = 0;
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.AutoToolTip = true;
-            this.toolStripLabel1.ForeColor = System.Drawing.Color.Violet;
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(201, 34);
-            this.toolStripLabel1.Text = "Run-time Information";
-            // 
-            // nameB
-            // 
-            this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameB.ForeColor = System.Drawing.Color.White;
-            this.nameB.Margin = new System.Windows.Forms.Padding(30, 0, 1, 0);
-            this.nameB.Name = "nameB";
-            this.nameB.Size = new System.Drawing.Size(230, 33);
-            // 
-            // descripBox
-            // 
-            this.descripBox.BackColor = System.Drawing.Color.DimGray;
-            this.descripBox.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descripBox.ForeColor = System.Drawing.Color.Lime;
-            this.descripBox.Name = "descripBox";
-            this.descripBox.Size = new System.Drawing.Size(520, 33);
             // 
             // ucSSFData
             // 

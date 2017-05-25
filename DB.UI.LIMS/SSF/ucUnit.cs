@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DB.Tools;
 using Rsx.Dumb;
 using System.Drawing;
+using static DB.LINAA;
 
 namespace DB.UI
 {
@@ -26,30 +27,39 @@ namespace DB.UI
 
             try
             {
-                DataGridView dgv = sender as DataGridView;
-                if (dgv.RowCount == 0)
-                {
-                    Interface.IReport.Msg("No Rows found in the DataGridView", "Error", false); //report
-                    return;
-                }
-                DataRow row = Caster.Cast<DataRow>(dgv.Rows[e.RowIndex]);
+                int rowInder = e.RowIndex;
+
+                DataRow row = GetDRFromDataGridView(sender, rowInder);
+                if (row == null) return;
 
               
-                bool isUnuit = row.GetType().Equals(typeof(LINAA.UnitRow));
-                LINAA.UnitRow unit = null;
-                if (isUnuit && lastIndex != e.RowIndex)
+                bool isUnuit = row.GetType().Equals(typeof(UnitRow));
+                UnitRow unit = null;
+                if (isUnuit && lastIndex != rowInder)
                 {
                     //so it does not select and reselect everytime;
-                    lastIndex = e.RowIndex;
-                    unit = row as LINAA.UnitRow;
-                    Interface.IBS.Update<LINAA.SubSamplesRow>(unit?.SubSamplesRow, false, true);
+                    lastIndex = rowInder;
+                    unit = row as UnitRow;
+                    SubSamplesRow s = unit.SubSamplesRow;
+                   
+                    Interface.IBS.Update(s, false, true);
+
+                  //  bool isOkUnit = s.CheckUnit();
+
+                   // string samplesOK = "Sample values updated with the Template item", "Updated!";
+
                 }
                 else
                 {
-                    unit = Interface.ICurrent.Unit as LINAA.UnitRow; 
+                    //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
+                    unit = Interface.ICurrent.Unit as UnitRow; 
                     unit.SetParent(ref row);
-                    Interface.IReport.Msg("Sample values updated with Template item", "Updated!", false); //report
+                    Interface.IReport.Msg("Sample values updated with the Template item", "Updated!"); //report
+
+                    //bring back to VIEW (Select)
+                    Interface.IBS.Update<UnitRow>(unit,true,false,true);
                 }
+             
 
             }
             catch (System.Exception ex)
@@ -57,6 +67,19 @@ namespace DB.UI
                 // Interface.IReport.Msg(ex.StackTrace, ex.Message);
                 Interface.IStore.AddException(ex);
             }
+        }
+
+        private DataRow GetDRFromDataGridView(object sender, int rowInder)
+        {
+            DataGridView dgv = sender as DataGridView;
+            DataRow row = null;
+            if (dgv.RowCount == 0)
+            {
+                Interface.IReport.Msg("No Rows found in the DataGridView", "Error", false); //report
+
+            }
+            else row = Caster.Cast<DataRow>(dgv.Rows[rowInder]);
+            return row;
         }
 
         /// <summary>
@@ -85,12 +108,17 @@ namespace DB.UI
 
             this.unitDGV.CellValueChanged += UnitDGV_CellValueChanged;
 
+            this.unitDGV.RowPostPaint += UnitDGV_RowPostPaint;
 
             PaintRows();
 
         }
 
-    
+        private void UnitDGV_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            
+        }
+
         public void AttachCtrl<T>(ref T pro)
         {
             if (pro.GetType().Equals(typeof(ucPreferences)))

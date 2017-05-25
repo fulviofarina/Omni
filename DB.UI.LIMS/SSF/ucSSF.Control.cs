@@ -31,9 +31,14 @@ namespace DB.UI
             }
             else if (pro.GetType().Equals(typeof(BindingNavigator)))
             {
+
+            //    BindingNavigator bn = new BindingNavigator(Interface.IBS.SubSamples);
+              //  pro = (T)Convert.ChangeType(bn,pro.GetType());
+                
                 BindingNavigator b = pro as BindingNavigator;
                 b.Items["SaveItem"].Visible = false;
                 b.Parent.Controls.Remove(b);
+                                
                 // this.unitBN.Dispose();
                 destiny = this.unitSC.Panel2;
             }
@@ -52,11 +57,8 @@ namespace DB.UI
             //necessary protection for user interface
             ucSubMS.Enabled = enable;
             ucNS.Enabled = enable;
-
             nameToolStrip.Enabled = enable;
-         //   this.ucComposition1.Controls[0].Visible = enable;
-
-         //   this.sampleDGV.Enabled = enable;
+       
         }
 
         /// <summary>
@@ -79,8 +81,8 @@ namespace DB.UI
                 sampleCompoLbl.PerformClick();
 
 
-                this.SampleLBL.Click += sampleSelectClick;
-                this.descriplbl.Click += sampleSelectClick;
+                this.SampleLBL.Click += dropDownClickedLabel;
+                this.descriplbl.Click += dropDownClickedLabel;
 
 
                 //    Interface.IReport.Msg("Database", "Units were loaded!");
@@ -126,7 +128,7 @@ namespace DB.UI
         {
             InitializeComponent();
 
-        
+            this.sampleCompoLbl.Text = "SWITCH VIEW";
             
         }
 
@@ -150,7 +152,7 @@ namespace DB.UI
         }
 
 
-        private void sampleSelectClick(object sender, EventArgs e)
+        private void dropDownClickedLabel(object sender, EventArgs e)
         {
 
             ToolStripLabel lbl = sender as ToolStripLabel;
@@ -190,8 +192,8 @@ namespace DB.UI
         }
 
         protected bool assigned = false;
-         protected string compo = "COMPOSITION";
-        protected string geom = "GEOMETRY";
+         protected string compo = "SWITCH";
+        protected string geom = "CHANGE";
 
 
         public void ViewChanged(object sender, EventArgs e)
@@ -207,28 +209,33 @@ namespace DB.UI
         {
 
             TabPage page = setLabelView(compo, geom);
-
             TabControl ctrl = (page.Parent as TabControl);
+            ctrl.Visible = false;
             ctrl.SelectedTab = page;
             if (ctrl.Parent.GetType().Equals(typeof(TabPage)))
             {
                 page = (ctrl.Parent as TabPage);
                 (page.Parent as TabControl).SelectedTab = page;//.Show();//Focus();
             }
-
+            ctrl.Visible = true;
         }
 
         private TabPage setLabelView(string compo, string geom)
         {
 
+            TwoSectionSC.Visible = false;
+
             TwoSectionSC.Panel1Collapsed = assigned;
             TwoSectionSC.Panel2Collapsed = !assigned;
+
+            TwoSectionSC.Visible = true;
             assigned = !assigned;
 
             TabPage page = on;
 
+            this.sampleCompoLbl.Visible = false;
             Image img = Properties.Resources.Geometries;
-            Color clr = Color.Orange;
+            Color clr = Color.OrangeRed;
             if (sampleCompoLbl.Text.Contains(compo))
             {
                 sampleCompoLbl.Text = sampleCompoLbl.Text.Replace(compo, geom);
@@ -238,11 +245,14 @@ namespace DB.UI
             {
                 sampleCompoLbl.Text = sampleCompoLbl.Text.Replace(geom, compo);
                 img = Properties.Resources.Matrices;
-                clr = Color.Cyan;
+                clr = Color.Fuchsia;
                 page = off;
 
             }
+            sampleCompoLbl.VisitedLinkColor = clr;
+            sampleCompoLbl.LinkColor = clr;
 
+            this.sampleCompoLbl.Visible = true;
             this.imgBtn.Image = img;
             return page;
         }

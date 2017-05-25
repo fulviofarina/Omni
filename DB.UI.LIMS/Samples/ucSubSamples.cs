@@ -92,9 +92,6 @@ namespace DB.UI
             // ucContent.DeLink();
         }
 
-      
-    
-
         public void Predict(object sender, EventArgs e)
         {
             List<SubSamplesRow> samplesToPredict = new List<SubSamplesRow>();
