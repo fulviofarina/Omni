@@ -120,7 +120,7 @@ namespace Msn
             f.MinimizeBox = false;
             f.ShowIcon = false;
             f.ShowInTaskbar = false;
-            f.TopMost = true;
+            f.TopMost = false;
             f.Controls.Add(this);
             f.Opacity = 100;
             f.Visible = true;

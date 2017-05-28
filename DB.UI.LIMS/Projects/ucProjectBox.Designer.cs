@@ -29,66 +29,64 @@
         private void InitializeComponent()
         {
             this.TLP = new System.Windows.Forms.TableLayoutPanel();
-            this.TS = new System.Windows.Forms.ToolStrip();
-            this.projectlabel = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.projectbox = new System.Windows.Forms.ToolStripComboBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.projectlabel = new System.Windows.Forms.Label();
+            this.projectbox = new System.Windows.Forms.ComboBox();
             this.TLP.SuspendLayout();
-            this.TS.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TLP
             // 
             this.TLP.ColumnCount = 1;
             this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TLP.Controls.Add(this.TS, 0, 0);
+            this.TLP.Controls.Add(this.tableLayoutPanel1, 1, 0);
             this.TLP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TLP.Location = new System.Drawing.Point(0, 0);
             this.TLP.Name = "TLP";
             this.TLP.RowCount = 1;
             this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.61589F));
-            this.TLP.Size = new System.Drawing.Size(372, 53);
+            this.TLP.Size = new System.Drawing.Size(372, 64);
             this.TLP.TabIndex = 2;
             // 
-            // TS
+            // tableLayoutPanel1
             // 
-            this.TS.BackColor = System.Drawing.SystemColors.Control;
-            this.TS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TS.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.TS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.projectlabel,
-            this.toolStripSeparator1,
-            this.projectbox});
-            this.TS.Location = new System.Drawing.Point(0, 0);
-            this.TS.Name = "TS";
-            this.TS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.TS.Size = new System.Drawing.Size(372, 53);
-            this.TS.TabIndex = 2;
-            this.TS.Text = "toolStrip1";
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.projectlabel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.projectbox, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(366, 58);
+            this.tableLayoutPanel1.TabIndex = 3;
             // 
             // projectlabel
             // 
+            this.projectlabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectlabel.ForeColor = System.Drawing.Color.Purple;
+            this.projectlabel.Location = new System.Drawing.Point(3, 0);
             this.projectlabel.Name = "projectlabel";
-            this.projectlabel.Size = new System.Drawing.Size(91, 50);
+            this.projectlabel.Size = new System.Drawing.Size(177, 79);
+            this.projectlabel.TabIndex = 0;
             this.projectlabel.Text = "PROJECT";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 53);
             // 
             // projectbox
             // 
             this.projectbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.projectbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.projectbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.projectbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.projectbox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectbox.ForeColor = System.Drawing.Color.Gold;
+            this.projectbox.Location = new System.Drawing.Point(186, 3);
             this.projectbox.Name = "projectbox";
-            this.projectbox.Size = new System.Drawing.Size(223, 53);
+            this.projectbox.Size = new System.Drawing.Size(177, 33);
+            this.projectbox.TabIndex = 1;
             // 
             // ucProjectBox
             // 
@@ -97,11 +95,9 @@
             this.Controls.Add(this.TLP);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucProjectBox";
-            this.Size = new System.Drawing.Size(372, 53);
+            this.Size = new System.Drawing.Size(372, 64);
             this.TLP.ResumeLayout(false);
-            this.TLP.PerformLayout();
-            this.TS.ResumeLayout(false);
-            this.TS.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -109,9 +105,8 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel TLP;
-        private System.Windows.Forms.ToolStrip TS;
-        private System.Windows.Forms.ToolStripLabel projectlabel;
-        public System.Windows.Forms.ToolStripComboBox projectbox;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Label projectlabel;
+        public System.Windows.Forms.ComboBox projectbox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

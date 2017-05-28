@@ -18,7 +18,7 @@ namespace DB.Tools
             + "Please verify the sample data provided, such as: composition, dimensions and neutron source parameters.";
         protected static string FINISHED = "Self-shielding calculations finished!";
         protected static string CANCELLED = "Self-shielding calculations were cancelled!";
-        protected static string SELECT_SAMPLES = "Select the Samples to calculate under the 'Calc?' column";
+        protected static string SELECT_SAMPLES = "Select the Samples to calculate by double-clicking the row header of the sample grid (at the right-hand panel)";
 
         protected static System.Collections.Hashtable processTable;
         protected static string STARTED = "Process started.\n Please be patient";
