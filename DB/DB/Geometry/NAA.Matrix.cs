@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Rsx;
 
 namespace DB
@@ -10,12 +9,12 @@ namespace DB
     {
         //Requires attention on DataColumn Changing Handlers
 
-        partial class MatrixDataTable
+        partial class MatrixDataTable : IColumn
         {
             public Action populateMUESList;
             private IEnumerable<DataColumn> nonNullables;
 
-            public IEnumerable<DataColumn> NonNullables
+            public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
@@ -30,24 +29,6 @@ namespace DB
                         };
                     }
                     return nonNullables;
-                }
-            }
-
-            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
-            {
-                DataColumn col = e.Column;
-
-                if (!NonNullables.Contains(col)) return;
-
-                LINAA.MatrixRow m = e.Row as LINAA.MatrixRow;
-                try
-                {
-                    m.Check(col);
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(e.Row, e.Column, ex);
-                    (this.DataSet as LINAA).AddException(ex);
                 }
             }
 
@@ -85,7 +66,5 @@ namespace DB
                 }
             }
         }
-
-    
     }
 }

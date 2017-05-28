@@ -47,13 +47,18 @@ namespace DB.Tools
             }
         }
 
+       
         public void Calculate()
         {
             //actual position
             //  Cursor.Current = Cursors.WaitCursor;
             try
             {
-                cancelCalculations = false;
+              
+
+             //   Interface.IBS.IsCalculating = true;
+
+                IsCalculating = true;
 
                 resetProgress?.Invoke(3);
 
@@ -81,8 +86,8 @@ namespace DB.Tools
                 //1
                 if (count == 0)
                 {
-                    Interface.IReport.Msg("Select the Samples to calculate under the 'Calc?' column", "Oops, nothing was selected");
-                    cancelCalculations = true;
+                    MessageBox.Show(SELECT_SAMPLES, "Oops, nothing was selected!", MessageBoxButtons.OK);
+                    IsCalculating = false;
                 }
                 else
                 {
@@ -93,14 +98,18 @@ namespace DB.Tools
                         {
                             UnitRow UNIT = item;
                             //update position in BS
+                            UNIT.Clean();
+
                             Interface.IBS.Update<UnitRow>(UNIT);
 
                             showProgress?.Invoke(null, EventArgs.Empty);
 
-                            CheckAndClean(ref UNIT);
+                            bool ok = CheckInputData(UNIT);
 
-                            GenerateAnInput(ref UNIT);
-
+                            if (ok)
+                            {
+                                GenerateAnInput(ref UNIT);
+                            }
                             showProgress?.Invoke(null, EventArgs.Empty);
                         }
                         catch (SystemException ex)
@@ -110,16 +119,14 @@ namespace DB.Tools
                         }
                     }
                 }
+               
+                 Interface.IBS.SubSamples.Position = position;
 
-                //2
-                Interface.IBS.SubSamples.Position = position;
-                if (cancelCalculations)
-                {
-                    Interface.IReport.Msg("Cancelled", "Calculations not initiated!");
-                }
-                else RunProcess();
+                 RunProcess();
 
-                showProgress?.Invoke(null, EventArgs.Empty);
+               
+
+                callBack?.Invoke(null, EventArgs.Empty);
             }
             catch (SystemException ex)
             {

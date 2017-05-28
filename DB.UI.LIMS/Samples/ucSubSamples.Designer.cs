@@ -118,14 +118,14 @@
             // 
             // projectbox
             // 
-            this.projectbox.CallBack = null;
+          //  this.projectbox.CallBack = null;
             this.projectbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.projectbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectbox.Location = new System.Drawing.Point(0, 0);
             this.projectbox.Margin = new System.Windows.Forms.Padding(2);
             this.projectbox.Name = "projectbox";
-            this.projectbox.Offline = false;
-            this.projectbox.Project = "";
+       //     this.projectbox.Offline = false;
+       //     this.projectbox.Project = "";
             this.projectbox.Size = new System.Drawing.Size(493, 40);
             this.projectbox.TabIndex = 0;
             // 

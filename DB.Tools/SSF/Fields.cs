@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using Rsx;
-using Rsx.Dumb;
-using static DB.LINAA;
 
 namespace DB.Tools
 {
@@ -18,14 +14,85 @@ namespace DB.Tools
         protected internal static string inPutExt = ".in";
         protected internal static string outPutExt = ".out";
         protected internal static string startupPath = string.Empty;
+        protected static string ERRORS = "The self-shielding calculations were cancelled because the proper input data is missing.\n"
+            + "Please verify the sample data provided, such as: composition, dimensions and neutron source parameters.";
+        protected static string FINISHED = "Self-shielding calculations finished!";
+        protected static string CANCELLED = "Self-shielding calculations were cancelled!";
+        protected static string SELECT_SAMPLES = "Select the Samples to calculate under the 'Calc?' column";
+
         protected static System.Collections.Hashtable processTable;
+        protected static string STARTED = "Process started.\n Please be patient";
         protected EventHandler callBack = null;
-        protected bool cancelCalculations = false;
+
+        // private bool cancelCalculations = false;
         protected Interface Interface;
+
         protected Action<int> resetProgress;
         protected EventHandler showProgress;
-        protected IList<LINAA.UnitRow> units = null;
-    }
 
-   
+        protected IList<LINAA.UnitRow> units = null;
+
+        public bool IsCalculating
+        {
+            get
+            {
+                return Interface.IBS.IsCalculating;
+            }
+
+            set
+            {
+                Interface.IBS.IsCalculating = value;
+
+                if (!value)
+                {
+
+                    //no processes remaining
+                    if (processTable.Count == 0)
+                    {
+                        //rows with errors
+              
+                        DataRow[] rowsInError = units.Where(o => !CheckInputData(o)).ToArray();
+                        int errorCount = rowsInError.Count();
+                        if (errorCount!=0)
+                        {
+                            //some missing
+                            string some = "Some of ";
+                            if (errorCount == units.Count)
+                            {
+                                Interface.IReport.Msg(ERRORS, "All samples were Skipped");
+                                some = "All the ";
+                            }
+                            else
+                            {
+                                Interface.IReport.Msg(ERRORS, "Some samples were Skipped");
+                            }
+
+                            Interface.IReport.Speak(some + ERRORS);
+                        }
+                        else
+                        {
+                            //all good finished
+                            Interface.IReport.Msg(FINISHED, "Finished");
+                            Interface.IReport.Speak(FINISHED);
+                        }
+                    }
+                    else
+                    {
+                        //user cancelled
+                        Interface.IReport.Msg(CANCELLED, "Cancelled");
+                        Interface.IReport.Speak(CANCELLED);
+                        processTable.Clear();
+                    }
+                    resetProgress(0);
+                }
+                else
+                {
+                    Interface.IReport.Msg(STARTED, "Running...");
+                    Interface.IReport.Speak(STARTED);
+                }
+            }
+        }
+
+    
+    }
 }

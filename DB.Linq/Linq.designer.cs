@@ -14258,6 +14258,8 @@ namespace DB.Linq
 		
 		private System.Nullable<double> _pEpi;
 		
+		private System.Nullable<int> _ChannelID;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -14314,6 +14316,8 @@ namespace DB.Linq
     partial void OnpThChanged();
     partial void OnpEpiChanging(System.Nullable<double> value);
     partial void OnpEpiChanged();
+    partial void OnChannelIDChanging(System.Nullable<int> value);
+    partial void OnChannelIDChanged();
     #endregion
 		
 		public Unit()
@@ -14837,6 +14841,26 @@ namespace DB.Linq
 					this._pEpi = value;
 					this.SendPropertyChanged("pEpi");
 					this.OnpEpiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChannelID", DbType="Int")]
+		public System.Nullable<int> ChannelID
+		{
+			get
+			{
+				return this._ChannelID;
+			}
+			set
+			{
+				if ((this._ChannelID != value))
+				{
+					this.OnChannelIDChanging(value);
+					this.SendPropertyChanging();
+					this._ChannelID = value;
+					this.SendPropertyChanged("ChannelID");
+					this.OnChannelIDChanged();
 				}
 			}
 		}

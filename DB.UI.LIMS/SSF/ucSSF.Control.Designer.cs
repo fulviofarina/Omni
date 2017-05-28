@@ -33,7 +33,7 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.UnitSSFSC = new System.Windows.Forms.SplitContainer();
             this.inputTLP = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStrip8 = new System.Windows.Forms.ToolStrip();
+            this.descripTS = new System.Windows.Forms.ToolStrip();
             this.descriplbl = new System.Windows.Forms.ToolStripLabel();
             this.descripBox = new System.Windows.Forms.ToolStripComboBox();
             this.infoTS = new System.Windows.Forms.ToolStrip();
@@ -43,7 +43,7 @@
             this.SampleLBL = new System.Windows.Forms.ToolStripLabel();
             this.nameB = new System.Windows.Forms.ToolStripComboBox();
             this.barTLP = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStrip7 = new System.Windows.Forms.ToolStrip();
+            this.changeViewTS = new System.Windows.Forms.ToolStrip();
             this.sampleCompoLbl = new System.Windows.Forms.ToolStripLabel();
             this.imgBtn = new System.Windows.Forms.ToolStripButton();
             this.TwoSectionSC = new System.Windows.Forms.SplitContainer();
@@ -55,14 +55,14 @@
             this.UnitSSFSC.Panel1.SuspendLayout();
             this.UnitSSFSC.SuspendLayout();
             this.inputTLP.SuspendLayout();
-            this.toolStrip8.SuspendLayout();
+            this.descripTS.SuspendLayout();
             this.infoTS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unitSC)).BeginInit();
             this.unitSC.Panel1.SuspendLayout();
             this.unitSC.SuspendLayout();
             this.nameToolStrip.SuspendLayout();
             this.barTLP.SuspendLayout();
-            this.toolStrip7.SuspendLayout();
+            this.changeViewTS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TwoSectionSC)).BeginInit();
             this.TwoSectionSC.Panel1.SuspendLayout();
             this.TwoSectionSC.Panel2.SuspendLayout();
@@ -111,7 +111,7 @@
             this.inputTLP.BackColor = System.Drawing.SystemColors.Control;
             this.inputTLP.ColumnCount = 1;
             this.inputTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.inputTLP.Controls.Add(this.toolStrip8, 0, 1);
+            this.inputTLP.Controls.Add(this.descripTS, 0, 1);
             this.inputTLP.Controls.Add(this.infoTS, 0, 3);
             this.inputTLP.Controls.Add(this.unitSC, 0, 0);
             this.inputTLP.Controls.Add(this.barTLP, 0, 2);
@@ -128,23 +128,23 @@
             this.inputTLP.Size = new System.Drawing.Size(702, 705);
             this.inputTLP.TabIndex = 4;
             // 
-            // toolStrip8
+            // descripTS
             // 
-            this.toolStrip8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.descripTS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolStrip8.BackColor = System.Drawing.SystemColors.Control;
-            this.toolStrip8.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip8.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.descripTS.BackColor = System.Drawing.SystemColors.Control;
+            this.descripTS.Dock = System.Windows.Forms.DockStyle.None;
+            this.descripTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.descripTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.descriplbl,
             this.descripBox});
-            this.toolStrip8.Location = new System.Drawing.Point(0, 45);
-            this.toolStrip8.Name = "toolStrip8";
-            this.toolStrip8.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip8.Size = new System.Drawing.Size(702, 33);
-            this.toolStrip8.TabIndex = 15;
-            this.toolStrip8.Text = "toolStrip8";
+            this.descripTS.Location = new System.Drawing.Point(0, 45);
+            this.descripTS.Name = "descripTS";
+            this.descripTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.descripTS.Size = new System.Drawing.Size(702, 33);
+            this.descripTS.TabIndex = 15;
+            this.descripTS.Text = "toolStrip8";
             // 
             // descriplbl
             // 
@@ -250,7 +250,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.barTLP.ColumnCount = 1;
             this.barTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.barTLP.Controls.Add(this.toolStrip7, 0, 0);
+            this.barTLP.Controls.Add(this.changeViewTS, 0, 0);
             this.barTLP.Controls.Add(this.TwoSectionSC, 0, 1);
             this.barTLP.Location = new System.Drawing.Point(3, 81);
             this.barTLP.Name = "barTLP";
@@ -260,23 +260,23 @@
             this.barTLP.Size = new System.Drawing.Size(696, 584);
             this.barTLP.TabIndex = 20;
             // 
-            // toolStrip7
+            // changeViewTS
             // 
-            this.toolStrip7.BackColor = System.Drawing.Color.Transparent;
-            this.toolStrip7.CanOverflow = false;
-            this.toolStrip7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip7.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeViewTS.BackColor = System.Drawing.Color.Transparent;
+            this.changeViewTS.CanOverflow = false;
+            this.changeViewTS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.changeViewTS.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.changeViewTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.changeViewTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sampleCompoLbl,
             this.imgBtn});
-            this.toolStrip7.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip7.Name = "toolStrip7";
-            this.toolStrip7.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip7.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip7.Size = new System.Drawing.Size(696, 28);
-            this.toolStrip7.TabIndex = 13;
-            this.toolStrip7.Text = "toolStrip2";
+            this.changeViewTS.Location = new System.Drawing.Point(0, 0);
+            this.changeViewTS.Name = "changeViewTS";
+            this.changeViewTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.changeViewTS.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.changeViewTS.Size = new System.Drawing.Size(696, 28);
+            this.changeViewTS.TabIndex = 13;
+            this.changeViewTS.Text = "toolStrip2";
             // 
             // sampleCompoLbl
             // 
@@ -356,8 +356,8 @@
             this.UnitSSFSC.ResumeLayout(false);
             this.inputTLP.ResumeLayout(false);
             this.inputTLP.PerformLayout();
-            this.toolStrip8.ResumeLayout(false);
-            this.toolStrip8.PerformLayout();
+            this.descripTS.ResumeLayout(false);
+            this.descripTS.PerformLayout();
             this.infoTS.ResumeLayout(false);
             this.infoTS.PerformLayout();
             this.unitSC.Panel1.ResumeLayout(false);
@@ -368,8 +368,8 @@
             this.nameToolStrip.PerformLayout();
             this.barTLP.ResumeLayout(false);
             this.barTLP.PerformLayout();
-            this.toolStrip7.ResumeLayout(false);
-            this.toolStrip7.PerformLayout();
+            this.changeViewTS.ResumeLayout(false);
+            this.changeViewTS.PerformLayout();
             this.TwoSectionSC.Panel1.ResumeLayout(false);
             this.TwoSectionSC.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TwoSectionSC)).EndInit();
@@ -388,9 +388,9 @@
         private System.Windows.Forms.ToolStrip nameToolStrip;
         private System.Windows.Forms.ToolStripLabel SampleLBL;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
-        private System.Windows.Forms.ToolStrip toolStrip7;
+        private System.Windows.Forms.ToolStrip changeViewTS;
         private System.Windows.Forms.ToolStripLabel sampleCompoLbl;
-        private System.Windows.Forms.ToolStrip toolStrip8;
+        private System.Windows.Forms.ToolStrip descripTS;
         private System.Windows.Forms.ToolStripLabel descriplbl;
         private System.Windows.Forms.TableLayoutPanel barTLP;
         private System.Windows.Forms.ToolStrip infoTS;

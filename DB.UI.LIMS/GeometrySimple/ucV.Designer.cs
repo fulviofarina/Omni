@@ -31,8 +31,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        private System.Windows.Forms.ContextMenuStrip dgvCMS;
-
         private DB.LINAA lINAA;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
@@ -63,22 +61,6 @@
    //     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 
         private System.Windows.Forms.TableLayoutPanel TLPShapes;
-
-        private System.Windows.Forms.ToolStrip toolStrip12;
-
-        private System.Windows.Forms.ToolStrip toolStrip13;
-
-        private System.Windows.Forms.ToolStrip toolStrip6;
-
-        private System.Windows.Forms.ToolStripLabel toolStripLabel10;
-
-        private System.Windows.Forms.ToolStripLabel toolStripLabel12;
-
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 
@@ -150,21 +132,12 @@
             this.bindingNavigatorMoveNextItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.toolStrip12 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip13 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.TLPShapes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).BeginInit();
@@ -177,13 +150,8 @@
             this.shapeTS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VialBN)).BeginInit();
             this.VialBN.SuspendLayout();
-            this.dgvCMS.SuspendLayout();
-            this.toolStrip6.SuspendLayout();
-            this.toolStrip12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.SuspendLayout();
-            this.toolStrip13.SuspendLayout();
             this.SuspendLayout();
             // 
             // TLPShapes
@@ -196,11 +164,11 @@
             this.TLPShapes.Location = new System.Drawing.Point(0, 0);
             this.TLPShapes.Margin = new System.Windows.Forms.Padding(4);
             this.TLPShapes.Name = "TLPShapes";
-            this.TLPShapes.RowCount = 3;
+            this.TLPShapes.RowCount = 2;
             this.TLPShapes.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TLPShapes.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TLPShapes.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TLPShapes.Size = new System.Drawing.Size(792, 513);
+            this.TLPShapes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.TLPShapes.Size = new System.Drawing.Size(750, 586);
             this.TLPShapes.TabIndex = 9;
             // 
             // vialDGV
@@ -216,7 +184,7 @@
             this.vialDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.vialDGV.AutoGenerateColumns = false;
             this.vialDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.vialDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.vialDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.vialDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.vialDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.vialDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
@@ -265,7 +233,7 @@
             this.vialDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.vialDGV.RowTemplate.Height = 24;
             this.vialDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.vialDGV.Size = new System.Drawing.Size(784, 427);
+            this.vialDGV.Size = new System.Drawing.Size(742, 534);
             this.vialDGV.TabIndex = 9;
             // 
             // vialTypeRefDataGridViewTextBoxColumn
@@ -364,14 +332,14 @@
             // shapeSC.Panel2
             // 
             this.shapeSC.Panel2.Controls.Add(this.VialBN);
-            this.shapeSC.Size = new System.Drawing.Size(780, 32);
-            this.shapeSC.SplitterDistance = 286;
+            this.shapeSC.Size = new System.Drawing.Size(738, 32);
+            this.shapeSC.SplitterDistance = 270;
             this.shapeSC.SplitterWidth = 7;
             this.shapeSC.TabIndex = 8;
             // 
             // shapeTS
             // 
-            this.shapeTS.BackColor = System.Drawing.SystemColors.Menu;
+            this.shapeTS.BackColor = System.Drawing.SystemColors.Control;
             this.shapeTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.shapeTS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.shapeTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -380,14 +348,14 @@
             this.shapeTS.Location = new System.Drawing.Point(0, 0);
             this.shapeTS.Name = "shapeTS";
             this.shapeTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.shapeTS.Size = new System.Drawing.Size(286, 32);
+            this.shapeTS.Size = new System.Drawing.Size(270, 32);
             this.shapeTS.TabIndex = 2;
             this.shapeTS.Text = "toolStrip5";
             // 
             // VialTypelabel
             // 
             this.VialTypelabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VialTypelabel.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.VialTypelabel.ForeColor = System.Drawing.Color.SaddleBrown;
             this.VialTypelabel.Name = "VialTypelabel";
             this.VialTypelabel.Size = new System.Drawing.Size(168, 29);
             this.VialTypelabel.Text = "Container dimensions";
@@ -395,7 +363,7 @@
             // VialBN
             // 
             this.VialBN.AddNewItem = this.bnVialAddItem;
-            this.VialBN.BackColor = System.Drawing.SystemColors.Menu;
+            this.VialBN.BackColor = System.Drawing.SystemColors.MenuBar;
             this.VialBN.BindingSource = this.VialBS;
             this.VialBN.CountItem = this.bindingNavigatorCountItem1;
             this.VialBN.DeleteItem = this.bindingNavigatorDeleteItem1;
@@ -421,7 +389,7 @@
             this.VialBN.Name = "VialBN";
             this.VialBN.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.VialBN.PositionItem = this.bindingNavigatorPositionItem1;
-            this.VialBN.Size = new System.Drawing.Size(487, 32);
+            this.VialBN.Size = new System.Drawing.Size(461, 32);
             this.VialBN.TabIndex = 1;
             this.VialBN.Text = "bindingNavigator1";
             // 
@@ -510,43 +478,6 @@
             this.bindingNavigatorSeparator5.Name = "bindingNavigatorSeparator5";
             this.bindingNavigatorSeparator5.Size = new System.Drawing.Size(6, 32);
             // 
-            // dgvCMS
-            // 
-            this.dgvCMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem2.Text = "Export";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem3.Text = "View Output";
-            // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(199, 21);
-            this.toolStripLabel3.Text = "Select &Irradiation Container";
-            // 
-            // toolStrip6
-            // 
-            this.toolStrip6.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel3});
-            this.toolStrip6.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip6.Name = "toolStrip6";
-            this.toolStrip6.Size = new System.Drawing.Size(202, 25);
-            this.toolStrip6.TabIndex = 2;
-            this.toolStrip6.Text = "toolStrip6";
-            // 
             // matrixIDDataGridViewTextBoxColumn
             // 
             this.matrixIDDataGridViewTextBoxColumn.DataPropertyName = "MatrixID";
@@ -584,56 +515,14 @@
             this.cDataGridViewCheckBoxColumn.ReadOnly = true;
             this.cDataGridViewCheckBoxColumn.Width = 23;
             // 
-            // toolStrip12
-            // 
-            this.toolStrip12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip12.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel10});
-            this.toolStrip12.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip12.Name = "toolStrip12";
-            this.toolStrip12.Size = new System.Drawing.Size(88, 23);
-            this.toolStrip12.TabIndex = 2;
-            this.toolStrip12.Text = "toolStrip12";
-            // 
-            // toolStripLabel10
-            // 
-            this.toolStripLabel10.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel10.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripLabel10.Name = "toolStripLabel10";
-            this.toolStripLabel10.Size = new System.Drawing.Size(40, 20);
-            this.toolStripLabel10.Text = "Shape";
-            // 
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer5.Location = new System.Drawing.Point(355, 3);
             this.splitContainer5.Name = "splitContainer5";
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.toolStrip13);
             this.splitContainer5.Size = new System.Drawing.Size(374, 23);
             this.splitContainer5.SplitterDistance = 123;
             this.splitContainer5.TabIndex = 9;
-            // 
-            // toolStrip13
-            // 
-            this.toolStrip13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip13.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel12});
-            this.toolStrip13.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip13.Name = "toolStrip13";
-            this.toolStrip13.Size = new System.Drawing.Size(123, 23);
-            this.toolStrip13.TabIndex = 3;
-            this.toolStrip13.Text = "toolStrip13";
-            // 
-            // toolStripLabel12
-            // 
-            this.toolStripLabel12.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel12.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripLabel12.Name = "toolStripLabel12";
-            this.toolStripLabel12.Size = new System.Drawing.Size(50, 20);
-            this.toolStripLabel12.Text = "Channel";
             // 
             // toolStripSeparator15
             // 
@@ -648,7 +537,7 @@
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ucV";
-            this.Size = new System.Drawing.Size(792, 513);
+            this.Size = new System.Drawing.Size(750, 586);
             this.TLPShapes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.vialDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VialBS)).EndInit();
@@ -664,17 +553,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.VialBN)).EndInit();
             this.VialBN.ResumeLayout(false);
             this.VialBN.PerformLayout();
-            this.dgvCMS.ResumeLayout(false);
-            this.toolStrip6.ResumeLayout(false);
-            this.toolStrip6.PerformLayout();
-            this.toolStrip12.ResumeLayout(false);
-            this.toolStrip12.PerformLayout();
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
-            this.toolStrip13.ResumeLayout(false);
-            this.toolStrip13.PerformLayout();
             this.ResumeLayout(false);
 
         }

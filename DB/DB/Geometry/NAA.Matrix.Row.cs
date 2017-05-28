@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Rsx;
 
 namespace DB
@@ -12,14 +13,22 @@ namespace DB
 
         partial class MatrixRow : IRow
         {
+            public void Check()
+            {
+                foreach (DataColumn column in this.tableMatrix.Columns)
+                {
+                    Check(column);
+                }
+                //   return this.GetColumnsInError().Count() != 0;
+            }
             public void DecomposeFormula(string formula, ref List<string> elements, ref List<string> moles)
             {
-                System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("[0-9]");
+                Regex re = new Regex("[0-9]");
                 string[] result = re.Split(formula);
                 foreach (string s in result) if (!s.Equals(string.Empty)) elements.Add(s); // gives elements
 
                 //NUMBERS
-                System.Text.RegularExpressions.Regex re2 = new System.Text.RegularExpressions.Regex("[a-z]", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                Regex re2 = new Regex("[a-z]", RegexOptions.IgnoreCase);
                 result = re2.Split(formula);
                 foreach (string s in result) if (!s.Equals(string.Empty)) moles.Add(s); // gives moles
             }
@@ -27,7 +36,9 @@ namespace DB
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
-                return colsInE.Intersect(this.tableMatrix.NonNullables).Count() != 0;
+                int count = colsInE.Intersect(this.tableMatrix.ForbiddenNullCols).Count();// != 0;
+              //  colsInE = null;
+                return count!=0;
             }
 
 
@@ -42,7 +53,6 @@ namespace DB
                     if (renew)
                     {
                         linaa.TAM.MUESTableAdapter.DeleteByMatrixID(MatrixID);
-
                         linaa.Matrix.populateMUESList?.Invoke();
                     }
                 }
@@ -111,7 +121,7 @@ namespace DB
 
             public void SetParent<T>(ref T rowParent, object[] args = null)
             {
-                throw new NotImplementedException();
+               // throw new NotImplementedException();
             }
 
             /// <summary>

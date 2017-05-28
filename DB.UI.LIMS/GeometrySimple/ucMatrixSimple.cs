@@ -22,6 +22,7 @@ namespace DB.UI
             }
         }
 
+
         public void Set(ref Interface LinaaInterface, bool selected = false)
         {
             Interface = LinaaInterface;
@@ -33,7 +34,7 @@ namespace DB.UI
             {
                bs = Interface.IBS.SelectedMatrix;
                 matrixDGV.RowHeadersVisible = false;
-                MatrixBN.Visible = false;
+                MatrixBN.AddNewItem.Visible = false;
             }
             else
             {
@@ -47,7 +48,7 @@ namespace DB.UI
             this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
       
             string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
-            Binding mlabel = BS.ABinding(ref bs, column);
+            Binding mlabel = Rsx.Dumb.BS.ABinding(ref bs, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
 
             ucComposition1.Set(ref Interface, selected);

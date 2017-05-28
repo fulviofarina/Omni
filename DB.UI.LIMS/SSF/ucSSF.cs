@@ -18,7 +18,7 @@ namespace DB.UI
     {
         private static Size currentSize;
 
-        private bool cancelCalculations = false;
+   //     private bool cancelCalculations = false;
         private Interface Interface = null;
      //   private Action<int> resetProgress;
         /// <summary>
@@ -31,40 +31,19 @@ namespace DB.UI
             try
             {
                 Control destiny = null;
-                if (pro.GetType().Equals(typeof(ucProjectBox)))
+                Type t = pro.GetType();
+                if (t.Equals(typeof(ucProjectBox)))
                 {
                     ucProjectBox projBox = pro as ucProjectBox;
-
                     projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel1;
-
-                    //  BindingList<int> list = new BindingList<int>();
-                    // list.Add(Interface.IBS.SubSamples.Count );
-
-                    //  cancelBtn.DataBindings.Add(new Binding("Enabled", list, string.Empty));
-
-                    //PRUEBA
-                    /*
-                    BindingList<Notif> list = new BindingList<Notif>();
-                    list.Add(new Notif(ref Interface) { bsActive = true });
-
-                    Binding b0 = new Binding("Enabled", list,"bsActive");
-                    Binding b1 = new Binding("Enabled", list, "bsActive");
-                    Binding b2 = new Binding("Enabled", list, string.Empty);
-                    Binding b3 = new Binding("Enabled", list, string.Empty);
-                    cancelBtn.DataBindings.Add(b0);
-                    this.CalcBtn.DataBindings.Add(b1);
-                   */
-
-                    projBox.CallBack += delegate
-                    {
-                        refreshProject();
-                    };
+                    Interface.IBS.PropertyChanged += IBS_PropertyChanged;
+                
                 }
-                else if (pro.GetType().Equals(typeof(ucOptions)))
+                else if (t.Equals(typeof(ucOptions)))
                 {
                     IucOptions options = pro as IucOptions;
-                    MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
+                  
                     //SET A METHOD TO CALL BACK!!!!
                     EventHandler callBack = delegate
                     {
@@ -76,37 +55,11 @@ namespace DB.UI
                     // projBox.HideChildControl = Hide;
                     destiny = this.splitContainer1.Panel2;
                 }
-                else if (pro.GetType().Equals(typeof(ucUnit)))
-                {
-                    //link to bindings
-                    this.CalcTab.Controls.Clear();
-                    ucUnit.Dispose();
-                    ucUnit = pro as ucUnit;
-                    ucUnit.Dock = DockStyle.Fill;
-                    destiny = this.CalcTab;
-                    // ucUnit.Set(ref Interface);
-
-                    ucMS.Set(ref Interface);
-                    ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-
-                    // OTHER CONTROLS
-                    ucCC1.Set(ref Interface);
-                    ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-
-                    ucVcc.Set(ref Interface);
-                    ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-
-                }
                 else
                 {
-
-                  
-
-
-
+                    //main child
                     ucSSFControl.AttachCtrl(ref pro);
                     ucUnit.AttachCtrl(ref pro);
-                 
                 }
 
                 destiny?.Controls.Add(pro as Control);
@@ -116,75 +69,19 @@ namespace DB.UI
                 Interface.IStore.AddException(ex);
             }
         }
-        /*
-        [LookupBindingProperties]
-        public class Notif
+
+        private void IBS_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            protected Interface Interface;
-
-
-            public Notif(ref Interface inter)
-            {
-                Interface = inter;
-            }
-            
-            public bool bsActive
-            {
-
-                get
-                {
-                    return Interface.IBS.SubSamples.Count != 0;
-                }
-                set
-                {
-
-                    
-                }
-            }
-        }
-        */
-        private void refreshProject()
-        {
-
             bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
-            this.CalcBtn.Enabled = ThereIsData;
-            this.CalcBtn.Visible = ThereIsData;
-            this.cancelBtn.Visible = ThereIsData;
-
-            ucSSFControl.Disabler(ThereIsData);
-            ucUnit.PaintRows();
-        
-        }
-
-     
-
-        public void Calculate(object sender, EventArgs e)
-        {
-            Interface.IBS.EndEdit();
-            // this.ValidateChildren();
-
-            Cursor.Current = Cursors.WaitCursor;
-
-          
-
-            this.CalcBtn.Enabled = false;
-            this.cancelBtn.Enabled = true;
-            this.Visible = true;
-            this.ParentForm.Visible = true;
-
+            bool isCalculating = Interface.IBS.IsCalculating;
+            this.CalcBtn.Visible = ThereIsData && !isCalculating;
+            this.cancelBtn.Visible = ThereIsData && isCalculating;
             this.Tab.SelectedTab = this.CalcTab;
-
-            MatSSF.Calculate();
-
-            this.CalcBtn.Enabled = true;
-     
-            // Creator.SaveInFull(true);
-            this.cancelBtn.Enabled = false;
-
-            Cursor.Current = Cursors.Default;
-
+            ucUnit.PaintRows();
+          
         }
 
+     
 
 
         /// <summary>
@@ -216,7 +113,7 @@ namespace DB.UI
 
    
 
-        protected MatSSF MatSSF;
+        protected MatSSF MatSSF=null;
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
         /// </summary>
@@ -225,48 +122,62 @@ namespace DB.UI
             Interface = inter;
             try
             {
+                currentSize = this.Size;
+          //      this.cancelBtn.Enabled = false;
+                this.CalcBtn.Click += delegate
+                    {
+                        this.ValidateChildren();
+                        Cursor.Current = Cursors.WaitCursor;
+                        MatSSF.Calculate();
+                        Cursor.Current = Cursors.Default;
+                    };
+                this.cancelBtn.Click += delegate
+                    {
+                        MatSSF.IsCalculating = false;
+                    };
 
+                //
+                ucUnit.Set(ref Interface);
+                ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                //
+                ucMS.Set(ref Interface);
+                ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                // OTHER CONTROLS
+                ucCC1.Set(ref Interface);
+                ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                ucVcc.Set(ref Interface);
+                ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                //
+            //EN ESTE ORDEN!!!!
                 ucSSFControl.On = this.CalcTab;
                 ucSSFControl.Off = this.MatrixTab;
                 ucSSFControl.Set(ref Interface);
+                //
 
                 this.templatesTabCtrl.Selected += delegate
                 {
+                    bool matrix = false;
                     if (templatesTabCtrl.SelectedTab == MatrixTab)
                     {
-                        ucSSFControl.ViewChanged(true,EventArgs.Empty);
+                        matrix = true;
                     }
-                 else
-                    { 
-                        ucSSFControl.ViewChanged(false, EventArgs.Empty);
-                    }
+                    ucSSFControl.ViewChanged(matrix, EventArgs.Empty);
                 };
 
-                //set calculation options
-                //   Interface.IBS.EndEdit();
-
-                Interface.IReport.Msg("Database", "Units were loaded!");
+                Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
             catch (System.Exception ex)
             {
+                Interface.IReport.Msg("SSF Control NOT OK", "Severe error");
                 Interface.IStore.AddException(ex);
             }
         }
 
-     
-
-        private void cancelBtn_Click(object sender, EventArgs e)
-        {
-            cancelCalculations = true;
-            // this.cancelBtn.Enabled = false;
-        }
 
         public ucSSF()
         {
             InitializeComponent();
-
-            currentSize = this.Size;
-            this.cancelBtn.Enabled = false;
+       
         }
     }
 }

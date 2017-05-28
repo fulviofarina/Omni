@@ -24,9 +24,17 @@ namespace DB
                 Energy = energy;
             }
 
+            public void Check()
+            {
+                foreach (DataColumn column in this.tablePeaks.Columns)
+                {
+                    Check(column);
+                }
+                //   return this.GetColumnsInError().Count() != 0;
+            }
             public void Check(DataColumn Column)
             {
-                throw new NotImplementedException();
+              //  throw new NotImplementedException();
             }
 
             public void SetParent<T>(ref T rowParent, object[] args = null)

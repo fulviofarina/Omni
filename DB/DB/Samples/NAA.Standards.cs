@@ -1,49 +1,77 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
+using System.Collections.Generic;
 
 namespace DB
 {
     public partial class LINAA
     {
-        partial class StandardsDataTable
+        partial class StandardsRow : IRow
         {
-            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
+            public void Check()
             {
-                try
+                foreach (DataColumn column in this.tableStandards.Columns)
                 {
-                    StandardsRow std = (StandardsRow)e.Row;
-                    if (e.Column == this.MonitorCodeColumn)
-                    {
-                        bool nulo = EC.CheckNull(e.Column, e.Row);
-
-                        if (nulo) return;
-
-                        if (std.GeometryRow == null && std.MatrixRow != null)
-                        {
-                            LINAA l = ((LINAA)this.DataSet);
-                            GeometryDataTable gdt = l.tableGeometry;
-                            GeometryRow g = gdt.NewGeometryRow();
-                            g.GeometryName = std.MonitorCode;
-                            gdt.AddGeometryRow(g);
-                            g.MatrixID = std.MatrixID;
-                            g.VialTypeID = l.tableVialType.FirstOrDefault(o => o.VialTypeRef.CompareTo("Bare") == 0).VialTypeID;
-                            std.GeometryRow = g;
-                        }
-                    }
-                    else if (e.Column == this.stdNameColumn) EC.CheckNull(e.Column, e.Row);
-                    else if (e.Column == this.stdProducerColumn) EC.CheckNull(e.Column, e.Row);
-                    //  else if (e.Column == this.stdElementColumn) EC.CheckNull(e.Column, e.Row);
-                    else if (e.Column == this.MatrixNameColumn) EC.CheckNull(e.Column, e.Row);
-                    else if (e.Column == this.stdUncColumn) EC.CheckNull(e.Column, e.Row);
+                    Check(column);
                 }
-                catch (SystemException ex)
+                //   return this.GetColumnsInError().Count() != 0;
+            }
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Check(DataColumn column)
+            {
+                bool nulo = EC.CheckNull(column, this);
+
+                if (column == this.tableStandards.MonitorCodeColumn)
                 {
-                    (this.DataSet as LINAA).AddException(ex);
-                    EC.SetRowError(e.Row, e.Column, ex);
+                
+
+                    if (nulo) return;
+
+                    if (GeometryRow == null && MatrixRow != null)
+                    {
+                        LINAA l = ((LINAA)this.tableStandards.DataSet);
+                        GeometryDataTable gdt = l.tableGeometry;
+                        GeometryRow g = gdt.NewGeometryRow();
+                        g.GeometryName = MonitorCode;
+                        gdt.AddGeometryRow(g);
+                        g.MatrixID = MatrixID;
+                        g.VialTypeID = l.tableVialType.FirstOrDefault(o => o.VialTypeRef.CompareTo("Bare") == 0).VialTypeID;
+                        GeometryRow = g;
+                    }
+                }
+              
+
+            }
+
+           
+        }
+        partial class StandardsDataTable : IColumn
+        {
+            IEnumerable<DataColumn> nonNullables=null;
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    if (nonNullables == null)
+                    {
+                        nonNullables = new DataColumn[]{ stdNameColumn,
+                     MatrixNameColumn,stdProducerColumn,stdUncColumn,
+                      MonitorCodeColumn };
+                    }
+
+                    return nonNullables;
+                 
                 }
             }
+
+           
         }
     }
 }

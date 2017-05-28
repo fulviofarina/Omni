@@ -8,9 +8,9 @@ namespace DB
 {
     public interface IColumn
     {
-        void DataColumnChanged(object sender, DataColumnChangeEventArgs e);
+     //   void DataColumnChanged(object sender, DataColumnChangeEventArgs e);
 
-        IEnumerable<DataColumn> NonNullables
+        IEnumerable<DataColumn> ForbiddenNullCols
         {
             get;
         }

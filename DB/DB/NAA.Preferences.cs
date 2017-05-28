@@ -1,136 +1,125 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using DB.Properties;
-using Rsx.Dumb; using Rsx;
+using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
-
-        protected internal void handlersPreferences()
+        public partial class PreferencesDataTable : IColumn
         {
-            handlers.Add(Preferences.DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Preferences));
-            handlers.Add(SSFPref.DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(SSFPref));
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    return null;
+                }
+            }
         }
 
+        public partial class SSFPrefDataTable : IColumn
+        {
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    return null;
+                }
+            }
+        }
 
-        public partial class SSFPrefRow
+        public partial class SSFPrefRow : IRow
         {
             public void Check()
             {
-                //    if (this.IsLastUnitIDNull()) LastUnitID = -1;
-           //     if (this.IsWindowsUserNull()) WindowsUser = string.Empty;
-                if (this.IsCalcDensityNull()) CalcDensity = false;
-                if (this.IsCalcMassNull()) CalcMass = false;
-                if (IsAAFillHeightNull()) AAFillHeight = false;
-                if (IsAARadiusNull()) AARadius = false;
+              
                 if (IsCalibrationNull()) Calibration = false;
                 if (this.IsDoCKNull()) DoCK = true;
                 if (this.IsDoMatSSFNull()) DoMatSSF = true;
                 if (this.IsLoopNull()) Loop = true;
                 if (this.IsRoundingNull()) Rounding = "N3";
-                //    if (this.IsSQLNull()) SQL = Settings.Default.SSFSQL;
-                //  else Settings.Default["SSFSQL"] = SQL;
                 if (IsShowOtherNull()) ShowOther = false;
                 if (IsOverridesNull()) Overrides = false;
-                //   if (IsAutoLoadNull()) AutoLoad = true;
-
                 if (IsShowMatSSFNull()) ShowMatSSF = false;
 
-        //        this.AcceptChanges();
-
-              //  Settings.Default.Save();
-            }
-        }
-
-        public partial class PreferencesDataTable
-        {
-            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
-            {
-           //     PreferencesRow p = e.Row as PreferencesRow;
-                try
+                foreach (DataColumn item in this.tableSSFPref.Columns)
                 {
-                    EC.CheckNull(e.Column, e.Row);
+                    Check(item);
                 }
-                catch (Exception ex)
-                {
-                    EC.SetRowError(e.Row, e.Column, ex);
-                    (this.DataSet as LINAA).AddException(ex);
-                }
-                //  throw new NotImplementedException();
             }
-        }
 
-        public partial class SSFPrefDataTable
-        {
-            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
+            public void Check(DataColumn column)
             {
-                SSFPrefRow p = e.Row as SSFPrefRow;
 
-                try
+                if (this.IsCalcMassNull()) CalcMass = false;
+                if (IsAAFillHeightNull()) AAFillHeight = false;
+                if (IsAARadiusNull()) AARadius = false;
+                if (this.IsCalcDensityNull()) CalcDensity = false;
+
+                //    Check();
+                if (column == this.tableSSFPref.AAFillHeightColumn)
                 {
-                    if (e.Column == this.AAFillHeightColumn)
-                    {
-                        if (p.AAFillHeight)
-                        {
-                            p.AARadius = false;
-                            p.CalcDensity = false;
-                            p.CalcMass = false;
-
-                        }
-                        else if (!p.AARadius && !p.CalcDensity)
-                        {
-                            p.CalcMass = true;
-
-                        }
-
-                    }
-                    else if (e.Column == this.AARadiusColumn)
-                    {
-                        if (p.AARadius)
-                        {
-                            p.AAFillHeight = false;
-                            p.CalcDensity = false;
-                            p.CalcMass = false;
-
-                        }
-                        else if (!p.AAFillHeight && !p.CalcDensity)
-                        {
-                            p.CalcMass = true;
-
-                        }
-
-                    }
-                    else if (e.Column == this.CalcDensityColumn)
-                    {
-                        if (p.CalcDensity)
-                        {
-                            p.AAFillHeight = false;
-                            p.AARadius = false;
-                            p.CalcMass = false;
-                        }
-                        else if (!p.AARadius && !p.AAFillHeight)
-                        {
-                            p.CalcMass = true;
-
-                        }
-                    }
-                    else EC.CheckNull(e.Column, e.Row);
                    
+                    if (AAFillHeight)
+                    {
+                        AARadius = false;
+                        CalcDensity = false;
+                        CalcMass = false;
+                    }
+                    else if (!AARadius && !CalcDensity)
+                    {
+                        CalcMass = true;
+                    }
                 }
-                catch (Exception ex)
+                else if (column == this.tableSSFPref.AARadiusColumn)
                 {
-                    EC.SetRowError(e.Row, e.Column, ex);
-                    (this.DataSet as LINAA).AddException(ex);
+                  
+
+                    if (AARadius)
+                    {
+                        AAFillHeight = false;
+                        CalcDensity = false;
+                        CalcMass = false;
+                    }
+                    else if (!AAFillHeight && !CalcDensity)
+                    {
+                        CalcMass = true;
+                    }
                 }
+                else if (column == this.tableSSFPref.CalcDensityColumn)
+                {
+                  
+
+                    if (CalcDensity)
+                    {
+                        AAFillHeight = false;
+                        AARadius = false;
+                        CalcMass = false;
+                    }
+                    else if (!AARadius && !AAFillHeight)
+                    {
+                        CalcMass = true;
+                    }
+                }
+                else
+                {
+                
+                    EC.CheckNull(column, this);
+                }
+            }
+
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                //throw new NotImplementedException();
             }
         }
 
-        partial class PreferencesRow
+        partial class PreferencesRow : IRow
         {
             private bool usrAnal = false;
+
             /// <summary>
             /// Should fix this
             /// </summary>
@@ -143,6 +132,7 @@ namespace DB
 
             public void Check()
             {
+
                 if (IsOfflineNull()) Offline = false;
                 if (IsIsSQLNull()) this.IsSQL = false;
                 if (IsIsMSMQNull()) this.IsMSMQ = false;
@@ -153,31 +143,52 @@ namespace DB
                 if (IsmaxUncNull()) maxUnc = 50;
                 if (IsAutoLoadNull()) AutoLoad = true;
                 if (IsShowSolangNull()) ShowSolang = false;
-                //   if (IsShowSampleDescriptionNull()) ShowSampleDescription = true;
+                // if (IsShowSampleDescriptionNull()) ShowSampleDescription = true;
                 this.LastAccessDate = DateTime.Now;
                 if (IsLastToDoNull()) LastToDo = string.Empty;
                 if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
                 if (IsFillByHLNull()) FillByHL = true;
                 if (IsFillBySpectraNull()) FillBySpectra = true;
 
-
                 if (IsHLNull()) HL = Settings.Default.HLSNMNAAConnectionString;
                 else Settings.Default["HLSNMNAAConnectionString"] = HL;
                 if (IsLIMSNull()) LIMS = Settings.Default.localDB;
-               ////// //reponer
+                ////// //reponer
                 Settings.Default["NAAConnectionString"] = LIMS;
                 if (IsSpectraNull()) Spectra = Settings.Default.SpectraFolder;
                 else Settings.Default["SpectraFolder"] = Spectra;
                 if (IsSpectraSvrNull()) SpectraSvr = Settings.Default.SpectraServer;
                 else Settings.Default["SpectraServer"] = SpectraSvr;
 
-                Settings.Default.Save();
-                //    if (IsFolderNull()) Folder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                //   else Settings.Default["Folder"] = Folder;
+                foreach (DataColumn item in this.tablePreferences.Columns)
+                {
+                    Check(item);
+                }
 
-                //    if (IsSolCoiFolderNull()) SolCoiFolder = Resources.SolCoiFolder;
-                //   else Settings.Default["SOLCOIFolder"] = SolCoiFolder;
+                Settings.Default.Save();
             }
+
+
+            public void Check(DataColumn Column)
+            {
+
+             
+
+                EC.CheckNull(Column, this);
+            }
+
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                // throw new NotImplementedException();
+            }
+        }
+
+        protected internal void handlersPreferences()
+        {
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Preferences));
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(SSFPref));
         }
     }
 }

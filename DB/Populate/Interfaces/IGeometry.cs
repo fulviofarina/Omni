@@ -7,6 +7,9 @@ namespace DB
 {
     public interface IGeometry
     {
+         MatrixRow AddNewMatrix();
+         VialTypeRow AddNewVial(bool aRabbit);
+
         GeometryRow DefaultGeometry { get; }
 
         GeometryRow FindReferenceGeometry(string refName);

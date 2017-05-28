@@ -1,5 +1,8 @@
 ﻿using System;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
+using System.Collections.Generic;
+using System.Data;
 
 namespace DB
 {
@@ -7,24 +10,43 @@ namespace DB
     {
         protected internal void handlersDetSol()
         {
-            handlers.Add(DetectorsAbsorbers.DataColumnChanged);
+            handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
         }
 
-        public partial class DetectorsAbsorbersDataTable
+        public partial class DetectorsAbsorbersRow : IRow
         {
-            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
+            public void Check()
             {
-                try
+                foreach (DataColumn column in this.tableDetectorsAbsorbers.Columns)
                 {
-                    EC.CheckNull(e.Column, e.Row);
+                    Check(column);
                 }
-                catch (SystemException ex)
+                //   return this.GetColumnsInError().Count() != 0;
+            }
+            public void Check(DataColumn Column)
+            {
+
+                EC.CheckNull(Column, this);
+                //  throw new NotImplementedException();
+            }
+
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                //throw new NotImplementedException();
+            }
+        }
+        public partial class DetectorsAbsorbersDataTable : IColumn
+        {
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
                 {
-                    EC.SetRowError(e.Row, e.Column, ex);
-                    (this.DataSet as LINAA).AddException(ex);
+                    return null;
                 }
             }
+
+           
         }
     }
 }

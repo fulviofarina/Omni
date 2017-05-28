@@ -135,7 +135,7 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
             }
         }
-
+     
         protected string getChannelCfg(bool defaultVal, ref LINAA.UnitRow UNIT)
         {
             string chCfg = string.Empty;

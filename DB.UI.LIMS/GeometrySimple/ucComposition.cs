@@ -69,7 +69,7 @@ namespace DB.UI
         private void setBindings(ref BindingSource Bind)
         {
             string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
-            Binding mcompoBin = BS.ABinding(ref Bind, column);
+            Binding mcompoBin = Rsx.Dumb.BS.ABinding(ref Bind, column);
             this.matrixRTB.DataBindings.Add(mcompoBin);
          
         }

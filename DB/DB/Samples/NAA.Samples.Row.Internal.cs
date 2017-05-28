@@ -13,6 +13,8 @@ namespace DB
         /// </summary>
         public partial class SubSamplesRow 
         {
+            protected double perCentDiff = 0.1;
+
             protected string _projectNr
             {
                 get
@@ -21,8 +23,18 @@ namespace DB
                     return Regex.Replace(this.IrradiationCode, "[a-z]", String.Empty, RegexOptions.IgnoreCase);
                 }
             }
+            internal bool CheckGeometry()
+            {
+                DataColumn geoCol = this.tableSubSamples.GeometryNameColumn;
+                this.SetColumnError(geoCol, null);
+                if (EC.IsNuDelDetch(GeometryRow))
+                {
+                    this.SetColumnError(geoCol, "Please assign a valid geometry to this sample");
+                    return false;
+                }
+                return true;
+            }
 
-            protected double perCentDiff = 0.1;
             internal bool CheckMass()
             {
                 bool one = EC.CheckNull(this.tableSubSamples.Gross1Column, this);
@@ -59,20 +71,6 @@ namespace DB
                     return false;
                 }
                 return true;
-            }
-
-            internal MatrixRow GetMatrixByMatrixID(int templateID)
-            {
-                //find in the list of childs Rows
-                return GetMatrixRows()
-         .FirstOrDefault(o => o.MatrixID == templateID);
-            }
-
-            internal MatrixRow GetMatrixByTemplateID(int templateID)
-            {
-                //find child from template
-                return GetMatrixRows()
-         .FirstOrDefault(o => !o.IsTemplateIDNull() && o.TemplateID == templateID);
             }
 
             internal void GetDensity(bool caldensity)
@@ -168,6 +166,7 @@ namespace DB
                 // }
                 return mass;
             }
+
             internal string GetIrradiationCode()
             {
                 if (EC.IsNuDelDetch(IrradiationRequestsRow)) return string.Empty;
@@ -176,6 +175,19 @@ namespace DB
                 return IrradiationRequestsRow.IrradiationCode;
             }
 
+            internal MatrixRow GetMatrixByMatrixID(int templateID)
+            {
+                //find in the list of childs Rows
+                return GetMatrixRows()
+         .FirstOrDefault(o => o.MatrixID == templateID);
+            }
+
+            internal MatrixRow GetMatrixByTemplateID(int templateID)
+            {
+                //find child from template
+                return GetMatrixRows()
+         .FirstOrDefault(o => !o.IsTemplateIDNull() && o.TemplateID == templateID);
+            }
             internal string GetMonitorNameFromSampleName()
             {
                 string newName = string.Empty;
@@ -257,6 +269,11 @@ namespace DB
                 return false;
             }
 
+            internal void SetCreationDate()
+            {
+                SubSampleCreationDate = DateTime.Now;
+            }
+
             internal bool SetDescriptionFromMonitor()
             {
                 SubSampleDescription = GetDescriptionFromMonitor();
@@ -301,19 +318,6 @@ namespace DB
                 }
                 return false;
             }
-
-            internal bool CheckGeometry()
-            {
-                DataColumn geoCol = this.tableSubSamples.GeometryNameColumn;
-                this.SetColumnError(geoCol, null);
-                if (EC.IsNuDelDetch(GeometryRow))
-                {
-                    this.SetColumnError(geoCol, "Please assign a valid geometry to this sample");
-                    return false;
-                }
-                return true;
-            }
-
             internal bool SetGeometryFromMonitor()
             {
                 bool ok = false;
@@ -381,6 +385,11 @@ namespace DB
                 }
             }
 
+            internal void SetIrradiationRequestID(int? IrrReqID)
+            {
+                if (IrrReqID != null) IrradiationRequestsID = (int)IrrReqID;
+            }
+
             internal void SetIrradiationTime(double totalMins)
             {
                 DataColumn tCol = this.tableSubSamples.IrradiationTotalTimeColumn;
@@ -414,8 +423,6 @@ namespace DB
             {
                 this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
 
-                bool ok = false;
-
                 if (EC.IsNuDelDetch(this.MatrixRow)) SetMatrixFromGeometry();
 
                 if (!EC.IsNuDelDetch(this.MatrixRow))
@@ -431,7 +438,7 @@ namespace DB
                     //does not exist, so adopt (CLONE) the matrix to the list
                     if (m == null)
                     {
-                        MatrixDataTable set = (this.Table.DataSet as LINAA).Matrix;
+                        MatrixDataTable set = db.Matrix;
                         m = set.NewMatrixRow();
                         set.AddMatrixRow(m);
                         m.SetBasic(SubSamplesID, templateID);
@@ -445,16 +452,14 @@ namespace DB
                     //update lastMATRIX ID
                     if (MatrixID != m.MatrixID) MatrixID = m.MatrixID;
 
-                    ok = !this.MatrixRow.HasErrors();
+                  //  ok = !this.MatrixRow.HasErrors();
                 }
                 else
                 {
-                    // this.SetColumnError(this.tableSubSamples.GeometryNameColumn, "Plase assign a
-                    // matrix for this geometry");
                     this.SetColumnError(this.tableSubSamples.MatrixNameColumn, "Plase assign a matrix either directly or through a geometry");
                 }
 
-                return ok;
+                return !EC.IsNuDelDetch(this.MatrixRow);
             }
 
             internal bool SetMassFromMonitor(bool force = true)
@@ -486,16 +491,6 @@ namespace DB
                 this.MatrixRow = this.GeometryRow.MatrixRow;
                 return MatrixRow!=null;
             }
-            internal bool SetMVialFromGeometry()
-            {
-                if (EC.IsNuDelDetch(this.GeometryRow)) return false;
-                this.VialTypeRow = this.GeometryRow.VialTypeRow;
-                return VialTypeRow!=null;
-            }
-            internal void SetCreationDate()
-            {
-                SubSampleCreationDate = DateTime.Now;
-            }
             internal bool SetMatrixFromStandard()
             {
                 bool ok = false;
@@ -508,9 +503,12 @@ namespace DB
                 }
                 return EC.IsNuDelDetch(MatrixRow);
             }
-            internal void SetIrradiationRequestID(int? IrrReqID)
+
+            internal bool SetMVialFromGeometry()
             {
-                if (IrrReqID != null) IrradiationRequestsID = (int)IrrReqID;
+                if (EC.IsNuDelDetch(this.GeometryRow)) return false;
+                this.VialTypeRow = this.GeometryRow.VialTypeRow;
+                return VialTypeRow!=null;
             }
             internal bool SetName(ref int _lastSampleNr)
             {

@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.htlp = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.enlistBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.poolingBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.timeoutboxHL = new System.Windows.Forms.TextBox();
@@ -43,10 +47,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.HyperLabRTB = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label3 = new System.Windows.Forms.Label();
-            this.poolingBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.enlistBox = new System.Windows.Forms.ComboBox();
             this.htlp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -89,6 +89,48 @@
             this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49625F));
             this.htlp.Size = new System.Drawing.Size(414, 461);
             this.htlp.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 399);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(201, 62);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Enlist";
+            // 
+            // enlistBox
+            // 
+            this.enlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enlistBox.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.enlistBox.Location = new System.Drawing.Point(210, 402);
+            this.enlistBox.Name = "enlistBox";
+            this.enlistBox.Size = new System.Drawing.Size(201, 29);
+            this.enlistBox.TabIndex = 18;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(3, 342);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(201, 57);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Pooling";
+            // 
+            // poolingBox
+            // 
+            this.poolingBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poolingBox.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.poolingBox.Location = new System.Drawing.Point(210, 345);
+            this.poolingBox.Name = "poolingBox";
+            this.poolingBox.Size = new System.Drawing.Size(201, 29);
+            this.poolingBox.TabIndex = 16;
             // 
             // label8
             // 
@@ -228,48 +270,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(754, 461);
             this.splitContainer1.SplitterDistance = 414;
             this.splitContainer1.TabIndex = 11;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(3, 342);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(201, 57);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Pooling";
-            // 
-            // poolingBox
-            // 
-            this.poolingBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poolingBox.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.poolingBox.Location = new System.Drawing.Point(210, 345);
-            this.poolingBox.Name = "poolingBox";
-            this.poolingBox.Size = new System.Drawing.Size(201, 29);
-            this.poolingBox.TabIndex = 16;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 399);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(201, 62);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Enlist";
-            // 
-            // enlistBox
-            // 
-            this.enlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.enlistBox.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.enlistBox.Location = new System.Drawing.Point(210, 402);
-            this.enlistBox.Name = "enlistBox";
-            this.enlistBox.Size = new System.Drawing.Size(201, 29);
-            this.enlistBox.TabIndex = 18;
             // 
             // ucSQLConnection
             // 

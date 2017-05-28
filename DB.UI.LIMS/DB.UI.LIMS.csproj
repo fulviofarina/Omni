@@ -88,12 +88,6 @@
     <Compile Include="SSF\ucSSF.Control.Designer.cs">
       <DependentUpon>ucSSF.Control.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Connections.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Connections.Designer.cs">
-      <DependentUpon>Connections.cs</DependentUpon>
-    </Compile>
     <Compile Include="GeometrySimple\ucCC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -273,9 +267,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SSF\ucSSF.Control.resx">
       <DependentUpon>ucSSF.Control.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Connections.resx">
-      <DependentUpon>Connections.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeometrySimple\ucCC.resx">
       <DependentUpon>ucCC.cs</DependentUpon>

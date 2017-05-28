@@ -9,6 +9,13 @@ namespace DB
     {
         public partial class MonitorsRow : IRow
         {
+            public void Check()
+            {
+                foreach (DataColumn item in this.tableMonitors.Columns)
+                {
+                    Check(item);
+                }
+            }
             public void Check(DataColumn Column)
             {
                 if (Column == this.tableMonitors.MonGrossMass1Column || Column == this.tableMonitors.MonGrossMass2Column)

@@ -15,8 +15,6 @@
 
         private System.Windows.Forms.ToolStrip datesTS;
 
-        private System.Windows.Forms.ContextMenuStrip dgvCMS;
-
         private System.Windows.Forms.ToolStripTextBox lastCal;
 
         private System.Windows.Forms.ToolStripTextBox lastChg;
@@ -37,10 +35,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel11;
 
         private System.Windows.Forms.ToolStripLabel toolStripLabel17;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 
@@ -100,9 +94,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.UnitBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
-            this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.SSFBS = new System.Windows.Forms.BindingSource(this.components);
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
@@ -128,8 +119,10 @@
             this.SigB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChEpi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ToDoCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ToDoCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GtM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GtCKS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MCL = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -148,7 +141,6 @@
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.UnitBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).BeginInit();
-            this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SSFBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
@@ -160,6 +152,8 @@
             this.cfgSC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unitDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SSFDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.SuspendLayout();
             // 
             // UnitBS
@@ -177,26 +171,6 @@
             this.lINAA.QTA = null;
             this.lINAA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.lINAA.TAM = null;
-            // 
-            // dgvCMS
-            // 
-            this.dgvCMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem2.Text = "Export";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem3.Text = "View Output";
             // 
             // SSFBS
             // 
@@ -353,8 +327,8 @@
             this.unitDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.unitDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.unitDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ToDoCol,
             this.dataGridViewTextBoxColumn10,
+            this.ToDoCol,
             this.GtM,
             this.GtCKS,
             this.MCL,
@@ -431,7 +405,6 @@
             this.SigB,
             this.ChEpi,
             this.UnitID});
-            this.SSFDGV.ContextMenuStrip = this.dgvCMS;
             this.SSFDGV.DataSource = this.SSFBS;
             dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
@@ -572,34 +545,44 @@
             this.UnitID.Name = "UnitID";
             this.UnitID.Visible = false;
             // 
-            // ToDoCol
+            // errorProvider1
             // 
-            this.ToDoCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.ToDoCol.DataPropertyName = "ToDo";
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.ToDoCol.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ToDoCol.DividerWidth = 4;
-            this.ToDoCol.HeaderText = "Calc?";
-            this.ToDoCol.Name = "ToDoCol";
-            this.ToDoCol.ReadOnly = true;
-            this.ToDoCol.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ToDoCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ToDoCol.ToolTipText = "Choose the samples to calculate";
-            this.ToDoCol.Width = 64;
+            this.errorProvider1.ContainerControl = this;
+            this.errorProvider1.DataSource = this.UnitBS;
+            // 
+            // errorProvider2
+            // 
+            this.errorProvider2.ContainerControl = this;
+            this.errorProvider2.DataSource = this.SSFBS;
             // 
             // dataGridViewTextBoxColumn10
             // 
             this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTextBoxColumn10.DividerWidth = 2;
             this.dataGridViewTextBoxColumn10.HeaderText = "Sample";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // ToDoCol
+            // 
+            this.ToDoCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ToDoCol.DataPropertyName = "ToDo";
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.ToDoCol.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ToDoCol.DividerWidth = 4;
+            this.ToDoCol.HeaderText = "OK";
+            this.ToDoCol.Name = "ToDoCol";
+            this.ToDoCol.ReadOnly = true;
+            this.ToDoCol.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ToDoCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ToDoCol.ToolTipText = "Red for samples that require calculations";
+            this.ToDoCol.Width = 46;
             // 
             // GtM
             // 
@@ -748,7 +731,6 @@
             this.Size = new System.Drawing.Size(707, 527);
             ((System.ComponentModel.ISupportInitialize)(this.UnitBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lINAA)).EndInit();
-            this.dgvCMS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SSFBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
@@ -762,6 +744,8 @@
             this.cfgSC.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.unitDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SSFDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -780,8 +764,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ChEpi;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitID;
         private System.Windows.Forms.ToolStripTextBox sampleLBL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ToDoCol;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ToDoCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn GtM;
         private System.Windows.Forms.DataGridViewTextBoxColumn GtCKS;
         private System.Windows.Forms.DataGridViewTextBoxColumn MCL;

@@ -46,8 +46,8 @@ namespace DB.UI
             WCalcPath = this.Linaa.FolderPath + DB.Properties.Resources.WCalc;
             webBrowser.Url = new Uri(WCalcPath);
 
-            BS.LinkBS(ref this.bs, this.Linaa.Matrix, string.Empty, defaultFilter);
-            BS.LinkBS(ref this.compoBS, this.Linaa.Compositions, string.Empty, afterAddfilter);
+            Rsx.Dumb.BS.LinkBS(ref this.bs, this.Linaa.Matrix, string.Empty, defaultFilter);
+            Rsx.Dumb.BS.LinkBS(ref this.compoBS, this.Linaa.Compositions, string.Empty, afterAddfilter);
 
             PostRefresh(null, EventArgs.Empty);
 

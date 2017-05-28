@@ -23,6 +23,8 @@ namespace VTools
             }
         }
 
+       
+
         public string ConnectionString
         {
             get
@@ -50,33 +52,24 @@ namespace VTools
                     boxes.Add(this.enlistBox);
                     boxes.Add(this.poolingBox);
 
-                  
-                   List<string> ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
-                   ls.AddRange( SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
-                    Rsx.Dumb.UIControl.FillABox(hsrv, ls, true, false);
+
+                    List<string> ls = null;
+                    ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
+                    ls.AddRange(SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
+                    ls.Add("(localDB)\\MSSQLLocalDB");
+                    Rsx.Dumb.UIControl.FillABox(hsrv, ls, true, false);// this.hsrv.Items.AddRange(value);
+
+
+
+                    //  List<string> ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
+                    // ls.AddRange( SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
+                    //   Rsx.Dumb.UIControl.FillABox(hsrv, ls, true, false);
 
                     SQL.ConnectionString sq = new SQL.ConnectionString(HyperLabRTB.Text);
                     //set what to do when user updates boxes
                     sq.SetUI(ref boxes);
 
-
-                    hsrv.Text = sq.Server;
-                    hdb.Text = sq.DB;
-                    securityInfoHL.Text = sq.SecurityInfo;
-                    hlogin.Text = sq.Login;
-                    hpass.Text = sq.Password;
-                    timeoutboxHL.Text = sq.Timeout;
-                    poolingBox.Text = sq.Pooling;
-                    enlistBox.Text = sq.Enlist;
-
-                    hsrv.Tag = sq.ServerTag;
-                    hdb.Tag = sq.DBTag;
-                    securityInfoHL.Tag = sq.SecurityInfoTag;
-                    hlogin.Tag = sq.LoginTag;
-                    hpass.Tag = sq.PasswordTag;
-                    timeoutboxHL.Tag = sq.TimeoutTag;
-                    poolingBox.Tag = sq.PoolingTag;
-                    enlistBox.Tag = sq.EnlistTag;
+                    setTextAndTags(ref sq);
 
                     //make handler to update the BOX
                     EventHandler handler = delegate
@@ -97,12 +90,33 @@ namespace VTools
                         }
                     }
 
-                 
+
                 }
                 catch (SystemException ex)
                 {
                 }
             }
+        }
+
+        private void setTextAndTags(ref SQL.ConnectionString sq)
+        {
+            hsrv.Text = sq.Server;
+            hdb.Text = sq.DB;
+            securityInfoHL.Text = sq.SecurityInfo;
+            hlogin.Text = sq.Login;
+            hpass.Text = sq.Password;
+            timeoutboxHL.Text = sq.Timeout;
+            poolingBox.Text = sq.Pooling;
+            enlistBox.Text = sq.Enlist;
+
+            hsrv.Tag = sq.ServerTag;
+            hdb.Tag = sq.DBTag;
+            securityInfoHL.Tag = sq.SecurityInfoTag;
+            hlogin.Tag = sq.LoginTag;
+            hpass.Tag = sq.PasswordTag;
+            timeoutboxHL.Tag = sq.TimeoutTag;
+            poolingBox.Tag = sq.PoolingTag;
+            enlistBox.Tag = sq.EnlistTag;
         }
 
         public string Title

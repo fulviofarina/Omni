@@ -275,13 +275,13 @@ namespace k0X
                     avguncfil = showfilter + " AND " + MinimumFil;
                 }
 
-                BS.LinkBS(ref this.ListBS, this.Linaa.ToDo, listfil, listSort);
-                BS.LinkBS(ref this.RawBS, this.Linaa.ToDoData, rawfil, rawSort);
-                BS.LinkBS(ref this.AvgBS, this.Linaa.ToDoAvg, avguncfil, avgSort);
+                Rsx.Dumb.BS.LinkBS(ref this.ListBS, this.Linaa.ToDo, listfil, listSort);
+                Rsx.Dumb.BS.LinkBS(ref this.RawBS, this.Linaa.ToDoData, rawfil, rawSort);
+                Rsx.Dumb.BS.LinkBS(ref this.AvgBS, this.Linaa.ToDoAvg, avguncfil, avgSort);
                 Application.DoEvents();
-                BS.LinkBS(ref this.AvgUncBS, this.Linaa.ToDoAvgUnc, showfilter, avgUncSort);
-                BS.LinkBS(ref this.ResBS, this.Linaa.ToDoRes, showfilter, resSort);
-                BS.LinkBS(ref this.ResAvgBS, this.Linaa.ToDoResAvg, showfilter, resavgSort);
+                Rsx.Dumb.BS.LinkBS(ref this.AvgUncBS, this.Linaa.ToDoAvgUnc, showfilter, avgUncSort);
+                Rsx.Dumb.BS.LinkBS(ref this.ResBS, this.Linaa.ToDoRes, showfilter, resSort);
+                Rsx.Dumb.BS.LinkBS(ref this.ResAvgBS, this.Linaa.ToDoResAvg, showfilter, resavgSort);
             }
             catch (SystemException ex)
             {
@@ -294,16 +294,16 @@ namespace k0X
         {
             try
             {
-                string[] aux = BS.DeLinkBS(ref this.ListBS);
+                string[] aux = Rsx.Dumb.BS.DeLinkBS(ref this.ListBS);
                 listSort = aux[0];
                 listfil = aux[1];
-                aux = BS.DeLinkBS(ref this.RawBS);
+                aux = Rsx.Dumb.BS.DeLinkBS(ref this.RawBS);
                 rawSort = aux[0];
                 rawfil = aux[1];
-                aux = BS.DeLinkBS(ref this.AvgBS);
+                aux = Rsx.Dumb.BS.DeLinkBS(ref this.AvgBS);
                 avgSort = aux[0];
                 avgfil = aux[1];
-                aux = BS.DeLinkBS(ref this.AvgUncBS);
+                aux = Rsx.Dumb.BS.DeLinkBS(ref this.AvgUncBS);
                 avgUncSort = aux[0];
                 avguncfil = aux[1];
             }

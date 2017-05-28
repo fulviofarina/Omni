@@ -86,7 +86,7 @@ namespace DB.UI
         {
             this.filter = Interface.IBS.SubSamples.Filter;
             this.sort = Interface.IBS.SubSamples.Sort;
-            BS.DeLinkBS(ref Interface.IBS.SubSamples);
+            Rsx.Dumb.BS.DeLinkBS(ref Interface.IBS.SubSamples);
 
             
             // ucContent.DeLink();
@@ -220,16 +220,17 @@ namespace DB.UI
 
           //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             projectbox.Set(ref Interface);
-            projectbox.CallBack += delegate
+            Interface.IBS.PropertyChanged += delegate
             {
                 if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
             };
 
-
+            /*
             Interface.IBS.SubSamples.AddingNew += delegate
              {
                  projectbox.CallBack?.Invoke();
              };
+            */
             //other callBACKS CAN BE ADDED TO THIS ONE BY OTHER CONTROLS
 
             //  Interface.IBS.SubSamples = this.BS;

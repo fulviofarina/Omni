@@ -115,7 +115,7 @@ namespace DB.Tools
             aux = "Potential x.sect.";
             Tables.SetField(ref PXS, ref array, aux, invcmUnit);
 
-            if (!Gt.Equals(string.Empty) && doSSF)
+            if (!string.IsNullOrEmpty(Gt) && doSSF)
             {
                 UNIT.Gt = Dumb.Parse(Gt, 1);
                 if (UNIT.SubSamplesRow != null)
@@ -140,29 +140,32 @@ namespace DB.Tools
         }
 
 
-        public void CheckAndClean(ref UnitRow UNIT)
+        public bool CheckInputData( UnitRow UNIT)
         {
             //CLEAN
 
-            UNIT.Clean();
+         
+        
             // 1 CHECK ERRORS
-            bool isOK = UNIT.HasErrors(); //has Unit errors??
-            isOK = UNIT.SubSamplesRow.HasBasicErrors() && isOK; //has Sample Errors?
+            bool hasError = UNIT.HasErrors(); //has Unit errors??
+            hasError = UNIT.SubSamplesRow.HasBasicErrors() || hasError; //has Sample Errors?
 
-            string inputDataOK = "Input row data is OK for Sample ";
+            string inputDataOK = "Input data is OK for Sample ";
 
             inputDataOK += UNIT.Name;// inputDataOKTitle;
-            if (isOK)
+            string error = "Input data is NOT OK for ";
+            if (hasError)
             {
-                string inputDataOKTitle = "Checking data...";
-                Interface.IReport.Msg(inputDataOK, inputDataOKTitle);
+                string inputDataNotOK = error+"Sample " + UNIT.Name;
+                UNIT.SetColumnError((UNIT.Table as UnitDataTable).NameColumn, error + "Sample");
             }
             else
             {
-                string inputDataNotOK = "Input row data is NOT OK for Sample " + UNIT.Name;
-
-                throw new SystemException(inputDataNotOK);
+            
+                string inputDataOKTitle = "Checking data...";
+                Interface.IReport.Msg(inputDataOK, inputDataOKTitle);
             }
+            return !hasError;
         }
 
         public void GenerateAnInput(ref LINAA.UnitRow UNIT)
@@ -215,7 +218,8 @@ namespace DB.Tools
                 {
                     string inputGeneratedTitle = "Starting calculations...";
                     string inputGeneratedMsg = "Input metadata generated for Sample ";
-
+                    UNIT.SubSamplesRow.Selected = true;
+                
                     Interface.IReport.Msg(inputGeneratedMsg + unitName, inputGeneratedTitle);
                 }
                 else
@@ -229,22 +233,25 @@ namespace DB.Tools
         public void RunProcess()
         {
             //RUN 3
+
+          
+
             IPreferences ip = Interface.IPreferences;
             bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
             bool doCk = (ip.CurrentSSFPref.DoCK);
 
-            string msg = "Calculations started.\n Please be patient";
-            Interface.IReport.Msg(msg, "Running...");
-            Interface.IReport.Speak(msg);
-
-            string[] unitsNames = units.Select(o => o.Name).ToArray();
+            string[] unitsNames = units.Select(o => o.Name.Trim()).ToArray();
             for (int i = 0; i<unitsNames.Count(); i++)
             {
                 string item = unitsNames[i];
 
                 try
                 {
-                 
+                    //if cancelled
+                    if (!IsCalculating) continue;
+
+                
+                    //otherwise calculate
                     string newMatssfEXEFile = exefile + item + ".exe";
                     if (File.Exists(startupPath + item + inPutExt))
                     {
@@ -255,7 +262,7 @@ namespace DB.Tools
                     else
                     {
                         //remove from list
-                        units.RemoveAt(i);
+                       // units = units.Where(o => o.Name.CompareTo(item) != 0).ToList();
                     }
 
 
@@ -263,50 +270,60 @@ namespace DB.Tools
                 catch (Exception ex)
                 {
                     // runOk = false;
-                    Interface.IReport.Msg("Problems when cloning the code for " + item, "Code Cloning ERROR...");
+                    Interface.IReport.Msg("Problems when cloning code for " + item, "Code Cloning ERROR...");
                     Interface.IStore.AddException(ex);
                 }
             }
 
             //refresh
-            unitsNames = units.Select(o => o.Name).ToArray();
+     //       unitsNames = units.Select(o => o.Name).ToArray();
 
 
             foreach (string item in unitsNames)
             {
                 try
                 {
-                    RunAProcess(hide, item, exefile + item + ".exe");
 
-
-
-                    Interface.IReport.Msg("MatSSF execution OK", "MatSSF Code executed...");
+                    //if cancelled
+                    if (!IsCalculating) continue;
+                    EventHandler hdl = process_Exited;
+                    string EXE = exefile + item + ".exe";
+                        RunAProcess(hide, item, EXE, ref hdl);
                 }
                 catch (Exception ex)
                 {
                     // runOk = false;
-                    Interface.IReport.Msg("Problems when running the MatSSF code for " + item, "MatSSF ERROR...");
+                    Interface.IReport.Msg("Problems when running MatSSF for sample " + item, "MatSSF ERROR!");
                     Interface.IStore.AddException(ex);
                 }
             }
+
+            showProgress?.Invoke(null, EventArgs.Empty);
+
+            if (processTable.Count == 0)
+            {
+            
+                IsCalculating = false;
+            }
+
+
         }
 
-        public void RunAProcess(bool hide, string item, string newMatssfEXEFile)
+        public void RunAProcess(bool hide, string item, string newMatssfEXEFile, ref EventHandler exitHANDLER)
         {
-            //files in and out
-            string[] ioFile = new string[] { item + inPutExt, item + outPutExt };
-            EventHandler processExits = delegate
-            {
-                Application.OpenForms[0].Invoke(DoMatSSF(item));
-                Application.OpenForms[0].Invoke(DoCKS(item));
-                Application.OpenForms[0].Invoke(ReportFinished(item));
-            };
-            System.Diagnostics.Process process = IO.Process(cmd, "/c " + newMatssfEXEFile, startupPath, false, hide, null, processExits);
+
+            if (!File.Exists(startupPath + newMatssfEXEFile)) return;
+      
+                Interface.IReport.Msg("MatSSF is running OK for sample " + item, "MatSSF Running...");
+        //files in and out
+           string[] ioFile = new string[] { item + inPutExt, item + outPutExt };
+           
+            System.Diagnostics.Process process = IO.Process(cmd, "/c " + newMatssfEXEFile, startupPath, false, hide, null, exitHANDLER);
             //add to table
             processTable.Add((object)process, (object)item);
             //start process
             process.Start();
-
+         
             process.BeginErrorReadLine();
             process.BeginOutputReadLine();
             //set input files on Console
@@ -321,22 +338,45 @@ namespace DB.Tools
             // process.WaitForExit();
         }
 
+        private void process_Exited(object sender, EventArgs e)
+        {
+            string item = (string)processTable[sender as System.Diagnostics.Process];
+            processTable.Remove(sender as System.Diagnostics.Process);
+            // processTable((object)process, (object)item);
+            Application.OpenForms[0].Invoke(DoMatSSF(item));
+            Application.OpenForms[0].Invoke(DoCKS(item));
+            Application.OpenForms[0].Invoke(ReportFinished(item));
+        }
+
         public EventHandler ReportFinished(string sampleName)
         {
             EventHandler final = delegate
             {
+                if (!IsCalculating) return;
+
                 try
                 {
+
                     LINAA.UnitRow UNIT = null;
                     UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
 
                     Interface.IStore.Save<LINAA.SubSamplesDataTable>();
                     Interface.IStore.Save<LINAA.UnitDataTable>();
 
-                    Interface.IBS.Update<LINAA.UnitRow>(UNIT);
+                    Interface.IBS.Update<LINAA.SubSamplesRow>(UNIT.SubSamplesRow);
 
-                    string msg = "Finished for Unit " + UNIT.Name;
+                    string msg = "Finished calculations for sample " + UNIT.Name;
                     Interface.IReport.Msg(msg, "Done");
+                    UNIT.ToDo = false;
+                    UNIT.LastCalc = DateTime.Now;
+
+                    UNIT.SubSamplesRow.Selected = false;
+
+                    if (processTable.Count==0)
+                    {
+                        IsCalculating = false;
+                    }
+
                 }
                 catch (SystemException ex)
                 {
@@ -357,6 +397,9 @@ namespace DB.Tools
         {
             EventHandler chilean = delegate
             {
+                if (!IsCalculating) return;
+
+
                 try
                 {
                     LINAA.UnitRow UNIT = null;
@@ -391,6 +434,9 @@ namespace DB.Tools
         {
             EventHandler temp = delegate
             {
+
+                if (!IsCalculating) return;
+
                 try
                 {
                     bool runOk = false;
@@ -445,8 +491,9 @@ namespace DB.Tools
                     Interface.IStore.AddException(ex);
                 }
 
-                // Application.DoEvents();
-                DoMatSSF(sampleName);
+                /// WARNING
+                /////////////VOLVER A PONER SI TENGO PROBLEMAS
+              //  DoMatSSF(sampleName);
                 showProgress?.Invoke(null, EventArgs.Empty);
             };
 

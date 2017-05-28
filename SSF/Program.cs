@@ -19,8 +19,6 @@ namespace SSF
         public static Form CreateSSFUserInterface()
         {
 
-      
-
             IucPreferences preferences = LIMS.PreferencesUI();
             Form aboutbox = new AboutBox();
             IucOptions options = LIMS.OptionsUI(ref aboutbox);
@@ -33,7 +31,7 @@ namespace SSF
             ucProjectBox = ucSubSamples.projectbox;
             BindingNavigator aBindingNavigator = ucSubSamples.BN;
 
-            ucUnit units = LIMS.CreateUI(ControlNames.Units,null,true) as ucUnit;
+       //     ucUnit units = LIMS.CreateUI(ControlNames.Units,null,true) as ucUnit;
 
             ucSSF ucSSF =new ucSSF();
             ucSSF.Set(ref LIMS.Interface);
@@ -46,10 +44,10 @@ namespace SSF
             Creator.CallBack = delegate
             {
 
-                ucSSF.AttachCtrl(ref units);
+           //     ucSSF.AttachCtrl(ref units);
                 ucSSF.AttachCtrl(ref preferences);
-                ucSSF.AttachCtrl(ref aBindingNavigator);
                 ucSSF.AttachCtrl(ref ucProjectBox);
+                ucSSF.AttachCtrl(ref aBindingNavigator);
                 ucSSF.AttachCtrl(ref options);
 
                 Application.DoEvents();
@@ -103,7 +101,7 @@ namespace SSF
 
                 //3
                 ucProjectBox.Project = lastProject;
-                ucProjectBox.Refresher();
+             //   ucProjectBox.Refresher();
 
                 Form frm2 = msn.ParentForm;
                 frm2.Visible = false;

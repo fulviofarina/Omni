@@ -125,7 +125,7 @@ namespace k0X
                     ucIrrReq.Name = ProjectOrOrder + " - New Irradiation";
 
                     Application.DoEvents();
-                    LIMS.Interface.IPopulate.IIrradiations.AddIrradiation(ProjectOrOrder);
+                    LIMS.Interface.IPopulate.IIrradiations.AddNewIrradiation(ProjectOrOrder);
                     LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
 
                     this.Box_KeyUp(sender, e);

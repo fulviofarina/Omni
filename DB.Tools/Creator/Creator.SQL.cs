@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Linq;
 using DB.Properties;
+using DB.UI;
 using Rsx.SQL;
 
 namespace DB.Tools
@@ -11,6 +12,29 @@ namespace DB.Tools
 
     public partial class Creator
     {
+
+        public static void Connections()
+        {
+            LINAA.PreferencesRow prefe = Interface.IPreferences.CurrentPref;
+
+            Connections cform = new Connections(ref prefe);
+            cform.ShowDialog();
+
+            if ((prefe as DataRow).RowState != DataRowState.Modified) return;
+
+            DialogResult res = MessageBox.Show("Would you like to Save/Accept the connection changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.No)
+            {
+                Interface.IPreferences.RejectChanges();
+            }
+            else
+            {
+                prefe.Check();
+                Interface.IPreferences.SavePreferences();
+                Application.Restart();
+            }
+        }
+
         /// <summary>
         /// Prepare the needed methods and the worker
         /// </summary>
@@ -51,7 +75,6 @@ namespace DB.Tools
 
                 //show no connection Intro
                 //could not connect
-                //  MessageBoxButtons btn = MessageBoxButtons.OK;
                 Cursor.Current = Cursors.Default;
                 MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 

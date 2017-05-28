@@ -712,6 +712,7 @@
       <Column Name="GtMC" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="pTh" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="pEpi" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ChannelID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

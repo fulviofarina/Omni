@@ -6,6 +6,7 @@ using DB.Tools;
 using Rsx.Dumb;
 using System.Drawing;
 using static DB.LINAA;
+using Rsx;
 
 namespace DB.UI
 {
@@ -23,65 +24,22 @@ namespace DB.UI
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            ///check if table has no rows
-
-            try
-            {
-                int rowInder = e.RowIndex;
-
-                DataRow row = GetDRFromDataGridView(sender, rowInder);
-                if (row == null) return;
-
-              
-                bool isUnuit = row.GetType().Equals(typeof(UnitRow));
-                UnitRow unit = null;
-                if (isUnuit && lastIndex != rowInder)
-                {
-                    //so it does not select and reselect everytime;
-                    lastIndex = rowInder;
-                    unit = row as UnitRow;
-                    SubSamplesRow s = unit.SubSamplesRow;
-                   
-                    Interface.IBS.Update(s, false, true);
-
-                  //  bool isOkUnit = s.CheckUnit();
-
-                   // string samplesOK = "Sample values updated with the Template item", "Updated!";
-
-                }
-                else
-                {
-                    //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
-                    unit = Interface.ICurrent.Unit as UnitRow; 
-                    unit.SetParent(ref row);
-                    Interface.IReport.Msg("Sample values updated with the Template item", "Updated!"); //report
-
-                    //bring back to VIEW (Select)
-                    Interface.IBS.Update<UnitRow>(unit,true,false,true);
-                }
-             
-
-            }
-            catch (System.Exception ex)
-            {
-                // Interface.IReport.Msg(ex.StackTrace, ex.Message);
-                Interface.IStore.AddException(ex);
-            }
+            int rowInder = e.RowIndex;
+            DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
+            Interface.IBS.SelectUnitChildRow(rowInder, ref row, ref lastIndex);
+            PaintRows();
         }
 
-        private DataRow GetDRFromDataGridView(object sender, int rowInder)
+
+
+        public DataGridViewCellMouseEventHandler RowHeaderMouseClick
         {
-            DataGridView dgv = sender as DataGridView;
-            DataRow row = null;
-            if (dgv.RowCount == 0)
+            ///FIRST TIME AND ONLY
+            set
             {
-                Interface.IReport.Msg("No Rows found in the DataGridView", "Error", false); //report
-
+                this.unitDGV.RowHeaderMouseDoubleClick += value;
             }
-            else row = Caster.Cast<DataRow>(dgv.Rows[rowInder]);
-            return row;
         }
-
         /// <summary>
         /// Link the bindings sources, EXECUTES ONCE
         /// </summary>
@@ -97,27 +55,22 @@ namespace DB.UI
 
             unitDGV.DataSource = Interface.IBS.Units;
             SSFDGV.DataSource = Interface.IBS.SSF;
-
+            errorProvider1.DataSource = Interface.IBS.Units;
+            errorProvider2.DataSource = Interface.IBS.SSF;
+            unitDGV.RowHeadersVisible = true;
             setBindings();
-
-            this.unitDGV.CellMouseClick += cellMouseClick;
-            this.unitDGV.CellMouseClick += DgvItemSelected;
 
             this.unitDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.SSFDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-
+      
             this.unitDGV.CellValueChanged += UnitDGV_CellValueChanged;
-
-            this.unitDGV.RowPostPaint += UnitDGV_RowPostPaint;
+   
 
             PaintRows();
 
         }
 
-        private void UnitDGV_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-            
-        }
+     
 
         public void AttachCtrl<T>(ref T pro)
         {
@@ -174,82 +127,96 @@ namespace DB.UI
             }
         }
       
-      
 
         public void PaintRows()
         {
             foreach (DataGridViewRow row in this.unitDGV.Rows)
             {
+                try
+                {
+               
                 DataGridViewCell cell = unitDGV[ToDoCol.Index, row.Index];
                 paintCell(ref cell);
+                }
+
+                catch (SystemException ex)
+                {
+                    Interface.IStore.AddException(ex);
+                }
             }
         }
-        /*
-        private void UnitDGV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-           // DataGridViewCellEventArgs er = new DataGridViewCellEventArgs(ToDoCol.Index, e.RowIndex);
-            DataGridViewCell cell = unitDGV[ToDoCol.Index, e.RowIndex];
-            paintCell(ref cell);
-        }
-        */
 
         private void UnitDGV_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
 
-            DataGridView dgv = sender as DataGridView;
-            if (dgv.Rows.Count == 0 ||  e.RowIndex < 0) return;
-            if (e.ColumnIndex == ToDoCol.Index)
+            try
             {
-
-                //invert the bool or check state
-             //   object value = dgv[e.ColumnIndex, e.RowIndex].Value;
-              //  dgv[e.ColumnIndex, e.RowIndex].Value = !bool.Parse(value.ToString());
-
-                DataGridViewCell cell = dgv[e.ColumnIndex, e.RowIndex];
-                paintCell(ref cell);
-
-                //  dgv.RefreshEdit();
-                // unit.ToDo = !unit.ToDo;
+                //only if it is a TODO
+                DataGridView dgv = sender as DataGridView;
+                if (dgv.Rows.Count == 0 || e.RowIndex < 0) return;
+                if (e.ColumnIndex == ToDoCol.Index)
+                {
+                    DataGridViewCell cell = dgv[e.ColumnIndex, e.RowIndex];
+                    paintCell(ref cell);
+                }
             }
-        }
-
+            
+            catch   (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+}
+        /*
         private void cellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
+
             if (dgv.Rows.Count == 0 || e.RowIndex<0) return;
+
+            UnitRow row =  Interface.IBS.GetDataRowFromDGV(sender, e.RowIndex) as UnitRow;
+
             if (e.ColumnIndex == ToDoCol.Index)
             {
                 //invert the bool or check state
                 DataGridViewCell cell = dgv[e.ColumnIndex, e.RowIndex];
                 object value = cell.Value;
                 cell.Value = !bool.Parse(value.ToString());
-             
-                // dgv.ClearSelection();
-                //   dgv.EndEdit();
             }
         }
-
+        */
         private static void paintCell(ref DataGridViewCell cell)
         {
-            string values = cell.Value.ToString();
-           // Button c = cell as Button;
-            if (values.CompareTo("False") == 0)
-            {
-            
-                cell.Style.BackColor = System.Drawing.Color.DarkGreen;
-           
-                
-            }
-            else
-            {
-                cell.Style.BackColor = System.Drawing.Color.DarkRed;
-              //  cell.Style.ForeColor = System.Drawing.Color.DarkRed;
-            }
-            cell.Style.ForeColor = System.Drawing.Color.White;
-            cell.Style.SelectionBackColor = System.Drawing.Color.Transparent;
-            cell.Style.SelectionForeColor = System.Drawing.Color.Transparent;
 
-            cell.DataGridView.ClearSelection();
+            //try
+           // {
+                string values = cell.Value.ToString();
+                UnitRow u = Caster.Cast<UnitRow>(cell.OwningRow);
+                SubSamplesRow s = u.SubSamplesRow;
+                bool noSample = EC.IsNuDelDetch(s);
+                // Button c = cell as Button;
+                //    bool ok = 
+                if (!u.ToDo && !noSample && !u.SubSamplesRow.Selected)
+                {
+                    cell.Style.BackColor = System.Drawing.Color.DarkGreen;
+                    cell.Style.ForeColor = System.Drawing.Color.DarkGreen;
+                }
+                else if (u.ToDo && !noSample && u.SubSamplesRow.Selected)
+                {
+                    cell.Style.BackColor = System.Drawing.Color.DarkOrange;
+                    cell.Style.ForeColor = System.Drawing.Color.DarkOrange;
+                }
+                else
+                {
+                    cell.Style.BackColor = System.Drawing.Color.DarkRed;
+                    cell.Style.ForeColor = System.Drawing.Color.DarkRed;
+                    //  cell.Style.ForeColor = System.Drawing.Color.DarkRed;
+                }
+
+                cell.Style.SelectionBackColor = System.Drawing.Color.Transparent;
+                cell.Style.SelectionForeColor = System.Drawing.Color.Transparent;
+
+                cell.DataGridView.ClearSelection();
+          
            
         }
 
@@ -259,7 +226,7 @@ namespace DB.UI
             BindingSource bs = Interface.IBS.Units;
 
             string sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
-            BS.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
+            Rsx.Dumb.BS.LinkBS(ref bs, Interface.IDB.Unit, string.Empty, sort);
 
             DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
             string text = "Text";
@@ -270,7 +237,7 @@ namespace DB.UI
             this.lastCal.TextBox.DataBindings.Add(lastcalbs);
             this.lastChg.TextBox.DataBindings.Add(lastchgbs);
             column = Interface.IDB.Unit.NameColumn.ColumnName;
-            Binding b0 = BS.ABinding(ref bs, column);
+            Binding b0 = Rsx.Dumb.BS.ABinding(ref bs, column);
             sampleLBL.TextBox.DataBindings.Add(b0);
            
             // Interface.IBS.Units = bs; //link to binding source

@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>https://sites.google.com/site/fulviofarina/system/app/pages/admin/attachments/</PublishUrl>
+    <PublishUrl>ftp://ftp.drivehq.com/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://sites.google.com/site/fulviofarina/system/app/pages/admin/attachments/</InstallUrl>
+    <InstallUrl>http://fulviofarina.drivehq.com/</InstallUrl>
     <TargetCulture>en-US</TargetCulture>
     <ProductName>Self-shielding factors</ProductName>
     <PublisherName>Fulvio Farina Arboccò</PublisherName>
@@ -240,7 +240,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

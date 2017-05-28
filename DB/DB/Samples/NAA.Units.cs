@@ -12,7 +12,7 @@ namespace DB
         partial class UnitDataTable : IColumn
         {
             // private DataColumn[] changeables;
-            private DataColumn[] nonNullables;
+            private DataColumn[] nonNullCols;
 
             /// <summary>
             /// fix this to use windows user
@@ -27,13 +27,21 @@ namespace DB
                 }
             }
 
-            public IEnumerable<DataColumn> NonNullables
+            public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
-                    if (nonNullables == null)
+                    return null;
+                }
+            }
+            public IEnumerable<DataColumn> NonNullables
+            {
+                
+                get
+                {
+                    if (nonNullCols == null)
                     {
-                        nonNullables = new DataColumn[] {
+                        nonNullCols = new DataColumn[] {
                             this.columnChRadius, this.columnChLength,
                             this.columnkth,this.columnkepi,
                             this.columnChCfg,
@@ -44,7 +52,7 @@ namespace DB
                             this.nFactorColumn
                         };
                     }
-                    return nonNullables;
+                    return nonNullCols;
                 }
             }
 
@@ -79,26 +87,7 @@ namespace DB
             /// </summary>
             /// <param name="sender"></param>
             /// <param name="e">     </param>
-            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
-            {
-                DataColumn c = e.Column;
-
-                //should pass or No
-                if (!NonNullables.Contains(c) && c != this.SSFTableColumn) return;
-
-                DataRow row = e.Row;
-                UnitRow r = row as UnitRow;
-
-                try
-                {
-                    r.Check(c);
-                }
-                catch (SystemException ex)
-                {
-                    (this.DataSet as LINAA).AddException(ex);
-                    EC.SetRowError(e.Row, e.Column, ex);
-                }
-            }
+           
 
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
@@ -113,7 +102,7 @@ namespace DB
 
                     if (change)
                     {
-                        r.ValueChanged();
+                        r.valueChanged();
                     }
                 }
                 catch (SystemException ex)

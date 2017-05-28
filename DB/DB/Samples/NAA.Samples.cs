@@ -12,24 +12,32 @@ namespace DB
         /// <summary>
         /// Cleaned
         /// </summary>
-        public partial class SubSamplesDataTable
+        public partial class SubSamplesDataTable : IColumn
         {
-            private DataColumn[] nonNullable;
+        //    private DataColumn[] nonNullable=null;
+            private DataColumn[] simplenonNullable=null;
+            private DataColumn[] nonNullableUnit=null;
 
-            private DataColumn[] nonNullableUnit;
-
-            public DataColumn[] NonNullable
+            public DataColumn[] SimpleNonNullable
             {
                 get
                 {
-                    if (nonNullable == null)
+                    if (simplenonNullable == null)
                     {
-                        nonNullable = new DataColumn[]{ columnSubSampleName,
+                        simplenonNullable = new DataColumn[]{ columnSubSampleName,
                      columnSubSampleCreationDate,columnSubSampleDescription,columnVol,
                      columnFC, columnCapsuleName, columnMatrixName };
                     }
 
-                    return nonNullable;
+                    return simplenonNullable;
+                }
+            }
+            //WHEN NNULL IT BYPASES
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    return null;
                 }
             }
 
@@ -46,30 +54,7 @@ namespace DB
                 }
             }
 
-            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
-            {
-
-             
-                DataRow row = e.Row;
-                DataColumn column = e.Column;
-
-
-                if (NonNullable.Contains(column))
-                {
-                    EC.CheckNull(column, row);
-                    return;
-                }
-                try
-                {
-                    LINAA.SubSamplesRow subs = row as LINAA.SubSamplesRow; //cast
-                    subs.Check(column);
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(row, column, ex);
-                    (this.DataSet as LINAA).AddException(ex);
-                }
-            }
+          
 
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
@@ -87,7 +72,7 @@ namespace DB
 
                     bool change = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) != 0);
 
-                    if (change) r.UnitRow?.ValueChanged();
+                    if (change) r.UnitRow?.valueChanged();
                 }
                 catch (SystemException ex)
                 {
@@ -101,13 +86,13 @@ namespace DB
 
         protected internal void handlersSamples()
         {
-            handlers.Add(Standards.DataColumnChanged);
+            handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Standards));
 
-            handlers.Add(Monitors.DataColumnChanged);
+            handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Monitors));
 
-            handlers.Add(Unit.DataColumnChanged);
+            handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Unit));
 
             // tableIRequestsAverages.ChThColumn.Expression = " ISNULL(1000 *

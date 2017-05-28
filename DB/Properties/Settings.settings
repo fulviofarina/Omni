@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="SpectraFolder" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\scksrv1\gkd\DOKUMENT\LRM\LABO_NAA\METINGEN\</Value>
+      <Value Profile="(Default)">c:\</Value>
     </Setting>
     <Setting Name="SpectraServer" Type="System.String" Scope="Application">
       <Value Profile="(Default)">PC1533</Value>
     </Setting>
     <Setting Name="deployPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\scksrv1\gkd\DOKUMENT\LRM\_Software_Ontwikkeling\ex_RNM_Archief\k0X\</Value>
+      <Value Profile="(Default)">c:\</Value>
     </Setting>
     <Setting Name="HLSNMNAAConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

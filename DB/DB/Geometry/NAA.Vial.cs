@@ -9,21 +9,37 @@ namespace DB
     public partial class LINAA
     {
 
-        public partial class VialTypeRow
+        public partial class VialTypeRow : IRow
         {
+            public void Check()
+            {
+                foreach (DataColumn column in this.tableVialType.Columns)
+                {
+                    Check(column);
+                }
+                //   return this.GetColumnsInError().Count() != 0;
+            }
+            public void Check(DataColumn Column)
+            {
+                bool nu = EC.CheckNull(Column, this);
+            }
 
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
-                return colsInE.Intersect(this.tableVialType.NonNullables).Count() != 0;
+                return colsInE.Intersect(this.tableVialType.ForbiddenNullCols).Count() != 0;
             }
 
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                //throw new NotImplementedException();
+            }
         }
-        partial class VialTypeDataTable
+        partial class VialTypeDataTable : IColumn
         {
             private IEnumerable<DataColumn> nonNullables;
 
-            public IEnumerable<DataColumn> NonNullables
+            public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
@@ -40,24 +56,8 @@ namespace DB
                 }
             }
 
-            public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
-            {
-                DataColumn col = e.Column;
-                VialTypeRow subs = e.Row as VialTypeRow;
-                try
-                {
-                    if (NonNullables.Contains(col))
-                    {
-                        bool nu = EC.CheckNull(e.Column, e.Row);
-                        if (col == this.columnVialTypeRef && nu) subs.VialTypeRef = "No Name";
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    (this.DataSet as LINAA).AddException(ex);
-                    EC.SetRowError(e.Row, e.Column, ex);
-                }
-            }
+            
+          
         }
     }
 }

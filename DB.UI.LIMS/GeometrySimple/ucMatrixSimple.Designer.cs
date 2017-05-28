@@ -37,8 +37,6 @@
 
         private System.Windows.Forms.ToolStrip contentTS;
 
-        private System.Windows.Forms.ContextMenuStrip dgvCMS;
-
         private DB.LINAA lINAA;
 
         private System.Windows.Forms.BindingNavigator MatrixBN;
@@ -62,9 +60,6 @@
        // private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 
         private System.Windows.Forms.TableLayoutPanel TLPMatrix;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 
@@ -109,6 +104,7 @@
             this.contentLBL = new System.Windows.Forms.ToolStripLabel();
             this.contentNameBox = new System.Windows.Forms.ToolStripTextBox();
             this.MatrixBN = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -119,11 +115,7 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.ucComposition1 = new DB.UI.ucComposition();
-            this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -139,7 +131,6 @@
             this.contentTS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).BeginInit();
             this.MatrixBN.SuspendLayout();
-            this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
             this.SuspendLayout();
@@ -158,8 +149,8 @@
             this.TLPMatrix.Location = new System.Drawing.Point(0, 0);
             this.TLPMatrix.Name = "TLPMatrix";
             this.TLPMatrix.RowCount = 2;
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.548709F));
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.45129F));
+            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TLPMatrix.Size = new System.Drawing.Size(706, 493);
             this.TLPMatrix.TabIndex = 6;
             // 
@@ -176,7 +167,7 @@
             this.matrixDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.matrixDGV.AutoGenerateColumns = false;
             this.matrixDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.matrixDGV.BackgroundColor = System.Drawing.Color.Gray;
+            this.matrixDGV.BackgroundColor = System.Drawing.Color.Plum;
             this.matrixDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.matrixDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.matrixDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
@@ -206,7 +197,7 @@
             this.matrixDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.matrixDGV.EnableHeadersVisualStyles = false;
             this.matrixDGV.GridColor = System.Drawing.Color.Black;
-            this.matrixDGV.Location = new System.Drawing.Point(3, 45);
+            this.matrixDGV.Location = new System.Drawing.Point(3, 32);
             this.matrixDGV.MultiSelect = false;
             this.matrixDGV.Name = "matrixDGV";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -219,7 +210,7 @@
             this.matrixDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.matrixDGV.RowTemplate.Height = 24;
             this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.matrixDGV.Size = new System.Drawing.Size(360, 445);
+            this.matrixDGV.Size = new System.Drawing.Size(360, 458);
             this.matrixDGV.TabIndex = 7;
             // 
             // matrixNameDataGridViewTextBoxColumn1
@@ -276,17 +267,18 @@
             this.contentTS.Location = new System.Drawing.Point(366, 0);
             this.contentTS.Name = "contentTS";
             this.contentTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.contentTS.Size = new System.Drawing.Size(340, 42);
+            this.contentTS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.contentTS.Size = new System.Drawing.Size(340, 29);
             this.contentTS.TabIndex = 5;
             this.contentTS.Text = "toolStrip8";
             // 
             // contentLBL
             // 
             this.contentLBL.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contentLBL.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.contentLBL.ForeColor = System.Drawing.Color.DarkViolet;
             this.contentLBL.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.contentLBL.Name = "contentLBL";
-            this.contentLBL.Size = new System.Drawing.Size(94, 39);
+            this.contentLBL.Size = new System.Drawing.Size(94, 26);
             this.contentLBL.Text = "Content of:";
             // 
             // contentNameBox
@@ -294,14 +286,14 @@
             this.contentNameBox.BackColor = System.Drawing.SystemColors.Control;
             this.contentNameBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.contentNameBox.Name = "contentNameBox";
-            this.contentNameBox.Size = new System.Drawing.Size(140, 42);
+            this.contentNameBox.Size = new System.Drawing.Size(140, 29);
             this.contentNameBox.Text = "Nothing";
             this.contentNameBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MatrixBN
             // 
             this.MatrixBN.AddNewItem = this.bindingNavigatorAddNewItem;
-            this.MatrixBN.BackColor = System.Drawing.SystemColors.Menu;
+            this.MatrixBN.BackColor = System.Drawing.SystemColors.Control;
             this.MatrixBN.BindingSource = this.MatrixBS;
             this.MatrixBN.CountItem = this.bindingNavigatorCountItem;
             this.MatrixBN.DeleteItem = this.bindingNavigatorDeleteItem;
@@ -328,15 +320,25 @@
             this.MatrixBN.Name = "MatrixBN";
             this.MatrixBN.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.MatrixBN.PositionItem = this.bindingNavigatorPositionItem;
-            this.MatrixBN.Size = new System.Drawing.Size(366, 42);
+            this.MatrixBN.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.MatrixBN.Size = new System.Drawing.Size(366, 29);
             this.MatrixBN.TabIndex = 1;
             this.MatrixBN.Text = "bindingNavigator1";
+            // 
+            // bindingNavigatorAddNewItem
+            // 
+            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(49, 39);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(49, 26);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
             // 
@@ -346,7 +348,7 @@
             this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 39);
+            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 26);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
             // bindingNavigatorMoveFirstItem
@@ -355,7 +357,7 @@
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 39);
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 26);
             this.bindingNavigatorMoveFirstItem.Text = "Move first";
             // 
             // bindingNavigatorMovePreviousItem
@@ -364,18 +366,19 @@
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 39);
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 26);
             this.bindingNavigatorMovePreviousItem.Text = "Move previous";
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 42);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 29);
             // 
             // bindingNavigatorPositionItem
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Position";
             this.bindingNavigatorPositionItem.AutoSize = false;
+            this.bindingNavigatorPositionItem.ForeColor = System.Drawing.Color.Black;
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(55, 29);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -385,7 +388,7 @@
             // bindingNavigatorSeparator1
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 42);
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 29);
             // 
             // bindingNavigatorMoveNextItem
             // 
@@ -393,7 +396,7 @@
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 39);
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 26);
             this.bindingNavigatorMoveNextItem.Text = "Move next";
             // 
             // bindingNavigatorMoveLastItem
@@ -402,51 +405,22 @@
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 39);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 26);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 42);
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 39);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 29);
             // 
             // ucComposition1
             // 
             this.ucComposition1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucComposition1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucComposition1.Location = new System.Drawing.Point(369, 45);
+            this.ucComposition1.Location = new System.Drawing.Point(369, 32);
             this.ucComposition1.Name = "ucComposition1";
-            this.ucComposition1.Size = new System.Drawing.Size(334, 445);
+            this.ucComposition1.Size = new System.Drawing.Size(334, 458);
             this.ucComposition1.TabIndex = 8;
-            // 
-            // dgvCMS
-            // 
-            this.dgvCMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem2.Text = "Export";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem3.Text = "View Output";
             // 
             // matrixIDDataGridViewTextBoxColumn
             // 
@@ -525,7 +499,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBN)).EndInit();
             this.MatrixBN.ResumeLayout(false);
             this.MatrixBN.PerformLayout();
-            this.dgvCMS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
             this.ResumeLayout(false);

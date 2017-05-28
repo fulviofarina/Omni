@@ -68,6 +68,13 @@ namespace DB.UI
                 errorProvider2.DataMember = Interface.IDB.SubSamples.TableName;
                 errorProvider2.DataSource = Interface.IBS.SubSamples;
 
+                
+                Interface.IBS.PropertyChanged += delegate
+             {
+
+             //    sampleDGV.Visible = Interface.IBS.SubSamples.Count != 0;
+             };
+                
                 Interface.IReport.Msg("Database", "Units were loaded!");
             }
             catch (System.Exception ex)
@@ -164,7 +171,7 @@ namespace DB.UI
             //units
             UnitDataTable Unit = Interface.IDB.Unit;
             BindingSource bs = Interface.IBS.Units; //link to binding source;
-            Hashtable bindings = BS.ArrayOfBindings(ref bs, rounding);
+            Hashtable bindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, rounding);
 
             string column;
             column = Unit.ChRadiusColumn.ColumnName;

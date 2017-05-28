@@ -13,28 +13,15 @@ namespace DB
 
         partial class MonitorsDataTable : IColumn
         {
-            public IEnumerable<DataColumn> NonNullables
+            public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
-                    throw new NotImplementedException();
+                    return null;
                 }
             }
 
-            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
-            {
-                try
-                {
-                    MonitorsRow m = e.Row as MonitorsRow;
-
-                    m.Check(e.Column);
-                }
-                catch (SystemException ex)
-                {
-                    (this.DataSet as LINAA).AddException(ex);
-                    EC.SetRowError(e.Row, e.Column, ex);
-                }
-            }
+          
 
           
         }

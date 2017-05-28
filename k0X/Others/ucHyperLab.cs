@@ -53,9 +53,9 @@ namespace k0X
             this.Linaa.TAM.Connection.ConnectionString = DB.Properties.Settings.Default.HLSNMNAAConnectionString;
             HLTA = new DB.LINAATableAdapters.PeaksHLTableAdapter();
 
-            BS.LinkBS(ref this.measBS, this.Linaa.Measurements, string.Empty, "MeasurementStart desc");
-            BS.LinkBS(ref this.peaksBS, this.Linaa.PeaksHL, string.Empty, "Energy desc");
-            BS.LinkBS(ref this.gammasBS, this.Linaa.Gammas, string.Empty, "Intensity desc");
+            Rsx.Dumb.BS.LinkBS(ref this.measBS, this.Linaa.Measurements, string.Empty, "MeasurementStart desc");
+            Rsx.Dumb.BS.LinkBS(ref this.peaksBS, this.Linaa.PeaksHL, string.Empty, "Energy desc");
+            Rsx.Dumb.BS.LinkBS(ref this.gammasBS, this.Linaa.Gammas, string.Empty, "Intensity desc");
 
             AuxiliarForm form = new AuxiliarForm();
             UserControl control = this;
@@ -180,7 +180,7 @@ namespace k0X
                         table.Dispose();
                     }
                 }
-                BS.LinkBS(ref this.gammasBS, GaTA.GetPossibleIsotopes(peak.Energy, 1));
+                Rsx.Dumb.BS.LinkBS(ref this.gammasBS, GaTA.GetPossibleIsotopes(peak.Energy, 1));
             }
         }
 
@@ -268,7 +268,7 @@ namespace k0X
             {
                 filter = "Detector = '" + e.Node.Text + "'";
             }
-            BS.LinkBS(ref this.measBS, this.Linaa.Measurements, filter, "MeasurementStart desc");
+            Rsx.Dumb.BS.LinkBS(ref this.measBS, this.Linaa.Measurements, filter, "MeasurementStart desc");
         }
     }
 }

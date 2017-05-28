@@ -23,16 +23,23 @@ namespace DB
 
             }
 
-            public bool Check()
+            public void Check()
             {
                 foreach (DataColumn column  in this.tableSubSamples.Columns)
                 {
                     Check(column);
                 }
-                return this.GetColumnsInError().Count() != 0;
+             //   return this.GetColumnsInError().Count() != 0;
             }
             public void Check(DataColumn column)
             {
+
+                if (this.tableSubSamples.SimpleNonNullable.Contains(column))
+                {
+                    EC.CheckNull(column, this);
+                    return;
+                }
+
                 bool calMass, calRad, calFh, calDensity;
                 //TODO: Mejorar esto
                 SSFPrefRow pref = db.SSFPref.FirstOrDefault();

@@ -28,7 +28,7 @@ namespace DB
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public IrradiationRequestsRow AddIrradiation(string project)
+        public IrradiationRequestsRow AddNewIrradiation(string project)
         {
             string projetNoCd = project.Trim().ToUpper();
 
@@ -47,10 +47,17 @@ namespace DB
 
             return i;
         }
-
+        public ChannelsRow AddNewChannel()
+        {
+            // ChannelsRow v = e.NewObject as ChannelsRow;//Interface.IDB.Matrix.NewMatrixRow();
+            ChannelsRow v = Channels.NewChannelsRow() as ChannelsRow;
+            Channels.AddChannelsRow(v);
+            return v;
+        }
     }
     public partial class LINAA : IIrradiations
     {
+      
 
         public void PopulateChannels()
         {

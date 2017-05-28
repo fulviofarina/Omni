@@ -15,8 +15,20 @@ namespace DB
         /// </summary>
         public partial class UnitRow : IRow
         {
+            public void Check()
+            {
+                foreach (DataColumn column in this.tableUnit.Columns)
+                {
+                    Check(column);
+                }
+                //   return this.GetColumnsInError().Count() != 0;
+            }
+
             public void Check(DataColumn c)
             {
+
+                if (!this.tableUnit.NonNullables.Contains(c) && c != this.tableUnit.SSFTableColumn) return;
+
                 bool nullo = EC.CheckNull(c, this);// string.IsNullOrEmpty(e.Row.GetColumnError(e.Column));
 
                 if (this.tableUnit.kepiColumn == c)
@@ -62,13 +74,13 @@ namespace DB
                         isWGT = isWGT || this.tableUnit.defaultValue;
                         if (isWGT)
                         {
-                            SetWGt();
+                            setWGt();
                         }
                         bool isBell = EC.CheckNull(this.tableUnit.BellFactorColumn, this);
                         isBell = isBell || this.tableUnit.defaultValue;
                         if (isBell)
                         {
-                            SetBellFactor();
+                            setBellFactor();
                         }
                     }
                 }
@@ -111,7 +123,7 @@ namespace DB
                 SetMCLNull();
                 SetPXSNull();
                 SetEXSNull();
-
+                SetColumnError(this.tableUnit.NameColumn, null);
                 SetSSFTableNull();
                 AcceptChanges();
             }
@@ -138,23 +150,27 @@ namespace DB
                 if (isChannel)
                 {
                     ChannelsRow c = row as ChannelsRow;
-                    SetChannel(ref c);
+                    setChannel(ref c);
                 }
                else  if (!isMatrix)
                 {
                     if (t.Equals(typeof(VialTypeRow)))
                     {
                         LINAA.VialTypeRow v = row as VialTypeRow;
-                         SetRabbit(ref v);
+                         setRabbit(ref v);
                        
                     }
+                    //if a sample (first time ADD)
                     else
                     {
                         SubSamplesRow s = row as SubSamplesRow;
-                        SetSample(ref s);
-                      
-                        ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
-                        SetParent(ref c);
+                        setSample(ref s);
+                        //set default channel from irradiation request
+                        if (!EC.IsNuDelDetch(s.IrradiationRequestsRow))
+                        {
+                            ChannelsRow c = s.IrradiationRequestsRow.ChannelsRow;
+                            SetParent(ref c);
+                        }
                     }
                 }
                 else if (isMatrix)
@@ -171,20 +187,37 @@ namespace DB
 
         public partial class UnitRow
         {
-            internal void SetRabbit(ref VialTypeRow v)
+            internal void setRabbit(ref VialTypeRow v)
             {
-                this.ChRadius = v.InnerRadius;
-                this.ChLength = v.MaxFillHeight;
+
                 if (v.IsRabbit)
                 {
-                    if (SubSamplesRow.ChCapsuleID != v.VialTypeID)
+                                     
+                   if (SubSamplesRow.IsChCapsuleIDNull() || SubSamplesRow.ChCapsuleID != v.VialTypeID)
+                   {
+                       SubSamplesRow.ChCapsuleID = v.VialTypeID;
+                    }
+                   else
                     {
-                        SubSamplesRow.ChCapsuleID = v.VialTypeID;
+                        //JUST UPDATE
+                         this.ChRadius = v.InnerRadius;
+                         this.ChLength = v.MaxFillHeight;
                     }
                 }
-                else SubSamplesRow.CapsulesID = v.VialTypeID;
+                else
+                {
+                  if (SubSamplesRow.IsCapsulesIDNull()  || SubSamplesRow.CapsulesID != v.VialTypeID)
+                    {
+                        SubSamplesRow.CapsulesID = v.VialTypeID;
+                    }
+                    else
+                    {
+                        this.SubSamplesRow.Radius = v.InnerRadius;
+                        this.SubSamplesRow.FillHeight = v.MaxFillHeight;
+                    }
+                }
             }
-            internal void SetSample(ref SubSamplesRow s)
+            internal void setSample(ref SubSamplesRow s)
             {
                 ToDo = true;
                 LastCalc = DateTime.Now;
@@ -196,13 +229,13 @@ namespace DB
             /// <summary>
             /// RESET THE UNIT TODO SO IT CAN BE RECALCULATED
             /// </summary>
-            internal void ValueChanged()
+            internal void valueChanged()
             {
                 this.LastChanged = DateTime.Now;
                 ToDo = true;
             }
 
-            internal void SetBellFactor()
+            internal void setBellFactor()
             {
                 if (ChCfg.Contains("2"))
                 {
@@ -221,7 +254,7 @@ namespace DB
                 }
             }
 
-            internal void SetWGt()
+            internal void setWGt()
             {
                 if (ChCfg.Contains("2"))
                 {
@@ -272,11 +305,18 @@ namespace DB
             }
 
             /// <summary>
-            /// Sets the channel data
+            /// Sets the specific channel data
+            /// The Channel row from the irradiation request is the default Row in case there's nothing
+            /// However each unit has its own channel row, which can override all
+            /// data sample.IrradiationRequest.ChannelRow
             /// </summary>
             /// <param name="c"></param>
-            internal void SetChannel(ref LINAA.ChannelsRow c)
+            internal void setChannel(ref LINAA.ChannelsRow c)
             {
+                //associate the channel
+                this.ChannelsRow = c;
+                this.SubSamplesRow.f = c.f; //override f
+                this.SubSamplesRow.Alpha = c.Alpha; //override Alpha (yes)
                 this.kth = c.kth;
                 this.kepi = c.kepi;
                 this.ChCfg = c.FluxType;
@@ -286,6 +326,7 @@ namespace DB
                 this.nFactor = c.nFactor;
                 this.pTh = c.pTh;
                 this.pEpi = c.pEpi;
+               
             }
 
            

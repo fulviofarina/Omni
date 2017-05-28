@@ -72,21 +72,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connections.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Connections.Designer.cs">
+      <DependentUpon>Connections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Creator\Creator.SQL.cs" />
     <Compile Include="Creator\Creator.Public.cs" />
-    <Compile Include="Interface\BS\BindingSources.Update.cs" />
-    <Compile Include="Interface\BS\BindingSources.Public.cs" />
-    <Compile Include="Interface\BS\BindingSources.cs" />
-    <Compile Include="Interface\Current\Current.Public.cs" />
-    <Compile Include="Interface\Current\ICurrent.cs" />
-    <Compile Include="Interface\Populate\Populate.cs" />
-    <Compile Include="Interface\Preferences\Preferences.Public.cs" />
-    <Compile Include="Interface\Preferences\Preferences.cs" />
-    <Compile Include="Interface\Report\IReport.cs" />
-    <Compile Include="Interface\Report\Report.Public.cs" />
-    <Compile Include="Interface\Report\Report.cs" />
-    <Compile Include="Interface\Interface.cs" />
-    <Compile Include="Interface\Preferences\IPreferences.cs" />
+    <Compile Include="BS\BS.Fields.cs" />
+    <Compile Include="BS\BS.Update.cs" />
+    <Compile Include="BS\BS.Public.cs" />
+    <Compile Include="BS\BS.cs" />
+    <Compile Include="Current\Current.Public.Fields.cs" />
+    <Compile Include="Current\Current.Public.cs" />
+    <Compile Include="Current\ICurrent.cs" />
+    <Compile Include="Populate\Populate.Fields.cs" />
+    <Compile Include="Populate\Populate.cs" />
+    <Compile Include="Preferences\Preferences.Public.cs" />
+    <Compile Include="Preferences\Preferences.cs" />
+    <Compile Include="Report\IReport.cs" />
+    <Compile Include="Report\Report.Public.cs" />
+    <Compile Include="Report\Report.cs" />
+    <Compile Include="Interface.cs" />
+    <Compile Include="Preferences\IPreferences.cs" />
     <Compile Include="SSF\Main.cs" />
     <Compile Include="SSF\Fields.cs" />
     <Compile Include="SSF\Engine.cs" />
@@ -139,6 +148,10 @@
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
       <Name>Rsx.SQL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
+      <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
+      <Name>VTools.Explorer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WC\Static\Populate.cs" />
@@ -154,6 +167,11 @@
     <Content Include="SSF\MatSSF\MATSSF_INP.TXT" />
     <Content Include="SSF\MatSSF\MATSSF_LST.TXT" />
     <Content Include="SSF\MatSSF\MATSSF_XSR.TXT" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Connections.resx">
+      <DependentUpon>Connections.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

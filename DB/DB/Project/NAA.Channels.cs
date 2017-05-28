@@ -18,15 +18,24 @@ namespace DB
     {
         partial class ChannelsRow : IRow
         {
+
+            public void Check()
+            {
+                foreach (DataColumn column in this.tableChannels.Columns)
+                {
+                    Check(column);
+                }
+                //   return this.GetColumnsInError().Count() != 0;
+            }
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
-                return colsInE.Intersect(this.tableChannels.NonNullables)
+                return colsInE.Intersect(this.tableChannels.ForbiddenNullCols)
                     .Count() != 0;
             }
             public void SetParent<T>(ref T row, object[] args = null)
             {
-                throw new NotImplementedException();
+               // throw new NotImplementedException();
             }
             public void Check(DataColumn Column)
             {
@@ -127,7 +136,7 @@ namespace DB
                     return !(this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
                 }
             }
-            public IEnumerable<DataColumn> NonNullables
+            public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
@@ -143,22 +152,7 @@ namespace DB
                 }
             }
 
-            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
-            {
-                ChannelsRow ch = e.Row as ChannelsRow;
-
-                try
-                {
-                    if (NonNullables.Contains(e.Column))
-                    {
-                        ch.Check(e.Column);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    e.Row.SetColumnError(e.Column, ex.Message);
-                }
-            }
+          
         }
     }
 }

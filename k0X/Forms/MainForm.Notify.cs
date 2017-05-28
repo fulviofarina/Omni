@@ -72,7 +72,7 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-            LIMS.Connections();
+            Creator.Connections();
 
            // if (!restart) return;
 

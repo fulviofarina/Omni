@@ -43,21 +43,18 @@ namespace DB.Tools
             if (inter != null)
             {
                 inter.IAdapter.DisposeAdapters();
+           
             }
             LINAA LINAA = new LINAA();
             inter = new Interface(ref LINAA);
-
             Interface = inter;
-       
-
           //en este orden
             checkDirectories();
-
+            MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
             Interface.IReport.Msg(LOADING_DB, "Initializing...");
             Application.DoEvents();
             Interface.IDB.PopulateColumnExpresions();
             Interface.IPreferences.PopulatePreferences();
-    
             Cursor.Current = Cursors.Default;
         }
 

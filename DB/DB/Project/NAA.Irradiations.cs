@@ -9,12 +9,20 @@ namespace DB
 {
     public partial class LINAA
     {
-        public partial class IrradiationRequestsRow
+        public partial class IrradiationRequestsRow : IRow
         {
+            public void Check()
+            {
+                foreach (DataColumn column in this.tableIrradiationRequests.Columns)
+                {
+                    Check(column);
+                }
+                //   return this.GetColumnsInError().Count() != 0;
+            }
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
-                return colsInE.Intersect(this.tableIrradiationRequests.NonNullables)
+                return colsInE.Intersect(this.tableIrradiationRequests.ForbiddenNullCols)
                     .Count() != 0;
             }
 
@@ -68,13 +76,18 @@ namespace DB
                     ChannelsRow = GetChannel();
                 }
             }
+
+            public void SetParent<T>(ref T rowParent, object[] args = null)
+            {
+                //throw new NotImplementedException();
+            }
         }
 
-        partial class IrradiationRequestsDataTable
+        partial class IrradiationRequestsDataTable :IColumn
         {
             private IEnumerable<DataColumn> nonNullables;
 
-            public IEnumerable<DataColumn> NonNullables
+            public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
@@ -86,30 +99,15 @@ namespace DB
                 }
             }
 
-            public void DataColumnChanged(object sender, DataColumnChangeEventArgs e)
-            {
-                try
-                {
-                    IrradiationRequestsRow r = e.Row as IrradiationRequestsRow;
-                    if (NonNullables.Contains(e.Column))
-                    {
-                        r.Check(e.Column);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    (this.DataSet as LINAA).AddException(ex);
-                    EC.SetRowError(e.Row, e.Column, ex);
-                }
-            }
+          
         }
 
         protected internal void handlersIrradiations()
         {
-            handlers.Add(Channels.DataColumnChanged);
+            handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Channels));
 
-            handlers.Add(IrradiationRequests.DataColumnChanged);
+            handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(IrradiationRequests));
         }
     }

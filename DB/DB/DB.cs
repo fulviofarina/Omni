@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Rsx;
 
 namespace DB
 {
@@ -56,7 +58,27 @@ namespace DB
 
 
 
+        public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
+        {
+            try
+            {
+                DataColumn col = e.Column;
+                IColumn table = e.Row.Table as IColumn;
 
+                if (table.ForbiddenNullCols != null)
+                {
+                    if (!table.ForbiddenNullCols.Contains(col)) return;
+                }
+
+                IRow m = e.Row as IRow;
+                m.Check(col);
+            }
+            catch (SystemException ex)
+            {
+                EC.SetRowError(e.Row, e.Column, ex);
+                AddException(ex);
+            }
+        }
 
 
 
@@ -69,13 +91,13 @@ namespace DB
             // if( e.Action != DataRowAction.Commit) return;
             if (e.Row.RowState == DataRowState.Deleted) return;
             e.Row.ClearErrors();
-            dynamic table;
-            table = e.Row.Table;
+        //    dynamic table;
+        //    table = e.Row.Table.DataSet;
             IEnumerable<DataColumn> cols = e.Row.Table.Columns.OfType<DataColumn>();
             foreach (DataColumn column in cols)
             {
                 DataColumnChangeEventArgs args = new DataColumnChangeEventArgs(e.Row, column, e.Row[column]);
-                table.DataColumnChanged(sender, args);
+                DataColumnChanged(sender, args);
             }
         }
 

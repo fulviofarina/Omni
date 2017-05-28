@@ -121,7 +121,7 @@ namespace DB.UI
                   
                       string format = this.roundingTextBox.Text;
                       if (format.Length < 2) return;
-                      BS.ChangeBindingsFormat(format, ref units);
+                      Rsx.Dumb.BS.ChangeBindingsFormat(format, ref units);
           
                       Interface.IPreferences.CurrentSSFPref.Rounding = format;
                
@@ -138,7 +138,7 @@ namespace DB.UI
         {
             BindingSource bs = Interface.IBS.Preferences;
 
-            Hashtable prefbindings = BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+            Hashtable prefbindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
 
             this.fillByHLCheckBox.DataBindings.Add(prefbindings["FillByHL"] as Binding);
             this.fillBySpectraCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
@@ -150,9 +150,9 @@ namespace DB.UI
             this.offlineCheckBox.DataBindings.Add(prefbindings["Offline"] as Binding);
             this.showSampleDescriptionCheckBox.DataBindings.Add(prefbindings["ShowSampleDescription"] as Binding);
             this.advancedEditorCheckBox.DataBindings.Add(prefbindings["AdvancedEditor"] as Binding);
-    
+
             //text binding
-            Hashtable bindings2 = BS.ArrayOfBindings(ref bs, string.Empty);
+            Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
 
             this.maxUncTextBox.DataBindings.Add(bindings2["maxUnc"] as Binding);
             this.minAreaTextBox.DataBindings.Add(bindings2["minArea"] as Binding);
@@ -164,7 +164,7 @@ namespace DB.UI
         {
             BindingSource bs = Interface.IBS.SSFPreferences;
 
-            Hashtable bindings = BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+            Hashtable bindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
 
             string column = Interface.IDB.SSFPref.OverridesColumn.ColumnName;
             this.overridesCheckBox.DataBindings.Add(bindings[column] as Binding);
@@ -198,7 +198,7 @@ namespace DB.UI
 
 
 
-            Binding b2 = BS.ABinding(ref bs, Interface.IDB.SSFPref.RoundingColumn.ColumnName);
+            Binding b2 = Rsx.Dumb.BS.ABinding(ref bs, Interface.IDB.SSFPref.RoundingColumn.ColumnName);
             this.roundingTextBox.DataBindings.Add(b2);
         }
 

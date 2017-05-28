@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,13 @@ namespace DB.UI
                 BindingNavigator b = pro as BindingNavigator;
                 b.Items["SaveItem"].Visible = false;
                 b.Parent.Controls.Remove(b);
-                                
+                b.DeleteItem.Click += delegate
+                {
+                    IBS_PropertyChanged(null, new PropertyChangedEventArgs(string.Empty));
+
+                   // Creator.SaveInFull(true);
+                   
+                };
                 // this.unitBN.Dispose();
                 destiny = this.unitSC.Panel2;
             }
@@ -51,15 +58,7 @@ namespace DB.UI
 
    
 
-        public void Disabler(bool enable)
-        {
-            //turns off or disables the controls.
-            //necessary protection for user interface
-            ucSubMS.Enabled = enable;
-            ucNS.Enabled = enable;
-            nameToolStrip.Enabled = enable;
-       
-        }
+    
 
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
@@ -78,12 +77,17 @@ namespace DB.UI
 
                 this.sampleCompoLbl.Click += viewChanged;
                 this.imgBtn.Click += viewChanged;
-                sampleCompoLbl.PerformClick();
+              
 
 
                 this.SampleLBL.Click += dropDownClickedLabel;
                 this.descriplbl.Click += dropDownClickedLabel;
 
+
+                Interface.IBS.PropertyChanged += IBS_PropertyChanged;
+               
+
+                sampleCompoLbl.PerformClick();
 
                 //    Interface.IReport.Msg("Database", "Units were loaded!");
             }
@@ -93,7 +97,18 @@ namespace DB.UI
             }
         }
 
-     
+        private void IBS_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            //turns off or disables the controls.
+            //necessary protection for user interface
+            bool enable = Interface.IBS.SubSamples.Count != 0;//EnabledControls;
+            ucSubMS.Enabled = enable;
+            ucNS.Enabled = enable;
+            nameToolStrip.Enabled = enable;
+            descripTS.Enabled = enable;
+          //  changeViewTS.Enabled = enable;
+
+        }
 
         private void setSampleBindings()
         {
@@ -106,13 +121,13 @@ namespace DB.UI
 
             string column;
             column = SSamples.SubSampleNameColumn.ColumnName;
-            Binding b1 = BS.ABinding(ref bsSample, column);
+            Binding b1 = Rsx.Dumb.BS.ABinding(ref bsSample, column);
             nameB.ComboBox.DataBindings.Add(b1);
 
          //   BS.BindAComboBox(ref bsSample, ref namebox, column);
 
             column = SSamples.SubSampleDescriptionColumn.ColumnName;
-            Binding b0 = BS.ABinding(ref bsSample, column);
+            Binding b0 = Rsx.Dumb.BS.ABinding(ref bsSample, column);
             descripBox.ComboBox.DataBindings.Add(b0);
 
         //    BS.BindAComboBox(ref bsSample, ref descripBox, column);

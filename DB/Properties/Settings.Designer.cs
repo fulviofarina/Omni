@@ -25,7 +25,7 @@ namespace DB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\scksrv1\\gkd\\DOKUMENT\\LRM\\LABO_NAA\\METINGEN\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:\\")]
         public string SpectraFolder {
             get {
                 return ((string)(this["SpectraFolder"]));
@@ -43,7 +43,7 @@ namespace DB.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\scksrv1\\gkd\\DOKUMENT\\LRM\\_Software_Ontwikkeling\\ex_RNM_Archief\\k0X\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:\\")]
         public string deployPath {
             get {
                 return ((string)(this["deployPath"]));

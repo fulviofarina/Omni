@@ -7,7 +7,23 @@ namespace DB
 {
     public partial class LINAA : IGeometry
     {
-      
+        public VialTypeRow AddNewVial(bool aRabbit)
+        {
+            VialTypeRow v = null;
+            v = VialType.NewVialTypeRow() as VialTypeRow;
+            VialType.AddVialTypeRow(v);
+            if (aRabbit) v.IsRabbit = true;
+            else v.IsRabbit = false;
+            return v;
+        }
+
+        public MatrixRow AddNewMatrix()
+        {
+            MatrixRow v = null;//Interface.IDB.Matrix.NewMatrixRow();
+            v = Matrix.NewMatrixRow() as MatrixRow;
+            Matrix.AddMatrixRow(v);
+            return v;
+        }
 
         public GeometryRow DefaultGeometry
         {

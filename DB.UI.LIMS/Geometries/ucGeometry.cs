@@ -15,7 +15,7 @@ namespace DB.UI
 
         public void Set(ref Interface inter)
         {
-            BS.DeLinkBS(ref this.bs);
+            Rsx.Dumb.BS.DeLinkBS(ref this.bs);
             Dumb.FD(ref this.Linaa);
             Dumb.FD(ref this.bs);
 

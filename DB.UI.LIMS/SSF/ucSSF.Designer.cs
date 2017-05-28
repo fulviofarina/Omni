@@ -116,31 +116,31 @@
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.DaCONTAINER = new System.Windows.Forms.SplitContainer();
             this.SSFPlitter = new System.Windows.Forms.SplitContainer();
             this.UnitSSFSC = new System.Windows.Forms.SplitContainer();
             this.SCMENU = new System.Windows.Forms.SplitContainer();
             this.CalcBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
+            this.ucSSFControl = new DB.UI.ucSSFData();
             this.Tab = new System.Windows.Forms.TabControl();
             this.CalcTab = new System.Windows.Forms.TabPage();
+            this.ucUnit = new DB.UI.ucUnit();
             this.TemplatesTab = new System.Windows.Forms.TabPage();
             this.templatesTabCtrl = new System.Windows.Forms.TabControl();
             this.ContainerTab = new System.Windows.Forms.TabPage();
+            this.ucVcc = new DB.UI.ucV();
             this.MatrixTab = new System.Windows.Forms.TabPage();
+            this.ucMS = new DB.UI.ucMatrixSimple();
             this.SourceTab = new System.Windows.Forms.TabPage();
+            this.ucCC1 = new DB.UI.ucCC();
             this.FilesTabMain = new System.Windows.Forms.TabPage();
             this.FilesTab = new System.Windows.Forms.TabControl();
             this.outputTab = new System.Windows.Forms.TabPage();
             this.outputBox = new System.Windows.Forms.RichTextBox();
             this.inputTab = new System.Windows.Forms.TabPage();
             this.inputbox = new System.Windows.Forms.RichTextBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.DaCONTAINER = new System.Windows.Forms.SplitContainer();
-            this.ucSSFControl = new DB.UI.ucSSFData();
-            this.ucUnit = new DB.UI.ucUnit();
-            this.ucVcc = new DB.UI.ucV();
-            this.ucMS = new DB.UI.ucMatrixSimple();
-            this.ucCC1 = new DB.UI.ucCC();
             this.dgvCMS.SuspendLayout();
             this.toolStrip6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
@@ -150,6 +150,12 @@
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.SuspendLayout();
             this.toolStrip13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DaCONTAINER)).BeginInit();
+            this.DaCONTAINER.Panel1.SuspendLayout();
+            this.DaCONTAINER.Panel2.SuspendLayout();
+            this.DaCONTAINER.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SSFPlitter)).BeginInit();
             this.SSFPlitter.Panel1.SuspendLayout();
             this.SSFPlitter.Panel2.SuspendLayout();
@@ -173,12 +179,6 @@
             this.FilesTab.SuspendLayout();
             this.outputTab.SuspendLayout();
             this.inputTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DaCONTAINER)).BeginInit();
-            this.DaCONTAINER.Panel1.SuspendLayout();
-            this.DaCONTAINER.Panel2.SuspendLayout();
-            this.DaCONTAINER.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvCMS
@@ -288,6 +288,33 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(1600, 39);
+            this.splitContainer1.SplitterDistance = 703;
+            this.splitContainer1.TabIndex = 13;
+            // 
+            // DaCONTAINER
+            // 
+            this.DaCONTAINER.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DaCONTAINER.Location = new System.Drawing.Point(0, 0);
+            this.DaCONTAINER.Name = "DaCONTAINER";
+            this.DaCONTAINER.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // DaCONTAINER.Panel1
+            // 
+            this.DaCONTAINER.Panel1.Controls.Add(this.splitContainer1);
+            // 
+            // DaCONTAINER.Panel2
+            // 
+            this.DaCONTAINER.Panel2.Controls.Add(this.SSFPlitter);
+            this.DaCONTAINER.Size = new System.Drawing.Size(1600, 834);
+            this.DaCONTAINER.SplitterDistance = 39;
+            this.DaCONTAINER.TabIndex = 0;
+            // 
             // SSFPlitter
             // 
             this.SSFPlitter.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -337,7 +364,7 @@
             // 
             this.SCMENU.Panel2.Controls.Add(this.cancelBtn);
             this.SCMENU.Size = new System.Drawing.Size(700, 34);
-            this.SCMENU.SplitterDistance = 505;
+            this.SCMENU.SplitterDistance = 356;
             this.SCMENU.TabIndex = 9;
             // 
             // CalcBtn
@@ -348,11 +375,10 @@
             this.CalcBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.CalcBtn.Location = new System.Drawing.Point(0, 0);
             this.CalcBtn.Name = "CalcBtn";
-            this.CalcBtn.Size = new System.Drawing.Size(505, 34);
+            this.CalcBtn.Size = new System.Drawing.Size(356, 34);
             this.CalcBtn.TabIndex = 0;
             this.CalcBtn.Text = "CALCULATE";
             this.CalcBtn.UseVisualStyleBackColor = false;
-            this.CalcBtn.Click += new System.EventHandler(this.Calculate);
             // 
             // cancelBtn
             // 
@@ -362,11 +388,20 @@
             this.cancelBtn.ForeColor = System.Drawing.Color.Red;
             this.cancelBtn.Location = new System.Drawing.Point(0, 0);
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(191, 34);
+            this.cancelBtn.Size = new System.Drawing.Size(340, 34);
             this.cancelBtn.TabIndex = 1;
             this.cancelBtn.Text = "CANCEL";
             this.cancelBtn.UseVisualStyleBackColor = false;
-            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
+            // 
+            // ucSSFControl
+            // 
+            this.ucSSFControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSSFControl.Font = new System.Drawing.Font("Segoe UI", 14.25F);
+            this.ucSSFControl.Location = new System.Drawing.Point(0, 0);
+            this.ucSSFControl.Margin = new System.Windows.Forms.Padding(2);
+            this.ucSSFControl.Name = "ucSSFControl";
+            this.ucSSFControl.Size = new System.Drawing.Size(700, 753);
+            this.ucSSFControl.TabIndex = 0;
             // 
             // Tab
             // 
@@ -395,6 +430,17 @@
             this.CalcTab.Text = "Samples";
             this.CalcTab.UseVisualStyleBackColor = true;
             // 
+            // ucUnit
+            // 
+            this.ucUnit.AutoSize = true;
+            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucUnit.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucUnit.Location = new System.Drawing.Point(3, 3);
+            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
+            this.ucUnit.Name = "ucUnit";
+            this.ucUnit.Size = new System.Drawing.Size(882, 744);
+            this.ucUnit.TabIndex = 0;
+            // 
             // TemplatesTab
             // 
             this.TemplatesTab.Controls.Add(this.templatesTabCtrl);
@@ -421,36 +467,71 @@
             // 
             // ContainerTab
             // 
+            this.ContainerTab.BackColor = System.Drawing.Color.SaddleBrown;
             this.ContainerTab.Controls.Add(this.ucVcc);
+            this.ContainerTab.ForeColor = System.Drawing.Color.SaddleBrown;
             this.ContainerTab.Location = new System.Drawing.Point(4, 37);
             this.ContainerTab.Name = "ContainerTab";
             this.ContainerTab.Padding = new System.Windows.Forms.Padding(3);
             this.ContainerTab.Size = new System.Drawing.Size(874, 703);
             this.ContainerTab.TabIndex = 3;
             this.ContainerTab.Text = "1 Containers";
-            this.ContainerTab.UseVisualStyleBackColor = true;
+            // 
+            // ucVcc
+            // 
+            this.ucVcc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucVcc.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucVcc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ucVcc.Location = new System.Drawing.Point(3, 3);
+            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
+            this.ucVcc.Name = "ucVcc";
+            this.ucVcc.Size = new System.Drawing.Size(868, 697);
+            this.ucVcc.TabIndex = 0;
             // 
             // MatrixTab
             // 
+            this.MatrixTab.BackColor = System.Drawing.Color.MediumPurple;
             this.MatrixTab.Controls.Add(this.ucMS);
+            this.MatrixTab.ForeColor = System.Drawing.Color.Purple;
             this.MatrixTab.Location = new System.Drawing.Point(4, 37);
             this.MatrixTab.Name = "MatrixTab";
             this.MatrixTab.Padding = new System.Windows.Forms.Padding(3);
             this.MatrixTab.Size = new System.Drawing.Size(874, 703);
             this.MatrixTab.TabIndex = 0;
             this.MatrixTab.Text = "2 Matrices";
-            this.MatrixTab.UseVisualStyleBackColor = true;
+            // 
+            // ucMS
+            // 
+            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucMS.Location = new System.Drawing.Point(3, 3);
+            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMS.Name = "ucMS";
+            this.ucMS.Size = new System.Drawing.Size(868, 697);
+            this.ucMS.TabIndex = 0;
             // 
             // SourceTab
             // 
+            this.SourceTab.BackColor = System.Drawing.Color.DarkSlateGray;
             this.SourceTab.Controls.Add(this.ucCC1);
+            this.SourceTab.ForeColor = System.Drawing.Color.MidnightBlue;
             this.SourceTab.Location = new System.Drawing.Point(4, 37);
             this.SourceTab.Name = "SourceTab";
             this.SourceTab.Padding = new System.Windows.Forms.Padding(3);
             this.SourceTab.Size = new System.Drawing.Size(874, 703);
             this.SourceTab.TabIndex = 4;
             this.SourceTab.Text = "3 Sources";
-            this.SourceTab.UseVisualStyleBackColor = true;
+            // 
+            // ucCC1
+            // 
+            this.ucCC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCC1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucCC1.Location = new System.Drawing.Point(3, 3);
+            this.ucCC1.Margin = new System.Windows.Forms.Padding(4);
+            this.ucCC1.Name = "ucCC1";
+            this.ucCC1.Size = new System.Drawing.Size(868, 697);
+            this.ucCC1.TabIndex = 0;
             // 
             // FilesTabMain
             // 
@@ -516,87 +597,9 @@
             this.inputbox.Location = new System.Drawing.Point(0, 0);
             this.inputbox.Margin = new System.Windows.Forms.Padding(2);
             this.inputbox.Name = "inputbox";
-            this.inputbox.Size = new System.Drawing.Size(874, 715);
+            this.inputbox.Size = new System.Drawing.Size(874, 703);
             this.inputbox.TabIndex = 2;
             this.inputbox.Text = "";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Size = new System.Drawing.Size(1600, 39);
-            this.splitContainer1.SplitterDistance = 703;
-            this.splitContainer1.TabIndex = 13;
-            // 
-            // DaCONTAINER
-            // 
-            this.DaCONTAINER.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DaCONTAINER.Location = new System.Drawing.Point(0, 0);
-            this.DaCONTAINER.Name = "DaCONTAINER";
-            this.DaCONTAINER.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // DaCONTAINER.Panel1
-            // 
-            this.DaCONTAINER.Panel1.Controls.Add(this.splitContainer1);
-            // 
-            // DaCONTAINER.Panel2
-            // 
-            this.DaCONTAINER.Panel2.Controls.Add(this.SSFPlitter);
-            this.DaCONTAINER.Size = new System.Drawing.Size(1600, 834);
-            this.DaCONTAINER.SplitterDistance = 39;
-            this.DaCONTAINER.TabIndex = 0;
-            // 
-            // ucSSFControl
-            // 
-            this.ucSSFControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSSFControl.Font = new System.Drawing.Font("Segoe UI", 14.25F);
-            this.ucSSFControl.Location = new System.Drawing.Point(0, 0);
-            this.ucSSFControl.Margin = new System.Windows.Forms.Padding(2);
-            this.ucSSFControl.Name = "ucSSFControl";
-            this.ucSSFControl.Size = new System.Drawing.Size(700, 753);
-            this.ucSSFControl.TabIndex = 0;
-            // 
-            // ucUnit
-            // 
-            this.ucUnit.AutoSize = true;
-            this.ucUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucUnit.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucUnit.Location = new System.Drawing.Point(3, 3);
-            this.ucUnit.Margin = new System.Windows.Forms.Padding(4);
-            this.ucUnit.Name = "ucUnit";
-            this.ucUnit.Size = new System.Drawing.Size(882, 744);
-            this.ucUnit.TabIndex = 0;
-            // 
-            // ucVcc
-            // 
-            this.ucVcc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucVcc.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucVcc.Location = new System.Drawing.Point(3, 3);
-            this.ucVcc.Margin = new System.Windows.Forms.Padding(2);
-            this.ucVcc.Name = "ucVcc";
-            this.ucVcc.Size = new System.Drawing.Size(868, 697);
-            this.ucVcc.TabIndex = 0;
-            // 
-            // ucMS
-            // 
-            this.ucMS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucMS.Location = new System.Drawing.Point(3, 3);
-            this.ucMS.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMS.Name = "ucMS";
-            this.ucMS.Size = new System.Drawing.Size(868, 709);
-            this.ucMS.TabIndex = 0;
-            // 
-            // ucCC1
-            // 
-            this.ucCC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucCC1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucCC1.Location = new System.Drawing.Point(3, 3);
-            this.ucCC1.Margin = new System.Windows.Forms.Padding(4);
-            this.ucCC1.Name = "ucCC1";
-            this.ucCC1.Size = new System.Drawing.Size(868, 709);
-            this.ucCC1.TabIndex = 0;
             // 
             // ucSSF
             // 
@@ -620,6 +623,12 @@
             this.splitContainer5.ResumeLayout(false);
             this.toolStrip13.ResumeLayout(false);
             this.toolStrip13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.DaCONTAINER.Panel1.ResumeLayout(false);
+            this.DaCONTAINER.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DaCONTAINER)).EndInit();
+            this.DaCONTAINER.ResumeLayout(false);
             this.SSFPlitter.Panel1.ResumeLayout(false);
             this.SSFPlitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SSFPlitter)).EndInit();
@@ -644,12 +653,6 @@
             this.FilesTab.ResumeLayout(false);
             this.outputTab.ResumeLayout(false);
             this.inputTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.DaCONTAINER.Panel1.ResumeLayout(false);
-            this.DaCONTAINER.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DaCONTAINER)).EndInit();
-            this.DaCONTAINER.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

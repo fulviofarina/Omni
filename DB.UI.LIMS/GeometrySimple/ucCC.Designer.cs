@@ -34,8 +34,6 @@
 
         private System.Windows.Forms.DataGridView ContainerDGV;
 
-        private System.Windows.Forms.ContextMenuStrip dgvCMS;
-
         private DB.LINAA lINAA;
 
 
@@ -46,12 +44,6 @@
     
 
         private System.Windows.Forms.TableLayoutPanel TLPShapes;
-
-        private System.Windows.Forms.ToolStrip toolStrip12;
-
-        private System.Windows.Forms.ToolStrip toolStrip13;
-
-        private System.Windows.Forms.ToolStrip toolStrip6;
 
         private System.Windows.Forms.ToolStripButton toolStripButton2;
 
@@ -73,23 +65,13 @@
 
         private System.Windows.Forms.ToolStripButton toolStripButton6;
 
-        private System.Windows.Forms.ToolStripLabel toolStripLabel10;
-
-        private System.Windows.Forms.ToolStripLabel toolStripLabel12;
-
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
 
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
 
         private System.Windows.Forms.ToolStripLabel toolStripLabel8;
 
         private System.Windows.Forms.ToolStripLabel toolStripLabel9;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 
@@ -144,8 +126,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLPShapes = new System.Windows.Forms.TableLayoutPanel();
             this.ChParSC = new System.Windows.Forms.SplitContainer();
             this.channelParTS = new System.Windows.Forms.ToolStrip();
@@ -182,9 +165,6 @@
             this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContainerDGV = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContainerBS = new System.Windows.Forms.BindingSource(this.components);
             this.channelSC = new System.Windows.Forms.SplitContainer();
             this.channelTS = new System.Windows.Forms.ToolStrip();
@@ -201,18 +181,14 @@
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.toolStrip12 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip13 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Vol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPShapes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChParSC)).BeginInit();
             this.ChParSC.Panel1.SuspendLayout();
@@ -233,17 +209,13 @@
             this.channelTS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContainerBN)).BeginInit();
             this.ContainerBN.SuspendLayout();
-            this.dgvCMS.SuspendLayout();
-            this.toolStrip6.SuspendLayout();
-            this.toolStrip12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.SuspendLayout();
-            this.toolStrip13.SuspendLayout();
             this.SuspendLayout();
             // 
             // TLPShapes
             // 
+            this.TLPShapes.BackColor = System.Drawing.Color.Transparent;
             this.TLPShapes.ColumnCount = 1;
             this.TLPShapes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.TLPShapes.Controls.Add(this.ChParSC, 0, 0);
@@ -284,7 +256,7 @@
             // 
             // channelParTS
             // 
-            this.channelParTS.BackColor = System.Drawing.SystemColors.Menu;
+            this.channelParTS.BackColor = System.Drawing.SystemColors.Control;
             this.channelParTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.channelParTS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelParTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -293,6 +265,7 @@
             this.channelParTS.Location = new System.Drawing.Point(0, 0);
             this.channelParTS.Name = "channelParTS";
             this.channelParTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.channelParTS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.channelParTS.Size = new System.Drawing.Size(329, 21);
             this.channelParTS.TabIndex = 2;
             this.channelParTS.Text = "toolStrip5";
@@ -308,7 +281,7 @@
             // channelParBN
             // 
             this.channelParBN.AddNewItem = this.addChParBn;
-            this.channelParBN.BackColor = System.Drawing.SystemColors.Menu;
+            this.channelParBN.BackColor = System.Drawing.SystemColors.Control;
             this.channelParBN.BindingSource = this.ChannelBS;
             this.channelParBN.CountItem = this.toolStripLabel9;
             this.channelParBN.DeleteItem = this.toolStripButton25;
@@ -334,6 +307,7 @@
             this.channelParBN.Name = "channelParBN";
             this.channelParBN.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.channelParBN.PositionItem = this.toolStripTextBox2;
+            this.channelParBN.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.channelParBN.Size = new System.Drawing.Size(564, 21);
             this.channelParBN.TabIndex = 1;
             this.channelParBN.Text = "bindingNavigator1";
@@ -446,6 +420,7 @@
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             this.ChannelDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.ChannelDGV.AutoGenerateColumns = false;
             this.ChannelDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
@@ -505,11 +480,11 @@
             // 
             // channelNameDataGridViewTextBoxColumn
             // 
+            this.channelNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.channelNameDataGridViewTextBoxColumn.DataPropertyName = "ChannelName";
             this.channelNameDataGridViewTextBoxColumn.HeaderText = "Label";
             this.channelNameDataGridViewTextBoxColumn.Name = "channelNameDataGridViewTextBoxColumn";
             this.channelNameDataGridViewTextBoxColumn.ToolTipText = "A label for the neutron source configuration";
-            this.channelNameDataGridViewTextBoxColumn.Width = 74;
             // 
             // irReqCodeDataGridViewTextBoxColumn
             // 
@@ -524,12 +499,12 @@
             // fluxTypeDGVColumn
             // 
             this.fluxTypeDGVColumn.DataPropertyName = "FluxType";
-            this.fluxTypeDGVColumn.HeaderText = "MatSSF Mode";
+            this.fluxTypeDGVColumn.HeaderText = "Configuration";
             this.fluxTypeDGVColumn.Name = "fluxTypeDGVColumn";
             this.fluxTypeDGVColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.fluxTypeDGVColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.fluxTypeDGVColumn.ToolTipText = "Default MatSSF Mode for this neutron source";
-            this.fluxTypeDGVColumn.Width = 138;
+            this.fluxTypeDGVColumn.ToolTipText = "The MatSSF Configuration for this neutron source";
+            this.fluxTypeDGVColumn.Width = 136;
             // 
             // BellFactor
             // 
@@ -655,6 +630,7 @@
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle9.BackColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
             this.ContainerDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.ContainerDGV.AutoGenerateColumns = false;
             this.ContainerDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
@@ -671,57 +647,35 @@
             this.ContainerDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn12});
+            this.dataGridViewTextBoxColumn12,
+            this.Vol,
+            this.Comments});
             this.ContainerDGV.DataSource = this.ContainerBS;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ContainerDGV.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ContainerDGV.DefaultCellStyle = dataGridViewCellStyle12;
             this.ContainerDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContainerDGV.EnableHeadersVisualStyles = false;
             this.ContainerDGV.Location = new System.Drawing.Point(4, 291);
             this.ContainerDGV.Margin = new System.Windows.Forms.Padding(4);
             this.ContainerDGV.Name = "ContainerDGV";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ContainerDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ContainerDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.ContainerDGV.RowTemplate.Height = 24;
             this.ContainerDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ContainerDGV.Size = new System.Drawing.Size(904, 218);
             this.ContainerDGV.TabIndex = 7;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "VialTypeRef";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Label";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ToolTipText = "A label for the neutron source dimensions";
-            this.dataGridViewTextBoxColumn3.Width = 74;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "InnerRadius";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Radius";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ToolTipText = "Neutron source radius in milimeters";
-            this.dataGridViewTextBoxColumn6.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "MaxFillHeight";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Length";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ToolTipText = "Neutron source length in milimeters";
-            this.dataGridViewTextBoxColumn12.Width = 86;
             // 
             // ContainerBS
             // 
@@ -749,7 +703,7 @@
             // 
             // channelTS
             // 
-            this.channelTS.BackColor = System.Drawing.SystemColors.Menu;
+            this.channelTS.BackColor = System.Drawing.SystemColors.Control;
             this.channelTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.channelTS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -758,6 +712,7 @@
             this.channelTS.Location = new System.Drawing.Point(0, 0);
             this.channelTS.Name = "channelTS";
             this.channelTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.channelTS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.channelTS.Size = new System.Drawing.Size(334, 21);
             this.channelTS.TabIndex = 3;
             this.channelTS.Text = "toolStrip7";
@@ -773,7 +728,7 @@
             // ContainerBN
             // 
             this.ContainerBN.AddNewItem = this.bnChannelAddItem;
-            this.ContainerBN.BackColor = System.Drawing.SystemColors.Menu;
+            this.ContainerBN.BackColor = System.Drawing.SystemColors.Control;
             this.ContainerBN.BindingSource = this.ContainerBS;
             this.ContainerBN.CountItem = this.toolStripLabel2;
             this.ContainerBN.DeleteItem = this.toolStripButton2;
@@ -799,6 +754,7 @@
             this.ContainerBN.Name = "ContainerBN";
             this.ContainerBN.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.ContainerBN.PositionItem = this.toolStripTextBox1;
+            this.ContainerBN.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.ContainerBN.Size = new System.Drawing.Size(559, 21);
             this.ContainerBN.TabIndex = 1;
             this.ContainerBN.Text = "bindingNavigator2";
@@ -888,43 +844,6 @@
             this.toolStripSeparator12.Name = "toolStripSeparator12";
             this.toolStripSeparator12.Size = new System.Drawing.Size(6, 21);
             // 
-            // dgvCMS
-            // 
-            this.dgvCMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem2.Text = "Export";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem3.Text = "View Output";
-            // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(199, 21);
-            this.toolStripLabel3.Text = "Select &Irradiation Container";
-            // 
-            // toolStrip6
-            // 
-            this.toolStrip6.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel3});
-            this.toolStrip6.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip6.Name = "toolStrip6";
-            this.toolStrip6.Size = new System.Drawing.Size(202, 25);
-            this.toolStrip6.TabIndex = 2;
-            this.toolStrip6.Text = "toolStrip6";
-            // 
             // cDataGridViewCheckBoxColumn
             // 
             this.cDataGridViewCheckBoxColumn.DataPropertyName = "C";
@@ -933,61 +852,65 @@
             this.cDataGridViewCheckBoxColumn.ReadOnly = true;
             this.cDataGridViewCheckBoxColumn.Width = 23;
             // 
-            // toolStrip12
-            // 
-            this.toolStrip12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip12.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel10});
-            this.toolStrip12.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip12.Name = "toolStrip12";
-            this.toolStrip12.Size = new System.Drawing.Size(88, 23);
-            this.toolStrip12.TabIndex = 2;
-            this.toolStrip12.Text = "toolStrip12";
-            // 
-            // toolStripLabel10
-            // 
-            this.toolStripLabel10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel10.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripLabel10.Name = "toolStripLabel10";
-            this.toolStripLabel10.Size = new System.Drawing.Size(55, 20);
-            this.toolStripLabel10.Text = "Shape";
-            // 
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer5.Location = new System.Drawing.Point(355, 3);
             this.splitContainer5.Name = "splitContainer5";
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.toolStrip13);
             this.splitContainer5.Size = new System.Drawing.Size(374, 23);
             this.splitContainer5.SplitterDistance = 123;
             this.splitContainer5.TabIndex = 9;
-            // 
-            // toolStrip13
-            // 
-            this.toolStrip13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip13.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel12});
-            this.toolStrip13.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip13.Name = "toolStrip13";
-            this.toolStrip13.Size = new System.Drawing.Size(123, 23);
-            this.toolStrip13.TabIndex = 3;
-            this.toolStrip13.Text = "toolStrip13";
-            // 
-            // toolStripLabel12
-            // 
-            this.toolStripLabel12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripLabel12.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripLabel12.Name = "toolStripLabel12";
-            this.toolStripLabel12.Size = new System.Drawing.Size(68, 20);
-            this.toolStripLabel12.Text = "Channel";
             // 
             // toolStripSeparator15
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "VialTypeRef";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Label";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ToolTipText = "A label for the neutron source dimensions";
+            this.dataGridViewTextBoxColumn3.Width = 74;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "InnerRadius";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Radius";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ToolTipText = "Neutron source radius in milimeters";
+            this.dataGridViewTextBoxColumn6.Width = 83;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "MaxFillHeight";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Length";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ToolTipText = "Neutron source length in milimeters";
+            this.dataGridViewTextBoxColumn12.Width = 86;
+            // 
+            // Vol
+            // 
+            this.Vol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Vol.DataPropertyName = "Vol";
+            dataGridViewCellStyle11.Format = "N3";
+            this.Vol.DefaultCellStyle = dataGridViewCellStyle11;
+            this.Vol.HeaderText = "Vol";
+            this.Vol.Name = "Vol";
+            this.Vol.ReadOnly = true;
+            this.Vol.ToolTipText = "Volume in cubic centimeters";
+            this.Vol.Width = 58;
+            // 
+            // Comments
+            // 
+            this.Comments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Comments.DataPropertyName = "Comments";
+            this.Comments.HeaderText = "Comments";
+            this.Comments.Name = "Comments";
             // 
             // ucCC
             // 
@@ -1026,22 +949,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.ContainerBN)).EndInit();
             this.ContainerBN.ResumeLayout(false);
             this.ContainerBN.PerformLayout();
-            this.dgvCMS.ResumeLayout(false);
-            this.toolStrip6.ResumeLayout(false);
-            this.toolStrip6.PerformLayout();
-            this.toolStrip12.ResumeLayout(false);
-            this.toolStrip12.PerformLayout();
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
-            this.toolStrip13.ResumeLayout(false);
-            this.toolStrip13.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
         private System.Windows.Forms.DataGridViewTextBoxColumn channelNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn irReqCodeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn fluxTypeDGVColumn;
@@ -1061,5 +976,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Vol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Comments;
     }
 }
