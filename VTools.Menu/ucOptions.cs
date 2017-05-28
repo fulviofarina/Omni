@@ -30,6 +30,7 @@ namespace VTools
 
             this.connectionsTSMI.Click += (this.connectionsTSMI_Click);
             this.aboutToolStripMenuItem.Click += (this.aboutToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.Click += HelpToolStripMenuItem_Click;
 
 
             this.Save.Click += Save_Click;
@@ -39,6 +40,11 @@ namespace VTools
             this.preferencesTSMI.Click += PreferencesTSMI_Click;
            
 
+        }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            help?.Invoke();
         }
 
         private void LimsTSMI_Click(object sender, EventArgs e)
@@ -115,8 +121,8 @@ namespace VTools
                 connectionBox = value;
             }
         }
+        private Action help;
         private Action explorer;
-
         public Action ExplorerClick
         {
 
@@ -142,7 +148,14 @@ namespace VTools
                 return pros;
             }
         }
-     
+
+        public Action HelpClick
+        {
+            set
+            {
+                help = value;
+            }
+        }
 
         public void ResetProgress (int max)
         {
@@ -167,6 +180,12 @@ namespace VTools
         private void explorerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             explorer?.Invoke();
+        }
+
+        public void SetDeveloperMode(bool devMode)
+        {
+            explorerToolStripMenuItem.Enabled = devMode;
+            limsTSMI.Enabled = devMode;
         }
     }
 }

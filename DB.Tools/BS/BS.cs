@@ -57,7 +57,10 @@ namespace DB.Tools
                   //  SelectedCompositions.ResetBindings(false);
                 }
 
-                (sender as BindingSource).ResetBindings(false);
+                notifyPropertyChanged("added");
+                IRow row = e.NewObject as IRow;
+                row.Check();
+               // (sender as BindingSource).ResetBindings(false);
 
              //   EnabledControls = true;
             }
@@ -75,7 +78,7 @@ namespace DB.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="r"></param>
-        private void checkCompulsoryErrors<T>(T r)
+        private void hasCompulsoryErrors<T>(T r)
         {
             if (Rsx.EC.IsNuDelDetch(r as DataRow)) return;
             DataRow row = r as DataRow;

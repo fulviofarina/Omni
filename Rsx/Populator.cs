@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data.Linq;
+using System.Transactions;
 
 namespace Rsx.SQL
 {
@@ -56,21 +57,46 @@ namespace Rsx.SQL
             return destiny.DatabaseExists();
         }
 
-       
+
 
         /// <summary>
         /// Inserts on Submits a SQL DataTable from one place to another
         /// </summary>
         /// <param name="dt"> </param>
         /// <param name="ita"></param>
-        public static void InsertDataTable(ref ITable dt, ref ITable ita)
+        public static void InsertDataTable(ref ITable dt, ref ITable ita, string name)
         {
+
+/*
+            using (System.Transactions.TransactionScope trans = new TransactionScope())
+            {
+                using (YourDataContext context = new YourDataContext())
+                {
+                    context.ExecuteCommand("SET IDENTITY_INSERT MyTable ON");
+
+                    context.ExecuteCommand("yourInsertCommand");
+
+                    context.ExecuteCommand("SET IDENTITY_INSERT MyTable OFF");
+                }
+                trans.Complete();
+            }
+
+
+
+
+
+    */
+
+      //      ita.Context.ExecuteCommand("SET IDENTITY_INSERT "+ name+ " ON");
             foreach (var i in dt)
             {
+               
                 ita.InsertOnSubmit(i);
             }
 
             ita.Context.SubmitChanges();
+
+       //     ita.Context.ExecuteCommand("SET IDENTITY_INSERT " + name + " OFF");
         }
 
 

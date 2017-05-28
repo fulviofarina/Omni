@@ -5,29 +5,35 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SSF")]
-[assembly: AssemblyDescription(@"Software for Neutron Self-shielding calculations
+[assembly: AssemblyTitle("nSSF")]
+[assembly: AssemblyDescription(@"Software for neutron self-shielding calculations
 on cylindrical samples according to several authors
 
 Calculation methods:
 
--MatSSF(Trkov)
-- Chilean, Kennedy, St.Pierre(Not included yet)
-- The Universal Curve(Martinho, Salgado, Goncalves)(Not included yet)
-- GEANT4(Not included yet)
+- MatSSF method
+                Dr. Andrej Trkov
+- Chilean-Kennedy Sigmoid method
+                Dr. Cornelia Chilian &
+                Dr. Greg Kennedy
+- 
+- GEANT4 (Not included yet)
 
-This software author:
+-------------------------------------------------------------
+nSSF was developed by:
                 Fulvio Farina Arboccò
-    email: fulviofarina@usb.ve
-
-MatSSF bundle software author:
-                 Andrej Trkov
+work:           Physics Department,
+                Simón Bolívar University (Caracas, Venezuela)
+email:          fulviofarina@usb.ve
+-------------------------------------------------------------
+The open-source MatSSF code (FORTRAN) was developed by
+                Dr. Andrej Trkov (IAEA)
 ")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Fulvio Farina Arboccò")]
-[assembly: AssemblyProduct("SSF Program")]
-[assembly: AssemblyCopyright("Fulvio Farina Arboccò, 2017")]
-[assembly: AssemblyTrademark("Registered by FRFA")]
+[assembly: AssemblyCompany("F. Farina Arboccò")]
+[assembly: AssemblyProduct("nSSF: neutron self-shielding factors")]
+[assembly: AssemblyCopyright("F. Farina Arboccò (June 1st, 2017)")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -48,6 +54,6 @@ MatSSF bundle software author:
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.9")]
+[assembly: AssemblyFileVersion("0.9")]
 [assembly: NeutralResourcesLanguage("en")]

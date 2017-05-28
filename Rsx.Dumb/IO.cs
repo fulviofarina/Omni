@@ -337,11 +337,11 @@ namespace Rsx.Dumb
 
             public static void MakeADirectory(string path, bool overrider = false)
             {
-                DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.Owner);
+              //  DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.Owner);
 
                 if (!Directory.Exists(path) || overrider)
                 {
-                    Directory.CreateDirectory(path, secutiry);
+                    Directory.CreateDirectory(path);
                 }
             }
 

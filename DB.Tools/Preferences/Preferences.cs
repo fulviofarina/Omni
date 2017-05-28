@@ -139,8 +139,8 @@ namespace DB.Tools
 
             if (add)
             {
-                dt.ImportRow(row);
-                //dt.LoadDataRow(row.ItemArray,true);
+            //    dt.ImportRow(row);
+               dt.LoadDataRow(row.ItemArray,true);
             }
         }
 

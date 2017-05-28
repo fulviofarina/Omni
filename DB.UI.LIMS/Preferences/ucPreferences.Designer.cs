@@ -392,7 +392,7 @@
             this.loopCheckBox.Name = "loopCheckBox";
             this.loopCheckBox.Size = new System.Drawing.Size(279, 43);
             this.loopCheckBox.TabIndex = 10;
-            this.loopCheckBox.Text = "Loop Calculation";
+            this.loopCheckBox.Text = "Calculate All Samples";
             this.loopCheckBox.UseVisualStyleBackColor = true;
             // 
             // showMatSSFCheckBox
@@ -415,7 +415,7 @@
             this.doCKCheckBox.Name = "doCKCheckBox";
             this.doCKCheckBox.Size = new System.Drawing.Size(279, 43);
             this.doCKCheckBox.TabIndex = 8;
-            this.doCKCheckBox.Text = "Do CK";
+            this.doCKCheckBox.Text = "Do CKS Method";
             this.doCKCheckBox.UseVisualStyleBackColor = true;
             // 
             // doMatSSFCheckBox
@@ -428,7 +428,7 @@
             this.doMatSSFCheckBox.Name = "doMatSSFCheckBox";
             this.doMatSSFCheckBox.Size = new System.Drawing.Size(279, 43);
             this.doMatSSFCheckBox.TabIndex = 6;
-            this.doMatSSFCheckBox.Text = "Do MatSSF";
+            this.doMatSSFCheckBox.Text = "Do MatSSF Method";
             this.doMatSSFCheckBox.UseVisualStyleBackColor = true;
             // 
             // calcDensityCheckBox
@@ -475,7 +475,7 @@
             this.showOtherCheckBox.Name = "showOtherCheckBox";
             this.showOtherCheckBox.Size = new System.Drawing.Size(279, 43);
             this.showOtherCheckBox.TabIndex = 2;
-            this.showOtherCheckBox.Text = "Show Other Content";
+            this.showOtherCheckBox.Text = "Show other content";
             this.showOtherCheckBox.UseVisualStyleBackColor = true;
             // 
             // overridesCheckBox
@@ -485,7 +485,7 @@
             this.overridesCheckBox.Name = "overridesCheckBox";
             this.overridesCheckBox.Size = new System.Drawing.Size(279, 43);
             this.overridesCheckBox.TabIndex = 13;
-            this.overridesCheckBox.Text = "Override Default Values";
+            this.overridesCheckBox.Text = "Override default values";
             this.overridesCheckBox.UseVisualStyleBackColor = true;
             // 
             // label1

@@ -54,10 +54,11 @@ namespace DB.Tools
             //  Cursor.Current = Cursors.WaitCursor;
             try
             {
-              
 
-             //   Interface.IBS.IsCalculating = true;
 
+                //   Interface.IBS.IsCalculating = true;
+
+                Creator.SaveInFull(true);
                 IsCalculating = true;
 
                 resetProgress?.Invoke(3);

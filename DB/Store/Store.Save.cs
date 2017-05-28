@@ -7,6 +7,7 @@ using System.Linq;
 using Rsx.Dumb;
 using Rsx;
 using DB.Properties;
+using System.Collections;
 
 namespace DB
 {
@@ -67,19 +68,7 @@ namespace DB
 
             dt.BeginLoadData();
 
-            try
-            {
-                bool wasPeaks = false; //tells if the rows were peaks Family of rows
-                wasPeaks = savePeaks<T>(ref rows);
-                if (!wasPeaks)
-                {
-                    saveOthers(ref rows);
-                }
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
+            save(ref rows);
 
             if (useHandlers)
             {
@@ -97,6 +86,34 @@ namespace DB
             dt.EndLoadData();
 
             return true;
+        }
+
+        private void save<T>(ref IEnumerable<T> rows)
+        {
+            try
+            {
+                bool wasPeaks = false; //tells if the rows were peaks Family of rows
+                wasPeaks = savePeaks<T>(ref rows);
+                if (!wasPeaks)
+                {
+                    saveOthers(ref rows);
+                }
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+
+         //   return rows;
+        }
+        public void Save<T>(ref T row)
+        {
+          //  this.BeginEndLoadData(true);
+                List<T> list = new List<T>();
+                list.Add(row);
+                IEnumerable<T> rows = list.ToArray();
+                         Save(ref rows);
+         //   this.BeginEndLoadData(false);
         }
 
         public string SaveExceptions()
@@ -150,22 +167,24 @@ namespace DB
         public bool SaveRemote(ref IEnumerable<DataTable> tables)
         {
             bool ok = false;
-            try
-            {
+          
 
                 foreach (System.Data.DataTable t in tables)
                 {
+                try
+                {
                     IEnumerable<DataRow> rows = t.AsEnumerable();
                     Save(ref rows);
+
+                    ok = true;
+                }
+                catch (SystemException ex)
+                {
+                    AddException(ex);
                 }
 
+            }
 
-                ok = true;
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);
-            }
             return ok;
         }
 

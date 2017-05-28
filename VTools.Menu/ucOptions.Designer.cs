@@ -37,13 +37,15 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.connectionsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.explorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.limsTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.explorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.TS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,41 +89,59 @@
             this.toolStripSeparator2,
             this.explorerToolStripMenuItem,
             this.toolStripSeparator3,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.helpToolStripMenuItem});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptionsBtn.ForeColor = System.Drawing.Color.DarkOrange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
             this.OptionsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OptionsBtn.Name = "OptionsBtn";
-            this.OptionsBtn.Size = new System.Drawing.Size(108, 43);
+            this.OptionsBtn.ShowDropDownArrow = false;
+            this.OptionsBtn.Size = new System.Drawing.Size(99, 43);
             this.OptionsBtn.Text = "OPTIONS";
             // 
             // preferencesTSMI
             // 
             this.preferencesTSMI.Name = "preferencesTSMI";
-            this.preferencesTSMI.Size = new System.Drawing.Size(195, 30);
+            this.preferencesTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.preferencesTSMI.Size = new System.Drawing.Size(257, 30);
             this.preferencesTSMI.Text = "Preferences";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(254, 6);
             // 
             // connectionsTSMI
             // 
             this.connectionsTSMI.Name = "connectionsTSMI";
-            this.connectionsTSMI.Size = new System.Drawing.Size(195, 30);
+            this.connectionsTSMI.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.connectionsTSMI.Size = new System.Drawing.Size(257, 30);
             this.connectionsTSMI.Text = "Connections";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(254, 6);
+            // 
+            // explorerToolStripMenuItem
+            // 
+            this.explorerToolStripMenuItem.Name = "explorerToolStripMenuItem";
+            this.explorerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
+            this.explorerToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.explorerToolStripMenuItem.Text = "Explorer";
+            this.explorerToolStripMenuItem.Click += new System.EventHandler(this.explorerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(195, 30);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // toolStripSeparator13
@@ -134,6 +154,7 @@
             this.Save.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Save.ForeColor = System.Drawing.Color.DarkCyan;
             this.Save.Name = "Save";
+            this.Save.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.Save.Size = new System.Drawing.Size(70, 46);
             this.Save.Text = "SAVE";
             // 
@@ -147,20 +168,21 @@
             this.limsTSMI.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.limsTSMI.ForeColor = System.Drawing.Color.MediumVioletRed;
             this.limsTSMI.Name = "limsTSMI";
+            this.limsTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.limsTSMI.Size = new System.Drawing.Size(69, 46);
             this.limsTSMI.Text = "LIMS";
             // 
-            // explorerToolStripMenuItem
+            // helpToolStripMenuItem
             // 
-            this.explorerToolStripMenuItem.Name = "explorerToolStripMenuItem";
-            this.explorerToolStripMenuItem.Size = new System.Drawing.Size(195, 30);
-            this.explorerToolStripMenuItem.Text = "Explorer";
-            this.explorerToolStripMenuItem.Click += new System.EventHandler(this.explorerToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
-            // toolStripSeparator3
+            // toolStripSeparator4
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
             // 
             // ucOptions
             // 
@@ -193,5 +215,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem explorerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }

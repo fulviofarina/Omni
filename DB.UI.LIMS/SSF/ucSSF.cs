@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using DB.Properties;
 using DB.Tools;
-using Rsx.Dumb;
 using VTools;
-using static DB.LINAA;
 
 namespace DB.UI
 {
     public partial class ucSSF : UserControl
     {
+        protected MatSSF MatSSF = null;
         private static Size currentSize;
 
-   //     private bool cancelCalculations = false;
+        // private bool cancelCalculations = false;
         private Interface Interface = null;
-     //   private Action<int> resetProgress;
+
+        // private Action<int> resetProgress;
         /// <summary>
         /// Attachs the respectivo SuperControls to the SSF Control
         /// </summary>
@@ -34,26 +28,11 @@ namespace DB.UI
                 Type t = pro.GetType();
                 if (t.Equals(typeof(ucProjectBox)))
                 {
-                    ucProjectBox projBox = pro as ucProjectBox;
-                    projBox.HideChildControl = Hide;
-                    destiny = this.splitContainer1.Panel1;
-                    Interface.IBS.PropertyChanged += IBS_PropertyChanged;
-                
+                    destiny = attachProjectbox(pro);
                 }
                 else if (t.Equals(typeof(ucOptions)))
                 {
-                    IucOptions options = pro as IucOptions;
-                  
-                    //SET A METHOD TO CALL BACK!!!!
-                    EventHandler callBack = delegate
-                    {
-                        this.ucUnit.PaintRows();
-                    };
-                    MatSSF = new MatSSF();
-                    MatSSF.Set(ref Interface, callBack, options.ResetProgress,options.ShowProgress);
-
-                    // projBox.HideChildControl = Hide;
-                    destiny = this.splitContainer1.Panel2;
+                    destiny = attachOptions(pro);
                 }
                 else
                 {
@@ -69,20 +48,6 @@ namespace DB.UI
                 Interface.IStore.AddException(ex);
             }
         }
-
-        private void IBS_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
-            bool isCalculating = Interface.IBS.IsCalculating;
-            this.CalcBtn.Visible = ThereIsData && !isCalculating;
-            this.cancelBtn.Visible = ThereIsData && isCalculating;
-            this.Tab.SelectedTab = this.CalcTab;
-            ucUnit.PaintRows();
-          
-        }
-
-     
-
 
         /// <summary>
         /// A function to show hide this control and mimetize
@@ -109,11 +74,6 @@ namespace DB.UI
             DaCONTAINER.Panel2Collapsed = !hidden;
         }
 
-   
-
-   
-
-        protected MatSSF MatSSF=null;
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
         /// </summary>
@@ -123,46 +83,11 @@ namespace DB.UI
             try
             {
                 currentSize = this.Size;
-          //      this.cancelBtn.Enabled = false;
-                this.CalcBtn.Click += delegate
-                    {
-                        this.ValidateChildren();
-                        Cursor.Current = Cursors.WaitCursor;
-                        MatSSF.Calculate();
-                        Cursor.Current = Cursors.Default;
-                    };
-                this.cancelBtn.Click += delegate
-                    {
-                        MatSSF.IsCalculating = false;
-                    };
+                setButtons();
 
+                setTemplateControls();
                 //
-                ucUnit.Set(ref Interface);
-                ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-                //
-                ucMS.Set(ref Interface);
-                ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-                // OTHER CONTROLS
-                ucCC1.Set(ref Interface);
-                ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-                ucVcc.Set(ref Interface);
-                ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-                //
-            //EN ESTE ORDEN!!!!
-                ucSSFControl.On = this.CalcTab;
-                ucSSFControl.Off = this.MatrixTab;
-                ucSSFControl.Set(ref Interface);
-                //
-
-                this.templatesTabCtrl.Selected += delegate
-                {
-                    bool matrix = false;
-                    if (templatesTabCtrl.SelectedTab == MatrixTab)
-                    {
-                        matrix = true;
-                    }
-                    ucSSFControl.ViewChanged(matrix, EventArgs.Empty);
-                };
+                setCalculator();
 
                 Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
@@ -173,11 +98,100 @@ namespace DB.UI
             }
         }
 
+        private Control attachOptions<T>(T pro)
+        {
+            Control destiny;
+            IucOptions options = pro as IucOptions;
+
+            //SET A METHOD TO CALL BACK!!!!
+            EventHandler callBack = delegate
+            {
+                this.ucUnit.PaintRows();
+            };
+            MatSSF = new MatSSF();
+            MatSSF.Set(ref Interface, callBack, options.ResetProgress, options.ShowProgress);
+
+            // projBox.HideChildControl = Hide;
+            destiny = this.splitContainer1.Panel2;
+            return destiny;
+        }
+
+        private Control attachProjectbox<T>(T pro)
+        {
+            Control destiny;
+            ucProjectBox projBox = pro as ucProjectBox;
+            projBox.HideChildControl = Hide;
+            destiny = this.splitContainer1.Panel1;
+            //attach binding
+            Interface.IBS.PropertyChanged += delegate
+            {
+                bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
+                bool isCalculating = Interface.IBS.IsCalculating;
+                this.CalcBtn.Visible = ThereIsData && !isCalculating;
+                this.cancelBtn.Visible = ThereIsData && isCalculating;
+                // this.Tab.SelectedTab = this.CalcTab;
+                ucUnit.PaintRows();
+            };
+            // Interface.IBS.EnabledControls = false;
+            Interface.IBS.EnabledControls = true;
+
+            //invoke
+            //    bindingChanged(null, new PropertyChangedEventArgs(string.Empty));
+            return destiny;
+        }
+        private void setButtons()
+        {
+            // this.cancelBtn.Enabled = false;
+            this.CalcBtn.Click += delegate
+            {
+                this.ValidateChildren();
+                Cursor.Current = Cursors.WaitCursor;
+                this.Tab.SelectedTab = this.CalcTab;
+                MatSSF.Calculate();
+                Cursor.Current = Cursors.Default;
+            };
+            this.cancelBtn.Click += delegate
+            {
+                MatSSF.IsCalculating = false;
+            };
+        }
+
+        private void setCalculator()
+        {
+            //EN ESTE ORDEN!!!!
+            ucSSFControl.On = this.CalcTab;
+            ucSSFControl.Off = this.MatrixTab;
+            ucSSFControl.Set(ref Interface);
+            //
+
+            this.templatesTabCtrl.Selected += delegate
+            {
+                bool matrix = false;
+                if (templatesTabCtrl.SelectedTab == MatrixTab)
+                {
+                    matrix = true;
+                }
+                ucSSFControl.ViewChanged(matrix, EventArgs.Empty);
+            };
+        }
+        private void setTemplateControls()
+        {
+            //
+            ucUnit.Set(ref Interface);
+            ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+            //
+            ucMS.Set(ref Interface);
+            ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+            // OTHER CONTROLS
+            ucCC1.Set(ref Interface);
+            ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+            ucVcc.Set(ref Interface);
+            ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+        }
 
         public ucSSF()
         {
             InitializeComponent();
-       
         }
     }
 }

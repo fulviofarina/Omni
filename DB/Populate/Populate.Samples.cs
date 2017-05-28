@@ -166,7 +166,7 @@ namespace DB
         {
             DataTable table = new DataTable();
 
-            double Ld = 0.693 / daugther.k0NAARow.NAARow.T3;
+            double Ld = 0.693 / daugther.k0NAARow.NAARowParent.T3;
             double Sd = MyMath.S(Ld, daugther.SubSamplesRow.IrradiationTotalTime);
 
             LINAA.PeaksRow[] dpeaks = daugther.GetPeaksRows();
@@ -186,7 +186,7 @@ namespace DB
                 table.Columns.Add("YCalc" + energy, typeof(double));
 
                 //lamdas
-                double Lref = 0.693 / reference.k0NAARow.NAARow.T2;
+                double Lref = 0.693 / reference.k0NAARow.NAARowParent.T2;
                 //saturation factor
                 double Sref = MyMath.S(Lref, reference.SubSamplesRow.IrradiationTotalTime);
                 double DLrefd = Ld - Lref; //delta lamdaes

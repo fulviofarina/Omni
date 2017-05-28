@@ -7,7 +7,7 @@ namespace DB
 {
     public interface IStore
     {
-
+        void Save<T>(ref T row);
         string FolderPath
         {
             get;

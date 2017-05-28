@@ -165,6 +165,11 @@
             this.FC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reactorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContainerDGV = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Vol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContainerBS = new System.Windows.Forms.BindingSource(this.components);
             this.channelSC = new System.Windows.Forms.SplitContainer();
             this.channelTS = new System.Windows.Forms.ToolStrip();
@@ -184,11 +189,6 @@
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Vol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPShapes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChParSC)).BeginInit();
             this.ChParSC.Panel1.SuspendLayout();
@@ -474,7 +474,6 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ChannelDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.ChannelDGV.RowTemplate.Height = 24;
-            this.ChannelDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ChannelDGV.Size = new System.Drawing.Size(904, 213);
             this.ChannelDGV.TabIndex = 11;
             // 
@@ -673,9 +672,54 @@
             dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ContainerDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.ContainerDGV.RowTemplate.Height = 24;
-            this.ContainerDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ContainerDGV.Size = new System.Drawing.Size(904, 218);
             this.ContainerDGV.TabIndex = 7;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "VialTypeRef";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Label";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ToolTipText = "A label for the neutron source dimensions";
+            this.dataGridViewTextBoxColumn3.Width = 74;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "InnerRadius";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Radius";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ToolTipText = "Neutron source radius in milimeters";
+            this.dataGridViewTextBoxColumn6.Width = 83;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "MaxFillHeight";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Length";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ToolTipText = "Neutron source length in milimeters";
+            this.dataGridViewTextBoxColumn12.Width = 86;
+            // 
+            // Vol
+            // 
+            this.Vol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Vol.DataPropertyName = "Vol";
+            dataGridViewCellStyle11.Format = "N3";
+            this.Vol.DefaultCellStyle = dataGridViewCellStyle11;
+            this.Vol.HeaderText = "Vol";
+            this.Vol.Name = "Vol";
+            this.Vol.ReadOnly = true;
+            this.Vol.ToolTipText = "Volume in cubic centimeters";
+            this.Vol.Width = 58;
+            // 
+            // Comments
+            // 
+            this.Comments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Comments.DataPropertyName = "Comments";
+            this.Comments.HeaderText = "Comments";
+            this.Comments.Name = "Comments";
             // 
             // ContainerBS
             // 
@@ -865,52 +909,6 @@
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "VialTypeRef";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Label";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ToolTipText = "A label for the neutron source dimensions";
-            this.dataGridViewTextBoxColumn3.Width = 74;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "InnerRadius";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Radius";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ToolTipText = "Neutron source radius in milimeters";
-            this.dataGridViewTextBoxColumn6.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "MaxFillHeight";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Length";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ToolTipText = "Neutron source length in milimeters";
-            this.dataGridViewTextBoxColumn12.Width = 86;
-            // 
-            // Vol
-            // 
-            this.Vol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Vol.DataPropertyName = "Vol";
-            dataGridViewCellStyle11.Format = "N3";
-            this.Vol.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Vol.HeaderText = "Vol";
-            this.Vol.Name = "Vol";
-            this.Vol.ReadOnly = true;
-            this.Vol.ToolTipText = "Volume in cubic centimeters";
-            this.Vol.Width = 58;
-            // 
-            // Comments
-            // 
-            this.Comments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Comments.DataPropertyName = "Comments";
-            this.Comments.HeaderText = "Comments";
-            this.Comments.Name = "Comments";
             // 
             // ucCC
             // 

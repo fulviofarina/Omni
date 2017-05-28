@@ -42,14 +42,21 @@ namespace DB.Tools
                 {
                     //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
                     unit = Interface.ICurrent.Unit as UnitRow;
+                    EnabledControls = false;
                     unit.SetParent(ref row);
                     Interface.IReport.Msg("Sample " + unit.Name + " values updated with the template item", "Updated!"); //report
-              
+                    EnabledControls = true;
                     //bring back to VIEW (Select)
                 }
 
                 Update<UnitRow>(unit, true, false, true);
-                Checker(unit);
+                IRow ir = unit as IRow;
+                ir.Check();
+           //     Interface.IStore.Save(ref row);
+                Interface.IStore.Save(ref unit);
+                SubSamplesRow s = unit.SubSamplesRow;
+                Interface.IStore.Save(ref s);
+                HasErrors(row);
             }
             catch (System.Exception ex)
             {
@@ -162,7 +169,7 @@ namespace DB.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="r"></param>
-        public void Checker<T>(T r)
+        public void HasErrors<T>(T r)
         {
 
             if (EC.IsNuDelDetch(r as DataRow)) return;
@@ -214,7 +221,7 @@ namespace DB.Tools
                 // updateIrradiationRequest(r, doCascade, findItself);
             }
             //now check the errors!!!
-            checkCompulsoryErrors(r);
+            hasCompulsoryErrors(r);
         }
 
         /// <summary>
@@ -264,6 +271,8 @@ namespace DB.Tools
             string field = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
             int position = Interface.IBS.Irradiations.Find(field, projectOrOrder);
             Interface.IBS.Irradiations.Position = position;
+            IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
+            Update(ir, true, false, true);
         }
 
         public void StartBinding()
@@ -364,7 +373,7 @@ namespace DB.Tools
                 updateIrradiationRequest(r, doCascade, findItself);
             }
 
-           if (EnabledControls) Checker(r);
+           if (EnabledControls) HasErrors(r);
             //now check the errors!!!
             //   CheckCompulsoryErrors(r);
         }

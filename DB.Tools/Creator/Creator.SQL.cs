@@ -176,16 +176,27 @@ namespace DB.Tools
             }
             Interface.IStore.Read(filePath);
             DataSet set = Interface.Get();
+            //clear and repopulate
+            Interface.IPreferences.SavePreferences();
+            Interface.IDB.Preferences.Clear();
+            Interface.IDB.SSFPref.Clear();
+          
+            //Interface.IDB.SSFPref.Clear();
+            Interface.IDB.Exceptions.Clear();
+            Interface.IDB.MatSSF.Clear();
+            Interface.IDB.Compositions.Clear();
+            Interface.IDB.MUES.Clear();
             IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
             //save
             Interface.IStore.SaveRemote(ref tables);
-
+       
             Interface.IAdapter.DisposeAdapters();
             //now clone to the USER!!!
             //o do something more selective!
             //DEVELOPER MODE COPY
             ok = LinqDataContext.PopulateSQL(localDB, true, developerDB);
             //again, restore the string to the User STRING
+            Interface.IPreferences.PopulatePreferences();
             Interface.IPreferences.CurrentPref.LIMS = localDB;
             return ok;
         }

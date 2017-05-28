@@ -110,7 +110,7 @@ namespace DB
 
             private static bool NotLike(ref IPeakAveragesRow b1, ref IPeakAveragesRow b2)
             {
-                if (b1.k0NAARow.NAARow != b2.k0NAARow.NAARow) return true;
+                if (b1.k0NAARow.NAARowParent != b2.k0NAARow.NAARowParent) return true;
                 else return false;
             }
 

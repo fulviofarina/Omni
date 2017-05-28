@@ -16,7 +16,7 @@ namespace DB.UI
     {
       
         private Interface Interface = null;
-
+        BindingNavigator bn = null;
         /// <summary>
         /// Attachs the respectivo SuperControls to the SSF Control
         /// </summary>
@@ -36,16 +36,10 @@ namespace DB.UI
             //    BindingNavigator bn = new BindingNavigator(Interface.IBS.SubSamples);
               //  pro = (T)Convert.ChangeType(bn,pro.GetType());
                 
-                BindingNavigator b = pro as BindingNavigator;
-                b.Items["SaveItem"].Visible = false;
-                b.Parent.Controls.Remove(b);
-                b.DeleteItem.Click += delegate
-                {
-                    IBS_PropertyChanged(null, new PropertyChangedEventArgs(string.Empty));
-
-                   // Creator.SaveInFull(true);
-                   
-                };
+                bn = pro as BindingNavigator;
+                bn.Items["SaveItem"].Visible = false;
+                bn.Parent.Controls.Remove(bn);
+             
                 // this.unitBN.Dispose();
                 destiny = this.unitSC.Panel2;
             }
@@ -84,8 +78,9 @@ namespace DB.UI
                 this.descriplbl.Click += dropDownClickedLabel;
 
 
-                Interface.IBS.PropertyChanged += IBS_PropertyChanged;
-               
+                Interface.IBS.PropertyChanged += enableControls;
+                Interface.IBS.EnabledControls = true;
+            //    enableControls(null, new PropertyChangedEventArgs(string.Empty));
 
                 sampleCompoLbl.PerformClick();
 
@@ -97,13 +92,14 @@ namespace DB.UI
             }
         }
 
-        private void IBS_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void enableControls(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //turns off or disables the controls.
             //necessary protection for user interface
             bool enable = Interface.IBS.SubSamples.Count != 0;//EnabledControls;
             ucSubMS.Enabled = enable;
             ucNS.Enabled = enable;
+        //    bool bnOk = enable && 
             nameToolStrip.Enabled = enable;
             descripTS.Enabled = enable;
           //  changeViewTS.Enabled = enable;

@@ -104,6 +104,9 @@
     <Compile Include="DB\Samples\NAA.Samples.Row.Internal.cs" />
     <Compile Include="DB\Samples\NAA.Samples.Row.cs" />
     <Compile Include="DB\Samples\NAA.Units.Row.cs" />
+    <Compile Include="LINAA.cs">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

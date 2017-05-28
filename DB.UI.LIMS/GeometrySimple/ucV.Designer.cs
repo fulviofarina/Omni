@@ -232,7 +232,6 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.vialDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.vialDGV.RowTemplate.Height = 24;
-            this.vialDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.vialDGV.Size = new System.Drawing.Size(742, 534);
             this.vialDGV.TabIndex = 9;
             // 

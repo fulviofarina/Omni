@@ -143,7 +143,8 @@ namespace DB.Tools
                 }
             }
 
-            eCancel = !SaveInFull(takeChanges);
+           // eCancel = !SaveInFull(takeChanges);
+            SaveInFull(takeChanges);
             //if cancel, this means that a remote or a local copy could not be saved,
             //not good, this is the worst nightmare...
             //the backup
@@ -362,10 +363,11 @@ namespace DB.Tools
             // Interface.IStore.SaveSSF(off, savePath);
 
             Interface.IBS.EndEdit();
+          
             // Interface.Get().BeginEndLoadData(false); Interface.IBS.EndEdit();
-
             Interface.IPreferences.SavePreferences();
             Interface.IStore.SaveExceptions();
+
 
             Interface.IReport.Msg("Saved preferences", "Saved!");
 

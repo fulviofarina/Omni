@@ -7,14 +7,15 @@ namespace DB.Tools
 
     
 
-        public void LoadProject(bool makeProject, string ProjectOrOrder)
+        public bool LoadProject( bool makeProject, string ProjectOrOrder)
         {
-            if (string.IsNullOrEmpty(ProjectOrOrder)) return;
-            ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
+            if (string.IsNullOrEmpty(ProjectOrOrder)) return false;
+            //    ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
             bool isAProjectOrOrder = Interface.IPopulate.IProjects.ProjectsList.Contains(ProjectOrOrder);
-            if (!Interface.IBS.EnabledControls) return;
+            if (!Interface.IBS.EnabledControls) return false;
             //eactivate box because it entered
             makeProject = makeProject && !isAProjectOrOrder;
+
             if (isAProjectOrOrder || makeProject)
             {
                 Interface.IBS.EnabledControls = false;
@@ -29,17 +30,20 @@ namespace DB.Tools
             {
              //   Interface.IBS.EnabledControls = true;
                 Interface.IBS.SelectProject(ProjectOrOrder);
+                
             }
             Interface.IBS.EnabledControls = true;
 
-           Interface.IBS.SubSamples.MoveLast();//.Position = 0;
+            Interface.IBS.SubSamples.MoveLast();//.Position = 0;
             Interface.IBS.Units.MoveLast();//.Position = 0;
+
+            return makeProject;
 
         }
         private void addProject(ref string ProjectOrOrder)
         {
             DialogResult result = DialogResult.No;
-            string text = "This Irradiation Project does not exist.\nCreate new one?";
+            string text = "This Project does not exist yet (not found).\nWould you like to create a new one?";
             Interface.IReport.Msg(text, "Not Found... " + ProjectOrOrder);
             result = MessageBox.Show(text, "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
@@ -54,7 +58,10 @@ namespace DB.Tools
                 Interface.IPopulate.IIrradiations.AddNewIrradiation(ProjectOrOrder);
                 Interface.IStore.Save<LINAA.IrradiationRequestsDataTable>();
                 // LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
-                Interface.IReport.Msg("Project created", "Please add some samples... " + ProjectOrOrder);
+                text = "Project created.\n\nPlease add some samples to it... ";
+                string created = "Project " + ProjectOrOrder + " created";
+                MessageBox.Show(text, created, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Interface.IReport.Msg(created, text );
             }
 
         }

@@ -36,7 +36,7 @@ namespace DB
             {
               
                 if (IsCalibrationNull()) Calibration = false;
-                if (this.IsDoCKNull()) DoCK = true;
+                if (this.IsDoCKNull()) DoCK = false;
                 if (this.IsDoMatSSFNull()) DoMatSSF = true;
                 if (this.IsLoopNull()) Loop = true;
                 if (this.IsRoundingNull()) Rounding = "N3";
@@ -136,7 +136,7 @@ namespace DB
                 if (IsOfflineNull()) Offline = false;
                 if (IsIsSQLNull()) this.IsSQL = false;
                 if (IsIsMSMQNull()) this.IsMSMQ = false;
-                if (IsAdvancedEditorNull()) this.AdvancedEditor = true;
+                if (IsAdvancedEditorNull()) this.AdvancedEditor = false;
                 if (IswindowANull()) windowA = 1.5;
                 if (IswindowBNull()) windowB = 0.001;
                 if (IsminAreaNull()) minArea = 500;

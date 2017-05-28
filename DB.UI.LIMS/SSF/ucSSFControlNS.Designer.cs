@@ -35,15 +35,23 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.sampleDGV = new System.Windows.Forms.DataGridView();
+            this.gross1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.radiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.calcDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.volDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.alphaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dryNetDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.comparatorDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SampleBS = new System.Windows.Forms.BindingSource(this.components);
             this.unitSC = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -76,23 +84,12 @@
             this.chlenB = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.gross1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.radiusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fillHeightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.calcDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.volDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.alphaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dryNetDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.comparatorDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SampleBS = new System.Windows.Forms.BindingSource(this.components);
-            this.dgvCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sampleDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unitSC)).BeginInit();
             this.unitSC.Panel1.SuspendLayout();
             this.unitSC.Panel2.SuspendLayout();
@@ -106,28 +103,7 @@
             this.matssfTS.SuspendLayout();
             this.chTS.SuspendLayout();
             this.toolStrip3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dgvCMS
-            // 
-            this.dgvCMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem2.Text = "Export";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem3.Text = "View Output";
             // 
             // tableLayoutPanel3
             // 
@@ -187,7 +163,6 @@
             this.dryNetDataGridViewTextBoxColumn,
             this.comparatorDataGridViewCheckBoxColumn,
             this.matrixDensityDataGridViewTextBoxColumn1});
-            this.sampleDGV.ContextMenuStrip = this.dgvCMS;
             this.sampleDGV.DataSource = this.SampleBS;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -215,6 +190,92 @@
             this.sampleDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.sampleDGV.Size = new System.Drawing.Size(690, 77);
             this.sampleDGV.TabIndex = 16;
+            // 
+            // gross1DataGridViewTextBoxColumn
+            // 
+            this.gross1DataGridViewTextBoxColumn.DataPropertyName = "Gross1";
+            dataGridViewCellStyle2.Format = "N1";
+            this.gross1DataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.gross1DataGridViewTextBoxColumn.DividerWidth = 2;
+            this.gross1DataGridViewTextBoxColumn.HeaderText = "Mass (mg)";
+            this.gross1DataGridViewTextBoxColumn.Name = "gross1DataGridViewTextBoxColumn";
+            this.gross1DataGridViewTextBoxColumn.ToolTipText = "in mg";
+            // 
+            // radiusDataGridViewTextBoxColumn
+            // 
+            this.radiusDataGridViewTextBoxColumn.DataPropertyName = "Radius";
+            this.radiusDataGridViewTextBoxColumn.HeaderText = "Radius (mm)";
+            this.radiusDataGridViewTextBoxColumn.Name = "radiusDataGridViewTextBoxColumn";
+            this.radiusDataGridViewTextBoxColumn.ToolTipText = "in mm";
+            // 
+            // fillHeightDataGridViewTextBoxColumn
+            // 
+            this.fillHeightDataGridViewTextBoxColumn.DataPropertyName = "FillHeight";
+            this.fillHeightDataGridViewTextBoxColumn.DividerWidth = 2;
+            this.fillHeightDataGridViewTextBoxColumn.HeaderText = "Length (mm)";
+            this.fillHeightDataGridViewTextBoxColumn.Name = "fillHeightDataGridViewTextBoxColumn";
+            this.fillHeightDataGridViewTextBoxColumn.ToolTipText = "in mm";
+            // 
+            // calcDensityDataGridViewTextBoxColumn
+            // 
+            this.calcDensityDataGridViewTextBoxColumn.DataPropertyName = "CalcDensity";
+            dataGridViewCellStyle3.Format = "N3";
+            this.calcDensityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.calcDensityDataGridViewTextBoxColumn.HeaderText = "Density (g/cm3)";
+            this.calcDensityDataGridViewTextBoxColumn.Name = "calcDensityDataGridViewTextBoxColumn";
+            this.calcDensityDataGridViewTextBoxColumn.ToolTipText = "in g/cm3";
+            // 
+            // volDataGridViewTextBoxColumn
+            // 
+            this.volDataGridViewTextBoxColumn.DataPropertyName = "Vol";
+            dataGridViewCellStyle4.Format = "N3";
+            this.volDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.volDataGridViewTextBoxColumn.HeaderText = "Volume (cm3)";
+            this.volDataGridViewTextBoxColumn.Name = "volDataGridViewTextBoxColumn";
+            this.volDataGridViewTextBoxColumn.ReadOnly = true;
+            this.volDataGridViewTextBoxColumn.ToolTipText = "in cm3";
+            // 
+            // alphaDataGridViewTextBoxColumn
+            // 
+            this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
+            this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
+            this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
+            this.alphaDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // fDataGridViewTextBoxColumn
+            // 
+            this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
+            this.fDataGridViewTextBoxColumn.HeaderText = "f";
+            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
+            this.fDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // dryNetDataGridViewTextBoxColumn
+            // 
+            this.dryNetDataGridViewTextBoxColumn.DataPropertyName = "DryNet";
+            this.dryNetDataGridViewTextBoxColumn.HeaderText = "DryNet";
+            this.dryNetDataGridViewTextBoxColumn.Name = "dryNetDataGridViewTextBoxColumn";
+            this.dryNetDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dryNetDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // comparatorDataGridViewCheckBoxColumn
+            // 
+            this.comparatorDataGridViewCheckBoxColumn.DataPropertyName = "Comparator";
+            this.comparatorDataGridViewCheckBoxColumn.HeaderText = "Comparator";
+            this.comparatorDataGridViewCheckBoxColumn.Name = "comparatorDataGridViewCheckBoxColumn";
+            this.comparatorDataGridViewCheckBoxColumn.Visible = false;
+            // 
+            // matrixDensityDataGridViewTextBoxColumn1
+            // 
+            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
+            this.matrixDensityDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.matrixDensityDataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // SampleBS
+            // 
+            this.SampleBS.DataMember = "SubSamples";
+            this.SampleBS.DataSource = typeof(DB.LINAA);
             // 
             // unitSC
             // 
@@ -665,92 +726,6 @@
             this.toolStripLabel4.Size = new System.Drawing.Size(249, 25);
             this.toolStripLabel4.Text = "Neutron Source parameters";
             // 
-            // gross1DataGridViewTextBoxColumn
-            // 
-            this.gross1DataGridViewTextBoxColumn.DataPropertyName = "Gross1";
-            dataGridViewCellStyle2.Format = "N1";
-            this.gross1DataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.gross1DataGridViewTextBoxColumn.DividerWidth = 2;
-            this.gross1DataGridViewTextBoxColumn.HeaderText = "Mass (mg)";
-            this.gross1DataGridViewTextBoxColumn.Name = "gross1DataGridViewTextBoxColumn";
-            this.gross1DataGridViewTextBoxColumn.ToolTipText = "in mg";
-            // 
-            // radiusDataGridViewTextBoxColumn
-            // 
-            this.radiusDataGridViewTextBoxColumn.DataPropertyName = "Radius";
-            this.radiusDataGridViewTextBoxColumn.HeaderText = "Radius (mm)";
-            this.radiusDataGridViewTextBoxColumn.Name = "radiusDataGridViewTextBoxColumn";
-            this.radiusDataGridViewTextBoxColumn.ToolTipText = "in mm";
-            // 
-            // fillHeightDataGridViewTextBoxColumn
-            // 
-            this.fillHeightDataGridViewTextBoxColumn.DataPropertyName = "FillHeight";
-            this.fillHeightDataGridViewTextBoxColumn.DividerWidth = 2;
-            this.fillHeightDataGridViewTextBoxColumn.HeaderText = "Length (mm)";
-            this.fillHeightDataGridViewTextBoxColumn.Name = "fillHeightDataGridViewTextBoxColumn";
-            this.fillHeightDataGridViewTextBoxColumn.ToolTipText = "in mm";
-            // 
-            // calcDensityDataGridViewTextBoxColumn
-            // 
-            this.calcDensityDataGridViewTextBoxColumn.DataPropertyName = "CalcDensity";
-            dataGridViewCellStyle3.Format = "N3";
-            this.calcDensityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.calcDensityDataGridViewTextBoxColumn.HeaderText = "Density (g/cm3)";
-            this.calcDensityDataGridViewTextBoxColumn.Name = "calcDensityDataGridViewTextBoxColumn";
-            this.calcDensityDataGridViewTextBoxColumn.ToolTipText = "in g/cm3";
-            // 
-            // volDataGridViewTextBoxColumn
-            // 
-            this.volDataGridViewTextBoxColumn.DataPropertyName = "Vol";
-            dataGridViewCellStyle4.Format = "N3";
-            this.volDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.volDataGridViewTextBoxColumn.HeaderText = "Volume (cm3)";
-            this.volDataGridViewTextBoxColumn.Name = "volDataGridViewTextBoxColumn";
-            this.volDataGridViewTextBoxColumn.ReadOnly = true;
-            this.volDataGridViewTextBoxColumn.ToolTipText = "in cm3";
-            // 
-            // alphaDataGridViewTextBoxColumn
-            // 
-            this.alphaDataGridViewTextBoxColumn.DataPropertyName = "Alpha";
-            this.alphaDataGridViewTextBoxColumn.HeaderText = "Alpha";
-            this.alphaDataGridViewTextBoxColumn.Name = "alphaDataGridViewTextBoxColumn";
-            this.alphaDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // fDataGridViewTextBoxColumn
-            // 
-            this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
-            this.fDataGridViewTextBoxColumn.HeaderText = "f";
-            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
-            this.fDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // dryNetDataGridViewTextBoxColumn
-            // 
-            this.dryNetDataGridViewTextBoxColumn.DataPropertyName = "DryNet";
-            this.dryNetDataGridViewTextBoxColumn.HeaderText = "DryNet";
-            this.dryNetDataGridViewTextBoxColumn.Name = "dryNetDataGridViewTextBoxColumn";
-            this.dryNetDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dryNetDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // comparatorDataGridViewCheckBoxColumn
-            // 
-            this.comparatorDataGridViewCheckBoxColumn.DataPropertyName = "Comparator";
-            this.comparatorDataGridViewCheckBoxColumn.HeaderText = "Comparator";
-            this.comparatorDataGridViewCheckBoxColumn.Name = "comparatorDataGridViewCheckBoxColumn";
-            this.comparatorDataGridViewCheckBoxColumn.Visible = false;
-            // 
-            // matrixDensityDataGridViewTextBoxColumn1
-            // 
-            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
-            this.matrixDensityDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.matrixDensityDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // SampleBS
-            // 
-            this.SampleBS.DataMember = "SubSamples";
-            this.SampleBS.DataSource = typeof(DB.LINAA);
-            // 
             // ucSSFControlNS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
@@ -760,12 +735,12 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ucSSFControlNS";
             this.Size = new System.Drawing.Size(702, 369);
-            this.dgvCMS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sampleDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).EndInit();
             this.unitSC.Panel1.ResumeLayout(false);
             this.unitSC.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.unitSC)).EndInit();
@@ -788,16 +763,11 @@
             this.chTS.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SampleBS)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-      
-        private System.Windows.Forms.ContextMenuStrip dgvCMS;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         //   private System.Windows.Forms.TableLayoutPanel TLPS;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.SplitContainer splitContainer5;

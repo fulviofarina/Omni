@@ -222,9 +222,17 @@ namespace DB.UI
             projectbox.Set(ref Interface);
             Interface.IBS.PropertyChanged += delegate
             {
-                if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
+                string currentProject = projectbox.Project;
+                if (this.ParentForm != null) this.ParentForm.Text = currentProject + " - Samples";
+             
+                bool show = !string.IsNullOrEmpty(currentProject);
+                show = show && Interface.IPopulate.IProjects.ProjectsList.Contains(currentProject);
+                this.BN.AddNewItem.Enabled = show;
             };
-
+            BN.DeleteItem.Click += delegate
+            {
+                Interface.IBS.EnabledControls = true;
+            };
             /*
             Interface.IBS.SubSamples.AddingNew += delegate
              {

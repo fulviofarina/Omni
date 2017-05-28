@@ -169,7 +169,7 @@ namespace DB.Tools
             }
             catch (Exception ex2)
             {
-                Interface.IReport.Msg(ex2.InnerException.Message, ex2.Message, false);
+           //     Interface.IReport.Msg(ex2.InnerException.Message, ex2.Message, false);
                 Interface.IStore.AddException(ex2);
             }
 
