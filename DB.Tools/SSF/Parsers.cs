@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using Rsx;
 using Rsx.Dumb;
 using static DB.LINAA;
@@ -12,7 +10,6 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
-    
         protected LINAA.MatSSFDataTable fillSSFTableWith(ref LINAA.UnitRow u, IList<string> fileContent, bool fillSSF)
         {
             string[] content = null;
@@ -135,7 +132,7 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
             }
         }
-     
+
         protected string getChannelCfg(bool defaultVal, ref LINAA.UnitRow UNIT)
         {
             string chCfg = string.Empty;
@@ -163,6 +160,4 @@ namespace DB.Tools
             return chCfg;
         }
     }
-
-  
 }

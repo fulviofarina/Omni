@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Rsx;
 
 //using DB.Interfaces;
 
@@ -13,7 +14,7 @@ namespace DB
             int? IrrReqID = null;
 
             LINAA.IrradiationRequestsRow irr = this.FindIrradiationByCode(project.Trim().ToUpper());
-            if (irr != null) IrrReqID = irr.IrradiationRequestsID;
+            if (!EC.IsNuDelDetch(irr)) IrrReqID = irr.IrradiationRequestsID;
             return IrrReqID;
         }
 

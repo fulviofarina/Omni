@@ -13,18 +13,16 @@ namespace SSF
     {
         private static NotifyIcon con;
 
-        private static string TITLE = Application.ProductName +" v" + Application.ProductVersion + " (Beta)";
+        private static string TITLE = Application.ProductName + " v" + Application.ProductVersion + " (Beta)";
 
-        // [STAThread]
         public static Form CreateSSFUserInterface()
         {
-
             IucPreferences preferences = LIMS.PreferencesUI();
             Form aboutbox = new AboutBox();
             IucOptions options = LIMS.OptionsUI(ref aboutbox);
 
             //DEVELOPER MODE
-            options.SetDeveloperMode(false);
+            //      options.SetDeveloperMode(false);
             options.HelpClick = helpReQuested;
             UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
             LIMS.CreateForm("Samples", ref control, false);
@@ -34,12 +32,8 @@ namespace SSF
             ucProjectBox = ucSubSamples.projectbox;
             BindingNavigator aBindingNavigator = ucSubSamples.BN;
 
-
-
             ////2
-            Application.DoEvents();
-
-            //     ucUnit units = LIMS.CreateUI(ControlNames.Units,null,true) as ucUnit;
+         //   Application.DoEvents();
 
             ucSSF ucSSF = new ucSSF();
             ucSSF.Set(ref LIMS.Interface);
@@ -50,60 +44,54 @@ namespace SSF
             form.AutoSizeMode = AutoSizeMode.GrowOnly;
             Creator.CallBack = delegate
             {
-
-                //     ucSSF.AttachCtrl(ref units);
+                // ucSSF.AttachCtrl(ref units);
                 ucSSF.AttachCtrl(ref preferences);
                 ucSSF.AttachCtrl(ref ucProjectBox);
                 ucSSF.AttachCtrl(ref aBindingNavigator);
                 ucSSF.AttachCtrl(ref options);
 
                 Application.DoEvents();
-            //    form.HelpButtonClicked += helpReQuested;
+                // form.HelpButtonClicked += helpReQuested;
                 form.FormClosing += Form_FormClosing;
                 ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
                 form.Controls.Add(ucSSF);
-
             };
-            // form.Enabled = false;
+       
 
             Creator.LastCallBack = delegate
             {
-
                 bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
                 string lastProject = string.Empty;
                 if (autoload)
                 {
                     lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
                 }
-                else LIMS.Interface.IReport.SpeakLoadingFinished();
 
-                //       
+                if (!autoload || string.IsNullOrEmpty(lastProject))
+                {
+                    LIMS.Interface.IReport.GreetUser();
+                    LIMS.Interface.IReport.SpeakLoadingFinished();
+                }
+             
 
                 //ESTE ORDEN ES FUNDAMENTAL!!!
-                Application.DoEvents();
+           //     Application.DoEvents();
                 form.Opacity = 100;
 
                 LIMS.Interface.IBS.ApplyFilters();
                 LIMS.Interface.IBS.StartBinding();
 
-
                 //3
+                Application.DoEvents();
+
                 ucProjectBox.Project = lastProject;
-                //   ucProjectBox.Refresher();
+                // ucProjectBox.Refresher();
 
                 Form frm2 = msn.ParentForm;
                 frm2.Opacity = 0;
                 ucSSF.AttachCtrl(ref msn);
                 frm2.Dispose();
-
-            
-
-
-
-
             };
-
-
 
             return form;
         }
@@ -121,31 +109,15 @@ namespace SSF
             form.Text = TITLE;
             form.HelpButton = true;
             form.TopMost = false;
-           form.ShowInTaskbar = true;
+            form.ShowInTaskbar = true;
             form.ShowIcon = true;
             form.MaximizeBox = false;
             form.ControlBox = true;
             form.StartPosition = FormStartPosition.CenterParent;
             form.SetDesktopLocation(0, 0);
-          
-           
-        
+
             return form;
         }
-
-        private static void helpReQuested()
-        {
-           
-            string helpFile = Application.StartupPath + DB.Properties.Resources.DevFiles + "UserGuide.pdf";
-
-            System.Diagnostics.Process.Start("explorer.exe", helpFile);
-
-        }
-
-        /// <summary>
-        /// Function meant to Create a LINAA database datatables and load itto store and display data
-        /// </summary>
-        /// <returns>Form created with the respective ucSSF inner control</returns>
 
         private static void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -156,6 +128,17 @@ namespace SSF
             }
         }
 
+        private static void helpReQuested()
+        {
+            string helpFile = Application.StartupPath + DB.Properties.Resources.DevFiles + "UserGuide.pdf";
+
+            System.Diagnostics.Process.Start("explorer.exe", helpFile);
+        }
+
+        /// <summary>
+        /// Function meant to Create a LINAA database datatables and load itto store and display data
+        /// </summary>
+        /// <returns>Form created with the respective ucSSF inner control</returns>
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -171,7 +154,7 @@ namespace SSF
             {
                 //create database
                 Creator.Build(ref LIMS.Interface);
-             
+
                 LIMS.Linaa = LIMS.Interface.Get();
                 LIMS.Form = new LIMS(); //make a new UI LIMS
                 LIMS.Form.ShowInTaskbar = false;
@@ -191,7 +174,7 @@ namespace SSF
                 //FIRST SQL
                 UserControl IConn = new ucSQLConnection();
                 bool ok = Creator.PrepareSQL(ref IConn);
-             
+
                 LIMS.Interface.IPreferences.SavePreferences();
                 //CHECK RESTART FILE
                 LIMS.Interface.IReport.CheckRestartFile();
@@ -204,10 +187,6 @@ namespace SSF
                 Creator.Run();
 
                 Application.Run(toReturn);
-
-            
-
-              
             }
             catch (Exception ex)
             {

@@ -9,7 +9,7 @@ namespace VTools
         Action DatabaseClick { set; }
         Action HelpClick { set; }
 
-        void SetDeveloperMode(bool devMode);
+   //     void SetDeveloperMode(bool devMode);
         Action ExplorerClick { set; }
         Action PreferencesClick { set; }
         Action AboutBoxAction { set; }

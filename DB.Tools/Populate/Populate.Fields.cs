@@ -13,7 +13,7 @@ namespace DB.Tools
         public ISamples ISamples;
         public ISchedAcqs ISchedAcqs;
         public IToDoes IToDoes;
-        protected Interface Interface;
+        protected internal Interface Interface;
 
      
     }

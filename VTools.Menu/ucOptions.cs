@@ -182,10 +182,7 @@ namespace VTools
             explorer?.Invoke();
         }
 
-        public void SetDeveloperMode(bool devMode)
-        {
-            explorerToolStripMenuItem.Enabled = devMode;
-            limsTSMI.Enabled = devMode;
-        }
+      
+       
     }
 }

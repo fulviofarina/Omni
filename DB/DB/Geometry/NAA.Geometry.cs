@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx;
 
 namespace DB
 {
     public partial class LINAA
     {
-
-        protected internal void handlersGeometries()
+        public partial class DetectorsAbsorbersDataTable : IColumn
         {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Matrix));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(VialType));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Geometry));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(SubSamples));
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    return null;
+                }
+            }
         }
-
 
         partial class GeometryDataTable : IColumn
         {
@@ -51,10 +44,108 @@ namespace DB
                     return nonNullables;
                 }
             }
-
-           
         }
 
-      
+        partial class MatrixDataTable : IColumn
+        {
+            public Action populateMUESList;
+            private IEnumerable<DataColumn> nonNullables;
+
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    if (nonNullables == null)
+                    {
+                        nonNullables = new DataColumn[]
+                        {
+                            this.columnMatrixDensity,
+                            this.columnMatrixName,
+                            this.columnMatrixComposition,
+                            this.columnMatrixDate
+                        };
+                    }
+                    return nonNullables;
+                }
+            }
+
+            /// <summary>
+            /// Gets a non-repeated list of matrices IDs from wich their mass attenuation
+            /// coefficients were stored in the database
+            /// </summary>
+            public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
+            {
+                int col = e.Column.Ordinal;
+                object propo = e.ProposedValue; //new value
+                object val = e.Row[e.Column]; //old value
+                MatrixRow m = (MatrixRow)e.Row;
+                try
+                {
+                    m.Checking(e.Column, propo, val);
+                }
+                catch (SystemException ex)
+                {
+                    EC.SetRowError(e.Row, e.Column, ex);
+                    (this.DataSet as LINAA).AddException(ex);
+                }
+            }
+
+            /// <summary>
+            /// Retabifies the Matrix Composition
+            /// </summary>
+            private void Tabify()
+            {
+                foreach (MatrixRow item in this.Rows)
+                {
+                    IList<string[]> stripped = item.StripComposition(item.MatrixComposition);
+
+                    item.AddOrUpdateComposition(stripped, true);
+                }
+            }
+        }
+
+        //Requires attention on DataColumn Changing Handlers
+        partial class VialTypeDataTable : IColumn
+        {
+            private IEnumerable<DataColumn> nonNullables;
+
+            public IEnumerable<DataColumn> ForbiddenNullCols
+            {
+                get
+                {
+                    if (nonNullables == null)
+                    {
+                        nonNullables = new DataColumn[] {
+                            this.columnMatrixDensity,
+                            this.columnMatrixName,
+                            this.columnVialTypeRef ,
+                        this.columnMaxFillHeight,
+                        this.InnerRadiusColumn};
+                    }
+                    return nonNullables;
+                }
+            }
+        }
+
+        protected internal void handlersDetSol()
+        {
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
+        }
+
+        protected internal void handlersGeometries()
+        {
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Matrix));
+
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(VialType));
+
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Geometry));
+
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(SubSamples));
+        }
     }
 }

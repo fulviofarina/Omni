@@ -177,6 +177,16 @@ namespace DB
                 EC.CheckNull(Column, this);
             }
 
+            public void SetConnections(string hLString, string lIMSString, string spectraSrv, string spectraPath)
+            {
+                HL = hLString;
+                LIMS = lIMSString;
+                SpectraSvr = spectraSrv;
+                string spectra = spectraPath;
+                if (!spectra[spectra.Length - 1].ToString().Equals("\\")) spectra += "\\";
+                Spectra = spectra;
+            }
+
             public void SetParent<T>(ref T rowParent, object[] args = null)
             {
                 // throw new NotImplementedException();

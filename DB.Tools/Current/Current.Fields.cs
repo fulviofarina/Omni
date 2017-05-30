@@ -4,15 +4,13 @@ using Rsx.Dumb;
 
 namespace DB.Tools
 {
-    /// <summary>
-    /// This class gives the current row shown by a Binding Source
-    /// </summary>
+   
 
     public partial class Current : ICurrent
     {
-        protected BS bs;
+        protected internal BS bs;
 
-        protected Interface Interface;
+        protected internal Interface Interface;
 
         /// <summary>
         /// Current Row
@@ -22,6 +20,26 @@ namespace DB.Tools
             get
             {
                 return (bs.Channels.Current as DataRowView)?.Row;
+            }
+        }
+        /// <summary>
+        /// Current Row
+        /// </summary>
+        public DataRow Vial
+        {
+            get
+            {
+                return (bs.Vial.Current as DataRowView)?.Row;
+            }
+        }
+        /// <summary>
+        /// Current Row
+        /// </summary>
+        public DataRow Rabbit
+        {
+            get
+            {
+                return (bs.Rabbit.Current as DataRowView)?.Row;
             }
         }
 

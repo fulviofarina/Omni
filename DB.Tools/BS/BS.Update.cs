@@ -1,28 +1,69 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
 {
-
-
     public partial class BS
     {
+        private void update<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
+        {
+            Type tipo = typeof(T);
+
+            bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
+            bool isUnit = tipo.Equals(typeof(UnitRow));
+            bool isMatrix = tipo.Equals(typeof(MatrixRow));
+            //to check later the columns that should be ok
+
+            // Action Checker = null; DataColumn[] columnsThatShouldBeOk = null;
+            if (isSubSample)
+            {
+                //take columns that should be ok
+                updateSubSample(r, doCascade, findItself);
+            }
+            else if (isUnit)
+            {
+                // columnsThatShouldBeOk = Interface.IDB.Unit.Changeables;
+                updateUnit(r, doCascade, findItself);
+
+                //the checker Method
+                //       aChecker += s.CheckErrors;
+            }
+            else if (isMatrix)
+            {
+                //
+                updateMatrix(r, doCascade, findItself, selectedBS);
+            }
+            else if (tipo.Equals(typeof(VialTypeRow)))
+            {
+                //
+                updateVialRabbit(r, doCascade, findItself);
+            }
+            else if (tipo.Equals(typeof(ChannelsRow)))
+            {
+                //
+                updateChannel(r, doCascade, findItself);
+            }
+            else if (tipo.Equals(typeof(IrradiationRequestsRow)))
+            {
+                //
+                updateIrradiationRequest(r, doCascade, findItself);
+            }
+
+            if (EnabledControls) hasErrors(r);
+        }
+
         private void updateChannel<T>(T r, bool doCascade, bool findItself)
         {
-
             string col = Interface.IDB.Channels.ChannelsIDColumn.ColumnName;
             string col2 = Interface.IDB.IrradiationRequests.ChannelsIDColumn.ColumnName;
-            //    string column = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName;
+            // string column = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName;
             string filter = col + " IS NULL";
             string filter2 = col2 + " IS NULL";
 
-    
             if (!EC.IsNuDelDetch(r as DataRow))
             {
                 LINAA.ChannelsRow u = r as LINAA.ChannelsRow;
@@ -33,11 +74,9 @@ namespace DB.Tools
                 }
                 filter = col + " = '" + id + "'";
                 filter2 = col2 + " = '" + id + "'";// + " OR " + chColumn + " IS NULL ";
-             
             }
             SelectedIrradiation.Filter = filter2;
             SelectedChannel.Filter = filter;
-         
         }
 
         private void updateIrradiationRequest<T>(T r, bool doCascade = true, bool findItself = false)
@@ -47,13 +86,12 @@ namespace DB.Tools
 
             if (!EC.IsNuDelDetch(r as DataRow))
             {
-
                 LINAA.IrradiationRequestsRow u = r as LINAA.IrradiationRequestsRow;
                 int id = u.IrradiationRequestsID;
                 if (findItself)
                 {
                     Irradiations.Position = Irradiations.Find(column, id);
-                    //    Irradiations.ResetBindings(false);
+                    // Irradiations.ResetBindings(false);
                 }
                 if (doCascade)
                 {
@@ -67,12 +105,11 @@ namespace DB.Tools
                     column = Interface.IDB.SubSamples.IrradiationRequestsIDColumn.ColumnName;
                     filter2 = column + " = '" + id + "'";
                     Interface.IBS.SubSamples.Filter = filter2;
-            
+
                     Interface.IPopulate.ISamples.PopulateSubSamples(id);
                     Interface.IPreferences.CurrentPref.LastIrradiationProject = u.IrradiationCode;
                     Interface.IPreferences.SavePreferences();
                     Interface.IReport.Speak("Loaded project " + u.IrradiationCode);
-
                 }
 
                 column = Interface.IDB.IrradiationRequests.IrradiationRequestsIDColumn.ColumnName;
@@ -80,20 +117,10 @@ namespace DB.Tools
             }
 
             SelectedIrradiation.Filter = filter;
-          
-        }
-
-        private void ResetBidings(bool v)
-        {
-            foreach(BindingSource bs in bindings.Values)
-            {
-                bs.ResetBindings(v);
-            }
         }
 
         private void updateMatrix<T>(T r, bool doCascade = true, bool findItself = false, bool selectedBS = false)
         {
-
             string column = Interface.IDB.Compositions.MatrixIDColumn.ColumnName;
             string filter = column + " IS NULL";
             string filterMatrixSelected = string.Empty;
@@ -104,7 +131,6 @@ namespace DB.Tools
             if (selectedBS)
             {
                 bs2 = SelectedCompositions;
-            
             }
             BindingSource bs = null;
             if (selectedBS)
@@ -113,24 +139,21 @@ namespace DB.Tools
             }
             else bs = Matrix;
 
-           
-
             if (!EC.IsNuDelDetch(r as DataRow))
             {
-            
                 LINAA.MatrixRow u = r as LINAA.MatrixRow;
                 int id = u.MatrixID; //default matrix id to filter with
-                                     //     column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
+                                     // column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
                 filter = column + " = '" + id + "'";
                 if (selectedBS)
                 {
                     column = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName;
                     //last matrix id
                     id = u.SubSamplesRow.SubSamplesID;
-                     filterMatrixSelected = column + " = '" + id + "'";
-                    filter += " AND " +  column + " = '" + id + "'";
+                    filterMatrixSelected = column + " = '" + id + "'";
+                    filter += " AND " + column + " = '" + id + "'";
                 }
-            
+
                 if (findItself)
                 {
                     bs.Position = bs.Find(column, id);
@@ -139,14 +162,13 @@ namespace DB.Tools
             }
 
             bs2.Filter = filter;
-             if (selectedBS)    bs.Filter = filterMatrixSelected;
-          //  bs2.ResetBindings(false);
-
+            if (selectedBS) bs.Filter = filterMatrixSelected;
+            // bs2.ResetBindings(false);
         }
 
         private void updateSubSample<T>(T r, bool doCascade, bool findItself)
         {
-           // Rsx.Dumb.BS.DeLinkBS(ref SelectedSubSample);
+            // Rsx.Dumb.BS.DeLinkBS(ref SelectedSubSample);
             string column = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
             string filter = column + " IS NULL";
 
@@ -156,30 +178,25 @@ namespace DB.Tools
 
                 if (findItself)
                 {
-                 //   string unitValID = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
+                    // string unitValID = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
                     SubSamples.Position = SubSamples.Find(column, s.SubSamplesID);
-
                 }
 
                 DataRow row = s.UnitRow;
                 if (doCascade && EnabledControls)
                 {
-               
-                        Update<UnitRow>(row as UnitRow);
-                  
+                    update<UnitRow>(row as UnitRow);
                 }
 
-            //    if (!s.IsSubSampleNameNull())
-              //  {//
-                 //   string filColumn = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
-                    filter = column + " = '" + s.SubSamplesID + "'";
-             //   }
+                // if (!s.IsSubSampleNameNull()) {// string filColumn = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
+                filter = column + " = '" + s.SubSamplesID + "'";
+                // }
             }
 
-          //  if (EnabledControls)
+            // if (EnabledControls)
             {
-               // Rsx.Dumb.BS.LinkBS(ref SelectedSubSample, Interface.IDB.SubSamples,filter,string.Empty);
-               SelectedSubSample.Filter = filter;
+                // Rsx.Dumb.BS.LinkBS(ref SelectedSubSample, Interface.IDB.SubSamples,filter,string.Empty);
+                SelectedSubSample.Filter = filter;
             }
         }
 
@@ -187,12 +204,11 @@ namespace DB.Tools
         {
             Rsx.Dumb.BS.DeLinkBS(ref SSF);
             string column = Interface.IDB.MatSSF.MatSSFIDColumn.ColumnName;
-            string filter = column +" IS NULL";
+            string filter = column + " IS NULL";
             string sortCol = Interface.IDB.MatSSF.TargetIsotopeColumn.ColumnName;
 
             if (!EC.IsNuDelDetch(r as DataRow))
             {
-
                 LINAA.UnitRow s = r as LINAA.UnitRow;
                 if (findItself)
                 {
@@ -205,40 +221,38 @@ namespace DB.Tools
                 if (doCascade && !EC.IsNuDelDetch(row) && EnabledControls)
                 {
                     row = s.SubSamplesRow.VialTypeRow;
-                    Update<LINAA.VialTypeRow>(row as VialTypeRow);
+                    update<LINAA.VialTypeRow>(row as VialTypeRow);
                     row = s.SubSamplesRow.ChCapsuleRow;
-                    Update<LINAA.VialTypeRow>(row as VialTypeRow);
+                    update<LINAA.VialTypeRow>(row as VialTypeRow);
                     row = s.ChannelsRow;//use the channel assigned to the unit; plan A
                     if (EC.IsNuDelDetch(row)) //plan b, use the channel from the Irr Req.
                     {
                         row = s.SubSamplesRow.IrradiationRequestsRow.ChannelsRow;
                     }
-                    Update<LINAA.ChannelsRow>(row as ChannelsRow, true, true);
+                    update<LINAA.ChannelsRow>(row as ChannelsRow, true, true);
                     row = s.SubSamplesRow.MatrixRow;
-                    Update<MatrixRow>(row as MatrixRow, true, false, false);
+                    update<MatrixRow>(row as MatrixRow, true, false, false);
                     if (s.SubSamplesRow.MatrixRow != null)
                     {
                         row = s.SubSamplesRow.GetMatrixRows().FirstOrDefault(o => o.MatrixID == s.SubSamplesRow.MatrixID);
                     }
                     else row = s.SubSamplesRow.GetMatrixRows().FirstOrDefault();
-                    Update<MatrixRow>(row as MatrixRow, true, true, true);
+                    update<MatrixRow>(row as MatrixRow, true, true, true);
                 }
 
                 column = Interface.IDB.MatSSF.UnitIDColumn.ColumnName;
                 filter = column + " = '" + s.UnitID.ToString() + "'";
             }
-          if (EnabledControls)
+            if (EnabledControls)
             {
-              //  SelectedSubSample.Filter = filter;
+                // SelectedSubSample.Filter = filter;
                 Rsx.Dumb.BS.LinkBS(ref SSF, Interface.IDB.MatSSF, filter, sortCol);
             }
         }
 
         private void updateVialRabbit<T>(T r, bool doCascade, bool findItself)
         {
-
             if (EC.IsNuDelDetch(r as DataRow)) return;
-
 
             LINAA.VialTypeRow u = r as LINAA.VialTypeRow;
             BindingSource bs = Rabbit;
@@ -247,14 +261,11 @@ namespace DB.Tools
 
             if (findItself)
             {
-                string column= Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
+                string column = Interface.IDB.VialType.VialTypeIDColumn.ColumnName;
                 int id = u.VialTypeID;
                 //BindingSource rabbitBS = Interface.IBS.Rabbit;
                 bs.Position = bs.Find(column, id);
             }
-
         }
     }
-
-    
 }

@@ -123,7 +123,7 @@ namespace DB.UI
             projBox.HideChildControl = Hide;
             destiny = this.splitContainer1.Panel1;
             //attach binding
-            Interface.IBS.PropertyChanged += delegate
+            Interface.IBS.PropertyChangedHandler += delegate
             {
                 bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                 bool isCalculating = Interface.IBS.IsCalculating;

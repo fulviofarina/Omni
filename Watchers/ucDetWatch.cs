@@ -333,7 +333,7 @@ namespace k0X
                 {
                     //get first schedule in list
 
-                    LINAA.SchAcqsRow[] schs = this.Linaa.SchAcqs.FindDetectorLastSchedule(detBox.Text);
+                    LINAA.SchAcqsRow[] schs = this.Linaa.FindDetectorLastSchedule(detBox.Text);
                     LSchAcq = schs[0];
                     NxtSchAcq = schs[1];   //get second in list
                                            //if this is not null, a scheduled meas was found.. then start scheduled measurement...
@@ -490,7 +490,7 @@ namespace k0X
                 {
                     //get current sample
                     int? id = this.Linaa.FindIrradiationID(project);
-                    this.currentSample = this.Linaa.FindSample(sample, true, id);
+                    this.currentSample = this.Linaa.AddSamples(sample, id);
                     if (!IsNDD(this.currentSample))
                     {
                         this.currentSample.SetDetectorPosition(det, project);
@@ -499,7 +499,7 @@ namespace k0X
                 if (!meas.Equals(string.Empty))
                 {
                     //get current measurement
-                    this.currentMeas = this.Linaa.Measurements.FindByMeasurementName(meas, true);
+                    this.currentMeas = this.Linaa.AddMeasurement(meas);
                     if (!IsNDD(this.currentMeas)) this.currentMeas.SetCAMData(ref reader);
                 }
 
@@ -1071,7 +1071,7 @@ namespace k0X
                         LINAA.IRequestsAveragesRow irs = this.Linaa.IRequestsAverages.FirstOrDefault(o => o.NAAID == iso);
                         if (IsNDD(irs))
                         {
-                            this.Linaa.IRequestsAverages.NewIRequestsAveragesRow(iso, ref this.currentSample);
+                            this.Linaa.AddIRequestsAverage(iso, ref this.currentSample);
                         }
                     }
                     catch (SystemException ex)

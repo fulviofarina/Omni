@@ -8,12 +8,7 @@ namespace DB
 {
     public partial class LINAA
     {
-        protected internal void handlersDetSol()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
-        }
-
+      
         public partial class DetectorsAbsorbersRow : IRow
         {
             public void Check()
@@ -36,17 +31,7 @@ namespace DB
                 //throw new NotImplementedException();
             }
         }
-        public partial class DetectorsAbsorbersDataTable : IColumn
-        {
-            public IEnumerable<DataColumn> ForbiddenNullCols
-            {
-                get
-                {
-                    return null;
-                }
-            }
 
-           
-        }
+      
     }
 }

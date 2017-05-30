@@ -32,14 +32,21 @@ namespace DB.UI
             {
                 Creator.SaveInFull(true);
             };
-            options.ExplorerClick = LIMS.Explore;
-
+            options.ExplorerClick =delegate
+                {
+                    if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
+                LIMS.Explore();
+            };
             options.PreferencesClick = delegate
             {
                 LIMS.ShowPreferences(true);
             };
-            options.DatabaseClick = LIMS.ShowToUser;
+            options.DatabaseClick = delegate
 
+             {
+                 if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
+                 LIMS.ShowToUser();
+             };
             return options;
         }
 

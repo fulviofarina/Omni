@@ -7,9 +7,22 @@ namespace DB
 {
     public partial class LINAA
     {
+        public partial class CompositionsRow
+        {
+            public void SetValues(int matrixID, double quantity, string element)
+            {
+                //   c.Formula = formula;
+                MatrixID = matrixID;
+                Quantity = quantity;
+                //  c.Weight = formulaweight;
+                Element = element;
+                Unc = 0;
+                //c.UncUnit = "%";
+                QuantityUnit = "%";
+            }
+        }
         public partial class CompositionsDataTable
         {
-        
 
             public CompositionsRow AddCompositionsRow(int matrixID, string element, double formulaweight, double quantity)
             {
@@ -27,14 +40,9 @@ namespace DB
                         c = NewCompositionsRow();
                         add = true;
                     }
-                    //   c.Formula = formula;
-                    c.MatrixID = matrixID;
-                    c.Quantity = quantity;
-                  //  c.Weight = formulaweight;
-                    c.Element = element;
-                    c.Unc = 0;
-                    //c.UncUnit = "%";
-                    c.QuantityUnit = "%";
+
+                    c.SetValues(matrixID, quantity, element);
+              
                
                     if (add) AddCompositionsRow(c);
                 }

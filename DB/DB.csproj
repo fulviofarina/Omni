@@ -112,19 +112,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Populate\Interfaces\IColumn.cs" />
-    <Compile Include="Populate\Interfaces\IRow.cs" />
-    <Compile Include="Populate\Interfaces\IIrradiations.cs" />
-    <Compile Include="Populate\Interfaces\IProjects.cs" />
-    <Compile Include="Populate\Interfaces\IOrders.cs" />
-    <Compile Include="Populate\Interfaces\IDetSol.cs" />
-    <Compile Include="Populate\Interfaces\INuclear.cs" />
-    <Compile Include="Populate\Interfaces\ISchedAcqs.cs" />
-    <Compile Include="Populate\Interfaces\IGeometry.cs" />
-    <Compile Include="Populate\Interfaces\ISamples.cs" />
-    <Compile Include="Populate\Interfaces\IExpressions.cs" />
-    <Compile Include="Adapter\IAdapter.cs" />
-    <Compile Include="DB\IDB.cs" />
+    <Compile Include="Interfaces\IColumn.cs" />
+    <Compile Include="Interfaces\IRow.cs" />
+    <Compile Include="Interfaces\IIrradiations.cs" />
+    <Compile Include="Interfaces\IProjects.cs" />
+    <Compile Include="Interfaces\IOrders.cs" />
+    <Compile Include="Interfaces\IDetSol.cs" />
+    <Compile Include="Interfaces\INuclear.cs" />
+    <Compile Include="Interfaces\ISchedAcqs.cs" />
+    <Compile Include="Interfaces\IGeometry.cs" />
+    <Compile Include="Interfaces\ISamples.cs" />
+    <Compile Include="Interfaces\IExpressions.cs" />
+    <Compile Include="Interfaces\IAdapter.cs" />
+    <Compile Include="Interfaces\IDB.cs" />
+    <Compile Include="Populate\Samples\Populate.Samples.Add.cs" />
+    <Compile Include="Populate\Samples\Populate.Samples.Find.cs" />
+    <Compile Include="Populate\Samples\Populate.Samples.Get.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,25 +138,21 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Store\IStore.cs" />
+    <Compile Include="Interfaces\IStore.cs" />
     <Compile Include="Properties\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Geometry\NAA.DetSol.cs" />
+    <Compile Include="DB\Geometry\NAA.DetSol.Row.cs" />
     <Compile Include="DB\Geometry\NAA.Geometry.cs" />
     <Compile Include="DB\Geometry\NAA.Compositions.cs" />
-    <Compile Include="DB\Geometry\NAA.Matrix.cs" />
-    <Compile Include="DB\Samples\NAA.Units.cs" />
-    <Compile Include="DB\Geometry\NAA.Vial.cs" />
+    <Compile Include="DB\Geometry\NAA.Vial.Row.cs" />
     <Compile Include="Populate\Populate.DetSol.cs" />
     <Compile Include="Populate\Populate.Geometry.cs" />
-    <Compile Include="Populate\Interfaces\IToDoes.cs" />
-    <Compile Include="Populate\Populate.Actions.cs" />
+    <Compile Include="Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Components.cs" />
     <Compile Include="Basura\Main.cs" />
-    <Compile Include="DB\Project\NAA.Orders.cs" />
     <Compile Include="DB\Project\NAA.Channels.cs" />
     <Compile Include="DB\Project\NAA.Projects.cs" />
     <Compile Include="DB\Nuclear\NAA.Element.cs" />
@@ -170,12 +169,10 @@
     </Compile>
     <Compile Include="DB\Samples\NAA.IPeaksAvg.cs" />
     <Compile Include="DB\Samples\NAA.IReqAvg.cs" />
-    <Compile Include="DB\Samples\NAA.Standards.cs" />
-    <Compile Include="DB\Samples\NAA.Monitors.cs" />
-    <Compile Include="DB\Samples\NAA.Measurements.cs" />
-    <Compile Include="DB\Samples\NAA.Peaks.cs" />
+    <Compile Include="DB\Samples\NAA.Standards.Row.cs" />
+    <Compile Include="DB\Samples\NAA.Peak.Row.cs" />
     <Compile Include="DB\Samples\NAA.Samples.cs" />
-    <Compile Include="Populate\Populate.Samples.cs" />
+    <Compile Include="Populate\Samples\Populate.Samples.cs" />
     <Compile Include="DB\SchAcqs\NAA.SchedAcqs.cs" />
     <Compile Include="Populate\Populate.SchedAcqs.cs" />
     <Compile Include="Static\Comparers.cs" />

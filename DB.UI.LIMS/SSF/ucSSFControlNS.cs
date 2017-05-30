@@ -69,7 +69,7 @@ namespace DB.UI
                 errorProvider2.DataSource = Interface.IBS.SubSamples;
 
                 
-                Interface.IBS.PropertyChanged += delegate
+                Interface.IBS.PropertyChangedHandler += delegate
              {
 
              //    sampleDGV.Visible = Interface.IBS.SubSamples.Count != 0;

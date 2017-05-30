@@ -5,11 +5,12 @@ namespace DB.Tools
 {
     public interface ICurrent
     {
-      
         DataRow Channel { get; }
-        DataRow Irradiation { get;  }
+        DataRow Irradiation { get; }
         bool IsSpectraPathOk { get; }
         DataRow Matrix { get; }
+        DataRow Rabbit { get;  }
+        DataRow Vial { get; }
         DataRow SubSample { get; }
         DataRow SubSampleMatrix { get; }
         IEnumerable<DataRow> SubSamples { get; }

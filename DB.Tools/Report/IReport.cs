@@ -6,10 +6,10 @@ namespace DB.Tools
     public interface IReport
     {
         Pop Msn { get; set; }
+        void GreetUser();
         void ReportToolTip(object sender, EventArgs ev);
-        string RestartFile { get; }
 
-      //  void AskToRestart();
+        string RestartFile { get; }
 
         bool CheckMSMQ();
 
@@ -21,7 +21,7 @@ namespace DB.Tools
 
         void GenerateUserInfoReport();
 
-        void Msg(string msg, string title, bool ok=true);
+        void Msg(string msg, string title, bool ok = true);
 
         void ReportProgress(int percentage);
 

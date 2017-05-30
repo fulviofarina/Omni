@@ -27,7 +27,8 @@ namespace DB
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
-                return colsInE.Intersect(this.tableVialType.ForbiddenNullCols).Count() != 0;
+                int count = colsInE.Intersect(this.tableVialType.ForbiddenNullCols).Count();
+                return count != 0;
             }
 
             public void SetParent<T>(ref T rowParent, object[] args = null)
@@ -35,29 +36,6 @@ namespace DB
                 //throw new NotImplementedException();
             }
         }
-        partial class VialTypeDataTable : IColumn
-        {
-            private IEnumerable<DataColumn> nonNullables;
 
-            public IEnumerable<DataColumn> ForbiddenNullCols
-            {
-                get
-                {
-                    if (nonNullables == null)
-                    {
-                        nonNullables = new DataColumn[] {
-                            this.columnMatrixDensity,
-                            this.columnMatrixName,
-                            this.columnVialTypeRef ,
-                        this.columnMaxFillHeight,
-                        this.InnerRadiusColumn};
-                    }
-                    return nonNullables;
-                }
-            }
-
-            
-          
-        }
     }
 }

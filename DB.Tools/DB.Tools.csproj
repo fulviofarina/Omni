@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BS\BS.Others.cs" />
     <Compile Include="Connections.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,18 +85,19 @@
     <Compile Include="BS\BS.Update.cs" />
     <Compile Include="BS\BS.Public.cs" />
     <Compile Include="BS\BS.cs" />
-    <Compile Include="Current\Current.Public.Fields.cs" />
+    <Compile Include="Current\Current.Fields.cs" />
     <Compile Include="Current\Current.Public.cs" />
     <Compile Include="Current\ICurrent.cs" />
     <Compile Include="Populate\Populate.Fields.cs" />
     <Compile Include="Populate\Populate.cs" />
-    <Compile Include="Preferences\Preferences.Public.cs" />
-    <Compile Include="Preferences\Preferences.cs" />
+    <Compile Include="Current\Preferences\Preferences.Fields.cs" />
+    <Compile Include="Current\Preferences\Preferences.Public.cs" />
+    <Compile Include="Current\Preferences\Preferences.cs" />
     <Compile Include="Report\IReport.cs" />
     <Compile Include="Report\Report.Public.cs" />
     <Compile Include="Report\Report.cs" />
     <Compile Include="Interface.cs" />
-    <Compile Include="Preferences\IPreferences.cs" />
+    <Compile Include="Current\Preferences\IPreferences.cs" />
     <Compile Include="SSF\Main.cs" />
     <Compile Include="SSF\Fields.cs" />
     <Compile Include="SSF\Engine.cs" />
@@ -157,7 +159,7 @@
     <Compile Include="WC\Static\Populate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CLASSDIAGRAM.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="SSF\DIAGRAMSSF.cd" />
     <None Include="SSF\MatSSF\MATSSF.CFG" />
     <None Include="SSF\MatSSF\MATSSF.DAT" />

@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
 {
     public partial class MatSSF
     {
-
         /// <summary>
         /// Types of channels configurations
         /// </summary>
         public static string[] Types = new string[] { "0 = Isotropic", "1 = Wire flat", "2 = Foil/wire ch. axis" };
-
 
         /// <summary>
         /// This is the main row with the data
@@ -47,16 +43,13 @@ namespace DB.Tools
             }
         }
 
-       
         public void Calculate()
         {
             //actual position
             //  Cursor.Current = Cursors.WaitCursor;
             try
             {
-
-
-                //   Interface.IBS.IsCalculating = true;
+                // Interface.IBS.IsCalculating = true;
 
                 Creator.SaveInFull(true);
                 IsCalculating = true;
@@ -120,12 +113,10 @@ namespace DB.Tools
                         }
                     }
                 }
-               
-                 Interface.IBS.SubSamples.Position = position;
 
-                 RunProcess();
+                Interface.IBS.SubSamples.Position = position;
 
-               
+                RunProcess();
 
                 callBack?.Invoke(null, EventArgs.Empty);
             }
@@ -145,8 +136,6 @@ namespace DB.Tools
 
             if (processTable == null) processTable = new System.Collections.Hashtable();
         }
-
-     
 
         public MatSSF()
         {

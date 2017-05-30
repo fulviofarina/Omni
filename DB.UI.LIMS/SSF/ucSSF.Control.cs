@@ -78,7 +78,7 @@ namespace DB.UI
                 this.descriplbl.Click += dropDownClickedLabel;
 
 
-                Interface.IBS.PropertyChanged += enableControls;
+                Interface.IBS.PropertyChangedHandler += enableControls;
                 Interface.IBS.EnabledControls = true;
             //    enableControls(null, new PropertyChangedEventArgs(string.Empty));
 

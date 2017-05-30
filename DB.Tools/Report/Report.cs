@@ -9,71 +9,34 @@ namespace DB.Tools
     /// <summary>
     /// This class gives the current row shown by a Binding Source
     /// </summary>
-    //STATIC
+
     public partial class Report
     {
         protected static string BE_PATIENT = "Please be patient...";
+        protected static string BUG_REPORT_EMPTY = "Nothing seems 'buggy' this time ;)";
         protected static string BUG_REPORT_FAILED = "Bug Report not generated!";
         protected static string BUG_REPORT_ONWAY = "Bug Report is being populated";
         protected static string BUG_REPORT_PROBLEM = "Problems with Bug Report!";
         protected static string BUGS_ONTRAY = "Bug Reports on tray...";
-        protected static string MSMQ_NOT_OK = "Cannot initiate the Message Queue";
-        protected static string MSMQ_CHECK = "Checking if MSMQ is installed";
         protected static string EMAIL_DEFAULT = "k0x.help@gmail.com";
-        protected static string BUG_REPORT_EMPTY = "Nothing seems 'buggy' this time ;)";
+        protected static string MSMQ_CHECK = "Checking if MSMQ is installed";
+        protected static string MSMQ_NOT_OK = "Cannot initiate the Message Queue";
         protected static string REPORT_PROBLEMS = "Problems while generating Report!";
-      //  protected static string SHOULD_RESTART = "Do you want to restart the program now?";
-      //  protected static string START_OR_EXIT = "Restart or Exit?";
+
+        // protected static string SHOULD_RESTART = "Do you want to restart the program now?";
+        // protected static string START_OR_EXIT = "Restart or Exit?";
         protected static string RESTARTING_OK = "Restarting succeeded...";
 
-        /// <summary>
-        /// not used finds greetings
-        /// </summary>
-        private static string[] generateGreeting(ref string user)
-        {
-            string text;
-            string title;
-            int hours = DateTime.Now.TimeOfDay.Hours;
-            if (hours < 12) text = "Good morning " + user;
-            else if ((hours < 16) && (hours >= 12)) text = "Good afternoon... " + user;
-            else text = "Good evening... " + user;
-
-            text += "\nPlease type in the name of the project";
-            title = "Which project to look for?";
-
-            return new string[] { title, text };
-        }
+     
     }
 
-    //PRIVATE
     public partial class Report
     {
-        // private MessageQueue bugQM = null;
-        private IAsyncResult bugresult = null;
+        protected internal IAsyncResult bugresult = null;
 
-        protected Interface Interface;
+        protected internal Interface Interface;
 
-        private Pop msn = null;
-
-        private static ArrayList generatePathsToAttachments(ref System.Messaging.Message w)
-        {
-            ArrayList array = new ArrayList();
-            Type tipo = w.Body.GetType();
-
-            //assign label
-            if (tipo.Equals(typeof(string[])))
-            {
-                string[] paths = w.Body as string[];
-                array.AddRange(paths);
-            }
-            else
-            {
-                string path = w.Body as string;
-                array.Add(path);
-            }
-
-            return array;
-        }
+        protected internal Pop msn = null;
 
         private static string generateEmail(ref MessageQueue qMsg1, ref System.Messaging.Message w, string user)
         {
@@ -100,6 +63,62 @@ namespace DB.Tools
             string bodyMsg = Rsx.Emailer.DecodeMessage(messageContent);
             string result = Rsx.Emailer.SendMessageWithAttachmentAsync(user, lbel, bodyMsg, array, ref qMsg1, sendto);
             return result;
+        }
+
+        private static string[] generateGreeting()
+        {
+            string text;
+            string title;
+            int hours = DateTime.Now.TimeOfDay.Hours;
+            if (hours < 12) text = "Good morning " ;
+            else if ((hours < 16) && (hours >= 12)) text = "Good afternoon... " ;
+            else text = "Good evening... ";
+
+            text += "\nPlease type in the name of the project";
+            title = "Which project to look for?";
+
+            return new string[] { text, title };
+        }
+
+        private static ArrayList generatePathsToAttachments(ref System.Messaging.Message w)
+        {
+            ArrayList array = new ArrayList();
+            Type tipo = w.Body.GetType();
+
+            //assign label
+            if (tipo.Equals(typeof(string[])))
+            {
+                string[] paths = w.Body as string[];
+                array.AddRange(paths);
+            }
+            else
+            {
+                string path = w.Body as string;
+                array.Add(path);
+            }
+
+            return array;
+        }
+
+        private void msgReportResult(string result, DateTime when)
+        {
+            string whatsSending = "Status";
+            string title = whatsSending + " NOT Sent!";
+            bool sending = false;
+
+            if (result.Contains("sending"))
+            {
+                title = "Sending " + whatsSending + "...";
+                sending = true;
+            }
+
+            // // this.Msg(result + "\n\nAt " + when.ToString(), title, sending);
+
+            if (!sending)
+            {
+                string msg = title + "\n\n" + "Failure sending email - Async email failed";
+                throw new SystemException(msg);
+            }
         }
 
         private void queryMsgReceived(object sender, ReceiveCompletedEventArgs e)
@@ -143,7 +162,6 @@ namespace DB.Tools
                     //REPORT TO SEND NOW...
                     msgReportResult(result, when);
                 }
-
             }
             catch (SystemException ex)
             {
@@ -203,37 +221,11 @@ namespace DB.Tools
                 }
             }
 
-       
             bugresult = qMsg1.BeginReceive();
-
-
 
             //LAST because it throws and exception...
             //DONT MOVE
             msgReportResult(EmailTitle, when);
-
-
-        }
-
-        private void msgReportResult(string result, DateTime when)
-        {
-            string whatsSending = "Status";
-            string title = whatsSending + " NOT Sent!";
-            bool sending = false;
-
-            if (result.Contains("sending"))
-            {
-                title = "Sending " + whatsSending + "...";
-                sending = true;
-            }
-
-    //   //     this.Msg(result + "\n\nAt " + when.ToString(), title, sending);
-
-            if (!sending)
-            {
-                string msg = title +"\n\n"+ "Failure sending email - Async email failed";
-                throw new SystemException(msg);
-            }
         }
     }
 }

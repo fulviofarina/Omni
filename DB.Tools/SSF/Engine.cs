@@ -10,8 +10,6 @@ using static DB.LINAA;
 
 namespace DB.Tools
 {
-  
-
     public partial class MatSSF
     {
         public void DoCKS(ref LINAA.UnitRow UNIT)
@@ -139,13 +137,10 @@ namespace DB.Tools
             return isOk;
         }
 
-
-        public bool CheckInputData( UnitRow UNIT)
+        public bool CheckInputData(UnitRow UNIT)
         {
             //CLEAN
 
-         
-        
             // 1 CHECK ERRORS
             bool hasError = UNIT.HasErrors(); //has Unit errors??
             hasError = UNIT.SubSamplesRow.HasBasicErrors() || hasError; //has Sample Errors?
@@ -156,12 +151,11 @@ namespace DB.Tools
             string error = "Input data is NOT OK for ";
             if (hasError)
             {
-                string inputDataNotOK = error+"Sample " + UNIT.Name;
+                string inputDataNotOK = error + "Sample " + UNIT.Name;
                 UNIT.SetColumnError((UNIT.Table as UnitDataTable).NameColumn, error + "Sample");
             }
             else
             {
-            
                 string inputDataOKTitle = "Checking data...";
                 Interface.IReport.Msg(inputDataOK, inputDataOKTitle);
             }
@@ -219,7 +213,7 @@ namespace DB.Tools
                     string inputGeneratedTitle = "Starting calculations...";
                     string inputGeneratedMsg = "Input metadata generated for Sample ";
                     UNIT.SubSamplesRow.Selected = true;
-                
+
                     Interface.IReport.Msg(inputGeneratedMsg + unitName, inputGeneratedTitle);
                 }
                 else
@@ -234,14 +228,12 @@ namespace DB.Tools
         {
             //RUN 3
 
-          
-
             IPreferences ip = Interface.IPreferences;
             bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
             bool doCk = (ip.CurrentSSFPref.DoCK);
 
             string[] unitsNames = units.Select(o => o.Name.Trim()).ToArray();
-            for (int i = 0; i<unitsNames.Count(); i++)
+            for (int i = 0; i < unitsNames.Count(); i++)
             {
                 string item = unitsNames[i];
 
@@ -250,7 +242,6 @@ namespace DB.Tools
                     //if cancelled
                     if (!IsCalculating) continue;
 
-                
                     //otherwise calculate
                     string newMatssfEXEFile = exefile + item + ".exe";
                     if (File.Exists(startupPath + item + inPutExt))
@@ -262,10 +253,8 @@ namespace DB.Tools
                     else
                     {
                         //remove from list
-                       // units = units.Where(o => o.Name.CompareTo(item) != 0).ToList();
+                        // units = units.Where(o => o.Name.CompareTo(item) != 0).ToList();
                     }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -276,19 +265,17 @@ namespace DB.Tools
             }
 
             //refresh
-     //       unitsNames = units.Select(o => o.Name).ToArray();
-
+            //       unitsNames = units.Select(o => o.Name).ToArray();
 
             foreach (string item in unitsNames)
             {
                 try
                 {
-
                     //if cancelled
                     if (!IsCalculating) continue;
                     EventHandler hdl = process_Exited;
                     string EXE = exefile + item + ".exe";
-                        RunAProcess(hide, item, EXE, ref hdl);
+                    RunAProcess(hide, item, EXE, ref hdl);
                 }
                 catch (Exception ex)
                 {
@@ -302,28 +289,24 @@ namespace DB.Tools
 
             if (processTable.Count == 0)
             {
-            
                 IsCalculating = false;
             }
-
-
         }
 
         public void RunAProcess(bool hide, string item, string newMatssfEXEFile, ref EventHandler exitHANDLER)
         {
-
             if (!File.Exists(startupPath + newMatssfEXEFile)) return;
-      
-                Interface.IReport.Msg("MatSSF is running OK for sample " + item, "MatSSF Running...");
-        //files in and out
-           string[] ioFile = new string[] { item + inPutExt, item + outPutExt };
-           
+
+            Interface.IReport.Msg("MatSSF is running OK for sample " + item, "MatSSF Running...");
+            //files in and out
+            string[] ioFile = new string[] { item + inPutExt, item + outPutExt };
+
             System.Diagnostics.Process process = IO.Process(cmd, "/c " + newMatssfEXEFile, startupPath, false, hide, null, exitHANDLER);
             //add to table
             processTable.Add((object)process, (object)item);
             //start process
             process.Start();
-         
+
             process.BeginErrorReadLine();
             process.BeginOutputReadLine();
             //set input files on Console
@@ -356,7 +339,6 @@ namespace DB.Tools
 
                 try
                 {
-
                     LINAA.UnitRow UNIT = null;
                     UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
 
@@ -372,11 +354,10 @@ namespace DB.Tools
 
                     UNIT.SubSamplesRow.Selected = false;
 
-                    if (processTable.Count==0)
+                    if (processTable.Count == 0)
                     {
                         IsCalculating = false;
                     }
-
                 }
                 catch (SystemException ex)
                 {
@@ -398,7 +379,6 @@ namespace DB.Tools
             EventHandler chilean = delegate
             {
                 if (!IsCalculating) return;
-
 
                 try
                 {
@@ -434,7 +414,6 @@ namespace DB.Tools
         {
             EventHandler temp = delegate
             {
-
                 if (!IsCalculating) return;
 
                 try
@@ -493,7 +472,7 @@ namespace DB.Tools
 
                 /// WARNING
                 /////////////VOLVER A PONER SI TENGO PROBLEMAS
-              //  DoMatSSF(sampleName);
+                // DoMatSSF(sampleName);
                 showProgress?.Invoke(null, EventArgs.Empty);
             };
 

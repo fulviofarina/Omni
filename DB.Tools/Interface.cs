@@ -25,7 +25,7 @@
         /// <summary>
         /// Main stuff
         /// </summary>
-     //   public IStore IStore;
+     // public IStore IStore;
 
         /// <summary>
         /// Populator interface
@@ -50,7 +50,7 @@
         /// <summary>
         /// is it used? not sure
         /// </summary>
-        protected LINAA dataset = null;
+        protected internal LINAA dataset = null;
 
         /// <summary>
         /// Gets the LINAA database
@@ -66,7 +66,7 @@
         public Interface(ref LINAA aux)
         {
             dataset = aux;
-      //      IStore = (IStore)aux;
+            // IStore = (IStore)aux;
             IAdapter = (IAdapter)aux;
             IStore = (IStore)aux;
             IDB = (IDB)aux;

@@ -2,13 +2,54 @@
 using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
+using System.Linq;
 
 namespace DB
 {
     public partial class LINAA : IDetSol
     {
+      
+            public LINAA.MeasurementsRow AddMeasurement(string measName)
+            {
+                MeasurementsRow meas = FindByMeas(measName);
+                if (Rsx.EC.IsNuDelDetch(meas)) meas = this.addMeasurement(measName);
 
+                return meas;
+            }
+
+            public MeasurementsRow FindByMeas(string measName)
+            {
+                LINAA.MeasurementsRow meas = null;
+                Func<MeasurementsRow, bool> currSel = null;
+                string col = this.tableMeasurements.MeasurementColumn.ColumnName;
+                currSel = LINAA.SelectorByField<MeasurementsRow>(measName, col);
+                meas = this.tableMeasurements.FirstOrDefault(currSel);
+                return meas;
+            }
+
+            private LINAA.MeasurementsRow addMeasurement(string measName)
+            {
+
+                LINAA.MeasurementsRow meas = this.tableMeasurements.NewMeasurementsRow();
+                this.tableMeasurements.AddMeasurementsRow(meas);
+
+                try
+                {
+
+                meas.SetName(measName);
+
+
+                }
+                catch (SystemException ex)
+                {
+                    EC.SetRowError(meas, ex);
+                }
+                return meas;
+            }
+
+       
 
         /// <summary>
         /// Gets a non-repeated list of Detectors in the database
@@ -97,7 +138,31 @@ namespace DB
                 this.AddException(ex);
             }
         }
+        public IEnumerable<Action> PMThree()
+        {
+            Action[] populatorOther = null;
 
+            populatorOther = new Action[]   {
+                    PopulateCOIList,
+                      PopulateToDoes,
+                   PopulateScheduledAcqs};
+
+            IEnumerable<Action> populatorArray = null;
+            populatorArray = populatorOther;
+            // populatorArray.Union(PMNAA());
+
+            return populatorArray;
+        }
+
+        public IEnumerable<Action> PMTwo()
+        {
+            IEnumerable<Action> populatorArray = null;
+            populatorArray = PMMatrix();
+            //   populatorArray = populatorArray.Union(PMMatrix());
+
+            populatorArray = populatorArray.Union(PMDetect());
+            return populatorArray;
+        }
         public void PopulateDetectorHolders()
         {
             try

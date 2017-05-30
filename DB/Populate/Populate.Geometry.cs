@@ -84,7 +84,19 @@ namespace DB
                 this.AddException(ex);
             }
         }
+        public Action[] PMMatrix()
+        {
+            Action[] populatorArray = null;
 
+            populatorArray = new Action[]   {
+            PopulateCompositions ,
+        PopulateMatrix,
+        //    PopulateMUESList,
+         PopulateVials,
+            PopulateGeometry};
+
+            return populatorArray;
+        }
         public void PopulateGeometry()
         {
             try

@@ -220,7 +220,7 @@ namespace DB.UI
 
           //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             projectbox.Set(ref Interface);
-            Interface.IBS.PropertyChanged += delegate
+            Interface.IBS.PropertyChangedHandler += delegate
             {
                 string currentProject = projectbox.Project;
                 if (this.ParentForm != null) this.ParentForm.Text = currentProject + " - Samples";

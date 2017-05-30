@@ -141,32 +141,6 @@ namespace DB
             }
         }
 
-        public partial class SchAcqsDataTable
-        {
-            public SchAcqsRow FindASpecificSchedule(string det, string project, string sample)
-            {
-                IEnumerable<SchAcqsRow> todo = this.Where(SelectorSchAcqsBy(false, false));
-                todo = todo.Where(SelectorSchAcqsBy(det));
-                return todo.FirstOrDefault(SelectorSchAcqsBy(project, sample));
-            }
-
-            public SchAcqsRow[] FindDetectorLastSchedule(string det)
-            {
-                IEnumerable<SchAcqsRow> todo = this.Where(SelectorSchAcqsBy(false, false));
-                todo = todo.Where(LINAA.SelectorSchAcqsBy(det));
-                DateTime ahora = DateTime.Now;
-                SchAcqsRow next = todo.FirstOrDefault(SelectorSchAcqsBy(ahora, false, false));
-                SchAcqsRow sch = todo.FirstOrDefault(SelectorSchAcqsBy(ahora, true, true));
-
-                return new DB.LINAA.SchAcqsRow[] { sch, next };
-            }
-
-            public IEnumerable<SchAcqsRow> FindLastSchedules()
-            {
-                IEnumerable<SchAcqsRow> todo = this.Where(SelectorSchAcqsBy(false, false));
-                DateTime ahora = DateTime.Now;
-                return todo.Where(SelectorSchAcqsBy(ahora, true, true));
-            }
-        }
+     
     }
 }

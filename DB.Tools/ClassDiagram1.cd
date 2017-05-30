@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="DB.Tools.BS" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kI0JAgAFAEgYCAE7KhDg0QUcAoQwQEhtEBEIgAjdkcw=</HashCode>
+      <FileName>BS\BS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.Creator" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAEAAYBEEAYABABCAAgAUAgIIBiAAoECCAACI=</HashCode>
+      <FileName>Creator\Creator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.Current" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgDAECgCgAAIBAAKADABAAAgAggABAAkjoAAAIAAAA=</HashCode>
+      <FileName>Current\Current.Public.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.Tools.Interface" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgIFCAAAAAEEAAIAAAAAAAACAAAAAAgA=</HashCode>
+      <FileName>Interface.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.Populate" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAABAEAAAAAEABAAAACAABAAIAAAAAgAACgAAA=</HashCode>
+      <FileName>Populate\Populate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.Report" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAIAhBIBCEAAAQAABAAGlADABQJAAAAgYAAMAICAg=</HashCode>
+      <FileName>Report\Report.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.Tools.MatSSF" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggQBBgABAAAABwQhiAFgAEAAACSQAAAAWLAAABDAQAA=</HashCode>
+      <FileName>SSF\Engine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.WC" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YgBSjWoyCBGIBQiASQFAyC4CHnoBwCm0xoISIQiQ4So=</HashCode>
+      <FileName>WC\Fields.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.Connections" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAEAACAABAgAAACAAIACgAAAQAAAAAAAAFAggCA=</HashCode>
+      <FileName>Connections.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="DB.Tools.ICurrent" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgAAAAIBAAIACABAAAAAggAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Current\ICurrent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.Tools.IPreferences" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAgAAABAAAAAAAAAAAAgAABAAgDAAAAIAAAA=</HashCode>
+      <FileName>Current\Preferences\IPreferences.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.Tools.IReport">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAgBAAAAAAAAAAAAAAAAAABAJAAAAgAAAIAICAg=</HashCode>
+      <FileName>Report\IReport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.Tools.IWC" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAAEoAAAAAAAgAAAEAwAAABAAAACCAAgAAAAgAoAo=</HashCode>
+      <FileName>WC\Interface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

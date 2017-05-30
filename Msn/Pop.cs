@@ -64,8 +64,11 @@ namespace Msn
         protected System.Speech.Synthesis.SpeechSynthesizer lorito;
         //   protected SpeechLib.SpVoice lorito;
 
+        protected string lastSpeak = string.Empty;
         public void Speak(string text)
         {
+            if (lastSpeak.CompareTo(text) == 0) return;
+            lastSpeak = text;
             if (lorito == null)
             {
                 this.lorito = new System.Speech.Synthesis.SpeechSynthesizer();

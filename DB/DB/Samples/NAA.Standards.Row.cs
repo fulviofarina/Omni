@@ -52,26 +52,6 @@ namespace DB
 
            
         }
-        partial class StandardsDataTable : IColumn
-        {
-            IEnumerable<DataColumn> nonNullables=null;
-            public IEnumerable<DataColumn> ForbiddenNullCols
-            {
-                get
-                {
-                    if (nonNullables == null)
-                    {
-                        nonNullables = new DataColumn[]{ stdNameColumn,
-                     MatrixNameColumn,stdProducerColumn,stdUncColumn,
-                      MonitorCodeColumn };
-                    }
-
-                    return nonNullables;
-                 
-                }
-            }
-
-           
-        }
+     
     }
 }

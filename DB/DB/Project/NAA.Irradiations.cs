@@ -83,32 +83,5 @@ namespace DB
             }
         }
 
-        partial class IrradiationRequestsDataTable :IColumn
-        {
-            private IEnumerable<DataColumn> nonNullables;
-
-            public IEnumerable<DataColumn> ForbiddenNullCols
-            {
-                get
-                {
-                    if (nonNullables == null)
-                    {
-                        nonNullables = new DataColumn[] { this.columnChannelName, this.columnIrradiationCode, this.columnNumber, this.columnIrradiationStartDateTime };
-                    }
-                    return nonNullables;
-                }
-            }
-
-          
-        }
-
-        protected internal void handlersIrradiations()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Channels));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(IrradiationRequests));
-        }
     }
 }

@@ -11,17 +11,98 @@ namespace DB.Tools
     /// This is a class to attach the binding sources
     /// </summary>
 
-
     public partial class BS
     {
-   
+        private UnitRow selectUnitOrChildRow(ref DataRow row)
+        {
+            bool isUnuit = row.GetType().Equals(typeof(UnitRow));
+            UnitRow unit = null;
+
+            string title = SAMPLE;// + unit.Name;
+            if (isUnuit)
+            {
+                unit = row as UnitRow;
+                title += unit.Name;
+                unit.ToDo = !unit.ToDo;
+                Interface.IReport.Msg(title + SELECTED_ROW, SELECTED); //report
+            }
+            else
+            {
+                //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
+                unit = Interface.ICurrent.Unit as UnitRow;
+                title += unit.Name;
+                EnabledControls = false;
+                unit.SetParent(ref row);
+                Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
+                EnabledControls = true;
+                //bring back to VIEW (Select)
+            }
+
+            return unit;
+        }
+
+        /// <summary>
+        /// Checks a row for serious errors according to the NonNullable columns or specialized array
+        /// </summary>
+        private void hasErrors<T>(T r)
+        {
+            if (EC.IsNuDelDetch(r as DataRow)) return;
+
+            Type tipo = typeof(T);
+
+            bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
+            bool isUnit = tipo.Equals(typeof(UnitRow));
+            bool isMatrix = tipo.Equals(typeof(MatrixRow));
+            //to check later the columns that should be ok
+
+            hasErrorsMethod = null;
+            // Action Checker = null; DataColumn[] columnsThatShouldBeOk = null;
+            if (isSubSample)
+            {
+                SubSamplesRow s = r as SubSamplesRow;
+                hasErrorsMethod += s.HasBasicErrors;
+                hasErrorsMethod += s.UnitRow.HasErrors;
+            }
+            else if (isUnit)
+            {
+                UnitRow u = r as UnitRow;
+                hasErrorsMethod += u.HasErrors;
+                hasErrorsMethod += u.SubSamplesRow.HasBasicErrors;
+            }
+            else if (isMatrix)
+            {
+                MatrixRow m = r as MatrixRow;
+                hasErrorsMethod += m.HasErrors;
+            }
+            else if (tipo.Equals(typeof(VialTypeRow)))
+            {
+                //
+                VialTypeRow v = r as VialTypeRow;
+                hasErrorsMethod += v.HasErrors;
+            }
+            else if (tipo.Equals(typeof(ChannelsRow)))
+            {
+                ChannelsRow c = r as ChannelsRow;
+                hasErrorsMethod += c.HasErrors;
+
+                // updateChannel(r, doCascade, findItself);
+            }
+            else if (tipo.Equals(typeof(IrradiationRequestsRow)))
+            {
+                //
+                IrradiationRequestsRow i = r as IrradiationRequestsRow;
+                hasErrorsMethod += i.HasErrors;
+                // updateIrradiationRequest(r, doCascade, findItself);
+            }
+            //now check the errors!!!
+            hasCompulsoryErrors(r);
+        }
+
         private void addingNew(object sender, AddingNewEventArgs e)
         {
             try
             {
-
-
-             //   EnabledControls = false;
+                // EnabledControls = false;
 
                 bool isChannel = sender.Equals(Channels);
                 bool aRabbit = sender.Equals(Rabbit);
@@ -30,39 +111,37 @@ namespace DB.Tools
                 {
                     ChannelsRow c = Interface.IPopulate.IIrradiations.AddNewChannel();
                     e.NewObject = c;
-                    Update(c, false, true);
+                    update(c, false, true);
                 }
                 else if (sender.Equals(Matrix))
                 {
                     MatrixRow v = Interface.IPopulate.IGeometry.AddNewMatrix();
                     e.NewObject = v;
-                    Update(v, false, true);
+                    update(v, false, true);
                 }
                 else if (aVial || aRabbit)
                 {
                     VialTypeRow v = Interface.IPopulate.IGeometry.AddNewVial(aRabbit);
                     e.NewObject = v;
-                    Update(v, false, true);
+                    update(v, false, true);
                 }
                 else if (sender.Equals(SubSamples))
                 {
                     IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
                     SubSamplesRow s = Interface.IPopulate.ISamples.AddSamples(ref ir);
                     e.NewObject = s;
-                    Update(s, false, true);
+                    update(s, false, true);
 
-           //         SelectedSubSample.ResetBindings(false);
-               //     Units.ResetBindings(false);
-                 //   SelectedMatrix.ResetBindings(false);
-                  //  SelectedCompositions.ResetBindings(false);
+                    // SelectedSubSample.ResetBindings(false); Units.ResetBindings(false);
+                    // SelectedMatrix.ResetBindings(false); SelectedCompositions.ResetBindings(false);
                 }
-
-                notifyPropertyChanged("added");
+                //reanimate controls
+                Interface.IBS.EnabledControls = true;
                 IRow row = e.NewObject as IRow;
                 row.Check();
-               // (sender as BindingSource).ResetBindings(false);
+                // (sender as BindingSource).ResetBindings(false);
 
-             //   EnabledControls = true;
+                // EnabledControls = true;
             }
             catch (Exception ex)
             {
@@ -70,7 +149,10 @@ namespace DB.Tools
             }
         }
 
-       
+        private void notifyPropertyChanged(/*[CallerMemberName]*/ String propertyName = "")
+        {
+            PropertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         /// <summary>
         /// Checks a row for serious errors according to the NonNullable columns or specialized array
@@ -84,7 +166,7 @@ namespace DB.Tools
             DataRow row = r as DataRow;
             if (row.HasErrors)
             {
-                bool? seriousCellsWithErrors = hasErrors?.Invoke();
+                bool? seriousCellsWithErrors = hasErrorsMethod?.Invoke();
                 // if (row.GetColumnsInError())
                 if (seriousCellsWithErrors != null && (bool)seriousCellsWithErrors)
                 {
@@ -93,27 +175,35 @@ namespace DB.Tools
             }
             else Interface.IReport.Msg(ROW_OK, CHECKED, true);
             //clean
-            hasErrors = null;
+            hasErrorsMethod = null;
         }
 
         private void currentChanged(object sender, EventArgs e)
         {
             try
             {
-           
                 BindingSource bs = sender as BindingSource;
-                
+
                 bool selectedBs = false;
                 if (sender.Equals(Irradiations))
                 {
                     IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
-                    Update(r, true, false, selectedBs);
+                    update(r, true, false, selectedBs);
                 }
                 else if (sender.Equals(Channels))
                 {
-                    
                     ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
-                    Update(c, true, false, selectedBs);
+                    update(c, true, false, selectedBs);
+                }
+                else if (sender.Equals(Rabbit))
+                {
+                    VialTypeRow c = Interface.ICurrent.Rabbit as VialTypeRow;
+                    update(c, true, false, selectedBs);
+                }
+                else if (sender.Equals(Vial ))
+                {
+                    VialTypeRow c = Interface.ICurrent.Vial as VialTypeRow;
+                    update(c, true, false, selectedBs);
                 }
                 else if (sender.Equals(SubSamples) || sender.Equals(Units))
                 {
@@ -127,12 +217,10 @@ namespace DB.Tools
                         UnitRow u = Interface.ICurrent.Unit as UnitRow;
                         if (!EC.IsNuDelDetch(u.SubSamplesRow)) r = u.SubSamplesRow;
                     }
-                    Update(r, true, false, selectedBs);
+                    update(r, true, false, selectedBs);
                 }
-              
                 else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
                 {
-                  
                     MatrixRow c = null;
                     if (sender.Equals(Matrix)) c = Interface.ICurrent.Matrix as MatrixRow;
                     else
@@ -140,10 +228,10 @@ namespace DB.Tools
                         selectedBs = true;
                         c = Interface.ICurrent.SubSampleMatrix as MatrixRow;
                     }
-                    Update(c, true, false, selectedBs);
+                    update(c, true, false, selectedBs);
                 }
 
-             //   bs.RaiseListChangedEvents = true;
+                // bs.RaiseListChangedEvents = true;
             }
             catch (Exception ex)
             {
@@ -151,119 +239,6 @@ namespace DB.Tools
             }
         }
 
-        private void initializeGeometryBindingSources()
-        {
-            string rabbit = "Rabbit";
-            LINAA set = Interface.Get();
-            string name = Interface.IDB.Matrix.TableName;
-            Matrix = new BindingSource(set, name);
-            bindings.Add(name, Matrix);
-            name = Interface.IDB.Compositions.TableName;
-            Compositions = new BindingSource(set, name);
-            bindings.Add(name, Compositions);
-
-            name = Interface.IDB.VialType.TableName;
-            Rabbit = new BindingSource(set, name);
-            bindings.Add(name + rabbit, Rabbit);
-
-            name = Interface.IDB.VialType.TableName;
-            Vial = new BindingSource(set, name);
-            bindings.Add(name, Vial);
-
-            name = Interface.IDB.Geometry.TableName;
-            Geometry = new BindingSource(set, name);
-            bindings.Add(name, Geometry);
-        }
-
-        private void initializePreferencesBindingSources()
-        {
-            LINAA set = Interface.Get();
-            string name = Interface.IDB.Preferences.TableName;
-            Preferences = new BindingSource(set, name);
-            bindings.Add(name, Preferences);
-
-            name = Interface.IDB.SSFPref.TableName;
-            SSFPreferences = new BindingSource(set, name);
-            bindings.Add(name, SSFPreferences);
-        }
-
-        private void initializeProjectBindingSources()
-        {
-            LINAA set = Interface.Get();
-
-            string name = Interface.IDB.Channels.TableName;
-            Channels = new BindingSource(set, name);
-            bindings.Add(name, Channels);
-
-            name = Interface.IDB.IrradiationRequests.TableName;
-            Irradiations = new BindingSource(set, name);
-            bindings.Add(name, Irradiations);
-
-            name = Interface.IDB.Projects.TableName;
-            Projects = new BindingSource(set, name);
-            bindings.Add(name, Projects);
-
-            name = Interface.IDB.Orders.TableName;
-            Orders = new BindingSource(set, name);
-            bindings.Add(name, Orders);
-        }
-        private void initializeSampleBindingSources()
-        {
-            LINAA set = Interface.Get();
-            string name = Interface.IDB.Standards.TableName;
-            Standards = new BindingSource(set, name);
-            bindings.Add(name, Standards);
-
-            name = Interface.IDB.Monitors.TableName;
-            Monitors = new BindingSource(set, name);
-            bindings.Add(name, Monitors);
-
-            name = Interface.IDB.MonitorsFlags.TableName;
-            MonitorsFlags = new BindingSource(set, name);
-            bindings.Add(name, MonitorsFlags);
-
-            name = Interface.IDB.Samples.TableName;
-            Samples = new BindingSource(set, name);
-            bindings.Add(name, Samples);
-
-            name = Interface.IDB.SubSamples.TableName;
-            SubSamples = new BindingSource(set, name);
-            bindings.Add(name, SubSamples);
-
-            name = Interface.IDB.Unit.TableName;
-            Units = new BindingSource(set, name);
-            bindings.Add(name, Units);
-
-            // Units.CurrentChanged += units_CurrentChanged;
-            name = Interface.IDB.MatSSF.TableName;
-            SSF = new BindingSource(set, name);
-            bindings.Add(name, SSF);
-        }
-
-        private void initializeSelectedBindingSources()
-        {
-            LINAA set = Interface.Get();
-
-            string name = Interface.IDB.Channels.TableName;
-            SelectedChannel = new BindingSource(set, name);
-            bindings.Add("Selected" + name, SelectedChannel);
-
-            name = Interface.IDB.Compositions.TableName;
-            SelectedCompositions = new BindingSource(set, name);
-            bindings.Add("Selected" + name, SelectedCompositions);
-            name = Interface.IDB.Matrix.TableName;
-            SelectedMatrix = new BindingSource(set, name);
-            bindings.Add("Selected" + name, SelectedMatrix);
-
-            // Units.BindingComplete += Units_BindingComplete;
-            name = Interface.IDB.SubSamples.TableName;
-            SelectedSubSample = new BindingSource(set, name);
-            bindings.Add("Selected" + name, SelectedSubSample);
-
-            name = Interface.IDB.IrradiationRequests.TableName;
-            SelectedIrradiation = new BindingSource(set, name);
-            bindings.Add("Selected" + name, Irradiations);
-        }
         private void listChanged_Preferences(object sender, ListChangedEventArgs e)
         {
             try

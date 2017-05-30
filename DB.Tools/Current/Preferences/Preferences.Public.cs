@@ -1,7 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Security.Principal;
+using DB.Properties;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -13,47 +12,28 @@ namespace DB.Tools
     public partial class Current : IPreferences
     {
 
-       public void RejectChanges()
+       
+
+        public string GetSSFPreferencesPath()
         {
-            this.RejectChanges();
-        }
-        /// <summary>
-        /// Check if the Spectra directory is OK
-        /// </summary>
-        public bool IsSpectraPathOk
-        {
-            get
-            {
-                string spec = CurrentPref.Spectra;
-                if (string.IsNullOrEmpty(spec)) return false;
-                else return Directory.Exists(spec);
-            }
+            return Interface.IStore.FolderPath + Resources.SSFPreferences + XML_EXT;
         }
 
-        /// <summary>
-        /// The current SSF Preferences
-        /// </summary>
-        public SSFPrefRow CurrentSSFPref
+        public string GetPreferencesPath()
         {
-            get
-            {
-                // currentSSFPref = Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
-                return Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
-            }
+            return Interface.IStore.FolderPath + Resources.Preferences + XML_EXT;
         }
 
-        /// <summary>
-        /// The current preferences (Main)
-        /// </summary>
-        public PreferencesRow CurrentPref
+        public void RejectPreferencesChanges()
         {
-            get
-            {
-                // currentPref = Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
-                return Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
-            }
+            Interface.IPreferences.CurrentPref.RejectChanges();
+          //  Interface.IPreferences.CurrentSSFPref.RejectChanges();
         }
-
+        public void RejectSSFChanges()
+        {
+           // Interface.IPreferences.CurrentPref.RejectChanges();
+            Interface.IPreferences.CurrentSSFPref.RejectChanges();
+        }
         /// <summary>
         /// Populates the preferences
         /// </summary>
@@ -65,7 +45,7 @@ namespace DB.Tools
                 if (ok)
                 {
                     //cleaning
-                    cleanPreferences<PreferencesDataTable>();    //important
+                    cleanNullPreferences<PreferencesDataTable>();    //important
                 }
                 populateCurrentPreferences<PreferencesDataTable>();
             }
@@ -79,7 +59,7 @@ namespace DB.Tools
                 if (ok)
                 {
                     //cleaning
-                    cleanPreferences<SSFPrefDataTable>();    //important
+                    cleanNullPreferences<SSFPrefDataTable>();    //important
                 }
                 populateCurrentPreferences<SSFPrefDataTable>();
             }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,8 +17,8 @@ namespace DB.Tools
         public static void Connections()
         {
             LINAA.PreferencesRow prefe = Interface.IPreferences.CurrentPref;
-
-            Connections cform = new Connections(ref prefe);
+            Action<SystemException> addException = Interface.IStore.AddException;
+            Connections cform = new Connections(ref prefe, ref addException);
             cform.ShowDialog();
 
             if ((prefe as DataRow).RowState != DataRowState.Modified) return;
@@ -25,7 +26,7 @@ namespace DB.Tools
             DialogResult res = MessageBox.Show("Would you like to Save/Accept the connection changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.No)
             {
-                Interface.IPreferences.RejectChanges();
+                Interface.IPreferences.RejectPreferencesChanges();
             }
             else
             {

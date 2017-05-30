@@ -124,35 +124,6 @@ namespace DB
             }
         }
 
-        partial class ChannelsDataTable : IColumn
-        {
-            private IEnumerable<DataColumn> nonNullables;
-            public bool defaultValue
-            {
-                //TODO: windows user instead
-                get
-                {
-                    // LINAA set = this.DataSet as LINAA;
-                    return !(this.DataSet as LINAA).SSFPref.FirstOrDefault().Overrides;
-                }
-            }
-            public IEnumerable<DataColumn> ForbiddenNullCols
-            {
-                get
-                {
-                    if (nonNullables == null)
-                    {
-                        nonNullables = new DataColumn[] { this.columnAlpha, this.columnf,
-                            this.columnReactor, this.columnkth, this.columnkepi ,
-                            columnIrReqCode,this.FluxTypeColumn,
-                            columnpEpi, columnpTh, columnA1, columnA2,
-                        columnBellFactor, columnWGt, columnnFactor};
-                    }
-                    return nonNullables;
-                }
-            }
-
-          
-        }
+      
     }
 }

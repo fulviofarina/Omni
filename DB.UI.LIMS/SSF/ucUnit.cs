@@ -26,7 +26,7 @@ namespace DB.UI
             if (e.RowIndex < 0) return;
             int rowInder = e.RowIndex;
             DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
-            Interface.IBS.SelectUnitChildRow(rowInder, ref row, ref lastIndex);
+            Interface.IBS.SelectUnitOrChildRow(rowInder, ref row, ref lastIndex);
             PaintRows();
         }
 

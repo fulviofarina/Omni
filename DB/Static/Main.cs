@@ -28,6 +28,16 @@ namespace DB
             hashy = null;
             return aux;
         }
+        public static double AverageOfFCs(string irradiationCode, ref IEnumerable<IRequestsAveragesRow> comparators)
+        {
+            double FC = 0;
+            if (comparators.Count() != 0) comparators = comparators.Where(HasProjectName(irradiationCode));
+            if (comparators.Count() != 0) comparators = comparators.Where(IsComparator());
+            //   if (comparators.Count() != 0) comparators = comparators.Where(x => !EC.IsNuDelDetch(x.SubSamplesRow.MonitorsRow));
+            if (comparators.Count() != 0) FC = comparators.Average(FCAverager);
+            if (FC == 0) FC = 1;
+            return FC;
+        }
 
         public static IEnumerable<T> FindSelected<T>(IEnumerable<T> rows)
         {
@@ -47,6 +57,9 @@ namespace DB
             }
             else throw new SystemException("FindSelected not Implemented");
         }
+
+
+        public static Func<LINAA.IRequestsAveragesRow, double> FCAverager = x => { if (x.IsFcNull()) return 0; else return x.Fc; };
 
         /// <summary>
         /// Get Peaks in need of calculations

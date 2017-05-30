@@ -32,7 +32,15 @@ namespace DB
             else throw new SystemException("Not impletemented");
             return any;
         }
+        public static Func<IRequestsAveragesRow, bool> IsComparator()
+        {
+            return x => x.Comparator && !EC.IsNuDelDetch(x.SubSamplesRow.MonitorsRow);
+        }
 
+        public static Func<IRequestsAveragesRow, bool> HasProjectName(string irradiationCode)
+        {
+            return x => x.Project.CompareTo(irradiationCode) == 0;
+        }
         public static Func<T, bool> SelectorByField<T>(object value, string field)
         {
             Func<T, bool> any = null;

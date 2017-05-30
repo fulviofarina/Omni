@@ -66,8 +66,8 @@ namespace DB.Tools
                 if (!monitorsOnly && uncsOnly)
                 {
                     //take average Fc from monitors
-                    Fc = Linaa.IRequestsAverages.AvgOfFCs(Name);
-                    FcCD = Linaa.IRequestsAverages.AvgOfFCs(Name + DB.Properties.Misc.Cd);
+                    Fc = Linaa.CalculateAvgOfFCs(Name);
+                    FcCD = Linaa.CalculateAvgOfFCs(Name + DB.Properties.Misc.Cd);
 
                     if (Fc != 1) msg = "FC = " + Decimal.Round(Convert.ToDecimal(Fc), 0);
                     else if (FcCD != 1) msg = "FC (Cadmium) = " + Decimal.Round(Convert.ToDecimal(FcCD), 0);
@@ -81,7 +81,7 @@ namespace DB.Tools
             }
             catch (SystemException ex)
             {
-                Linaa.AddException(ex);
+                Interface.IStore.AddException(ex);
                 msg = "Something is wrong with the averaged FC (not a number)";
             }
 

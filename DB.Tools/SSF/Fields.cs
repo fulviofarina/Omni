@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
 
 namespace DB.Tools
 {
@@ -14,8 +13,13 @@ namespace DB.Tools
         protected internal static string inPutExt = ".in";
         protected internal static string outPutExt = ".out";
         protected internal static string startupPath = string.Empty;
-        protected static string ERRORS = "The self-shielding calculations were cancelled because the proper input data is missing.\n"
+
+        protected static string ERROR_SPEAK = "Calculations were cancelled because the proper input data is missing.\n"
+         + "Please verify the sample data provided";
+
+        protected static string ERRORS = "Calculations were Cancelled because the proper input data is missing.\n"
             + "Please verify the sample data provided, such as: composition, dimensions and neutron source parameters.";
+
         protected static string FINISHED = "Self-shielding calculations finished!";
         protected static string CANCELLED = "Self-shielding calculations were cancelled!";
         protected static string SELECT_SAMPLES = "Select the Samples to calculate by double-clicking the row header of the sample grid (at the right-hand panel)";
@@ -45,15 +49,14 @@ namespace DB.Tools
 
                 if (!value)
                 {
-
                     //no processes remaining
                     if (processTable.Count == 0)
                     {
                         //rows with errors
-              
+
                         DataRow[] rowsInError = units.Where(o => !CheckInputData(o)).ToArray();
                         int errorCount = rowsInError.Count();
-                        if (errorCount!=0)
+                        if (errorCount != 0)
                         {
                             //some missing
                             string some = "Some of ";
@@ -67,7 +70,7 @@ namespace DB.Tools
                                 Interface.IReport.Msg(ERRORS, "Some samples were Skipped");
                             }
 
-                            Interface.IReport.Speak(some + ERRORS);
+                            Interface.IReport.Speak(some + ERROR_SPEAK);
                         }
                         else
                         {
@@ -92,7 +95,5 @@ namespace DB.Tools
                 }
             }
         }
-
-    
     }
 }

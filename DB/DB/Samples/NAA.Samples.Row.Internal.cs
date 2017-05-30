@@ -195,13 +195,16 @@ namespace DB
                 newName = SubSampleName.Trim().ToUpper();
                 //     string _projectNr = Regex.Replace(IrradiationCode, "[a-z]", String.Empty, RegexOptions.IgnoreCase);
                 //take default vlues
-                string code = IrradiationCode.Replace(_projectNr, null);
+                string code = string.Empty;
+                if (!string.IsNullOrEmpty(_projectNr)) code = IrradiationCode.Replace(_projectNr, null);
                 if (!EC.IsNuDelDetch(IrradiationRequestsRow.ChannelsRow))
                 {
                     code = IrradiationRequestsRow.ChannelsRow.IrReqCode.Trim().ToUpper();
                 }
-                string projectNoCode = IrradiationCode.Replace(code, null);
-                return newName.Replace(projectNoCode, null);
+                string projectNoCode = string.Empty;
+                if (!string.IsNullOrEmpty(code)) projectNoCode = IrradiationCode.Replace(code, null);
+                if (!string.IsNullOrEmpty(projectNoCode)) newName = newName.Replace(projectNoCode, null);
+                return newName;
             }
 
             internal string GetName(int _lastSampleNr)

@@ -55,9 +55,6 @@ namespace DB
             }
         }
 
-
-
-
         public void DataColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
         {
             try
@@ -79,10 +76,6 @@ namespace DB
                 AddException(ex);
             }
         }
-
-
-
-
 
         protected internal void rowChanged(object sender, DataRowChangeEventArgs e)
         {

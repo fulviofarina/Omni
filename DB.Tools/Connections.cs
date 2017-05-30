@@ -1,68 +1,72 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using Rsx.SQL;
 
 namespace DB.UI
 {
     public partial class Connections : Form
     {
-        private DB.LINAA.PreferencesRow pref;
-  
-        private void Connections_FormClosing(object sender, FormClosingEventArgs e)
+        protected internal Action<SystemException> exceptions = null;
+        protected internal DB.LINAA.PreferencesRow pref;
+
+        private void closingForm(object sender, FormClosingEventArgs e)
         {
-            if (ucSQLLIMSCom.ConnectionString.Equals(string.Empty))
+            if (string.IsNullOrEmpty(ucSQLLIMSCom.ConnectionString))
             {
-                DialogResult res = MessageBox.Show("A connection to the LIMS database needs to be provided... Try again?", "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                if (res == System.Windows.Forms.DialogResult.No) this.Dispose();
-                else return;
+                MessageBox.Show("A connection to the LIMS database needs to be provided...", "Important", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
             }
-
-            try
+            else
             {
-                pref.HL = ucSQLHLCom.ConnectionString;
-                pref.LIMS = ucSQLLIMSCom.ConnectionString;
-
-                pref.SpectraSvr = this.SpectraSvrRBT.Text.ToUpper();
-
-                string spectra = this.SpectraRBT.Text.ToUpper();
-                if (!spectra[spectra.Length - 1].ToString().Equals("\\")) spectra += "\\";
-                pref.Spectra = spectra;
+                try
+                {
+                    pref.SetConnections(ucSQLHLCom.ConnectionString, ucSQLLIMSCom.ConnectionString, this.SpectraSvrRBT.Text.ToUpper(), this.SpectraRBT.Text.ToUpper());
+                }
+                catch (SystemException ex)
+                {
+                    exceptions?.Invoke(ex);
+                }
+                e.Cancel = false;
             }
-            catch (SystemException ex)
-            {
-            }
-            this.Dispose();
+            if (!e.Cancel) this.Dispose();
         }
 
-        private void Connections_Load(object sender, EventArgs e)
+        private void loadForm(object sender, EventArgs e)
         {
             try
             {
                 ucSQLHLCom.ConnectionString = pref.HL;
                 ucSQLLIMSCom.ConnectionString = pref.LIMS;
-                ucSQLHLCom.Title = "HyperLab Server";
-                ucSQLLIMSCom.Title = "LIMS Server";
+
                 this.SpectraSvrRBT.Text = pref.SpectraSvr.ToUpper();
 
                 this.SpectraRBT.Text = pref.Spectra.ToUpper();
-
             }
             catch (SystemException ex)
             {
+                exceptions?.Invoke(ex);
             }
         }
+        private void setTitles()
+        {
+            this.Text = "Connections";
+            ucSQLHLCom.Title = "HyperLab Server";
+            ucSQLLIMSCom.Title = "LIMS Server";
+        }
 
-        public Connections(ref LINAA.PreferencesRow preferences)
+        public Connections()
+        {
+        }
+
+        public Connections(ref LINAA.PreferencesRow preferences, ref Action<SystemException> excepts)
         {
             InitializeComponent();
 
             pref = preferences;
-            this.Text = "Connections";
-            this.FormClosing += this.Connections_FormClosing;
-            this.Load += this.Connections_Load;
+            exceptions = excepts;
+            setTitles();
 
-         
+            this.FormClosing += this.closingForm;
+            this.Load += this.loadForm;
         }
     }
 }

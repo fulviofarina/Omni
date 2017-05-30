@@ -63,6 +63,25 @@ namespace DB
                 }
             }
 
+            /// <summary>
+            /// Sets the measurement name
+            /// </summary>
+            /// <param name="measName"></param>
+            public void SetName(string measName)
+            {
+                Measurement = measName;
+                Sample = measName.Substring(0, measName.Length - 3);
+                string DPN = measName.Replace(Sample, null).Trim();
+                MeasurementNr = DPN.Substring(2, 1);
+                Position = Convert.ToInt16(DPN.Substring(1, 1));
+                Detector = DPN.Substring(0, 1);
+                Project = string.Empty;
+                if (!Rsx.EC.IsNuDelDetch(SubSamplesRow))
+                {
+                    if (!SubSamplesRow.IsIrradiationCodeNull()) Project = SubSamplesRow.IrradiationCode;
+                }
+            }
+
             public bool ShouldSelectIt()
             {
                 if (HasErrors) return false;
