@@ -34,13 +34,28 @@ namespace DB.Tools
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        public void SelectUnitOrChildRow(int rowInder, ref DataRow row, ref int lastIndex)
+        public void SelectUnitOrChildRow<T>(int rowInder, ref T row, ref int lastIndex)
         {
             try
             {
                 if (row == null) return;
 
-                UnitRow unit = selectUnitOrChildRow(ref row);
+              //  UnitRow unit = selectUnitOrChildRow(ref row);
+
+                bool isUnuit = row.GetType().Equals(typeof(UnitRow));
+                UnitRow unit = null;
+
+             //   string title = SAMPLE;// + unit.Name;
+                if (isUnuit)
+                {
+                    unit = SelectUnit(ref row);
+                }
+                else
+                {
+                    unit = SelectUnitChild(ref row);
+                }
+
+
                 update<UnitRow>(unit, true, false, true);
                 IRow ir = unit as IRow;
                 ir.Check();
@@ -54,6 +69,32 @@ namespace DB.Tools
                 // Interface.IReport.Msg(ex.StackTrace, ex.Message);
                 Interface.IStore.AddException(ex);
             }
+        }
+
+        private UnitRow SelectUnitChild<T>(ref T row)
+        {
+            UnitRow unit;
+            string title = SAMPLE;// + unit.Name;
+                                  //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
+            unit = Interface.ICurrent.Unit as UnitRow;
+            title += unit.Name;
+            EnabledControls = false;
+            unit.SetParent(ref row);
+            Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
+            EnabledControls = true;
+            //bring back to VIEW (Select)
+            return unit;
+        }
+
+        public UnitRow SelectUnit<T>(ref T row)
+        {
+            UnitRow unit;
+            string title = SAMPLE;// + unit.Name;
+            unit = row as UnitRow;
+            title += unit.Name;
+            unit.ToDo = !unit.ToDo;
+            Interface.IReport.Msg(title + SELECTED_ROW, SELECTED); //report
+            return unit;
         }
 
         public void ResetBidings(bool v)

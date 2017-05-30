@@ -40,7 +40,7 @@ namespace DB.UI
                 }
                 else
                 {
-                    this.compositionsDGV.BackgroundColor = System.Drawing.Color.Purple;
+                    this.compositionsDGV.BackgroundColor = System.Drawing.Color.Thistle;
                     Bind = Interface.IBS.SelectedMatrix;
                     bsCompositions = Interface.IBS.SelectedCompositions;
                 }

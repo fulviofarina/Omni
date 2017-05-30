@@ -84,8 +84,7 @@ namespace DB
             // if( e.Action != DataRowAction.Commit) return;
             if (e.Row.RowState == DataRowState.Deleted) return;
             e.Row.ClearErrors();
-        //    dynamic table;
-        //    table = e.Row.Table.DataSet;
+            // dynamic table; table = e.Row.Table.DataSet;
             IEnumerable<DataColumn> cols = e.Row.Table.Columns.OfType<DataColumn>();
             foreach (DataColumn column in cols)
             {
@@ -116,6 +115,7 @@ namespace DB
                 dt.ColumnChanged -= han;
             }
         }
+
         protected internal void setRowHandlers(ref DataTable table, bool activate)
         {
             int dtindex = Tables.IndexOf(table);

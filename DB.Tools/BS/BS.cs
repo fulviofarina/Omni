@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using Rsx;
 using static DB.LINAA;
@@ -13,33 +14,7 @@ namespace DB.Tools
 
     public partial class BS
     {
-        private UnitRow selectUnitOrChildRow(ref DataRow row)
-        {
-            bool isUnuit = row.GetType().Equals(typeof(UnitRow));
-            UnitRow unit = null;
-
-            string title = SAMPLE;// + unit.Name;
-            if (isUnuit)
-            {
-                unit = row as UnitRow;
-                title += unit.Name;
-                unit.ToDo = !unit.ToDo;
-                Interface.IReport.Msg(title + SELECTED_ROW, SELECTED); //report
-            }
-            else
-            {
-                //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
-                unit = Interface.ICurrent.Unit as UnitRow;
-                title += unit.Name;
-                EnabledControls = false;
-                unit.SetParent(ref row);
-                Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
-                EnabledControls = true;
-                //bring back to VIEW (Select)
-            }
-
-            return unit;
-        }
+ 
 
         /// <summary>
         /// Checks a row for serious errors according to the NonNullable columns or specialized array
@@ -60,14 +35,14 @@ namespace DB.Tools
             if (isSubSample)
             {
                 SubSamplesRow s = r as SubSamplesRow;
-                hasErrorsMethod += s.HasBasicErrors;
+                hasErrorsMethod += s.HasErrors;
                 hasErrorsMethod += s.UnitRow.HasErrors;
             }
             else if (isUnit)
             {
                 UnitRow u = r as UnitRow;
                 hasErrorsMethod += u.HasErrors;
-                hasErrorsMethod += u.SubSamplesRow.HasBasicErrors;
+                hasErrorsMethod += u.SubSamplesRow.HasErrors;
             }
             else if (isMatrix)
             {
@@ -115,13 +90,13 @@ namespace DB.Tools
                 }
                 else if (sender.Equals(Matrix))
                 {
-                    MatrixRow v = Interface.IPopulate.IGeometry.AddNewMatrix();
+                    MatrixRow v = Interface.IPopulate.IGeometry.AddMatrix();
                     e.NewObject = v;
                     update(v, false, true);
                 }
                 else if (aVial || aRabbit)
                 {
-                    VialTypeRow v = Interface.IPopulate.IGeometry.AddNewVial(aRabbit);
+                    VialTypeRow v = Interface.IPopulate.IGeometry.AddVial(aRabbit);
                     e.NewObject = v;
                     update(v, false, true);
                 }
@@ -164,18 +139,82 @@ namespace DB.Tools
         {
             if (Rsx.EC.IsNuDelDetch(r as DataRow)) return;
             DataRow row = r as DataRow;
+            string tableName = row.Table.TableName;
+            string msg = ROW_OK;
+            string title = CHECKED;
+            bool ok = true;
             if (row.HasErrors)
             {
                 bool? seriousCellsWithErrors = hasErrorsMethod?.Invoke();
                 // if (row.GetColumnsInError())
                 if (seriousCellsWithErrors != null && (bool)seriousCellsWithErrors)
                 {
-                    Interface.IReport.Msg(ROW_WITH_ERROR, WARNING, false);
+                    string result = GetDisplayColumName(ref row, tableName);
+                    ok = false;
+                    msg = ROW_WITH_ERROR + result;
+                    title = WARNING;
+                   
                 }
             }
-            else Interface.IReport.Msg(ROW_OK, CHECKED, true);
+         
+            GetDisplayTableName(ref tableName);
+            //display name
+            msg = msg.Replace("item", tableName);
+            Interface.IReport.Msg(msg, title, ok);
             //clean
             hasErrorsMethod = null;
+        }
+        private static void GetDisplayTableName(ref string tableName)
+        {
+            if (tableName.Contains("Vial"))
+            {
+                tableName = "Container";
+            }
+            else if (tableName.Contains("Channel"))
+            {
+                tableName = "Neutron Source";
+            }
+            else if (tableName.Contains("Unit"))
+            {
+                tableName = "Sample";
+            }
+            
+        }
+        private static string GetDisplayColumName(ref DataRow row, string tableName)
+        {
+            string[] colsInError = row.GetColumnsInError().Select(o => o.ColumnName).ToArray();
+
+            for (int i = 0; i < colsInError.Count(); i++)
+            {
+                string col = colsInError[i];
+                if (col.Contains(tableName))
+                {
+                    colsInError[i] = colsInError[i].Replace(tableName, null);
+                }
+                if (col.Contains("FillHeight"))
+                {
+                    colsInError[i] = "Length";
+
+                }
+                else if (col.Contains("Radius"))
+                {
+                    colsInError[i] = "Radius";
+                }
+                else if (col.Contains("Name") || col.Contains("Ref"))
+                {
+                    colsInError[i] = "Label";
+                }
+                else if (col.Contains("Gross"))
+                {
+                    colsInError[i] = "Mass";
+                }
+                
+               
+            }
+            string sep = ",\n\t\t\t\t";
+            string result = colsInError.Aggregate((o, next) => o=o+ sep + next);
+            result = "\t" + result;
+            return result;
         }
 
         private void currentChanged(object sender, EventArgs e)

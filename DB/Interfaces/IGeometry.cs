@@ -7,8 +7,9 @@ namespace DB
 {
     public interface IGeometry
     {
-         MatrixRow AddNewMatrix();
-         VialTypeRow AddNewVial(bool aRabbit);
+        MatrixRow AddMatrix();
+
+        VialTypeRow AddVial(bool aRabbit);
 
         GeometryRow DefaultGeometry { get; }
 
@@ -21,8 +22,6 @@ namespace DB
         void PopulateMatrix();
 
         void PopulateUnits();
-
-     
 
         void PopulateVials();
 

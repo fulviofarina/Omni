@@ -203,8 +203,8 @@ namespace DB.UI
         }
 
         protected bool assigned = false;
-         protected string compo = "SWITCH";
-        protected string geom = "CHANGE";
+         protected string compo = "<<SWITCH VIEW>>";
+        protected string geom = "<<CHANGE VIEW>>";
 
 
         public void ViewChanged(object sender, EventArgs e)
@@ -246,17 +246,17 @@ namespace DB.UI
 
             this.sampleCompoLbl.Visible = false;
             Image img = Properties.Resources.Geometries;
-            Color clr = Color.OrangeRed;
+            Color clr = Color.GhostWhite;
             if (sampleCompoLbl.Text.Contains(compo))
             {
-                sampleCompoLbl.Text = sampleCompoLbl.Text.Replace(compo, geom);
+                sampleCompoLbl.Text = geom;
             }
 
             else
             {
-                sampleCompoLbl.Text = sampleCompoLbl.Text.Replace(geom, compo);
+                sampleCompoLbl.Text = compo;
                 img = Properties.Resources.Matrices;
-                clr = Color.Fuchsia;
+                clr = Color.WhiteSmoke;
                 page = off;
 
             }

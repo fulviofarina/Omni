@@ -10,6 +10,70 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
+
+        private void prepareInputs(ref LINAA.UnitRow UNIT)
+        {
+            //2
+            string unitName = UNIT.Name;
+            //delete .out file
+
+            //generate input file
+            bool defaultValues = !Interface.IPreferences.CurrentSSFPref.Overrides;
+            bool isOK = false;
+
+            string buffer = string.Empty;
+
+            IEnumerable<MatrixRow> matrices = UNIT.SubSamplesRow.GetMatrixRows();
+            foreach (MatrixRow mat in matrices)
+            {
+                //suck into buffer th matrix composition of each matrix
+                string composition = mat.MatrixComposition;
+                IList<string[]> ls = mat.StripComposition(composition);
+                buffer += mat.StripMoreComposition(ref ls);
+                // buffer += " ";
+            }
+
+            string config = getChannelCfg(defaultValues, ref UNIT);
+
+            double lenfgt = UNIT.SubSamplesRow.FillHeight;
+            double diamet = UNIT.SubSamplesRow.Radius * 2;
+            double mass = UNIT.SubSamplesRow.Net;
+
+            string inputNOTGeneratedMsg = "Input metadata NOT generated for Sample ";
+
+            if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
+            {
+                buffer += "\n";
+                buffer += mass + "\n" + diamet + "\n" + lenfgt + "\n"
+                    + config;
+                buffer += "\n";
+                buffer += "\n";
+
+                string fulFile = startupPath + unitName + inPutExt;
+                //delete .in file
+                System.IO.TextWriter writer = new System.IO.StreamWriter(fulFile, false); //create fromRow file
+                writer.Write(buffer);
+                writer.Close();
+                writer = null;
+                isOK = System.IO.File.Exists(fulFile);
+
+                if (isOK)
+                {
+                    string inputGeneratedTitle = "Starting calculations...";
+                    string inputGeneratedMsg = "Input metadata generated for Sample ";
+                    UNIT.SubSamplesRow.Selected = true;
+
+                    Interface.IReport.Msg(inputGeneratedMsg + unitName, inputGeneratedTitle);
+                }
+                else
+                {
+                    throw new SystemException(inputNOTGeneratedMsg + unitName);
+                }
+            }
+            else throw new SystemException(inputNOTGeneratedMsg + unitName);
+        }
+
+
         protected LINAA.MatSSFDataTable fillSSFTableWith(ref LINAA.UnitRow u, IList<string> fileContent, bool fillSSF)
         {
             string[] content = null;

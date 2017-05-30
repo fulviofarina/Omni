@@ -7,22 +7,15 @@ namespace DB
 {
     public partial class LINAA : IAdapter
     {
-
-
         public void SetConnections(/*string localDB, string developerDB,*/ string defaultConnection)
         {
-
             //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
-          //  Properties.Settings.Default["developerDB"] = developerDB;
-       //     Properties.Settings.Default["localDB"] = localDB;
+            //  Properties.Settings.Default["developerDB"] = developerDB;
+            //     Properties.Settings.Default["localDB"] = localDB;
             Properties.Settings.Default["NAAConnectionString"] = defaultConnection;
 
             Properties.Settings.Default.Save();
-
-        
         }
-     
-
 
         public string ChangeConnection
         {

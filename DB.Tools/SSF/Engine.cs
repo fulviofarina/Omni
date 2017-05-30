@@ -12,6 +12,7 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
+        protected internal bool bkgCalculation = false;
         public void DoCKS(ref LINAA.UnitRow UNIT)
         {
             //sample geometry dependant values// why recalculate each time? leave them here
@@ -136,14 +137,55 @@ namespace DB.Tools
 
             return isOk;
         }
+        public void PrepareInputs(bool background = false)
+        {
+            foreach (UnitRow item in units)
+            {
+                UnitRow UNIT = item;
+                PrepareInputs(ref UNIT, background);
+            }
+        }
 
-        public bool CheckInputData(UnitRow UNIT)
+        public void PrepareInputs(ref UnitRow UNIT, bool background = false)
+        {
+            try
+            {
+                //UnitRow UNIT = item;
+                //update position in BS
+                UNIT.Clean();
+
+                if (!background) Interface.IBS.Update<UnitRow>(UNIT);
+
+                showProgress?.Invoke(null, EventArgs.Empty);
+
+                bool ok = CheckInputData(ref UNIT);
+
+                if (ok)
+                {
+                    prepareInputs(ref UNIT);
+                }
+                showProgress?.Invoke(null, EventArgs.Empty);
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);
+                Interface.IReport.Msg(ex.Message, "ERROR", false);
+            }
+        }
+
+
+        /// <summary>
+        /// Checks if the input data has errors
+        /// </summary>
+        /// <param name="UNIT"></param>
+        /// <returns></returns>
+        public bool CheckInputData(ref UnitRow UNIT)
         {
             //CLEAN
 
             // 1 CHECK ERRORS
             bool hasError = UNIT.HasErrors(); //has Unit errors??
-            hasError = UNIT.SubSamplesRow.HasBasicErrors() || hasError; //has Sample Errors?
+            hasError = UNIT.SubSamplesRow.HasErrors() || hasError; //has Sample Errors?
 
             string inputDataOK = "Input data is OK for Sample ";
 
@@ -162,71 +204,11 @@ namespace DB.Tools
             return !hasError;
         }
 
-        public void GenerateAnInput(ref LINAA.UnitRow UNIT)
-        {
-            //2
-            string unitName = UNIT.Name;
-            //delete .out file
-
-            //generate input file
-            bool defaultValues = !Interface.IPreferences.CurrentSSFPref.Overrides;
-            bool isOK = false;
-
-            string buffer = string.Empty;
-
-            IEnumerable<MatrixRow> matrices = UNIT.SubSamplesRow.GetMatrixRows();
-            foreach (MatrixRow mat in matrices)
-            {
-                //suck into buffer th matrix composition of each matrix
-                string composition = mat.MatrixComposition;
-                IList<string[]> ls = mat.StripComposition(composition);
-                buffer += mat.StripMoreComposition(ref ls);
-                // buffer += " ";
-            }
-
-            string config = getChannelCfg(defaultValues, ref UNIT);
-
-            double lenfgt = UNIT.SubSamplesRow.FillHeight;
-            double diamet = UNIT.SubSamplesRow.Radius * 2;
-            double mass = UNIT.SubSamplesRow.Net;
-
-            string inputNOTGeneratedMsg = "Input metadata NOT generated for Sample ";
-
-            if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
-            {
-                buffer += "\n";
-                buffer += mass + "\n" + diamet + "\n" + lenfgt + "\n"
-                    + config;
-                buffer += "\n";
-                buffer += "\n";
-
-                string fulFile = startupPath + unitName + inPutExt;
-                //delete .in file
-                System.IO.TextWriter writer = new System.IO.StreamWriter(fulFile, false); //create fromRow file
-                writer.Write(buffer);
-                writer.Close();
-                writer = null;
-                isOK = System.IO.File.Exists(fulFile);
-
-                if (isOK)
-                {
-                    string inputGeneratedTitle = "Starting calculations...";
-                    string inputGeneratedMsg = "Input metadata generated for Sample ";
-                    UNIT.SubSamplesRow.Selected = true;
-
-                    Interface.IReport.Msg(inputGeneratedMsg + unitName, inputGeneratedTitle);
-                }
-                else
-                {
-                    throw new SystemException(inputNOTGeneratedMsg + unitName);
-                }
-            }
-            else throw new SystemException(inputNOTGeneratedMsg + unitName);
-        }
-
+      
         public void RunProcess()
         {
             //RUN 3
+            IsCalculating = true;
 
             IPreferences ip = Interface.IPreferences;
             bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
@@ -286,7 +268,7 @@ namespace DB.Tools
             }
 
             showProgress?.Invoke(null, EventArgs.Empty);
-
+            //leave here because RunProcess is public
             if (processTable.Count == 0)
             {
                 IsCalculating = false;
@@ -328,10 +310,10 @@ namespace DB.Tools
             // processTable((object)process, (object)item);
             Application.OpenForms[0].Invoke(DoMatSSF(item));
             Application.OpenForms[0].Invoke(DoCKS(item));
-            Application.OpenForms[0].Invoke(ReportFinished(item));
+            Application.OpenForms[0].Invoke(Finalize(item));
         }
 
-        public EventHandler ReportFinished(string sampleName)
+        public EventHandler Finalize(string sampleName)
         {
             EventHandler final = delegate
             {
@@ -345,14 +327,17 @@ namespace DB.Tools
                     Interface.IStore.Save<LINAA.SubSamplesDataTable>();
                     Interface.IStore.Save<LINAA.UnitDataTable>();
 
-                    Interface.IBS.Update<LINAA.SubSamplesRow>(UNIT.SubSamplesRow);
+                    if (!bkgCalculation)  Interface.IBS.Update<LINAA.SubSamplesRow>(UNIT.SubSamplesRow);
+
+                    //set DONE
+                    UNIT.ValueChanged(false);
+                    //what is this? check
+                    UNIT.SubSamplesRow.Selected = false;
+
 
                     string msg = "Finished calculations for sample " + UNIT.Name;
                     Interface.IReport.Msg(msg, "Done");
-                    UNIT.ToDo = false;
-                    UNIT.LastCalc = DateTime.Now;
 
-                    UNIT.SubSamplesRow.Selected = false;
 
                     if (processTable.Count == 0)
                     {

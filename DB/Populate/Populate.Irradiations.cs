@@ -8,7 +8,6 @@ namespace DB
 {
     public partial class LINAA : IIrradiations
     {
-
         public int? FindIrradiationID(String project)
         {
             int? IrrReqID = null;
@@ -48,6 +47,7 @@ namespace DB
 
             return i;
         }
+
         public ChannelsRow AddNewChannel()
         {
             // ChannelsRow v = e.NewObject as ChannelsRow;//Interface.IDB.Matrix.NewMatrixRow();
@@ -56,10 +56,9 @@ namespace DB
             return v;
         }
     }
+
     public partial class LINAA : IIrradiations
     {
-      
-
         public void PopulateChannels()
         {
             try
@@ -80,13 +79,13 @@ namespace DB
         {
             try
             {
-                //	Dumb.CleanColumnExpressions(tableIrradiationRequests);
+                // Dumb.CleanColumnExpressions(tableIrradiationRequests);
                 this.tableIrradiationRequests.BeginLoadData();
                 this.tableIrradiationRequests.Clear();
                 //Handlers(this.tableIrradiationRequests, false, tableIrradiationRequests.DataColumnChanged);
                 this.TAM.IrradiationRequestsTableAdapter.Fill(this.tableIrradiationRequests);
-                //    IEnumerable<DataRow> rows = this.tableIrradiationRequests.AsEnumerable();
-                //   LINAA.SetAdded(ref rows);
+                // IEnumerable<DataRow> rows = this.tableIrradiationRequests.AsEnumerable();
+                // LINAA.SetAdded(ref rows);
                 this.tableIrradiationRequests.AcceptChanges();
                 this.tableIrradiationRequests.EndLoadData();
             }

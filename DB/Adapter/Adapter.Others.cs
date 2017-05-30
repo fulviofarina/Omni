@@ -4,15 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IAdapter
     {
-
-
-
         protected internal static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
         {
             bool duplicates = false;
@@ -45,8 +42,6 @@ namespace DB
 
             return duplicates;
         }
-
-
 
         protected internal static void disposeIrradiationAdapters(ref LINAATableAdapters.TableAdapterManager tAM)
         {
@@ -100,11 +95,9 @@ namespace DB
             tAM.tStudentTableAdapter?.Connection.Close();
             tAM.tStudentTableAdapter?.Dispose();
 
-          //  tAM.LINES_FISTableAdapter?.Connection.Close();
-          //  tAM.LINES_FISTableAdapter?.Dispose();
+            // tAM.LINES_FISTableAdapter?.Connection.Close(); tAM.LINES_FISTableAdapter?.Dispose();
 
-         //   tAM.LINESTableAdapter?.Connection.Close();
-         //   tAM.LINESTableAdapter?.Dispose();
+            // tAM.LINESTableAdapter?.Connection.Close(); tAM.LINESTableAdapter?.Dispose();
 
             //  }
             //if (tAM.pValuesTableAdapter != null)
@@ -171,13 +164,9 @@ namespace DB
                 tAM.UnitTableAdapter?.Dispose();
             }
 
-            // if (tAM.MatSSFTableAdapter != null)
-       //     {
-        //        tAM.MatSSFTableAdapter?.Connection.Close();
+            // if (tAM.MatSSFTableAdapter != null) { tAM.MatSSFTableAdapter?.Connection.Close();
 
-          //      tAM.MatSSFTableAdapter?.Dispose();
-         //   }
-            // if (tAM.MonitorsFlagsTableAdapter != null)
+            // tAM.MatSSFTableAdapter?.Dispose(); } if (tAM.MonitorsFlagsTableAdapter != null)
             {
                 tAM.MonitorsFlagsTableAdapter?.Connection.Close();
                 tAM.MonitorsFlagsTableAdapter?.Dispose();
@@ -204,7 +193,7 @@ namespace DB
                 tAM.SubSamplesTableAdapter?.Dispose();
             }
 
-        //    tAM.MatSSFTableAdapter = null;
+            // tAM.MatSSFTableAdapter = null;
             tAM.UnitTableAdapter = null;
             tAM.MonitorsFlagsTableAdapter = null;
             tAM.MonitorsTableAdapter = null;
@@ -248,10 +237,10 @@ namespace DB
             adapters.Add(tAM.YieldsTableAdapter, tAM.YieldsTableAdapter);
             tAM.tStudentTableAdapter = new LINAATableAdapters.tStudentTableAdapter();
             adapters.Add(tAM.tStudentTableAdapter, tAM.tStudentTableAdapter);
-        //    tAM.LINESTableAdapter = new LINAATableAdapters.LINESTableAdapter();
-          //  adapters.Add(tAM.LINESTableAdapter, tAM.LINESTableAdapter);
-           // tAM.LINES_FISTableAdapter = new LINAATableAdapters.LINES_FISTableAdapter();
-          //  adapters.Add(tAM.LINES_FISTableAdapter, tAM.LINES_FISTableAdapter);
+            // tAM.LINESTableAdapter = new LINAATableAdapters.LINESTableAdapter();
+            // adapters.Add(tAM.LINESTableAdapter, tAM.LINESTableAdapter); tAM.LINES_FISTableAdapter
+            // = new LINAATableAdapters.LINES_FISTableAdapter();
+            // adapters.Add(tAM.LINES_FISTableAdapter, tAM.LINES_FISTableAdapter);
         }
 
         protected internal static void initializePeaksAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
@@ -266,8 +255,8 @@ namespace DB
 
         protected internal static void initializeSampleAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
         {
-        //    tAM.MatSSFTableAdapter = new LINAATableAdapters.MatSSFTableAdapter();
-        //    adapters.Add(tAM.MatSSFTableAdapter, tAM.MatSSFTableAdapter);
+            // tAM.MatSSFTableAdapter = new LINAATableAdapters.MatSSFTableAdapter();
+            // adapters.Add(tAM.MatSSFTableAdapter, tAM.MatSSFTableAdapter);
             tAM.UnitTableAdapter = new LINAATableAdapters.UnitTableAdapter();
             adapters.Add(tAM.UnitTableAdapter, tAM.UnitTableAdapter);
             tAM.MonitorsFlagsTableAdapter = new LINAATableAdapters.MonitorsFlagsTableAdapter();

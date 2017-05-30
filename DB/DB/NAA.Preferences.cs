@@ -34,7 +34,6 @@ namespace DB
         {
             public void Check()
             {
-              
                 if (IsCalibrationNull()) Calibration = false;
                 if (this.IsDoCKNull()) DoCK = false;
                 if (this.IsDoMatSSFNull()) DoMatSSF = true;
@@ -52,16 +51,14 @@ namespace DB
 
             public void Check(DataColumn column)
             {
-
                 if (this.IsCalcMassNull()) CalcMass = false;
                 if (IsAAFillHeightNull()) AAFillHeight = false;
                 if (IsAARadiusNull()) AARadius = false;
                 if (this.IsCalcDensityNull()) CalcDensity = false;
 
-                //    Check();
+                // Check();
                 if (column == this.tableSSFPref.AAFillHeightColumn)
                 {
-                   
                     if (AAFillHeight)
                     {
                         AARadius = false;
@@ -75,8 +72,6 @@ namespace DB
                 }
                 else if (column == this.tableSSFPref.AARadiusColumn)
                 {
-                  
-
                     if (AARadius)
                     {
                         AAFillHeight = false;
@@ -90,8 +85,6 @@ namespace DB
                 }
                 else if (column == this.tableSSFPref.CalcDensityColumn)
                 {
-                  
-
                     if (CalcDensity)
                     {
                         AAFillHeight = false;
@@ -105,7 +98,6 @@ namespace DB
                 }
                 else
                 {
-                
                     EC.CheckNull(column, this);
                 }
             }
@@ -132,7 +124,6 @@ namespace DB
 
             public void Check()
             {
-
                 if (IsOfflineNull()) Offline = false;
                 if (IsIsSQLNull()) this.IsSQL = false;
                 if (IsIsMSMQNull()) this.IsMSMQ = false;
@@ -168,12 +159,8 @@ namespace DB
                 Settings.Default.Save();
             }
 
-
             public void Check(DataColumn Column)
             {
-
-             
-
                 EC.CheckNull(Column, this);
             }
 

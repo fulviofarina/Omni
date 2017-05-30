@@ -103,13 +103,13 @@ namespace DB.UI
             //   projectbox.Items.AddRange(Interface.IPopulate.IProjects.ProjectsList.ToArray());
             //set if the control should be enabled
             Interface.IBS.EnabledControls = this.projectbox.Enabled;
-            Interface.IBS.PropertyChangedHandler += delegate
-            {
+       //     Interface.IBS.PropertyChangedHandler += delegate
+         //   {
               
                 //it does not fires when GET enbled controls
-                this.projectbox.Enabled = Interface.IBS.EnabledControls;
+              //  this.projectbox.m = Interface.IBS.EnabledControls;
           
-            };
+        //    };
 
             this.projectlabel.Click += delegate
              {

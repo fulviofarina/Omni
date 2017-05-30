@@ -243,7 +243,7 @@ namespace k0X
 
             SampleNode.ImageKey = "red";
 
-            if (!sample.HasErrors)
+            if (!sample.HasErrors())
             {
                 if (!sample.NeedsSSF && !sample.NeedsMeasurements && !sample.NeedsPeaks) SampleNode.ImageKey = "green";
             }

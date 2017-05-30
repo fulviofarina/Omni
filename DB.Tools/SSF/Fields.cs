@@ -54,7 +54,7 @@ namespace DB.Tools
                     {
                         //rows with errors
 
-                        DataRow[] rowsInError = units.Where(o => !CheckInputData(o)).ToArray();
+                        DataRow[] rowsInError = units.Where(o => !CheckInputData(ref o)).ToArray();
                         int errorCount = rowsInError.Count();
                         if (errorCount != 0)
                         {

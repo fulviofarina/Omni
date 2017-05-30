@@ -9,6 +9,7 @@ namespace DB
 
         void PopulateSelectedExpression(bool setexpression);
 
-        //    bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref DB.LINAA.TAMDeleteMethod remover);
+        // bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref
+        // DB.LINAA.TAMDeleteMethod remover);
     }
 }

@@ -8,6 +8,7 @@ using DB.Properties;
 using Msn;
 using Rsx;
 using Rsx.Dumb;
+using static DB.LINAA;
 
 namespace DB.Tools
 {
@@ -148,7 +149,7 @@ namespace DB.Tools
 
                 bugresult = qm.BeginReceive();
 
-                GenerateUserInfoReport();
+               // GenerateUserInfoReport();
             }
             catch (Exception ex)
             {
@@ -191,33 +192,42 @@ namespace DB.Tools
         /// </summary>
         public void GenerateUserInfoReport()
         {
-            Rsx.EDB en = new EDB();
+            try
+            {
+                Rsx.EDB en = new EDB();
 
-            EDB.EnvironmentRow e = en.Environment.NewEnvironmentRow();
+                EDB.EnvironmentRow e = en.Environment.NewEnvironmentRow();
 
-            e.OSVersion = Environment.OSVersion.VersionString;
-            e.Is64Bit = Environment.Is64BitProcess;
-            e.Is64BitOS = Environment.Is64BitOperatingSystem;
-            e.MachineName = Environment.MachineName;
-            e.CurrentPath = Environment.CurrentDirectory;
-            e.CPUCount = Environment.ProcessorCount;
-            e.NewLine = Environment.NewLine;
-            e.UserDomainName = Environment.UserDomainName;
-            e.UserName = Environment.UserName;
-            e.WorkingSet = Environment.WorkingSet;
-            e.Ticks = Environment.TickCount;
+                e.OSVersion = Environment.OSVersion.VersionString;
+                e.Is64Bit = Environment.Is64BitProcess;
+                e.Is64BitOS = Environment.Is64BitOperatingSystem;
+                e.MachineName = Environment.MachineName;
+                e.CurrentPath = Environment.CurrentDirectory;
+                e.CPUCount = Environment.ProcessorCount;
+                e.NewLine = Environment.NewLine;
+                e.UserDomainName = Environment.UserDomainName;
+                e.UserName = Environment.UserName;
+                e.WorkingSet = Environment.WorkingSet;
+                e.Ticks = Environment.TickCount;
 
-            en.Environment.AddEnvironmentRow(e);
+                en.Environment.AddEnvironmentRow(e);
 
-            string enviropath = "Enviroment.xml";
-            en.WriteXml(enviropath, System.Data.XmlWriteMode.WriteSchema);
+                string enviropath = "Enviroment.xml";
+                en.WriteXml(enviropath, System.Data.XmlWriteMode.WriteSchema);
 
-            Dumb.FD(ref en);
+                Dumb.FD(ref en);
 
-            string path = e.CurrentPath + "\\" + enviropath;
-            string usrInfo = "UserInfo";
+                string path = e.CurrentPath + "\\" + enviropath;
+                string usrInfo = "UserInfo";
 
-            GenerateReport(enviropath, path, string.Empty, usrInfo, EMAIL_DEFAULT);
+                GenerateReport(enviropath, path, string.Empty, usrInfo, EMAIL_DEFAULT);
+
+            }
+            catch (SystemException ex)
+            {
+                // Interface.IReport.Msg(ex.InnerException.Message, ex.Message, false);
+                Interface.IStore.AddException(ex);
+            }
         }
 
         /// <summary>
@@ -302,23 +312,37 @@ namespace DB.Tools
         private void generateBugReport(ref MessageQueue qm)
         {
             Interface.IStore.SaveExceptions();
-
+            const int maxBugsTables = 15;
             Msg(BE_PATIENT, BUG_REPORT_ONWAY);
 
             string path = Interface.IStore.FolderPath + Resources.Exceptions;
             IEnumerable<string> exceptions = Directory.EnumerateFiles(path);
-            int cnt = exceptions.Count();
-            if (cnt != 0)
+         //    int cnt = exceptions.Count();
+            if (exceptions.Count() != 0)
             {
+                int counter = 1;
+                System.Messaging.Message w = null;
+                string bodyOfBugEmail = "Should I add more comments?";
                 foreach (string excFile in exceptions)
                 {
-                    System.Messaging.Message w = null;
-                    string bodyOfBugEmail = "Should I add more comments?";
-                    w = Emailer.CreateQMsg(excFile, "Bug Report", bodyOfBugEmail);
-                    Emailer.SendQMsg(ref qm, ref w);
-                    // System.IO.File.Delete(excFile);
+                    ExceptionsDataTable dt = new ExceptionsDataTable();
+                    dt.ReadXml(excFile);
+                    if (counter < maxBugsTables)
+                    {
+                        Interface.IDB.Exceptions.Merge(dt);
+                        System.IO.File.Delete(excFile);
+                        counter++;
+                    }
+                    if (counter == maxBugsTables) break;
+                    
                 }
-                Msg(BUGS_ONTRAY, cnt + " scheduled to be sent", true);
+                string file = Guid.NewGuid() + ".xml";
+                Interface.IDB.Exceptions.WriteXml(file);
+                //    Interface.IDB.Exceptions.WriteXml(excFile);
+                w = Emailer.CreateQMsg(file, "Bug Report", bodyOfBugEmail);
+                Emailer.SendQMsg(ref qm, ref w);
+                counter = 1;
+                Msg(BUGS_ONTRAY, counter + " scheduled to be sent", true);
             }
             else Msg(BUG_REPORT_FAILED, BUG_REPORT_EMPTY);
 

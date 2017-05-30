@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using DB.LINAATableAdapters;
 
 namespace DB
 {
     public interface IStore
     {
         void Save<T>(ref T row);
+
         string FolderPath
         {
             get;
             set;
         }
 
-
         void AddException(Exception ex);
+
         void Read(string filepath);
+
         void CloneDataSet(ref LINAA set);
+
         // void AddException(Exception ex);
         void Delete<T>(ref IEnumerable<T> rows);
+
         IEnumerable<DataTable> GetTablesWithChanges();
+
         bool DeletePeaks(int measID);
 
         bool Save<T>(ref IEnumerable<T> rows);
@@ -42,7 +46,7 @@ namespace DB
         /// </summary>
         bool SaveLocalCopy();
 
-        //  void SavePreferences();
+        // void SavePreferences();
 
         /// <summary>
         /// Saves to Server
@@ -62,6 +66,6 @@ namespace DB
         //void LoadMonitorsFile(string file);
         void UpdateIrradiationDates();
 
-        //   void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
+        // void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
     }
 }

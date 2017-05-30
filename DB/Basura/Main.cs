@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Xml;
-using System.Xml.Schema;
-
-//using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+﻿//using DB.Interfaces;
 
 namespace DB
 {
-    public partial class LINAA 
+    public partial class LINAA
     {
         /*
      public bool Read(string file)
@@ -36,9 +28,6 @@ namespace DB
          return read;
      }
      */
-
- 
-
 
         /*
     public void PopulateSubSamples()

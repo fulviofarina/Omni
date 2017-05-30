@@ -43,8 +43,12 @@ namespace DB.Tools
             }
         }
 
-        public void Calculate()
+        public void Calculate(bool background = false)
         {
+
+            bkgCalculation = background;
+
+          
             //actual position
             //  Cursor.Current = Cursors.WaitCursor;
             try
@@ -52,25 +56,13 @@ namespace DB.Tools
                 // Interface.IBS.IsCalculating = true;
 
                 Creator.SaveInFull(true);
-                IsCalculating = true;
+             
 
                 resetProgress?.Invoke(3);
 
                 int position = Interface.IBS.SubSamples.Position;
                 // int count = SelectUnits();
-                bool shoulLoop = Interface.IPreferences.CurrentSSFPref.Loop;
-                if (shoulLoop)
-                {
-                    //take currents
-                    units = Interface.ICurrent.Units.OfType<LINAA.UnitRow>()
-                        .Where(o => o.ToDo).ToList();
-                }
-                else
-                {
-                    //take only current
-                    units = new List<UnitRow>();
-                    units.Add(Interface.ICurrent.Unit as UnitRow);
-                }
+                SelectSamples(background);
 
                 int count = units.Count;
                 int numberofSteps = 5;
@@ -86,35 +78,10 @@ namespace DB.Tools
                 else
                 {
                     //loop through all samples to work to
-                    foreach (UnitRow item in Units)
-                    {
-                        try
-                        {
-                            UnitRow UNIT = item;
-                            //update position in BS
-                            UNIT.Clean();
-
-                            Interface.IBS.Update<UnitRow>(UNIT);
-
-                            showProgress?.Invoke(null, EventArgs.Empty);
-
-                            bool ok = CheckInputData(UNIT);
-
-                            if (ok)
-                            {
-                                GenerateAnInput(ref UNIT);
-                            }
-                            showProgress?.Invoke(null, EventArgs.Empty);
-                        }
-                        catch (SystemException ex)
-                        {
-                            Interface.IStore.AddException(ex);
-                            Interface.IReport.Msg(ex.Message, "ERROR", false);
-                        }
-                    }
+                    PrepareInputs(background);
                 }
 
-                Interface.IBS.SubSamples.Position = position;
+                if (!background)   Interface.IBS.SubSamples.Position = position;
 
                 RunProcess();
 
@@ -127,11 +94,58 @@ namespace DB.Tools
             }
         }
 
+        /// <summary>
+        /// Prepares de Input Files
+        /// </summary>
+     
+        public void SelectSamples(bool background = false)
+        {
+            //should loop all?
+            bool shoulLoop = Interface.IPreferences.CurrentSSFPref.Loop;
+
+//if batch evaluation or backround bacth work
+            if (shoulLoop || background)
+            {
+                //take ALL SAMPLES (BACKROUND RUN)
+                if (background)
+                {
+                    units = Interface.IDB.Unit.OfType<UnitRow>()
+                        .ToList(); 
+                }
+                //take the ones in the binding source
+                else
+                {
+                    units = Interface.ICurrent.Units.OfType<LINAA.UnitRow>()
+                        .ToList();
+                }
+                units = units.Where(o => o.ToDo).ToList();
+            }
+            else //no loop, take current
+            {
+                //take only current (binding source)
+                units = new List<UnitRow>();
+                UnitRow u = Interface.ICurrent.Unit as UnitRow;
+                if (u.ToDo)     units.Add(u);
+            }
+        }
+
         public void Set(ref Interface inter, EventHandler callBackMethod = null, Action<int> resetProg = null, EventHandler showProg = null)
         {
             Interface = inter;
-            showProgress = showProg;
-            resetProgress = resetProg;
+            showProgress = delegate
+            {
+                if (!bkgCalculation)
+                {
+                    showProg?.Invoke(null,EventArgs.Empty);
+                }
+            };
+            resetProgress = delegate (int i)
+            {
+                if (!bkgCalculation)
+                {
+                    resetProg?.Invoke(i);
+                }
+            };
             callBack = callBackMethod;
 
             if (processTable == null) processTable = new System.Collections.Hashtable();

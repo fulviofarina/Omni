@@ -127,12 +127,12 @@ namespace DB.UI
             {
                 bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                 bool isCalculating = Interface.IBS.IsCalculating;
-                this.CalcBtn.Visible = ThereIsData && !isCalculating;
-                this.cancelBtn.Visible = ThereIsData && isCalculating;
+                this.CalcBtn.Enabled = ThereIsData && !isCalculating;
+                this.cancelBtn.Enabled = ThereIsData && isCalculating;
                 // this.Tab.SelectedTab = this.CalcTab;
                 ucUnit.PaintRows();
             };
-            // Interface.IBS.EnabledControls = false;
+            // force refresh
             Interface.IBS.EnabledControls = true;
 
             //invoke
@@ -147,7 +147,7 @@ namespace DB.UI
                 this.ValidateChildren();
                 Cursor.Current = Cursors.WaitCursor;
                 this.Tab.SelectedTab = this.CalcTab;
-                MatSSF.Calculate();
+                MatSSF.Calculate(true);
                 Cursor.Current = Cursors.Default;
             };
             this.cancelBtn.Click += delegate

@@ -85,6 +85,10 @@ namespace DB.Tools
             bool add = false;
             if (row == null)
             {
+                if (row.GetType().Equals(typeof(PreferencesRow)))
+                {
+                    Interface.IReport.GenerateUserInfoReport();
+                }
                 row = dt.NewRow();
 
                 add = true;

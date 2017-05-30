@@ -455,7 +455,7 @@ namespace DB.Tools
             {
                 srow = null;
                 srow = s.Tag as LINAA.SubSamplesRow;
-                if (srow.HasErrors) s.Checked = false;
+                if (srow.HasErrors()) s.Checked = false;
                 else if (all) s.Checked = true;
                 srow.Selected = s.Checked;
                 measnodes = null;

@@ -8,12 +8,15 @@ namespace DB
 {
     public interface IIrradiations
     {
+        ChannelsRow AddNewChannel();
 
-         ChannelsRow AddNewChannel();
         Int32? FindIrradiationID(string project);
-      //  int? FindIrrReqID(String project);
+
+        // int? FindIrrReqID(String project);
         IrradiationRequestsRow AddNewIrradiation(string project);
+
         IrradiationRequestsRow FindIrradiationByCode(string project);
+
         void PopulateChannels();
 
         void PopulateIrradiationRequests();

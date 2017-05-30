@@ -102,13 +102,13 @@
             // 
             this.UnitSSFSC.Panel1.Controls.Add(this.inputTLP);
             this.UnitSSFSC.Size = new System.Drawing.Size(702, 854);
-            this.UnitSSFSC.SplitterDistance = 705;
+            this.UnitSSFSC.SplitterDistance = 623;
             this.UnitSSFSC.SplitterWidth = 8;
             this.UnitSSFSC.TabIndex = 11;
             // 
             // inputTLP
             // 
-            this.inputTLP.BackColor = System.Drawing.SystemColors.Control;
+            this.inputTLP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.inputTLP.ColumnCount = 1;
             this.inputTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.inputTLP.Controls.Add(this.descripTS, 0, 1);
@@ -120,21 +120,17 @@
             this.inputTLP.Margin = new System.Windows.Forms.Padding(4);
             this.inputTLP.Name = "inputTLP";
             this.inputTLP.RowCount = 4;
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.382979F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.680851F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.68794F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.106383F));
-            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.inputTLP.Size = new System.Drawing.Size(702, 705);
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.inputTLP.Size = new System.Drawing.Size(702, 623);
             this.inputTLP.TabIndex = 4;
             // 
             // descripTS
             // 
-            this.descripTS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.descripTS.BackColor = System.Drawing.SystemColors.Control;
-            this.descripTS.Dock = System.Windows.Forms.DockStyle.None;
+            this.descripTS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.descripTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.descripTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.descripTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.descriplbl,
@@ -150,11 +146,11 @@
             // 
             this.descriplbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.descriplbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriplbl.ForeColor = System.Drawing.Color.Green;
-            this.descriplbl.Margin = new System.Windows.Forms.Padding(0, 1, 19, 2);
+            this.descriplbl.ForeColor = System.Drawing.Color.White;
             this.descriplbl.Name = "descriplbl";
-            this.descriplbl.Size = new System.Drawing.Size(110, 30);
-            this.descriplbl.Text = "Description";
+            this.descriplbl.Padding = new System.Windows.Forms.Padding(4, 1, 19, 2);
+            this.descriplbl.Size = new System.Drawing.Size(142, 30);
+            this.descriplbl.Text = "COMMENTS";
             this.descriplbl.ToolTipText = "Provide some description for the sample";
             // 
             // descripBox
@@ -180,7 +176,7 @@
             this.infoTS.Name = "infoTS";
             this.infoTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.infoTS.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.infoTS.Size = new System.Drawing.Size(702, 37);
+            this.infoTS.Size = new System.Drawing.Size(702, 28);
             this.infoTS.TabIndex = 14;
             this.infoTS.Text = "toolStrip2";
             // 
@@ -189,7 +185,7 @@
             this.toolStripLabel1.AutoToolTip = true;
             this.toolStripLabel1.ForeColor = System.Drawing.Color.Violet;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(201, 34);
+            this.toolStripLabel1.Size = new System.Drawing.Size(201, 25);
             this.toolStripLabel1.Text = "Run-time Information";
             // 
             // unitSC
@@ -211,7 +207,7 @@
             // 
             // nameToolStrip
             // 
-            this.nameToolStrip.BackColor = System.Drawing.SystemColors.Control;
+            this.nameToolStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(95)))), ((int)(((byte)(95)))));
             this.nameToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nameToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.nameToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -227,27 +223,28 @@
             // SampleLBL
             // 
             this.SampleLBL.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SampleLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.SampleLBL.Margin = new System.Windows.Forms.Padding(0, 1, 19, 2);
+            this.SampleLBL.ForeColor = System.Drawing.Color.LightGoldenrodYellow;
             this.SampleLBL.Name = "SampleLBL";
-            this.SampleLBL.Size = new System.Drawing.Size(75, 30);
-            this.SampleLBL.Text = "Sample";
+            this.SampleLBL.Padding = new System.Windows.Forms.Padding(0, 1, 6, 2);
+            this.SampleLBL.Size = new System.Drawing.Size(89, 30);
+            this.SampleLBL.Text = "SAMPLE";
             this.SampleLBL.ToolTipText = "Name automatically generated, but you can change it";
             // 
             // nameB
             // 
-            this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.nameB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.nameB.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameB.ForeColor = System.Drawing.Color.White;
-            this.nameB.Margin = new System.Windows.Forms.Padding(30, 0, 1, 0);
+            this.nameB.ForeColor = System.Drawing.Color.Gold;
+            this.nameB.Margin = new System.Windows.Forms.Padding(45, 1, 0, 2);
             this.nameB.Name = "nameB";
-            this.nameB.Size = new System.Drawing.Size(230, 33);
+            this.nameB.Size = new System.Drawing.Size(220, 30);
             // 
             // barTLP
             // 
             this.barTLP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.barTLP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.barTLP.ColumnCount = 1;
             this.barTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.barTLP.Controls.Add(this.changeViewTS, 0, 0);
@@ -262,7 +259,7 @@
             // 
             // changeViewTS
             // 
-            this.changeViewTS.BackColor = System.Drawing.Color.Transparent;
+            this.changeViewTS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(95)))), ((int)(((byte)(95)))));
             this.changeViewTS.CanOverflow = false;
             this.changeViewTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.changeViewTS.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -282,11 +279,10 @@
             // 
             this.sampleCompoLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.sampleCompoLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sampleCompoLbl.ForeColor = System.Drawing.Color.Fuchsia;
-            this.sampleCompoLbl.IsLink = true;
+            this.sampleCompoLbl.ForeColor = System.Drawing.Color.LightYellow;
             this.sampleCompoLbl.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-            this.sampleCompoLbl.LinkColor = System.Drawing.Color.Fuchsia;
-            this.sampleCompoLbl.Margin = new System.Windows.Forms.Padding(1, 1, 250, 2);
+            this.sampleCompoLbl.LinkColor = System.Drawing.Color.Lime;
+            this.sampleCompoLbl.Margin = new System.Windows.Forms.Padding(1, 1, 2, 2);
             this.sampleCompoLbl.Name = "sampleCompoLbl";
             this.sampleCompoLbl.Size = new System.Drawing.Size(193, 25);
             this.sampleCompoLbl.Text = "COMPOSITION VIEW";
@@ -323,6 +319,7 @@
             // 
             // ucNS
             // 
+            this.ucNS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ucNS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucNS.Font = new System.Drawing.Font("Segoe UI Semibold", 14F);
             this.ucNS.Location = new System.Drawing.Point(0, 0);

@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 
 namespace DB
 {
     public interface IDB
     {
         void PopulateColumnExpresions();
-     //   LINAA.AcquisitionsDataTable Acquisitions { get; }
+
+        // LINAA.AcquisitionsDataTable Acquisitions { get; }
         LINAA.BlanksDataTable Blanks { get; }
+
         LINAA.ChannelsDataTable Channels { get; }
         LINAA.COINDataTable COIN { get; }
         LINAA.CompositionsDataTable Compositions { get; }
@@ -20,7 +21,7 @@ namespace DB
         LINAA.ExceptionsDataTable Exceptions { get; }
         LINAA.GammasDataTable Gammas { get; }
         LINAA.GeometryDataTable Geometry { get; }
-    
+
         LINAA.HoldersDataTable Holders { get; }
         LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
         string DataSetName { get; }
@@ -73,7 +74,7 @@ namespace DB
 
         LINAA.SolangDataTable Solang { get; }
 
-        //   string FolderPath { get; set; }
+        // string FolderPath { get; set; }
         LINAA.SSFPrefDataTable SSFPref { get; }
 
         LINAA.StandardsDataTable Standards { get; }

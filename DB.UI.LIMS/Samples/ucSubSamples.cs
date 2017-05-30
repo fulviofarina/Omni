@@ -226,7 +226,8 @@ namespace DB.UI
                 if (this.ParentForm != null) this.ParentForm.Text = currentProject + " - Samples";
              
                 bool show = !string.IsNullOrEmpty(currentProject);
-                show = show && Interface.IPopulate.IProjects.ProjectsList.Contains(currentProject);
+                bool isProject = Interface.IPopulate.IProjects.ProjectsList.Contains(currentProject);
+                show = show && isProject;
                 this.BN.AddNewItem.Enabled = show;
             };
             BN.DeleteItem.Click += delegate

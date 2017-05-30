@@ -96,22 +96,19 @@
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\DB.cs" />
-    <Compile Include="DB\Geometry\NAA.Geometry.Row.cs" />
-    <Compile Include="DB\Geometry\NAA.Matrix.Row.cs" />
-    <Compile Include="DB\NAA.Exceptions.cs" />
-    <Compile Include="DB\Samples\NAA.Measurements.Row.cs" />
-    <Compile Include="DB\Samples\NAA.MonitorsRow..cs" />
-    <Compile Include="DB\Samples\NAA.Samples.Row.Internal.cs" />
-    <Compile Include="DB\Samples\NAA.Samples.Row.cs" />
-    <Compile Include="DB\Samples\NAA.Units.Row.cs" />
-    <Compile Include="LINAA.cs">
-      <DependentUpon>LINAA.xsd</DependentUpon>
-    </Compile>
     <Compile Include="LINAA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Row\Geometry\NAA.Geometry.Row.cs" />
+    <Compile Include="Row\Geometry\NAA.Matrix.Row.cs" />
+    <Compile Include="DB\NAA.Exceptions.cs" />
+    <Compile Include="Row\Geometry\NAA.Measurements.Row.cs" />
+    <Compile Include="Row\Samples\NAA.MonitorsRow..cs" />
+    <Compile Include="Row\Samples\NAA.Samples.Row.Internal.cs" />
+    <Compile Include="Row\Samples\NAA.Samples.Row.cs" />
+    <Compile Include="Row\Samples\NAA.Units.Row.cs" />
     <Compile Include="Interfaces\IColumn.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Interfaces\IIrradiations.cs" />
@@ -144,21 +141,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Geometry\NAA.DetSol.Row.cs" />
-    <Compile Include="DB\Geometry\NAA.Geometry.cs" />
-    <Compile Include="DB\Geometry\NAA.Compositions.cs" />
-    <Compile Include="DB\Geometry\NAA.Vial.Row.cs" />
+    <Compile Include="Row\Geometry\NAA.DetSol.Row.cs" />
+    <Compile Include="DB\NAA.Geometry.cs" />
+    <Compile Include="Row\Geometry\NAA.Compositions.cs" />
+    <Compile Include="Row\Geometry\NAA.Vial.Row.cs" />
     <Compile Include="Populate\Populate.DetSol.cs" />
     <Compile Include="Populate\Populate.Geometry.cs" />
     <Compile Include="Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Components.cs" />
     <Compile Include="Basura\Main.cs" />
-    <Compile Include="DB\Project\NAA.Channels.cs" />
-    <Compile Include="DB\Project\NAA.Projects.cs" />
-    <Compile Include="DB\Nuclear\NAA.Element.cs" />
+    <Compile Include="Row\Project\NAA.Channels.Row.cs" />
+    <Compile Include="DB\NAA.Projects.cs" />
+    <Compile Include="Row\Samples\NAA.Element.Row.cs" />
     <Compile Include="Populate\Populate.Nuclear.cs" />
     <Compile Include="DB\NAA.Preferences.cs" />
-    <Compile Include="DB\Project\NAA.Irradiations.cs" />
+    <Compile Include="Row\Project\NAA.Irradiations.Row.cs" />
     <Compile Include="Populate\Populate.Irradiations.cs" />
     <Compile Include="Populate\Populate.Orders.cs" />
     <Compile Include="Populate\Populate.Projects.cs" />
@@ -167,13 +164,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QM.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Samples\NAA.IPeaksAvg.cs" />
-    <Compile Include="DB\Samples\NAA.IReqAvg.cs" />
-    <Compile Include="DB\Samples\NAA.Standards.Row.cs" />
-    <Compile Include="DB\Samples\NAA.Peak.Row.cs" />
-    <Compile Include="DB\Samples\NAA.Samples.cs" />
+    <Compile Include="Row\Samples\NAA.IPeaksAvg.Row.cs" />
+    <Compile Include="Row\Samples\NAA.IReqAvg.Row.cs" />
+    <Compile Include="Row\Samples\NAA.Standards.Row.cs" />
+    <Compile Include="Row\Samples\NAA.Peak.Row.cs" />
+    <Compile Include="DB\NAA.Samples.cs" />
     <Compile Include="Populate\Samples\Populate.Samples.cs" />
-    <Compile Include="DB\SchAcqs\NAA.SchedAcqs.cs" />
+    <Compile Include="Row\Geometry\NAA.SchedAcqs.Row.cs" />
     <Compile Include="Populate\Populate.SchedAcqs.cs" />
     <Compile Include="Static\Comparers.cs" />
     <Compile Include="Static\Main.cs" />
@@ -184,11 +181,10 @@
     <Compile Include="Store\Store.Delete.cs" />
     <Compile Include="Store\Store.Save.cs" />
     <Compile Include="Populate\Populate.ToDoes.cs" />
-    <Compile Include="DB\ToDo\ToDo.Avg.cs" />
-    <Compile Include="DB\ToDo\ToDo.cs" />
-    <Compile Include="DB\ToDo\ToDo.Data.cs" />
-    <Compile Include="DB\ToDo\ToDo.Res.cs" />
-    <None Include="DIAGRAMLINAA.cd" />
+    <Compile Include="ToDo\ToDo.Avg.cs" />
+    <Compile Include="ToDo\ToDo.cs" />
+    <Compile Include="ToDo\ToDo.Data.cs" />
+    <Compile Include="ToDo\ToDo.Res.cs" />
     <None Include="Basura\Basura.cs">
       <SubType>Component</SubType>
     </None>
@@ -203,15 +199,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="LINAA.xsc">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
     <None Include="LINAA.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>LINAA.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="LINAA.xss">
-      <DependentUpon>LINAA.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

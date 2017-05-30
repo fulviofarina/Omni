@@ -28,50 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TLP = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.projectlabel = new System.Windows.Forms.Label();
             this.projectbox = new System.Windows.Forms.ComboBox();
-            this.TLP.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TLP
-            // 
-            this.TLP.ColumnCount = 1;
-            this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TLP.Controls.Add(this.tableLayoutPanel1, 1, 0);
-            this.TLP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TLP.Location = new System.Drawing.Point(0, 0);
-            this.TLP.Name = "TLP";
-            this.TLP.RowCount = 1;
-            this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.61589F));
-            this.TLP.Size = new System.Drawing.Size(372, 64);
-            this.TLP.TabIndex = 2;
-            // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.65986F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.34013F));
             this.tableLayoutPanel1.Controls.Add(this.projectlabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.projectbox, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(366, 58);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(588, 43);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // projectlabel
             // 
+            this.projectlabel.AutoSize = true;
             this.projectlabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectlabel.ForeColor = System.Drawing.Color.Purple;
+            this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projectlabel.ForeColor = System.Drawing.Color.Thistle;
             this.projectlabel.Location = new System.Drawing.Point(3, 0);
             this.projectlabel.Name = "projectlabel";
-            this.projectlabel.Size = new System.Drawing.Size(177, 79);
+            this.projectlabel.Size = new System.Drawing.Size(139, 43);
             this.projectlabel.TabIndex = 0;
             this.projectlabel.Text = "PROJECT";
             // 
@@ -79,32 +66,30 @@
             // 
             this.projectbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.projectbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.projectbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.projectbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.projectbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.projectbox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectbox.ForeColor = System.Drawing.Color.Gold;
-            this.projectbox.Location = new System.Drawing.Point(186, 3);
+            this.projectbox.Location = new System.Drawing.Point(148, 3);
             this.projectbox.Name = "projectbox";
-            this.projectbox.Size = new System.Drawing.Size(177, 33);
+            this.projectbox.Size = new System.Drawing.Size(437, 33);
             this.projectbox.TabIndex = 1;
             // 
             // ucProjectBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.TLP);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucProjectBox";
-            this.Size = new System.Drawing.Size(372, 64);
-            this.TLP.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(588, 43);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel TLP;
         private System.Windows.Forms.Label projectlabel;
         public System.Windows.Forms.ComboBox projectbox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

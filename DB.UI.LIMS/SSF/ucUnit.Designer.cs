@@ -121,7 +121,7 @@
             this.UnitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sampleDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ToDoCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GtM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GtCKS = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -327,7 +327,7 @@
             this.unitDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.unitDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.unitDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn10,
+            this.sampleDGVColumn,
             this.ToDoCol,
             this.GtM,
             this.GtCKS,
@@ -555,18 +555,18 @@
             this.errorProvider2.ContainerControl = this;
             this.errorProvider2.DataSource = this.SSFBS;
             // 
-            // dataGridViewTextBoxColumn10
+            // sampleDGVColumn
             // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Name";
+            this.sampleDGVColumn.DataPropertyName = "Name";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn10.DividerWidth = 2;
-            this.dataGridViewTextBoxColumn10.HeaderText = "Sample";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.sampleDGVColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.sampleDGVColumn.DividerWidth = 2;
+            this.sampleDGVColumn.HeaderText = "Sample";
+            this.sampleDGVColumn.Name = "sampleDGVColumn";
+            this.sampleDGVColumn.ReadOnly = true;
             // 
             // ToDoCol
             // 
@@ -766,7 +766,7 @@
         private System.Windows.Forms.ToolStripTextBox sampleLBL;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ErrorProvider errorProvider2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sampleDGVColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ToDoCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn GtM;
         private System.Windows.Forms.DataGridViewTextBoxColumn GtCKS;

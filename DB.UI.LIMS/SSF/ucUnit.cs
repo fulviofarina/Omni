@@ -64,13 +64,25 @@ namespace DB.UI
             this.SSFDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
       
             this.unitDGV.CellValueChanged += UnitDGV_CellValueChanged;
-   
+            this.unitDGV.CellDoubleClick += UnitDGV_CellDoubleClick;
 
             PaintRows();
 
         }
 
-     
+        private void UnitDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            int rowInder = e.RowIndex;
+
+            if (e.ColumnIndex == this.sampleDGVColumn.Index)
+            {
+                DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
+                Interface.IBS.SelectUnit(ref row);
+
+         }
+
+        }
 
         public void AttachCtrl<T>(ref T pro)
         {
