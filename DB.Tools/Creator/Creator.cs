@@ -2,8 +2,12 @@
 using System.IO;
 using System.Windows.Forms;
 using DB.Properties;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+using Rsx;
 using Rsx.Generic;
+using System.Drawing;
+using DB.Tools;
+using VTools;
 
 namespace DB.Tools
 {
@@ -21,7 +25,60 @@ namespace DB.Tools
         /// disposes the worker that loads the data
         /// </summary>
     }
+    public partial class Creator
+    {
 
+        public static string TITLE = Application.ProductName + " v" + Application.ProductVersion + " (Beta)";
+
+
+        public static bool CheckConnections()
+        {
+            
+            bool isMsmq = Interface.IReport.CheckMSMQ();
+            if (!isMsmq)
+            {
+                //this needs restart to activate so
+                //it will not give back a OK if queried
+                InstallMSMQ();
+            }
+            //FIRST SQL
+            UserControl IConn = new ucSQLConnection();
+            //this is the OK that matters..
+            //the connection
+            bool ok = PrepareSQL(ref IConn);
+
+            Interface.IPreferences.SavePreferences();
+            //CHECK RESTART FILE
+            Interface.IReport.CheckRestartFile();
+
+            return ok;
+        }
+
+
+        public static Form CreateForm(  ref Bitmap image)
+        {
+            Form form = null;//
+            form = new Form();
+            form.Opacity = 0;
+            form.AutoSizeMode = AutoSizeMode.GrowOnly;
+            form.AutoSize = true;
+            IntPtr Hicon = image.GetHicon();
+            Icon myIcon = Icon.FromHandle(Hicon);
+            form.Icon = myIcon;
+            form.Text = TITLE;
+            form.HelpButton = true;
+            form.TopMost = false;
+            form.ShowInTaskbar = true;
+            form.ShowIcon = true;
+            form.MaximizeBox = false;
+            form.ControlBox = true;
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.SetDesktopLocation(0, 0);
+
+            return form;
+        }
+
+    }
     public partial class Creator
     {
         /// <summary>

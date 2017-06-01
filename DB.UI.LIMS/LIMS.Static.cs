@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
+using Msn;
 using Rsx.Dumb;
 using VTools;
 using static Rsx.DGV.Control;
@@ -12,6 +14,132 @@ namespace DB.UI
 {
     public partial class LIMS
     {
+        private static string HELP_FILE_PDF = "UserGuide.pdf";
+        private static string WINDOWS_EXPLORER = "explorer.exe";
+
+        private static void formClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = Creator.Close(ref LIMS.Linaa);
+            if (!e.Cancel)
+            {
+                Application.ExitThread();
+            }
+        }
+
+        public static string GetHelpFile()
+        {
+            return Application.StartupPath + DB.Properties.Resources.DevFiles + HELP_FILE_PDF;
+        }
+        public static Form CreateSSFUserInterface(ref Form aboutbox, out Action lastCallBack, out Action midCallBack)
+        {
+            IucPreferences preferences = LIMS.PreferencesUI();
+          
+            IucOptions options = LIMS.OptionsUI(ref aboutbox);
+
+            //DEVELOPER MODE
+            //      options.SetDeveloperMode(false);
+            options.HelpClick += delegate
+            {
+                string helpFile = GetHelpFile();
+                System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
+            };
+
+            //1
+            UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
+            LIMS.CreateForm("Samples", ref control, false);
+            ucSubSamples ucSubSamples = control as ucSubSamples;
+            ucSubSamples.ucContent.Set(ref LIMS.Interface);
+
+            //2
+            ucProjectBox ucProjectBox = null;
+            ucProjectBox = ucSubSamples.projectbox;
+
+            //3
+            BindingNavigator aBindingNavigator = ucSubSamples.BN;
+
+            //4
+            ucSSF ucSSF = new ucSSF();
+            ucSSF.Set(ref LIMS.Interface);
+
+            Pop msn = LIMS.Interface.IReport.Msn;
+            Bitmap icon = Properties.Resources.Logo;
+            Form form = Creator.CreateForm(ref icon);
+
+            midCallBack = delegate
+            {
+                // ucSSF.AttachCtrl(ref units);
+                ucSSF.AttachCtrl(ref preferences);
+                ucSSF.AttachCtrl(ref ucProjectBox);
+                ucSSF.AttachCtrl(ref aBindingNavigator);
+                ucSSF.AttachCtrl(ref options);
+
+                Application.DoEvents();
+                // form.HelpButtonClicked += helpReQuested;
+                form.FormClosing += formClosing;
+            
+            };
+
+            lastCallBack = delegate
+            {
+                bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
+                string lastProject = string.Empty;
+                if (autoload)
+                {
+                    lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                }
+
+                if (!autoload || string.IsNullOrEmpty(lastProject))
+                {
+                    LIMS.Interface.IReport.GreetUser();
+                    LIMS.Interface.IReport.SpeakLoadingFinished();
+                }
+
+                //ESTE ORDEN ES FUNDAMENTAL!!!
+                   Application.DoEvents();
+
+            
+
+                LIMS.Interface.IBS.ApplyFilters();
+                LIMS.Interface.IBS.StartBinding();
+
+                ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
+                form.Controls.Add(ucSSF);
+                form.Opacity = 100;
+
+                //3
+                // Application.DoEvents();
+
+                ucProjectBox.Project = lastProject;
+                // ucProjectBox.Refresher();
+                ucSSF.SetTimer();
+
+                Form frm2 = msn.ParentForm;
+                frm2.Opacity = 0;
+                ucSSF.AttachCtrl(ref msn);
+                frm2.Dispose();
+
+
+
+            };
+
+            return form;
+        }
+
+
+        public static void CreateLIMS()
+        {
+            Interface.IReport.Msg("Starting LIMS", "Starting...");
+            Linaa = LIMS.Interface.Get();
+            Form = new LIMS(); //make a new UI LIMS
+            Form.ShowInTaskbar = false;
+            Form.Opacity = 0;
+            UserControls = new List<object>();
+            //FIRST THIS IN CASE i NEED TO RESTART AGAIN IN SQL INSTALL
+            Interface.IReport.Msg("LIMS Set up", "LIMS OK");
+            Application.DoEvents();
+        }
+
+
         private static Form aboutBox;
 
         public static IucOptions OptionsUI(ref Form AboutBox)
@@ -19,32 +147,41 @@ namespace DB.UI
             IucOptions options = new ucOptions();
             options.Set();
             aboutBox = AboutBox;
-            options.AboutBoxAction = delegate
+            options.AboutBoxClick += delegate
             {
                 aboutBox.Show();
                 // box.Show();
             };
-            options.ConnectionBox = delegate
+            options.ConnectionBox += delegate
             {
                 Creator.Connections();
             };
-            options.SaveClick = delegate
+            options.SaveClick += delegate
             {
                 Creator.SaveInFull(true);
             };
-            options.ExplorerClick =delegate
+            options.ExplorerClick +=delegate
                 {
-                    if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
+               //     if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
                 LIMS.Explore();
             };
-            options.PreferencesClick = delegate
+            options.PreferencesClick += delegate
             {
                 LIMS.ShowPreferences(true);
             };
-            options.DatabaseClick = delegate
+            options.DropDownClicked += delegate
+            {
+                bool ok = Interface.IPreferences
+                .CurrentPref.AdvancedEditor;
+
+                options.DisableImportant = ok;
+                
+            
+            };
+            options.DatabaseClick += delegate
 
              {
-                 if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
+               //  if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
                  LIMS.ShowToUser();
              };
             return options;

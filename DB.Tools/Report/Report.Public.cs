@@ -338,7 +338,7 @@ namespace DB.Tools
                 }
                 string file = Guid.NewGuid() + ".xml";
                 Interface.IDB.Exceptions.WriteXml(file);
-                //    Interface.IDB.Exceptions.WriteXml(excFile);
+                Interface.IDB.Exceptions.Clear();
                 w = Emailer.CreateQMsg(file, "Bug Report", bodyOfBugEmail);
                 Emailer.SendQMsg(ref qm, ref w);
                 counter = 1;

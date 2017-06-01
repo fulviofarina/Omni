@@ -78,10 +78,10 @@ namespace DB.Tools
                                   //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
             unit = Interface.ICurrent.Unit as UnitRow;
             title += unit.Name;
-            EnabledControls = false;
+       //     EnabledControls = false;
             unit.SetParent(ref row);
             Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
-            EnabledControls = true;
+          //  EnabledControls = true;
             //bring back to VIEW (Select)
             return unit;
         }
@@ -131,15 +131,14 @@ namespace DB.Tools
                 if (isCalculating)
                 {
                     EndEdit();
-                    EnabledControls = false;
+                 //   EnabledControls = false;
                 }
-                else { EnabledControls = true; }
+                //DO I NEED TO PUT ENABLED TRUE??
+            //    EnabledControls = !value;// else { EnabledControls = true; }
             }
         }
 
-        /// <summary>
-        /// Applies the Binding Source default filters
-        /// </summary>
+       
         public void ApplyFilters()
         {
             try

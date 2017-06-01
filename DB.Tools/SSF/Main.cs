@@ -55,7 +55,7 @@ namespace DB.Tools
             {
                 // Interface.IBS.IsCalculating = true;
 
-                Creator.SaveInFull(true);
+               if (!bkgCalculation) Creator.SaveInFull(true);
              
 
                 resetProgress?.Invoke(3);
@@ -63,27 +63,31 @@ namespace DB.Tools
                 int position = Interface.IBS.SubSamples.Position;
                 // int count = SelectUnits();
                 SelectSamples(background);
-
-                int count = units.Count;
-                int numberofSteps = 5;
-
-                resetProgress?.Invoke(2 + (count * numberofSteps));
-
+           
                 //1
-                if (count == 0)
+                if (units.Count == 0)
                 {
-                    MessageBox.Show(SELECT_SAMPLES, "Oops, nothing was selected!", MessageBoxButtons.OK);
-                    IsCalculating = false;
+                    if (!bkgCalculation)
+                    {
+                        MessageBox.Show(SELECT_SAMPLES, "Oops, nothing was selected!", MessageBoxButtons.OK);
+                    }
+                 //   IsCalculating = false;
                 }
                 else
                 {
                     //loop through all samples to work to
+                    int numberofSteps = 5;
+
+                    resetProgress?.Invoke(2 + (units.Count * numberofSteps));
+
+
                     PrepareInputs(background);
+
+                    if (!background) Interface.IBS.SubSamples.Position = position;
+
+                    RunProcess();
+
                 }
-
-                if (!background)   Interface.IBS.SubSamples.Position = position;
-
-                RunProcess();
 
                 callBack?.Invoke(null, EventArgs.Empty);
             }
@@ -118,15 +122,17 @@ namespace DB.Tools
                     units = Interface.ICurrent.Units.OfType<LINAA.UnitRow>()
                         .ToList();
                 }
-                units = units.Where(o => o.ToDo).ToList();
             }
             else //no loop, take current
             {
                 //take only current (binding source)
                 units = new List<UnitRow>();
                 UnitRow u = Interface.ICurrent.Unit as UnitRow;
-                if (u.ToDo)     units.Add(u);
+                units.Add(u);
             }
+            //filter now by non busy and TODO
+            units = units.Where(o => o.ToDo && !o.IsBusy).ToList();
+
         }
 
         public void Set(ref Interface inter, EventHandler callBackMethod = null, Action<int> resetProg = null, EventHandler showProg = null)

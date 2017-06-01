@@ -31,18 +31,40 @@ namespace DB.Tools
             //to check later the columns that should be ok
 
             hasErrorsMethod = null;
+
+            IRow irow = r as IRow;
+
+            hasErrorsMethod += irow.HasErrors;
+
+            if (isSubSample)
+            {
+                SubSamplesRow s = r as SubSamplesRow;
+
+              //  hasErrorsMethod += s.HasErrors;
+                 hasErrorsMethod += s.UnitRow.HasErrors;
+            }
+            else if (isUnit)
+            {
+                UnitRow u = r as UnitRow;
+              //  hasErrorsMethod += u.HasErrors;
+                hasErrorsMethod += u.SubSamplesRow.HasErrors;
+            }
+
+
+            /*
             // Action Checker = null; DataColumn[] columnsThatShouldBeOk = null;
             if (isSubSample)
             {
                 SubSamplesRow s = r as SubSamplesRow;
+
                 hasErrorsMethod += s.HasErrors;
-                hasErrorsMethod += s.UnitRow.HasErrors;
+          //      hasErrorsMethod += s.UnitRow.HasErrors;
             }
             else if (isUnit)
             {
                 UnitRow u = r as UnitRow;
                 hasErrorsMethod += u.HasErrors;
-                hasErrorsMethod += u.SubSamplesRow.HasErrors;
+           //     hasErrorsMethod += u.SubSamplesRow.HasErrors;
             }
             else if (isMatrix)
             {
@@ -69,6 +91,7 @@ namespace DB.Tools
                 hasErrorsMethod += i.HasErrors;
                 // updateIrradiationRequest(r, doCascade, findItself);
             }
+            */
             //now check the errors!!!
             hasCompulsoryErrors(r);
         }
@@ -135,7 +158,7 @@ namespace DB.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="r"></param>
-        private void hasCompulsoryErrors<T>(T r)
+        protected void hasCompulsoryErrors<T>(T r)
         {
             if (Rsx.EC.IsNuDelDetch(r as DataRow)) return;
             DataRow row = r as DataRow;
@@ -219,65 +242,11 @@ namespace DB.Tools
 
         private void currentChanged(object sender, EventArgs e)
         {
-            try
-            {
-                BindingSource bs = sender as BindingSource;
-
-                bool selectedBs = false;
-                if (sender.Equals(Irradiations))
-                {
-                    IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
-                    update(r, true, false, selectedBs);
-                }
-                else if (sender.Equals(Channels))
-                {
-                    ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
-                    update(c, true, false, selectedBs);
-                }
-                else if (sender.Equals(Rabbit))
-                {
-                    VialTypeRow c = Interface.ICurrent.Rabbit as VialTypeRow;
-                    update(c, true, false, selectedBs);
-                }
-                else if (sender.Equals(Vial ))
-                {
-                    VialTypeRow c = Interface.ICurrent.Vial as VialTypeRow;
-                    update(c, true, false, selectedBs);
-                }
-                else if (sender.Equals(SubSamples) || sender.Equals(Units))
-                {
-                    SubSamplesRow r = null;
-                    if (sender.Equals(SubSamples))
-                    {
-                        r = Interface.ICurrent.SubSample as SubSamplesRow;
-                    }
-                    else
-                    {
-                        UnitRow u = Interface.ICurrent.Unit as UnitRow;
-                        if (!EC.IsNuDelDetch(u.SubSamplesRow)) r = u.SubSamplesRow;
-                    }
-                    update(r, true, false, selectedBs);
-                }
-                else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
-                {
-                    MatrixRow c = null;
-                    if (sender.Equals(Matrix)) c = Interface.ICurrent.Matrix as MatrixRow;
-                    else
-                    {
-                        selectedBs = true;
-                        c = Interface.ICurrent.SubSampleMatrix as MatrixRow;
-                    }
-                    update(c, true, false, selectedBs);
-                }
-
-                // bs.RaiseListChangedEvents = true;
-            }
-            catch (Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
+            BindingSource bs = sender as BindingSource;
+            CurrentChanged(ref bs);
         }
 
+   
         private void listChanged_Preferences(object sender, ListChangedEventArgs e)
         {
             try

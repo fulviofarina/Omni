@@ -10,8 +10,9 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
+        protected static string INPUT_NOTGEN = "Input metadata NOT generated for Sample ";
 
-        private void prepareInputs(ref LINAA.UnitRow UNIT)
+        private string prepareInputs(ref LINAA.UnitRow UNIT)
         {
             //2
             string unitName = UNIT.Name;
@@ -19,7 +20,6 @@ namespace DB.Tools
 
             //generate input file
             bool defaultValues = !Interface.IPreferences.CurrentSSFPref.Overrides;
-            bool isOK = false;
 
             string buffer = string.Empty;
 
@@ -38,39 +38,20 @@ namespace DB.Tools
             double lenfgt = UNIT.SubSamplesRow.FillHeight;
             double diamet = UNIT.SubSamplesRow.Radius * 2;
             double mass = UNIT.SubSamplesRow.Net;
+           
 
-            string inputNOTGeneratedMsg = "Input metadata NOT generated for Sample ";
-
-            if (diamet != 0 && lenfgt != 0 && !config.Equals(String.Empty))
+            if (diamet != 0 && lenfgt != 0 && !string.IsNullOrEmpty(config))
             {
                 buffer += "\n";
                 buffer += mass + "\n" + diamet + "\n" + lenfgt + "\n"
                     + config;
                 buffer += "\n";
                 buffer += "\n";
-
-                string fulFile = startupPath + unitName + inPutExt;
-                //delete .in file
-                System.IO.TextWriter writer = new System.IO.StreamWriter(fulFile, false); //create fromRow file
-                writer.Write(buffer);
-                writer.Close();
-                writer = null;
-                isOK = System.IO.File.Exists(fulFile);
-
-                if (isOK)
-                {
-                    string inputGeneratedTitle = "Starting calculations...";
-                    string inputGeneratedMsg = "Input metadata generated for Sample ";
-                    UNIT.SubSamplesRow.Selected = true;
-
-                    Interface.IReport.Msg(inputGeneratedMsg + unitName, inputGeneratedTitle);
-                }
-                else
-                {
-                    throw new SystemException(inputNOTGeneratedMsg + unitName);
-                }
+     
             }
-            else throw new SystemException(inputNOTGeneratedMsg + unitName);
+            else throw new SystemException(INPUT_NOTGEN + unitName);
+            return buffer;
+
         }
 
 

@@ -129,7 +129,7 @@ namespace DB.Tools
 
             geom.Gather(atpos, setDet);
 
-            succes = !geom.HasErrors;
+            succes = !geom.HasErrors();
 
             if (!succes)
             {

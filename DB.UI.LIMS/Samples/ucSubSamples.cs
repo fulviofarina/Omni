@@ -218,22 +218,10 @@ namespace DB.UI
             this.DGV.DataSource = Interface.IBS.SubSamples;
             this.BN.BindingSource = Interface.IBS.SubSamples;
 
-          //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
+            //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             projectbox.Set(ref Interface);
-            Interface.IBS.PropertyChangedHandler += delegate
-            {
-                string currentProject = projectbox.Project;
-                if (this.ParentForm != null) this.ParentForm.Text = currentProject + " - Samples";
-             
-                bool show = !string.IsNullOrEmpty(currentProject);
-                bool isProject = Interface.IPopulate.IProjects.ProjectsList.Contains(currentProject);
-                show = show && isProject;
-                this.BN.AddNewItem.Enabled = show;
-            };
-            BN.DeleteItem.Click += delegate
-            {
-                Interface.IBS.EnabledControls = true;
-            };
+
+            setRefresh();
             /*
             Interface.IBS.SubSamples.AddingNew += delegate
              {
@@ -243,6 +231,33 @@ namespace DB.UI
             //other callBACKS CAN BE ADDED TO THIS ONE BY OTHER CONTROLS
 
             //  Interface.IBS.SubSamples = this.BS;
+        }
+
+        private void setRefresh()
+        {
+            Interface.IBS.PropertyChangedHandler += delegate
+            {
+                string currentProject = projectbox.Project;
+                if (this.ParentForm != null)
+                {
+                    this.ParentForm.Text = currentProject + " - Samples";
+                }
+
+                bool showAdd = !string.IsNullOrEmpty(currentProject);
+                bool isProject = Interface
+                .IPopulate.
+                IProjects.ProjectsList
+                .Contains(currentProject);
+
+                showAdd = showAdd && isProject;
+
+                this.BN.AddNewItem.Enabled = showAdd;
+            };
+            //binding navigator
+            BN.DeleteItem.Click += delegate
+            {
+                Interface.IBS.EnabledControls = true;
+            };
         }
 
         /// <summary>

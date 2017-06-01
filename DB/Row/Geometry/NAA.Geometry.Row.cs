@@ -8,6 +8,10 @@ namespace DB
     {
         partial class GeometryRow : IRow
         {
+            public new bool HasErrors()
+            {
+                return base.HasErrors;
+            }
             public void Check()
             {
                 foreach (DataColumn column in this.tableGeometry.Columns)

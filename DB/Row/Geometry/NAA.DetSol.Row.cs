@@ -7,6 +7,11 @@ namespace DB
     {
         public partial class DetectorsAbsorbersRow : IRow
         {
+            public new bool HasErrors()
+            {
+                return base.HasErrors;
+            }
+
             public void Check()
             {
                 foreach (DataColumn column in this.tableDetectorsAbsorbers.Columns)

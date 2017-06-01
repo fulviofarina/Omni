@@ -10,9 +10,8 @@ namespace DB.UI
     {
         private Interface Interface;
         // 
-
-        private EventHandler checkChanged;
-        public EventHandler CheckChanged
+        /*
+          public EventHandler CheckChanged
         {
            
             set
@@ -20,20 +19,20 @@ namespace DB.UI
                 this.aARadiusCheckBox.Click += value;
                 this.aAFillHeightCheckBox.Click += value;
                 this.calcDensityCheckBox.Click += value;
-               this.calcMassCheckBox.Click += value;
+            //   this.calcMassCheckBox.Click += value;
 
-                checkChanged = value;
+              //  checkChanged = value;
 
 
             }
-            get
-            {
+         //   get
+         //   {
 
-                return checkChanged;
-            }
+             //   return checkChanged;
+           // }
         }
-        private EventHandler checkChanged2;
-        public EventHandler CheckChanged2
+     //   private EventHandler checkChanged2;
+        public EventHandler DoChilianChanged
         {
           
             set
@@ -41,34 +40,59 @@ namespace DB.UI
                // this.doMatSSFCheckBox.CheckStateChanged += value;
                 this.doCKCheckBox.Click += value;
 
-                checkChanged2 = value;
-
+             //   checkChanged2 = value;
+//
 
             }
-            get
-            {
+         //   get
+         //   {
 
-                return checkChanged2;
-            }
+         //       return checkChanged2;
+         //   }
         }
-        private EventHandler checkChanged3;
-        public EventHandler CheckChanged3
+
+        public EventHandler OverriderChanged
+        {
+            set
+            {
+            //    this.doMatSSFCheckBox.Click += value;
+                this.overridesCheckBox.Click += value;
+
+            }
+          
+        }
+        public EventHandler RunInBackground
+        {
+            set
+            {
+                //    this.doMatSSFCheckBox.Click += value;
+                this.runInBackgroundCheckBox.Click += value;
+
+            }
+
+        }
+
+        public EventHandler DoMatSSFChanged
         {
 
             set
             {
                 this.doMatSSFCheckBox.Click += value;
+                this.overridesCheckBox.Click += value;
+
                 // this.doCKCheckBox.CheckStateChanged += value;
 
-                checkChanged3 = value;
+                // checkChanged3 = value;
 
             }
-            get
-            {
+           // get
+          //  {
 
-                return checkChanged3;
-            }
+             //   return checkChanged3;
+          //  }
         }
+  //      private EventHandler checkChanged;
+      */
 
         public void Set(ref Interface inter)
         {
@@ -82,20 +106,10 @@ namespace DB.UI
 
                 setPreferencesbindings();
 
-                this.calcMassCheckBox.Enabled = false;
-                /*
-                this.fillByHLCheckBox.Enabled = false;
-                this.windowBTextBox.Enabled = false;
-                this.maxUncTextBox.Enabled = false;
-                this.windowATextBox.Enabled = false;
-                this.minAreaTextBox.Enabled = false;
-                this.offlineCheckBox.Enabled = false;
-                this.doSolangCheckBox.Enabled = false;
-                this.showSolangCheckBox.Enabled = false;
-                this.fillBySpectraCheckBox.Enabled = false;
-                this.showSampleDescriptionCheckBox.Enabled = false;
-               */
+               this.calcMassCheckBox.Enabled = false;
+            
 
+              
       
             }
             catch (Exception ex)
@@ -182,7 +196,7 @@ namespace DB.UI
             this.advancedEditorCheckBox.DataBindings.Add(b15);
 
             this.showOtherCheckBox.DataBindings.Add(b16);
-            this.overridesCheckBox.DataBindings.Add(b10);
+         //   this.overridesCheckBox.DataBindings.Add(b10);
             this.showMatSSFCheckBox.DataBindings.Add(b11);
             this.doCKCheckBox.DataBindings.Add(b12);
             this.doMatSSFCheckBox.DataBindings.Add(b13);
@@ -215,6 +229,9 @@ namespace DB.UI
 
             //
             this.showSolangCheckBox.DataBindings.Add(prefbindings["ShowSolang"] as Binding);
+
+            this.runInBackgroundCheckBox.DataBindings.Add(prefbindings["RunInBackground"] as Binding);
+
             this.doSolangCheckBox.DataBindings.Add(prefbindings["DoSolang"] as Binding);
             this.autoLoadCheckBox.DataBindings.Add(prefbindings["AutoLoad"] as Binding);
             this.offlineCheckBox.DataBindings.Add(prefbindings["Offline"] as Binding);

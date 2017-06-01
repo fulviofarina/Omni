@@ -117,12 +117,12 @@ namespace DB
 
             internal void CheckUnitsColumns(DataColumn column)
             {
-                bool calMass, calRad, calFh, calDensity;
+                bool calMass, calRad, calFh, calculateDensity;
                 //TODO: Mejorar esto
                 SSFPrefRow pref = db.SSFPref.FirstOrDefault();
                 calMass = pref.CalcMass;
                 calRad = pref.AARadius;
-                calDensity = pref.CalcDensity;
+                calculateDensity = pref.CalcDensity;
                 calFh = pref.AAFillHeight;
 
                 if (column == this.tableSubSamples.CalcDensityColumn)
@@ -135,7 +135,7 @@ namespace DB
                 {
                     if (CheckMass())
                     {
-                        if (calDensity) GetDensity(calDensity);
+                        if (calculateDensity) GetDensity(calculateDensity);
                         SetRadiusFillHeight(calRad, calFh);
                     }
                 }
@@ -146,7 +146,7 @@ namespace DB
                         Radius = GetRadius();
                         return;
                     }
-                    SetGeometryValues(calMass, calDensity);
+                    SetGeometryValues(calMass, calculateDensity);
                 }
                 else if (this.tableSubSamples.RadiusColumn == column)
                 {
@@ -155,7 +155,7 @@ namespace DB
                         FillHeight = GetFillHeight();
                         return;
                     }
-                    SetGeometryValues(calMass, calDensity);
+                    SetGeometryValues(calMass, calculateDensity);
                 }
                 else if (column == this.tableSubSamples.Gross1Column)
                 {
@@ -235,7 +235,8 @@ namespace DB
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
-                return colsInE.Intersect(this.tableSubSamples.NonNullableUnit).Count() != 0;
+                int count = colsInE.Intersect(this.tableSubSamples.NonNullableUnit).Count();
+                return (count != 0);
             }
 
             public void SetParent<T>(ref T rowParent, object[] args = null)

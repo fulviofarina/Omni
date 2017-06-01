@@ -6,17 +6,20 @@ namespace VTools
     public interface IucOptions
     {
         //  Action AboutBoxAction { set; }
-        Action DatabaseClick { set; }
-        Action HelpClick { set; }
+        event EventHandler DatabaseClick;
+        event EventHandler HelpClick;
 
-   //     void SetDeveloperMode(bool devMode);
-        Action ExplorerClick { set; }
-        Action PreferencesClick { set; }
-        Action AboutBoxAction { set; }
-        Action ConnectionBox { set; }
-        Action SaveClick { set; }
+        //     void SetDeveloperMode(bool devMode);
+        event EventHandler ExplorerClick;
+        event EventHandler PreferencesClick;
+        event EventHandler AboutBoxClick;
+        event EventHandler ConnectionBox;
+        event EventHandler SaveClick;
         void ResetProgress(int max);
         void Set();
         EventHandler ShowProgress { get; }
+        bool DisableImportant {  set; }
+
+        event EventHandler DropDownClicked;// { get; set; }
     }
 }

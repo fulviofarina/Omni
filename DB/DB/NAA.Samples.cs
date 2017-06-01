@@ -62,6 +62,8 @@ namespace DB
                 }
             }
 
+         
+
             public IEnumerable<DataColumn> IrradiationNonNullable
             {
                 get
@@ -80,7 +82,7 @@ namespace DB
                 {
                     if (nonNullableUnit == null)
                     {
-                        nonNullableUnit = new DataColumn[] { CalcDensityColumn, this.Gross2Column, this.Gross1Column, this.FillHeightColumn, this.RadiusColumn };
+                        nonNullableUnit = new DataColumn[] { CalcDensityColumn, this.Gross2Column, this.Gross1Column, this.FillHeightColumn, this.RadiusColumn, this.MatrixNameColumn, this.NetColumn };
                     }
 
                     return nonNullableUnit;
@@ -141,6 +143,8 @@ namespace DB
                     return timesNonNullable;
                 }
             }
+
+         
 
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
@@ -205,10 +209,11 @@ namespace DB
 
         partial class UnitDataTable : IColumn
         {
-            public EventHandler AddSSFsHandler;
+            public  EventHandler AddSSFsHandler;
 
+            public EventHandler InvokeCalculations;
 
-            public EventHandler CleanSSFsHandler;
+            public  EventHandler CleanSSFsHandler;
 
             // private DataColumn[] changeables;
             private DataColumn[] nonNullCols;
@@ -301,6 +306,10 @@ namespace DB
                     if (change)
                     {
                         r.ValueChanged(change);
+
+                        ////     //not used!!!
+                        this.InvokeCalculations?.Invoke(null, EventArgs.Empty);
+
                     }
                 }
                 catch (SystemException ex)

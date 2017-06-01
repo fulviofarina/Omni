@@ -76,17 +76,18 @@
     <Compile Include="GeometrySimple\ucComposition.Designer.cs">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\ucSSFControlNS.cs">
+    <Compile Include="SSF\IucSSF.cs" />
+    <Compile Include="SSF\ucSSFData.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SSF\ucSSFControlNS.Designer.cs">
-      <DependentUpon>ucSSFControlNS.cs</DependentUpon>
+    <Compile Include="SSF\ucSSFData.Designer.cs">
+      <DependentUpon>ucSSFData.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\ucSSF.Control.cs">
+    <Compile Include="SSF\ucSSF.Panel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SSF\ucSSF.Control.Designer.cs">
-      <DependentUpon>ucSSF.Control.cs</DependentUpon>
+    <Compile Include="SSF\ucSSF.Panel.Designer.cs">
+      <DependentUpon>ucSSF.Panel.cs</DependentUpon>
     </Compile>
     <Compile Include="GeometrySimple\ucCC.cs">
       <SubType>UserControl</SubType>
@@ -262,11 +263,11 @@
     <EmbeddedResource Include="GeometrySimple\ucComposition.resx">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucSSFControlNS.resx">
-      <DependentUpon>ucSSFControlNS.cs</DependentUpon>
+    <EmbeddedResource Include="SSF\ucSSFData.resx">
+      <DependentUpon>ucSSFData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucSSF.Control.resx">
-      <DependentUpon>ucSSF.Control.cs</DependentUpon>
+    <EmbeddedResource Include="SSF\ucSSF.Panel.resx">
+      <DependentUpon>ucSSF.Panel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeometrySimple\ucCC.resx">
       <DependentUpon>ucCC.cs</DependentUpon>

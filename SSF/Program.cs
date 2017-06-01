@@ -13,127 +13,7 @@ namespace SSF
     {
         private static NotifyIcon con;
 
-        private static string TITLE = Application.ProductName + " v" + Application.ProductVersion + " (Beta)";
-
-        public static Form CreateSSFUserInterface()
-        {
-            IucPreferences preferences = LIMS.PreferencesUI();
-            Form aboutbox = new AboutBox();
-            IucOptions options = LIMS.OptionsUI(ref aboutbox);
-
-            //DEVELOPER MODE
-            //      options.SetDeveloperMode(false);
-            options.HelpClick = helpReQuested;
-            UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
-            LIMS.CreateForm("Samples", ref control, false);
-            ucSubSamples ucSubSamples = control as ucSubSamples;
-            ucSubSamples.ucContent.Set(ref LIMS.Interface);
-            ucProjectBox ucProjectBox = null;
-            ucProjectBox = ucSubSamples.projectbox;
-            BindingNavigator aBindingNavigator = ucSubSamples.BN;
-
-            ////2
-         //   Application.DoEvents();
-
-            ucSSF ucSSF = new ucSSF();
-            ucSSF.Set(ref LIMS.Interface);
-
-            Pop msn = LIMS.Interface.IReport.Msn;
-            Form form = createForm();
-
-            form.AutoSizeMode = AutoSizeMode.GrowOnly;
-            Creator.CallBack = delegate
-            {
-                // ucSSF.AttachCtrl(ref units);
-                ucSSF.AttachCtrl(ref preferences);
-                ucSSF.AttachCtrl(ref ucProjectBox);
-                ucSSF.AttachCtrl(ref aBindingNavigator);
-                ucSSF.AttachCtrl(ref options);
-
-                Application.DoEvents();
-                // form.HelpButtonClicked += helpReQuested;
-                form.FormClosing += Form_FormClosing;
-                ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
-                form.Controls.Add(ucSSF);
-            };
-       
-
-            Creator.LastCallBack = delegate
-            {
-                bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
-                string lastProject = string.Empty;
-                if (autoload)
-                {
-                    lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
-                }
-
-                if (!autoload || string.IsNullOrEmpty(lastProject))
-                {
-                    LIMS.Interface.IReport.GreetUser();
-                    LIMS.Interface.IReport.SpeakLoadingFinished();
-                }
-             
-
-                //ESTE ORDEN ES FUNDAMENTAL!!!
-           //     Application.DoEvents();
-                form.Opacity = 100;
-
-                LIMS.Interface.IBS.ApplyFilters();
-                LIMS.Interface.IBS.StartBinding();
-
-                //3
-                Application.DoEvents();
-
-                ucProjectBox.Project = lastProject;
-                // ucProjectBox.Refresher();
-
-                Form frm2 = msn.ParentForm;
-                frm2.Opacity = 0;
-                ucSSF.AttachCtrl(ref msn);
-                frm2.Dispose();
-            };
-
-            return form;
-        }
-
-        private static Form createForm()
-        {
-            Form form = null;//
-            form = new Form();
-            form.Opacity = 0;
-            form.AutoSizeMode = AutoSizeMode.GrowOnly;
-            form.AutoSize = true;
-            IntPtr Hicon = Properties.Resources.Logo.GetHicon();
-            Icon myIcon = Icon.FromHandle(Hicon);
-            form.Icon = myIcon;
-            form.Text = TITLE;
-            form.HelpButton = true;
-            form.TopMost = false;
-            form.ShowInTaskbar = true;
-            form.ShowIcon = true;
-            form.MaximizeBox = false;
-            form.ControlBox = true;
-            form.StartPosition = FormStartPosition.CenterParent;
-            form.SetDesktopLocation(0, 0);
-
-            return form;
-        }
-
-        private static void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = Creator.Close(ref LIMS.Linaa);
-            if (!e.Cancel)
-            {
-                Application.ExitThread();
-            }
-        }
-
-        private static void helpReQuested()
-        {
-            string helpFile = Application.StartupPath + DB.Properties.Resources.DevFiles + "UserGuide.pdf";
-
-            System.Diagnostics.Process.Start("explorer.exe", helpFile);
-        }
+      
 
         /// <summary>
         /// Function meant to Create a LINAA database datatables and load itto store and display data
@@ -149,44 +29,34 @@ namespace SSF
             Application.SetCompatibleTextRenderingDefault(false);
 
             Form toReturn = null;
-
+       //     Application.UseWaitCursor = true;
+       
             try
             {
                 //create database
                 Creator.Build(ref LIMS.Interface);
 
-                LIMS.Linaa = LIMS.Interface.Get();
-                LIMS.Form = new LIMS(); //make a new UI LIMS
-                LIMS.Form.ShowInTaskbar = false;
-                LIMS.Form.Opacity = 0;
+                LIMS.CreateLIMS();
 
-                LIMS.UserControls = new List<object>();
-
-                //FIRST THIS IN CASE i NEED TO RESTART AGAIN IN SQL INSTALL
-                LIMS.Interface.IReport.Msg("Set up", "Checking MSMQ...");
-                Application.DoEvents();
-
-                bool isMsmq = LIMS.Interface.IReport.CheckMSMQ();
-                if (!isMsmq)
-                {
-                    Creator.InstallMSMQ();
-                }
-                //FIRST SQL
-                UserControl IConn = new ucSQLConnection();
-                bool ok = Creator.PrepareSQL(ref IConn);
-
-                LIMS.Interface.IPreferences.SavePreferences();
-                //CHECK RESTART FILE
-                LIMS.Interface.IReport.CheckRestartFile();
+                bool ok = Creator.CheckConnections();
 
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
 
-                toReturn = CreateSSFUserInterface();
+
+                Action lastCallBack;
+                Action midCallBack;
+                Form aboutbox = new AboutBox();
+
+                toReturn = LIMS.CreateSSFUserInterface(ref aboutbox, out lastCallBack, out midCallBack);
+
+                Creator.LastCallBack = lastCallBack;
+                Creator.CallBack = midCallBack;
 
                 Creator.Run();
 
                 Application.Run(toReturn);
+
             }
             catch (Exception ex)
             {
@@ -194,11 +64,14 @@ namespace SSF
                 LIMS.Interface.IStore.SaveExceptions();
                 MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
             }
+
+      //      Application.UseWaitCursor = false;
         }
 
-        /// <summary>
-        /// Loads the Database, makes the ucControl
-        /// </summary>
-        /// <returns>the ParentForm of the ucControl</returns>
+       
+      
+
+  
+      
     }
 }

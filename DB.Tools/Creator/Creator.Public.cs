@@ -38,7 +38,7 @@ namespace DB.Tools
         /// <param name="handler">referenced handler to a method to run after completition</param>
         public static void Build(ref Interface inter)
         {
-            Cursor.Current = Cursors.WaitCursor;
+          
 
             if (inter != null)
             {
@@ -49,13 +49,18 @@ namespace DB.Tools
             inter = new Interface(ref LINAA);
             Interface = inter;
           //en este orden
+
             checkDirectories();
+
             MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
+
             Interface.IReport.Msg(LOADING_DB, "Initializing...");
-            Application.DoEvents();
+
+        //    Application.DoEvents();
+
             Interface.IDB.PopulateColumnExpresions();
             Interface.IPreferences.PopulatePreferences();
-            Cursor.Current = Cursors.Default;
+         
         }
 
         /// <summary>

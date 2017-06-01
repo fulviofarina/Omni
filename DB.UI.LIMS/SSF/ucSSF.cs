@@ -6,13 +6,11 @@ using VTools;
 
 namespace DB.UI
 {
-    public partial class ucSSF : UserControl
+    public partial class ucSSF : UserControl, IucSSF
     {
-        protected MatSSF MatSSF = null;
-        private static Size currentSize;
-
-        // private bool cancelCalculations = false;
-        private Interface Interface = null;
+        protected internal MatSSF MatSSF = null;
+        protected static Size currentSize;
+        protected internal Interface Interface = null;
 
         // private Action<int> resetProgress;
         /// <summary>
@@ -37,7 +35,7 @@ namespace DB.UI
                 else
                 {
                     //main child
-                    ucSSFControl.AttachCtrl(ref pro);
+                    ucSSPan.AttachCtrl(ref pro);
                     ucUnit.AttachCtrl(ref pro);
                 }
 
@@ -74,6 +72,9 @@ namespace DB.UI
             DaCONTAINER.Panel2Collapsed = !hidden;
         }
 
+
+       protected internal Timer timer = null;
+
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
         /// </summary>
@@ -83,11 +84,15 @@ namespace DB.UI
             try
             {
                 currentSize = this.Size;
-                setButtons();
+
+             
 
                 setTemplateControls();
                 //
-                setCalculator();
+                setSampleControl();
+
+              
+
 
                 Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
@@ -98,18 +103,93 @@ namespace DB.UI
             }
         }
 
+        public void SetTimer()
+        {
+
+          
+
+            timer = new Timer();
+            timer.Enabled = false;
+            timer.Interval = 5000;
+            timer.Tick += delegate
+            {
+                //  timer.Enabled = false;
+                timer.Stop();
+
+                if (Interface.IPreferences.CurrentPref.RunInBackground)
+                {
+                    this.Calculate(true);
+                }
+            };
+
+            //activate TIMER ONLY WHEN APP IS IDLE OR WHEN IDLE IS RAISED
+            Application.Idle += delegate
+            {
+                //    Interface.IReport.Msg("Is Idle", string.Empty);
+                string status =  "Timer Enabled";
+                bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
+                if (!timer.Enabled && runInBK)
+                {
+                  
+                    //Interface.IReport.Msg("Timer Enabled", string.Empty);
+                    timer.Start();
+                    Interface.IReport.Msg(status, "Was idle and started");
+
+                }
+                else if (!runInBK)
+                {
+                    status = "Timer Disabled";
+                    timer.Stop();
+                    Interface.IReport.Msg(status, "Is Idle");
+                }
+
+             
+
+                //    Interface.IReport.Msg(status, "Is Idle");
+
+            };
+
+            //chec if calcs needed
+            Interface.IDB.Unit.InvokeCalculations += delegate
+              {
+                  Application.RaiseIdle(EventArgs.Empty);
+                  /*
+                  bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
+                  bool shouldRun = timer.Enabled;
+                  shouldRun = shouldRun && runInBK;
+//for reseting timer... so it does not trigger every time
+//although I dont need this..
+                  if (shouldRun)
+                  {
+                      timer.Stop();
+                      timer.Start();
+                  }
+                  */
+              };
+
+           
+
+        }
+
+       
+
+      
+        Action<int> resetProgress;
+        EventHandler showProgress;
         private Control attachOptions<T>(T pro)
         {
             Control destiny;
             IucOptions options = pro as IucOptions;
 
             //SET A METHOD TO CALL BACK!!!!
-            EventHandler callBack = delegate
-            {
-                this.ucUnit.PaintRows();
-            };
-            MatSSF = new MatSSF();
-            MatSSF.Set(ref Interface, callBack, options.ResetProgress, options.ShowProgress);
+        
+
+            resetProgress= options.ResetProgress;
+            showProgress = options.ShowProgress;
+
+
+
+          
 
             // projBox.HideChildControl = Hide;
             destiny = this.splitContainer1.Panel2;
@@ -127,9 +207,11 @@ namespace DB.UI
             {
                 bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                 bool isCalculating = Interface.IBS.IsCalculating;
-                this.CalcBtn.Enabled = ThereIsData && !isCalculating;
-                this.cancelBtn.Enabled = ThereIsData && isCalculating;
-                // this.Tab.SelectedTab = this.CalcTab;
+                this.CalcBtn.Enabled = ThereIsData;
+                this.cancelBtn.Enabled = ThereIsData;
+         //       this.CalcBtn.Enabled = ThereIsData && !isCalculating;
+         //   this.cancelBtn.Enabled = ThereIsData && isCalculating;
+         // this.Tab.SelectedTab = this.CalcTab;
                 ucUnit.PaintRows();
             };
             // force refresh
@@ -139,29 +221,66 @@ namespace DB.UI
             //    bindingChanged(null, new PropertyChangedEventArgs(string.Empty));
             return destiny;
         }
-        private void setButtons()
+      
+
+    
+
+        public void Calculate(bool? Bkg=null)
         {
-            // this.cancelBtn.Enabled = false;
-            this.CalcBtn.Click += delegate
+
+            EventHandler callBack = delegate
+            {
+                timer.Start();// = true;
+             //   timer.Interval = 5000;
+                this.ucUnit.PaintRows();
+            };
+
+            if (MatSSF == null)
+            {
+                MatSSF = new MatSSF();
+                MatSSF.Set(ref Interface, callBack, resetProgress, showProgress);
+            }
+
+            bool background = false;
+            //if bkg is null take from preferences
+            if (Bkg == null)
+            {
+                background = Interface.IPreferences.CurrentPref.RunInBackground;
+            }
+            //otherwise take from sender...
+            else background = (bool)Bkg;
+            //if not background touch controls
+
+          
+            if (!background)
             {
                 this.ValidateChildren();
-                Cursor.Current = Cursors.WaitCursor;
+                //   Cursor.Current = Cursors.WaitCursor;
                 this.Tab.SelectedTab = this.CalcTab;
-                MatSSF.Calculate(true);
-                Cursor.Current = Cursors.Default;
-            };
+            }
+            //calculate method
             this.cancelBtn.Click += delegate
             {
                 MatSSF.IsCalculating = false;
             };
+
+            MatSSF.Calculate(background);
+          //  Cursor.Current = Cursors.Default;
         }
 
-        private void setCalculator()
+        private void setSampleControl()
         {
+
+            this.CalcBtn.Click += delegate
+            {
+                Calculate(null);
+            };
+
+
             //EN ESTE ORDEN!!!!
-            ucSSFControl.On = this.CalcTab;
-            ucSSFControl.Off = this.MatrixTab;
-            ucSSFControl.Set(ref Interface);
+            ucSSPan.On = this.CalcTab;
+            ucSSPan.Off = this.MatrixTab;
+            ucSSPan.Set(ref Interface);
             //
 
             this.templatesTabCtrl.Selected += delegate
@@ -171,7 +290,7 @@ namespace DB.UI
                 {
                     matrix = true;
                 }
-                ucSSFControl.ViewChanged(matrix, EventArgs.Empty);
+                ucSSPan.ViewChanged(matrix, EventArgs.Empty);
             };
         }
         private void setTemplateControls()

@@ -14,6 +14,10 @@ namespace DB
 
         public void PopulateColumnExpresions()
         {
+
+
+          
+
             handlersIrradiations();
 
             handlersGeometries();

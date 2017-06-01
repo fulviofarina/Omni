@@ -17,123 +17,119 @@ namespace VTools
         public ucOptions()
         {
             InitializeComponent();
-
-           
         }
-
-
-
-   //     private Interface Interface;
+  
         public void Set()
         {
-            //    Interface = inter;
+            //basic
+            //then others attached
 
-            this.connectionsTSMI.Click += (this.connectionsTSMI_Click);
-            this.aboutToolStripMenuItem.Click += (this.aboutToolStripMenuItem_Click);
-            this.helpToolStripMenuItem.Click += HelpToolStripMenuItem_Click;
+            this.Save.Click += delegate
+            {
+                this.ParentForm.Validate();
+            };
+        }
 
+        public event EventHandler DropDownClicked
+        {
+            add
+            {
+                this.OptionsBtn.DropDownOpened += value;
+            }
 
-            this.Save.Click += Save_Click;
+            remove
+            {
+                this.OptionsBtn.DropDownOpened -= value;
+            }
+        }
 
-            this.limsTSMI.Click += LimsTSMI_Click;
+        public event EventHandler PreferencesClick
+        {
+            add
+            {
+                this.preferencesTSMI.Click += value;
+            }
 
-            this.preferencesTSMI.Click += PreferencesTSMI_Click;
+            remove
+            {
+                this.preferencesTSMI.Click -= value;
+            }
+        }
+
+        public event EventHandler DatabaseClick
+        {
+
+            add
+            {
+                limsTSMI.Click += value;
+            }
+            remove
+            {
+                limsTSMI.Click -= value;
            
-
-        }
-
-        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            help?.Invoke();
-        }
-
-        private void LimsTSMI_Click(object sender, EventArgs e)
-        {
-            databaseClick?.Invoke();
-        }
-
-        private void PreferencesTSMI_Click(object sender, EventArgs e)
-        {
-            preferencesClick?.Invoke();
-        }
-
-        private void Save_Click(object sender, EventArgs e)
-        {
-            this.ParentForm.Validate();
-
-            saveClick?.Invoke();
-        }
-
-        private Action preferencesClick;
-        private Action databaseClick;
-
-
-        public Action PreferencesClick
-        {
-
-
-            set
-            {
-                preferencesClick = value;
-            }
-        }
-        public Action DatabaseClick
-        {
-
-
-            set
-            {
-                databaseClick = value;
             }
         }
 
-        private   Action aboutBox;
-
-        public Action AboutBoxAction
+   
+        public event EventHandler AboutBoxClick
         {
-          
-
-            set
+            add
             {
-                aboutBox = value;
+                aboutToolStripMenuItem.Click += value;
+            }
+
+            remove
+            {
+                aboutToolStripMenuItem.Click -= value;
             }
         }
-        private Action saveClick;
-
-        public Action SaveClick
+   
+        public event EventHandler SaveClick
         {
-
-
-            set
+            add
             {
-                saveClick = value;
+
+                this.Save.Click += value;
+
+            }
+
+            remove
+            {
+           
+                this.Save.Click -= value;
+            
             }
         }
 
-        private Action connectionBox;
-
-        public Action ConnectionBox
+     
+        public event EventHandler ConnectionBox
         {
 
-
-            set
+            add
             {
-                connectionBox = value;
+                connectionsTSMI.Click += value;
+            }
+            remove
+            {
+                connectionsTSMI.Click -= value;
             }
         }
-        private Action help;
-        private Action explorer;
-        public Action ExplorerClick
+      
+        public event EventHandler ExplorerClick
         {
 
 
-            set
+            add
             {
-                explorer = value;
+                explorerToolStripMenuItem.Click += value;
+            }
+            remove
+            {
+                explorerToolStripMenuItem.Click -= value;
             }
         }
      
-        public EventHandler ShowProgress
+        public  EventHandler ShowProgress
         {
 
 
@@ -146,16 +142,37 @@ namespace VTools
                     Application.DoEvents();
                 };
                 return pros;
+               
+            }
+          
+        }
+
+        public bool DisableImportant
+        {
+         
+
+            set
+            {
+                this.explorerToolStripMenuItem.Enabled = value;
+                this.limsTSMI.Enabled = value;
             }
         }
 
-        public Action HelpClick
+        public  event EventHandler HelpClick
         {
-            set
+            add
             {
-                help = value;
+                helpToolStripMenuItem2.Click += value;
+                helpToolStripMenuItem.Click += value;
+            }
+            remove
+            {
+                helpToolStripMenuItem2.Click -= value;
+                helpToolStripMenuItem.Click -= value;
             }
         }
+
+      
 
         public void ResetProgress (int max)
         {
@@ -167,20 +184,7 @@ namespace VTools
 
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            aboutBox?.Invoke();
-        }
-
-        private void connectionsTSMI_Click(object sender, EventArgs e)
-        {
-            connectionBox?.Invoke();
-        }
-
-        private void explorerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            explorer?.Invoke();
-        }
+     
 
       
        

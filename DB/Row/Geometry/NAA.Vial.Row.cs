@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Linq;
 using Rsx;
 
@@ -20,6 +21,10 @@ namespace DB
             public void Check(DataColumn Column)
             {
                 bool nu = EC.CheckNull(Column, this);
+                if (nu && Column == this.tableVialType.VialTypeRefColumn)
+                {
+                        VialTypeRef = "New @ " + DateTime.Now.ToLocalTime();
+                }
             }
 
             public new bool HasErrors()

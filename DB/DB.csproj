@@ -207,6 +207,9 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>LINAA.Designer.cs</LastGenOutput>
     </None>
+    <None Include="LINAA.xss">
+      <DependentUpon>LINAA.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

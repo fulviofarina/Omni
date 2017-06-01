@@ -85,34 +85,53 @@ namespace DB.Tools
             bool add = false;
             if (row == null)
             {
-                if (row.GetType().Equals(typeof(PreferencesRow)))
-                {
                     Interface.IReport.GenerateUserInfoReport();
-                }
-                row = dt.NewRow();
-
                 add = true;
             }
             Type tipo = typeof(T);
+          
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
-                PreferencesRow p = row as PreferencesRow;
+                PreferencesDataTable data = dt as PreferencesDataTable;
 
-                p.WindowsUser = WindowsUser;
-                p.Check();
+                PreferencesRow p = null;
+
+                if (row == null)
+                {
+                    p = data.NewPreferencesRow();
+                    p.WindowsUser = WindowsUser;
+                    p.Check();
+                    data.AddPreferencesRow(p);
+                    row = p as DataRow;
+                }
+                else p = row as PreferencesRow;
+              //  p.WindowsUser = WindowsUser;
             }
             else
             {
-                SSFPrefRow p = row as SSFPrefRow;
+                SSFPrefDataTable data = dt as SSFPrefDataTable;
+                SSFPrefRow p = null;
+                if (row == null)
+                {
+                     p = data.NewSSFPrefRow();
+                    p.WindowsUser = WindowsUser;
+                    p.Check();
+                    data.AddSSFPrefRow(p);
+                    row = p as DataRow;
+                }
+               else p = row as SSFPrefRow;
 
-                p.WindowsUser = WindowsUser;
-                p.Check();
-            }
 
-            if (add)
-            {
-                dt.LoadDataRow(row.ItemArray, true);
+               
             }
+          
+          //  if (add)
+          //  {
+            //    dt.LoadDataRow(row.ItemArray, true);
+          //  }
+         //   IRow r = row as IRow;
+            //check
+       //     r.Check();
         }
 
         /*

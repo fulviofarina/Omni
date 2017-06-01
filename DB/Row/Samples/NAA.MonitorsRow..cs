@@ -45,6 +45,11 @@ namespace DB
             {
                 throw new NotImplementedException();
             }
+
+           public new  bool  HasErrors()
+            {
+                return base.HasErrors;
+            }
         }
 
         public partial class MonitorsRow

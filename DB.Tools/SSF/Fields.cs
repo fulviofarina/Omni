@@ -9,9 +9,9 @@ namespace DB.Tools
     {
         protected internal static char[] ch = new char[] { ',', '(', '#', ')' };
         protected internal static string cmd = "cmd";
-        protected internal static string exefile = "matssf2.exe";
-        protected internal static string inPutExt = ".in";
-        protected internal static string outPutExt = ".out";
+        public static string EXEFILE = "matssf2.exe";
+        public static string INPUT_EXT = ".in";
+        public static string OUTPUT_EXT = ".out";
         protected internal static string startupPath = string.Empty;
 
         protected static string ERROR_SPEAK = "Calculations were cancelled because the proper input data is missing.\n"
@@ -40,59 +40,100 @@ namespace DB.Tools
         {
             get
             {
+           
                 return Interface.IBS.IsCalculating;
             }
 
             set
             {
                 Interface.IBS.IsCalculating = value;
+                Interface.IBS.EnabledControls = true;
+                bool valor = value;
+                reportToUser(valor);
+            }
+        }
 
-                if (!value)
+        private void reportToUser(bool valor)
+        {
+            //false means finished, cancelled or error
+            if (!valor)
+            {
+                //no processes remaining
+                if (processTable.Count == 0)
                 {
-                    //no processes remaining
-                    if (processTable.Count == 0)
+                    //rows with errors
+                    DataRow[] rowsInError = units
+                        .Where(o => !CheckInputData(ref o))
+                        .ToArray();
+
+                    int errorCount = rowsInError.Count();
+                    if (errorCount != 0)
                     {
-                        //rows with errors
-
-                        DataRow[] rowsInError = units.Where(o => !CheckInputData(ref o)).ToArray();
-                        int errorCount = rowsInError.Count();
-                        if (errorCount != 0)
-                        {
-                            //some missing
-                            string some = "Some of ";
-                            if (errorCount == units.Count)
-                            {
-                                Interface.IReport.Msg(ERRORS, "All samples were Skipped");
-                                some = "All the ";
-                            }
-                            else
-                            {
-                                Interface.IReport.Msg(ERRORS, "Some samples were Skipped");
-                            }
-
-                            Interface.IReport.Speak(some + ERROR_SPEAK);
-                        }
-                        else
-                        {
-                            //all good finished
-                            Interface.IReport.Msg(FINISHED, "Finished");
-                            Interface.IReport.Speak(FINISHED);
-                        }
+                        reportErrors(errorCount);
                     }
                     else
                     {
-                        //user cancelled
-                        Interface.IReport.Msg(CANCELLED, "Cancelled");
-                        Interface.IReport.Speak(CANCELLED);
-                        processTable.Clear();
+                        reportFinishedOK();
                     }
-                    resetProgress(0);
                 }
                 else
                 {
-                    Interface.IReport.Msg(STARTED, "Running...");
-                    Interface.IReport.Speak(STARTED);
+                    reportFinishedCancelled();
                 }
+
+                resetProgress(0);
+
+                //callback
+                callBack?.Invoke(null, EventArgs.Empty);
+
+            }
+            else //everything is runnning now...
+            {
+                reportRunning();
+            }
+        }
+
+        private void reportRunning()
+        {
+            Interface.IReport.Msg(STARTED, "Running...");
+            if (!bkgCalculation) Interface.IReport.Speak(STARTED);
+        }
+
+        private void reportFinishedCancelled()
+        {
+            //user cancelled
+            Interface.IReport.Msg(CANCELLED, "Cancelled");
+            if (!bkgCalculation) Interface.IReport.Speak(CANCELLED);
+            processTable.Clear();
+        }
+
+        private void reportFinishedOK()
+        {
+         
+            if (!bkgCalculation)
+            {
+                //all good finished
+                Interface.IReport.Msg(FINISHED, "Finished");
+                Interface.IReport.Speak(FINISHED);
+            }
+        }
+
+        private void reportErrors(int errorCount)
+        {
+            if (!bkgCalculation)
+            {
+                //some missing
+                string some = "Some of ";
+                if (errorCount == units.Count)
+                {
+                    Interface.IReport.Msg(ERRORS, "All samples were Skipped");
+                    some = "All the ";
+                }
+                else
+                {
+                    Interface.IReport.Msg(ERRORS, "Some samples were Skipped");
+                }
+                Interface.IReport.Speak(some + ERROR_SPEAK);
             }
         }
     }

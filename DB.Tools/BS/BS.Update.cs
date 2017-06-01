@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,6 +10,109 @@ namespace DB.Tools
 {
     public partial class BS
     {
+
+        public void CurrentChanged(ref BindingSource sender)
+        {
+            try
+            {
+                if (!EnabledControls) return;
+                bool selectedBs = false;
+                if (sender.Equals(Irradiations))
+                {
+                    IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
+                    update(r, true, false, selectedBs);
+                }
+                else if (sender.Equals(Channels))
+                {
+                    ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
+                    update(c, true, false, selectedBs);
+                }
+              
+                else if (sender.Equals(SubSamples) || sender.Equals(Units))
+                {
+                    updateSubSampleOrUnit(ref sender, selectedBs);
+
+                }
+                else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
+                {
+                    updateMatrixOrSelected(ref sender, selectedBs);
+                }
+                else
+                {
+                    updateVialOrRabbit(ref  sender, selectedBs);
+                }
+
+                // bs.RaiseListChangedEvents = true;
+            }
+            catch (Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+        }
+
+        private void updateVialOrRabbit(ref  BindingSource sender, bool selectedBs)
+        {
+            VialTypeRow c = null;
+            if (sender.Equals(Rabbit))
+            {
+                c = Interface.ICurrent.Rabbit as VialTypeRow;
+
+            }
+            else if (sender.Equals(Vial))
+            {
+                c = Interface.ICurrent.Vial as VialTypeRow;
+
+            }
+
+            update(c, true, false, selectedBs);
+        }
+
+        private void updateMatrixOrSelected(ref BindingSource sender, bool selectedBs)
+        {
+            MatrixRow c = null;
+            if (sender.Equals(Matrix)) c = Interface.ICurrent.Matrix as MatrixRow;
+            else
+            {
+                selectedBs = true;
+                c = Interface.ICurrent.SubSampleMatrix as MatrixRow;
+            }
+            update(c, true, false, selectedBs);
+         //   return selectedBs;
+        }
+
+        private void updateSubSampleOrUnit(ref  BindingSource sender, bool selectedBs)
+        {
+            SubSamplesRow r = null; //which one to send
+                                    //the SubSample from the SubSample of the unit that called or
+                                    //the SubSample from the Unit that called
+                                    //by default doCascade = true
+
+            if (sender.Equals(SubSamples))
+            {
+                //take current
+                //    bool doCascade = true;
+                //   bool findItself = false; //should find itself = false
+                r = Interface.ICurrent.SubSample as SubSamplesRow;
+                update(r, true, false, selectedBs);
+            }
+            else
+            {
+                //take current
+                UnitRow u = Interface.ICurrent.Unit as UnitRow;
+                //if not null
+                if (!EC.IsNuDelDetch(u.SubSamplesRow))
+                {
+                    //   findItself = true; //when unit request yes,
+                    // doCascade = false;
+                    //find the subsample in the binding source list
+                    //update
+                    r = u.SubSamplesRow;
+                }
+
+                update(r, false, true, selectedBs);
+            }
+        }
+
         private void update<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
         {
             Type tipo = typeof(T);
@@ -52,8 +156,11 @@ namespace DB.Tools
                 //
                 updateIrradiationRequest(r, doCascade, findItself);
             }
-
-            if (EnabledControls) hasErrors(r);
+            //to avoid spending too much time when loading
+            if (EnabledControls)
+            {
+                hasErrors(r);
+            }
         }
 
         private void updateChannel<T>(T r, bool doCascade, bool findItself)
@@ -122,10 +229,11 @@ namespace DB.Tools
         private void updateMatrix<T>(T r, bool doCascade = true, bool findItself = false, bool selectedBS = false)
         {
             string column = Interface.IDB.Compositions.MatrixIDColumn.ColumnName;
+            
             string filter = column + " IS NULL";
-            string filterMatrixSelected = string.Empty;
+         //   string filterMatrixSelected = string.Empty;
             column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
-            filterMatrixSelected = column + " IS NULL";
+            string filterMatrixSelected = column + " IS NULL";
 
             BindingSource bs2 = Compositions;
             if (selectedBS)
@@ -147,11 +255,14 @@ namespace DB.Tools
                 filter = column + " = '" + id + "'";
                 if (selectedBS)
                 {
-                    column = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName;
+                  //  column2 = Interface.IDB.Matrix.TemplateIDColumn.ColumnName;
+                     column = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName;
                     //last matrix id
-                    id = u.SubSamplesRow.SubSamplesID;
+                    id = u.SubSampleID;
                     filterMatrixSelected = column + " = '" + id + "'";
-                    filter += " AND " + column + " = '" + id + "'";
+                    column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
+                     id = u.MatrixID;
+                    //    filter += " AND " + column2 + " = '" + id + "'";
                 }
 
                 if (findItself)
@@ -161,7 +272,7 @@ namespace DB.Tools
                 }
             }
 
-            bs2.Filter = filter;
+            bs2.Filter = filter; //sea cual sea este es el filtrro
             if (selectedBS) bs.Filter = filterMatrixSelected;
             // bs2.ResetBindings(false);
         }
@@ -183,23 +294,26 @@ namespace DB.Tools
                 }
 
                 DataRow row = s.UnitRow;
-                if (doCascade && EnabledControls)
+               // doCascade = doCascade && EnabledControls;
+                if (doCascade )
                 {
                     update<UnitRow>(row as UnitRow);
                 }
-
-                // if (!s.IsSubSampleNameNull()) {// string filColumn = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
                 filter = column + " = '" + s.SubSamplesID + "'";
-                // }
+                
             }
 
-            // if (EnabledControls)
-            {
-                // Rsx.Dumb.BS.LinkBS(ref SelectedSubSample, Interface.IDB.SubSamples,filter,string.Empty);
-                SelectedSubSample.Filter = filter;
-            }
+                  SelectedSubSample.Filter = filter;
+            
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="r"></param>
+        /// <param name="doCascade"></param>
+        /// <param name="findItself"></param>
         private void updateUnit<T>(T r, bool doCascade, bool findItself)
         {
             Rsx.Dumb.BS.DeLinkBS(ref SSF);
@@ -218,31 +332,48 @@ namespace DB.Tools
 
                 DataRow row = s.SubSamplesRow;
                 //do childs parents or not?
-                if (doCascade && !EC.IsNuDelDetch(row) && EnabledControls)
+                doCascade = doCascade && !EC.IsNuDelDetch(row);
+              //TOD:  doCascade = doCascade && EnabledControls;
+                if (doCascade)
                 {
                     row = s.SubSamplesRow.VialTypeRow;
-                    update<LINAA.VialTypeRow>(row as VialTypeRow);
+                    update(row as VialTypeRow);
                     row = s.SubSamplesRow.ChCapsuleRow;
-                    update<LINAA.VialTypeRow>(row as VialTypeRow);
+                    update(row as VialTypeRow);
                     row = s.ChannelsRow;//use the channel assigned to the unit; plan A
                     if (EC.IsNuDelDetch(row)) //plan b, use the channel from the Irr Req.
                     {
                         row = s.SubSamplesRow.IrradiationRequestsRow.ChannelsRow;
                     }
-                    update<LINAA.ChannelsRow>(row as ChannelsRow, true, true);
-                    row = s.SubSamplesRow.MatrixRow;
-                    update<MatrixRow>(row as MatrixRow, true, false, false);
-                    if (s.SubSamplesRow.MatrixRow != null)
-                    {
-                        row = s.SubSamplesRow.GetMatrixRows().FirstOrDefault(o => o.MatrixID == s.SubSamplesRow.MatrixID);
+                    update(row as ChannelsRow, true, true);
+
+                    //aqui hacer el cambio Selected Matrix..
+                    SubSamplesRow samp = s.SubSamplesRow;
+
+                    //take template Matrix by default
+                    row = samp.MatrixRow;
+                    update(row as MatrixRow, true, false, false);
+                    IEnumerable<MatrixRow> ROWS = samp.GetMatrixRows();
+                   if (!EC.IsNuDelDetch(samp.MatrixRow))
+                  {
+                        //take Latest! child matrix then...
+                        row = ROWS
+                              //  .Where(o => !o.IsTemplateIDNull())
+                                  .FirstOrDefault(o => o.MatrixID == samp.MatrixID);
                     }
-                    else row = s.SubSamplesRow.GetMatrixRows().FirstOrDefault();
-                    update<MatrixRow>(row as MatrixRow, true, true, true);
+                  //take any child matrix then
+                    else row = ROWS.FirstOrDefault();
+                                    
+                 //   row = ROWS
+
+                    update(row as MatrixRow, true, true, true);
                 }
 
                 column = Interface.IDB.MatSSF.UnitIDColumn.ColumnName;
                 filter = column + " = '" + s.UnitID.ToString() + "'";
             }
+            //por que cuando estan enabled?
+            //por que se pone a autochequear?
             if (EnabledControls)
             {
                 // SelectedSubSample.Filter = filter;

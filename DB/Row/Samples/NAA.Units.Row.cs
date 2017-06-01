@@ -13,6 +13,14 @@ namespace DB
         /// </summary>
         public partial class UnitRow : IRow
         {
+            protected internal bool isBusy = false; // { get; set; }
+
+            public bool IsBusy
+            {
+                get { return isBusy; }
+                set { isBusy = value; }
+            }
+
             public void Check()
             {
                 foreach (DataColumn column in this.tableUnit.Columns)
@@ -101,6 +109,8 @@ namespace DB
                 {
                     if (nullo) pEpi = 0.82;
                 }
+
+        
             }
 
             public void Clean()
@@ -148,7 +158,8 @@ namespace DB
             {
                 IEnumerable<DataColumn> colsInE = GetColumnsInError();
                 int count = colsInE.Count();
-                return count != 0;
+                bool ok = (count != 0);
+                return ok;
             }
 
             public void SetParent<T>(ref T row, object[] args = null)
@@ -200,18 +211,18 @@ namespace DB
             {
                 this.LastChanged = DateTime.Now;
                 ToDo = val;
+         
                 // Clean();
             }
 
             internal void checkSSFTable()
             {
                 DataColumn col = this.tableUnit.SSFTableColumn;
-               bool nullo = EC.CheckNull(col, this);
+                bool nullo = EC.CheckNull(col, this);
                 //   LINAA linaa = (this.tableUnit.DataSet as LINAA);
                 //if there are rows bytes but no rows in the table, LOAD
                 if (GetMatSSFRows().Count() == 0 && !nullo)
                 {
-                   
                     this.tableUnit.AddSSFsHandler?
                      .Invoke(this, EventArgs.Empty);
                 }
@@ -219,7 +230,6 @@ namespace DB
                 {
                     this.tableUnit.CleanSSFsHandler?
                           .Invoke(this.GetMatSSFRows(), EventArgs.Empty);
-
                 }
 
                 nullo = EC.CheckNull(col, this);// string.IsNullOrEmpty(e.Row.GetColumnError(e.Column));
@@ -262,14 +272,18 @@ namespace DB
                 this.SubSamplesRow.f = c.f; //override f
                 this.SubSamplesRow.Alpha = c.Alpha; //override Alpha (yes)
                 this.kth = c.kth;
-                this.kepi = c.kepi;
+                if (!this.tableUnit.defaultValue)
+                {
+                    this.kepi = c.kepi;
+                    this.BellFactor = c.BellFactor;
+                    this.WGt = c.WGt;
+                    this.nFactor = c.nFactor;
+                    this.pTh = c.pTh;
+                    this.pEpi = c.pEpi;
+                }
                 this.ChCfg = c.FluxType;
-                this.BellFactor = c.BellFactor;
                 this.SubSamplesRow.FC = c.FC;
-                this.WGt = c.WGt;
-                this.nFactor = c.nFactor;
-                this.pTh = c.pTh;
-                this.pEpi = c.pEpi;
+              
             }
 
             internal void setRabbit(ref VialTypeRow v)

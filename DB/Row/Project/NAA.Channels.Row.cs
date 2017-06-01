@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Linq;
 using Rsx;
 
@@ -44,7 +45,7 @@ namespace DB
                 {
                     if (nu)
                     {
-                        ChannelName = "New Channel";
+                        ChannelName = "New @ " + DateTime.Now.ToLocalTime();
                     }
                 }
                 else if (Column == this.tableChannels.pEpiColumn)

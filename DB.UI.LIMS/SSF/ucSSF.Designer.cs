@@ -17,8 +17,6 @@
 
         private System.Windows.Forms.SplitContainer DaCONTAINER;
 
-        private System.Windows.Forms.ContextMenuStrip dgvCMS;
-
         private System.Windows.Forms.TabControl FilesTab;
 
         private System.Windows.Forms.TabPage FilesTabMain;
@@ -63,17 +61,13 @@
 
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
 
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 
         private ucCC ucCC1;
 
         private ucMatrixSimple ucMS;
 
-        private ucSSFData ucSSFControl;
+        private ucSSFPanel ucSSPan;
 
         private ucUnit ucUnit;
 
@@ -102,10 +96,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.dgvCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -136,12 +126,11 @@
             this.outputBox = new System.Windows.Forms.RichTextBox();
             this.inputTab = new System.Windows.Forms.TabPage();
             this.inputbox = new System.Windows.Forms.RichTextBox();
-            this.ucSSFControl = new DB.UI.ucSSFData();
+            this.ucSSPan = new DB.UI.ucSSFPanel();
             this.ucUnit = new DB.UI.ucUnit();
             this.ucVcc = new DB.UI.ucV();
             this.ucMS = new DB.UI.ucMatrixSimple();
             this.ucCC1 = new DB.UI.ucCC();
-            this.dgvCMS.SuspendLayout();
             this.toolStrip6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.SuspendLayout();
@@ -180,26 +169,6 @@
             this.outputTab.SuspendLayout();
             this.inputTab.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dgvCMS
-            // 
-            this.dgvCMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.dgvCMS.Name = "CMS";
-            this.dgvCMS.Size = new System.Drawing.Size(168, 56);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem2.Text = "Export";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItem3.Text = "View Output";
             // 
             // toolStripLabel3
             // 
@@ -349,7 +318,7 @@
             // 
             // UnitSSFSC.Panel2
             // 
-            this.UnitSSFSC.Panel2.Controls.Add(this.ucSSFControl);
+            this.UnitSSFSC.Panel2.Controls.Add(this.ucSSPan);
             this.UnitSSFSC.Size = new System.Drawing.Size(700, 791);
             this.UnitSSFSC.SplitterDistance = 34;
             this.UnitSSFSC.TabIndex = 11;
@@ -458,7 +427,8 @@
             this.ContainerTab.Padding = new System.Windows.Forms.Padding(3);
             this.ContainerTab.Size = new System.Drawing.Size(874, 703);
             this.ContainerTab.TabIndex = 3;
-            this.ContainerTab.Text = "1 Containers";
+            this.ContainerTab.Text = "1 CONTAINERS";
+            this.ContainerTab.UseVisualStyleBackColor = true;
             // 
             // MatrixTab
             // 
@@ -470,7 +440,8 @@
             this.MatrixTab.Padding = new System.Windows.Forms.Padding(3);
             this.MatrixTab.Size = new System.Drawing.Size(874, 703);
             this.MatrixTab.TabIndex = 0;
-            this.MatrixTab.Text = "2 Matrices";
+            this.MatrixTab.Text = "2 MATRICES";
+            this.MatrixTab.UseVisualStyleBackColor = true;
             // 
             // SourceTab
             // 
@@ -482,7 +453,8 @@
             this.SourceTab.Padding = new System.Windows.Forms.Padding(3);
             this.SourceTab.Size = new System.Drawing.Size(874, 703);
             this.SourceTab.TabIndex = 4;
-            this.SourceTab.Text = "3 Sources";
+            this.SourceTab.Text = "3 SOURCES";
+            this.SourceTab.UseVisualStyleBackColor = true;
             // 
             // FilesTabMain
             // 
@@ -552,16 +524,16 @@
             this.inputbox.TabIndex = 2;
             this.inputbox.Text = "";
             // 
-            // ucSSFControl
+            // ucSSPan
             // 
-            this.ucSSFControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.ucSSFControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSSFControl.Font = new System.Drawing.Font("Segoe UI", 14.25F);
-            this.ucSSFControl.Location = new System.Drawing.Point(0, 0);
-            this.ucSSFControl.Margin = new System.Windows.Forms.Padding(2);
-            this.ucSSFControl.Name = "ucSSFControl";
-            this.ucSSFControl.Size = new System.Drawing.Size(700, 753);
-            this.ucSSFControl.TabIndex = 0;
+            this.ucSSPan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.ucSSPan.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucSSPan.Font = new System.Drawing.Font("Segoe UI", 14.25F);
+            this.ucSSPan.Location = new System.Drawing.Point(0, 0);
+            this.ucSSPan.Margin = new System.Windows.Forms.Padding(2);
+            this.ucSSPan.Name = "ucSSPan";
+            this.ucSSPan.Size = new System.Drawing.Size(700, 753);
+            this.ucSSPan.TabIndex = 0;
             // 
             // ucUnit
             // 
@@ -593,7 +565,7 @@
             this.ucMS.Location = new System.Drawing.Point(3, 3);
             this.ucMS.Margin = new System.Windows.Forms.Padding(4);
             this.ucMS.Name = "ucMS";
-            this.ucMS.Size = new System.Drawing.Size(868, 709);
+            this.ucMS.Size = new System.Drawing.Size(868, 697);
             this.ucMS.TabIndex = 0;
             // 
             // ucCC1
@@ -603,7 +575,7 @@
             this.ucCC1.Location = new System.Drawing.Point(3, 3);
             this.ucCC1.Margin = new System.Windows.Forms.Padding(4);
             this.ucCC1.Name = "ucCC1";
-            this.ucCC1.Size = new System.Drawing.Size(868, 709);
+            this.ucCC1.Size = new System.Drawing.Size(868, 697);
             this.ucCC1.TabIndex = 0;
             // 
             // ucSSF
@@ -615,7 +587,6 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ucSSF";
             this.Size = new System.Drawing.Size(1600, 834);
-            this.dgvCMS.ResumeLayout(false);
             this.toolStrip6.ResumeLayout(false);
             this.toolStrip6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();

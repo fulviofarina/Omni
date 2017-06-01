@@ -47,7 +47,7 @@ namespace DB.UI
 		   this.TLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 655F));
 		   this.TLP.Size = new System.Drawing.Size(1041, 655);
 		   this.TLP.TabIndex = 7;
-		   this.TLP.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.TLP_ControlRemoved);
+		   this.TLP.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.controlRemoved);
 		   // 
 		   // AuxiliarForm
 		   // 
@@ -61,7 +61,6 @@ namespace DB.UI
 		   this.Name = "AuxiliarForm";
 		   this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 		   this.Text = "AuxiliarForm";
-		   this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AuxiliarForm_FormClosing);
 		 	   this.ResumeLayout(false);
 		   this.PerformLayout();
 

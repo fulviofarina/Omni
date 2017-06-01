@@ -36,6 +36,7 @@
             System.Windows.Forms.Label roundingLabel;
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.runInBackgroundCheckBox = new System.Windows.Forms.CheckBox();
             this.advancedEditorCheckBox = new System.Windows.Forms.CheckBox();
             this.showSampleDescriptionCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -159,6 +160,7 @@
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.runInBackgroundCheckBox, 0, 18);
             this.tableLayoutPanel1.Controls.Add(this.advancedEditorCheckBox, 0, 17);
             this.tableLayoutPanel1.Controls.Add(this.showSampleDescriptionCheckBox, 0, 15);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
@@ -180,7 +182,8 @@
             this.tableLayoutPanel1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 19;
+            this.tableLayoutPanel1.RowCount = 20;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -202,6 +205,17 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(304, 615);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // runInBackgroundCheckBox
+            // 
+            this.runInBackgroundCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.runInBackgroundCheckBox.ForeColor = System.Drawing.Color.Red;
+            this.runInBackgroundCheckBox.Location = new System.Drawing.Point(3, 560);
+            this.runInBackgroundCheckBox.Name = "runInBackgroundCheckBox";
+            this.runInBackgroundCheckBox.Size = new System.Drawing.Size(298, 24);
+            this.runInBackgroundCheckBox.TabIndex = 19;
+            this.runInBackgroundCheckBox.Text = "Timer ON/OFF (Experimental)";
+            this.runInBackgroundCheckBox.UseVisualStyleBackColor = true;
             // 
             // advancedEditorCheckBox
             // 
@@ -388,6 +402,7 @@
             // loopCheckBox
             // 
             this.loopCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loopCheckBox.ForeColor = System.Drawing.Color.Aqua;
             this.loopCheckBox.Location = new System.Drawing.Point(3, 317);
             this.loopCheckBox.Name = "loopCheckBox";
             this.loopCheckBox.Size = new System.Drawing.Size(279, 43);
@@ -411,11 +426,12 @@
             this.doCKCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.doCKCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doCKCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.doCKCheckBox.ForeColor = System.Drawing.Color.Gold;
             this.doCKCheckBox.Location = new System.Drawing.Point(3, 268);
             this.doCKCheckBox.Name = "doCKCheckBox";
             this.doCKCheckBox.Size = new System.Drawing.Size(279, 43);
             this.doCKCheckBox.TabIndex = 8;
-            this.doCKCheckBox.Text = "Do CKS Method";
+            this.doCKCheckBox.Text = "Do Ch Method";
             this.doCKCheckBox.UseVisualStyleBackColor = true;
             // 
             // doMatSSFCheckBox
@@ -424,6 +440,7 @@
             this.doMatSSFCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.doMatSSFCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doMatSSFCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.doMatSSFCheckBox.ForeColor = System.Drawing.Color.Chartreuse;
             this.doMatSSFCheckBox.Location = new System.Drawing.Point(3, 219);
             this.doMatSSFCheckBox.Name = "doMatSSFCheckBox";
             this.doMatSSFCheckBox.Size = new System.Drawing.Size(279, 43);
@@ -481,11 +498,12 @@
             // overridesCheckBox
             // 
             this.overridesCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.overridesCheckBox.ForeColor = System.Drawing.Color.Red;
             this.overridesCheckBox.Location = new System.Drawing.Point(3, 366);
             this.overridesCheckBox.Name = "overridesCheckBox";
             this.overridesCheckBox.Size = new System.Drawing.Size(279, 43);
             this.overridesCheckBox.TabIndex = 13;
-            this.overridesCheckBox.Text = "Override default values";
+            this.overridesCheckBox.Text = "Expert Mode";
             this.overridesCheckBox.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -562,5 +580,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox showSampleDescriptionCheckBox;
         private System.Windows.Forms.CheckBox advancedEditorCheckBox;
+        private System.Windows.Forms.CheckBox runInBackgroundCheckBox;
     }
 }

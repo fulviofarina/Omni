@@ -4,99 +4,41 @@ using System.Windows.Forms;
 
 namespace Msn
 {
-    public partial class Pop : UserControl
+    public partial class Pop : UserControl, IPop
     {
-        public Pop()
-        {
+        protected internal int _DISPLAY_INTERVAL = 16000;
 
-        }
-       
+        protected internal string _LAST_MSG_SPEAK = string.Empty;
 
-        public void Msg(string msg, string title, bool ok)
+        protected internal System.Speech.Synthesis.SpeechSynthesizer _LORITO;
+
+        protected internal Timer _TIMER;
+
+        protected internal Font _FONT = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
+
+        public int DisplayInterval
         {
-          //  string pre = string.Empty;
-            System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
-            string pre = "OK";
-            if (!ok)
+            get
             {
-                pre = "=(";
-               
-                
-            }
-             this.iconic.Image = Notifier.MakeBitMap(pre, seg, Color.White);
-
-
-            // else pre = "FAILED - ";
-            //  pre += title;
-
-            Msg(msg, title, icon);
-        
-
-         //   Application.DoEvents();
-        }
-        protected Font seg = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
-
-        public void ReportProgress(int percentage)
-        {
-        
-            this.iconic.Image = Notifier.MakeBitMap(percentage.ToString() + "%", seg, Color.White);
-            //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
-
-            Application.DoEvents();
-
-            string msg = "Loading... ";
-            string title = "Please wait...";
-            if (percentage == 100)
-            {
-                msg = "Loaded ";
-                this.iconic.Image = Notifier.MakeBitMap("OK", seg, Color.White);
-                title = "Ready to go...";
+                return _DISPLAY_INTERVAL;
             }
 
-            Msg(title, msg, ToolTipIcon.Info);
-
-            if (percentage == 100) this.iconic.Image = Notifier.MakeBitMap(":)", seg, Color.White);
-
-            Application.DoEvents();
-        }
-
-        public int DisplayInterval = 16000;
-        protected System.Speech.Synthesis.SpeechSynthesizer lorito;
-        //   protected SpeechLib.SpVoice lorito;
-
-        protected string lastSpeak = string.Empty;
-        public void Speak(string text)
-        {
-            if (lastSpeak.CompareTo(text) == 0) return;
-            lastSpeak = text;
-            if (lorito == null)
+            set
             {
-                this.lorito = new System.Speech.Synthesis.SpeechSynthesizer();
-
-                //    this.lorito = new SpeechLib.SpVoice();
+                _DISPLAY_INTERVAL = value;
             }
-            System.ComponentModel.BackgroundWorker worker3 = new System.ComponentModel.BackgroundWorker();
-            worker3.DoWork += new System.ComponentModel.DoWorkEventHandler(speaker_DoWork);
-            worker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(speaker_RunWorkerCompleted);
-            worker3.RunWorkerAsync(text);
         }
 
-        internal void speaker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+       public string BufferMessage
         {
-            System.ComponentModel.BackgroundWorker worker3 = sender as System.ComponentModel.BackgroundWorker;
-            worker3.Dispose();
-            worker3 = null;
-        }
-
-        internal void speaker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            try
+            get
             {
-                string text = e.Argument as string;
-                this.lorito.Speak(text);
+                return _LAST_MSG_SPEAK;
             }
-            catch (SystemException ex)
+
+            set
             {
+                _LAST_MSG_SPEAK = value;
             }
         }
 
@@ -114,7 +56,7 @@ namespace Msn
             }
             f.Opacity = 0;
             f.AutoSize = true;
-        //    f.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            // f.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             f.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             f.StartPosition = FormStartPosition.CenterScreen;
             f.Opacity = 0;
@@ -128,17 +70,127 @@ namespace Msn
             f.Opacity = 100;
             f.Visible = true;
 
-       //     f.StartPosition = FormStartPosition.CenterScreen;
-          //  f.Opacity = 0;
-       
+            // f.StartPosition = FormStartPosition.CenterScreen; f.Opacity = 0;
+        }
 
+        public void Msg(string msg, string title, bool ok)
+        {
+            // string pre = string.Empty;
+            System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
+            string pre = "OK";
+            if (!ok)
+            {
+                pre = "=(";
+            }
+            this.iconic.Image = Notifier.MakeBitMap(pre, _FONT, Color.White);
 
+            // else pre = "FAILED - "; pre += title;
+
+            Msg(msg, title, icon);
+
+            // Application.DoEvents();
+        }
+
+        public void Msg(string msg, string title, System.Windows.Forms.ToolTipIcon icon)
+        {
+            // if (InvokeRequired)
+            {
+                Action dele = delegate
+                {
+                    this.textBoxDescription.Text = msg;
+                    this.title.Text = title;
+                    Show();
+                    Application.DoEvents();
+                };
+                Invoke(dele);
+            }
+            //catch (Exception)
+            //{
+            //}
+        }
+
+        public void ReportProgress(int percentage)
+        {
+            this.iconic.Image = Notifier.MakeBitMap(percentage.ToString() + "%", _FONT, Color.White);
+            //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
+
+            Application.DoEvents();
+
+            string msg = "Loading... ";
+            string title = "Please wait...";
+            if (percentage == 100)
+            {
+                msg = "Loaded ";
+                this.iconic.Image = Notifier.MakeBitMap("OK", _FONT, Color.White);
+                title = "Ready to go...";
+            }
+
+            Msg(title, msg, ToolTipIcon.Info);
+
+            if (percentage == 100) this.iconic.Image = Notifier.MakeBitMap(":)", _FONT, Color.White);
+
+            Application.DoEvents();
+        }
+
+        // protected SpeechLib.SpVoice lorito;
+        public void Speak(string text)
+        {
+            if (BufferMessage.CompareTo(text) == 0) return;
+            BufferMessage = text;
+            if (_LORITO == null)
+            {
+                this._LORITO = new System.Speech.Synthesis.SpeechSynthesizer();
+
+                // this.lorito = new SpeechLib.SpVoice();
+            }
+            System.ComponentModel.BackgroundWorker worker3 = new System.ComponentModel.BackgroundWorker();
+            worker3.DoWork += new System.ComponentModel.DoWorkEventHandler(speakDoWork);
+            worker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(speakCompleted);
+            worker3.RunWorkerAsync(text);
+        }
+
+        protected void timerTick(object sender, EventArgs e)
+        {
+            _TIMER.Stop();
+            if (this.Visible) this.Visible = false;
+        }
+
+        protected void speakDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            try
+            {
+                string text = e.Argument as string;
+                this._LORITO.Speak(text);
+            }
+            catch (SystemException ex)
+            {
+            }
+        }
+
+        protected void speakCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            System.ComponentModel.BackgroundWorker worker3 = sender as System.ComponentModel.BackgroundWorker;
+            worker3.Dispose();
+            worker3 = null;
+        }
+
+        protected void msgChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                _TIMER.Stop();
+                _TIMER.Start();
+            }
+            else this.Visible = true;
+        }
+
+        public Pop()
+        {
         }
 
         public Pop(bool withForm)
         {
             InitializeComponent();
-
 
             BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             Location = new System.Drawing.Point(3, 32);
@@ -147,65 +199,22 @@ namespace Msn
             Size = new System.Drawing.Size(512, 113);
             TabIndex = 6;
 
-
             this.Text = string.Empty;
 
             this.title.Text = string.Empty;
             this.textBoxDescription.Text = string.Empty;
 
-            n = new Timer();
+            _TIMER = new Timer();
 
-            n.Tick += n_Tick;
-            n.Interval = DisplayInterval;
+            _TIMER.Tick += timerTick;
+            _TIMER.Interval = _DISPLAY_INTERVAL;
 
-            this.textBoxDescription.TextChanged += textBoxDescription_TextChanged;
+            this.textBoxDescription.TextChanged += msgChanged;
 
             if (withForm)
             {
                 MakeForm();
             }
-        }
-
-        private void textBoxDescription_TextChanged(object sender, EventArgs e)
-        {
-            if (this.Visible)
-            {
-                n.Stop();
-                n.Start();
-            }
-            else this.Visible = true;
-        }
-
-        private Timer n;
-
-        public void Msg(string msg, string title, System.Windows.Forms.ToolTipIcon icon)
-        {
-          
-
-       //     if (InvokeRequired)
-            {
-                Action dele = delegate
-                {
-
-                    this.textBoxDescription.Text = msg;
-                    this.title.Text = title;
-                    Show();
-                    Application.DoEvents();
-                };
-                 Invoke(dele);
-            }
-                //catch (Exception)
-            //{
-
-                
-            //}            
-        
-        }
-
-        private void n_Tick(object sender, EventArgs e)
-        {
-            n.Stop();
-            if (this.Visible) this.Visible = false;
         }
     }
 }

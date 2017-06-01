@@ -8,6 +8,11 @@ namespace DB
     {
         partial class PeaksRow : IRow
         {
+            public new bool HasErrors()
+            {
+                return base.HasErrors;
+            }
+
             public double UncSq = 0;
             public double w = 0;
             public double w2 = 0;

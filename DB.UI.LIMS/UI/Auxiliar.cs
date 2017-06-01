@@ -19,9 +19,11 @@ namespace DB.UI
             TLP.Controls.Add(control, 0, 0);
             DisplayedControl = control;
             this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            this.FormClosing +=this.formClosing;
+
         }
 
-        public void AuxiliarForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void formClosing(object sender, FormClosingEventArgs e)
         {
             if (this.DisplayedControl.GetType().Equals(typeof(ucPreferences)))
             {
@@ -36,7 +38,7 @@ namespace DB.UI
             else this.Visible = false;
         }
 
-        private void TLP_ControlRemoved(object sender, ControlEventArgs e)
+        private void controlRemoved(object sender, ControlEventArgs e)
         {
             e.Control.Dispose();
             this.Dispose();

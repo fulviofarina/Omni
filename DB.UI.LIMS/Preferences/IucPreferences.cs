@@ -6,10 +6,11 @@ namespace DB.UI
 {
     public interface IucPreferences
     {
-        EventHandler CheckChanged { set; get; }
-        EventHandler CheckChanged2 { set; get; }
-        EventHandler CheckChanged3 { set; get; }
-
+     //   EventHandler CheckChanged { set;  }
+      //  EventHandler DoChilianChanged { set; }
+      //  EventHandler DoMatSSFChanged { set;  }
+      //  EventHandler OverriderChanged { set; }
+     //   EventHandler RunInBackground { set; }
         void Set(ref Interface inter);
 
         void SetRoundingBinding(ref Hashtable unitsTable);

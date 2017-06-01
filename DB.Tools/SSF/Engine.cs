@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -139,15 +140,24 @@ namespace DB.Tools
         }
         public void PrepareInputs(bool background = false)
         {
+          
+
             foreach (UnitRow item in units)
             {
                 UnitRow UNIT = item;
                 PrepareInputs(ref UNIT, background);
             }
+
+      
+
         }
 
-        public void PrepareInputs(ref UnitRow UNIT, bool background = false)
+        public bool PrepareInputs(ref UnitRow UNIT, bool background = false)
         {
+
+            showProgress?.Invoke(null, EventArgs.Empty);
+
+            bool ok = false;
             try
             {
                 //UnitRow UNIT = item;
@@ -156,21 +166,49 @@ namespace DB.Tools
 
                 if (!background) Interface.IBS.Update<UnitRow>(UNIT);
 
-                showProgress?.Invoke(null, EventArgs.Empty);
-
-                bool ok = CheckInputData(ref UNIT);
+                ok = CheckInputData(ref UNIT);
 
                 if (ok)
                 {
-                    prepareInputs(ref UNIT);
+                    //generate file
+                    string fulFile = startupPath + UNIT.Name + INPUT_EXT;
+                    string buffer =   prepareInputs(ref UNIT);
+                 //   bool isOK = false;
+                    if (!string.IsNullOrEmpty(buffer))
+                    {
+                        //delete .in file
+                        TextWriter writer = new StreamWriter(fulFile, false); //create fromRow file
+                        writer.Write(buffer);
+                        writer.Close();
+                        writer = null;
+                        //here
+                        ok = File.Exists(fulFile);
+                    }
+                   
+                    //now check if file generated
+                    if (ok)
+                    {
+                        string inputGeneratedTitle = "Starting calculations...";
+                        string inputGeneratedMsg = "Input metadata generated for Sample ";
+                        UNIT.IsBusy = true;
+                        Interface.IReport.Msg(inputGeneratedMsg + UNIT.Name, inputGeneratedTitle);
+                    }
+                    else
+                    {
+                        throw new SystemException(INPUT_NOTGEN + UNIT.Name);
+                    }
                 }
-                showProgress?.Invoke(null, EventArgs.Empty);
+              
             }
             catch (SystemException ex)
             {
                 Interface.IStore.AddException(ex);
                 Interface.IReport.Msg(ex.Message, "ERROR", false);
             }
+
+            showProgress?.Invoke(null, EventArgs.Empty);
+
+            return ok;
         }
 
 
@@ -214,58 +252,7 @@ namespace DB.Tools
             bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
             bool doCk = (ip.CurrentSSFPref.DoCK);
 
-            string[] unitsNames = units.Select(o => o.Name.Trim()).ToArray();
-            for (int i = 0; i < unitsNames.Count(); i++)
-            {
-                string item = unitsNames[i];
-
-                try
-                {
-                    //if cancelled
-                    if (!IsCalculating) continue;
-
-                    //otherwise calculate
-                    string newMatssfEXEFile = exefile + item + ".exe";
-                    if (File.Exists(startupPath + item + inPutExt))
-                    {
-                        System.IO.File.Copy(startupPath + exefile, startupPath + newMatssfEXEFile, true);
-                        //runAProcess(hide, item, );
-                        Interface.IReport.Msg("Code cloning OK", "Code cloned...");
-                    }
-                    else
-                    {
-                        //remove from list
-                        // units = units.Where(o => o.Name.CompareTo(item) != 0).ToList();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // runOk = false;
-                    Interface.IReport.Msg("Problems when cloning code for " + item, "Code Cloning ERROR...");
-                    Interface.IStore.AddException(ex);
-                }
-            }
-
-            //refresh
-            //       unitsNames = units.Select(o => o.Name).ToArray();
-
-            foreach (string item in unitsNames)
-            {
-                try
-                {
-                    //if cancelled
-                    if (!IsCalculating) continue;
-                    EventHandler hdl = process_Exited;
-                    string EXE = exefile + item + ".exe";
-                    RunAProcess(hide, item, EXE, ref hdl);
-                }
-                catch (Exception ex)
-                {
-                    // runOk = false;
-                    Interface.IReport.Msg("Problems when running MatSSF for sample " + item, "MatSSF ERROR!");
-                    Interface.IStore.AddException(ex);
-                }
-            }
+            RunProcess(hide);
 
             showProgress?.Invoke(null, EventArgs.Empty);
             //leave here because RunProcess is public
@@ -275,15 +262,100 @@ namespace DB.Tools
             }
         }
 
-        public void RunAProcess(bool hide, string item, string newMatssfEXEFile, ref EventHandler exitHANDLER)
+        public IEnumerable<string> RunProcess(bool hide=true,  string[] unitsNames=null)
         {
-            if (!File.Exists(startupPath + newMatssfEXEFile)) return;
+            if (unitsNames==null) unitsNames = units.Select(o => o.Name.Trim()).ToArray();
+
+            IEnumerable<string> exefiles =  GenerateMatSSFEXEFile(ref unitsNames);
+
+
+            for (int i = 0; i < unitsNames.Count(); i++)
+            {
+                string item = unitsNames[i];
+                string EXE = exefiles.ElementAt(i);
+                
+
+                try
+                {
+                    //if cancelled
+                    if (string.IsNullOrEmpty(EXE)) continue;
+
+                    if (!IsCalculating) continue;
+
+                    EventHandler hdl = process_Exited;
+                    //  string EXE = exefile + item + "." + Guid.NewGuid() + ".exe";
+               
+                    RunAProcess(hide, item, EXE, ref hdl);
+                }
+                catch (Exception ex)
+                {
+                    string msg = "Problems when running MatSSF for sample " + item;
+                    msg += ", having EXE FILE: " + EXE;
+                    Interface.IReport.Msg(msg, "MatSSF ERROR!");
+
+                    Exception ex2  = new Exception(msg,ex.InnerException);
+                    Interface.IStore.AddException(ex2);
+                }
+            }
+
+            return exefiles;
+        }
+
+        public IEnumerable<string> GenerateMatSSFEXEFile(ref  string[] unitsNames)
+        {
+            IList<string> exefiles = new List<string>();
+
+            for (int i = 0; i < unitsNames.Count(); i++)
+            {
+                string item = unitsNames[i];
+                try
+                {
+                    //if cancelled
+                    if (!IsCalculating) continue;
+                    //otherwise calculate
+                   string thisExeFile =    GenerateMatSSFEXEFile(item);
+                    exefiles.Add(thisExeFile);
+
+                }
+                catch (Exception ex)
+                {
+                    Interface.IReport.Msg("Problems when cloning code for " + item, "Code Cloning ERROR...");
+                    Interface.IStore.AddException(ex);
+                }
+            }
+
+            return exefiles;
+        }
+
+        public string GenerateMatSSFEXEFile(string item)
+        {
+            string newMatssfEXEFile = EXEFILE 
+                + item + "." 
+                + Guid.NewGuid().ToString().Substring(0,5)
+                + ".exe";
+
+            bool inputExist = File.Exists(startupPath + item + INPUT_EXT);
+            if (inputExist)
+            {
+                //copy .exe file peersonalized for the unit
+                File.Copy(startupPath + EXEFILE, startupPath + newMatssfEXEFile, true);
+                //runAProcess(hide, item, );
+                Interface.IReport.Msg("Code cloning OK", "Code cloned...");
+            }
+            return newMatssfEXEFile;
+        }
+
+        public Process RunAProcess(bool hide, string item, string newMatssfEXEFile, ref EventHandler exitHANDLER)
+        {
+            if (string.IsNullOrEmpty(newMatssfEXEFile)) return null;
+            bool exists = File.Exists(startupPath + newMatssfEXEFile);
+            if (!exists) return null;
 
             Interface.IReport.Msg("MatSSF is running OK for sample " + item, "MatSSF Running...");
             //files in and out
-            string[] ioFile = new string[] { item + inPutExt, item + outPutExt };
+            string[] ioFile = new string[] { item + INPUT_EXT, item + OUTPUT_EXT };
 
-            System.Diagnostics.Process process = IO.Process(cmd, "/c " + newMatssfEXEFile, startupPath, false, hide, null, exitHANDLER);
+            Process process = IO.Process(cmd, "/c " + newMatssfEXEFile, startupPath, false, hide, null, exitHANDLER);
             //add to table
             processTable.Add((object)process, (object)item);
             //start process
@@ -300,49 +372,118 @@ namespace DB.Tools
                 process.StandardInput.WriteLine(content);
             }
 
+            return process;
             // process.WaitForExit();
         }
 
         private void process_Exited(object sender, EventArgs e)
         {
-            string item = (string)processTable[sender as System.Diagnostics.Process];
-            processTable.Remove(sender as System.Diagnostics.Process);
-            // processTable((object)process, (object)item);
-            Application.OpenForms[0].Invoke(DoMatSSF(item));
+            if (processTable.Count == 0) return;
+            Process process = sender as Process;
+
+            string item = (string)processTable[process];
+
+            if (item == null) return;
+            if (string.IsNullOrEmpty(item)) return;
+
+            try
+            {
+
+                processTable.Remove(process);
+
+                string exeF = process.StartInfo.Arguments;
+                int index = exeF.IndexOf(EXEFILE[0]);
+                exeF = process.StartInfo.Arguments.Substring(index);
+
+                File.Delete(startupPath + exeF);
+               // EventHandler updateToDo = UpdateToDo(item);
+
+                Application.OpenForms[0].Invoke(UpdateToDo(item));
+
+                ////OTHERSS!!!
+
+                Application.OpenForms[0].Invoke(DoMatSSF(item));
+         
+
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+
             Application.OpenForms[0].Invoke(DoCKS(item));
+
             Application.OpenForms[0].Invoke(Finalize(item));
+        }
+
+        private EventHandler UpdateToDo(string item)
+        {
+            EventHandler updateToDo = delegate
+            {
+                UnitRow UNIT = null;
+                UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(item) == 0);
+                //set DONE
+                UNIT.ToDo = false;
+                UNIT.LastChanged = DateTime.Now;
+                UNIT.LastCalc = DateTime.Now;
+                UNIT.IsBusy = false;
+
+                string outFile = UNIT.Name + OUTPUT_EXT;
+                string infile = UNIT.Name + INPUT_EXT;
+
+                //SAVE COPY IN BACKUPS TO LATER ZIP
+                string pathBase = Interface.IStore.FolderPath
+                + Properties.Resources.Backups
+                + "\\" + UNIT.SubSamplesRow.IrradiationCode + "\\";
+
+
+                if (!Directory.Exists(pathBase))
+                {
+                    Directory.CreateDirectory(pathBase);
+                }
+                File.Copy(startupPath + outFile, pathBase + outFile, true);
+                File.Copy(startupPath + infile, pathBase + infile, true);
+
+                File.Delete(startupPath + infile);
+
+            };
+            return updateToDo;
         }
 
         public EventHandler Finalize(string sampleName)
         {
+
+         
+
             EventHandler final = delegate
             {
-                if (!IsCalculating) return;
-
                 try
                 {
-                    LINAA.UnitRow UNIT = null;
+
+                  //  Application.OpenForms[0].ValidateChildren();
+
+                  if (!IsCalculating) return;
+
+
+                    UnitRow UNIT = null;
                     UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
-
-                    Interface.IStore.Save<LINAA.SubSamplesDataTable>();
-                    Interface.IStore.Save<LINAA.UnitDataTable>();
-
-                    if (!bkgCalculation)  Interface.IBS.Update<LINAA.SubSamplesRow>(UNIT.SubSamplesRow);
-
-                    //set DONE
-                    UNIT.ValueChanged(false);
-                    //what is this? check
-                    UNIT.SubSamplesRow.Selected = false;
-
 
                     string msg = "Finished calculations for sample " + UNIT.Name;
                     Interface.IReport.Msg(msg, "Done");
 
-
                     if (processTable.Count == 0)
                     {
+                        if (!bkgCalculation)
+                        {
+                            Interface.IStore.Save<SubSamplesDataTable>();
+                            Interface.IStore.Save<UnitDataTable>();
+
+                            Interface.IBS.Update<SubSamplesRow>(UNIT.SubSamplesRow);
+                        }
+
                         IsCalculating = false;
                     }
+
                 }
                 catch (SystemException ex)
                 {
@@ -351,9 +492,7 @@ namespace DB.Tools
                 }
 
                 showProgress?.Invoke(null, EventArgs.Empty);
-
-                //callback
-                callBack?.Invoke(null, EventArgs.Empty);
+             
             };
 
             return final;
@@ -404,12 +543,14 @@ namespace DB.Tools
                 try
                 {
                     bool runOk = false;
-                    LINAA.UnitRow UNIT = null;
+                    UnitRow UNIT = null;
                     UNIT = Interface.IDB.Unit
                     .FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
 
-                    string file = startupPath + sampleName + outPutExt;
-                    string lecture = IO.ReadFile(file);
+                    string outFile = startupPath+ UNIT.Name + OUTPUT_EXT;
+                    string lecture = IO.ReadFile(outFile);
+                    File.Delete(outFile);
+
                     string problemsFor = "Problems Reading MATSSF Output for Unit ";
                     string matssfOk = "MatSSF calculations done for Unit ";
                     string matssfMsgTitle = "MatSSF Calculations";
@@ -418,6 +559,7 @@ namespace DB.Tools
                     {
                         throw new SystemException(problemsFor + UNIT.Name + "\n");
                     }
+
                     bool doSSF = Interface.IPreferences.CurrentSSFPref.DoMatSSF;
                     runOk = DoMatSSF(lecture, ref UNIT, doSSF);
 
@@ -427,25 +569,25 @@ namespace DB.Tools
                     }
                     else
                     {
-                        string outFile = UNIT.Name + outPutExt;
-                        string infile = UNIT.Name + inPutExt;
-                        string exeF = startupPath + exefile + UNIT.Name + ".exe";
+                     
+                       // string infile = UNIT.Name + INPUT_EXT;
+                       
 
                         //SAVE COPY IN BACKUPS TO LATER ZIP
-                        string pathBase = Interface.IStore.FolderPath
-                        + Properties.Resources.Backups
-                        + "\\" + UNIT.SubSamplesRow.IrradiationCode + "\\";
-                        if (!Directory.Exists(pathBase))
-                        {
-                            Directory.CreateDirectory(pathBase);
-                        }
-                        System.IO.File.Copy(startupPath + outFile, pathBase + outFile, true);
-                        System.IO.File.Copy(startupPath + infile, pathBase + infile, true);
+                      //  string pathBase = Interface.IStore.FolderPath
+                      //  + Properties.Resources.Backups
+                      //  + "\\" + UNIT.SubSamplesRow.IrradiationCode + "\\";
+                      //  if (!Directory.Exists(pathBase))
+                      //  {
+                      //      Directory.CreateDirectory(pathBase);
+                      //  }
+                      //  File.Copy(startupPath + outFile, pathBase + outFile, true);
+                      //  File.Copy(startupPath + infile, pathBase + infile, true);
 
-                        System.IO.File.Delete(startupPath + outFile);
-                        System.IO.File.Delete(startupPath + infile);
-                        System.IO.File.Delete(exeF);
+                    //   File.Delete(startupPath + outFile);
+                 //     File.Delete(startupPath + infile);
 
+                  
                         Interface.IReport.Msg(matssfOk + UNIT.Name, matssfMsgTitle);
                     }
                 }

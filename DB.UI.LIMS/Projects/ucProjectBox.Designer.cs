@@ -54,11 +54,11 @@
             // 
             this.projectlabel.AutoSize = true;
             this.projectlabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projectlabel.Font = new System.Drawing.Font("Segoe UI", 18.25F, System.Drawing.FontStyle.Bold);
             this.projectlabel.ForeColor = System.Drawing.Color.Thistle;
             this.projectlabel.Location = new System.Drawing.Point(3, 0);
             this.projectlabel.Name = "projectlabel";
-            this.projectlabel.Size = new System.Drawing.Size(139, 43);
+            this.projectlabel.Size = new System.Drawing.Size(138, 43);
             this.projectlabel.TabIndex = 0;
             this.projectlabel.Text = "PROJECT";
             // 
@@ -68,11 +68,11 @@
             this.projectbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.projectbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.projectbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectbox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectbox.ForeColor = System.Drawing.Color.Gold;
-            this.projectbox.Location = new System.Drawing.Point(148, 3);
+            this.projectbox.Font = new System.Drawing.Font("Segoe UI", 18.25F, System.Drawing.FontStyle.Bold);
+            this.projectbox.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.projectbox.Location = new System.Drawing.Point(147, 3);
             this.projectbox.Name = "projectbox";
-            this.projectbox.Size = new System.Drawing.Size(437, 33);
+            this.projectbox.Size = new System.Drawing.Size(438, 40);
             this.projectbox.TabIndex = 1;
             // 
             // ucProjectBox

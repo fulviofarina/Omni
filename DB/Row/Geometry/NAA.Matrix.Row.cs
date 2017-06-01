@@ -37,6 +37,13 @@ namespace DB
                 {
                     nulo = checkMatrixComposition();
                 }
+                else if (col == this.tableMatrix.MatrixNameColumn)
+                {
+                    if (nulo)
+                    {
+                        MatrixName = "New @ " + DateTime.Now.ToLocalTime();
+                    }
+                }
             }
 
             public void Checking(DataColumn col, object propo, object val)
