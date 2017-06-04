@@ -14,10 +14,10 @@ namespace DB.UI
 {
     public partial class LIMS
     {
-        private static string HELP_FILE_PDF = "UserGuide.pdf";
-        private static string WINDOWS_EXPLORER = "explorer.exe";
+        protected static string HELP_FILE_PDF = "UserGuide.pdf";
+        protected static string WINDOWS_EXPLORER = "explorer.exe";
 
-        private static void formClosing(object sender, FormClosingEventArgs e)
+        protected internal static void formClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = Creator.Close(ref LIMS.Linaa);
             if (!e.Cancel)
@@ -30,11 +30,118 @@ namespace DB.UI
         {
             return Application.StartupPath + DB.Properties.Resources.DevFiles + HELP_FILE_PDF;
         }
+
+        /// <summary>
+        /// Sets a ucGenericBox as a Project Box, with the corresponding methods
+        /// </summary>
+        /// <param name="comboBox"></param>
+        public static void SetProjectBox(ref ucGenericCBox comboBox)
+        {
+      
+
+            DB.UI.ucGenericCBox control = comboBox;
+
+            control.DeveloperMethod += delegate
+            {
+                Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+                Interface.IPreferences.SavePreferences();
+
+                control.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
+
+            };
+            control.PopulateListMethod += delegate
+            {
+                if (Interface == null) return; //puede pasar debido al Designer y tener contendio no nulo
+                control.InputProjects = Interface.IPopulate.IProjects.ProjectsList.ToArray();
+            };
+            control.RefreshMethod += delegate
+            {
+                bool rejected = Interface.IPopulate.LoadProject(control.EnterPressed, control.TextContent);
+                if (rejected)
+                {
+                    control.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                }
+            };
+
+            control.Label = PROJECT_LABEL;
+            control.LabelForeColor = System.Drawing.Color.Thistle;
+
+            //ad to users controls...
+            UserControls.Add(control);
+
+            /*
+            BindingSource bs = Interface.IBS.Irradiations;
+            string column;
+            column = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
+            control.BindingField = column;
+            control.SetBindingSource(ref bs);
+            */
+        
+    }
+        public static void SetSampleBox(ref ucGenericCBox sampleBox)
+        {
+
+            EventHandler endEdit = delegate
+            {
+                Interface.IBS.EndEdit();
+            };
+
+            DB.UI.ucGenericCBox control = sampleBox;
+            //    control.Label = "Sample";
+            //   control.LabelForeColor = Color.LemonChiffon;
+            EventHandler fillsampleNames = delegate
+            {
+                control.InputProjects = Interface.ICurrent.SubSamplesNames.ToArray();
+            };
+            control.PopulateListMethod += fillsampleNames;
+
+            //invoke the handlers...
+            Interface.IBS.SubSamples.AddingNew += delegate
+            {
+                // filldescriptios.Invoke(null, EventArgs.Empty);
+                fillsampleNames.Invoke(null, EventArgs.Empty);
+            };
+
+            IGenericCBox cb = UserControls.OfType<ucGenericCBox>().FirstOrDefault(o => o.Label.CompareTo(PROJECT_LABEL) == 0);
+
+            if (cb != null) cb.RefreshMethod += fillsampleNames;
+            //   control.PopulateListMethod += endEdit;
+        }
+        public static void SetSampleDescriptionBox(ref ucGenericCBox sampleBox)
+        {
+
+
+            DB.UI.ucGenericCBox control2 = sampleBox;
+            //   control2.Label = "Description";
+            //    control2.LabelForeColor = Color.White;
+            EventHandler filldescriptios = delegate
+            {
+                control2.InputProjects = Interface.ICurrent.SubSamplesDescriptions.ToArray();
+            };
+            control2.PopulateListMethod += filldescriptios;
+            // control2.PopulateListMethod += endEdit;
+
+            //invoke the handlers...
+            Interface.IBS.SubSamples.AddingNew += delegate
+            {
+                filldescriptios.Invoke(null, EventArgs.Empty);
+                //  fillsampleNames.Invoke(null, EventArgs.Empty);
+            };
+          
+
+            IGenericCBox cb=       UserControls.OfType<ucGenericCBox>().FirstOrDefault(o => o.Label.CompareTo(PROJECT_LABEL) == 0);
+            if (cb!=null)           cb.RefreshMethod += filldescriptios;
+
+        }
+
+
         public static Form CreateSSFUserInterface(ref Form aboutbox, out Action lastCallBack, out Action midCallBack)
         {
-            IucPreferences preferences = LIMS.PreferencesUI();
-          
-            IucOptions options = LIMS.OptionsUI(ref aboutbox);
+            IPreferences preferences = GetPreferences();
+
+
+            LIMS.AboutBox = aboutbox;
+            IOptions options = GetOptions();
 
             //DEVELOPER MODE
             //      options.SetDeveloperMode(false);
@@ -45,10 +152,10 @@ namespace DB.UI
             };
 
             //1
-            UserControl control = LIMS.CreateUI(ControlNames.SubSamples);
-            LIMS.CreateForm("Samples", ref control, false);
+            UserControl control = CreateUI(ControlNames.SubSamples);
+            CreateForm("Samples", ref control, false);
             ucSubSamples ucSubSamples = control as ucSubSamples;
-            ucSubSamples.ucContent.Set(ref LIMS.Interface);
+            ucSubSamples.ucContent.Set(ref Interface);
 
             //2
             ucGenericCBox ucProjectBox = null;
@@ -59,30 +166,23 @@ namespace DB.UI
 
             //4
             ucSSF ucSSF = new ucSSF();
-            ucSSF.Set(ref LIMS.Interface);
+        
 
-            Pop msn = LIMS.Interface.IReport.Msn;
+            Pop msn = Interface.IReport.Msn;
             Bitmap icon = Properties.Resources.Logo;
             Form form = Creator.CreateForm(ref icon);
 
             midCallBack = delegate
             {
-
+                
                 // ARREGLAR ESTO
-                   LINAA.SSFPrefRow pr = LIMS.Interface.IPreferences.CurrentSSFPref;
+                   LINAA.SSFPrefRow pr = Interface.IPreferences.CurrentSSFPref;
                    pr.DoMatSSF = true;
                    pr.DoCK = false;
                    pr.Loop = true;
                 pr.CalcDensity = true;
-
-                LIMS.Interface.IPreferences.CurrentPref.AutoLoad = true;
-
+                Interface.IPreferences.CurrentPref.AutoLoad = true;
 // ARREGLAR ESTO
-
-
-
-
-
 
 
                 Application.DoEvents();
@@ -90,14 +190,14 @@ namespace DB.UI
                 form.Controls.Add(ucSSF);
 
                 //ESTE ORDEN ES FUNDAMENTAL!!!
-                LIMS.Interface.IBS.ApplyFilters();
-                LIMS.Interface.IBS.StartBinding();
+                Interface.IBS.ApplyFilters();
+                Interface.IBS.StartBinding();
 
-
-                ucSSF.AttachCtrl(ref preferences);
+                ucSSF.Set(ref Interface);
+                //       ucSSF.AttachCtrl(ref preferences);
                 ucSSF.AttachCtrl(ref ucProjectBox);
                 ucSSF.AttachCtrl(ref aBindingNavigator);
-                ucSSF.AttachCtrl(ref options);
+            //    ucSSF.AttachCtrl(ref options);
 
                 // ucSSF.AttachCtrl(ref units);
          
@@ -111,32 +211,33 @@ namespace DB.UI
             lastCallBack = delegate
             {
 
-                bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
+                bool autoload = Interface.IPreferences.CurrentPref.AutoLoad;
                 string lastProject = string.Empty;
                 if (autoload)
                 {
-                    lastProject = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                    lastProject = Interface.IPreferences.CurrentPref.LastIrradiationProject;
                 }
 
-                if (!autoload || string.IsNullOrEmpty(lastProject))
-                {
-                    LIMS.Interface.IReport.GreetUser();
-                    LIMS.Interface.IReport.SpeakLoadingFinished();
-                }
-           
-
-                form.Opacity = 100;
-                //3
-                // Application.DoEvents();
-
+                //load last porject
                 ucProjectBox.TextContent = lastProject;
-                // ucProjectBox.Refresher();
-            
+
+              
 
                 Form frm2 = msn.ParentForm;
                 frm2.Opacity = 0;
                 ucSSF.AttachCtrl(ref msn);
                 frm2.Dispose();
+
+             
+                form.Opacity = 100;
+
+                Application.DoEvents();
+                if (!autoload || string.IsNullOrEmpty(lastProject))
+                {
+                    Interface.IReport.GreetUser();
+                    Interface.IReport.SpeakLoadingFinished();
+
+                }
 
                 ucSSF.SetTimer();
 
@@ -145,11 +246,12 @@ namespace DB.UI
             return form;
         }
 
+     
 
         public static void CreateLIMS()
         {
             Interface.IReport.Msg("Starting LIMS", "Starting...");
-            Linaa = LIMS.Interface.Get();
+            Linaa = Interface.Get();
             Form = new LIMS(); //make a new UI LIMS
             Form.ShowInTaskbar = false;
             Form.Opacity = 0;
@@ -162,14 +264,19 @@ namespace DB.UI
 
         private static Form aboutBox;
 
-        public static IucOptions OptionsUI(ref Form AboutBox)
+        public static IOptions GetOptions()
         {
-            IucOptions options = new ucOptions();
+
+            IOptions options =   UserControls.OfType<ucOptions>().FirstOrDefault();
+
+            if (options != null) return options;
+
+            options = new ucOptions();
             options.Set();
-            aboutBox = AboutBox;
+            LIMS.AboutBox = AboutBox;
             options.AboutBoxClick += delegate
             {
-                aboutBox.Show();
+                LIMS.AboutBox.Show();
                 // box.Show();
             };
             options.ConnectionBox += delegate
@@ -183,58 +290,53 @@ namespace DB.UI
             options.ExplorerClick +=delegate
                 {
                //     if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
-                LIMS.Explore();
+                Explore();
             };
             options.PreferencesClick += delegate
             {
-                LIMS.ShowPreferences(true);
+                GetPreferences(true);
             };
             options.DropDownClicked += delegate
             {
                 bool ok = Interface.IPreferences
                 .CurrentPref.AdvancedEditor;
-
                 options.DisableImportant = ok;
-                
-            
             };
             options.DatabaseClick += delegate
-
              {
-               //  if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
-                 LIMS.ShowToUser();
+                 ShowToUser();
              };
+
+            UserControls.Add(options);
+
             return options;
         }
 
-        //= new Pop(true);
-        public static IucPreferences PreferencesUI()
-        {
-            UserControl ucPref = null;
-            ucPref = LIMS.CreateUI(ControlNames.Preferences);
-            LIMS.CreateForm("Preferences", ref ucPref, false);
-            IucPreferences preferences = (IucPreferences)ucPref;
-            return preferences;
-        }
-
-        // public static System.Collections.Generic.IList<object> UserControls;
 
         public static void ShowToUser()
         {
-            LIMS.Form.Visible = true;
-            LIMS.Form.Opacity = 100;
+            Form.Visible = true;
+            Form.Opacity = 100;
 
-            LIMS.Form.BringToFront();
+            Form.BringToFront();
         }
 
-        public static void ShowPreferences(bool show)
+        public static IPreferences GetPreferences(bool show = false)
         {
+            ucPreferences c = null;
             try
             {
-                UserControl c = LIMS.UserControls.OfType<ucPreferences>().FirstOrDefault();
+                c = UserControls.OfType<ucPreferences>().FirstOrDefault();
 
+                if (c == null)
+                {
+                    UserControl ucPref = null;
+                    ucPref = CreateUI(ControlNames.Preferences);
+                    CreateForm("Preferences", ref ucPref, false);
+                    c = ucPref as ucPreferences;
+                }
                 c.ParentForm.Visible = show;
-                c.ParentForm.Opacity = 100;
+            //    c.ParentForm.Opacity = 100;
                 c.ParentForm.TopMost = show;
                 c.ParentForm.BringToFront();
             }
@@ -242,6 +344,7 @@ namespace DB.UI
             {
                 Interface.IStore.AddException(ex);
             }
+            return c;
         }
 
         public static T FindLastControl<T>(string name)
@@ -265,11 +368,24 @@ namespace DB.UI
         /// </summary>
         public static LINAA Linaa = null;
 
-        private static Rsx.DGV.IFind IFind = null;
+        public static Rsx.DGV.IFind IFind = null;
 
         public static IList<object> UserControls = null;
 
-     
+        protected static string PROJECT_LABEL = "PROJECT";
+
+        protected internal static Form AboutBox
+        {
+            get
+            {
+                return aboutBox;
+            }
+
+            set
+            {
+                aboutBox = value;
+            }
+        }
 
         public static void CreateForm(string title, ref UserControl control, bool show = true)
         {
@@ -301,7 +417,7 @@ namespace DB.UI
 
             if (control == null)
             {
-                LIMS.Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
+                Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
                 return null;
             }
             UserControls.Add(control);
@@ -310,7 +426,7 @@ namespace DB.UI
                 
             //create the DGV controller... and
             //set methods...
-            Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref LIMS.IFind);
+            Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref IFind);
             cv.LoadMethod = loader;
             cv.PostRefresh = postRefresh;
             cv.PreRefresh = preRefresh;
@@ -328,7 +444,7 @@ namespace DB.UI
 
             if (dgvs.Count() != 0)
             {
-                cv.SetContext(controlHeader, ref dgvs, LIMS.Form.CMS);
+                cv.SetContext(controlHeader, ref dgvs, Form.CMS);
 
                 //create events
                 cv.CreateDGVEvents();
@@ -600,7 +716,7 @@ namespace DB.UI
                 controlToSend = ControlNames.Vials;
             }
 
-            UserControl control = LIMS.CreateUI(controlToSend);
+            UserControl control = CreateUI(controlToSend);
 
             if (control == null) return;
 
@@ -618,7 +734,7 @@ namespace DB.UI
 
             IPickerForm frm = new PickerForm();
             //pick from the following from dgvs, to this dgv,
-            LINAA.ExceptionsDataTable exsDT = LIMS.Interface.IDB.Exceptions;
+            LINAA.ExceptionsDataTable exsDT = Interface.IDB.Exceptions;
             frm.IPicker = new Picker(ref dgv, ref from, false, ref exsDT, rel);  //the picker algorithm class
             frm.Module = control;    //this will show the module to pick from
         }

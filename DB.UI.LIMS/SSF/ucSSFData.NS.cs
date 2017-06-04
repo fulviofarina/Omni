@@ -16,21 +16,19 @@ namespace DB.UI
 
         protected internal Hashtable unitBindings;
 
-        public void AttachCtrl<T>(ref T pro)
+     
+
+        private void refreshNSLabel()
         {
-            if (pro.GetType().Equals(typeof(ucPreferences)))
+            if (Interface.IPreferences.CurrentSSFPref.Overrides)
             {
-                IucPreferences pref = pro as IucPreferences;
-                EventHandler overrider = setOverriderChanged();
-
-                pref.OverriderChanged += overrider;
-
-                overrider.Invoke(null, EventArgs.Empty);
-
-                pref.RunInBackground += delegate
-                {
-                    Application.RaiseIdle(EventArgs.Empty);
-                };
+                this.NeutronSourceLBL.Text = sourceVARIABLES + add;
+                this.NeutronSourceLBL.ForeColor = Color.Red;
+            }
+            else
+            {
+                this.NeutronSourceLBL.Text = sourceVARIABLES;
+                this.NeutronSourceLBL.ForeColor = Color.LightCyan;
             }
         }
 
@@ -40,19 +38,30 @@ namespace DB.UI
         public Hashtable Set(ref Interface inter)
         {
             Interface = inter;
-
             try
             {
                 setEnabledBindings();
 
                 unitBindings = setUnitBindings();
 
-             
-                
+
+                IPreferences pref = LIMS.GetPreferences();
+                //       IPreferences pref = pro as IPreferences;
+                EventHandler overrider = delegate
+                {
+                    refreshNSLabel();
+                };
+                pref.OverriderChanged += overrider;
+                //invoke
+                overrider.Invoke(null, EventArgs.Empty);
+                //refreshNSLabel();
+
+
+
                 errorProvider1.DataMember = Interface.IDB.Unit.TableName;
                 errorProvider1.DataSource = Interface.IBS.Units;
 
-                Interface.IReport.Msg("Database", "Units were loaded!");
+                Interface.IReport.Msg("Neutron Source Control OK", "Control loaded");
             }
             catch (System.Exception ex)
             {
@@ -62,22 +71,7 @@ namespace DB.UI
             return unitBindings;
         }
 
-        private EventHandler setOverriderChanged()
-        {
-            return delegate
-            {
-                if (Interface.IPreferences.CurrentSSFPref.Overrides)
-                {
-                    this.NeutronSourceLBL.Text = sourceVARIABLES + add;
-                    this.NeutronSourceLBL.ForeColor = Color.Red;
-                }
-                else
-                {
-                    this.NeutronSourceLBL.Text = sourceVARIABLES;
-                    this.NeutronSourceLBL.ForeColor = Color.LightCyan;
-                }
-            };
-        }
+       
 
         private void setEnabledBindings()
         {

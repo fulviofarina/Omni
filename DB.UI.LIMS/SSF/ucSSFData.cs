@@ -9,9 +9,9 @@ namespace DB.UI
 {
     public partial class ucSSFData : UserControl
     {
-        protected Color[] arr = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.White };
+        protected internal Color[] arr = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.White };
 
-        protected Color[] arr2 = new Color[] { Color.Yellow, Color.Black, Color.Black };
+        protected internal Color[] arr2 = new Color[] { Color.Yellow, Color.Black, Color.Black };
 
         // private bool cancelCalculations = false;
         protected internal Interface Interface = null;
@@ -24,43 +24,21 @@ namespace DB.UI
       + "You can return to the DEFAULT MODE at any time.\n\n";
 
         protected static string EXPERT_MODE_ON_TITLE = "EXPERT MODE ACTIVATED";
-        protected internal Hashtable unitBindings;
+      
         protected static string BINDING_MSG = "Data Controls were loaded!";
         protected static string BINDING_OK = "Bindings OK";
-        Hashtable bindings = null;
-        public void AttachCtrl<T>(ref T pro)
+
+      //  protected internal Hashtable unitBindings;
+        private Hashtable bindings = null;
+
+     
+
+        private void popupMessage()
         {
-            if (pro.GetType().Equals(typeof(ucPreferences)))
+            if (Interface.IPreferences.CurrentSSFPref.Overrides)
             {
-                IucPreferences pref = pro as IucPreferences;
-
-                linkColumns();
-
-                EventHandler hdl = delegate
-                {
-                    this.sampleDGV.Invalidate();
-                    Application.DoEvents();
-                };
-                pref.CalcMassChanged += hdl;
-                pref.CalcDensityChanged += hdl;
-                pref.CalcRadiusChanged += hdl;
-                pref.CalcLengthChanged += hdl;
-
-                //TODO: Bidnings
-                pref.SetRoundingBinding(ref bindings);
-
-                EventHandler popup =
-delegate
-{
-    if (Interface.IPreferences.CurrentSSFPref.Overrides)
-    {
-        MessageBox.Show(EXPERT_MODE_ON_MSG, EXPERT_MODE_ON_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        Interface.IReport.Msg(EXPERT_MODE_ON_MSG, EXPERT_MODE_ON_TITLE);
-    }
-};
-                pref.OverriderChanged += popup;
-
-             ucSSFDataNS1.AttachCtrl(ref pro);
+                MessageBox.Show(EXPERT_MODE_ON_MSG, EXPERT_MODE_ON_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Interface.IReport.Msg(EXPERT_MODE_ON_MSG, EXPERT_MODE_ON_TITLE);
             }
         }
 
@@ -82,7 +60,36 @@ delegate
                 DataGridViewColumn col = this.volDataGridViewTextBoxColumn;
                 Rsx.DGV.Control.PaintColumn(true, ref col, arr, arr2);
 
-             //   paintColumns();
+
+                IPreferences pref = LIMS.GetPreferences();
+
+                linkColumns();
+
+                EventHandler cleanDGV = delegate
+                {
+                    this.sampleDGV.Invalidate();
+
+                };
+                pref.CalcMassChanged += cleanDGV;
+                pref.CalcDensityChanged += cleanDGV;
+                pref.CalcRadiusChanged += cleanDGV;
+                pref.CalcLengthChanged += cleanDGV;
+
+                //TODO: Bidnings
+                pref.SetRoundingBinding(ref bindings);
+
+                EventHandler popup = delegate
+                {
+                    popupMessage();
+                };
+                pref.OverriderChanged += popup;
+
+                pref.RunInBackground += delegate
+                {
+                    Application.RaiseIdle(EventArgs.Empty);
+                };
+
+
 
                 errorProvider2.DataMember = Interface.IDB.SubSamples.TableName;
                 errorProvider2.DataSource = Interface.IBS.SubSamples;
@@ -98,9 +105,9 @@ delegate
         protected internal void linkColumns()
         {
             LINAA.SSFPrefRow pref = Interface.IPreferences.CurrentSSFPref;
-        
+
             SampleColumn columna = this.fillHeightDataGridViewTextBoxColumn;
-      
+
             columna.BindingPreferenceField = Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
 
@@ -108,37 +115,33 @@ delegate
             columna.BindingPreferenceField = Interface.IDB.SSFPref.CalcMassColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
 
-
             columna = this.radiusDataGridViewTextBoxColumn;
             columna.BindingPreferenceField = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
-
-
 
             columna = this.calcDensityDataGridViewTextBoxColumn;
             columna.BindingPreferenceField = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
 
-
-      
-            //  Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
+           
         }
+
         /*
         protected internal void paintColumns()
         {
             bool readOnly = Interface.IPreferences.CurrentSSFPref.AAFillHeight;
             DataGridViewColumn columna = this.fillHeightDataGridViewTextBoxColumn;
-            //     Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
+            // Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
             columna.ReadOnly = readOnly;
 
             columna = this.gross1DataGridViewTextBoxColumn;
             readOnly = Interface.IPreferences.CurrentSSFPref.CalcMass;
-            //   Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
+            // Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
             columna.ReadOnly = readOnly;
 
             readOnly = Interface.IPreferences.CurrentSSFPref.AARadius;
             columna = this.radiusDataGridViewTextBoxColumn;
-            //  Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
+            // Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
             columna.ReadOnly = readOnly;
 
             readOnly = Interface.IPreferences.CurrentSSFPref.CalcDensity;
@@ -146,9 +149,10 @@ delegate
             columna.ReadOnly = readOnly;
 
             this.sampleDGV.Invalidate();
-            //  Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
+            // Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
         }
 */
+
         public ucSSFData()
         {
             InitializeComponent();

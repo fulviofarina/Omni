@@ -71,6 +71,19 @@ namespace DB
                     return nonNullableUnit;
                 }
             }
+            public IEnumerable<DataColumn> NonNullBasicUnits
+            {
+                get
+                {
+                    if (nonNullBasicUnits == null)
+                    {
+                        nonNullBasicUnits = new DataColumn[] {  this.NetColumn, this.FillHeightColumn, this.RadiusColumn, this.columnMatrixID };
+                    }
+
+                    return nonNullBasicUnits;
+                }
+            }
+           protected internal DataColumn[] nonNullBasicUnits = null;
 
             public IEnumerable<DataColumn> SimpleNonNullable
             {

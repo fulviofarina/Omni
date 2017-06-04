@@ -7,39 +7,44 @@ namespace DB.Tools
 
     
 
-        public bool LoadProject( bool makeProject, string ProjectOrOrder)
+        public bool LoadProject( bool enterPressed, string ProjectOrOrder)
         {
             if (string.IsNullOrEmpty(ProjectOrOrder)) return false;
             //    ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
             bool isAProjectOrOrder = Interface.IPopulate.IProjects.ProjectsList.Contains(ProjectOrOrder);
             if (!Interface.IBS.EnabledControls) return false;
             //eactivate box because it entered
-            makeProject = makeProject && !isAProjectOrOrder;
+            bool makeProject = enterPressed && !isAProjectOrOrder;
 
             if (isAProjectOrOrder || makeProject)
             {
+                //disable boxes
                 Interface.IBS.EnabledControls = false;
             }
+            bool rejected = false;
             if (makeProject)
             {
-
+                //add project and update the flag
                 isAProjectOrOrder= Interface.IPopulate.AddProject(ref ProjectOrOrder);
-           //     isAProjectOrOrder = true;
+                if (!isAProjectOrOrder) rejected = true;
+                if (rejected)
+                {
+                    Interface.IReport.Msg("The user cancelled the project creation", "Project " + ProjectOrOrder + " not created", false);
+                }
+          
             }
             if (isAProjectOrOrder)
             {
-             //   Interface.IBS.EnabledControls = true;
+                //find project
                 Interface.IBS.SelectProject(ProjectOrOrder);
-                
-            }
-            if (isAProjectOrOrder || makeProject)
-            {
+                //renable boxes
                 Interface.IBS.EnabledControls = true;
+
                 Interface.IBS.SubSamples.MoveLast();//.Position = 0;
                 Interface.IBS.Units.MoveLast();//.Position = 0;
             }
 
-            return makeProject;
+            return rejected;
 
         }
         public bool AddProject(ref string ProjectOrOrder)

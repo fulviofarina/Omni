@@ -180,7 +180,10 @@ namespace DB
                 //ES QUE JAMAS VOY A ENTENDER POR QUE NO VALIDA
                 //HASTA QUE ESTA MIERDA ESTE AQUI
                 //ES UNA PUTADAAAAAAAAAAAAAA
-              bool nulo  =EC.CheckNull(column, this);
+
+                //esta mierda coloca los booleanos en falso por defecto
+                //dejar así
+           
                 ////////////////////////////
 
 
@@ -193,6 +196,7 @@ namespace DB
                 }
                 else if (column == this.tableSSFPref.CalcMassColumn)
                 {
+                    bool nulo = EC.CheckNull(column, this);
                     if (nulo)
                     {
                         CalcMass = false;
@@ -226,8 +230,9 @@ namespace DB
                 }
                 else if (column == this.tableSSFPref.OverridesColumn)
                 {
-                    if (nulo) Overrides = false;
-                 
+                    bool nulo = EC.CheckNull(column, this);
+                    //if (nulo) Overrides = false;
+
                 }
             
             }
@@ -314,17 +319,27 @@ namespace DB
             private void checkAutoCalculation(DataColumn column)
             {
                 // if (isBusy) return;
-                bool nulo = EC.CheckNull(column, this);
+            //    bool nulo = EC.CheckNull(column, this);
 
-             
+                if (IsAAFillHeightNull())
+                {
+                    AAFillHeight = false;
+                 //   return;
+                }
+                if (IsAARadiusNull())
+                {
+                    AARadius = false;
+                   // return;
+                }
+                if (IsCalcDensityNull())
+                {
+                    CalcDensity = true;
+                 //   return;
+                }
 
                 if (column == this.tableSSFPref.AAFillHeightColumn)
                 {
-                    if (nulo)
-                    {
-                        AAFillHeight = false;
-                        return;
-                    }
+                   
                 
 
                     // isBusy = true;
@@ -346,12 +361,7 @@ namespace DB
                 {
                     // isBusy = true;
 
-                    if (nulo)
-                    {
-                        AARadius = false;
-                        return;
-                    }
-                    
+                  
 
                     if (AARadius)
                     {
@@ -369,11 +379,7 @@ namespace DB
                 }
                 else if (column == this.tableSSFPref.CalcDensityColumn)
                 {
-                    if (nulo)
-                    {
-                        CalcDensity = true;
-                        return;
-                    }
+                   
                     // isBusy = true;
                     if (CalcDensity)
                     {
@@ -394,44 +400,45 @@ namespace DB
 
             private void checkDoColumns(DataColumn column)
             {
-                bool nulo = EC.CheckNull(column, this);
+              //  bool nulo = EC.CheckNull(column, this);
 
 
                 if (column == this.tableSSFPref.DoCKColumn)
                 {
-                    if (nulo) DoCK = false;
+                    if (IsDoCKNull()) DoCK = false;
                     // this.tableSSFPref.DoChilianChanged?.Invoke(null, EventArgs.Empty);
                 }
                 else if (column == this.tableSSFPref.DoMatSSFColumn)
                 {
-                    if (nulo) DoMatSSF = true;
+                    if (IsDoMatSSFNull()) DoMatSSF = true;
                     // this.tableSSFPref.DoMatSSFChanged?.Invoke(null, EventArgs.Empty);
                 }
                 else if (column == this.tableSSFPref.LoopColumn)
                 {
-                    if (nulo) Loop = true;
+                    if (IsLoopNull()) Loop = true;
                 }
+
             }
 
             private void checkOtherColumns(DataColumn column)
             {
                 bool nulo = EC.CheckNull(column, this);
-
+                ///EC automatically sets stuff to null
                 if (column == this.tableSSFPref.RoundingColumn)
                 {
                     if (nulo) Rounding = "N3";
                 }
                 else if (column == this.tableSSFPref.CalibrationColumn)
                 {
-                    if (nulo) Calibration = false;
+                   /// if (nulo) Calibration = false;
                 }
                 else if (column == this.tableSSFPref.ShowOtherColumn)
                 {
-                    if (nulo) ShowOther = false;
+                   /// if (nulo) ShowOther = false;
                 }
                else if (column == this.tableSSFPref.ShowMatSSFColumn)
                 {
-                    if (nulo) ShowMatSSF = false;
+                   /// if (nulo) ShowMatSSF = false;
                 }
 
               
@@ -469,7 +476,7 @@ namespace DB
             public void Check(DataColumn Column)
             {
 
-              bool nulo =   EC.CheckNull(Column, this);
+                 bool nulo =   EC.CheckNull(Column, this);
 
               
                 if (tablePreferences.OtherCols.Contains(Column))
@@ -506,7 +513,7 @@ namespace DB
                     }
                     else if (Column == this.tablePreferences.LastIrradiationProjectColumn)
                     {
-                       // if (nulo) LastIrradiationProject = string.Empty;
+                       if (IsLastIrradiationProjectNull()) LastIrradiationProject = string.Empty;
                     }
                     else if (Column == this.tablePreferences.ShowSampleDescriptionColumn)
                     {

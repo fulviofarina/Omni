@@ -294,6 +294,11 @@ namespace DB.UI
             callBack?.Invoke();
         }
 
+        public void RejectChanges()
+        {
+            this.projectbox.ResetText();
+        }
+
         // private Color color;
         protected internal void openDropDown(object sender, EventArgs e)
         {

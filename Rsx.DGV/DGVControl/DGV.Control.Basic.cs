@@ -410,6 +410,6 @@ namespace Rsx.DGV
       hs = null;
     }
 
-    public delegate void Informer(string Result, string Action, bool ok=true);
+    public delegate void Informer(string Result, string Action, bool ok=true, bool accumulate = false);
   }
 }

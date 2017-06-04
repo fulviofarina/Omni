@@ -6,7 +6,11 @@ namespace Rsx.Generic
 {
   public class Timer : System.Timers.Timer
   {
-    public Timer(int seg, Action toDo)
+
+
+     
+
+        public Timer(int seg, Action toDo)
     {
             this.Elapsed += Tim_Tick;
       this.Interval = seg * 1000;

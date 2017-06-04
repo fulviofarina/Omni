@@ -12,7 +12,27 @@ using System.Collections;
 
 namespace VTools
 {
-    public partial class ucOptions : UserControl, IucOptions
+
+    public interface IOptions
+    {
+        //  Action AboutBoxAction { set; }
+        event EventHandler DatabaseClick;
+        event EventHandler HelpClick;
+
+        //     void SetDeveloperMode(bool devMode);
+        event EventHandler ExplorerClick;
+        event EventHandler PreferencesClick;
+        event EventHandler AboutBoxClick;
+        event EventHandler ConnectionBox;
+        event EventHandler SaveClick;
+        void ResetProgress(int max);
+        void Set();
+        EventHandler ShowProgress { get; }
+        bool DisableImportant { set; }
+
+        event EventHandler DropDownClicked;// { get; set; }
+    }
+    public partial class ucOptions : UserControl, IOptions
     {
         public ucOptions()
         {

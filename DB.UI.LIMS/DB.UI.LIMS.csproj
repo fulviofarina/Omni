@@ -124,7 +124,6 @@
     <Compile Include="GeometrySimple\ucV.Designer.cs">
       <DependentUpon>ucV.cs</DependentUpon>
     </Compile>
-    <Compile Include="Preferences\IucPreferences.cs" />
     <Compile Include="Preferences\ucPreferences.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -183,9 +183,7 @@
     <Content Include="Files\solcoi.bak">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Files\Restarting">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Files\Restarting" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

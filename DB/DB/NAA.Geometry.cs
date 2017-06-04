@@ -77,7 +77,7 @@ namespace DB
                     {
                         nonNullables = new DataColumn[]
                         {
-                            this.columnMatrixDensity,
+                           // this.columnMatrixDensity,
                             this.columnMatrixName,
                             this.columnMatrixComposition,
                             this.columnMatrixDate

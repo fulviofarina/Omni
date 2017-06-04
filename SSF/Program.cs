@@ -57,6 +57,8 @@ namespace SSF
 
                 Application.Run(toReturn);
 
+                PainterTimer();
+
             }
             catch (Exception ex)
             {
@@ -68,10 +70,22 @@ namespace SSF
       //      Application.UseWaitCursor = false;
         }
 
-       
-      
+        public static void PainterTimer()
+        {
+            //to repaint the form
+            System.Timers.Timer painter = new System.Timers.Timer();
+            painter.Elapsed += delegate
+            {
+                painter.Enabled = false;
+                Application.OpenForms[0]?.Invalidate();
+                painter.Enabled = true;
+            };
+            painter.Interval = 60 * 10 * 1000; //10 minutes
+            painter.Enabled = true;
+        }
 
-  
-      
+
+
+
     }
 }

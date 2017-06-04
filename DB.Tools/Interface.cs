@@ -1,4 +1,7 @@
-﻿namespace DB.Tools
+﻿using System.Data;
+using System.Linq;
+
+namespace DB.Tools
 {
     public partial class Interface
     {
@@ -83,5 +86,70 @@
 
             //attach interfaces of LINAA (DB)
         }
+
+        /// <summary>
+        /// I put this here because I can have broad control on the names list
+        /// </summary>
+        /// <param name="tableName"></param>
+        public void GetDisplayTableName(ref string tableName)
+        {
+            if (tableName.Contains(IDB.VialType.TableName))
+            {
+                tableName = "Container";
+            }
+            else if (tableName.Contains(IDB.Channels.TableName))
+            {
+                tableName = "Neutron Source";
+            }
+            else if (tableName.Contains(IDB.Unit.TableName))
+            {
+                tableName = "Sample-Source configuration";
+            }
+            else if (tableName.Contains(IDB.SubSamples.TableName))
+            {
+                tableName = "Sample geometry";
+            }
+        }
+        public string GetDisplayColumName( string tableName, string[] colsInError )
+        {
+         
+            //iterate
+            for (int i = 0; i < colsInError.Count(); i++)
+            {
+                string col = colsInError[i];
+                if (col.Contains(tableName))
+                {
+                    colsInError[i] = colsInError[i].Replace(tableName, null);
+                }
+                if (col.Contains("FillHeight"))
+                {
+                    colsInError[i] = "Length";
+
+                }
+                else if (col.Contains("Radius"))
+                {
+                    colsInError[i] = "Radius";
+                }
+                else if (col.Contains("Matrix"))
+                {
+                    colsInError[i] = "Matrix";
+                }
+                else if (col.Contains("Name") || col.Contains("Ref"))
+                {
+                    colsInError[i] = "Label";
+                }
+                else if (col.Contains("Gross") || col.Contains("Net"))
+                {
+                    colsInError[i] = "Mass";
+                }
+               
+
+            }
+            string sep = ", ";
+            string result = colsInError.Aggregate((o, next) => o = o + sep + next);
+            result = "\t" + result;
+            return result;
+        }
+
     }
 }

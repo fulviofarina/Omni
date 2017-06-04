@@ -38,8 +38,8 @@
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.95547F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.04453F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.32653F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.67347F));
             this.tableLayoutPanel.Controls.Add(this.iconic, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.title, 1, 0);
@@ -60,7 +60,7 @@
             this.iconic.Location = new System.Drawing.Point(3, 3);
             this.iconic.Name = "iconic";
             this.tableLayoutPanel.SetRowSpan(this.iconic, 2);
-            this.iconic.Size = new System.Drawing.Size(57, 99);
+            this.iconic.Size = new System.Drawing.Size(73, 99);
             this.iconic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.iconic.TabIndex = 12;
             this.iconic.TabStop = false;
@@ -71,15 +71,14 @@
             this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDescription.Font = new System.Drawing.Font("Segoe UI", 13.25F, System.Drawing.FontStyle.Bold);
             this.textBoxDescription.ForeColor = System.Drawing.Color.DarkOrange;
-            this.textBoxDescription.Location = new System.Drawing.Point(69, 31);
+            this.textBoxDescription.Location = new System.Drawing.Point(85, 31);
             this.textBoxDescription.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
             this.textBoxDescription.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.textBoxDescription.Size = new System.Drawing.Size(418, 71);
+            this.textBoxDescription.Size = new System.Drawing.Size(402, 71);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.Text = "Description";
-            this.textBoxDescription.WordWrap = false;
             // 
             // title
             // 
@@ -88,9 +87,9 @@
             this.title.Dock = System.Windows.Forms.DockStyle.Fill;
             this.title.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
             this.title.ForeColor = System.Drawing.Color.White;
-            this.title.Location = new System.Drawing.Point(66, 0);
+            this.title.Location = new System.Drawing.Point(82, 0);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(421, 28);
+            this.title.Size = new System.Drawing.Size(405, 28);
             this.title.TabIndex = 24;
             this.title.Text = "Title";
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

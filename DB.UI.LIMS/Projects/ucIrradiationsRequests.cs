@@ -92,7 +92,7 @@ namespace DB.UI
              
                 ir.ChannelsRow = c;
 
-                Interface.IBS.Update(ir);
+                Interface.IBS.CurrentChanged(ir);
 
             }
             }

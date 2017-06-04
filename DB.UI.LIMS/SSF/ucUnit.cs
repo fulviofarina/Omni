@@ -38,15 +38,7 @@ namespace DB.UI
             }
         }
 
-        public void AttachCtrl<T>(ref T pro)
-        {
-            if (pro.GetType().Equals(typeof(ucPreferences)))
-            {
-                IucPreferences pref = pro as IucPreferences;
-
-                configurePreferences(ref pref);
-            }
-        }
+      
 
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -75,6 +67,14 @@ namespace DB.UI
             unitDGV.RowHeadersVisible = true;
             SSFDGV.DataSource = Interface.IBS.SSF;
 
+
+            IPreferences pref = LIMS.GetPreferences();
+
+            configurePreferences(ref pref);
+
+
+
+
             errorProvider1.DataSource = Interface.IBS.Units;
             errorProvider2.DataSource = Interface.IBS.SSF;
 
@@ -102,7 +102,7 @@ namespace DB.UI
 
         }         
 
-        private void configurePreferences(ref IucPreferences pref)
+        private void configurePreferences(ref IPreferences pref)
         {
             Color[] arr = new Color[] { Color.FromArgb(64, 64, 64), Color.Black, Color.FromArgb(64, 64, 64) };
             Color[] arr2 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Chartreuse };

@@ -145,7 +145,7 @@
             this.descripTS.Size = new System.Drawing.Size(696, 45);
             this.descripTS.TabIndex = 15;
             this.descripTS.TextBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.descripTS.TextContent = "PRUEBA";
+            this.descripTS.TextContent = "NOTHING";
             this.descripTS.TextForeColor = System.Drawing.Color.YellowGreen;
             // 
             // infoTS
@@ -212,7 +212,7 @@
             this.ucGenericCBox1.Size = new System.Drawing.Size(378, 46);
             this.ucGenericCBox1.TabIndex = 0;
             this.ucGenericCBox1.TextBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.ucGenericCBox1.TextContent = "PRUEBADDDD";
+            this.ucGenericCBox1.TextContent = "NOTHING";
             this.ucGenericCBox1.TextForeColor = System.Drawing.Color.LemonChiffon;
             // 
             // barTLP

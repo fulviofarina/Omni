@@ -59,10 +59,7 @@ namespace DB.UI
                 // this.unitBN.Dispose();
                 destiny = this.unitSC.Panel2;
             }
-            else if (t.Equals(typeof(ucPreferences)))
-            {
-                ucDataContent.AttachCtrl(ref pro);
-            }
+         
             destiny?.Controls.Add(pro as Control);
         }
 
@@ -79,18 +76,32 @@ namespace DB.UI
 
             try
             {
-                setSampleBindings();
-                ucDataContent.Set(ref inter);
-                ucSubMS.Set(ref inter, true);
 
+
+                setSampleBindings();
+
+           
                 this.sampleCompoLbl.Click += viewChanged;
                 this.imgBtn.Click += viewChanged;
 
-                setComboBox();
+                LIMS.SetSampleBox(ref this.ucGenericCBox1);
+                LIMS.SetSampleDescriptionBox(ref this.descripTS);
 
-                sampleCompoLbl.PerformClick();
+                viewChanged(null, EventArgs.Empty);//.PerformClick();
 
-                Interface.IBS.PropertyChangedHandler += enableControls;
+                Interface.IBS.PropertyChangedHandler += delegate
+                {
+                    //turns off or disables the controls.
+                    //necessary protection for user interface
+                    bool enable = Interface.IBS.SubSamples.Count != 0;//EnabledControls;
+                    ucSubMS.Enabled = enable;
+                    ucDataContent.Enabled = enable;
+                    // bool bnOk = enable &&
+                    ucGenericCBox1.Enabled = enable;
+                    descripTS.Enabled = enable;
+                };
+
+                //refresh?
                 Interface.IBS.EnabledControls = true;
           
             }
@@ -112,82 +123,7 @@ namespace DB.UI
             TabPage page = setLabelView(compo, geom);
         }
 
-        private void setComboBox()
-        {
-
-            EventHandler endEdit = delegate
-            {
-                Interface.IBS.EndEdit();
-            };
-
-            DB.UI.ucGenericCBox control = this.ucGenericCBox1;
-        //    control.Label = "Sample";
-         //   control.LabelForeColor = Color.LemonChiffon;
-            EventHandler fillsampleNames = delegate
-            {
-                control.InputProjects  = Interface.ICurrent.SubSamplesNames.ToArray();
-            };
-            control.PopulateListMethod += fillsampleNames;
-         //   control.PopulateListMethod += endEdit;
-
-
-            DB.UI.ucGenericCBox control2 = this.descripTS;
-         //   control2.Label = "Description";
-        //    control2.LabelForeColor = Color.White;
-            EventHandler filldescriptios = delegate
-            {
-                control2.InputProjects = Interface.ICurrent.SubSamplesDescriptions.ToArray();
-            };
-            control2.PopulateListMethod += filldescriptios;
-           // control2.PopulateListMethod += endEdit;
-
-            //invoke the handlers...
-            Interface.IBS.PropertyChangedHandler+=delegate
-            {
-                filldescriptios.Invoke(null, EventArgs.Empty);
-                fillsampleNames.Invoke(null, EventArgs.Empty);
-            };
-
-        }
-        /*
-
-        private void fillSampleComboBoxes(ref ToolStripLabel lbl)
-        {
-            ToolStripComboBox cbox = getAssociatedCBox(lbl);
-
-            string[] items = Interface.ICurrent.SubSamplesNames.ToArray();
-            if (!lbl.Equals(this.SampleLBL))
-            {
-                items = Interface.ICurrent.SubSamplesDescriptions.ToArray();
-            }
-
-            //first time
-            if (cbox.Items.Count == 0)
-            {
-                cbox.AutoCompleteMode = AutoCompleteMode.Suggest;
-                cbox.AutoCompleteSource = AutoCompleteSource.ListItems;
-            }
-
-            cbox.Items.Clear();
-
-            cbox.Items.AddRange(items);
-        }
-        */
-
-        private void enableControls(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            //turns off or disables the controls.
-            //necessary protection for user interface
-            bool enable = Interface.IBS.SubSamples.Count != 0;//EnabledControls;
-            ucSubMS.Enabled = enable;
-            ucDataContent.Enabled = enable;
-            // bool bnOk = enable &&
-            ucGenericCBox1.Enabled = enable;
-            descripTS.Enabled = enable;
-
-         
-            // changeViewTS.Enabled = enable;
-        }
+       
 
         private TabPage setLabelView(string compo, string geom)
         {
@@ -238,8 +174,14 @@ namespace DB.UI
             descripTS.BindingField = column;
             descripTS.SetBindingSource(ref bsSample);
 
+
+            ucDataContent.Set(ref Interface);
+            ucSubMS.Set(ref Interface, true);
+
+
+
         }
-        
+
 
         private void viewChanged(object sender, EventArgs e)
         {

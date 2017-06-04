@@ -8,14 +8,14 @@ namespace DB.Tools
     {
         protected static string CHECKED = "CHECKED";
         protected static string ERROR = "ERROR";
-        protected static string NO_ROWS = "No Rows found in the DataGridView";
-        protected static string ROW_OK = "Data for this item seems OK";
-        protected static string ROW_WITH_ERROR = "Data for this item is missing.\nPlease check\t";
+        protected static string NO_ROWS = "No Rows found in the DataGridView.";
+        protected static string ROW_OK = "Data for this item seems OK.";
+        protected static string ROW_WITH_ERROR = "Data for this item is missing.\nPlease check:\t";
         protected static string SAMPLE = "Sample ";
         protected static string SELECTED = "SELECTED";
-        protected static string SELECTED_ROW = " selected for calculations";
+        protected static string SELECTED_ROW = " selected for calculations.";
         protected static string UPDATED = "UPDATED";
-        protected static string UPDATED_ROW = " values updated with the template item";
+        protected static string UPDATED_ROW = " values updated with the template item.";
         protected static string WARNING = "WARNING";
     }
 
@@ -107,5 +107,22 @@ namespace DB.Tools
                 bindingList = value;
             }
         }
+
+        protected internal bool showErrors = true;
+        public bool ShowErrors
+        {
+            get
+            {
+                return showErrors;
+            }
+
+            set
+            {
+                showErrors = value;
+            }
+        }
+
+
+
     }
 }

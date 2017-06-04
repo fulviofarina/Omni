@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -235,10 +236,17 @@ namespace DB
 
             public new bool HasErrors()
             {
-                DataColumn[] colsInE = this.GetColumnsInError();
-                int count = colsInE.Intersect(this.tableSubSamples.NonNullableUnit).Count();
+                int count = GetBasicColumnsInErrorNames().Count();
                 return (count != 0);
             }
+            public IEnumerable<string> GetBasicColumnsInErrorNames()
+            {
+                IEnumerable<DataColumn> colsInE = this.GetColumnsInError();
+              //  colsInE = colsInE.Intersect(this.tableSubSamples.NonNullableUnit);
+                colsInE = colsInE.Intersect(this.tableSubSamples.NonNullBasicUnits);
+                return colsInE.Select(o=> o.ColumnName);
+            }
+
 
             public void SetParent<T>(ref T rowParent, object[] args = null)
             {

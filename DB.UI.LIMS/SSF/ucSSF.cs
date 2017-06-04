@@ -39,15 +39,12 @@ namespace DB.UI
                 {
                     destiny = attachProjectbox(pro);
                 }
-                else if (t.Equals(typeof(ucOptions)))
-                {
-                    destiny = attachOptions(pro);
-                }
+              
                 else
                 {
-                    //main child
+                    //main child 
                     ucSSPan.AttachCtrl(ref pro);
-                    ucUnit.AttachCtrl(ref pro);
+                  //  ucUnit.AttachCtrl(ref pro);
                 }
 
                 destiny?.Controls.Add(pro as Control);
@@ -95,9 +92,46 @@ namespace DB.UI
             {
                 currentSize = this.Size;
 
-                setTemplateControls();
+
+
                 //
+                ucUnit.Set(ref Interface);
+                ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                //
+                ucMS.Set(ref Interface);
+                ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                // OTHER CONTROLS
+                ucCC1.Set(ref Interface);
+                ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                ucVcc.Set(ref Interface);
+                ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+                //
+
+
+                Interface.IBS.PropertyChangedHandler += delegate
+                {
+                    bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
+                    bool isCalculating = Interface.IBS.IsCalculating;
+                    this.CalcBtn.Enabled = ThereIsData;
+                    this.cancelBtn.Enabled = ThereIsData;
+                    // this.CalcBtn.Enabled = ThereIsData && !isCalculating; this.cancelBtn.Enabled =
+                    // ThereIsData && isCalculating; this.Tab.SelectedTab = this.CalcTab; ucUnit.PaintRows();
+                };
+
+                this.CalcBtn.Click += delegate
+                {
+                    Calculate(null);
+                };
+
                 setSampleControl();
+
+
+                IOptions options = LIMS.GetOptions();
+                resetProgress = options.ResetProgress;
+                showProgress = options.ShowProgress;
+                // projBox.HideChildControl = Hide;
+                this.splitContainer1.Panel2.Controls.Add(options as Control) ;
+
 
                 Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
@@ -110,19 +144,14 @@ namespace DB.UI
 
         public void SetTimer()
         {
-            this.CalcBtn.Click += delegate
-            {
-                Calculate(null);
-            };
+          
 
             timer = new Timer();
             timer.Enabled = false;
             timer.Interval = 5000;
             timer.Tick += delegate
             {
-                // timer.Enabled = false;
                 timer.Stop();
-
                 if (Interface.IPreferences.CurrentPref.RunInBackground)
                 {
                     this.Calculate(true);
@@ -132,46 +161,30 @@ namespace DB.UI
             //activate TIMER ONLY WHEN APP IS IDLE OR WHEN IDLE IS RAISED
             Application.Idle += delegate
             {
-                // Interface.IReport.Msg("Is Idle", string.Empty);
-              //  string status = "Timer Enabled";
                 bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
                 if (!timer.Enabled && runInBK)
                 {
-                    //Interface.IReport.Msg("Timer Enabled", string.Empty);
+                
                     timer.Start();
                     ucSSPan.SetMessage("On");
-                   // Interface.IReport.Msg(status, "");
+                 
                 }
                 else if (!runInBK)
                 {
-             //       status = "Timer Disabled";
+           
                     timer.Stop();
                     ucSSPan.SetMessage("Idle");
-                   // Interface.IReport.Msg(status, );
+                  
                 }
-                else ucSSPan.SetMessage("*/*");
-
-                // Interface.IReport.Msg(status, "Is Idle");
+                else ucSSPan.SetMessage("Info");
+             
             };
         }
 
         private Action<int> resetProgress;
         private EventHandler showProgress;
 
-        private Control attachOptions<T>(T pro)
-        {
-            Control destiny;
-            IucOptions options = pro as IucOptions;
-
-            //SET A METHOD TO CALL BACK!!!!
-
-            resetProgress = options.ResetProgress;
-            showProgress = options.ShowProgress;
-
-            // projBox.HideChildControl = Hide;
-            destiny = this.splitContainer1.Panel2;
-            return destiny;
-        }
+       
 
         private Control attachProjectbox<T>(T pro)
         {
@@ -180,15 +193,7 @@ namespace DB.UI
             projBox.HideChildControl = Hide;
             destiny = this.splitContainer1.Panel1;
             //attach binding
-            Interface.IBS.PropertyChangedHandler += delegate
-            {
-                bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
-                bool isCalculating = Interface.IBS.IsCalculating;
-                this.CalcBtn.Enabled = ThereIsData;
-                this.cancelBtn.Enabled = ThereIsData;
-                // this.CalcBtn.Enabled = ThereIsData && !isCalculating; this.cancelBtn.Enabled =
-                // ThereIsData && isCalculating; this.Tab.SelectedTab = this.CalcTab; ucUnit.PaintRows();
-            };
+       
             // force refresh
             Interface.IBS.EnabledControls = true;
 
@@ -256,20 +261,7 @@ namespace DB.UI
             };
         }
 
-        private void setTemplateControls()
-        {
-            //
-            ucUnit.Set(ref Interface);
-            ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-            //
-            ucMS.Set(ref Interface);
-            ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-            // OTHER CONTROLS
-            ucCC1.Set(ref Interface);
-            ucCC1.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-            ucVcc.Set(ref Interface);
-            ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
-        }
+      
 
         public ucSSF()
         {

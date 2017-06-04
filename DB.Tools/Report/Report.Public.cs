@@ -235,9 +235,9 @@ namespace DB.Tools
         /// </summary>
         /// <param name="msg">  Message to display</param>
         /// <param name="title">title of the message</param>
-        public void Msg(string msg, string title, bool ok = true)
+        public void Msg(string msg, string title, bool ok = true, bool accumulate = false)
         {
-            this.msn.Msg(msg, title, ok);
+            this.msn.Msg(msg, title, ok, accumulate);
         }
 
         /// <summary>

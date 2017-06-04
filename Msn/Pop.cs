@@ -9,6 +9,7 @@ namespace Msn
         protected internal int _DISPLAY_INTERVAL = 16000;
 
         protected internal string _LAST_MSG_SPEAK = string.Empty;
+        protected internal string _LAST_MSG = string.Empty;
 
         protected internal System.Speech.Synthesis.SpeechSynthesizer _LORITO;
 
@@ -29,17 +30,31 @@ namespace Msn
             }
         }
 
-       public string BufferMessage
+       public string LastSpokenMessage
         {
             get
             {
                 return _LAST_MSG_SPEAK;
             }
 
-            set
+        }
+        public string LastMessage
+        {
+            get
             {
-                _LAST_MSG_SPEAK = value;
+                return _LAST_MSG;
             }
+
+        }
+
+        public string CurrentMessage
+        {
+            get
+            {
+                return this.textBoxDescription.Text;
+            }
+         
+
         }
 
         public void MakeForm()
@@ -73,7 +88,7 @@ namespace Msn
             // f.StartPosition = FormStartPosition.CenterScreen; f.Opacity = 0;
         }
 
-        public void Msg(string msg, string title, bool ok)
+        public void Msg(string msg, string title, bool ok=true, bool accumulate = false)
         {
             // string pre = string.Empty;
             System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
@@ -84,29 +99,23 @@ namespace Msn
             }
             this.iconic.Image = Notifier.MakeBitMap(pre, _FONT, Color.White);
 
-            // else pre = "FAILED - "; pre += title;
-
-            Msg(msg, title, icon);
-
-            // Application.DoEvents();
+            Msg(msg, title, icon, accumulate);
         }
 
-        public void Msg(string msg, string title, System.Windows.Forms.ToolTipIcon icon)
+
+        public void Msg(string msg, string title, ToolTipIcon icon, bool accumulate = false)
         {
-            // if (InvokeRequired)
-            {
+           
                 Action dele = delegate
                 {
-                    this.textBoxDescription.Text = msg;
+                    _LAST_MSG = this.textBoxDescription.Text;
+                    if (accumulate) this.textBoxDescription.Text = _LAST_MSG + "\n" + msg;
+                    else this.textBoxDescription.Text = msg;
                     this.title.Text = title;
                     Show();
                     Application.DoEvents();
                 };
                 Invoke(dele);
-            }
-            //catch (Exception)
-            //{
-            //}
         }
 
         public void ReportProgress(int percentage)
@@ -135,8 +144,8 @@ namespace Msn
         // protected SpeechLib.SpVoice lorito;
         public void Speak(string text)
         {
-            if (BufferMessage.CompareTo(text) == 0) return;
-            BufferMessage = text;
+            if (_LAST_MSG_SPEAK.CompareTo(text) == 0) return;
+            _LAST_MSG_SPEAK = text;
             if (_LORITO == null)
             {
                 this._LORITO = new System.Speech.Synthesis.SpeechSynthesizer();

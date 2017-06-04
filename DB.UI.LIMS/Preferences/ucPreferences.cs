@@ -5,7 +5,27 @@ using DB.Tools;
 
 namespace DB.UI
 {
-    public partial class ucPreferences : UserControl, IucPreferences
+
+
+    public interface IPreferences
+    {
+        //  event EventHandler SampleChanged;
+        event EventHandler DoChilianChanged;
+        event EventHandler DoMatSSFChanged;
+        event EventHandler OverriderChanged;
+        event EventHandler RunInBackground;
+        event EventHandler CalcRadiusChanged;
+        event EventHandler CalcLengthChanged;
+        event EventHandler CalcDensityChanged;
+        event EventHandler CalcMassChanged;
+
+        void Set(ref Interface inter);
+
+        void SetRoundingBinding(ref Hashtable unitsTable);
+    }
+
+
+    public partial class ucPreferences : UserControl, IPreferences
     {
         private EventHandler doChilianChanged = null;
         private EventHandler doMatSSFChanged = null;

@@ -52,11 +52,10 @@ namespace DB.Tools
                 }
                 else
                 {
-                    unit = SelectUnitChild(ref row);
+                    unit = selectUnitChild(ref row);
                 }
 
-
-                update<UnitRow>(unit, true, false, true);
+                CurrentChanged<UnitRow>(unit, true, false, true);
 
                 IRow ir = unit as IRow;
                 ir.Check();
@@ -65,7 +64,8 @@ namespace DB.Tools
                 SubSamplesRow s = unit.SubSamplesRow;
                 Interface.IStore.Save(ref s);
 
-                hasErrors(row);
+                CurrentChanged<SubSamplesRow>(s, false, false, true);
+
             }
             catch (System.Exception ex)
             {
@@ -74,18 +74,17 @@ namespace DB.Tools
             }
         }
 
-        private UnitRow SelectUnitChild<T>(ref T row)
+        private UnitRow selectUnitChild<T>(ref T row)
         {
             UnitRow unit;
             string title = SAMPLE;// + unit.Name;
                                   //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
             unit = Interface.ICurrent.Unit as UnitRow;
             title += unit.Name;
-       //     EnabledControls = false;
+      
             unit.SetParent(ref row);
             Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
-          //  EnabledControls = true;
-            //bring back to VIEW (Select)
+        
             return unit;
         }
 
@@ -169,18 +168,7 @@ namespace DB.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="r"></param>
-        public void HasErrors<T>(T r)
-        {
-            try
-            {
-                hasErrors(r);
-            }
-            catch (System.Exception ex)
-            {
-                // Interface.IReport.Msg(ex.StackTrace, ex.Message);
-                Interface.IStore.AddException(ex);
-            }
-        }
+       
 
         /// <summary>
         /// EndEdit for each binding source
@@ -229,7 +217,7 @@ namespace DB.Tools
             int position = Interface.IBS.Irradiations.Find(field, projectOrOrder);
             Interface.IBS.Irradiations.Position = position;
             IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
-            update(ir, true, false, true);
+            currentChanged(ir, true, false, true);
         }
 
         public void StartBinding()
@@ -280,20 +268,61 @@ namespace DB.Tools
         /// <typeparam name="T"></typeparam>
         /// <param name="r">        </param>
         /// <param name="doCascade"></param>
-        public void Update<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
+        public void CurrentChanged<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
         {
            
             try
             {
-                update(r, doCascade, findItself, selectedBS);
+                currentChanged(r, doCascade, findItself, selectedBS);
             }
             catch (System.Exception ex)
             {
-              
                 Interface.IStore.AddException(ex);
             }
        
         }
+
+
+        public void CurrentChanged(ref BindingSource sender)
+        {
+            try
+            {
+                if (!EnabledControls) return;
+                bool selectedBs = false;
+                if (sender.Equals(Irradiations))
+                {
+                    IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
+                    currentChanged(r, true, false, selectedBs);
+                }
+                else if (sender.Equals(Channels))
+                {
+                    ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
+                    currentChanged(c, true, false, selectedBs);
+                }
+
+                else if (sender.Equals(SubSamples) || sender.Equals(Units))
+                {
+                    updateSubSampleOrUnit(ref sender, selectedBs);
+
+                }
+                else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
+                {
+                    updateMatrixOrSelected(ref sender, selectedBs);
+                }
+                else
+                {
+                    updateVialOrRabbit(ref sender, selectedBs);
+                }
+
+                // bs.RaiseListChangedEvents = true;
+            }
+            catch (Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+        }
+
+
 
         public BS()
         {

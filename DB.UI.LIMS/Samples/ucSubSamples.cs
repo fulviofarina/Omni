@@ -205,42 +205,7 @@ namespace DB.UI
 
 
      
-        private  void setComboBox()
-        {
-
-            DB.UI.ucGenericCBox control = this.projectbox;
-
-            control.DeveloperMethod += delegate
-            {
-                Interface.IPreferences.CurrentPref.AdvancedEditor = true;
-                Interface.IPreferences.SavePreferences();
-
-                control.Label = Interface.IPreferences.CurrentPref.LastIrradiationProject;
-
-            };
-            control.PopulateListMethod += delegate
-            {
-                if (Interface == null) return; //puede pasar debido al Designer y tener contendio no nulo
-                control.InputProjects = Interface.IPopulate.IProjects.ProjectsList.ToArray();
-            };
-            control.RefreshMethod += delegate
-            {
-                bool projectAdded = Interface.IPopulate.LoadProject(control.EnterPressed, control.TextContent);
-            };
-
-            control.Label = "PROJECT";
-            control.LabelForeColor = System.Drawing.Color.Thistle;
-
-            /*
-            BindingSource bs = Interface.IBS.Irradiations;
-            string column;
-            column = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
-            control.BindingField = column;
-            control.SetBindingSource(ref bs);
-            */
-
-
-        }
+    
 
         /// <summary>
         /// set interface and basics
@@ -258,7 +223,7 @@ namespace DB.UI
             //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             //     projectbox.Set(ref Interface);
 
-            setComboBox();
+            LIMS.SetProjectBox(ref this.projectbox);
 
             setUI();
             /*

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Rsx;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -156,7 +157,7 @@ namespace DB.Tools
 
                     if (!_bkgCalculation)
                     {
-                        Interface.IBS.Update<SubSamplesRow>(UNIT.SubSamplesRow);
+                        Interface.IBS.CurrentChanged<SubSamplesRow>(UNIT.SubSamplesRow);
                     }
                 }
                 catch (SystemException ex)
@@ -375,7 +376,7 @@ namespace DB.Tools
                 _units.Add(u);
             }
             //filter now by non busy and TODO
-            _units = _units.Where(o => o.ToDo && !o.IsBusy).ToList();
+            _units = _units.Where(o => !EC.IsNuDelDetch(o) &&  o.ToDo && !o.IsBusy).ToList();
         }
 
         public void Set(ref Interface inter, EventHandler callBackMethod = null, Action<int> resetProg = null, EventHandler showProg = null)

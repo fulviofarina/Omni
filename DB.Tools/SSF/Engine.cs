@@ -260,7 +260,7 @@ namespace DB.Tools
             //
             UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated until the background computations upgrades them");
 
-            if (!background) Interface.IBS.Update<UnitRow>(UNIT);
+            if (!background) Interface.IBS.CurrentChanged<UnitRow>(UNIT);
 
             ok = checkInputData(ref UNIT);
 
