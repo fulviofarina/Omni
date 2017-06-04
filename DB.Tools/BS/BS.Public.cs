@@ -57,11 +57,14 @@ namespace DB.Tools
 
 
                 update<UnitRow>(unit, true, false, true);
+
                 IRow ir = unit as IRow;
                 ir.Check();
+
                 Interface.IStore.Save(ref unit);
                 SubSamplesRow s = unit.SubSamplesRow;
                 Interface.IStore.Save(ref s);
+
                 hasErrors(row);
             }
             catch (System.Exception ex)

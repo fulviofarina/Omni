@@ -300,7 +300,7 @@ namespace k0X
 
         protected void Preferences(bool load)
         {
-            LINAA.IrradiationRequestsRow irr = Interface.IPopulate.IIrradiations.FindIrradiationByCode(ISubS.projectbox.Project);
+            LINAA.IrradiationRequestsRow irr = Interface.IPopulate.IIrradiations.FindIrradiationByCode(ISubS.projectbox.TextContent);
 
             try
             {
@@ -525,9 +525,9 @@ namespace k0X
 
             string project = this.Name;
 
-            if (!this.ISubS.projectbox.Project.Equals(project))
+            if (!this.ISubS.projectbox.TextContent.Equals(project))
             {
-                this.ISubS.projectbox.Project = project;    //gather samples from these project (this.Name)
+                this.ISubS.projectbox.TextContent = project;    //gather samples from these project (this.Name)
             }
             this.samples = null;
 

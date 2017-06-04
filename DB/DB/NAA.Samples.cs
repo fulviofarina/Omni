@@ -8,28 +8,13 @@ namespace DB
 {
     public partial class LINAA
     {
-        partial class IPeakAveragesDataTable
-        {
-            public IPeakAveragesRow NewIPeakAveragesRow(Int32 k0Id, ref SubSamplesRow s)
-            {
-                IPeakAveragesRow ip = this.NewIPeakAveragesRow();
-                this.AddIPeakAveragesRow(ip);
-                ip.k0ID = k0Id;
-                // ip.Radioisotope = iso; ip.Element = sym; ip.Energy = energy;
-                if (!Rsx.EC.IsNuDelDetch(s))
-                {
-                    ip.Sample = s.SubSampleName;
-                    // if ( !s.IsIrradiationCodeNull()) ip.Project = s.IrradiationCode;
-                }
-                return ip;
-            }
-        }
-
         /// <summary>
         /// Cleaned
         /// </summary>
         public partial class SubSamplesDataTable : IColumn
         {
+            public EventHandler InvokeCalculations;
+
             private DataColumn[] geometriesNonNullable = null;
 
             private DataColumn[] irradiationNonNullable = null;
@@ -56,13 +41,11 @@ namespace DB
                 {
                     if (geometriesNonNullable == null)
                     {
-                        geometriesNonNullable = new DataColumn[] { DirectSolcoiColumn, this.GeometryNameColumn, this.CapsulesIDColumn, this.MatrixIDColumn };
+                        geometriesNonNullable = new DataColumn[] { DirectSolcoiColumn, this.GeometryNameColumn, this.CapsulesIDColumn };
                     }
                     return geometriesNonNullable;
                 }
             }
-
-         
 
             public IEnumerable<DataColumn> IrradiationNonNullable
             {
@@ -82,7 +65,7 @@ namespace DB
                 {
                     if (nonNullableUnit == null)
                     {
-                        nonNullableUnit = new DataColumn[] { CalcDensityColumn, this.Gross2Column, this.Gross1Column, this.FillHeightColumn, this.RadiusColumn, this.MatrixNameColumn, this.NetColumn };
+                        nonNullableUnit = new DataColumn[] { CalcDensityColumn, this.Gross2Column, this.Gross1Column, this.FillHeightColumn, this.RadiusColumn, this.columnMatrixID, this.NetColumn };
                     }
 
                     return nonNullableUnit;
@@ -96,7 +79,7 @@ namespace DB
                     if (simplenonNullable == null)
                     {
                         simplenonNullable = new DataColumn[]{ columnSubSampleName,
-                     columnSubSampleCreationDate,columnSubSampleDescription,columnVol,
+                     columnSubSampleCreationDate,SubSampleDescriptionColumn,columnVol,
                      columnFC, columnCapsuleName, columnMatrixName };
                     }
 
@@ -144,8 +127,6 @@ namespace DB
                 }
             }
 
-         
-
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
                 // DataColumn c = e.Column;
@@ -166,6 +147,7 @@ namespace DB
                     if (change)
                     {
                         r.UnitRow?.ValueChanged(change);
+                        InvokeCalculations?.Invoke(null, EventArgs.Empty);
                     }
                 }
                 catch (SystemException ex)
@@ -173,6 +155,23 @@ namespace DB
                     (this.DataSet as LINAA).AddException(ex);
                     EC.SetRowError(e.Row, e.Column, ex);
                 }
+            }
+        }
+
+        partial class IPeakAveragesDataTable
+        {
+            public IPeakAveragesRow NewIPeakAveragesRow(Int32 k0Id, ref SubSamplesRow s)
+            {
+                IPeakAveragesRow ip = this.NewIPeakAveragesRow();
+                this.AddIPeakAveragesRow(ip);
+                ip.k0ID = k0Id;
+                // ip.Radioisotope = iso; ip.Element = sym; ip.Energy = energy;
+                if (!Rsx.EC.IsNuDelDetch(s))
+                {
+                    ip.Sample = s.SubSampleName;
+                    // if ( !s.IsIrradiationCodeNull()) ip.Project = s.IrradiationCode;
+                }
+                return ip;
             }
         }
 
@@ -209,11 +208,10 @@ namespace DB
 
         partial class UnitDataTable : IColumn
         {
-            public  EventHandler AddSSFsHandler;
+            public EventHandler AddSSFsHandler;
 
+            public EventHandler CleanSSFsHandler;
             public EventHandler InvokeCalculations;
-
-            public  EventHandler CleanSSFsHandler;
 
             // private DataColumn[] changeables;
             private DataColumn[] nonNullCols;
@@ -309,7 +307,6 @@ namespace DB
 
                         ////     //not used!!!
                         this.InvokeCalculations?.Invoke(null, EventArgs.Empty);
-
                     }
                 }
                 catch (SystemException ex)
@@ -318,24 +315,6 @@ namespace DB
                     EC.SetRowError(e.Row, e.Column, ex);
                 }
             }
-        }
-        protected internal void addSSFEvent(object sender, EventArgs e)
-        {
-            UnitRow u = sender as UnitRow;
-            AddSSFs(ref u);
-        }
-
-        private void AddSSFs(ref UnitRow u)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
-            MatSSFDataTable dt = u.GetMatSSFTable(path);
-            this.tableMatSSF.Merge(dt, false, MissingSchemaAction.AddWithKey);
-        }
-
-        protected internal void cleanSSFEvent(object sender, EventArgs e)
-        {
-            IEnumerable<MatSSFRow> ssfs = sender as IEnumerable<MatSSFRow>;
-             CleanSSFs(ref ssfs);
         }
 
         public bool CleanSSFs(ref IEnumerable<MatSSFRow> ssfs)
@@ -346,6 +325,18 @@ namespace DB
                 MatSSF.AcceptChanges();
             }
             return true;
+        }
+
+        protected internal void addSSFEvent(object sender, EventArgs e)
+        {
+            UnitRow u = sender as UnitRow;
+            AddSSFs(ref u);
+        }
+
+        protected internal void cleanSSFEvent(object sender, EventArgs e)
+        {
+            IEnumerable<MatSSFRow> ssfs = sender as IEnumerable<MatSSFRow>;
+            CleanSSFs(ref ssfs);
         }
 
         protected internal void handlersSamples()
@@ -370,6 +361,13 @@ namespace DB
             // Parent(SubSamples_IRequestsAverages).DryNet / (
             // Parent(SubSamples_IRequestsAverages).Radius * (
             // Parent(SubSamples_IRequestsAverages).Radius + Parent(SubSamples_IRequestsAverages).FillHeight))";
+        }
+
+        private void AddSSFs(ref UnitRow u)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
+            MatSSFDataTable dt = u.GetMatSSFTable(path);
+            this.tableMatSSF.Merge(dt, false, MissingSchemaAction.AddWithKey);
         }
     }
 }

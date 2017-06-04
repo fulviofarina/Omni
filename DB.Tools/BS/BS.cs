@@ -187,21 +187,26 @@ namespace DB.Tools
             //clean
             hasErrorsMethod = null;
         }
-        private static void GetDisplayTableName(ref string tableName)
+        private  void GetDisplayTableName(ref string tableName)
         {
-            if (tableName.Contains("Vial"))
+            if (tableName.Contains(Interface.IDB.VialType.TableName))
             {
                 tableName = "Container";
             }
-            else if (tableName.Contains("Channel"))
+            else if (tableName.Contains(Interface.IDB.Channels.TableName))
             {
                 tableName = "Neutron Source";
             }
-            else if (tableName.Contains("Unit"))
+            else if (tableName.Contains(Interface.IDB.Unit.TableName))
             {
                 tableName = "Sample";
             }
-            
+            else if (tableName.Contains(Interface.IDB.SubSamples.TableName))
+            {
+                tableName = "Sample";
+            }
+
+
         }
         private static string GetDisplayColumName(ref DataRow row, string tableName)
         {
@@ -251,7 +256,7 @@ namespace DB.Tools
         {
             try
             {
-                if (e.ListChangedType != System.ComponentModel.ListChangedType.ItemChanged) return;
+              //  if (e.ListChangedType != System.ComponentModel.ListChangedType.ItemChanged) return;
 
                 string main = "Main";
                 if (sender.Equals(Preferences))

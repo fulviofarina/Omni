@@ -99,9 +99,9 @@ namespace DB.Tools
                 if (row == null)
                 {
                     p = data.NewPreferencesRow();
+                    data.AddPreferencesRow(p);
                     p.WindowsUser = WindowsUser;
                     p.Check();
-                    data.AddPreferencesRow(p);
                     row = p as DataRow;
                 }
                 else p = row as PreferencesRow;
@@ -114,9 +114,13 @@ namespace DB.Tools
                 if (row == null)
                 {
                      p = data.NewSSFPrefRow();
+                 
                     p.WindowsUser = WindowsUser;
-                    p.Check();
+                
+                 
                     data.AddSSFPrefRow(p);
+                    p.Check();
+               
                     row = p as DataRow;
                 }
                else p = row as SSFPrefRow;

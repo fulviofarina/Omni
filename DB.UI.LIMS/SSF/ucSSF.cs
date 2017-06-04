@@ -6,7 +6,18 @@ using VTools;
 
 namespace DB.UI
 {
-    public partial class ucSSF : UserControl, IucSSF
+    public interface ISSF
+    {
+        void AttachCtrl<T>(ref T pro);
+
+        void Calculate(bool? Bkg = null);
+
+        void Hide();
+
+        void Set(ref Interface inter);
+    }
+
+    public partial class ucSSF : UserControl, ISSF
     {
         protected internal MatSSF MatSSF = null;
         protected static Size currentSize;
@@ -24,7 +35,7 @@ namespace DB.UI
             {
                 Control destiny = null;
                 Type t = pro.GetType();
-                if (t.Equals(typeof(ucProjectBox)))
+                if (t.Equals(typeof(ucGenericCBox)))
                 {
                     destiny = attachProjectbox(pro);
                 }
@@ -72,8 +83,7 @@ namespace DB.UI
             DaCONTAINER.Panel2Collapsed = !hidden;
         }
 
-
-       protected internal Timer timer = null;
+        protected internal Timer timer = null;
 
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
@@ -85,14 +95,9 @@ namespace DB.UI
             {
                 currentSize = this.Size;
 
-             
-
                 setTemplateControls();
                 //
                 setSampleControl();
-
-              
-
 
                 Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
@@ -105,15 +110,17 @@ namespace DB.UI
 
         public void SetTimer()
         {
-
-          
+            this.CalcBtn.Click += delegate
+            {
+                Calculate(null);
+            };
 
             timer = new Timer();
             timer.Enabled = false;
             timer.Interval = 5000;
             timer.Tick += delegate
             {
-                //  timer.Enabled = false;
+                // timer.Enabled = false;
                 timer.Stop();
 
                 if (Interface.IPreferences.CurrentPref.RunInBackground)
@@ -125,71 +132,41 @@ namespace DB.UI
             //activate TIMER ONLY WHEN APP IS IDLE OR WHEN IDLE IS RAISED
             Application.Idle += delegate
             {
-                //    Interface.IReport.Msg("Is Idle", string.Empty);
-                string status =  "Timer Enabled";
+                // Interface.IReport.Msg("Is Idle", string.Empty);
+              //  string status = "Timer Enabled";
                 bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
                 if (!timer.Enabled && runInBK)
                 {
-                  
                     //Interface.IReport.Msg("Timer Enabled", string.Empty);
                     timer.Start();
-                    Interface.IReport.Msg(status, "Was idle and started");
-
+                    ucSSPan.SetMessage("On");
+                   // Interface.IReport.Msg(status, "");
                 }
                 else if (!runInBK)
                 {
-                    status = "Timer Disabled";
+             //       status = "Timer Disabled";
                     timer.Stop();
-                    Interface.IReport.Msg(status, "Is Idle");
+                    ucSSPan.SetMessage("Idle");
+                   // Interface.IReport.Msg(status, );
                 }
+                else ucSSPan.SetMessage("*/*");
 
-             
-
-                //    Interface.IReport.Msg(status, "Is Idle");
-
+                // Interface.IReport.Msg(status, "Is Idle");
             };
-
-            //chec if calcs needed
-            Interface.IDB.Unit.InvokeCalculations += delegate
-              {
-                  Application.RaiseIdle(EventArgs.Empty);
-                  /*
-                  bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
-                  bool shouldRun = timer.Enabled;
-                  shouldRun = shouldRun && runInBK;
-//for reseting timer... so it does not trigger every time
-//although I dont need this..
-                  if (shouldRun)
-                  {
-                      timer.Stop();
-                      timer.Start();
-                  }
-                  */
-              };
-
-           
-
         }
 
-       
+        private Action<int> resetProgress;
+        private EventHandler showProgress;
 
-      
-        Action<int> resetProgress;
-        EventHandler showProgress;
         private Control attachOptions<T>(T pro)
         {
             Control destiny;
             IucOptions options = pro as IucOptions;
 
             //SET A METHOD TO CALL BACK!!!!
-        
 
-            resetProgress= options.ResetProgress;
+            resetProgress = options.ResetProgress;
             showProgress = options.ShowProgress;
-
-
-
-          
 
             // projBox.HideChildControl = Hide;
             destiny = this.splitContainer1.Panel2;
@@ -199,7 +176,7 @@ namespace DB.UI
         private Control attachProjectbox<T>(T pro)
         {
             Control destiny;
-            ucProjectBox projBox = pro as ucProjectBox;
+            ucGenericCBox projBox = pro as ucGenericCBox;
             projBox.HideChildControl = Hide;
             destiny = this.splitContainer1.Panel1;
             //attach binding
@@ -209,10 +186,8 @@ namespace DB.UI
                 bool isCalculating = Interface.IBS.IsCalculating;
                 this.CalcBtn.Enabled = ThereIsData;
                 this.cancelBtn.Enabled = ThereIsData;
-         //       this.CalcBtn.Enabled = ThereIsData && !isCalculating;
-         //   this.cancelBtn.Enabled = ThereIsData && isCalculating;
-         // this.Tab.SelectedTab = this.CalcTab;
-                ucUnit.PaintRows();
+                // this.CalcBtn.Enabled = ThereIsData && !isCalculating; this.cancelBtn.Enabled =
+                // ThereIsData && isCalculating; this.Tab.SelectedTab = this.CalcTab; ucUnit.PaintRows();
             };
             // force refresh
             Interface.IBS.EnabledControls = true;
@@ -221,18 +196,13 @@ namespace DB.UI
             //    bindingChanged(null, new PropertyChangedEventArgs(string.Empty));
             return destiny;
         }
-      
 
-    
-
-        public void Calculate(bool? Bkg=null)
+        public void Calculate(bool? Bkg = null)
         {
-
             EventHandler callBack = delegate
             {
                 timer.Start();// = true;
-             //   timer.Interval = 5000;
-                this.ucUnit.PaintRows();
+                              // timer.Interval = 5000; this.ucUnit.PaintRows();
             };
 
             if (MatSSF == null)
@@ -251,11 +221,10 @@ namespace DB.UI
             else background = (bool)Bkg;
             //if not background touch controls
 
-          
             if (!background)
             {
                 this.ValidateChildren();
-                //   Cursor.Current = Cursors.WaitCursor;
+                // Cursor.Current = Cursors.WaitCursor;
                 this.Tab.SelectedTab = this.CalcTab;
             }
             //calculate method
@@ -265,18 +234,11 @@ namespace DB.UI
             };
 
             MatSSF.Calculate(background);
-          //  Cursor.Current = Cursors.Default;
+            // Cursor.Current = Cursors.Default;
         }
 
         private void setSampleControl()
         {
-
-            this.CalcBtn.Click += delegate
-            {
-                Calculate(null);
-            };
-
-
             //EN ESTE ORDEN!!!!
             ucSSPan.On = this.CalcTab;
             ucSSPan.Off = this.MatrixTab;
@@ -293,6 +255,7 @@ namespace DB.UI
                 ucSSPan.ViewChanged(matrix, EventArgs.Empty);
             };
         }
+
         private void setTemplateControls()
         {
             //

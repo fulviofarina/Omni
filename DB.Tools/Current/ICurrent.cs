@@ -17,5 +17,7 @@ namespace DB.Tools
         DataRow Unit { get; }
         IEnumerable<DataRow> Units { get; }
         string WindowsUser { get; }
+        IEnumerable<string> SubSamplesNames { get; }
+        IEnumerable<string> SubSamplesDescriptions { get; }
     }
 }

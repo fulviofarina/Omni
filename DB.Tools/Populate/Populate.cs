@@ -22,9 +22,9 @@ namespace DB.Tools
             }
             if (makeProject)
             {
-               
-                Interface.IPopulate.addProject(ref ProjectOrOrder);
-                isAProjectOrOrder = true;
+
+                isAProjectOrOrder= Interface.IPopulate.AddProject(ref ProjectOrOrder);
+           //     isAProjectOrOrder = true;
             }
             if (isAProjectOrOrder)
             {
@@ -32,15 +32,17 @@ namespace DB.Tools
                 Interface.IBS.SelectProject(ProjectOrOrder);
                 
             }
-            Interface.IBS.EnabledControls = true;
-
-            Interface.IBS.SubSamples.MoveLast();//.Position = 0;
-            Interface.IBS.Units.MoveLast();//.Position = 0;
+            if (isAProjectOrOrder || makeProject)
+            {
+                Interface.IBS.EnabledControls = true;
+                Interface.IBS.SubSamples.MoveLast();//.Position = 0;
+                Interface.IBS.Units.MoveLast();//.Position = 0;
+            }
 
             return makeProject;
 
         }
-        private void addProject(ref string ProjectOrOrder)
+        public bool AddProject(ref string ProjectOrOrder)
         {
             DialogResult result = DialogResult.No;
             string text = "This Project does not exist yet (not found).\nWould you like to create a new one?";
@@ -63,7 +65,7 @@ namespace DB.Tools
                 MessageBox.Show(text, created, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Interface.IReport.Msg(created, text );
             }
-
+            return result != DialogResult.No;
         }
 
         /// <summary>

@@ -296,7 +296,7 @@ namespace k0X
                     ISS.Name = project;
                     //  ISS.Project = project;
                     ISS.projectbox.Offline = !load;
-                    ISS.projectbox.CanSelectProject = false;
+                    ISS.projectbox.Enabled = false;
                     ISS.ucContent.Set(ref LIMS.Interface);
                     AuxiliarForm form = new AuxiliarForm();
                     form.Populate(ref control);

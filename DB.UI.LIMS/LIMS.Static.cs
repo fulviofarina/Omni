@@ -51,7 +51,7 @@ namespace DB.UI
             ucSubSamples.ucContent.Set(ref LIMS.Interface);
 
             //2
-            ucProjectBox ucProjectBox = null;
+            ucGenericCBox ucProjectBox = null;
             ucProjectBox = ucSubSamples.projectbox;
 
             //3
@@ -67,11 +67,40 @@ namespace DB.UI
 
             midCallBack = delegate
             {
-                // ucSSF.AttachCtrl(ref units);
+
+                // ARREGLAR ESTO
+                   LINAA.SSFPrefRow pr = LIMS.Interface.IPreferences.CurrentSSFPref;
+                   pr.DoMatSSF = true;
+                   pr.DoCK = false;
+                   pr.Loop = true;
+                pr.CalcDensity = true;
+
+                LIMS.Interface.IPreferences.CurrentPref.AutoLoad = true;
+
+// ARREGLAR ESTO
+
+
+
+
+
+
+
+                Application.DoEvents();
+                ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
+                form.Controls.Add(ucSSF);
+
+                //ESTE ORDEN ES FUNDAMENTAL!!!
+                LIMS.Interface.IBS.ApplyFilters();
+                LIMS.Interface.IBS.StartBinding();
+
+
                 ucSSF.AttachCtrl(ref preferences);
                 ucSSF.AttachCtrl(ref ucProjectBox);
                 ucSSF.AttachCtrl(ref aBindingNavigator);
                 ucSSF.AttachCtrl(ref options);
+
+                // ucSSF.AttachCtrl(ref units);
+         
 
                 Application.DoEvents();
                 // form.HelpButtonClicked += helpReQuested;
@@ -81,6 +110,7 @@ namespace DB.UI
 
             lastCallBack = delegate
             {
+
                 bool autoload = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
                 string lastProject = string.Empty;
                 if (autoload)
@@ -93,32 +123,22 @@ namespace DB.UI
                     LIMS.Interface.IReport.GreetUser();
                     LIMS.Interface.IReport.SpeakLoadingFinished();
                 }
+           
 
-                //ESTE ORDEN ES FUNDAMENTAL!!!
-                   Application.DoEvents();
-
-            
-
-                LIMS.Interface.IBS.ApplyFilters();
-                LIMS.Interface.IBS.StartBinding();
-
-                ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
-                form.Controls.Add(ucSSF);
                 form.Opacity = 100;
-
                 //3
                 // Application.DoEvents();
 
-                ucProjectBox.Project = lastProject;
+                ucProjectBox.TextContent = lastProject;
                 // ucProjectBox.Refresher();
-                ucSSF.SetTimer();
+            
 
                 Form frm2 = msn.ParentForm;
                 frm2.Opacity = 0;
                 ucSSF.AttachCtrl(ref msn);
                 frm2.Dispose();
 
-
+                ucSSF.SetTimer();
 
             };
 

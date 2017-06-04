@@ -15,5 +15,6 @@
         LINAA.SSFPrefRow CurrentSSFPref { get; }
 
         void RejectPreferencesChanges();
+        void AcceptChanges();
     }
 }

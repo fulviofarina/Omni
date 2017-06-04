@@ -98,10 +98,12 @@
     <Compile Include="Report\Report.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Current\Preferences\IPreferences.cs" />
+    <Compile Include="SSF\Fields.Static.cs" />
     <Compile Include="SSF\Main.cs" />
-    <Compile Include="SSF\Fields.cs" />
+    <Compile Include="SSF\IsCalculating.cs" />
     <Compile Include="SSF\Engine.cs" />
-    <Compile Include="SSF\Parsers.cs" />
+    <Compile Include="SSF\Fields.cs" />
+    <Compile Include="SSF\Engine.Parsers.cs" />
     <Compile Include="WC\Fields.cs" />
     <Compile Include="WC\Interface.cs" />
     <Compile Include="WC\Properties.cs" />

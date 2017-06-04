@@ -34,9 +34,9 @@ namespace DB
                 if (this.tableSubSamples.SimpleNonNullable.Contains(column))
                 {
                     EC.CheckNull(column, this);
-                    return;
+                   
                 }
-
+                else
                 if (this.tableSubSamples.GeometriesNonNullables.Contains(column))
                 {
                     CheckGeometryColumns(column);
@@ -90,13 +90,7 @@ namespace DB
                     //not used aymore??
                     if (IsDirectSolcoiNull()) DirectSolcoi = true;
                 }
-                else if (this.tableSubSamples.MatrixIDColumn == column)
-                {
-                    if (SetLastMatrix())
-                    {
-                        GetDensity(true);
-                    }
-                }
+              
                 else if (this.tableSubSamples.GeometryNameColumn == column)
                 {
                     if (CheckGeometry())
@@ -124,7 +118,7 @@ namespace DB
                 calRad = pref.AARadius;
                 calculateDensity = pref.CalcDensity;
                 calFh = pref.AAFillHeight;
-
+                EC.CheckNull(column, this);
                 if (column == this.tableSubSamples.CalcDensityColumn)
                 {
                     if (IsCalcDensityNull()) CalcDensity = 0;
@@ -169,6 +163,13 @@ namespace DB
                 else if (column == this.tableSubSamples.Gross2Column)
                 {
                     SetGrossAndNet();
+                }
+                else if (this.tableSubSamples.MatrixIDColumn == column)
+                {
+                    if (SetLastMatrix())
+                    {
+                        GetDensity(true);
+                    }
                 }
             }
 
@@ -295,6 +296,23 @@ namespace DB
                     return Regex.Replace(this.IrradiationCode, "[a-z]", String.Empty, RegexOptions.IgnoreCase);
                 }
             }
+            protected static string ASSIGN_MATRIX = "Plase assign a matrix either directly or through a geometry";
+            protected static string THE_CALC_DENSITY = "The calculated density (in gr/cm3)";
+            protected static string ASSIGN_IRR_START = "Set an Irradiation Start date/time";
+            protected static string ASSIGN_IRR_END = "Set an Irradiation End date/time";
+            protected static string IRR_TIME_NEGATIVE = "Irradiation Time was found tow be negative\nThe Irradiation End date/time is less than the Start date/time!";
+            protected static string IRR_TIME_ISNULL = "Irradiation Time is 0 min\nThe Irradiation End date/time is equal to the Start date/time";
+
+            protected static string ASSIGN_VIAL = "Assign a vial/capsule";
+
+            protected static string MASS_DIFFERENCE_HIGH = "Difference between weights is higher than 0.1%\nPlease check";
+
+            protected static string ASSIGN_NET = "NULL. Assign the Net Mass (in miligrams) through Gross and Tare Mass";
+
+            protected static string ASSIGN_GEOMETRY = "Please assign a valid geometry to this sample";
+
+            protected static string SET_IRR_TIMES = "Set an Irradiation Time (in minutes) or an Irradiation Start and End date/times";
+            protected static string ASSIGN_RABBIT= "Assign an irradiation container";
 
             internal bool CheckGeometry()
             {
@@ -302,7 +320,7 @@ namespace DB
                 this.SetColumnError(geoCol, null);
                 if (EC.IsNuDelDetch(GeometryRow))
                 {
-                    this.SetColumnError(geoCol, "Please assign a valid geometry to this sample");
+                    this.SetColumnError(geoCol, ASSIGN_GEOMETRY);
                     return false;
                 }
                 return true;
@@ -316,7 +334,7 @@ namespace DB
                 SetColumnError(col, null);
                 if (one || two)
                 {
-                    SetColumnError(col, "NULL. Assign the Net Mass (in miligrams) through Gross and Tare Mass");
+                    SetColumnError(col, ASSIGN_NET);
                     return false;
                 }
 
@@ -324,11 +342,11 @@ namespace DB
                 bool ok = false;
                 if ((diff / Gross1) >= perCentDiff)
                 {
-                    SetColumnError(col, "Difference between weights is higher than 0.1%\nPlease check");
+                    SetColumnError(col, MASS_DIFFERENCE_HIGH);
                 }
                 else if ((diff / Gross2) >= perCentDiff)
                 {
-                    SetColumnError(col, "Difference between weights is higher than 0.1%\nPlease check");
+                    SetColumnError(col, MASS_DIFFERENCE_HIGH);
                 }
                 else ok = true;
                 return ok;
@@ -340,7 +358,7 @@ namespace DB
                 VialTypeRow v = this.VialTypeRow;
                 if (EC.IsNuDelDetch(v))
                 {
-                    this.SetColumnError(tableSubSamples.CapsuleNameColumn, "Assign a vial/capsule");
+                    this.SetColumnError(tableSubSamples.CapsuleNameColumn, ASSIGN_VIAL);
                     return false;
                 }
                 return true;
@@ -359,7 +377,7 @@ namespace DB
 
                     if (matrixDensNull) return;
 
-                    string HighLow = "The calculated density (in gr/cm3)";
+                    string HighLow = THE_CALC_DENSITY;
                     double ratio = (this.MatrixDensity / this.CalcDensity) * 100;
                     int pent = 3;
                     bool seterror = false;
@@ -484,8 +502,9 @@ namespace DB
             internal string GetName(int _lastSampleNr)
             {
                 string name = string.Empty;
+                string zero = "0";
                 if (_lastSampleNr >= 10) name = _projectNr + _lastSampleNr.ToString();
-                else name = _projectNr + "0" + _lastSampleNr.ToString();
+                else name = _projectNr + zero + _lastSampleNr.ToString();
                 return name;
             }
 
@@ -554,8 +573,11 @@ namespace DB
 
             internal bool SetDescriptionFromMonitor()
             {
-                SubSampleDescription = GetDescriptionFromMonitor();
-
+               string description =  GetDescriptionFromMonitor();
+                if (!string.IsNullOrEmpty(description))
+                {
+                    SubSampleDescription = description;
+                }
                 return !string.IsNullOrEmpty(SubSampleDescription);
             }
 
@@ -638,12 +660,12 @@ namespace DB
 
                 //in
                 DataColumn inCol = this.tableSubSamples.InReactorColumn;
-                if (innull) SetColumnError(inCol, "Set an Irradiation Start date/time");
+                if (innull) SetColumnError(inCol, ASSIGN_IRR_START);
                 else SetColumnError(inCol, null);
 
                 DataColumn outCol = this.tableSubSamples.OutReactorColumn;
                 //out
-                if (outnull) SetColumnError(outCol, "Set an Irradiation End date/time");
+                if (outnull) SetColumnError(outCol, ASSIGN_IRR_END);
                 else SetColumnError(outCol, null);
             }
 
@@ -681,26 +703,27 @@ namespace DB
                 }
                 else if (tirnull && totalMins == 0)
                 {
-                    SetColumnError(tCol, "Set an Irradiation Time (in minutes) or an Irradiation Start and End date/times");
+                    SetColumnError(tCol, SET_IRR_TIMES);
                 }
                 else
                 {
                     SetColumnError(tCol, null);
                     if (IrradiationTotalTime < 0)
                     {
-                        SetColumnError(tCol, "Irradiation Time was found tow be negative\nThe Irradiation End date/time is less than the Start date/time!");
+                        SetColumnError(tCol, IRR_TIME_NEGATIVE);
                     }
                     else if (IrradiationTotalTime == 0)
                     {
-                        SetColumnError(tCol, "Irradiation Time is 0 min\nThe Irradiation End date/time is equal to the Start date/time!");
+                        SetColumnError(tCol, IRR_TIME_ISNULL);
                     }
                     else SetIrradiationDates();
                 }
             }
-
+       
             internal bool SetLastMatrix()
             {
                 this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
+                this.SetColumnError(this.tableSubSamples.MatrixIDColumn, null);
 
                 if (EC.IsNuDelDetch(this.MatrixRow)) SetMatrixFromGeometry();
 
@@ -735,7 +758,8 @@ namespace DB
                 }
                 else
                 {
-                    this.SetColumnError(this.tableSubSamples.MatrixNameColumn, "Plase assign a matrix either directly or through a geometry");
+                     this.SetColumnError(this.tableSubSamples.MatrixIDColumn, ASSIGN_MATRIX);
+                    this.SetColumnError(this.tableSubSamples.MatrixNameColumn, ASSIGN_MATRIX);
                 }
 
                 return !EC.IsNuDelDetch(this.MatrixRow);
@@ -832,7 +856,7 @@ namespace DB
 
                     v = IrradiationRequestsRow.ChannelsRow.VialTypeRow;
                     if (EC.IsNuDelDetch(v)) ok = false;
-                    if (!ok) SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, "Assign an irradiation container");
+                    if (!ok) SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, ASSIGN_RABBIT);
                     else
                     {
                         ChCapsuleID = v.VialTypeID;

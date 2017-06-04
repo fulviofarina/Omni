@@ -272,6 +272,7 @@
             // 
             // DaCONTAINER
             // 
+            this.DaCONTAINER.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.DaCONTAINER.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DaCONTAINER.Location = new System.Drawing.Point(0, 0);
             this.DaCONTAINER.Name = "DaCONTAINER";
@@ -279,10 +280,12 @@
             // 
             // DaCONTAINER.Panel1
             // 
+            this.DaCONTAINER.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.DaCONTAINER.Panel1.Controls.Add(this.splitContainer1);
             // 
             // DaCONTAINER.Panel2
             // 
+            this.DaCONTAINER.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.DaCONTAINER.Panel2.Controls.Add(this.SSFPlitter);
             this.DaCONTAINER.Size = new System.Drawing.Size(1600, 834);
             this.DaCONTAINER.SplitterDistance = 39;
@@ -290,6 +293,7 @@
             // 
             // SSFPlitter
             // 
+            this.SSFPlitter.BackColor = System.Drawing.Color.Black;
             this.SSFPlitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SSFPlitter.Location = new System.Drawing.Point(0, 0);
             this.SSFPlitter.Name = "SSFPlitter";
@@ -307,6 +311,7 @@
             // 
             // UnitSSFSC
             // 
+            this.UnitSSFSC.BackColor = System.Drawing.Color.Black;
             this.UnitSSFSC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UnitSSFSC.Location = new System.Drawing.Point(0, 0);
             this.UnitSSFSC.Name = "UnitSSFSC";
@@ -314,6 +319,7 @@
             // 
             // UnitSSFSC.Panel1
             // 
+            this.UnitSSFSC.Panel1.BackColor = System.Drawing.Color.Black;
             this.UnitSSFSC.Panel1.Controls.Add(this.SCMENU);
             // 
             // UnitSSFSC.Panel2
@@ -325,6 +331,7 @@
             // 
             // SCMENU
             // 
+            this.SCMENU.BackColor = System.Drawing.Color.Black;
             this.SCMENU.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SCMENU.Location = new System.Drawing.Point(0, 0);
             this.SCMENU.Name = "SCMENU";
@@ -342,10 +349,10 @@
             // 
             // CalcBtn
             // 
-            this.CalcBtn.BackColor = System.Drawing.Color.MintCream;
+            this.CalcBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(95)))), ((int)(((byte)(95)))));
             this.CalcBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CalcBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CalcBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.CalcBtn.ForeColor = System.Drawing.Color.PaleGreen;
             this.CalcBtn.Location = new System.Drawing.Point(0, 0);
             this.CalcBtn.Name = "CalcBtn";
             this.CalcBtn.Size = new System.Drawing.Size(356, 34);
@@ -355,10 +362,10 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.BackColor = System.Drawing.Color.Linen;
+            this.cancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(95)))), ((int)(((byte)(95)))));
             this.cancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cancelBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelBtn.ForeColor = System.Drawing.Color.Red;
+            this.cancelBtn.ForeColor = System.Drawing.Color.Coral;
             this.cancelBtn.Location = new System.Drawing.Point(0, 0);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(340, 34);
@@ -384,6 +391,7 @@
             // 
             // CalcTab
             // 
+            this.CalcTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.CalcTab.Controls.Add(this.ucUnit);
             this.CalcTab.Location = new System.Drawing.Point(4, 37);
             this.CalcTab.Name = "CalcTab";
@@ -391,7 +399,6 @@
             this.CalcTab.Size = new System.Drawing.Size(888, 750);
             this.CalcTab.TabIndex = 1;
             this.CalcTab.Text = "Samples";
-            this.CalcTab.UseVisualStyleBackColor = true;
             // 
             // TemplatesTab
             // 
@@ -565,7 +572,7 @@
             this.ucMS.Location = new System.Drawing.Point(3, 3);
             this.ucMS.Margin = new System.Windows.Forms.Padding(4);
             this.ucMS.Name = "ucMS";
-            this.ucMS.Size = new System.Drawing.Size(868, 697);
+            this.ucMS.Size = new System.Drawing.Size(868, 709);
             this.ucMS.TabIndex = 0;
             // 
             // ucCC1
@@ -575,7 +582,7 @@
             this.ucCC1.Location = new System.Drawing.Point(3, 3);
             this.ucCC1.Margin = new System.Windows.Forms.Padding(4);
             this.ucCC1.Name = "ucCC1";
-            this.ucCC1.Size = new System.Drawing.Size(868, 697);
+            this.ucCC1.Size = new System.Drawing.Size(868, 709);
             this.ucCC1.TabIndex = 0;
             // 
             // ucSSF

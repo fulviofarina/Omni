@@ -121,9 +121,9 @@ namespace DB
                 SetMCLNull();
                 SetPXSNull();
                 SetEXSNull();
-                SetColumnError(this.tableUnit.NameColumn, null);
+            
                 SetSSFTableNull();
-                AcceptChanges();
+              //  AcceptChanges();
             }
 
             /// <summary>
@@ -199,6 +199,17 @@ namespace DB
 
                     SubSamplesRow.MatrixID = m.MatrixID;
                 }
+            }
+
+            public void SetCalcsFinished()
+            {
+                //set DONE
+                ToDo = false;
+                LastChanged = DateTime.Now;
+                LastCalc = DateTime.Now;
+                IsBusy = false;
+
+                SetColumnError(this.tableUnit.NameColumn, null);
             }
         }
 

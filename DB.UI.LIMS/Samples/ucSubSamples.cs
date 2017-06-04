@@ -73,7 +73,7 @@ namespace DB.UI
             }
             else
             {
-                if (this.ParentForm != null) this.ParentForm.Text = projectbox.Project + " - Samples";
+                if (this.ParentForm != null) this.ParentForm.Text = projectbox.TextContent + " - Samples";
                 this.SaveItem.Enabled = false;
             }
             this.ParentForm.Visible = !this.ParentForm.Visible;
@@ -178,7 +178,7 @@ namespace DB.UI
         /// to do when a sample is added
         /// </summary>
         /// <param name="row"></param>
-      
+
 
         /*
         public void RowDeleted(ref DataRow row)
@@ -202,8 +202,45 @@ namespace DB.UI
             this.bindingNavigatorDeleteItem.Enabled = true;
         }
         */
-   
 
+
+     
+        private  void setComboBox()
+        {
+
+            DB.UI.ucGenericCBox control = this.projectbox;
+
+            control.DeveloperMethod += delegate
+            {
+                Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+                Interface.IPreferences.SavePreferences();
+
+                control.Label = Interface.IPreferences.CurrentPref.LastIrradiationProject;
+
+            };
+            control.PopulateListMethod += delegate
+            {
+                if (Interface == null) return; //puede pasar debido al Designer y tener contendio no nulo
+                control.InputProjects = Interface.IPopulate.IProjects.ProjectsList.ToArray();
+            };
+            control.RefreshMethod += delegate
+            {
+                bool projectAdded = Interface.IPopulate.LoadProject(control.EnterPressed, control.TextContent);
+            };
+
+            control.Label = "PROJECT";
+            control.LabelForeColor = System.Drawing.Color.Thistle;
+
+            /*
+            BindingSource bs = Interface.IBS.Irradiations;
+            string column;
+            column = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
+            control.BindingField = column;
+            control.SetBindingSource(ref bs);
+            */
+
+
+        }
 
         /// <summary>
         /// set interface and basics
@@ -219,9 +256,11 @@ namespace DB.UI
             this.BN.BindingSource = Interface.IBS.SubSamples;
 
             //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
-            projectbox.Set(ref Interface);
+            //     projectbox.Set(ref Interface);
 
-            setRefresh();
+            setComboBox();
+
+            setUI();
             /*
             Interface.IBS.SubSamples.AddingNew += delegate
              {
@@ -233,17 +272,18 @@ namespace DB.UI
             //  Interface.IBS.SubSamples = this.BS;
         }
 
-        private void setRefresh()
+        private void setUI()
         {
             Interface.IBS.PropertyChangedHandler += delegate
             {
-                string currentProject = projectbox.Project;
+                string currentProject = projectbox.TextContent;
                 if (this.ParentForm != null)
                 {
                     this.ParentForm.Text = currentProject + " - Samples";
                 }
 
                 bool showAdd = !string.IsNullOrEmpty(currentProject);
+
                 bool isProject = Interface
                 .IPopulate.
                 IProjects.ProjectsList
@@ -295,7 +335,7 @@ namespace DB.UI
         private void reportBtton_Click(object sender, EventArgs e)
         {
             if (Icrepo == null) Icrepo = new CReport(Interface.Get() as DataSet);
-            Icrepo.LoadACrystalReport(this.projectbox.Project, CReport.ReporTypes.ProjectReport);
+            Icrepo.LoadACrystalReport(this.projectbox.TextContent, CReport.ReporTypes.ProjectReport);
         }
 
         public ucSubSamples()

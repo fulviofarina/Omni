@@ -76,7 +76,18 @@
     <Compile Include="GeometrySimple\ucComposition.Designer.cs">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\IucSSF.cs" />
+    <Compile Include="Projects\ucGenericCBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Projects\ucGenericCBox.Designer.cs">
+      <DependentUpon>ucGenericCBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SSF\ucSSFData.NS.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SSF\ucSSFData.NS.Designer.cs">
+      <DependentUpon>ucSSFData.NS.cs</DependentUpon>
+    </Compile>
     <Compile Include="SSF\ucSSFData.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -132,17 +143,12 @@
     <Compile Include="SSF\ucSSF.Designer.cs">
       <DependentUpon>ucSSF.cs</DependentUpon>
     </Compile>
+    <Compile Include="SSF\DGVs.cs" />
     <Compile Include="UI\Auxiliar.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Auxiliar.designer.cs">
       <DependentUpon>Auxiliar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Projects\ucProjectBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Projects\ucProjectBox.Designer.cs">
-      <DependentUpon>ucProjectBox.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Picker\Picker.Fields.cs" />
     <Compile Include="UI\Picker\Picker.cs" />
@@ -263,6 +269,12 @@
     <EmbeddedResource Include="GeometrySimple\ucComposition.resx">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Projects\ucGenericCBox.resx">
+      <DependentUpon>ucGenericCBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SSF\ucSSFData.NS.resx">
+      <DependentUpon>ucSSFData.NS.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SSF\ucSSFData.resx">
       <DependentUpon>ucSSFData.cs</DependentUpon>
     </EmbeddedResource>
@@ -292,9 +304,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Auxiliar.resx">
       <DependentUpon>Auxiliar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Projects\ucProjectBox.resx">
-      <DependentUpon>ucProjectBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
@@ -417,6 +426,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\DB.LINAA+PreferencesDataTable.datasource" />
     <None Include="Properties\DataSources\DB.LINAA+SSFPrefDataTable.datasource" />
     <None Include="Properties\DataSources\DB.LINAA.datasource" />

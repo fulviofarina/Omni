@@ -123,10 +123,11 @@
             // roundingLabel
             // 
             roundingLabel.AutoSize = true;
+            roundingLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             roundingLabel.ForeColor = System.Drawing.Color.DarkOrange;
             roundingLabel.Location = new System.Drawing.Point(3, 510);
             roundingLabel.Name = "roundingLabel";
-            roundingLabel.Size = new System.Drawing.Size(81, 21);
+            roundingLabel.Size = new System.Drawing.Size(279, 49);
             roundingLabel.TabIndex = 10;
             roundingLabel.Text = "Rounding";
             // 
@@ -383,13 +384,14 @@
             // 
             // calcMassCheckBox
             // 
-            this.calcMassCheckBox.AutoCheck = false;
+            this.calcMassCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.calcMassCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calcMassCheckBox.Location = new System.Drawing.Point(3, 170);
             this.calcMassCheckBox.Name = "calcMassCheckBox";
-            this.calcMassCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.calcMassCheckBox.Size = new System.Drawing.Size(279, 43);
             this.calcMassCheckBox.TabIndex = 12;
             this.calcMassCheckBox.Text = "Find Mass";
-            this.calcMassCheckBox.UseVisualStyleBackColor = true;
+            this.calcMassCheckBox.UseVisualStyleBackColor = false;
             // 
             // roundingTextBox
             // 
@@ -452,37 +454,43 @@
             // 
             this.calcDensityCheckBox.Checked = true;
             this.calcDensityCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.calcDensityCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.calcDensityCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calcDensityCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.calcDensityCheckBox.Location = new System.Drawing.Point(3, 23);
             this.calcDensityCheckBox.Name = "calcDensityCheckBox";
             this.calcDensityCheckBox.Size = new System.Drawing.Size(279, 43);
             this.calcDensityCheckBox.TabIndex = 5;
             this.calcDensityCheckBox.Text = "Find Density";
-            this.calcDensityCheckBox.UseVisualStyleBackColor = true;
+            this.calcDensityCheckBox.UseVisualStyleBackColor = false;
             // 
             // aAFillHeightCheckBox
             // 
             this.aAFillHeightCheckBox.Checked = true;
             this.aAFillHeightCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.aAFillHeightCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.aAFillHeightCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aAFillHeightCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aAFillHeightCheckBox.Location = new System.Drawing.Point(3, 121);
             this.aAFillHeightCheckBox.Name = "aAFillHeightCheckBox";
             this.aAFillHeightCheckBox.Size = new System.Drawing.Size(279, 43);
             this.aAFillHeightCheckBox.TabIndex = 4;
             this.aAFillHeightCheckBox.Text = "Find Length";
-            this.aAFillHeightCheckBox.UseVisualStyleBackColor = true;
+            this.aAFillHeightCheckBox.UseVisualStyleBackColor = false;
             // 
             // aARadiusCheckBox
             // 
             this.aARadiusCheckBox.Checked = true;
             this.aARadiusCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.aARadiusCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.aARadiusCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aARadiusCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aARadiusCheckBox.Location = new System.Drawing.Point(3, 72);
             this.aARadiusCheckBox.Name = "aARadiusCheckBox";
             this.aARadiusCheckBox.Size = new System.Drawing.Size(279, 43);
             this.aARadiusCheckBox.TabIndex = 3;
             this.aARadiusCheckBox.Text = "Find Radius";
-            this.aARadiusCheckBox.UseVisualStyleBackColor = true;
+            this.aARadiusCheckBox.UseVisualStyleBackColor = false;
             // 
             // showOtherCheckBox
             // 

@@ -23,9 +23,9 @@ namespace DB.Tools
 
         private void resetSampleFilters()
         {
-            string sort = Interface.IDB.SubSamples.SubSampleNameColumn + " asc";
+            string sort = Interface.IDB.SubSamples.SubSamplesIDColumn + " asc";
             Interface.IBS.SubSamples.Sort = sort;
-            sort = Interface.IDB.Unit.NameColumn.ColumnName + " asc";
+            sort = Interface.IDB.Unit.SampleIDColumn.ColumnName + " asc";
             Interface.IBS.Units.Sort = sort;
         }
 

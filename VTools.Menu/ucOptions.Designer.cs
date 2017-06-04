@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucOptions));
             this.TS = new System.Windows.Forms.ToolStrip();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.preferencesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,13 +51,12 @@
             // 
             // TS
             // 
-            this.TS.BackColor = System.Drawing.SystemColors.Menu;
+            this.TS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.TS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TS.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.TS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressBar,
-            this.toolStripSeparator8,
             this.OptionsBtn,
             this.toolStripSeparator13,
             this.Save,
@@ -72,15 +70,10 @@
             // 
             // progressBar
             // 
-            this.progressBar.ForeColor = System.Drawing.Color.Teal;
+            this.progressBar.ForeColor = System.Drawing.Color.Black;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(100, 43);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 46);
             // 
             // OptionsBtn
             // 
@@ -97,7 +90,7 @@
             this.helpToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OptionsBtn.ForeColor = System.Drawing.Color.DarkOrange;
+            this.OptionsBtn.ForeColor = System.Drawing.Color.Orange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
             this.OptionsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OptionsBtn.Name = "OptionsBtn";
@@ -189,7 +182,7 @@
             // Save
             // 
             this.Save.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Save.ForeColor = System.Drawing.Color.DarkCyan;
+            this.Save.ForeColor = System.Drawing.Color.Aquamarine;
             this.Save.Name = "Save";
             this.Save.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.Save.Size = new System.Drawing.Size(70, 46);
@@ -203,6 +196,7 @@
             // helpToolStripMenuItem2
             // 
             this.helpToolStripMenuItem2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.helpToolStripMenuItem2.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem2.Name = "helpToolStripMenuItem2";
             this.helpToolStripMenuItem2.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.helpToolStripMenuItem2.Size = new System.Drawing.Size(71, 46);
@@ -225,7 +219,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip TS;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripDropDownButton OptionsBtn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem Save;

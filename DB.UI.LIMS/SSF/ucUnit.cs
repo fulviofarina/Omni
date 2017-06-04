@@ -3,34 +3,32 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DB.Tools;
-using Rsx;
 using Rsx.Dumb;
-using static DB.LINAA;
 
 namespace DB.UI
 {
     public partial class ucUnit : UserControl
     {
-        protected static string TOOLTIP_TEXT = " but with user-defined parameters";
         protected internal Interface Interface = null;
+        protected internal int lastIndex = -2;
 
-      protected static  string EXPERT_MODE_ON_TITLE = "EXPERT MODE ACTIVATED";
-        protected static string EXPERT_MODE_ON_MSG = "EXPERT MODE was activated:\n\n"
-        + "You are now allowed to alter all the default, fundamental paramaters of the calculation methods.\n\n"
-       + "Keep in mind that changing the fundamental values of each method was not intended by their creators, "
-        + "therefore the corresponding results are marked with an (*) symbol and there is no guarantee on their " +
-        "accuracy nor validity.\n\n"
-        + "You can return to the DEFAULT MODE at any time.\n\n";
+        protected static string ASTERISK = " *";
 
+      
+        protected static string gch = "Gt(Ch)";
+
+        protected static string gech = "Ge(Ch)";
+        protected static string gem = "Ge(M)";
+        protected static string gfast = "GFast(M)";
+        protected static string gm = "Gt(M)";
+        protected static string sep = "but";
+        protected static string TOOLTIP_TEXT = " but with user-defined parameters";
 
         /// <summary>
         /// A DGV Item selected to control child ucControls such as ucV uc Matrix Simple, ucCC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e">     </param>
-
-        protected internal int lastIndex = -2;
-
         public DataGridViewCellMouseEventHandler RowHeaderMouseClick
         {
             ///FIRST TIME AND ONLY
@@ -45,54 +43,9 @@ namespace DB.UI
             if (pro.GetType().Equals(typeof(ucPreferences)))
             {
                 IucPreferences pref = pro as IucPreferences;
+
                 configurePreferences(ref pref);
             }
-        }
-
-        private void configurePreferences(ref  IucPreferences pref)
-        {
-            Color[] arr = new Color[] { Color.FromArgb(64, 64, 64), Color.Black, Color.FromArgb(64, 64, 64) };
-            Color[] arr2 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Chartreuse };
-            Color[] arr3 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.LemonChiffon };
-            Color[] arr4 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Orange };
-            EventHandler popup =
-        delegate
-        {
-            if (Interface.IPreferences.CurrentSSFPref.Overrides)
-            {
-            
-                MessageBox.Show(EXPERT_MODE_ON_MSG,EXPERT_MODE_ON_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Interface.IReport.Msg(EXPERT_MODE_ON_MSG, EXPERT_MODE_ON_TITLE);
-            }
-        };
-
-
-            EventHandler chilian =
-            delegate
-            {
-                paintChilianRelated(arr, arr3);
-            };
-            //  chilian += popup;
-
-            Interface.IDB.SSFPref.DoChilianChanged = chilian;
-            chilian.Invoke(null, EventArgs.Empty);
-
-            EventHandler matssf =
-      delegate
-      {
-          paintMatSSFRelated(arr, arr2, arr4);
-      };
-            //   matssf += popup;
-
-            Interface.IDB.SSFPref.DoMatSSFChanged = matssf;
-            matssf.Invoke(null, EventArgs.Empty);
-            EventHandler overrider = chilian;
-            overrider += matssf;
-            overrider += popup;
-            Interface.IDB.SSFPref.OverriderChanged = overrider;
-          //  overrider.Invoke(null, EventArgs.Empty);
-
-
         }
 
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
@@ -101,23 +54,8 @@ namespace DB.UI
             int rowInder = e.RowIndex;
             DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
             Interface.IBS.SelectUnitOrChildRow(rowInder, ref row, ref lastIndex);
-            PaintRows();
-        }
-
-        public void PaintRows()
-        {
-            foreach (DataGridViewRow row in this.unitDGV.Rows)
-            {
-                try
-                {
-                    DataGridViewCell cell = unitDGV[ToDoCol.Index, row.Index];
-                    paintCell(ref cell);
-                }
-                catch (SystemException ex)
-                {
-                    Interface.IStore.AddException(ex);
-                }
-            }
+            this.unitDGV.ClearSelection();
+            // PaintRows();
         }
 
         /// <summary>
@@ -140,63 +78,66 @@ namespace DB.UI
             errorProvider1.DataSource = Interface.IBS.Units;
             errorProvider2.DataSource = Interface.IBS.SSF;
 
-
             setBindings();
 
             this.unitDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.SSFDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
-            this.unitDGV.CellValueChanged += UnitDGV_CellValueChanged;
-            this.unitDGV.CellDoubleClick += UnitDGV_CellDoubleClick;
 
-            Interface.IDB.Unit.InvokeCalculations += delegate
+         //   this.unitDGV.CellMouseDoubleClick += delegate
+
+          //    {
+                 
+           //   };
+          
+           
+
+            EventHandler handler = delegate
              {
-                 PaintRows();
+                 Application.RaiseIdle(EventArgs.Empty);
              };
-        }
 
-        private static void paintCell(ref DataGridViewCell cell)
+            Interface.IDB.Unit.InvokeCalculations += handler;
+            Interface.IDB.SubSamples.InvokeCalculations += handler;
+
+        }         
+
+        private void configurePreferences(ref IucPreferences pref)
         {
-            //try
-            // {
-            string values = cell.Value.ToString();
-            UnitRow u = Caster.Cast<UnitRow>(cell.OwningRow);
-            SubSamplesRow s = u.SubSamplesRow;
-            bool noSample = EC.IsNuDelDetch(s);
+            Color[] arr = new Color[] { Color.FromArgb(64, 64, 64), Color.Black, Color.FromArgb(64, 64, 64) };
+            Color[] arr2 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Chartreuse };
+            Color[] arr3 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.LemonChiffon };
+            Color[] arr4 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Orange };
 
-            Color clr2 = System.Drawing.Color.Transparent;
-            Color colr = Color.DarkGreen;
-            if (!noSample)
-            {
-                if (u.ToDo && u.IsBusy)
-                {
-                    colr = System.Drawing.Color.DarkOrange;
-                    // cell.Style.ForeColor = System.Drawing.Color.DarkOrange;
-                }
-                else if (u.ToDo && !u.IsBusy)
-                {
-                    colr = System.Drawing.Color.DarkRed;
-                    // cell.Style.ForeColor = System.Drawing.Color.DarkRed; cell.Style.ForeColor = System.Drawing.Color.DarkRed;
-                }
-            }
-            if (!noSample)
-            {
-                cell.Style.BackColor = colr;
-                cell.Style.ForeColor = colr;
-                cell.Style.SelectionBackColor = clr2;
-                cell.Style.SelectionForeColor = clr2;
+            EventHandler chilian = delegate
+           {
+               paintChilianRelated(arr, arr3);
+           };
 
-                // cell.DataGridView.ClearSelection();
-            }
+            chilian.Invoke(null, EventArgs.Empty);
+
+            pref.DoChilianChanged += chilian;
+
+            EventHandler matssf = delegate
+     {
+         paintMatSSFRelated(arr, arr2, arr4);
+         
+     };
+
+            matssf.Invoke(null, EventArgs.Empty);
+            pref.DoMatSSFChanged += matssf;
+      
+            EventHandler overrider = chilian;
+            overrider += matssf;
+
+            pref.OverriderChanged += overrider;
         }
 
         private void paintChilianRelated(Color[] arr, Color[] arr3)
         {
             // string gfast = "GFast";
-            string gch = "Gt(Ch)";
-            string gech = "Ge(Ch)";
-            string ASTERISK = " *";
-            string sep = "but";
+
+            // string sep = "but";
 
             string add = ASTERISK;
             if (Interface.IPreferences.CurrentSSFPref.Overrides)
@@ -234,12 +175,6 @@ namespace DB.UI
 
         private void paintMatSSFRelated(Color[] arr, Color[] arr2, Color[] arr4)
         {
-            string gfast = "GFast(M)";
-            string gm = "Gt(M)";
-            string gem = "Ge(M)";
-            string ASTERISK = " *";
-            string sep = "but";
-
             string add = ASTERISK;
             if (Interface.IPreferences.CurrentSSFPref.Overrides)
             {
@@ -283,6 +218,7 @@ namespace DB.UI
             // columna.Visible = readOnly; Rsx.DGV.Control.PaintColumn(readOnly2, ref columna);
             Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr4);
         }
+
         private void setBindings()
         {
             //sets all the bindings again
@@ -318,6 +254,7 @@ namespace DB.UI
             }
         }
 
+        /*
         private void UnitDGV_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -337,23 +274,6 @@ namespace DB.UI
             }
         }
 
-        /*
-        private void cellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            DataGridView dgv = sender as DataGridView;
-
-            if (dgv.Rows.Count == 0 || e.RowIndex<0) return;
-
-            UnitRow row =  Interface.IBS.GetDataRowFromDGV(sender, e.RowIndex) as UnitRow;
-
-            if (e.ColumnIndex == ToDoCol.Index)
-            {
-                //invert the bool or check state
-                DataGridViewCell cell = dgv[e.ColumnIndex, e.RowIndex];
-                object value = cell.Value;
-                cell.Value = !bool.Parse(value.ToString());
-            }
-        }
         */
 
         public ucUnit()

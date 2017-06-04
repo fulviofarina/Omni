@@ -97,6 +97,12 @@ namespace DB.Tools
             }
         }
 
+        public void AcceptChanges()
+        {
+            Interface.IDB.Preferences.AcceptChanges();
+            Interface.IDB.SSFPref.AcceptChanges();
+        }
+
         /*
         public void MergePreferences()
         {

@@ -62,9 +62,9 @@ namespace DB
 
             if (useHandlers)
             {
-                setHandlers(false, ref dt);
+         //       setHandlers(false, ref dt);
             }
-            setRowHandlers(ref dt, false);
+        //    setRowHandlers(ref dt, false);
 
             dt.BeginLoadData();
 
@@ -72,16 +72,16 @@ namespace DB
 
             if (useHandlers)
             {
-                setHandlers(true, ref dt);
-                useHandlers = false;
+        //        setHandlers(true, ref dt);
+        //        useHandlers = false;
             }
             else
             {
-                useHandlers = true;
-                Save(ref rows);
+         //       useHandlers = true;
+         //       Save(ref rows);
             }
 
-            setRowHandlers(ref dt, true);
+      //      setRowHandlers(ref dt, true);
 
             dt.EndLoadData();
 

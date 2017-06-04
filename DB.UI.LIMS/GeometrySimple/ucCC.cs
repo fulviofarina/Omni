@@ -54,9 +54,9 @@ namespace DB.UI
            
             LINAA.ChannelsRow row = (LINAA.ChannelsRow)(Interface.ICurrent.Channel );
 
-            if (row.FluxType.Contains("0")) row.FluxType = MatSSF.Types[1];
-            else if (row.FluxType.Contains("1")) row.FluxType = MatSSF.Types[2];
-            else row.FluxType = MatSSF.Types[0];
+            if (row.FluxType.Contains("0")) row.FluxType = MatSSF.TYPES[1];
+            else if (row.FluxType.Contains("1")) row.FluxType = MatSSF.TYPES[2];
+            else row.FluxType = MatSSF.TYPES[0];
         }
 
 

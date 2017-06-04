@@ -123,7 +123,12 @@ namespace Rsx
             }
             else if (t.Equals(typeof(bool)))
             {
-                if (row.IsNull(column) && !column.ReadOnly) row[column] = false;
+                if (row.IsNull(column) && !column.ReadOnly)
+                {
+                   // row.SetColumnError(column, "NULL!");
+                    // DELETED ON 3Hune 2017 IMPORTANT
+                    row[column] = false;
+                }
             }
             else if (t.Equals(typeof(byte[])))
             {

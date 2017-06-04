@@ -60,7 +60,8 @@ namespace DB.Tools
 
             Interface.IDB.PopulateColumnExpresions();
             Interface.IPreferences.PopulatePreferences();
-         
+            Interface.IPreferences.SavePreferences();
+
         }
 
         /// <summary>

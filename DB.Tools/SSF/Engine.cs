@@ -13,8 +13,62 @@ namespace DB.Tools
 {
     public partial class MatSSF
     {
-        protected internal bool bkgCalculation = false;
-        public void DoCKS(ref LINAA.UnitRow UNIT)
+       
+
+        private void reportFinished(string sampleName)
+        {
+            string msg = "Finished calculations for sample " + sampleName;
+            Interface.IReport.Msg(msg, "Done");
+            if (_processTable.Count == 0)
+            {
+                if (!_bkgCalculation)
+                {
+                    Interface.IStore.Save<SubSamplesDataTable>();
+                    Interface.IStore.Save<UnitDataTable>();
+                }
+                IsCalculating = false;
+            }
+        }
+
+
+   
+
+        private static bool checkIfSampleHasErrors(ref UnitRow UNIT)
+        {
+            //CLEAN
+
+            // 1 CHECK ERRORS
+            bool hasError = UNIT.HasErrors(); //has Unit errors??
+            bool hasSampleError = UNIT.SubSamplesRow.HasErrors();
+         //has Sample Errors?
+            return hasSampleError || hasError; 
+        }
+
+        private static Process runProcess(ref string[] ioFile, bool hide,   EventHandler exitHANDLER)
+        {
+
+            string newMatssfEXEFile = ioFile[1]; // the second item
+
+            Process process = IO.Process(CMD, "/c " + newMatssfEXEFile, _startupPath, false, hide, null, exitHANDLER);
+            //add to table
+            _processTable.Add((object)process, (object)ioFile);
+            //start process
+            process.Start();
+
+            process.BeginErrorReadLine();
+            process.BeginOutputReadLine();
+            //set input files on Console
+
+            // process.WaitForInputIdle();
+          
+         
+                process.StandardInput.WriteLine(ioFile[2]);
+            process.StandardInput.WriteLine(ioFile[3]);
+
+            return process;
+        }
+
+        private void doChMethod(ref UnitRow UNIT)
         {
             //sample geometry dependant values// why recalculate each time? leave them here
             HashSet<double> abs = new HashSet<double>();
@@ -84,7 +138,26 @@ namespace DB.Tools
             elements = null;
         }
 
-        public bool DoMatSSF(string lecture, ref LINAA.UnitRow UNIT, bool doSSF)
+        private void doChMethod(string sampleName)
+        {
+            LINAA.UnitRow UNIT = null;
+            UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
+
+            IPreferences ip = Interface.IPreferences;
+
+            bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
+
+            bool doCk = (ip.CurrentSSFPref.DoCK);
+
+            if (doCk)
+            {
+                doChMethod(ref UNIT);
+
+                Interface.IReport.Msg("CKS calculations done for Unit " + UNIT.Name, "CKS Calculations");
+            }
+        }
+
+        private bool doMatSSFMethod(string lecture, ref UnitRow UNIT, bool doSSF)
         {
             //read file data
             bool isOk = false;
@@ -129,7 +202,7 @@ namespace DB.Tools
             //fill the matssf table
             LINAA.MatSSFDataTable table = fillSSFTableWith(ref UNIT, array.ToList(), doSSF);
 
-            UNIT.SSFTable = Tables.MakeDTBytes(ref table, startupPath);
+            UNIT.SSFTable = Tables.MakeDTBytes(ref table, _startupPath);
 
             array = null;
             isOk = table.Count != 0;
@@ -138,472 +211,162 @@ namespace DB.Tools
 
             return isOk;
         }
-        public void PrepareInputs(bool background = false)
-        {
-          
 
-            foreach (UnitRow item in units)
+        private void doMatSSFMethod(string sampleName, string OutputFile)
+        {
+            bool runOk = false;
+            UnitRow UNIT = null;
+            UNIT = Interface.IDB.Unit
+            .FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
+
+            string outFile = _startupPath + OutputFile;
+            string lecture = IO.ReadFile(outFile);
+            File.Delete(outFile);
+
+            string problemsFor = "Problems Reading MATSSF Output for Unit ";
+            string matssfOk = "MatSSF calculations done for Unit ";
+            string matssfMsgTitle = "MatSSF Calculations";
+
+            if (string.IsNullOrEmpty(lecture))
             {
-                UnitRow UNIT = item;
-                PrepareInputs(ref UNIT, background);
+                throw new SystemException(problemsFor + UNIT.Name + "\n");
             }
 
-      
+            bool doSSF = Interface.IPreferences.CurrentSSFPref.DoMatSSF;
+            runOk = DoMatSSF(lecture, ref UNIT, doSSF);
 
-        }
-
-        public bool PrepareInputs(ref UnitRow UNIT, bool background = false)
-        {
-
-            showProgress?.Invoke(null, EventArgs.Empty);
-
-            bool ok = false;
-            try
+            if (!runOk)
             {
-                //UnitRow UNIT = item;
-                //update position in BS
-                UNIT.Clean();
-
-                if (!background) Interface.IBS.Update<UnitRow>(UNIT);
-
-                ok = CheckInputData(ref UNIT);
-
-                if (ok)
-                {
-                    //generate file
-                    string fulFile = startupPath + UNIT.Name + INPUT_EXT;
-                    string buffer =   prepareInputs(ref UNIT);
-                 //   bool isOK = false;
-                    if (!string.IsNullOrEmpty(buffer))
-                    {
-                        //delete .in file
-                        TextWriter writer = new StreamWriter(fulFile, false); //create fromRow file
-                        writer.Write(buffer);
-                        writer.Close();
-                        writer = null;
-                        //here
-                        ok = File.Exists(fulFile);
-                    }
-                   
-                    //now check if file generated
-                    if (ok)
-                    {
-                        string inputGeneratedTitle = "Starting calculations...";
-                        string inputGeneratedMsg = "Input metadata generated for Sample ";
-                        UNIT.IsBusy = true;
-                        Interface.IReport.Msg(inputGeneratedMsg + UNIT.Name, inputGeneratedTitle);
-                    }
-                    else
-                    {
-                        throw new SystemException(INPUT_NOTGEN + UNIT.Name);
-                    }
-                }
-              
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);
-                Interface.IReport.Msg(ex.Message, "ERROR", false);
-            }
-
-            showProgress?.Invoke(null, EventArgs.Empty);
-
-            return ok;
-        }
-
-
-        /// <summary>
-        /// Checks if the input data has errors
-        /// </summary>
-        /// <param name="UNIT"></param>
-        /// <returns></returns>
-        public bool CheckInputData(ref UnitRow UNIT)
-        {
-            //CLEAN
-
-            // 1 CHECK ERRORS
-            bool hasError = UNIT.HasErrors(); //has Unit errors??
-            hasError = UNIT.SubSamplesRow.HasErrors() || hasError; //has Sample Errors?
-
-            string inputDataOK = "Input data is OK for Sample ";
-
-            inputDataOK += UNIT.Name;// inputDataOKTitle;
-            string error = "Input data is NOT OK for ";
-            if (hasError)
-            {
-                string inputDataNotOK = error + "Sample " + UNIT.Name;
-                UNIT.SetColumnError((UNIT.Table as UnitDataTable).NameColumn, error + "Sample");
+                throw new SystemException(problemsFor + UNIT.Name + "\n");
             }
             else
             {
-                string inputDataOKTitle = "Checking data...";
-                Interface.IReport.Msg(inputDataOK, inputDataOKTitle);
-            }
-            return !hasError;
-        }
-
-      
-        public void RunProcess()
-        {
-            //RUN 3
-            IsCalculating = true;
-
-            IPreferences ip = Interface.IPreferences;
-            bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
-            bool doCk = (ip.CurrentSSFPref.DoCK);
-
-            RunProcess(hide);
-
-            showProgress?.Invoke(null, EventArgs.Empty);
-            //leave here because RunProcess is public
-            if (processTable.Count == 0)
-            {
-                IsCalculating = false;
+                Interface.IReport.Msg(matssfOk + UNIT.Name, matssfMsgTitle);
             }
         }
 
-        public IEnumerable<string> RunProcess(bool hide=true,  string[] unitsNames=null)
+     
+
+        private string prepareInputs(ref UnitRow UNIT, bool background)
         {
-            if (unitsNames==null) unitsNames = units.Select(o => o.Name.Trim()).ToArray();
-
-            IEnumerable<string> exefiles =  GenerateMatSSFEXEFile(ref unitsNames);
 
 
-            for (int i = 0; i < unitsNames.Count(); i++)
+           
+            bool ok;
+            //UnitRow UNIT = item;
+            //update position in BS
+            //  UNIT.Clean();
+            //CLEAN!!!
+            //
+            UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated until the background computations upgrades them");
+
+            if (!background) Interface.IBS.Update<UnitRow>(UNIT);
+
+            ok = checkInputData(ref UNIT);
+
+            string fulFile = string.Empty;
+            if (ok)
             {
-                string item = unitsNames[i];
-                string EXE = exefiles.ElementAt(i);
-                
-
-                try
+                //generate file
+                fulFile =  getGUID(UNIT.Name) + INPUT_EXT;
+                string buffer = prepareInputs(ref UNIT);
+                // bool isOK = false;
+                if (!string.IsNullOrEmpty(buffer))
                 {
-                    //if cancelled
-                    if (string.IsNullOrEmpty(EXE)) continue;
-
-                    if (!IsCalculating) continue;
-
-                    EventHandler hdl = process_Exited;
-                    //  string EXE = exefile + item + "." + Guid.NewGuid() + ".exe";
-               
-                    RunAProcess(hide, item, EXE, ref hdl);
+                    //delete .in file
+                    TextWriter writer = new StreamWriter(_startupPath+fulFile, false); //create fromRow file
+                    writer.Write(buffer);
+                    writer.Close();
+                    writer = null;
+                    //here
+                    ok = File.Exists(_startupPath+fulFile);
                 }
-                catch (Exception ex)
-                {
-                    string msg = "Problems when running MatSSF for sample " + item;
-                    msg += ", having EXE FILE: " + EXE;
-                    Interface.IReport.Msg(msg, "MatSSF ERROR!");
 
-                    Exception ex2  = new Exception(msg,ex.InnerException);
-                    Interface.IStore.AddException(ex2);
+                //now check if file generated
+                if (ok)
+                {
+                    string inputGeneratedTitle = "Starting calculations...";
+                    string inputGeneratedMsg = "Input metadata generated for Sample ";
+                    UNIT.IsBusy = true;
+                    Interface.IReport.Msg(inputGeneratedMsg + UNIT.Name, inputGeneratedTitle);
+                }
+                else
+                {
+                    throw new SystemException(INPUT_NOTGEN + UNIT.Name);
                 }
             }
 
-            return exefiles;
+            return fulFile;
         }
-
-        public IEnumerable<string> GenerateMatSSFEXEFile(ref  string[] unitsNames)
-        {
-            IList<string> exefiles = new List<string>();
-
-            for (int i = 0; i < unitsNames.Count(); i++)
-            {
-                string item = unitsNames[i];
-                try
-                {
-                    //if cancelled
-                    if (!IsCalculating) continue;
-                    //otherwise calculate
-                   string thisExeFile =    GenerateMatSSFEXEFile(item);
-                    exefiles.Add(thisExeFile);
-
-                }
-                catch (Exception ex)
-                {
-                    Interface.IReport.Msg("Problems when cloning code for " + item, "Code Cloning ERROR...");
-                    Interface.IStore.AddException(ex);
-                }
-            }
-
-            return exefiles;
-        }
-
-        public string GenerateMatSSFEXEFile(string item)
-        {
-            string newMatssfEXEFile = EXEFILE 
-                + item + "." 
-                + Guid.NewGuid().ToString().Substring(0,5)
-                + ".exe";
-
-            bool inputExist = File.Exists(startupPath + item + INPUT_EXT);
-            if (inputExist)
-            {
-                //copy .exe file peersonalized for the unit
-                File.Copy(startupPath + EXEFILE, startupPath + newMatssfEXEFile, true);
-                //runAProcess(hide, item, );
-                Interface.IReport.Msg("Code cloning OK", "Code cloned...");
-            }
-            return newMatssfEXEFile;
-        }
-
-        public Process RunAProcess(bool hide, string item, string newMatssfEXEFile, ref EventHandler exitHANDLER)
-        {
-            if (string.IsNullOrEmpty(newMatssfEXEFile)) return null;
-            bool exists = File.Exists(startupPath + newMatssfEXEFile);
-            if (!exists) return null;
-
-            Interface.IReport.Msg("MatSSF is running OK for sample " + item, "MatSSF Running...");
-            //files in and out
-            string[] ioFile = new string[] { item + INPUT_EXT, item + OUTPUT_EXT };
-
-            Process process = IO.Process(cmd, "/c " + newMatssfEXEFile, startupPath, false, hide, null, exitHANDLER);
-            //add to table
-            processTable.Add((object)process, (object)item);
-            //start process
-            process.Start();
-
-            process.BeginErrorReadLine();
-            process.BeginOutputReadLine();
-            //set input files on Console
-
-            // process.WaitForInputIdle();
-
-            foreach (string content in ioFile)
-            {
-                process.StandardInput.WriteLine(content);
-            }
-
-            return process;
-            // process.WaitForExit();
-        }
-
         private void process_Exited(object sender, EventArgs e)
         {
-            if (processTable.Count == 0) return;
+            if (_processTable.Count == 0) return;
             Process process = sender as Process;
 
-            string item = (string)processTable[process];
+            string[] itemIOFileANDEXE = (string[])_processTable[process];
 
-            if (item == null) return;
+            string item = itemIOFileANDEXE[0];
+
+            if (itemIOFileANDEXE == null) return;
             if (string.IsNullOrEmpty(item)) return;
+
+            _processTable.Remove(process);
 
             try
             {
+                //  string exeF = findEXEFile(ref process);
+                string exeFile = itemIOFileANDEXE[1];
+               
+                // EventHandler updateToDo = UpdateToDo(item);
 
-                processTable.Remove(process);
-
-                string exeF = process.StartInfo.Arguments;
-                int index = exeF.IndexOf(EXEFILE[0]);
-                exeF = process.StartInfo.Arguments.Substring(index);
-
-                File.Delete(startupPath + exeF);
-               // EventHandler updateToDo = UpdateToDo(item);
-
-                Application.OpenForms[0].Invoke(UpdateToDo(item));
+                string outFile = itemIOFileANDEXE[3];
+                string infile = itemIOFileANDEXE[2];
 
                 ////OTHERSS!!!
+                Application.OpenForms[0].Invoke(updateSampleToDo(item, infile, outFile, exeFile));
 
-                Application.OpenForms[0].Invoke(DoMatSSF(item));
-         
+                Application.OpenForms[0].Invoke(DoMatSSF(item, outFile));
 
+                Application.OpenForms[0].Invoke(DoChMethod(item));
+
+               
             }
             catch (SystemException ex)
             {
                 Interface.IStore.AddException(ex);
             }
-
-            Application.OpenForms[0].Invoke(DoCKS(item));
 
             Application.OpenForms[0].Invoke(Finalize(item));
         }
 
-        private EventHandler UpdateToDo(string item)
+     
+
+        private EventHandler updateSampleToDo(string item,  string infile, string outFile, string exeFile)
         {
             EventHandler updateToDo = delegate
             {
                 UnitRow UNIT = null;
                 UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(item) == 0);
-                //set DONE
-                UNIT.ToDo = false;
-                UNIT.LastChanged = DateTime.Now;
-                UNIT.LastCalc = DateTime.Now;
-                UNIT.IsBusy = false;
-
-                string outFile = UNIT.Name + OUTPUT_EXT;
-                string infile = UNIT.Name + INPUT_EXT;
+                UNIT.SetCalcsFinished();
+            //    UNIT.(Interface.IDB.Unit.NameColumn, null);
 
                 //SAVE COPY IN BACKUPS TO LATER ZIP
                 string pathBase = Interface.IStore.FolderPath
                 + Properties.Resources.Backups
                 + "\\" + UNIT.SubSamplesRow.IrradiationCode + "\\";
 
-
                 if (!Directory.Exists(pathBase))
                 {
                     Directory.CreateDirectory(pathBase);
                 }
-                File.Copy(startupPath + outFile, pathBase + outFile, true);
-                File.Copy(startupPath + infile, pathBase + infile, true);
+                File.Copy(_startupPath + outFile, pathBase + outFile, true);
+                File.Copy(_startupPath + infile, pathBase + infile, true);
 
-                File.Delete(startupPath + infile);
+                File.Delete(_startupPath + infile);
+                File.Delete(_startupPath + exeFile);
 
             };
             return updateToDo;
-        }
-
-        public EventHandler Finalize(string sampleName)
-        {
-
-         
-
-            EventHandler final = delegate
-            {
-                try
-                {
-
-                  //  Application.OpenForms[0].ValidateChildren();
-
-                  if (!IsCalculating) return;
-
-
-                    UnitRow UNIT = null;
-                    UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
-
-                    string msg = "Finished calculations for sample " + UNIT.Name;
-                    Interface.IReport.Msg(msg, "Done");
-
-                    if (processTable.Count == 0)
-                    {
-                        if (!bkgCalculation)
-                        {
-                            Interface.IStore.Save<SubSamplesDataTable>();
-                            Interface.IStore.Save<UnitDataTable>();
-
-                            Interface.IBS.Update<SubSamplesRow>(UNIT.SubSamplesRow);
-                        }
-
-                        IsCalculating = false;
-                    }
-
-                }
-                catch (SystemException ex)
-                {
-                    Interface.IStore.AddException(ex);
-                    Interface.IReport.Msg(ex.Message, "ERROR", false);
-                }
-
-                showProgress?.Invoke(null, EventArgs.Empty);
-             
-            };
-
-            return final;
-        }
-
-        public EventHandler DoCKS(string sampleName)
-        {
-            EventHandler chilean = delegate
-            {
-                if (!IsCalculating) return;
-
-                try
-                {
-                    LINAA.UnitRow UNIT = null;
-                    UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
-
-                    IPreferences ip = Interface.IPreferences;
-
-                    bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
-
-                    bool doCk = (ip.CurrentSSFPref.DoCK);
-
-                    if (doCk)
-                    {
-                        DoCKS(ref UNIT);
-
-                        Interface.IReport.Msg("CKS calculations done for Unit " + UNIT.Name, "CKS Calculations");
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    Interface.IStore.AddException(ex);
-                    Interface.IReport.Msg(ex.Message, "ERROR", false);
-                }
-
-                showProgress?.Invoke(null, EventArgs.Empty);
-            };
-
-            return chilean;
-        }
-
-        public EventHandler DoMatSSF(string sampleName)
-        {
-            EventHandler temp = delegate
-            {
-                if (!IsCalculating) return;
-
-                try
-                {
-                    bool runOk = false;
-                    UnitRow UNIT = null;
-                    UNIT = Interface.IDB.Unit
-                    .FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
-
-                    string outFile = startupPath+ UNIT.Name + OUTPUT_EXT;
-                    string lecture = IO.ReadFile(outFile);
-                    File.Delete(outFile);
-
-                    string problemsFor = "Problems Reading MATSSF Output for Unit ";
-                    string matssfOk = "MatSSF calculations done for Unit ";
-                    string matssfMsgTitle = "MatSSF Calculations";
-
-                    if (string.IsNullOrEmpty(lecture))
-                    {
-                        throw new SystemException(problemsFor + UNIT.Name + "\n");
-                    }
-
-                    bool doSSF = Interface.IPreferences.CurrentSSFPref.DoMatSSF;
-                    runOk = DoMatSSF(lecture, ref UNIT, doSSF);
-
-                    if (!runOk)
-                    {
-                        throw new SystemException(problemsFor + UNIT.Name + "\n");
-                    }
-                    else
-                    {
-                     
-                       // string infile = UNIT.Name + INPUT_EXT;
-                       
-
-                        //SAVE COPY IN BACKUPS TO LATER ZIP
-                      //  string pathBase = Interface.IStore.FolderPath
-                      //  + Properties.Resources.Backups
-                      //  + "\\" + UNIT.SubSamplesRow.IrradiationCode + "\\";
-                      //  if (!Directory.Exists(pathBase))
-                      //  {
-                      //      Directory.CreateDirectory(pathBase);
-                      //  }
-                      //  File.Copy(startupPath + outFile, pathBase + outFile, true);
-                      //  File.Copy(startupPath + infile, pathBase + infile, true);
-
-                    //   File.Delete(startupPath + outFile);
-                 //     File.Delete(startupPath + infile);
-
-                  
-                        Interface.IReport.Msg(matssfOk + UNIT.Name, matssfMsgTitle);
-                    }
-                }
-                catch (SystemException ex)
-                {
-                    Interface.IReport.Msg(ex.Message, "ERROR", false);
-                    Interface.IStore.AddException(ex);
-                }
-
-                /// WARNING
-                /////////////VOLVER A PONER SI TENGO PROBLEMAS
-                // DoMatSSF(sampleName);
-                showProgress?.Invoke(null, EventArgs.Empty);
-            };
-
-            return temp;
         }
     }
 }

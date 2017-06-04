@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using Rsx;
 using Rsx.Dumb;
+using static DB.LINAA;
 
 namespace DB.Tools
 {
@@ -90,8 +93,35 @@ namespace DB.Tools
             {
                 return Caster.Cast<DataRow>(bs.SubSamples.List as DataView);
             }
-        }
 
+          
+        }
+        public IEnumerable<string> SubSamplesNames
+        {
+            get
+            {
+                return SubSamples
+               .OfType<SubSamplesRow>()
+               .Where(o => !o.IsSubSampleNameNull())
+               .Select(o => o.SubSampleName)
+               .ToArray();
+            }
+
+            
+        }
+        public IEnumerable<string> SubSamplesDescriptions
+        {
+            get
+            {
+                return SubSamples
+               .OfType<SubSamplesRow>()
+               .Where(o => !o.IsSubSampleDescriptionNull())
+               .Select(o => o.SubSampleDescription)
+               .ToArray();
+            }
+
+
+        }
         /// <summary>
         /// Current Row
         /// </summary>

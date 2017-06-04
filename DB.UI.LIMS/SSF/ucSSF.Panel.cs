@@ -10,8 +10,8 @@ namespace DB.UI
     public partial class ucSSFPanel : UserControl
     {
         protected  bool assigned = false;
-        protected  static string compo = "<<SWITCH VIEW>>";
-        protected static string geom = "<<CHANGE VIEW>>";
+        protected  static string compo = "SWITCH VIEW";
+        protected static string geom = "CHANGE VIEW";
         protected internal   Interface Interface= null;
         protected internal TabPage off;
         protected internal BindingNavigator bn;
@@ -66,6 +66,10 @@ namespace DB.UI
             destiny?.Controls.Add(pro as Control);
         }
 
+        public void SetMessage(string msg)
+        {
+            infoLBL.Text = msg;
+        }
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
         /// </summary>
@@ -82,22 +86,24 @@ namespace DB.UI
                 this.sampleCompoLbl.Click += viewChanged;
                 this.imgBtn.Click += viewChanged;
 
-                this.SampleLBL.Click += dropDownClickedLabel;
-                this.descriplbl.Click += dropDownClickedLabel;
-
-                Interface.IBS.PropertyChangedHandler += enableControls;
-                Interface.IBS.EnabledControls = true;
-                // enableControls(null, new PropertyChangedEventArgs(string.Empty));
+                setComboBox();
 
                 sampleCompoLbl.PerformClick();
 
-                // Interface.IReport.Msg("Database", "Units were loaded!");
+                Interface.IBS.PropertyChangedHandler += enableControls;
+                Interface.IBS.EnabledControls = true;
+          
             }
             catch (System.Exception ex)
             {
                 Interface.IStore.AddException(ex);
             }
         }
+
+     
+
+     
+
 
         public void ViewChanged(object sender, EventArgs e)
         {
@@ -106,42 +112,67 @@ namespace DB.UI
             TabPage page = setLabelView(compo, geom);
         }
 
-        private void dropDownClickedLabel(object sender, EventArgs e)
+        private void setComboBox()
         {
-            ToolStripLabel lbl = sender as ToolStripLabel;
-            ToolStripComboBox cbox = null;
-            // if (lbl.Equals())
-            string[] items = Interface.ICurrent.SubSamples
-               .OfType<SubSamplesRow>()
-               .Where(o => !o.IsSubSampleNameNull())
-               .Select(o => o.SubSampleName)
-               .ToArray();
 
-            if (lbl.Equals(this.SampleLBL))
+            EventHandler endEdit = delegate
             {
-                cbox = this.nameB;
+                Interface.IBS.EndEdit();
+            };
+
+            DB.UI.ucGenericCBox control = this.ucGenericCBox1;
+        //    control.Label = "Sample";
+         //   control.LabelForeColor = Color.LemonChiffon;
+            EventHandler fillsampleNames = delegate
+            {
+                control.InputProjects  = Interface.ICurrent.SubSamplesNames.ToArray();
+            };
+            control.PopulateListMethod += fillsampleNames;
+         //   control.PopulateListMethod += endEdit;
+
+
+            DB.UI.ucGenericCBox control2 = this.descripTS;
+         //   control2.Label = "Description";
+        //    control2.LabelForeColor = Color.White;
+            EventHandler filldescriptios = delegate
+            {
+                control2.InputProjects = Interface.ICurrent.SubSamplesDescriptions.ToArray();
+            };
+            control2.PopulateListMethod += filldescriptios;
+           // control2.PopulateListMethod += endEdit;
+
+            //invoke the handlers...
+            Interface.IBS.PropertyChangedHandler+=delegate
+            {
+                filldescriptios.Invoke(null, EventArgs.Empty);
+                fillsampleNames.Invoke(null, EventArgs.Empty);
+            };
+
+        }
+        /*
+
+        private void fillSampleComboBoxes(ref ToolStripLabel lbl)
+        {
+            ToolStripComboBox cbox = getAssociatedCBox(lbl);
+
+            string[] items = Interface.ICurrent.SubSamplesNames.ToArray();
+            if (!lbl.Equals(this.SampleLBL))
+            {
+                items = Interface.ICurrent.SubSamplesDescriptions.ToArray();
             }
-            else
+
+            //first time
+            if (cbox.Items.Count == 0)
             {
-                cbox = this.descripBox;
-                items = Interface.ICurrent.SubSamples
-               .OfType<SubSamplesRow>()
-                      .Where(o => !o.IsSubSampleDescriptionNull())
-               .Select(o => o.SubSampleDescription)
-               .ToArray();
+                cbox.AutoCompleteMode = AutoCompleteMode.Suggest;
+                cbox.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
 
             cbox.Items.Clear();
 
-            if (!cbox.DroppedDown && items.Count() != 0)
-            {
-                cbox.AutoCompleteMode = AutoCompleteMode.Suggest;
-                cbox.AutoCompleteSource = AutoCompleteSource.ListItems;
-                cbox.Items.AddRange(items);
-            }
-
-            cbox.DroppedDown = !cbox.IsOnDropDown;
+            cbox.Items.AddRange(items);
         }
+        */
 
         private void enableControls(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -151,8 +182,10 @@ namespace DB.UI
             ucSubMS.Enabled = enable;
             ucDataContent.Enabled = enable;
             // bool bnOk = enable &&
-            nameToolStrip.Enabled = enable;
+            ucGenericCBox1.Enabled = enable;
             descripTS.Enabled = enable;
+
+         
             // changeViewTS.Enabled = enable;
         }
 
@@ -195,22 +228,18 @@ namespace DB.UI
             BindingSource bsSample = Interface.IBS.SubSamples;
             SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
 
-            ToolStripComboBox namebox = this.nameB;
-            ToolStripComboBox descriptionbox = this.descripBox;
 
             string column;
             column = SSamples.SubSampleNameColumn.ColumnName;
-            Binding b1 = Rsx.Dumb.BS.ABinding(ref bsSample, column);
-            nameB.ComboBox.DataBindings.Add(b1);
-
-            // BS.BindAComboBox(ref bsSample, ref namebox, column);
+            ucGenericCBox1.BindingField = column;
+            ucGenericCBox1.SetBindingSource(ref bsSample);
 
             column = SSamples.SubSampleDescriptionColumn.ColumnName;
-            Binding b0 = Rsx.Dumb.BS.ABinding(ref bsSample, column);
-            descripBox.ComboBox.DataBindings.Add(b0);
+            descripTS.BindingField = column;
+            descripTS.SetBindingSource(ref bsSample);
 
-            // BS.BindAComboBox(ref bsSample, ref descripBox, column);
         }
+        
 
         private void viewChanged(object sender, EventArgs e)
         {
