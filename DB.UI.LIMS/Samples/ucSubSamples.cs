@@ -223,7 +223,9 @@ namespace DB.UI
             //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
             //     projectbox.Set(ref Interface);
 
+         
             LIMS.SetProjectBox(ref this.projectbox);
+          
 
             setUI();
             /*

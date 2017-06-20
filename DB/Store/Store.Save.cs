@@ -201,8 +201,8 @@ namespace DB
             {
                 IEnumerable<SubSamplesRow> samps = schs.Cast<SubSamplesRow>();
                 saveSamples(ref samps);
-              //  IEnumerable<UnitRow> units = samps.SelectMany(o => o.GetUnitRows()).ToArray();//.UnitRow).ToArray();
-              //  saveOthers(ref units);
+                //  IEnumerable<UnitRow> units = samps.SelectMany(o => o.GetUnitRows()).ToArray();//.UnitRow).ToArray();
+                //  saveOthers(ref units);
             }
             else if (t.Equals(typeof(SchAcqsRow))) this.tAM.SchAcqsTableAdapter.Update(schs);
             else if (t.Equals(typeof(OrdersRow))) this.tAM.OrdersTableAdapter.Update(schs);
@@ -214,7 +214,16 @@ namespace DB
             }
             else if (t.Equals(typeof(MonitorsFlagsRow))) this.tAM.MonitorsFlagsTableAdapter.Update(schs);
             else if (t.Equals(typeof(StandardsRow))) this.tAM.StandardsTableAdapter.Update(schs);
-            else if (t.Equals(typeof(MatrixRow))) this.tAM.MatrixTableAdapter.Update(schs);
+            else if (t.Equals(typeof(MatrixRow)))
+            {
+
+                //   LINAATableAdapters.MatrixTableAdapter ta = new LINAATableAdapters.MatrixTableAdapter();
+                this.tAM.MatrixTableAdapter.Update(schs);
+              //   ta.Update(schs);
+
+             //    ta.Dispose();
+             //   ta = null;
+            }
             //    else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
             else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.RefMaterialsTableAdapter.Update(schs);
             else if (t.Equals(typeof(UnitRow)))
@@ -228,9 +237,9 @@ namespace DB
             else if (t.Equals(typeof(DetectorsAbsorbersRow))) this.tAM.DetectorsAbsorbersTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsCurvesRow))) this.tAM.DetectorsCurvesTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsDimensionsRow))) this.tAM.DetectorsDimensionsTableAdapter.Update(schs);
-       //     else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
+            //     else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
             else if (t.Equals(typeof(HoldersRow))) this.tAM.HoldersTableAdapter.Update(schs);
-             else if (t.Equals(typeof(MeasurementsRow)))
+            else if (t.Equals(typeof(MeasurementsRow)))
             {
                 this.tAM.MeasurementsTableAdapter.SetForLIMS();// Connection.ConnectionString = DB.Properties.Settings.Default.NAAConnectionString;
                 this.tAM.MeasurementsTableAdapter.Update(schs);
@@ -273,15 +282,15 @@ namespace DB
             {
                 this.tAM.tStudentTableAdapter.Update(schs);
             }
-           
-         
+
+
             else if (t.Equals(typeof(BlanksRow)))
             {
                 this.tAM.BlanksTableAdapter.Update(schs);
             }
             else if (t.Equals(typeof(CompositionsRow)))
             {
-                this.tAM.CompositionsTableAdapter.Update(schs);
+                //        this.tAM.CompositionsTableAdapter.Update(schs);
                 // string path = folderPath + DB.Properties.Resources.Backups + "Compositions.xml";
                 // this.tableCompositions.AcceptChanges(); this.tableCompositions.WriteXml(path);
             }

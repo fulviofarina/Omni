@@ -33,6 +33,10 @@
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.preferencesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.resourcesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderRestoreTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.sQLDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSMQPurgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionsTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +45,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -71,6 +75,7 @@
             // progressBar
             // 
             this.progressBar.ForeColor = System.Drawing.Color.Black;
+            this.progressBar.Maximum = 0;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(100, 43);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -80,6 +85,7 @@
             this.OptionsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.OptionsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.preferencesTSMI,
+            this.resourcesTSMI,
             this.toolStripSeparator2,
             this.databaseToolStripMenuItem,
             this.connectionsTSMI,
@@ -88,7 +94,7 @@
             this.toolStripSeparator4,
             this.toolStripMenuItem1,
             this.helpToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutTSMI});
             this.OptionsBtn.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptionsBtn.ForeColor = System.Drawing.Color.Orange;
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
@@ -105,6 +111,36 @@
             this.preferencesTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.preferencesTSMI.Size = new System.Drawing.Size(257, 30);
             this.preferencesTSMI.Text = "Preferences";
+            // 
+            // resourcesTSMI
+            // 
+            this.resourcesTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.folderRestoreTSMI,
+            this.sQLDatabaseToolStripMenuItem,
+            this.mSMQPurgeToolStripMenuItem});
+            this.resourcesTSMI.Name = "resourcesTSMI";
+            this.resourcesTSMI.Size = new System.Drawing.Size(257, 30);
+            this.resourcesTSMI.Text = "Restore";
+            // 
+            // folderRestoreTSMI
+            // 
+            this.folderRestoreTSMI.Name = "folderRestoreTSMI";
+            this.folderRestoreTSMI.Size = new System.Drawing.Size(205, 30);
+            this.folderRestoreTSMI.Text = "Resources";
+            // 
+            // sQLDatabaseToolStripMenuItem
+            // 
+            this.sQLDatabaseToolStripMenuItem.Enabled = false;
+            this.sQLDatabaseToolStripMenuItem.Name = "sQLDatabaseToolStripMenuItem";
+            this.sQLDatabaseToolStripMenuItem.Size = new System.Drawing.Size(205, 30);
+            this.sQLDatabaseToolStripMenuItem.Text = "SQL Database";
+            // 
+            // mSMQPurgeToolStripMenuItem
+            // 
+            this.mSMQPurgeToolStripMenuItem.Enabled = false;
+            this.mSMQPurgeToolStripMenuItem.Name = "mSMQPurgeToolStripMenuItem";
+            this.mSMQPurgeToolStripMenuItem.Size = new System.Drawing.Size(205, 30);
+            this.mSMQPurgeToolStripMenuItem.Text = "MSMQ Purge";
             // 
             // toolStripSeparator2
             // 
@@ -168,11 +204,11 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.helpToolStripMenuItem.Text = "User Guide";
             // 
-            // aboutToolStripMenuItem
+            // aboutTSMI
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutTSMI.Name = "aboutTSMI";
+            this.aboutTSMI.Size = new System.Drawing.Size(257, 30);
+            this.aboutTSMI.Text = "About";
             // 
             // toolStripSeparator13
             // 
@@ -228,12 +264,16 @@
         private System.Windows.Forms.ToolStripMenuItem limsTSMI;
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resourcesTSMI;
         private System.Windows.Forms.ToolStripMenuItem explorerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem aboutTSMI;
+        private System.Windows.Forms.ToolStripMenuItem folderRestoreTSMI;
+        private System.Windows.Forms.ToolStripMenuItem sQLDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mSMQPurgeToolStripMenuItem;
     }
 }

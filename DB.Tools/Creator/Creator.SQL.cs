@@ -187,6 +187,11 @@ namespace DB.Tools
             Interface.IDB.MatSSF.Clear();
             Interface.IDB.Compositions.Clear();
             Interface.IDB.MUES.Clear();
+            foreach (var item in Interface.IDB.Matrix)
+            {
+                item.SetCompositionTableNull();
+            }
+            Interface.IPopulate.INuclear.CleanSigmas();
             IEnumerable<DataTable> tables = set.Tables.OfType<DataTable>();
             //save
             Interface.IStore.SaveRemote(ref tables);

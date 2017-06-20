@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using DB.Tools;
@@ -39,12 +40,11 @@ namespace DB.UI
                 {
                     destiny = attachProjectbox(pro);
                 }
-              
                 else
                 {
-                    //main child 
+                    //main child
                     ucSSPan.AttachCtrl(ref pro);
-                  //  ucUnit.AttachCtrl(ref pro);
+                    // ucUnit.AttachCtrl(ref pro);
                 }
 
                 destiny?.Controls.Add(pro as Control);
@@ -92,11 +92,10 @@ namespace DB.UI
             {
                 currentSize = this.Size;
 
-
-
                 //
                 ucUnit.Set(ref Interface);
-                ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
+              
+            //    ucUnit.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
                 //
                 ucMS.Set(ref Interface);
                 ucMS.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
@@ -107,31 +106,34 @@ namespace DB.UI
                 ucVcc.RowHeaderMouseClick = this.ucUnit.DgvItemSelected;
                 //
 
-
                 Interface.IBS.PropertyChangedHandler += delegate
                 {
                     bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                     bool isCalculating = Interface.IBS.IsCalculating;
                     this.CalcBtn.Enabled = ThereIsData;
                     this.cancelBtn.Enabled = ThereIsData;
+
+                    ucUnit.DGVRefresher.Invoke(null, EventArgs.Empty);
+
                     // this.CalcBtn.Enabled = ThereIsData && !isCalculating; this.cancelBtn.Enabled =
                     // ThereIsData && isCalculating; this.Tab.SelectedTab = this.CalcTab; ucUnit.PaintRows();
                 };
 
+              
+
                 this.CalcBtn.Click += delegate
                 {
                     Calculate(null);
+
                 };
 
                 setSampleControl();
-
 
                 IOptions options = LIMS.GetOptions();
                 resetProgress = options.ResetProgress;
                 showProgress = options.ShowProgress;
                 // projBox.HideChildControl = Hide;
-                this.splitContainer1.Panel2.Controls.Add(options as Control) ;
-
+                this.splitContainer1.Panel2.Controls.Add(options as Control);
 
                 Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
@@ -144,58 +146,96 @@ namespace DB.UI
 
         public void SetTimer()
         {
-          
+
+            cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+         //   ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+           
 
             timer = new Timer();
-            timer.Enabled = false;
+          
             timer.Interval = 5000;
             timer.Tick += delegate
             {
-                timer.Stop();
+            //    string mb = getAvailableRAM();
+                string cpu = getCurrentCpuUsage();
+                bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
+             
+                string mb = Decimal.Round(Convert.ToDecimal(Environment.WorkingSet * 1e-6), 0).ToString();
+                mb += "Mb RAM";
+                string status = "Idle; ";
+              
                 if (Interface.IPreferences.CurrentPref.RunInBackground)
                 {
+                    timer.Stop();
                     this.Calculate(true);
-                }
-            };
+                   
 
+                }
+                if (MatSSF != null)
+                {
+                  if (MatSSF.IsCalculating) status = "ON; ";
+                }
+                ucSSPan.SetMessage(status + mb +"; " + cpu );
+
+                ucSSPan.RefreshChart().Invoke(null,EventArgs.Empty);
+
+            };
+            timer.Enabled = true;
+
+         
+            /*
             //activate TIMER ONLY WHEN APP IS IDLE OR WHEN IDLE IS RAISED
-            Application.Idle += delegate
+            timer.Tick += delegate
             {
-                bool runInBK = Interface.IPreferences.CurrentPref.RunInBackground;
+             //   Environment.Workin
+             
+             
+            //    string mb = Decimal.Round(Convert.ToDecimal(Environment.WorkingSet * 1e-6),1).ToString();
                 if (!timer.Enabled && runInBK)
                 {
-                
                     timer.Start();
-                    ucSSPan.SetMessage("On");
-                 
+                  //  ucSSPan.SetMessage("On");
                 }
                 else if (!runInBK)
                 {
-           
                     timer.Stop();
-                    ucSSPan.SetMessage("Idle");
-                  
+                   
+                  //  ucSSPan.SetMessage("Idle");
                 }
-                else ucSSPan.SetMessage("Info");
-             
+               
             };
+            */
         }
+        PerformanceCounter cpuCounter;
+        PerformanceCounter ramCounter;
+
+        // Consume like this:
+
+public string getCurrentCpuUsage()
+        {
+            string valor = Decimal.Round(Convert.ToDecimal(cpuCounter.NextValue()), 0) + "% CPU";
+            return valor;
+        }
+
+        public string getAvailableRAM()
+        {
+            return ramCounter.NextValue() + "MB";
+        }
+
 
         private Action<int> resetProgress;
         private EventHandler showProgress;
 
-       
-
         private Control attachProjectbox<T>(T pro)
         {
+
             Control destiny;
             ucGenericCBox projBox = pro as ucGenericCBox;
             projBox.HideChildControl = Hide;
             destiny = this.splitContainer1.Panel1;
             //attach binding
-       
-            // force refresh
-            Interface.IBS.EnabledControls = true;
+
+            // force refresh Interface.IBS.EnabledControls = true;
 
             //invoke
             //    bindingChanged(null, new PropertyChangedEventArgs(string.Empty));
@@ -206,14 +246,24 @@ namespace DB.UI
         {
             EventHandler callBack = delegate
             {
-                timer.Start();// = true;
-                              // timer.Interval = 5000; this.ucUnit.PaintRows();
+
+               // timer.Start();// = true;
             };
 
             if (MatSSF == null)
             {
                 MatSSF = new MatSSF();
-                MatSSF.Set(ref Interface, callBack, resetProgress, showProgress);
+
+
+                EventHandler showProg = showProgress;
+                showProg +=  ucUnit.DGVRefresher;
+
+                this.cancelBtn.Click += delegate
+                {
+                    if (MatSSF!=null)   MatSSF.IsCalculating = false;
+                };
+
+                MatSSF.Set(ref Interface, callBack, resetProgress, showProg);
             }
 
             bool background = false;
@@ -232,14 +282,14 @@ namespace DB.UI
                 // Cursor.Current = Cursors.WaitCursor;
                 this.Tab.SelectedTab = this.CalcTab;
             }
-            //calculate method
-            this.cancelBtn.Click += delegate
-            {
-                MatSSF.IsCalculating = false;
-            };
 
-            MatSSF.Calculate(background);
-            // Cursor.Current = Cursors.Default;
+
+            //save
+            if (!background) Creator.SaveInFull(true);
+         
+            MatSSF.RunAll(background);
+
+         
         }
 
         private void setSampleControl()
@@ -260,8 +310,6 @@ namespace DB.UI
                 ucSSPan.ViewChanged(matrix, EventArgs.Empty);
             };
         }
-
-      
 
         public ucSSF()
         {

@@ -15,8 +15,8 @@ namespace DB.Tools
     {
         private static Interface Interface = null;
 
-        private static Action lastCallBack = null;
-        private static Action mainCallBack = null;
+        private static EventHandler lastCallBack = null;
+        private static EventHandler mainCallBack = null;
 
         // private static int toPopulate = 0;
 
@@ -77,6 +77,9 @@ namespace DB.Tools
 
             return form;
         }
+
+
+
 
     }
     public partial class Creator

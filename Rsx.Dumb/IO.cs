@@ -161,28 +161,29 @@ namespace Rsx.Dumb
         }
 
 
-
+        public static string EXPAND_EXE = "expand.exe";
 
 
         /// <summary>
         /// unpack a Resource
         /// </summary>
         public static void UnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack)
+        {
+            if (File.Exists(resourcePath))
             {
-                if (File.Exists(resourcePath))
+                if (resourcePath.CompareTo(destFile) != 0) File.Copy(resourcePath, destFile);
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //conservar esto para unzippear
+                if (unpack)
                 {
-                 if (resourcePath.CompareTo(destFile)!=0)   File.Copy(resourcePath, destFile);
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    //conservar esto para unzippear
-                    if (unpack)
-                    {
-                        IO.Process(process, startExecutePath, "expand.exe", destFile + " -F:* " + startExecutePath, false, true, 100000);
-                        File.Delete(destFile);
-                    }
+                    IO.Process(process, startExecutePath, EXPAND_EXE, destFile + " -F:* " + startExecutePath, false, true, 100000);
+                    File.Delete(destFile);
                 }
             }
+        }
 
-            public static void WriteFileBytes(ref byte[] r, string destFile)
+
+        public static void WriteFileBytes(ref byte[] r, string destFile)
             {
                 FileStream f = new FileStream(destFile, FileMode.Create, FileAccess.Write);
                 f.Write(r, 0, Convert.ToInt32(r.Length));

@@ -400,7 +400,7 @@ namespace k0X
                 msn = new Pop(false);
 
                 //Build
-                Creator.Build(ref LIMS.Interface);
+                Creator.Build();
       
                 UserControl IConn = new VTools.ucSQLConnection();
              //   dynamic connectionControl = IConn;

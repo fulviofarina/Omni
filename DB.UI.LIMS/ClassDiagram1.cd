@@ -1,97 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.UI.ucGenericCBox" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>FBARAAAAECACAMCAAgzCgAgKISABAAAACAAVIFAAFCA=</HashCode>
-      <FileName>Projects\ucGenericCBox.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="DB.UI.SampleCell" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="DB.UI.SampleCell">
+    <Position X="0.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAABAAAAAAEAAAAAABAAAAAgAAAAIAAA=</HashCode>
       <FileName>SSF\DGVs.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DB.UI.SampleColumn" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Class Name="DB.UI.SampleColumn" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAAAoAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>SSF\DGVs.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="DB.UI.UnitBoolColumn" Collapsed="true">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+  <Class Name="DB.UI.UnitBoolColumn">
+    <Position X="8" Y="4.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>SSF\DGVs.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DB.UI.UnitCell" Collapsed="true">
-    <Position X="2.25" Y="2.5" Width="1.5" />
+  <Class Name="DB.UI.UnitSSFCell">
+    <Position X="8" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAIAAA=</HashCode>
       <FileName>SSF\DGVs.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DB.UI.ucSSF" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+  <Class Name="DB.UI.BindableDGVColumn" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>IBQAAAABBCYmB4GBECbACQACwCEAAwAAwAYASkCihAA=</HashCode>
-      <FileName>SSF\ucSSF.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAoAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>SSF\DGVs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.UI.UnitSSFColumn" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IBAAAAAgQABAIAAIAAAoCEEAACwAEAAAAAAAAAAQEAA=</HashCode>
+      <FileName>SSF\DGVs.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="DB.UI.ucSSFPanel" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+  <Class Name="DB.UI.UnitBoolCell">
+    <Position X="8.25" Y="6.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>EAQAiIUAAmaABQAAAADEAAICAQAAAQAAgAIjEIAAQMA=</HashCode>
-      <FileName>SSF\ucSSF.Panel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.ucSSFData" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ECAQABAAQLAYDwqBBEHUEQACiAQAIQAAkIIGAARA+CQ=</HashCode>
-      <FileName>SSF\ucSSFData.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.ucSSFDataNS" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgAIQwmBRCAAJwAICBDCAAgLAAAEQVCAgIMQQApCCBA=</HashCode>
-      <FileName>SSF\ucSSFData.NS.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.ucUnit" Collapsed="true">
-    <Position X="5.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ggBQIIEAADQCrXOOAAThTAACwCBAY4AwEAJGQQIAQhA=</HashCode>
-      <FileName>SSF\ucUnit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Interface Name="DB.UI.IGenericCBox" Collapsed="true">
-    <Position X="2.25" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAQAAAAEAACAMAAAAgCgAAAICABAAAAAAARAFAABAA=</HashCode>
-      <FileName>Projects\ucGenericCBox.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="DB.UI.ISampleColumn">
-    <Position X="0.5" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAAA=</HashCode>
       <FileName>SSF\DGVs.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="DB.UI.ISSF">
-    <Position X="4" Y="3.75" Width="1.5" />
+  </Class>
+  <Interface Name="DB.UI.ISampleColumn">
+    <Position X="3.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABQAAEAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SSF\ucSSF.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SSF\IDGVs.cs</FileName>
+      <NewMemberFileName>SSF\DGVs.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.IUnitSSFColumn">
+    <Position X="3.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAgQAAAAAAAAAAoAAEAAAwAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SSF\IDGVs.cs</FileName>
+      <NewMemberFileName>SSF\DGVs.cs</NewMemberFileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="10" />

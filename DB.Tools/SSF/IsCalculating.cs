@@ -8,24 +8,44 @@ namespace DB.Tools
     public partial class MatSSF
     {
 
-        string error = "Input data is NOT OK for ";
-        string inputDataOK = "Input data is OK for Sample ";
+        private void finalize(ref UnitRow UNIT)
+        {
+            //    if (!_bkgCalculation)
+            //     {
+            //  Interface.IBS.CurrentChanged<SubSamplesRow>(UNIT.SubSamplesRow);
+            //    }
 
+            SubSamplesRow sample = UNIT.SubSamplesRow;
+            reportFinished(UNIT.Name, sample.IrradiationCode);
+
+            Interface.IStore.Save(ref UNIT);
+            Interface.IStore.Save(ref sample);
+
+            if (_processTable.Count == 0)
+            {
+        
+                IsCalculating = false;
+            }
+
+        }
+
+
+      
         private bool reportIfSampleHasErrors(ref UnitRow UNIT, bool hasError)
         {
         
-            inputDataOK += UNIT.Name;// inputDataOKTitle;
-
+         //   DATA_OK = UNIT.Name;// inputDataOKTitle;
+            
             if (hasError)
             {
            
-                string inputDataNotOK = error + "Sample " + UNIT.Name;
-                UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, error + "Sample");
+                string inputDataNotOK = DATA_NOT_OK + "Sample " + UNIT.Name;
+                UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, DATA_NOT_OK + "Sample");
             }
             else
             {
-                string inputDataOKTitle = "Checking data...";
-                Interface.IReport.Msg(inputDataOK, inputDataOKTitle);
+              
+                Interface.IReport.Msg(DATA_OK+ UNIT.Name, DATA_OK_TITLE);
             }
             return !hasError;
         }
@@ -41,26 +61,22 @@ namespace DB.Tools
             {
                 Interface.IBS.IsCalculating = value;
                 Interface.IBS.EnabledControls = true;
-                bool valor = value;
-                reportToUser(valor);
+           
+                reportToUser();
             }
         }
-
+     
         private void reportErrors(int errorCount)
         {
             if (!_bkgCalculation)
             {
                 //some missing
-                string some = "Some of ";
+                string some = "Some ";
                 if (errorCount == _units.Count)
                 {
-                    Interface.IReport.Msg(ERRORS, "All samples were Skipped");
-                    some = "All the ";
+                    some = "All ";
                 }
-                else
-                {
-                    Interface.IReport.Msg(ERRORS, "Some samples were Skipped");
-                }
+              //  some += " were Skipped";
                 Interface.IReport.Speak(some + ERROR_SPEAK);
             }
         }
@@ -68,7 +84,7 @@ namespace DB.Tools
         private void reportFinishedCancelled()
         {
             //user cancelled
-            Interface.IReport.Msg(CANCELLED, "Cancelled");
+            Interface.IReport.Msg(CANCELLED, CANCELLED_TITLE);
             if (!_bkgCalculation) Interface.IReport.Speak(CANCELLED);
             _processTable.Clear();
         }
@@ -78,8 +94,8 @@ namespace DB.Tools
             if (!_bkgCalculation)
             {
                 //all good finished
-                Interface.IReport.Msg(FINISHED, FINISHED_TITLE);
-                Interface.IReport.Speak(FINISHED);
+                Interface.IReport.Msg(FINISHED_ALL, FINISHED_TITLE);
+                Interface.IReport.Speak(FINISHED_ALL);
             }
         }
 
@@ -89,10 +105,10 @@ namespace DB.Tools
             if (!_bkgCalculation) Interface.IReport.Speak(RUNNING);
         }
 
-        private void reportToUser(bool valor)
+        private void reportToUser()
         {
             //false means finished, cancelled or error
-            if (!valor)
+            if (!IsCalculating)
             {
                 //no processes remaining
                 if (_processTable.Count == 0)
@@ -115,11 +131,9 @@ namespace DB.Tools
                 else
                 {
                     reportFinishedCancelled();
+                    _resetProgress(0);
                 }
 
-                _resetProgress(0);
-
-                //callback
                 _callBack?.Invoke(null, EventArgs.Empty);
             }
             else //everything is runnning now...

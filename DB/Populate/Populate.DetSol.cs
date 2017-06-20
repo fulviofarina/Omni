@@ -29,26 +29,7 @@ namespace DB
                 return meas;
             }
 
-            private LINAA.MeasurementsRow addMeasurement(string measName)
-            {
-
-                LINAA.MeasurementsRow meas = this.tableMeasurements.NewMeasurementsRow();
-                this.tableMeasurements.AddMeasurementsRow(meas);
-
-                try
-                {
-
-                meas.SetName(measName);
-
-
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(meas, ex);
-                }
-                return meas;
-            }
-
+        
        
 
         /// <summary>

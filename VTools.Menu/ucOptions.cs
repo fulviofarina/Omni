@@ -30,6 +30,8 @@ namespace VTools
         EventHandler ShowProgress { get; }
         bool DisableImportant { set; }
 
+        event EventHandler RestoreFoldersClick;
+
         event EventHandler DropDownClicked;// { get; set; }
     }
     public partial class ucOptions : UserControl, IOptions
@@ -38,7 +40,18 @@ namespace VTools
         {
             InitializeComponent();
         }
-  
+
+        public event EventHandler RestoreFoldersClick
+        {
+            add
+            {
+                this.folderRestoreTSMI.Click += value;
+            }
+            remove
+            {
+                this.folderRestoreTSMI.Click -= value;
+            }
+        }
         public void Set()
         {
             //basic
@@ -95,12 +108,12 @@ namespace VTools
         {
             add
             {
-                aboutToolStripMenuItem.Click += value;
+                aboutTSMI.Click += value;
             }
 
             remove
             {
-                aboutToolStripMenuItem.Click -= value;
+                aboutTSMI.Click -= value;
             }
         }
    
@@ -161,6 +174,7 @@ namespace VTools
                     this.progressBar.PerformStep();
                     Application.DoEvents();
                 };
+
                 return pros;
                
             }
@@ -196,12 +210,17 @@ namespace VTools
 
         public void ResetProgress (int max)
         {
-
             this.progressBar.Minimum = 0;
             this.progressBar.Step = 1;
-            this.progressBar.Maximum = max;
-            this.progressBar.Value = 0;
+            if (max == 0)
+            {
 
+                this.progressBar.Maximum = 0;
+                this.progressBar.Value = 0;
+
+
+            }
+            else this.progressBar.Maximum += max;
         }
 
      

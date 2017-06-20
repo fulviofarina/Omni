@@ -101,6 +101,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Populate\Add.cs" />
+    <Compile Include="Populate\Events.cs" />
     <Compile Include="Row\Geometry\NAA.Geometry.Row.cs" />
     <Compile Include="Row\Geometry\NAA.Matrix.Row.cs" />
     <Compile Include="DB\NAA.Exceptions.cs" />

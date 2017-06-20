@@ -11,12 +11,43 @@ namespace DB.UI
     {
         protected internal Interface Interface = null;
 
-        private string sourceVARIABLES = "NEUTRON SOURCE VARIABLES";
         private string add = " (EXPERT MODE ON) ";
+        private string sourceVARIABLES = "NEUTRON SOURCE VARIABLES";
 
-        protected internal Hashtable unitBindings;
+        /// <summary>
+        /// sets the bindings for the ControlBoxes and others
+        /// </summary>
+        public void Set(ref Interface inter)
+        {
+            Interface = inter;
+            try
+            {
+                setEnabledBindings();
+                Hashtable unitBindings;
 
-     
+                unitBindings = setUnitBindings();
+
+                IPreferences pref = LIMS.GetPreferences();
+                // IPreferences pref = pro as IPreferences;
+                EventHandler overrider = delegate
+                {
+                    refreshNSLabel();
+                };
+                pref.OverriderChanged += overrider;
+                //invoke
+                overrider.Invoke(null, EventArgs.Empty);
+                //refreshNSLabel();
+
+                errorProvider1.DataMember = Interface.IDB.Unit.TableName;
+                errorProvider1.DataSource = Interface.IBS.Units;
+
+                Interface.IReport.Msg("Neutron Source Control OK", "Control loaded");
+            }
+            catch (System.Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+        }
 
         private void refreshNSLabel()
         {
@@ -32,54 +63,13 @@ namespace DB.UI
             }
         }
 
-        /// <summary>
-        /// sets the bindings for the ControlBoxes and others
-        /// </summary>
-        public Hashtable Set(ref Interface inter)
-        {
-            Interface = inter;
-            try
-            {
-                setEnabledBindings();
-
-                unitBindings = setUnitBindings();
-
-
-                IPreferences pref = LIMS.GetPreferences();
-                //       IPreferences pref = pro as IPreferences;
-                EventHandler overrider = delegate
-                {
-                    refreshNSLabel();
-                };
-                pref.OverriderChanged += overrider;
-                //invoke
-                overrider.Invoke(null, EventArgs.Empty);
-                //refreshNSLabel();
-
-
-
-                errorProvider1.DataMember = Interface.IDB.Unit.TableName;
-                errorProvider1.DataSource = Interface.IBS.Units;
-
-                Interface.IReport.Msg("Neutron Source Control OK", "Control loaded");
-            }
-            catch (System.Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-
-            return unitBindings;
-        }
-
-       
-
         private void setEnabledBindings()
         {
             string column;
 
             BindingSource bs = Interface.IBS.SSFPreferences;
             column = Interface.IDB.SSFPref.DoCKColumn.ColumnName;
-            Binding renabled5 =Rsx.Dumb.BS.ABinding(ref bs,column, string.Empty,"Enabled");
+            Binding renabled5 = Rsx.Dumb.BS.ABinding(ref bs, column, string.Empty, "Enabled");
             this.kthB.TextBox.DataBindings.Add(renabled5);
 
             column = Interface.IDB.SSFPref.OverridesColumn.ColumnName;

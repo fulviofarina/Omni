@@ -8,12 +8,44 @@ namespace DB
 {
     public partial class LINAA
     {
+
+       public partial class EventData : EventArgs
+        {
+
+           
+            public EventData(object[] arguments=null) : base()
+            {
+                args = arguments;
+            }
+
+            object[] args = null;
+
+            public object[] Args
+            {
+                get
+                {
+                    return args;
+                }
+
+                set
+                {
+                    args = value;
+                }
+            }
+        }
+
         /// <summary>
         /// Cleaned
         /// </summary>
         public partial class SubSamplesDataTable : IColumn
         {
+
+            public EventHandler<EventData> CalcParametersHandler;
+
+
             public EventHandler InvokeCalculations;
+            
+            public EventHandler<EventData> AddMatrixHandler;
 
             private DataColumn[] geometriesNonNullable = null;
 
@@ -376,10 +408,10 @@ namespace DB
             // Parent(SubSamples_IRequestsAverages).Radius + Parent(SubSamples_IRequestsAverages).FillHeight))";
         }
 
-        private void AddSSFs(ref UnitRow u)
+        public void AddSSFs(ref UnitRow u)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
-            MatSSFDataTable dt = u.GetMatSSFTable(path);
+            MatSSFDataTable dt = u.GetMatSSFTableNoFile();
             this.tableMatSSF.Merge(dt, false, MissingSchemaAction.AddWithKey);
         }
     }

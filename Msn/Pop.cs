@@ -16,6 +16,7 @@ namespace Msn
         protected internal Timer _TIMER;
 
         protected internal Font _FONT = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
+        private string logFilePath = string.Empty;
 
         public int DisplayInterval
         {
@@ -57,6 +58,24 @@ namespace Msn
 
         }
 
+        public string LogFilePath
+        {
+            get
+            {
+                return logFilePath;
+            }
+
+            set
+            {
+                logFilePath = value;
+
+                FillLog("**************************STARTED**************************");
+
+            }
+        }
+
+      
+
         public void MakeForm()
         {
             Form f = this.ParentForm;
@@ -90,55 +109,81 @@ namespace Msn
 
         public void Msg(string msg, string title, bool ok=true, bool accumulate = false)
         {
-            // string pre = string.Empty;
-            System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
-            string pre = "OK";
-            if (!ok)
+            EventHandler hdl = delegate
             {
-                pre = "=(";
-            }
-            this.iconic.Image = Notifier.MakeBitMap(pre, _FONT, Color.White);
+                // string pre = string.Empty;
+                System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
+                string pre = "OK";
+                if (!ok)
+                {
+                    pre = "=(";
+                }
+                this.iconic.Image = Notifier.MakeBitMap(pre, _FONT, Color.White);
 
-            Msg(msg, title, icon, accumulate);
+                message(msg, title,  accumulate);
+            };
+            this.Invoke(hdl);
         }
 
 
-        public void Msg(string msg, string title, ToolTipIcon icon, bool accumulate = false)
+        private void message( string msg, string title, bool accumulate = false)
         {
            
-                Action dele = delegate
-                {
-                    _LAST_MSG = this.textBoxDescription.Text;
-                    if (accumulate) this.textBoxDescription.Text = _LAST_MSG + "\n" + msg;
-                    else this.textBoxDescription.Text = msg;
-                    this.title.Text = title;
-                    Show();
-                    Application.DoEvents();
-                };
-                Invoke(dele);
+               
+                    try
+            {
+                _LAST_MSG = this.textBoxDescription.Text;
+                if (accumulate) this.textBoxDescription.Text = _LAST_MSG + "\n" + msg;
+                else this.textBoxDescription.Text = msg;
+                this.title.Text = title;
+
+                FillLog(msg);
+
+
+                //    Show();
+                //  Application.DoEvents();
+
+
+            }
+            catch (Exception ex)
+                    {
+                         
+                      
+                    }
+                 
+              
+        }
+
+        public void FillLog(string msg)
+        {
+            System.IO.File.AppendAllText(logFilePath, DateTime.Now.ToLocalTime() + "\t" + msg + "\n");
         }
 
         public void ReportProgress(int percentage)
         {
-            this.iconic.Image = Notifier.MakeBitMap(percentage.ToString() + "%", _FONT, Color.White);
-            //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
 
-            Application.DoEvents();
+        //    EventHandler hdl = delegate
+            //{
+                this.iconic.Image = Notifier.MakeBitMap(percentage.ToString() + "%", _FONT, Color.White);
+                //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
 
-            string msg = "Loading... ";
-            string title = "Please wait...";
-            if (percentage == 100)
-            {
-                msg = "Loaded ";
-                this.iconic.Image = Notifier.MakeBitMap("OK", _FONT, Color.White);
-                title = "Ready to go...";
-            }
+            //    Application.DoEvents();
 
-            Msg(title, msg, ToolTipIcon.Info);
+                string msg = "Loading... ";
+                string title = "Please wait...";
+                if (percentage == 100)
+                {
+                    msg = "Loaded ";
+                    this.iconic.Image = Notifier.MakeBitMap(":)", _FONT, Color.White);
+                    title = "Ready to go...";
+                }
+                message( msg +  percentage + "%", title);
 
-            if (percentage == 100) this.iconic.Image = Notifier.MakeBitMap(":)", _FONT, Color.White);
-
-            Application.DoEvents();
+          //      Application.DoEvents();
+                //   Application.DoEvents();
+          //  };
+         //   this.Invoke(hdl);
+            
         }
 
         // protected SpeechLib.SpVoice lorito;
@@ -162,6 +207,10 @@ namespace Msn
         {
             _TIMER.Stop();
             if (this.Visible) this.Visible = false;
+            {
+                FillLog("**************************IDLE**************************");
+
+            }
         }
 
         protected void speakDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -220,10 +269,26 @@ namespace Msn
 
             this.textBoxDescription.TextChanged += msgChanged;
 
+            this.textBoxDescription.MouseDoubleClick += TextBoxDescription_MouseDoubleClick; ;
+
             if (withForm)
             {
                 MakeForm();
             }
+        }
+
+        private void TextBoxDescription_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("explorer.exe", logFilePath);
+            }
+            catch (Exception)
+            {
+
+               
+            }
+           
         }
     }
 }

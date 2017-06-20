@@ -82,11 +82,13 @@ namespace DB.Tools
             findTableAndPath<T>(out dt, out path);
 
             DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
-            bool add = false;
+         //   bool add = false;
+
+
             if (row == null)
             {
-                    Interface.IReport.GenerateUserInfoReport();
-                add = true;
+                Interface.IReport.GenerateUserInfoReport();
+             //   add = true;
             }
             Type tipo = typeof(T);
           

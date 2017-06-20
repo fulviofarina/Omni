@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 ///FULVIO
 namespace Rsx.Dumb
@@ -181,10 +183,33 @@ namespace Rsx.Dumb
 
                 System.IO.File.Delete(file);
 
-                // auxiliar = null;
-            }
+        
 
-            public static byte[] MakeDTBytes<T2>( ref T2 dataTable, string startupPAth)
+
+            // auxiliar = null;
+        }
+        public static void ReadDTBytesNoFile<T>( ref byte[] auxiliar, ref T DestinyDataTable)
+        {
+            //string file = startupPath + Guid.NewGuid().ToString() + ".xml";
+
+          //  IO.WriteFileBytes(ref auxiliar, file);
+            DataTable toLoad = DestinyDataTable as DataTable;
+
+                  
+            XmlDocument doc = new XmlDocument();
+            string xml = Encoding.UTF8.GetString(auxiliar);
+            doc.LoadXml(xml);
+            XmlNodeReader reader = new XmlNodeReader(doc);
+            toLoad.ReadXml(reader);
+
+            reader.Close();
+            reader = null;
+            doc.RemoveAll();
+            doc = null;
+                       toLoad.AcceptChanges();
+            // auxiliar = null;
+        }
+        public static byte[] MakeDTBytes<T2>( ref T2 dataTable, string startupPAth)
         {
             string afile = startupPAth + Guid.NewGuid().ToString() + ".xml";
 

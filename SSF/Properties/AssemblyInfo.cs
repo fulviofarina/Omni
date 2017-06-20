@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("nSSF")]
 [assembly: AssemblyDescription(@"Software for neutron self-shielding calculations
-on cylindrical samples according to several authors
+on cylindrical samples according to different
 
 Calculation methods:
 
@@ -54,6 +54,6 @@ The open-source MatSSF code (FORTRAN) was developed by
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9")]
-[assembly: AssemblyFileVersion("0.9")]
+[assembly: AssemblyVersion("0.9.4")]
+[assembly: AssemblyFileVersion("0.9.4")]
 [assembly: NeutralResourcesLanguage("en")]

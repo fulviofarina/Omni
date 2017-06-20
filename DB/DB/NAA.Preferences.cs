@@ -188,7 +188,6 @@ namespace DB
 
 
 
-
                 if (this.tableSSFPref.AutoCal.Contains(column))
                 {
                     if (isBusy) return;
@@ -196,45 +195,39 @@ namespace DB
                 }
                 else if (column == this.tableSSFPref.CalcMassColumn)
                 {
-                    bool nulo = EC.CheckNull(column, this);
-                    if (nulo)
-                    {
-                        CalcMass = false;
-                        return;
-                    }
-                    isBusy = true;
-                    if (CalcMass)
-                    {
-                      
-                        AAFillHeight = false;
-                        AARadius = false;
-                        CalcDensity = false;
-                       
-                    }
-                    else
-                    {
-                        if (!CalcDensity && !AAFillHeight && !AARadius)
+                       bool nulo = EC.CheckNull(column, this);
+                        isBusy = true;
+                        if (CalcMass)
                         {
-                            CalcDensity = true;
+                            AAFillHeight = false;
+                            AARadius = false;
+                            CalcDensity = false;
                         }
-                    }
-                    isBusy = false;
+                        else
+                        {
+                            if (!CalcDensity && !AAFillHeight && !AARadius)
+                            {
+                                CalcDensity = true;
+                            }
+                        }
+                        isBusy = false;
+                   
                 }
                 else if (tableSSFPref.DoCols.Contains(column))
                 {
                     checkDoColumns(column);
+                   
                 }
                 else if (tableSSFPref.OtherCols.Contains(column))
                 {
                     checkOtherColumns(column);
                 }
-                else if (column == this.tableSSFPref.OverridesColumn)
+                else //if (column == this.tableSSFPref.OverridesColumn)
                 {
-                    bool nulo = EC.CheckNull(column, this);
-                    //if (nulo) Overrides = false;
-
+                  
                 }
-            
+
+                bool nulow = EC.CheckNull(column, this);
             }
 
             public new bool HasErrors()
@@ -319,8 +312,7 @@ namespace DB
             private void checkAutoCalculation(DataColumn column)
             {
                 // if (isBusy) return;
-            //    bool nulo = EC.CheckNull(column, this);
-
+             
                 if (IsAAFillHeightNull())
                 {
                     AAFillHeight = false;
@@ -405,7 +397,7 @@ namespace DB
 
                 if (column == this.tableSSFPref.DoCKColumn)
                 {
-                    if (IsDoCKNull()) DoCK = false;
+                    if (IsDoCKNull()) DoCK = true;
                     // this.tableSSFPref.DoChilianChanged?.Invoke(null, EventArgs.Empty);
                 }
                 else if (column == this.tableSSFPref.DoMatSSFColumn)

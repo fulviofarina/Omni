@@ -14,24 +14,13 @@ namespace DB.Tools
     public partial class MatSSF
     {
        
-
-        private void reportFinished(string sampleName)
+        private void reportFinished(string sampleName, string project)
         {
-            string msg = "Finished calculations for sample " + sampleName;
-            Interface.IReport.Msg(msg, "Done");
-            if (_processTable.Count == 0)
-            {
-                if (!_bkgCalculation)
-                {
-                    Interface.IStore.Save<SubSamplesDataTable>();
-                    Interface.IStore.Save<UnitDataTable>();
-                }
-                IsCalculating = false;
-            }
+
+            string msg = FINISHED_SAMPLE + sampleName + " (" + project + ")";
+            Interface.IReport.Msg(msg, DONE);
+           
         }
-
-
-   
 
         private static bool checkIfSampleHasErrors(ref UnitRow UNIT)
         {
@@ -44,14 +33,14 @@ namespace DB.Tools
             return hasSampleError || hasError; 
         }
 
-        private static Process runProcess(ref string[] ioFile, bool hide,   EventHandler exitHANDLER)
+        private static Process runProcess(ref string[] arrayOfUnitFiles, bool hide,   EventHandler exitHANDLER)
         {
 
-            string newMatssfEXEFile = ioFile[1]; // the second item
+            string newMatssfEXEFile = arrayOfUnitFiles[1]; // the second item
 
             Process process = IO.Process(CMD, "/c " + newMatssfEXEFile, _startupPath, false, hide, null, exitHANDLER);
             //add to table
-            _processTable.Add((object)process, (object)ioFile);
+            _processTable.Add((object)process, (object)arrayOfUnitFiles);
             //start process
             process.Start();
 
@@ -60,10 +49,8 @@ namespace DB.Tools
             //set input files on Console
 
             // process.WaitForInputIdle();
-          
-         
-                process.StandardInput.WriteLine(ioFile[2]);
-            process.StandardInput.WriteLine(ioFile[3]);
+                process.StandardInput.WriteLine(arrayOfUnitFiles[2]);
+            process.StandardInput.WriteLine(arrayOfUnitFiles[3]);
 
             return process;
         }
@@ -138,10 +125,10 @@ namespace DB.Tools
             elements = null;
         }
 
-        private void doChMethod(string sampleName)
+        private void doChMethod(int sampleID)
         {
-            LINAA.UnitRow UNIT = null;
-            UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
+       
+            UnitRow UNIT = Interface.IPopulate.ISamples.GetUnitBySampleID(sampleID);
 
             IPreferences ip = Interface.IPreferences;
 
@@ -153,7 +140,7 @@ namespace DB.Tools
             {
                 doChMethod(ref UNIT);
 
-                Interface.IReport.Msg("CKS calculations done for Unit " + UNIT.Name, "CKS Calculations");
+                Interface.IReport.Msg(CHILIAN_OK + UNIT.Name, "CKS Calculations");
             }
         }
 
@@ -212,12 +199,10 @@ namespace DB.Tools
             return isOk;
         }
 
-        private void doMatSSFMethod(string sampleName, string OutputFile)
+        private void doMatSSFMethod(int sampleID, string OutputFile)
         {
             bool runOk = false;
-            UnitRow UNIT = null;
-            UNIT = Interface.IDB.Unit
-            .FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
+            UnitRow UNIT = Interface.IPopulate.ISamples.GetUnitBySampleID(sampleID);
 
             string outFile = _startupPath + OutputFile;
             string lecture = IO.ReadFile(outFile);
@@ -258,9 +243,8 @@ namespace DB.Tools
             //  UNIT.Clean();
             //CLEAN!!!
             //
-            UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated until the background computations upgrades them");
-
-            if (!background) Interface.IBS.CurrentChanged<UnitRow>(UNIT);
+      //   
+        //    if (!background) Interface.IBS.CurrentChanged<UnitRow>(UNIT);
 
             ok = checkInputData(ref UNIT);
 
@@ -287,8 +271,9 @@ namespace DB.Tools
                 {
                     string inputGeneratedTitle = "Starting calculations...";
                     string inputGeneratedMsg = "Input metadata generated for Sample ";
-                    UNIT.IsBusy = true;
+                   
                     Interface.IReport.Msg(inputGeneratedMsg + UNIT.Name, inputGeneratedTitle);
+                  
                 }
                 else
                 {
@@ -300,73 +285,90 @@ namespace DB.Tools
         }
         private void process_Exited(object sender, EventArgs e)
         {
+         
+
             if (_processTable.Count == 0) return;
             Process process = sender as Process;
 
             string[] itemIOFileANDEXE = (string[])_processTable[process];
-
             string item = itemIOFileANDEXE[0];
-
-            if (itemIOFileANDEXE == null) return;
-            if (string.IsNullOrEmpty(item)) return;
+            string exeFile = itemIOFileANDEXE[1];
+            string outFile = itemIOFileANDEXE[3];
+            string infile = itemIOFileANDEXE[2];
+            int sampleID = Convert.ToInt32(itemIOFileANDEXE[4]);
 
             _processTable.Remove(process);
+         
+       
+
 
             try
             {
-                //  string exeF = findEXEFile(ref process);
-                string exeFile = itemIOFileANDEXE[1];
-               
-                // EventHandler updateToDo = UpdateToDo(item);
 
-                string outFile = itemIOFileANDEXE[3];
-                string infile = itemIOFileANDEXE[2];
+                //delete files and move
+                Application.OpenForms[0].Invoke(updateFiles(sampleID, infile, outFile, exeFile));
 
-                ////OTHERSS!!!
-                Application.OpenForms[0].Invoke(updateSampleToDo(item, infile, outFile, exeFile));
+                //find results Matssf
+                Application.OpenForms[0].Invoke(DoMatSSF(sampleID, outFile));
 
-                Application.OpenForms[0].Invoke(DoMatSSF(item, outFile));
+                //find chilian
+                Application.OpenForms[0].Invoke(DoChMethod(sampleID));
 
-                Application.OpenForms[0].Invoke(DoChMethod(item));
+                ////done!
+                EventHandler updateToDo = delegate
+                {
+                    UnitRow UNIT = null;
+                    UNIT = Interface.IPopulate.ISamples.GetUnitBySampleID(sampleID);
+                    UNIT.IsBusy = false;
 
-               
+                    _showProgress?.Invoke(null, EventArgs.Empty);
+
+                };
+                Application.OpenForms[0].Invoke(updateToDo);
+
+
+
             }
             catch (SystemException ex)
             {
                 Interface.IStore.AddException(ex);
             }
+            finally
+            {
+                //save and report
+                Application.OpenForms[0].Invoke(finalize(sampleID));
+            }
 
-            Application.OpenForms[0].Invoke(Finalize(item));
+           
         }
 
      
 
-        private EventHandler updateSampleToDo(string item,  string infile, string outFile, string exeFile)
+     
+        private EventHandler updateFiles(int subSampleID, string infile, string outFile, string exeFile)
         {
             EventHandler updateToDo = delegate
             {
                 UnitRow UNIT = null;
-                UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(item) == 0);
-                UNIT.SetCalcsFinished();
-            //    UNIT.(Interface.IDB.Unit.NameColumn, null);
-
+                UNIT = Interface.IPopulate.ISamples.GetUnitBySampleID(subSampleID);
                 //SAVE COPY IN BACKUPS TO LATER ZIP
                 string pathBase = Interface.IStore.FolderPath
                 + Properties.Resources.Backups
                 + "\\" + UNIT.SubSamplesRow.IrradiationCode + "\\";
-
                 if (!Directory.Exists(pathBase))
                 {
                     Directory.CreateDirectory(pathBase);
                 }
                 File.Copy(_startupPath + outFile, pathBase + outFile, true);
                 File.Copy(_startupPath + infile, pathBase + infile, true);
-
                 File.Delete(_startupPath + infile);
                 File.Delete(_startupPath + exeFile);
+
+                _showProgress?.Invoke(null, EventArgs.Empty);
 
             };
             return updateToDo;
         }
+
     }
 }

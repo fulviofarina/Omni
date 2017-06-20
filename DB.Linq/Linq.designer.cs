@@ -120,9 +120,6 @@ namespace DB.Linq
     partial void InsertSchAcq(SchAcq instance);
     partial void UpdateSchAcq(SchAcq instance);
     partial void DeleteSchAcq(SchAcq instance);
-    partial void InsertSigma(Sigma instance);
-    partial void UpdateSigma(Sigma instance);
-    partial void DeleteSigma(Sigma instance);
     partial void InsertSigmasSal(SigmasSal instance);
     partial void UpdateSigmasSal(SigmasSal instance);
     partial void DeleteSigmasSal(SigmasSal instance);
@@ -168,6 +165,9 @@ namespace DB.Linq
     partial void InsertUnit(Unit instance);
     partial void UpdateUnit(Unit instance);
     partial void DeleteUnit(Unit instance);
+    partial void InsertSigma(Sigma instance);
+    partial void UpdateSigma(Sigma instance);
+    partial void DeleteSigma(Sigma instance);
     #endregion
 		
 		public LinqDataContext() : 
@@ -448,14 +448,6 @@ namespace DB.Linq
 			}
 		}
 		
-		public System.Data.Linq.Table<Sigma> Sigmas
-		{
-			get
-			{
-				return this.GetTable<Sigma>();
-			}
-		}
-		
 		public System.Data.Linq.Table<SigmasSal> SigmasSals
 		{
 			get
@@ -573,6 +565,14 @@ namespace DB.Linq
 			get
 			{
 				return this.GetTable<Unit>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Sigma> Sigmas
+		{
+			get
+			{
+				return this.GetTable<Sigma>();
 			}
 		}
 	}
@@ -9382,212 +9382,6 @@ namespace DB.Linq
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Sigmas")]
-	public partial class Sigma : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Element;
-		
-		private string _Target;
-		
-		private System.Nullable<double> _theta;
-		
-		private System.Nullable<double> _sigma0;
-		
-		private System.Nullable<double> _I0;
-		
-		private System.Nullable<double> _sigmaEp;
-		
-		private int _ID;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnElementChanging(string value);
-    partial void OnElementChanged();
-    partial void OnTargetChanging(string value);
-    partial void OnTargetChanged();
-    partial void OnthetaChanging(System.Nullable<double> value);
-    partial void OnthetaChanged();
-    partial void Onsigma0Changing(System.Nullable<double> value);
-    partial void Onsigma0Changed();
-    partial void OnI0Changing(System.Nullable<double> value);
-    partial void OnI0Changed();
-    partial void OnsigmaEpChanging(System.Nullable<double> value);
-    partial void OnsigmaEpChanged();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    #endregion
-		
-		public Sigma()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Element", DbType="NVarChar(5)")]
-		public string Element
-		{
-			get
-			{
-				return this._Element;
-			}
-			set
-			{
-				if ((this._Element != value))
-				{
-					this.OnElementChanging(value);
-					this.SendPropertyChanging();
-					this._Element = value;
-					this.SendPropertyChanged("Element");
-					this.OnElementChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Target", DbType="NVarChar(10)")]
-		public string Target
-		{
-			get
-			{
-				return this._Target;
-			}
-			set
-			{
-				if ((this._Target != value))
-				{
-					this.OnTargetChanging(value);
-					this.SendPropertyChanging();
-					this._Target = value;
-					this.SendPropertyChanged("Target");
-					this.OnTargetChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_theta", DbType="Float")]
-		public System.Nullable<double> theta
-		{
-			get
-			{
-				return this._theta;
-			}
-			set
-			{
-				if ((this._theta != value))
-				{
-					this.OnthetaChanging(value);
-					this.SendPropertyChanging();
-					this._theta = value;
-					this.SendPropertyChanged("theta");
-					this.OnthetaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sigma0", DbType="Float")]
-		public System.Nullable<double> sigma0
-		{
-			get
-			{
-				return this._sigma0;
-			}
-			set
-			{
-				if ((this._sigma0 != value))
-				{
-					this.Onsigma0Changing(value);
-					this.SendPropertyChanging();
-					this._sigma0 = value;
-					this.SendPropertyChanged("sigma0");
-					this.Onsigma0Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_I0", DbType="Float")]
-		public System.Nullable<double> I0
-		{
-			get
-			{
-				return this._I0;
-			}
-			set
-			{
-				if ((this._I0 != value))
-				{
-					this.OnI0Changing(value);
-					this.SendPropertyChanging();
-					this._I0 = value;
-					this.SendPropertyChanged("I0");
-					this.OnI0Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sigmaEp", DbType="Float")]
-		public System.Nullable<double> sigmaEp
-		{
-			get
-			{
-				return this._sigmaEp;
-			}
-			set
-			{
-				if ((this._sigmaEp != value))
-				{
-					this.OnsigmaEpChanging(value);
-					this.SendPropertyChanging();
-					this._sigmaEp = value;
-					this.SendPropertyChanged("sigmaEp");
-					this.OnsigmaEpChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SigmasSal")]
 	public partial class SigmasSal : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -14861,6 +14655,236 @@ namespace DB.Linq
 					this._ChannelID = value;
 					this.SendPropertyChanged("ChannelID");
 					this.OnChannelIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Sigmas")]
+	public partial class Sigma : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Element;
+		
+		private string _Target;
+		
+		private System.Nullable<double> _theta;
+		
+		private System.Nullable<double> _sigma0;
+		
+		private System.Nullable<double> _I0;
+		
+		private System.Nullable<double> _sigmaEp;
+		
+		private int _ID;
+		
+		private string _Radioisotope;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnElementChanging(string value);
+    partial void OnElementChanged();
+    partial void OnTargetChanging(string value);
+    partial void OnTargetChanged();
+    partial void OnthetaChanging(System.Nullable<double> value);
+    partial void OnthetaChanged();
+    partial void Onsigma0Changing(System.Nullable<double> value);
+    partial void Onsigma0Changed();
+    partial void OnI0Changing(System.Nullable<double> value);
+    partial void OnI0Changed();
+    partial void OnsigmaEpChanging(System.Nullable<double> value);
+    partial void OnsigmaEpChanged();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnRadioisotopeChanging(string value);
+    partial void OnRadioisotopeChanged();
+    #endregion
+		
+		public Sigma()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Element", DbType="NVarChar(5)")]
+		public string Element
+		{
+			get
+			{
+				return this._Element;
+			}
+			set
+			{
+				if ((this._Element != value))
+				{
+					this.OnElementChanging(value);
+					this.SendPropertyChanging();
+					this._Element = value;
+					this.SendPropertyChanged("Element");
+					this.OnElementChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Target", DbType="NVarChar(10)")]
+		public string Target
+		{
+			get
+			{
+				return this._Target;
+			}
+			set
+			{
+				if ((this._Target != value))
+				{
+					this.OnTargetChanging(value);
+					this.SendPropertyChanging();
+					this._Target = value;
+					this.SendPropertyChanged("Target");
+					this.OnTargetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_theta", DbType="Float")]
+		public System.Nullable<double> theta
+		{
+			get
+			{
+				return this._theta;
+			}
+			set
+			{
+				if ((this._theta != value))
+				{
+					this.OnthetaChanging(value);
+					this.SendPropertyChanging();
+					this._theta = value;
+					this.SendPropertyChanged("theta");
+					this.OnthetaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sigma0", DbType="Float")]
+		public System.Nullable<double> sigma0
+		{
+			get
+			{
+				return this._sigma0;
+			}
+			set
+			{
+				if ((this._sigma0 != value))
+				{
+					this.Onsigma0Changing(value);
+					this.SendPropertyChanging();
+					this._sigma0 = value;
+					this.SendPropertyChanged("sigma0");
+					this.Onsigma0Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_I0", DbType="Float")]
+		public System.Nullable<double> I0
+		{
+			get
+			{
+				return this._I0;
+			}
+			set
+			{
+				if ((this._I0 != value))
+				{
+					this.OnI0Changing(value);
+					this.SendPropertyChanging();
+					this._I0 = value;
+					this.SendPropertyChanged("I0");
+					this.OnI0Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sigmaEp", DbType="Float")]
+		public System.Nullable<double> sigmaEp
+		{
+			get
+			{
+				return this._sigmaEp;
+			}
+			set
+			{
+				if ((this._sigmaEp != value))
+				{
+					this.OnsigmaEpChanging(value);
+					this.SendPropertyChanging();
+					this._sigmaEp = value;
+					this.SendPropertyChanged("sigmaEp");
+					this.OnsigmaEpChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Radioisotope", DbType="NVarChar(10)")]
+		public string Radioisotope
+		{
+			get
+			{
+				return this._Radioisotope;
+			}
+			set
+			{
+				if ((this._Radioisotope != value))
+				{
+					this.OnRadioisotopeChanging(value);
+					this.SendPropertyChanging();
+					this._Radioisotope = value;
+					this.SendPropertyChanged("Radioisotope");
+					this.OnRadioisotopeChanged();
 				}
 			}
 		}

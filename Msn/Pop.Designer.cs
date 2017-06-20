@@ -31,8 +31,10 @@
             this.iconic = new System.Windows.Forms.PictureBox();
             this.textBoxDescription = new System.Windows.Forms.RichTextBox();
             this.title = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -40,7 +42,8 @@
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.32653F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.67347F));
-            this.tableLayoutPanel.Controls.Add(this.iconic, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.pictureBox1, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.iconic, 0, 1);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.title, 1, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -49,6 +52,7 @@
             this.tableLayoutPanel.RowCount = 2;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 27.36842F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 72.63158F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(490, 105);
             this.tableLayoutPanel.TabIndex = 0;
             // 
@@ -57,10 +61,9 @@
             this.iconic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(70)))), ((int)(((byte)(85)))));
             this.iconic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.iconic.InitialImage = null;
-            this.iconic.Location = new System.Drawing.Point(3, 3);
+            this.iconic.Location = new System.Drawing.Point(3, 31);
             this.iconic.Name = "iconic";
-            this.tableLayoutPanel.SetRowSpan(this.iconic, 2);
-            this.iconic.Size = new System.Drawing.Size(73, 99);
+            this.iconic.Size = new System.Drawing.Size(73, 71);
             this.iconic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.iconic.TabIndex = 12;
             this.iconic.TabStop = false;
@@ -94,6 +97,18 @@
             this.title.Text = "Title";
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(70)))), ((int)(((byte)(85)))));
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(73, 22);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
+            // 
             // Pop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -108,6 +123,7 @@
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -118,5 +134,6 @@
         protected System.Windows.Forms.RichTextBox textBoxDescription;
         protected System.Windows.Forms.Label title;
         protected System.Windows.Forms.PictureBox iconic;
+        protected System.Windows.Forms.PictureBox pictureBox1;
     }
 }

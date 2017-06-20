@@ -447,17 +447,6 @@
       <Column Name="Cummulative" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Sigmas" Member="Sigmas">
-    <Type Name="Sigma">
-      <Column Name="Element" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="Target" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="theta" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="sigma0" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="I0" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="sigmaEp" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.SigmasSal" Member="SigmasSals">
     <Type Name="SigmasSal">
       <Column Name="Element" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
@@ -713,6 +702,18 @@
       <Column Name="pTh" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="pEpi" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="ChannelID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sigmas" Member="Sigmas">
+    <Type Name="Sigma">
+      <Column Name="Element" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Target" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="theta" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="sigma0" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="I0" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="sigmaEp" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Radioisotope" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

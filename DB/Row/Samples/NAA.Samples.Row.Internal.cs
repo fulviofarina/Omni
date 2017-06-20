@@ -14,14 +14,9 @@ namespace DB
         /// </summary>
         public partial class SubSamplesRow : IRow
         {
-            public LINAA db
-            {
-                get
-                {
-                    return (this.Table.DataSet as LINAA);
-                }
-            }
+           
 
+          
             public void Check()
             {
                 foreach (DataColumn column in this.tableSubSamples.Columns)
@@ -40,19 +35,19 @@ namespace DB
                 else
                 if (this.tableSubSamples.GeometriesNonNullables.Contains(column))
                 {
-                    CheckGeometryColumns(column);
+                    checkGeometryColumns(column);
                 }
                 else if (this.tableSubSamples.StandardsNonNullables.Contains(column))
                 {
-                    CheckStandardsColumns(column);
+                    checkStandardsColumns(column);
                 }
                 else if (this.tableSubSamples.NonNullableUnit.Contains(column))
                 {
-                    CheckUnitsColumns(column);
+                    checkUnitsColumns(column);
                 }
                 else if (this.tableSubSamples.IrradiationNonNullable.Contains(column))
                 {
-                    CheckIrradiationsColumns(column);
+                    checkIrradiationsColumns(column);
                 }
                 else if (this.tableSubSamples.TimesNonNullable.Contains(column))
                 {
@@ -63,7 +58,7 @@ namespace DB
                 }
             }
 
-            internal void CheckStandardsColumns(DataColumn column)
+            private void checkStandardsColumns(DataColumn column)
             {
                 if (column == this.tableSubSamples.MonitorsIDColumn)
                 {
@@ -84,7 +79,7 @@ namespace DB
                 }
             }
 
-            internal void CheckGeometryColumns(DataColumn column)
+            private void checkGeometryColumns(DataColumn column)
             {
                 if (column == this.tableSubSamples.DirectSolcoiColumn)
                 {
@@ -110,15 +105,23 @@ namespace DB
                 }
             }
 
-            internal void CheckUnitsColumns(DataColumn column)
+
+            protected internal EventData ebento = new EventData();
+
+            private void checkUnitsColumns(DataColumn column)
             {
                 bool calMass, calRad, calFh, calculateDensity;
                 //TODO: Mejorar esto
-                SSFPrefRow pref = db.SSFPref.FirstOrDefault();
-                calMass = pref.CalcMass;
-                calRad = pref.AARadius;
-                calculateDensity = pref.CalcDensity;
-                calFh = pref.AAFillHeight;
+
+            //    ebento = null;
+                this.tableSubSamples.CalcParametersHandler?.Invoke(this, ebento);
+               // SSFPrefRow pref = db.SSFPref.FirstOrDefault();
+                calMass = (bool)ebento.Args[0];// pref.CalcMass;
+                calRad = (bool)ebento.Args[1]; //  pref.AARadius;
+                calculateDensity = (bool)ebento.Args[2];// pref.CalcDensity;
+                calFh = (bool)ebento.Args[3];// pref.AAFillHeight;
+
+          
                 EC.CheckNull(column, this);
                 if (column == this.tableSubSamples.CalcDensityColumn)
                 {
@@ -174,7 +177,7 @@ namespace DB
                 }
             }
 
-            internal void CheckIrradiationsColumns(DataColumn column)
+            private void checkIrradiationsColumns(DataColumn column)
             {
                 if (column == this.tableSubSamples.ChCapsuleIDColumn)
                 {
@@ -322,7 +325,7 @@ namespace DB
             protected static string SET_IRR_TIMES = "Set an Irradiation Time (in minutes) or an Irradiation Start and End date/times";
             protected static string ASSIGN_RABBIT= "Assign an irradiation container";
 
-            internal bool CheckGeometry()
+            public bool CheckGeometry()
             {
                 DataColumn geoCol = this.tableSubSamples.GeometryNameColumn;
                 this.SetColumnError(geoCol, null);
@@ -334,7 +337,7 @@ namespace DB
                 return true;
             }
 
-            internal bool CheckMass()
+            public bool CheckMass()
             {
                 bool one = EC.CheckNull(this.tableSubSamples.Gross1Column, this);
                 bool two = EC.CheckNull(this.tableSubSamples.Gross2Column, this);
@@ -360,7 +363,7 @@ namespace DB
                 return ok;
             }
 
-            internal bool CheckVialCapsule()
+            public bool CheckVialCapsule()
             {
                 this.SetColumnError(this.tableSubSamples.CapsuleNameColumn, null);
                 VialTypeRow v = this.VialTypeRow;
@@ -372,7 +375,7 @@ namespace DB
                 return true;
             }
 
-            internal void GetDensity(bool caldensity)
+            public void GetDensity(bool caldensity)
             {
                 SetColumnError(tableSubSamples.MatrixDensityColumn, null);
 
@@ -410,7 +413,7 @@ namespace DB
                 }
             }
 
-            internal string GetDescriptionFromMonitor()
+            public string GetDescriptionFromMonitor()
             {
                 string description = string.Empty;
                 if (EC.IsNuDelDetch(MonitorsRow)) return description;
@@ -419,7 +422,7 @@ namespace DB
                 return description;
             }
 
-            internal string GetDescriptionFromStandard()
+            public string GetDescriptionFromStandard()
             {
                 string description = string.Empty;
                 if (!StandardsRow.IsstdNameNull())
@@ -433,12 +436,12 @@ namespace DB
             /// MoistureContent Content must be in Percentage
             /// </summary>
             /// <returns></returns>
-            internal double GetDryMass()
+            public double GetDryMass()
             {
                 return (this.Net - (this.Net * this.MoistureContent * 1e-2));  // netto dried mass in miligrams;
             }
 
-            internal double GetFillHeight()
+            public double GetFillHeight()
             {
                 if (IsCalcDensityNull()) return 0;
 
@@ -452,7 +455,7 @@ namespace DB
                 return result;
             }
 
-            internal double GetGrossMass()
+            public double GetGrossMass()
             {
                 // UnitRow u = this.UnitRow;
                 double mass = Vol * this.CalcDensity * 1e3;
@@ -466,7 +469,7 @@ namespace DB
                 return mass;
             }
 
-            internal string GetIrradiationCode()
+            public string GetIrradiationCode()
             {
                 if (EC.IsNuDelDetch(IrradiationRequestsRow)) return string.Empty;
 
@@ -474,21 +477,21 @@ namespace DB
                 return IrradiationRequestsRow.IrradiationCode;
             }
 
-            internal MatrixRow GetMatrixByMatrixID(int templateID)
+            public MatrixRow GetMatrixByMatrixID(int templateID)
             {
                 //find in the list of childs Rows
                 return GetMatrixRows()
          .FirstOrDefault(o => o.MatrixID == templateID);
             }
 
-            internal MatrixRow GetMatrixByTemplateID(int templateID)
+            public MatrixRow GetMatrixByTemplateID(int templateID)
             {
                 //find child from template
                 return GetMatrixRows()
          .FirstOrDefault(o => !o.IsTemplateIDNull() && o.TemplateID == templateID);
             }
 
-            internal string GetMonitorNameFromSampleName()
+            public string GetMonitorNameFromSampleName()
             {
                 string newName = string.Empty;
                 if (string.IsNullOrEmpty(SubSampleName)) return newName;
@@ -507,7 +510,7 @@ namespace DB
                 return newName;
             }
 
-            internal string GetName(int _lastSampleNr)
+            public string GetName(int _lastSampleNr)
             {
                 string name = string.Empty;
                 string zero = "0";
@@ -516,7 +519,7 @@ namespace DB
                 return name;
             }
 
-            internal string GetNameFromMonitor()
+            public string GetNameFromMonitor()
             {
                 string monName = string.Empty;
                 if (EC.IsNuDelDetch(MonitorsRow)) return monName;
@@ -528,7 +531,7 @@ namespace DB
                 return monName;
             }
 
-            internal double GetRadius()
+            public double GetRadius()
             {
                 if (IsCalcDensityNull()) return 0;
 
@@ -542,13 +545,13 @@ namespace DB
                 return result;
             }
 
-            internal double GetSurface()
+            public double GetSurface()
             {
                 double result = Math.PI * this.Radius * this.Radius * 0.1 * 0.1; //indexer cm
                 return result;
             }
 
-            internal double GetTotalMinutes()
+            public double GetTotalMinutes()
             {
                 double aux2 = 0;
                 if (!IsOutReactorNull() && !IsInReactorNull()) aux2 = (OutReactor - InReactor).TotalMinutes;
@@ -556,7 +559,7 @@ namespace DB
                 return aux2;
             }
 
-            internal double GetVolume()
+            public double GetVolume()
             {
                 return GetSurface() * this.FillHeight * 0.1;
             }
@@ -574,12 +577,12 @@ namespace DB
                 return false;
             }
 
-            internal void SetCreationDate()
+            public void SetCreationDate()
             {
                 SubSampleCreationDate = DateTime.Now;
             }
 
-            internal bool SetDescriptionFromMonitor()
+            public bool SetDescriptionFromMonitor()
             {
                string description =  GetDescriptionFromMonitor();
                 if (!string.IsNullOrEmpty(description))
@@ -694,12 +697,9 @@ namespace DB
                 }
             }
 
-            internal void SetIrradiationRequestID(int? IrrReqID)
-            {
-                if (IrrReqID != null) IrradiationRequestsID = (int)IrrReqID;
-            }
+           
 
-            internal void SetIrradiationTime(double totalMins)
+            public void SetIrradiationTime(double totalMins)
             {
                 DataColumn tCol = this.tableSubSamples.IrradiationTotalTimeColumn;
 
@@ -728,7 +728,7 @@ namespace DB
                 }
             }
        
-            internal bool SetLastMatrix()
+            public bool SetLastMatrix()
             {
                 this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
                 this.SetColumnError(this.tableSubSamples.MatrixIDColumn, null);
@@ -737,43 +737,43 @@ namespace DB
 
                 if (!EC.IsNuDelDetch(this.MatrixRow))
                 {
-                    //search template matrix
-                    int templateID = 0;
-                    bool templateNUll = this.MatrixRow.IsTemplateIDNull();
-                    if (templateNUll) templateID = this.MatrixRow.MatrixID;
-                    else templateID = this.MatrixRow.TemplateID;
-                    MatrixRow m = GetMatrixByMatrixID(templateID);
-                    //row is not on the list of childs, find in the Template list
-                    if (m == null) m = GetMatrixByTemplateID(templateID);
-                    //does not exist, so adopt (CLONE) the matrix to the list
-                    if (m == null)
-                    {
-                        MatrixDataTable set = db.Matrix;
-                        m = set.NewMatrixRow();
-                        set.AddMatrixRow(m);
-                        m.setBasic(SubSamplesID, templateID);
-                    }
-                    //it is just updatMatrixNameing content
-                    if (m != null)
-                    {
-                        MatrixRow toClone = this.MatrixRow;
-                        m.cloneFromMatrix(ref toClone);
-                    }
-                    //update lastMATRIX ID
-                    if (MatrixID != m.MatrixID) MatrixID = m.MatrixID;
-
-                    // ok = !this.MatrixRow.HasErrors();
+                    checkIfCloneNeeded();
                 }
                 else
                 {
                      this.SetColumnError(this.tableSubSamples.MatrixIDColumn, ASSIGN_MATRIX);
-                    this.SetColumnError(this.tableSubSamples.MatrixNameColumn, ASSIGN_MATRIX);
+                     this.SetColumnError(this.tableSubSamples.MatrixNameColumn, ASSIGN_MATRIX);
                 }
 
                 return !EC.IsNuDelDetch(this.MatrixRow);
             }
 
-            internal bool SetMassFromMonitor(bool force = true)
+            private void checkIfCloneNeeded()
+            {
+                //search template matrix
+                int templateID = 0;
+                bool templateNUll = this.MatrixRow.IsTemplateIDNull();
+                if (templateNUll) templateID = this.MatrixRow.MatrixID;
+                else templateID = this.MatrixRow.TemplateID;
+                MatrixRow m = GetMatrixByMatrixID(templateID);
+                //row is not on the list of childs, find in the Template list
+                if (m == null) m = GetMatrixByTemplateID(templateID);
+
+                //does not exist, so adopt (CLONE) the matrix to the list
+                if (m == null)
+                {
+                    MatrixRow toClone = this.MatrixRow;
+                    object[] args = new object[] { m, SubSamplesID, templateID, toClone,this };
+                    EventData data = new EventData(args);
+                    this.tableSubSamples.AddMatrixHandler?.Invoke(args, data);
+                    m = data.Args[0] as MatrixRow;
+
+                }
+                if (IsMatrixIDNull() || MatrixID != m.MatrixID) MatrixID = m.MatrixID;
+
+            }
+
+            public bool SetMassFromMonitor(bool force = true)
             {
                 if (EC.IsNuDelDetch(MonitorsRow)) return false;
 
@@ -795,7 +795,7 @@ namespace DB
                 return takeMonMass;
             }
 
-            internal bool SetMatrixFromGeometry()
+            public bool SetMatrixFromGeometry()
             {
                 if (EC.IsNuDelDetch(this.GeometryRow)) return false;
                 //associate to geometry matrix row
@@ -803,7 +803,7 @@ namespace DB
                 return MatrixRow != null;
             }
 
-            internal bool SetMatrixFromStandard()
+            public bool SetMatrixFromStandard()
             {
                 bool ok = false;
                 if (EC.IsNuDelDetch(StandardsRow)) return ok;
@@ -816,14 +816,14 @@ namespace DB
                 return EC.IsNuDelDetch(MatrixRow);
             }
 
-            internal bool SetMVialFromGeometry()
+            public bool SetMVialFromGeometry()
             {
                 if (EC.IsNuDelDetch(this.GeometryRow)) return false;
                 this.VialTypeRow = this.GeometryRow.VialTypeRow;
                 return VialTypeRow != null;
             }
 
-            internal bool SetName(ref int _lastSampleNr)
+            public bool SetName(ref int _lastSampleNr)
             {
                 if (EC.IsNuDelDetch(MonitorsRow) && IsSubSampleNameNull())
                 {
@@ -833,7 +833,7 @@ namespace DB
                 return !string.IsNullOrEmpty(SubSampleName);
             }
 
-            internal bool SetName(string sampleName)
+            public bool SetName(string sampleName)
             {
                 if (!string.IsNullOrEmpty(sampleName))
                 {
@@ -843,7 +843,7 @@ namespace DB
                 else return false;
             }
 
-            internal bool SetNameFromMonitor()
+            public bool SetNameFromMonitor()
             {
                 // if (EC.IsNuDelDetch(MonitorsRow)) return false;
                 string result = GetNameFromMonitor();
@@ -852,7 +852,7 @@ namespace DB
                 return ok;
             }
 
-            internal bool SetRabbit()
+            public bool SetRabbit()
             {
                 SetColumnError(this.tableSubSamples.ChCapsuleIDColumn, null);
                 VialTypeRow v = ChCapsuleRow;
@@ -877,7 +877,11 @@ namespace DB
                 return !EC.IsNuDelDetch(ChCapsuleRow);
             }
 
-            internal void SetRadiusFillHeight(bool takeFromVial)
+            /// <summary>
+            /// Takes from vial otherwise takes from Geometry.Vial
+            /// </summary>
+            /// <param name="takeFromVial"></param>
+            public void SetRadiusFillHeight(bool takeFromVial)
             {
                 UnitRow u = UnitRow;
 
@@ -910,13 +914,13 @@ namespace DB
                 }
             }
 
-            internal void SetRadiusFillHeight(bool calRad, bool calFh)
+            public void SetRadiusFillHeight(bool calRad, bool calFh)
             {
                 if (calRad) Radius = GetRadius();
                 else if (calFh) FillHeight = GetFillHeight();
             }
 
-            internal bool SetStandard()
+            public bool SetStandard()
             {
                 FC = 1;
                 Comparator = true;

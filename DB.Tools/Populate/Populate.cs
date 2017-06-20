@@ -1,18 +1,33 @@
 ﻿using System.Windows.Forms;
+using static DB.LINAA;
 
 namespace DB.Tools
 {
     public partial class Populate
     {
 
-    
-
-        public bool LoadProject( bool enterPressed, string ProjectOrOrder)
+        private void getPreferencesEvent(object sender, EventData e)
         {
-            if (string.IsNullOrEmpty(ProjectOrOrder)) return false;
+
+            SSFPrefRow pref = Interface.IPreferences.CurrentSSFPref;
+            object[] args = new object[]
+            {
+                pref.CalcMass,
+            pref.AARadius,
+             pref.CalcDensity,
+            pref.AAFillHeight
+        };
+
+           
+            e.Args = args;
+        }
+
+        public bool[] LoadProject( bool enterPressed, string ProjectOrOrder)
+        {
+            if (string.IsNullOrEmpty(ProjectOrOrder)) return new bool[] { false, false };
             //    ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
             bool isAProjectOrOrder = Interface.IPopulate.IProjects.ProjectsList.Contains(ProjectOrOrder);
-            if (!Interface.IBS.EnabledControls) return false;
+            if (!Interface.IBS.EnabledControls) return new bool[] { false, false };
             //eactivate box because it entered
             bool makeProject = enterPressed && !isAProjectOrOrder;
 
@@ -44,7 +59,7 @@ namespace DB.Tools
                 Interface.IBS.Units.MoveLast();//.Position = 0;
             }
 
-            return rejected;
+            return new bool[] { rejected, isAProjectOrOrder };
 
         }
         public bool AddProject(ref string ProjectOrOrder)
@@ -91,6 +106,10 @@ namespace DB.Tools
             ISamples = (ISamples)aux;
             ISchedAcqs = (ISchedAcqs)aux;
             IToDoes = (IToDoes)aux;
+
+
+            Interface.IDB.SubSamples.CalcParametersHandler += getPreferencesEvent;
+            
         }
     }
 }

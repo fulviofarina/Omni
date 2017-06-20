@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 //using DB.Interfaces;
 
@@ -7,7 +9,27 @@ namespace DB
     public partial class LINAA : INuclear
     {
         //
+        public void CleanSigmas()
+        {
+            IEnumerable<SigmasRow> rows = Sigmas;//.Where(o => o.Field<int>("ID1") == 1).ToList();
 
+            HashSet<string> hs = new HashSet<string>();
+            SigmasDataTable table = new LINAA.SigmasDataTable();
+            foreach (SigmasRow item in rows)
+            {
+
+                if (!hs.Add(item.Element+item.Target+item.Radioisotope)) continue;
+
+                table.ImportRow(item);
+
+            }
+            Sigmas.Clear();
+        //    deleteSigmaColumns();
+
+            Sigmas.Merge(table);
+        }
+
+      
         public void PopulateElements()
         {
             try
@@ -110,7 +132,7 @@ namespace DB
             {
                 this.tableSigmas.BeginLoadData();
                 this.tableSigmas.Clear();
-                this.TAM.SigmasTableAdapter.FillByReactions(this.tableSigmas);
+                this.TAM.SigmasTableAdapter.Fill(this.tableSigmas);
                 this.tableSigmas.AcceptChanges();
                 this.tableSigmas.EndLoadData();
             }

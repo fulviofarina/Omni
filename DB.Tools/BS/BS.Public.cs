@@ -13,48 +13,30 @@ namespace DB.Tools
     /// </summary>
     public partial class BS
     {
-        /// <summary>
-        /// Extracts the DataRow from a DataGrid
-        /// </summary>
-        public DataRow GetDataRowFromDGV(object dgvSender, int rowInder)
-        {
-            DataGridView dgv = dgvSender as DataGridView;
-            DataRow row = null;
-
-            if (dgv.RowCount == 0)
-            {
-                Interface.IReport.Msg(NO_ROWS, ERROR, false); //report
-            }
-            else row = Caster.Cast<DataRow>(dgv.Rows[rowInder]);
-            return row;
-        }
+       
 
         /// <summary>
         /// Selects a Unit Child Row or the Unit Row itself and assigns the respective Parent
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        public void SelectUnitOrChildRow<T>(int rowInder, ref T row, ref int lastIndex)
+        public void AssignUnitChild<T>( ref T row)
         {
             try
             {
                 if (row == null) return;
 
-              //  UnitRow unit = selectUnitOrChildRow(ref row);
+                //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
+                UnitRow unit = Interface.ICurrent.Unit as UnitRow;
 
-                bool isUnuit = row.GetType().Equals(typeof(UnitRow));
-                UnitRow unit = null;
+                string title = SAMPLE;// + unit.Name;
+                title += unit.Name;
 
-             //   string title = SAMPLE;// + unit.Name;
-                if (isUnuit)
-                {
-                    unit = SelectUnit(ref row);
-                }
-                else
-                {
-                    unit = selectUnitChild(ref row);
-                }
-
+                //set parent
+                unit.SetParent(ref row);
+                //report
+                Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
+                //stuff update and chek?
                 CurrentChanged<UnitRow>(unit, true, false, true);
 
                 IRow ir = unit as IRow;
@@ -64,6 +46,7 @@ namespace DB.Tools
                 SubSamplesRow s = unit.SubSamplesRow;
                 Interface.IStore.Save(ref s);
 
+                //do I need this? yes!
                 CurrentChanged<SubSamplesRow>(s, false, false, true);
 
             }
@@ -74,20 +57,8 @@ namespace DB.Tools
             }
         }
 
-        private UnitRow selectUnitChild<T>(ref T row)
-        {
-            UnitRow unit;
-            string title = SAMPLE;// + unit.Name;
-                                  //NO UNIT, maybe a matrix, a vial, a rabbit or a channel
-            unit = Interface.ICurrent.Unit as UnitRow;
-            title += unit.Name;
-      
-            unit.SetParent(ref row);
-            Interface.IReport.Msg(title + UPDATED_ROW, UPDATED); //report
-        
-            return unit;
-        }
-
+       
+        /*
         public UnitRow SelectUnit<T>(ref T row)
         {
             UnitRow unit;
@@ -98,7 +69,7 @@ namespace DB.Tools
             Interface.IReport.Msg(title + SELECTED_ROW, SELECTED); //report
             return unit;
         }
-
+        */
         public void ResetBidings(bool v)
         {
             foreach (BindingSource bs in bindings.Values)
@@ -222,8 +193,8 @@ namespace DB.Tools
 
         public void StartBinding()
         {
-            SSFPreferences.ListChanged += listChanged_Preferences;
-            Preferences.ListChanged += listChanged_Preferences;
+         //   SSFPreferences.ListChanged += listChanged_Preferences;
+          //  Preferences.ListChanged += listChanged_Preferences;
 
             SubSamples.CurrentChanged += currentChanged;
             Channels.CurrentChanged += currentChanged;

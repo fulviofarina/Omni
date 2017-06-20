@@ -7,6 +7,13 @@ namespace DB
 {
     public partial class LINAA : ISamples
     {
+
+        public UnitRow GetUnitBySampleID(int subSampleID)
+        {
+            return Unit.FirstOrDefault(o => o.SampleID == subSampleID);
+        }
+      
+
         public int GetLastSampleNr(ref IEnumerable<SubSamplesRow> samplesToImport, string project)
         {
             string _projectNr = System.Text.RegularExpressions.Regex.Replace(project, "[a-z]", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);

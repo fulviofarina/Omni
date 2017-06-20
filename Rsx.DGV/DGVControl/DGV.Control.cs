@@ -8,6 +8,24 @@ namespace Rsx.DGV
 {
   public partial class Control
   {
+
+      
+        /// <summary>
+        /// Extracts the DataRow from a DataGrid
+        /// </summary>
+        public static DataRow GetDataRowFromDGV(ref  object dgvSender, int rowInder)
+        {
+            DataGridView dgv = dgvSender as DataGridView;
+            DataRow row = null;
+          
+            if (dgv.RowCount == 0)
+            {
+            
+            }
+            else row = Caster.Cast<DataRow>(dgv.Rows[rowInder]);
+            return row;
+        }
+
         public static void PaintColumn(bool readOnly, ref DataGridViewColumn columna,  Color[] arrayOfBackColors=null,  Color[] arrayOfForeColors=null)
         {
 

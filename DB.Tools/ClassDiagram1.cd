@@ -3,56 +3,56 @@
   <Class Name="DB.Tools.BS" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>kI0JAgAFAEgYCAE7KhDg0QUcAoQwQEhtEBEIgAjdkcw=</HashCode>
+      <HashCode>kIkJAgAFAUwYCAEzKhDg0Q0cAoQ4YEhtEBFMgAhdkcw=</HashCode>
       <FileName>BS\BS.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.Creator" Collapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAEAAYBEEAYABABCAAgAUAgIIBiAAoECCAACI=</HashCode>
+      <HashCode>AAAAAQACEAAYBEEAYAFABCAEgAUAgIIBiAAoECCAACI=</HashCode>
       <FileName>Creator\Creator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.Current" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgDAECgCgAAIBAAKADABAAAgAggABAAkjoAAAIAAAA=</HashCode>
-      <FileName>Current\Current.Public.cs</FileName>
+      <HashCode>AAgDAECgCgAAIBAAKADAFIAEgAggABAIkjoAAAIAAAA=</HashCode>
+      <FileName>Current\Current.Fields.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DB.Tools.Interface" Collapsed="true">
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgIFCAAAAAEEAAIAAAAAAAACAAAAAAgA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgIFCAAAAAEEAAIAAAAAAAACAAABAAkA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.Populate" Collapsed="true">
     <Position X="0.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAABAEAAAAAEABAAAACAABAAIAAAAAgAACgAAA=</HashCode>
+      <HashCode>AAAAAAAABAEAAAAAEABAAAACAABAAIAAAAAgAAChAAA=</HashCode>
       <FileName>Populate\Populate.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.Report" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEQAIAhBIBCEAAAQAABAAGlADABQJAAAAgYAAMAICAg=</HashCode>
+      <HashCode>AEQAIAhBIBCEAAAQAABAAGkADABQJAAAAgYAAMAICAg=</HashCode>
       <FileName>Report\Report.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="DB.Tools.MatSSF" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+  <Class Name="DB.Tools.MatSSF">
+    <Position X="4.25" Y="1.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>ggQBBgABAAAABwQhiAFgAEAAACSQAAAAWLAAABDAQAA=</HashCode>
+      <HashCode>MgFBJAODkAiAlAAmSEFABEBIQCQLlgCQ2DIQkCCIALY=</HashCode>
       <FileName>SSF\Engine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.WC" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4" Y="2.5" Width="1.5" />
+    <Position X="6.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>YgBSjWoyCBGIBQiASQFAyC4CHnoBwCm0xoISIQiQ4So=</HashCode>
       <FileName>WC\Fields.cs</FileName>
@@ -67,23 +67,23 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="DB.Tools.ICurrent" Collapsed="true">
-    <Position X="0.5" Y="3.75" Width="1.5" />
+    <Position X="6.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAgAAAAIBAAIACABAAAAAggAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAgAAAAIBAAIACABIAEAAggAAAIEAAAAAIAAAA=</HashCode>
       <FileName>Current\ICurrent.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.Tools.IPreferences" Collapsed="true">
-    <Position X="2.25" Y="3.75" Width="1.5" />
+    <Position X="6.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAgAAABAAAAAAAAAAAAgAABAAgDAAAAIAAAA=</HashCode>
+      <HashCode>AAgAAAAAAgAAABAAAAAAEAAAAAgAABAAgDAAAAIAAAA=</HashCode>
       <FileName>Current\Preferences\IPreferences.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="DB.Tools.IReport">
-    <Position X="4" Y="3.75" Width="1.5" />
+    <Position X="8" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAgBAAAAAAAAAAAAAAAAAABAJAAAAgAAAIAICAg=</HashCode>
+      <HashCode>AEAAIAgBAAAAAAAAAAAAAAAAAABAJAAAAgAAAIAICAg=</HashCode>
       <FileName>Report\IReport.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -28,27 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.UnitSSFSC = new System.Windows.Forms.SplitContainer();
             this.inputTLP = new System.Windows.Forms.TableLayoutPanel();
-            this.descripTS = new DB.UI.ucGenericCBox();
             this.infoTS = new System.Windows.Forms.ToolStrip();
             this.infoLBL = new System.Windows.Forms.ToolStripLabel();
             this.unitSC = new System.Windows.Forms.SplitContainer();
-            this.ucGenericCBox1 = new DB.UI.ucGenericCBox();
             this.barTLP = new System.Windows.Forms.TableLayoutPanel();
             this.changeViewTS = new System.Windows.Forms.ToolStrip();
-            this.sampleCompoLbl = new System.Windows.Forms.ToolStripLabel();
-            this.imgBtn = new System.Windows.Forms.ToolStripButton();
-            this.TwoSectionSC = new System.Windows.Forms.SplitContainer();
-            this.ucDataContent = new DB.UI.ucSSFData();
-            this.ucSubMS = new DB.UI.ucMatrixSimple();
+            this._sampleCompoLbl = new System.Windows.Forms.ToolStripLabel();
+            this._imgBtn = new System.Windows.Forms.ToolStripButton();
+            this._TwoSectionSC = new System.Windows.Forms.SplitContainer();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this._ucSmpDescriptionBox = new VTools.ucGenericCBox();
+            this._ucSampleBox = new VTools.ucGenericCBox();
+            this._ucDataContent = new DB.UI.ucSSFData();
+            this._ucSubMS = new DB.UI.ucMatrixSimple();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UnitSSFSC)).BeginInit();
             this.UnitSSFSC.Panel1.SuspendLayout();
+            this.UnitSSFSC.Panel2.SuspendLayout();
             this.UnitSSFSC.SuspendLayout();
             this.inputTLP.SuspendLayout();
             this.infoTS.SuspendLayout();
@@ -57,10 +65,15 @@
             this.unitSC.SuspendLayout();
             this.barTLP.SuspendLayout();
             this.changeViewTS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TwoSectionSC)).BeginInit();
-            this.TwoSectionSC.Panel1.SuspendLayout();
-            this.TwoSectionSC.Panel2.SuspendLayout();
-            this.TwoSectionSC.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._TwoSectionSC)).BeginInit();
+            this._TwoSectionSC.Panel1.SuspendLayout();
+            this._TwoSectionSC.Panel2.SuspendLayout();
+            this._TwoSectionSC.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel3
@@ -100,6 +113,7 @@
             // UnitSSFSC.Panel2
             // 
             this.UnitSSFSC.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.UnitSSFSC.Panel2.Controls.Add(this.splitContainer1);
             this.UnitSSFSC.Size = new System.Drawing.Size(702, 854);
             this.UnitSSFSC.SplitterDistance = 654;
             this.UnitSSFSC.SplitterWidth = 8;
@@ -110,7 +124,7 @@
             this.inputTLP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.inputTLP.ColumnCount = 1;
             this.inputTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.inputTLP.Controls.Add(this.descripTS, 0, 1);
+            this.inputTLP.Controls.Add(this._ucSmpDescriptionBox, 0, 1);
             this.inputTLP.Controls.Add(this.infoTS, 0, 3);
             this.inputTLP.Controls.Add(this.unitSC, 0, 0);
             this.inputTLP.Controls.Add(this.barTLP, 0, 2);
@@ -125,28 +139,6 @@
             this.inputTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.960396F));
             this.inputTLP.Size = new System.Drawing.Size(702, 654);
             this.inputTLP.TabIndex = 4;
-            // 
-            // descripTS
-            // 
-            this.descripTS.AutoSize = true;
-            this.descripTS.BindingField = "";
-            this.descripTS.CallBack = null;
-            this.descripTS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.descripTS.EnterPressed = false;
-            this.descripTS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descripTS.InputProjects = new string[0];
-            this.descripTS.KeyValue = 0;
-            this.descripTS.Label = "Description";
-            this.descripTS.LabelBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.descripTS.LabelForeColor = System.Drawing.Color.White;
-            this.descripTS.Location = new System.Drawing.Point(3, 61);
-            this.descripTS.Name = "descripTS";
-            this.descripTS.Offline = false;
-            this.descripTS.Size = new System.Drawing.Size(696, 45);
-            this.descripTS.TabIndex = 15;
-            this.descripTS.TextBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.descripTS.TextContent = "NOTHING";
-            this.descripTS.TextForeColor = System.Drawing.Color.YellowGreen;
             // 
             // infoTS
             // 
@@ -187,33 +179,11 @@
             // 
             // unitSC.Panel1
             // 
-            this.unitSC.Panel1.Controls.Add(this.ucGenericCBox1);
+            this.unitSC.Panel1.Controls.Add(this._ucSampleBox);
             this.unitSC.Size = new System.Drawing.Size(690, 46);
             this.unitSC.SplitterDistance = 378;
             this.unitSC.SplitterWidth = 7;
             this.unitSC.TabIndex = 8;
-            // 
-            // ucGenericCBox1
-            // 
-            this.ucGenericCBox1.AutoSize = true;
-            this.ucGenericCBox1.BindingField = "";
-            this.ucGenericCBox1.CallBack = null;
-            this.ucGenericCBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucGenericCBox1.EnterPressed = false;
-            this.ucGenericCBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucGenericCBox1.InputProjects = new string[0];
-            this.ucGenericCBox1.KeyValue = 0;
-            this.ucGenericCBox1.Label = "Sample";
-            this.ucGenericCBox1.LabelBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.ucGenericCBox1.LabelForeColor = System.Drawing.Color.Gold;
-            this.ucGenericCBox1.Location = new System.Drawing.Point(0, 0);
-            this.ucGenericCBox1.Name = "ucGenericCBox1";
-            this.ucGenericCBox1.Offline = false;
-            this.ucGenericCBox1.Size = new System.Drawing.Size(378, 46);
-            this.ucGenericCBox1.TabIndex = 0;
-            this.ucGenericCBox1.TextBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.ucGenericCBox1.TextContent = "NOTHING";
-            this.ucGenericCBox1.TextForeColor = System.Drawing.Color.LemonChiffon;
             // 
             // barTLP
             // 
@@ -224,7 +194,7 @@
             this.barTLP.ColumnCount = 1;
             this.barTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.barTLP.Controls.Add(this.changeViewTS, 0, 0);
-            this.barTLP.Controls.Add(this.TwoSectionSC, 0, 1);
+            this.barTLP.Controls.Add(this._TwoSectionSC, 0, 1);
             this.barTLP.Location = new System.Drawing.Point(3, 112);
             this.barTLP.Name = "barTLP";
             this.barTLP.RowCount = 2;
@@ -241,8 +211,8 @@
             this.changeViewTS.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.changeViewTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.changeViewTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sampleCompoLbl,
-            this.imgBtn});
+            this._sampleCompoLbl,
+            this._imgBtn});
             this.changeViewTS.Location = new System.Drawing.Point(0, 0);
             this.changeViewTS.Name = "changeViewTS";
             this.changeViewTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -253,65 +223,155 @@
             // 
             // sampleCompoLbl
             // 
-            this.sampleCompoLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.sampleCompoLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sampleCompoLbl.ForeColor = System.Drawing.Color.LightYellow;
-            this.sampleCompoLbl.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-            this.sampleCompoLbl.LinkColor = System.Drawing.Color.Lime;
-            this.sampleCompoLbl.Margin = new System.Windows.Forms.Padding(1, 1, 2, 2);
-            this.sampleCompoLbl.Name = "sampleCompoLbl";
-            this.sampleCompoLbl.Size = new System.Drawing.Size(193, 25);
-            this.sampleCompoLbl.Text = "COMPOSITION VIEW";
-            this.sampleCompoLbl.ToolTipText = "Click here to change the sample View";
-            this.sampleCompoLbl.VisitedLinkColor = System.Drawing.Color.Fuchsia;
+            this._sampleCompoLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._sampleCompoLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._sampleCompoLbl.ForeColor = System.Drawing.Color.LightYellow;
+            this._sampleCompoLbl.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
+            this._sampleCompoLbl.LinkColor = System.Drawing.Color.Lime;
+            this._sampleCompoLbl.Margin = new System.Windows.Forms.Padding(1, 1, 2, 2);
+            this._sampleCompoLbl.Name = "sampleCompoLbl";
+            this._sampleCompoLbl.Size = new System.Drawing.Size(193, 25);
+            this._sampleCompoLbl.Text = "COMPOSITION VIEW";
+            this._sampleCompoLbl.ToolTipText = "Click here to change the sample View";
+            this._sampleCompoLbl.VisitedLinkColor = System.Drawing.Color.Fuchsia;
             // 
             // imgBtn
             // 
-            this.imgBtn.AutoToolTip = false;
-            this.imgBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.imgBtn.Image = global::DB.UI.Properties.Resources.Matrices;
-            this.imgBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.imgBtn.Name = "imgBtn";
-            this.imgBtn.Size = new System.Drawing.Size(23, 25);
-            this.imgBtn.Text = "toolStripButton1";
-            this.imgBtn.ToolTipText = "Click here to change the sample View";
+            this._imgBtn.AutoToolTip = false;
+            this._imgBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._imgBtn.Image = global::DB.UI.Properties.Resources.Matrices;
+            this._imgBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._imgBtn.Name = "imgBtn";
+            this._imgBtn.Size = new System.Drawing.Size(23, 25);
+            this._imgBtn.Text = "toolStripButton1";
+            this._imgBtn.ToolTipText = "Click here to change the sample View";
             // 
             // TwoSectionSC
             // 
-            this.TwoSectionSC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TwoSectionSC.Location = new System.Drawing.Point(3, 31);
-            this.TwoSectionSC.Name = "TwoSectionSC";
+            this._TwoSectionSC.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._TwoSectionSC.Location = new System.Drawing.Point(3, 31);
+            this._TwoSectionSC.Name = "TwoSectionSC";
             // 
             // TwoSectionSC.Panel1
             // 
-            this.TwoSectionSC.Panel1.Controls.Add(this.ucDataContent);
+            this._TwoSectionSC.Panel1.Controls.Add(this._ucDataContent);
             // 
             // TwoSectionSC.Panel2
             // 
-            this.TwoSectionSC.Panel2.Controls.Add(this.ucSubMS);
-            this.TwoSectionSC.Size = new System.Drawing.Size(690, 550);
-            this.TwoSectionSC.SplitterDistance = 336;
-            this.TwoSectionSC.TabIndex = 14;
+            this._TwoSectionSC.Panel2.Controls.Add(this._ucSubMS);
+            this._TwoSectionSC.Size = new System.Drawing.Size(690, 550);
+            this._TwoSectionSC.SplitterDistance = 336;
+            this._TwoSectionSC.TabIndex = 14;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.DataSource = this.bs;
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.Legend = "Legend1";
+            series1.MarkerColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series1.MarkerSize = 8;
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series1.Name = "Series1";
+            series1.XValueMember = "SigB";
+            series1.YValueMembers = "SSF";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(464, 192);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
+            // 
+            // bs
+            // 
+            this.bs.DataMember = "MatSSF";
+            this.bs.DataSource = typeof(DB.LINAA);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.chart1);
+            this.splitContainer1.Size = new System.Drawing.Size(702, 192);
+            this.splitContainer1.SplitterDistance = 234;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // descripTS
+            // 
+            this._ucSmpDescriptionBox.AutoSize = true;
+            this._ucSmpDescriptionBox.BindingField = "";
+            this._ucSmpDescriptionBox.CallBack = null;
+            this._ucSmpDescriptionBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ucSmpDescriptionBox.EnterPressed = false;
+            this._ucSmpDescriptionBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._ucSmpDescriptionBox.InputProjects = new string[0];
+            this._ucSmpDescriptionBox.KeyValue = 0;
+            this._ucSmpDescriptionBox.Label = "Description";
+            this._ucSmpDescriptionBox.LabelBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this._ucSmpDescriptionBox.LabelForeColor = System.Drawing.Color.White;
+            this._ucSmpDescriptionBox.Location = new System.Drawing.Point(3, 61);
+            this._ucSmpDescriptionBox.Name = "descripTS";
+            this._ucSmpDescriptionBox.Offline = false;
+            this._ucSmpDescriptionBox.Rejected = false;
+            this._ucSmpDescriptionBox.Size = new System.Drawing.Size(696, 45);
+            this._ucSmpDescriptionBox.TabIndex = 15;
+            this._ucSmpDescriptionBox.TextBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this._ucSmpDescriptionBox.TextContent = "NOTHING";
+            this._ucSmpDescriptionBox.TextForeColor = System.Drawing.Color.YellowGreen;
+            this._ucSmpDescriptionBox.WasRefreshed = false;
+            // 
+            // ucGenericCBox1
+            // 
+            this._ucSampleBox.AutoSize = true;
+            this._ucSampleBox.BindingField = "";
+            this._ucSampleBox.CallBack = null;
+            this._ucSampleBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ucSampleBox.EnterPressed = false;
+            this._ucSampleBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._ucSampleBox.InputProjects = new string[0];
+            this._ucSampleBox.KeyValue = 0;
+            this._ucSampleBox.Label = "Sample";
+            this._ucSampleBox.LabelBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this._ucSampleBox.LabelForeColor = System.Drawing.Color.Gold;
+            this._ucSampleBox.Location = new System.Drawing.Point(0, 0);
+            this._ucSampleBox.Name = "ucGenericCBox1";
+            this._ucSampleBox.Offline = false;
+            this._ucSampleBox.Rejected = false;
+            this._ucSampleBox.Size = new System.Drawing.Size(378, 46);
+            this._ucSampleBox.TabIndex = 0;
+            this._ucSampleBox.TextBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this._ucSampleBox.TextContent = "NOTHING";
+            this._ucSampleBox.TextForeColor = System.Drawing.Color.LemonChiffon;
+            this._ucSampleBox.WasRefreshed = false;
             // 
             // ucDataContent
             // 
-            this.ucDataContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.ucDataContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucDataContent.Font = new System.Drawing.Font("Segoe UI Semibold", 14F);
-            this.ucDataContent.Location = new System.Drawing.Point(0, 0);
-            this.ucDataContent.Margin = new System.Windows.Forms.Padding(4);
-            this.ucDataContent.Name = "ucDataContent";
-            this.ucDataContent.Size = new System.Drawing.Size(336, 550);
-            this.ucDataContent.TabIndex = 0;
+            this._ucDataContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this._ucDataContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ucDataContent.Font = new System.Drawing.Font("Segoe UI Semibold", 14F);
+            this._ucDataContent.Location = new System.Drawing.Point(0, 0);
+            this._ucDataContent.Margin = new System.Windows.Forms.Padding(4);
+            this._ucDataContent.Name = "ucDataContent";
+            this._ucDataContent.Size = new System.Drawing.Size(336, 550);
+            this._ucDataContent.TabIndex = 0;
             // 
             // ucSubMS
             // 
-            this.ucSubMS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucSubMS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucSubMS.Location = new System.Drawing.Point(0, 0);
-            this.ucSubMS.Name = "ucSubMS";
-            this.ucSubMS.Size = new System.Drawing.Size(350, 550);
-            this.ucSubMS.TabIndex = 0;
+            this._ucSubMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ucSubMS.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._ucSubMS.Location = new System.Drawing.Point(0, 0);
+            this._ucSubMS.Name = "ucSubMS";
+            this._ucSubMS.Size = new System.Drawing.Size(350, 550);
+            this._ucSubMS.TabIndex = 0;
             // 
             // ucSSFPanel
             // 
@@ -325,6 +385,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
             this.UnitSSFSC.Panel1.ResumeLayout(false);
+            this.UnitSSFSC.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.UnitSSFSC)).EndInit();
             this.UnitSSFSC.ResumeLayout(false);
             this.inputTLP.ResumeLayout(false);
@@ -339,10 +400,15 @@
             this.barTLP.PerformLayout();
             this.changeViewTS.ResumeLayout(false);
             this.changeViewTS.PerformLayout();
-            this.TwoSectionSC.Panel1.ResumeLayout(false);
-            this.TwoSectionSC.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TwoSectionSC)).EndInit();
-            this.TwoSectionSC.ResumeLayout(false);
+            this._TwoSectionSC.Panel1.ResumeLayout(false);
+            this._TwoSectionSC.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._TwoSectionSC)).EndInit();
+            this._TwoSectionSC.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -356,15 +422,18 @@
         private System.Windows.Forms.SplitContainer unitSC;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStrip changeViewTS;
-        private System.Windows.Forms.ToolStripLabel sampleCompoLbl;
+        private System.Windows.Forms.ToolStripLabel _sampleCompoLbl;
         private System.Windows.Forms.TableLayoutPanel barTLP;
         private System.Windows.Forms.ToolStrip infoTS;
-        private System.Windows.Forms.SplitContainer TwoSectionSC;
-        private ucSSFData ucDataContent;
-        private ucMatrixSimple ucSubMS;
-        private System.Windows.Forms.ToolStripButton imgBtn;
+        private System.Windows.Forms.SplitContainer _TwoSectionSC;
+        private ucSSFData _ucDataContent;
+        private ucMatrixSimple _ucSubMS;
+        private System.Windows.Forms.ToolStripButton _imgBtn;
         private System.Windows.Forms.ToolStripLabel infoLBL;
-        private ucGenericCBox descripTS;
-        private ucGenericCBox ucGenericCBox1;
+        private VTools.ucGenericCBox _ucSmpDescriptionBox;
+        private VTools.ucGenericCBox _ucSampleBox;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.BindingSource bs;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

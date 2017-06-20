@@ -9,6 +9,8 @@ namespace DB.UI
 
     public interface IPreferences
     {
+        event EventHandler RoundingChanged;
+
         //  event EventHandler SampleChanged;
         event EventHandler DoChilianChanged;
         event EventHandler DoMatSSFChanged;
@@ -21,7 +23,7 @@ namespace DB.UI
 
         void Set(ref Interface inter);
 
-        void SetRoundingBinding(ref Hashtable unitsTable);
+      
     }
 
 
@@ -37,6 +39,26 @@ namespace DB.UI
 
         private EventHandler runInBackground = null;
         private EventHandler sampleChanged = null;
+
+
+        public event EventHandler roundingChanged = null;
+
+        public event EventHandler RoundingChanged
+        {
+            add
+            {
+                // doChilianChanged += value;
+
+                roundingChanged += value;
+
+                // this.doMatSSFCheckBox.Click += value; this.overridesCheckBox.Click += value;
+            }
+            remove
+            {
+                roundingChanged -= value;
+                // this.doCKCheckBox.CheckStateChanged -= value; this.overridesCheckBox.Click -= value;
+            }
+        }
 
         public event EventHandler DoChilianChanged
         {
@@ -198,8 +220,10 @@ namespace DB.UI
                 this.aARadiusCheckBox.Click += generic;
                 this.aAFillHeightCheckBox.Click += generic;
                 this.calcDensityCheckBox.Click += generic;
+               
+                this.roundingTextBox.KeyUp += roundingTextBox_TextChanged;
 
-            //    this.calcMassCheckBox.Click += generic;
+                this.calcMassCheckBox.Click += generic;
             }
             catch (Exception ex)
             {
@@ -207,33 +231,12 @@ namespace DB.UI
             }
         }
 
-        public void SetRoundingBinding(ref Hashtable bindings)
+        private void roundingTextBox_TextChanged(object sender, EventArgs e)
         {
-            /*
-            //the bindings to round
-            Hashtable units = bindings;
-            this.LostFocus += delegate
-              {
-                  try
-                  {
-                      IPreferences ip = Interface.IPreferences;
-
-                      string format = this.roundingTextBox.Text;
-                      if (format.Length < 2) return;
-                      Rsx.Dumb.BS.ChangeBindingsFormat(format, ref units);
-
-                      Interface.IPreferences.CurrentSSFPref.Rounding = format;
-
-                      Interface.IPreferences.SavePreferences();
-                  }
-                  catch (Exception ex)
-                  {
-                      Interface.IStore.AddException(ex);
-                  }
-              };
-
-            */
+            roundingChanged?.Invoke(sender, e);
         }
+
+       
 
         private void DoCKCheckBox_CheckStateChanged(object sender, EventArgs e)
         {

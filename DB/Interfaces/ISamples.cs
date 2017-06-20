@@ -45,5 +45,6 @@ namespace DB
         void PopulateStandards();
 
         void PopulateSubSamples(Int32 IrReqID);
+        UnitRow GetUnitBySampleID(int subSampleID);
     }
 }

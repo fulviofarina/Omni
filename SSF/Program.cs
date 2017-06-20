@@ -25,39 +25,44 @@ namespace SSF
         [STAThread]
         private static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
-            Form toReturn = null;
-       //     Application.UseWaitCursor = true;
-       
             try
             {
-                //create database
-                Creator.Build(ref LIMS.Interface);
 
-                LIMS.CreateLIMS();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+ 
+
+                Form aboutbox = new AboutBox();
+
+                LIMS.Interface = Creator.Build();
+
+                //create database
+
+                LIMS.CreateLIMS(ref aboutbox);
+
+                Creator.CheckDirectories();
+
+                Creator.PopulateBasic();
 
                 bool ok = Creator.CheckConnections();
 
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
 
+            
+                //EventHandler firstCallBack;
+                Form toShow =   LIMS.CreateSSFUserInterface();
 
-                Action lastCallBack;
-                Action midCallBack;
-                Form aboutbox = new AboutBox();
-
-                toReturn = LIMS.CreateSSFUserInterface(ref aboutbox, out lastCallBack, out midCallBack);
-
-                Creator.LastCallBack = lastCallBack;
-                Creator.CallBack = midCallBack;
 
                 Creator.Run();
 
-                Application.Run(toReturn);
-
                 PainterTimer();
+
+
+                Application.Run(toShow);
+
+             
 
             }
             catch (Exception ex)
@@ -66,21 +71,36 @@ namespace SSF
                 LIMS.Interface.IStore.SaveExceptions();
                 MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
             }
-
-      //      Application.UseWaitCursor = false;
+    
         }
 
         public static void PainterTimer()
         {
+         
+
             //to repaint the form
             System.Timers.Timer painter = new System.Timers.Timer();
             painter.Elapsed += delegate
             {
                 painter.Enabled = false;
+              
                 Application.OpenForms[0]?.Invalidate();
+
+
+               
+
+
+
+
+
+                painter.Interval = 60 * 10 * 1000; //10 minutes
+
+                GC.Collect();
+
                 painter.Enabled = true;
+             
             };
-            painter.Interval = 60 * 10 * 1000; //10 minutes
+            painter.Interval = 15000;
             painter.Enabled = true;
         }
 

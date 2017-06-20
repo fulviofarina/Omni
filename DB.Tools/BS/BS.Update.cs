@@ -94,10 +94,10 @@ namespace DB.Tools
               
                 if (showErrors)
                 {
-                    hasErrorsMethod += s.HasErrors;
+                    hasErrorsMethod = s.HasErrors;
                     IEnumerable<string> names = s.GetBasicColumnsInErrorNames();
                     hasCompulsoryErrors(s, names.ToArray(),false);
-                    hasErrorsMethod += s.UnitRow.HasErrors;
+                    hasErrorsMethod = s.UnitRow.HasErrors;
                     hasCompulsoryErrors(s.UnitRow, null,true);
                 }
             }
@@ -109,10 +109,10 @@ namespace DB.Tools
                
                 if (showErrors)
                 {
-                    hasErrorsMethod += u.SubSamplesRow.HasErrors;
+                    hasErrorsMethod = u.SubSamplesRow.HasErrors;
                     IEnumerable<string> names=  u.SubSamplesRow.GetBasicColumnsInErrorNames();
                     hasCompulsoryErrors(u.SubSamplesRow, names.ToArray(),false);
-                    hasErrorsMethod += u.HasErrors;
+                    hasErrorsMethod = u.HasErrors;
                     hasCompulsoryErrors(u,null,true);
                 }
   
@@ -143,7 +143,7 @@ namespace DB.Tools
                 //to avoid spending too much time when loading
                 if (showErrors && hasErrorsMethod != null)
                 {
-                    hasErrorsMethod += (r as IRow).HasErrors;
+                    hasErrorsMethod = (r as IRow).HasErrors;
                     hasCompulsoryErrors(r);
                 }
             }

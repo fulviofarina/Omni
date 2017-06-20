@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
 using static DB.LINAA;
@@ -9,10 +8,10 @@ namespace DB.UI
 {
     public partial class ucSSFPanel : UserControl
     {
-        protected  bool assigned = false;
-        protected  static string compo = "SWITCH VIEW";
-        protected static string geom = "CHANGE VIEW";
-        protected internal   Interface Interface= null;
+        protected bool _assigned = false;
+        protected static string VIEW_COMPOSITION = "Composition View";
+        protected static string VIEW_GEOMETRY = "Geometry View";
+        protected internal Interface Interface = null;
         protected internal TabPage off;
         protected internal BindingNavigator bn;
 
@@ -46,7 +45,8 @@ namespace DB.UI
             if (t.Equals(typeof(Msn.Pop)))
             {
                 (pro as Msn.Pop).Dock = DockStyle.Fill;
-                destiny = this.UnitSSFSC.Panel2;
+                destiny = this.splitContainer1.Panel1;
+                this.splitContainer1.Panel2Collapsed = true;
             }
             else if (t.Equals(typeof(BindingNavigator)))
             {
@@ -59,13 +59,26 @@ namespace DB.UI
                 // this.unitBN.Dispose();
                 destiny = this.unitSC.Panel2;
             }
-         
+
             destiny?.Controls.Add(pro as Control);
         }
 
         public void SetMessage(string msg)
         {
             infoLBL.Text = msg;
+        }
+
+
+        public EventHandler RefreshChart()
+        {
+
+            return delegate
+            {
+                chart1.DataSource = Interface.IBS.SSF;
+                chart1.Series.Invalidate();
+                chart1.Update();
+                chart1.Invalidate();
+            };
         }
         /// <summary>
         /// sets the bindings for the ControlBoxes and others
@@ -77,15 +90,16 @@ namespace DB.UI
             try
             {
 
+          
+
 
                 setSampleBindings();
 
-           
-                this.sampleCompoLbl.Click += viewChanged;
-                this.imgBtn.Click += viewChanged;
+                this._sampleCompoLbl.Click += viewChanged;
+                this._imgBtn.Click += viewChanged;
 
-                LIMS.SetSampleBox(ref this.ucGenericCBox1);
-                LIMS.SetSampleDescriptionBox(ref this.descripTS);
+                LIMS.SetSampleBox(ref this._ucSampleBox);
+                LIMS.SetSampleDescriptionBox(ref this._ucSmpDescriptionBox);
 
                 viewChanged(null, EventArgs.Empty);//.PerformClick();
 
@@ -94,16 +108,15 @@ namespace DB.UI
                     //turns off or disables the controls.
                     //necessary protection for user interface
                     bool enable = Interface.IBS.SubSamples.Count != 0;//EnabledControls;
-                    ucSubMS.Enabled = enable;
-                    ucDataContent.Enabled = enable;
+                    _ucSubMS.Enabled = enable;
+                    _ucDataContent.Enabled = enable;
                     // bool bnOk = enable &&
-                    ucGenericCBox1.Enabled = enable;
-                    descripTS.Enabled = enable;
+                    _ucSampleBox.Enabled = enable;
+                    _ucSmpDescriptionBox.Enabled = enable;
                 };
 
                 //refresh?
-                Interface.IBS.EnabledControls = true;
-          
+                //   Interface.IBS.EnabledControls = true;
             }
             catch (System.Exception ex)
             {
@@ -111,51 +124,59 @@ namespace DB.UI
             }
         }
 
-     
-
-     
-
-
         public void ViewChanged(object sender, EventArgs e)
         {
-            bool.TryParse(sender.ToString(), out assigned);
-
-            TabPage page = setLabelView(compo, geom);
+            bool.TryParse(sender.ToString(), out _assigned);
+            changeView();
+            setLabelView();
         }
 
-       
-
-        private TabPage setLabelView(string compo, string geom)
+        /// <summary>
+        /// Looks good
+        /// </summary>
+        private void setLabelView()
         {
-            TwoSectionSC.Visible = false;
-
-            TwoSectionSC.Panel1Collapsed = assigned;
-            TwoSectionSC.Panel2Collapsed = !assigned;
-
-            TwoSectionSC.Visible = true;
-            assigned = !assigned;
-
-            TabPage page = on;
-
-            this.sampleCompoLbl.Visible = false;
+            // TabPage page = on;
+            _sampleCompoLbl.Visible = false;
             Image img = Properties.Resources.Geometries;
             Color clr = Color.GhostWhite;
-            if (sampleCompoLbl.Text.Contains(compo))
+            if (_TwoSectionSC.Panel2Collapsed)
             {
-                sampleCompoLbl.Text = geom;
+                _sampleCompoLbl.Text = VIEW_GEOMETRY;
             }
             else
             {
-                sampleCompoLbl.Text = compo;
+                _sampleCompoLbl.Text = VIEW_COMPOSITION;
                 img = Properties.Resources.Matrices;
-                clr = Color.WhiteSmoke;
+                clr = Color.Lavender;
+                // page = off;
+            }
+            _sampleCompoLbl.VisitedLinkColor = clr;
+            _sampleCompoLbl.LinkColor = clr;
+            _sampleCompoLbl.Visible = true;
+            _imgBtn.Image = img;
+            // return page;
+        }
+
+        private void changeView()
+        {
+            //looks good
+            _TwoSectionSC.Visible = false;
+            _TwoSectionSC.Panel1Collapsed = _assigned;
+            _TwoSectionSC.Panel2Collapsed = !_assigned;
+            _TwoSectionSC.Visible = true;
+            _assigned = !_assigned;
+        }
+
+        private TabPage setTabPage()
+        {
+            //looks good
+            TabPage page = on;
+            if (!_TwoSectionSC.Panel2Collapsed)
+            {
                 page = off;
             }
-            sampleCompoLbl.VisitedLinkColor = clr;
-            sampleCompoLbl.LinkColor = clr;
 
-            this.sampleCompoLbl.Visible = true;
-            this.imgBtn.Image = img;
             return page;
         }
 
@@ -164,29 +185,26 @@ namespace DB.UI
             BindingSource bsSample = Interface.IBS.SubSamples;
             SubSamplesDataTable SSamples = Interface.IDB.SubSamples;
 
-
             string column;
             column = SSamples.SubSampleNameColumn.ColumnName;
-            ucGenericCBox1.BindingField = column;
-            ucGenericCBox1.SetBindingSource(ref bsSample);
+            _ucSampleBox.BindingField = column;
+            _ucSampleBox.SetBindingSource(ref bsSample,true);
 
             column = SSamples.SubSampleDescriptionColumn.ColumnName;
-            descripTS.BindingField = column;
-            descripTS.SetBindingSource(ref bsSample);
+            _ucSmpDescriptionBox.BindingField = column;
+            _ucSmpDescriptionBox.SetBindingSource(ref bsSample,true);
 
-
-            ucDataContent.Set(ref Interface);
-            ucSubMS.Set(ref Interface, true);
-
-
-
+            _ucDataContent.Set(ref Interface);
+            _ucSubMS.Set(ref Interface, true);
         }
-
 
         private void viewChanged(object sender, EventArgs e)
         {
-            TabPage page = setLabelView(compo, geom);
+            this.changeView();
+            this.setLabelView();
+            TabPage page = setTabPage();
             TabControl ctrl = (page.Parent as TabControl);
+
             ctrl.Visible = false;
             ctrl.SelectedTab = page;
             if (ctrl.Parent.GetType().Equals(typeof(TabPage)))
@@ -202,7 +220,7 @@ namespace DB.UI
         {
             InitializeComponent();
 
-            this.sampleCompoLbl.Text = "SWITCH VIEW";
+            this._sampleCompoLbl.Text = VIEW_COMPOSITION;
         }
     }
 }

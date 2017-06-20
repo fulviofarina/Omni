@@ -30,31 +30,21 @@ namespace DB
         /// <returns></returns>
         public IrradiationRequestsRow AddNewIrradiation(string project)
         {
-            string projetNoCd = project.Trim().ToUpper();
-
-            if (projetNoCd.Length > 2)
-            {
-                if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(DB.Properties.Misc.Cd) == 0)
-                {
-                    projetNoCd = projetNoCd.Replace(DB.Properties.Misc.Cd, null);
-                }
-            }
-            IrradiationRequestsRow i = this.IrradiationRequests.NewIrradiationRequestsRow();
-            this.IrradiationRequests.AddIrradiationRequestsRow(i);
-
-            i.IrradiationStartDateTime = DateTime.Now;
-            i.IrradiationCode = projetNoCd;
+            IrradiationRequestsRow i = addIrradiation(project);
 
             return i;
         }
 
+      
+
         public ChannelsRow AddNewChannel()
         {
             // ChannelsRow v = e.NewObject as ChannelsRow;//Interface.IDB.Matrix.NewMatrixRow();
-            ChannelsRow v = Channels.NewChannelsRow() as ChannelsRow;
-            Channels.AddChannelsRow(v);
+            ChannelsRow v = addChannel();
             return v;
         }
+
+     
     }
 
     public partial class LINAA : IIrradiations

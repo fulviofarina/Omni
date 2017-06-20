@@ -77,8 +77,45 @@ namespace DB
             }
             public void SetParent<T>(ref T rowParent, object[] args = null)
             {
-                // throw new NotImplementedException();
+                Type tipo = typeof(T);
+                if (tipo.Equals(typeof(MatrixRow)))
+                {
+                    MatrixRow toClone = rowParent as MatrixRow;
+                    setMatrixToClone(ref toClone);
+                }
             }
+
+            private void setMatrixToClone(ref MatrixRow toClone)
+            {
+                if (EC.IsNuDelDetch(toClone)) return;
+                if (MatrixDensity != toClone.MatrixDensity)
+                {
+                    MatrixDensity = toClone.MatrixDensity;
+                }
+                if (!toClone.IsMatrixCompositionNull())
+                {
+                    if (!IsMatrixCompositionNull())
+                    {
+                        if (MatrixComposition.CompareTo(toClone.MatrixComposition) != 0)
+                        {
+                            MatrixComposition = toClone.MatrixComposition;
+                        }
+                    }
+                    else MatrixComposition = toClone.MatrixComposition;
+                }
+                if (!toClone.IsMatrixNameNull())
+                {
+                    if (!IsMatrixNameNull())
+                    {
+                        if (MatrixName.CompareTo(toClone.MatrixName) != 0)
+                        {
+                            MatrixName = toClone.MatrixName;
+                        }
+                    }
+                    else MatrixName = toClone.MatrixName;
+                }
+            }
+
             public new bool HasErrors()
             {
                 DataColumn[] colsInE = this.GetColumnsInError();
@@ -192,23 +229,7 @@ namespace DB
                 return buffer;
             }
 
-            internal void cloneFromMatrix(ref MatrixRow toClone)
-            {
-                if (EC.IsNuDelDetch(toClone)) return;
-                if (MatrixDensity != toClone.MatrixDensity)
-                {
-                    MatrixDensity = toClone.MatrixDensity;
-                }
-                if (MatrixComposition.CompareTo(toClone.MatrixComposition) != 0)
-                {
-                    MatrixComposition = toClone.MatrixComposition;
-                }
-                if (MatrixName.CompareTo(toClone.MatrixName) != 0)
-                {
-                    MatrixName = toClone.MatrixName;
-                }
-            }
-
+        
             internal void setBasic(int subSamplesID, int templateID)
             {
                 SubSampleID = subSamplesID; //the ID to identify
@@ -230,10 +251,13 @@ namespace DB
                     if (renew)
                     {
                         this.tableMatrix.CleanCompositionsHandler?
-                            .Invoke(GetCompositionsRows(), EventArgs.Empty);
+                            .Invoke(compos, EventArgs.Empty);
+                       
                         this.tableMatrix.MUESRequiredHandler?
                             .Invoke(this, EventArgs.Empty);
+                        
                         updateUnit();
+                        this.SetCompositionTableNull();
                         renew = false;
                     }
                     this.tableMatrix.AddCompositionsHandler?

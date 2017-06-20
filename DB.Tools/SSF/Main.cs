@@ -29,48 +29,34 @@ namespace DB.Tools
             }
         }
 
-        public void Calculate(bool background = false)
-        {
-            _bkgCalculation = background;
 
-            //actual position
-            //  Cursor.Current = Cursors.WaitCursor;
+        /// <summary>
+        /// Does everything
+        /// </summary>
+        /// <param name="background"></param>
+        public void RunAll(bool background = false)
+        {
             try
             {
-                // Interface.IBS.IsCalculating = true;
+                _bkgCalculation = background;
 
-                if (!_bkgCalculation) Creator.SaveInFull(true);
-
-                _resetProgress?.Invoke(3);
-
-                int position = Interface.IBS.SubSamples.Position;
-                // int count = SelectUnits();
+                //select
                 SelectSamples(background);
+                //calculate
 
-                //1
                 if (_units.Count == 0)
                 {
                     if (!_bkgCalculation)
                     {
                         MessageBox.Show(SELECT_SAMPLES, NOTHING_SELECTED, MessageBoxButtons.OK);
                     }
-                    // IsCalculating = false;
                 }
                 else
                 {
-                    //loop through all samples to work to
-                    int numberofSteps = 5;
-
-                    _resetProgress?.Invoke(2 + (_units.Count * numberofSteps));
-
-                   string[] inFiles =   PrepareInputs(background).ToArray();
-
-                    if (!background) Interface.IBS.SubSamples.Position = position;
-
+                    string[] inFiles =   PrepareInputs(background).ToArray();
                     RunProcess(ref inFiles);
                 }
-
-                _callBack?.Invoke(null, EventArgs.Empty);
+              
             }
             catch (SystemException ex)
             {
@@ -88,17 +74,17 @@ namespace DB.Tools
 
         public void DoChMethod(ref LINAA.UnitRow UNIT)
         {
-            doChMethod(UNIT.Name);
+            doChMethod(ref UNIT);
         }
 
-        public EventHandler DoChMethod(string sampleName)
+        public EventHandler DoChMethod(int sampleID)
         {
             EventHandler chilean = delegate
             {
                 if (!IsCalculating) return;
                 try
                 {
-                    doChMethod(sampleName);
+                    doChMethod(sampleID);
                 }
                 catch (SystemException ex)
                 {
@@ -118,30 +104,28 @@ namespace DB.Tools
             return doMatSSFMethod(lecture, ref UNIT, doSSF);
         }
 
-        public EventHandler DoMatSSF(string sampleName, string outPutFile)
+        public EventHandler DoMatSSF(int sampleID, string outPutFile)
         {
             EventHandler temp = delegate
             {
-                if (!IsCalculating) return;
-
                 try
                 {
-                    doMatSSFMethod(sampleName, outPutFile);
+                    if (!IsCalculating) return;
+                    doMatSSFMethod(sampleID, outPutFile);
                 }
                 catch (SystemException ex)
                 {
                     Interface.IReport.Msg(ex.Message, ERROR_TITLE, false);
                     Interface.IStore.AddException(ex);
                 }
-
-                //
+              
                 _showProgress?.Invoke(null, EventArgs.Empty);
             };
 
             return temp;
         }
 
-        public EventHandler Finalize(string sampleName)
+        private EventHandler finalize(int sampleID)
         {
             EventHandler final = delegate
             {
@@ -150,15 +134,9 @@ namespace DB.Tools
                     if (!IsCalculating) return;
 
                     UnitRow UNIT = null;
-                    UNIT = Interface.IDB.Unit.FirstOrDefault(o => o.Name.CompareTo(sampleName) == 0);
+                    UNIT = Interface.IPopulate.ISamples.GetUnitBySampleID(sampleID);
+                    finalize(ref UNIT);
 
-
-                    reportFinished(sampleName);
-
-                    if (!_bkgCalculation)
-                    {
-                        Interface.IBS.CurrentChanged<SubSamplesRow>(UNIT.SubSamplesRow);
-                    }
                 }
                 catch (SystemException ex)
                 {
@@ -171,6 +149,8 @@ namespace DB.Tools
 
             return final;
         }
+
+     
 
         public IEnumerable<string> GenerateMatSSFEXEFile(ref string[] unitsNames, ref string[] inFiles)
         {
@@ -203,72 +183,84 @@ namespace DB.Tools
             return exefiles;
         }
 
-      
 
+        int numberofSteps = 7;
+
+
+        /// <summary>
+        /// Prepares de Input Files (Step 2)
+        /// </summary>
+        /// <param name="background"></param>
+        /// <returns></returns>
         public IEnumerable<string> PrepareInputs(bool background = false)
         {
-
+            //loop through all samples to work to
             IList<string> ioFiles = new List<string>();
 
             foreach (UnitRow item in _units)
             {
                 
                 UnitRow UNIT = item;
-                string ioFile =   PrepareInputs(ref UNIT, background);
+             
+                string ioFile = string.Empty;
+                try
+                {
+                    ioFile = prepareInputs(ref UNIT, background);
 
-                if (string.IsNullOrEmpty(ioFile)) continue;
-                ioFiles.Add(ioFile);
+                    if (string.IsNullOrEmpty(ioFile)) continue;
+
+                    _resetProgress?.Invoke(numberofSteps);
+
+                     UNIT.IsBusy = true;
+
+                    //add
+                     ioFiles.Add(ioFile);
+
+                    _showProgress?.Invoke(null, EventArgs.Empty);
+                }
+                catch (SystemException ex)
+                {
+                    Interface.IStore.AddException(ex);
+                    Interface.IReport.Msg(ex.Message, ERROR_TITLE, false);
+                }
+             
                
             }
 
-            return ioFiles;
+
+
+            return ioFiles;//.Where(o=> !string.IsNullOrEmpty(o));
         }
 
-        public string PrepareInputs(ref UnitRow UNIT, bool background = false)
-        {
-            _showProgress?.Invoke(null, EventArgs.Empty);
+       
 
-
-            string inputFile = string.Empty;
-            try
-            {
-                 inputFile = prepareInputs(ref UNIT, background);
-              //  ok = true;
-             
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);
-                Interface.IReport.Msg(ex.Message, ERROR_TITLE, false);
-            }
-
-            _showProgress?.Invoke(null, EventArgs.Empty);
-
-            return inputFile;
-        }
-
-        public Process RunProcess(bool hide, ref string[] ioFile)
+        public Process runProcess(bool hide, ref string[] arrayOfUnitFiles)
         {
             Process proceso = null;
-
           
-            string newMatssfEXEFile = ioFile[1];
+            string newMatssfEXEFile = arrayOfUnitFiles[1];
 
             if (string.IsNullOrEmpty(newMatssfEXEFile)) return proceso;
             bool exists = File.Exists(_startupPath + newMatssfEXEFile);
             if (!exists) return proceso;
 
-            string item = ioFile[0];
+
+            string item = arrayOfUnitFiles[0];
 
             string msg = PROBLEMS_MATSSF + item;
             msg += PROBLEMS_MATSSF_EXTRA + newMatssfEXEFile;
+
+
             try
             {
-                proceso = runProcess(ref ioFile, hide, process_Exited);
+                proceso = runProcess(ref arrayOfUnitFiles, hide, process_Exited);
 
                 if (proceso != null)
                 {
+                    
+                    _showProgress?.Invoke(null, EventArgs.Empty);
                     Interface.IReport.Msg(MATSSF_OK + item, RUNNING_MATSSF_TITLE);
+                  
                 }
                 else throw new Exception(msg);
                 // process.WaitForExit();
@@ -282,18 +274,17 @@ namespace DB.Tools
             return proceso;
         }
 
-        public void RunProcess(ref string[] inFiles)
+        /// <summary>
+        /// Runs the processes (Step 3)
+        /// </summary>
+        /// <param name="inputFiles"></param>
+        public void RunProcess(ref string[] inputFiles)
         {
             IPreferences ip = Interface.IPreferences;
             bool hide = !(ip.CurrentSSFPref.ShowMatSSF);
-            bool doCk = (ip.CurrentSSFPref.DoCK);
-
             //RUN 3
-            RunProcess( ref inFiles, hide);
+            runProcess( ref inputFiles, hide);
 
-            _showProgress?.Invoke(null, EventArgs.Empty);
-
-            //leave here because RunProcess is public
             if (_processTable.Count == 0)
             {
                 IsCalculating = false;
@@ -301,11 +292,14 @@ namespace DB.Tools
             else IsCalculating = true;
         }
 
-        public IEnumerable<string> RunProcess(ref string[] infIles, bool hide = true)
+        private IEnumerable<string> runProcess(ref string[] l_inpuMatSSFtFiles, bool l_hide = true)
         {
             string[] unitsNames = _units.Select(o => o.Name.Trim()).ToArray();
+            int[] SubSamplesID = _units.Where(o => !o.IsSampleIDNull() )
+                .Select( o=> o.SampleID)
+                .ToArray();
 
-            string[] exefiles = GenerateMatSSFEXEFile(ref unitsNames, ref infIles).ToArray();
+            string[] exefiles = GenerateMatSSFEXEFile(ref unitsNames, ref l_inpuMatSSFtFiles).ToArray();
 
             if (exefiles.Count() == 0) return exefiles;
 
@@ -314,24 +308,26 @@ namespace DB.Tools
             for (int i = 0; i < unitsNames.Count(); i++)
             {
                 string item = unitsNames[i];
-
+                int sampleID = SubSamplesID[i];
 
                 string theEXEFILE = exefiles.FirstOrDefault(o => o.Contains(item));
                 if (theEXEFILE == null) continue;
                 if (string.IsNullOrEmpty(theEXEFILE)) continue;
 
 
-                string input = infIles.FirstOrDefault(o => o.Contains(item));
+                string input = l_inpuMatSSFtFiles.FirstOrDefault(o => o.Contains(item));
                 if (input == null) continue;
                 if (string.IsNullOrEmpty(input)) continue;
 
 
-                string[] ioFile = new string[] {item,
+                string[] ioFile = new string[] {
+                    item,
                     theEXEFILE,
                     input,
-                    input.Replace(INPUT_EXT, OUTPUT_EXT) };
+                    input.Replace(INPUT_EXT, OUTPUT_EXT),
+                sampleID.ToString()};
 
-                Process proceso =   RunProcess(hide, ref ioFile);
+                Process proceso =   runProcess(l_hide, ref ioFile);
 
                 //tells if it is running
                 theEXEFILE = findEXEFile(ref proceso);
@@ -344,9 +340,8 @@ namespace DB.Tools
         }
 
         /// <summary>
-        /// Prepares de Input Files
+        /// Selects Samples (Step 1)
         /// </summary>
-
         public void SelectSamples(bool background = false)
         {
             //should loop all?
@@ -377,25 +372,20 @@ namespace DB.Tools
             }
             //filter now by non busy and TODO
             _units = _units.Where(o => !EC.IsNuDelDetch(o) &&  o.ToDo && !o.IsBusy).ToList();
+
+
+        //    _resetProgress?.Invoke(3);
+
+
         }
 
         public void Set(ref Interface inter, EventHandler callBackMethod = null, Action<int> resetProg = null, EventHandler showProg = null)
         {
             Interface = inter;
-            _showProgress = delegate
-            {
-                if (!_bkgCalculation)
-                {
-                    showProg?.Invoke(null, EventArgs.Empty);
-                }
-            };
-            _resetProgress = delegate (int i)
-            {
-                if (!_bkgCalculation)
-                {
-                    resetProg?.Invoke(i);
-                }
-            };
+            _showProgress = showProg;
+
+            _resetProgress = resetProg;
+         
             _callBack = callBackMethod;
 
             if (_processTable == null) _processTable = new System.Collections.Hashtable();

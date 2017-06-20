@@ -14,7 +14,7 @@ namespace DB.Tools
         /// <summary>
         /// Method to call back
         /// </summary>
-        public static Action CallBack
+        public static EventHandler CallBack
         {
             get { return Creator.mainCallBack; }
             set { Creator.mainCallBack = value; }
@@ -23,7 +23,7 @@ namespace DB.Tools
         /// <summary>
         /// Another Call back method (last one)
         /// </summary>
-        public static Action LastCallBack
+        public static EventHandler LastCallBack
         {
             get { return Creator.lastCallBack; }
             set { Creator.lastCallBack = value; }
@@ -36,62 +36,69 @@ namespace DB.Tools
         /// <param name="Linaa">  referenced database to build (can be a null reference)</param>
         /// <param name="notify"> referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition</param>
-        public static void Build(ref Interface inter)
+        public static Interface Build()
         {
-          
 
-            if (inter != null)
-            {
-                inter.IAdapter.DisposeAdapters();
-           
-            }
+         
             LINAA LINAA = new LINAA();
-            inter = new Interface(ref LINAA);
-            Interface = inter;
-          //en este orden
+            Interface = new Interface(ref LINAA);
+            //   Interface = inter;
+            //en este orden
 
-            checkDirectories();
 
-            MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
+            return Interface;
+        }
 
+        public static void PopulateBasic()
+        {
             Interface.IReport.Msg(LOADING_DB, "Initializing...");
-
-        //    Application.DoEvents();
-
+            //    Application.DoEvents();
             Interface.IDB.PopulateColumnExpresions();
             Interface.IPreferences.PopulatePreferences();
             Interface.IPreferences.SavePreferences();
-
         }
 
         /// <summary>
-        /// Checks if the due directories exist
+        /// Checks the directories. If restore = true, repopulation of resources is performed.
+        /// Otherwise the FILE FLAG determines if restoration is performed
         /// </summary>
-        private static void checkDirectories()
+        /// <param name="restore"></param>
+        public static void CheckDirectories(bool restore = false)
         {
-            Cursor.Current = Cursors.WaitCursor;
+         //   Cursor.Current = Cursors.WaitCursor;
+            string checking = "Checking "; 
+            if (restore) checking = "Restoring ";
+            string directories = "directories...";
+            string resources = "resources...";
 
-            Interface.IReport.Msg(LOADING_DB, "Checking directories...");
-            Application.DoEvents();
+            Interface.IReport.Msg(LOADING_DB, checking+ directories);
+     //       Application.DoEvents();
 
             //check basic directory
-            populateBaseDirectory();
-            //check for overriders
-            bool overriderFound = populateOverriders();
-
-            Help();
-
+            populateBaseDirectory(restore);
+            bool overriderFound = false;
+            if (!restore)
+            {
+                //check for FILE FLAG = overriders
+                overriderFound = populateOverriders();
+                Help();
+            }
+            else overriderFound = true;
             //populate resources
-            Interface.IReport.Msg(LOADING_DB, "Checking resources...");
-            Application.DoEvents();
+            Interface.IReport.Msg(LOADING_DB, checking + resources);
+         //   Application.DoEvents();
             populateResources(overriderFound);
+
+
+            MatSSF.StartupPath = Interface.IStore.FolderPath + Resources.SSFFolder;
+
 
             //BUG REPORT HERE IN CASE I OVERRIDE IT OR THERE ARE EXCEPTIONS
 
-            Cursor.Current = Cursors.Default;
+            //  Cursor.Current = Cursors.Default;
         }
 
-        private static void populateBaseDirectory()
+        private static void populateBaseDirectory(bool restore = false)
         {
             //assign folderpath (like a App\Local folder)
             Interface.IStore.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -100,6 +107,7 @@ namespace DB.Tools
             //populate main directory at folderPath
             try
             {
+                if (restore) System.IO.Directory.Delete(Interface.IStore.FolderPath,true);
                 Rsx.Dumb.IO.MakeADirectory(Interface.IStore.FolderPath);
             }
             catch (SystemException ex)
@@ -243,9 +251,15 @@ namespace DB.Tools
 
             callback = delegate
         {
-            Creator.mainCallBack?.Invoke(); //the ? symbol is to check first if its not null!!!
-                                            //wow...
-            Creator.lastCallBack?.Invoke();
+
+         //   mainCallBack?.Invoke(null,EventArgs.Empty);
+         //   lastCallBack?.Invoke(null, EventArgs.Empty);
+           Application.OpenForms[0].Invoke(mainCallBack);
+          Application.OpenForms[0].Invoke(lastCallBack);
+
+            // Creator.mainCallBack?.Invoke(null, EventArgs.Empty); //the ? symbol is to check first if its not null!!!
+            //wow...
+            //   Creator.lastCallBack?.Invoke(null,EventArgs.Empty);
         };
 
             //add save preferences

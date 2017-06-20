@@ -338,6 +338,7 @@ namespace DB
                         return;
                     }
               */
+                this.tableSubSamples.AddMatrixHandler += this.addMatrixEvent;
                 this.tableSubSamples.BeginLoadData();
                 this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
                 this.tableSubSamples.AcceptChanges();
@@ -348,6 +349,8 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
+      
 
         public void PopulateUnitsByProject(int irrReqId)
         {
@@ -371,15 +374,6 @@ namespace DB
             }
         }
 
-        protected internal void populateSelectedExpression(bool setexpression)
-        {
-            string expression = string.Empty;
-            if (setexpression)
-            {
-                expression = "Parent(Measurements_Peaks).Selected";
-            }
-            // PopulatePreferences();
-            Peaks.SelectedColumn.Expression = expression;
-        }
+      
     }
 }

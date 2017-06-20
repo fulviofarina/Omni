@@ -103,11 +103,11 @@ namespace DB.Tools
             }
             else if (tableName.Contains(IDB.Unit.TableName))
             {
-                tableName = "Sample-Source configuration";
+                tableName = "neutron source configuration";
             }
             else if (tableName.Contains(IDB.SubSamples.TableName))
             {
-                tableName = "Sample geometry";
+                tableName = "geometry";
             }
         }
         public string GetDisplayColumName( string tableName, string[] colsInError )

@@ -5,7 +5,7 @@ namespace DB.Tools
 {
     public interface IReport
     {
-        Pop Msn { get; set; }
+        IPop Msn { get;  }
         void GreetUser();
         void ReportToolTip(object sender, EventArgs ev);
 

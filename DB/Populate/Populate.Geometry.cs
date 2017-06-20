@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rsx;
 
 //using DB.Interfaces;
 
@@ -9,8 +8,6 @@ namespace DB
 {
     public partial class LINAA : IGeometry
     {
-      //  public Action populateMUESList;
-
         public GeometryRow DefaultGeometry
         {
             get
@@ -27,102 +24,66 @@ namespace DB
             }
         }
 
-        public void AddCompositions()
+        public void AddCompositions(IEnumerable<MatrixRow> matrices = null)
         {
-            foreach (MatrixRow item in this.Matrix.Rows)
+            try
             {
-                IList<string[]> stripped = item.StripComposition(item.MatrixComposition);
-                LINAA.MatrixRow m = item;
-                AddCompositions(ref m, stripped, true);
+                matrices = addCompositions(ref matrices);
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
             }
         }
 
         public IEnumerable<CompositionsRow> AddCompositions(ref MatrixRow m, IList<string[]> listOfFormulasAndCompositions = null, bool code = true)
         {
             IList<CompositionsRow> compos = new List<CompositionsRow>();
-            bool nulo = EC.CheckNull(this.tableMatrix.MatrixCompositionColumn, m);
-            if (nulo) return compos;
-            if (!code || listOfFormulasAndCompositions == null)
-            {
-                listOfFormulasAndCompositions = m.StripComposition(m.MatrixComposition);
-                //to store matrix composition
-            }
-            string fullComposition = string.Empty;
-            //ilst of element and Quantity
-            foreach (string[] formCompo in listOfFormulasAndCompositions)
-            {
-                //decompose
-                string element = formCompo[0];
-                double formulaweight = 0;
-                double quantity = Convert.ToDouble(formCompo[1]);
-                // elementQuantity(formCompo, out element, out quantity, out formulaweight);
-                //CODE COMPOSITION
-                if (code)
-                {
-                    fullComposition += "#" + element.Trim() + "   (" + quantity.ToString() + ")   ";
-                    continue;
-                }
-                CompositionsRow c = AddCompositions(ref m, element, quantity, formulaweight);
-                compos.Add(c);
-            }
-            if (code) m.MatrixComposition = fullComposition;
-            return compos.AsEnumerable();
-        }
-
-        public CompositionsRow AddCompositions(ref LINAA.MatrixRow mea, string element, double quantity, double formulaweight)
-        {
-            CompositionsRow c = null;
             try
             {
-                LINAA.MatrixRow m = mea;
-                c = m.FindComposition(element);
-                if (c == null)
-                {
-                    c = this.Compositions.NewCompositionsRow();
-                    Compositions.AddCompositionsRow(c);
-                }
-
-                c.SetValues(m.MatrixID, quantity, element);
-
-                if (c.RowState == System.Data.DataRowState.Detached)
-                {
-                }
-
-                if (!EC.IsNuDelDetch(m.SubSamplesRow))
-                {
-                    c.SubSampleID = m.SubSamplesRow.SubSamplesID;
-                }
+                addCompositions(ref m, listOfFormulasAndCompositions, code, ref compos);
             }
             catch (SystemException ex)
             {
-                EC.SetRowError(c, ex);
                 AddException(ex);
             }
-            return c;
+            return compos;
         }
 
+        public MatrixRow AddMatrix(int SubSamplesID, int templateID)
+        {
+            MatrixRow m = null;
+            try
+            {
+                m = addMatrix();
+                m.setBasic(SubSamplesID, templateID);
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
+            }
+            return m;
+        }
         public MatrixRow AddMatrix()
         {
             MatrixRow v = null;//Interface.IDB.Matrix.NewMatrixRow();
-            v = Matrix.NewMatrixRow() as MatrixRow;
-            Matrix.AddMatrixRow(v);
+            v = addMatrix();
             return v;
         }
 
         public VialTypeRow AddVial(bool aRabbit)
         {
             VialTypeRow v = null;
-            v = VialType.NewVialTypeRow() as VialTypeRow;
-            VialType.AddVialTypeRow(v);
-            if (aRabbit) v.IsRabbit = true;
-            else v.IsRabbit = false;
+            try
+            {
+                v = addVial(aRabbit);
+            }
+            catch (SystemException ex)
+            {
+                // EC.SetRowError(v, ex);
+                AddException(ex);
+            }
             return v;
-        }
-
-        public bool CleanCompositions(ref IEnumerable<CompositionsRow> compos)
-        {
-            Delete(ref compos);
-            return Save(ref compos);
         }
 
         public GeometryRow FindReferenceGeometry(string refName)
@@ -137,7 +98,7 @@ namespace DB
             Action[] populatorArray = null;
 
             populatorArray = new Action[]   {
-            PopulateCompositions ,
+        //    PopulateCompositions ,
         PopulateMatrix,
         // PopulateMUESList,
          PopulateVials,
@@ -177,17 +138,23 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
         public void PopulateMatrix()
         {
             try
             {
-                this.tableMatrix.BeginLoadData();
+            //    this.tableMatrix.BeginLoadData();
                 this.tableMatrix.Clear();
+               this.tableMatrix.AcceptChanges();
                 PopulateMUESList();
-                this.TAM.MatrixTableAdapter.Fill(this.tableMatrix);
-
-                this.tableMatrix.EndLoadData();
-                this.tableMatrix.AcceptChanges();
+                MatrixDataTable m = new MatrixDataTable();
+                tAM.MatrixTableAdapter.ClearBeforeFill = true;
+                tAM.MatrixTableAdapter.Fill(m);
+          
+                this.tableMatrix.Merge(m, false, System.Data.MissingSchemaAction.AddWithKey);
+            //    this.tableMatrix.EndLoadData();
+            //    Save(ref this.tableMatrix);
+           //     this.tableMatrix.AcceptChanges();
             }
             catch (SystemException ex)
             {
@@ -233,54 +200,6 @@ namespace DB
             {
                 this.AddException(ex);
             }
-        }
-
-        protected internal void addCompositionsEvent(object sender, EventArgs e)
-        {
-            MatrixRow m = sender as MatrixRow;
-            //averiguar argumentos...
-            AddCompositions(ref m, null, false);
-        }
-
-        protected internal void cleanCompositionsEvent(object sender, EventArgs e)
-        {
-            // MatrixRow m = sender as MatrixRow;
-            IEnumerable<CompositionsRow> compos = sender as IEnumerable<CompositionsRow>;
-            CleanCompositions(ref compos);
-        }
-
-        protected internal void handlersDetSol()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
-        }
-
-        protected internal void handlersGeometries()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Matrix));
-
-            this.tableMatrix.AddCompositionsHandler += addCompositionsEvent;
-            this.tableMatrix.MUESRequiredHandler += mUESRequiredEvent;
-            this.tableMatrix.CleanCompositionsHandler += cleanCompositionsEvent;
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(VialType));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Geometry));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(SubSamples));
-        }
-        protected internal void mUESRequiredEvent(object sender, EventArgs e)
-        {
-            MatrixRow m = sender as MatrixRow;
-
-            int i = TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-            PopulateMUESList();
-
-            //return i != 0;
         }
     }
 }

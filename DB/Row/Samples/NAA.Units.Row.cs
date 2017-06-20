@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
+using System.Xml;
 using Rsx;
 
 namespace DB
@@ -18,7 +20,32 @@ namespace DB
             public bool IsBusy
             {
                 get { return isBusy; }
-                set { isBusy = value; }
+                set {
+
+                    isBusy = value;
+
+                    if (isBusy)
+                    {
+
+                        SetGtChNull();
+                        SetGtNull();
+                        SetGtMCNull();
+                        SetMCLNull();
+                        SetPXSNull();
+                        SetEXSNull();
+                        SetSSFTableNull();
+                        // UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated until the background computations upgrades them");
+
+                    }
+                    else
+                    {
+                        //set DONE
+                        ToDo = false;
+                        LastChanged = DateTime.Now;
+                        LastCalc = DateTime.Now;
+                        SetColumnError(this.tableUnit.NameColumn, null);
+                    }
+                }
             }
 
             public void Check()
@@ -113,18 +140,7 @@ namespace DB
         
             }
 
-            public void Clean()
-            {
-                SetGtChNull();
-                SetGtNull();
-                SetGtMCNull();
-                SetMCLNull();
-                SetPXSNull();
-                SetEXSNull();
-            
-                SetSSFTableNull();
-              //  AcceptChanges();
-            }
+           
 
             /// <summary>
             /// OVERRIDEN
@@ -137,7 +153,7 @@ namespace DB
                 return colsInE;
             }
 
-            public MatSSFDataTable GetMatSSFTable(string path)
+            public MatSSFDataTable GetMatSSFTableWithFile(string path)
             {
                 LINAA.MatSSFDataTable dt = new MatSSFDataTable();
 
@@ -145,6 +161,19 @@ namespace DB
                 {
                     byte[] arr = SSFTable;
                     Rsx.Dumb.Tables.ReadDTBytes(path, ref arr, ref dt);
+                }
+
+                return dt;
+            }
+
+            public MatSSFDataTable GetMatSSFTableNoFile()
+            {
+                LINAA.MatSSFDataTable dt = new MatSSFDataTable();
+
+                if (!IsSSFTableNull())
+                {
+                    byte[] arr = SSFTable;
+                    Rsx.Dumb.Tables.ReadDTBytesNoFile(ref arr, ref dt);
                 }
 
                 return dt;
@@ -201,16 +230,7 @@ namespace DB
                 }
             }
 
-            public void SetCalcsFinished()
-            {
-                //set DONE
-                ToDo = false;
-                LastChanged = DateTime.Now;
-                LastCalc = DateTime.Now;
-                IsBusy = false;
-
-                SetColumnError(this.tableUnit.NameColumn, null);
-            }
+           
         }
 
         public partial class UnitRow

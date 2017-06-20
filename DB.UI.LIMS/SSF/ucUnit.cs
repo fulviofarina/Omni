@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using DB.Tools;
 using Rsx.Dumb;
+using static DB.LINAA;
 
 namespace DB.UI
 {
@@ -12,17 +12,16 @@ namespace DB.UI
         protected internal Interface Interface = null;
         protected internal int lastIndex = -2;
 
-        protected static string ASTERISK = " *";
-
-      
         protected static string gch = "Gt(Ch)";
 
         protected static string gech = "Ge(Ch)";
         protected static string gem = "Ge(M)";
         protected static string gfast = "GFast(M)";
         protected static string gm = "Gt(M)";
-        protected static string sep = "but";
-        protected static string TOOLTIP_TEXT = " but with user-defined parameters";
+
+        protected static string ERROR = "ERROR";
+        protected static string NO_ROWS = "No Rows found in the DataGridView.";
+
 
         /// <summary>
         /// A DGV Item selected to control child ucControls such as ucV uc Matrix Simple, ucCC
@@ -38,18 +37,36 @@ namespace DB.UI
             }
         }
 
-      
-
         public void DgvItemSelected(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0) return;
             int rowInder = e.RowIndex;
-            DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
-            Interface.IBS.SelectUnitOrChildRow(rowInder, ref row, ref lastIndex);
-            this.unitDGV.ClearSelection();
-            // PaintRows();
-        }
+            Action<string,string,bool,bool> action = Interface.IReport.Msg;
+    
+            DataRow row = Rsx.DGV.Control.GetDataRowFromDGV(ref sender, rowInder);
 
+            action.Invoke(NO_ROWS, ERROR, false, false); //report
+
+            //quitar inder, poner esto en populate..
+            Interface.IBS.AssignUnitChild(ref row);
+
+            lastIndex = rowInder;
+
+            DGVRefresher.Invoke(sender, e);
+
+                    
+        }
+        public EventHandler DGVRefresher
+        {
+            get
+            {
+         return   delegate
+        {
+            this.unitDGV.Invalidate();
+            this.SSFDGV.Invalidate();
+        };
+            }
+        }
         /// <summary>
         /// Link the bindings sources, EXECUTES ONCE
         /// </summary>
@@ -64,16 +81,12 @@ namespace DB.UI
             Dumb.FD(ref this.SSFBS);
 
             unitDGV.DataSource = Interface.IBS.Units;
-            unitDGV.RowHeadersVisible = true;
+            unitDGV.RowHeadersVisible = false;
             SSFDGV.DataSource = Interface.IBS.SSF;
-
 
             IPreferences pref = LIMS.GetPreferences();
 
             configurePreferences(ref pref);
-
-
-
 
             errorProvider1.DataSource = Interface.IBS.Units;
             errorProvider2.DataSource = Interface.IBS.SSF;
@@ -83,140 +96,86 @@ namespace DB.UI
             this.unitDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.SSFDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
+         //   EventHandler handler = delegate
+          //   {
+               //  Application.RaiseIdle(EventArgs.Empty);
+          //   };
 
-         //   this.unitDGV.CellMouseDoubleClick += delegate
-
-          //    {
-                 
-           //   };
-          
-           
-
-            EventHandler handler = delegate
-             {
-                 Application.RaiseIdle(EventArgs.Empty);
-             };
-
-            Interface.IDB.Unit.InvokeCalculations += handler;
-            Interface.IDB.SubSamples.InvokeCalculations += handler;
-
-        }         
+           // Interface.IDB.Unit.InvokeCalculations += handler;
+           // Interface.IDB.SubSamples.InvokeCalculations += handler;
+        }
 
         private void configurePreferences(ref IPreferences pref)
         {
-            Color[] arr = new Color[] { Color.FromArgb(64, 64, 64), Color.Black, Color.FromArgb(64, 64, 64) };
-            Color[] arr2 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Chartreuse };
-            Color[] arr3 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.LemonChiffon };
-            Color[] arr4 = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.Orange };
+            string roundingBindableField = Interface.IDB.SSFPref.RoundingColumn.ColumnName;
+
+            string bindableField2 = Interface.IDB.SSFPref.DoCKColumn.ColumnName;
+            IUnitSSFColumn col4 = this.SSFCh as IUnitSSFColumn;
+
+            col4.OriginalHeaderText = gech;
+            setSSFColumn(ref col4, 2, bindableField2, roundingBindableField);
+
+            IUnitSSFColumn col5 = this.GtCKS as IUnitSSFColumn;
+            col5.OriginalHeaderText = gch;
+            setSSFColumn(ref col5, 2, bindableField2, roundingBindableField);
+
+         
 
             EventHandler chilian = delegate
-           {
-               paintChilianRelated(arr, arr3);
-           };
+            {
+                col4.PaintHeader();
+                col5.PaintHeader();
+            };
 
             chilian.Invoke(null, EventArgs.Empty);
 
             pref.DoChilianChanged += chilian;
+            pref.DoChilianChanged += DGVRefresher;
+
+            string bindableField = Interface.IDB.SSFPref.DoMatSSFColumn.ColumnName;
+            IUnitSSFColumn col = this.unitSSFColumn1 as IUnitSSFColumn;
+            col.OriginalHeaderText = gfast;
+            setSSFColumn(ref col, 3, bindableField, roundingBindableField);
+
+            IUnitSSFColumn col2 = this.GtM as IUnitSSFColumn;
+            col2.OriginalHeaderText = gm;
+            setSSFColumn(ref col2, 1, bindableField, roundingBindableField);
+
+            IUnitSSFColumn col3 = this.sSFDataGridViewTextBoxColumn as IUnitSSFColumn;
+            col3.OriginalHeaderText = gem;
+            setSSFColumn(ref col3, 1, bindableField, roundingBindableField);
 
             EventHandler matssf = delegate
-     {
-         paintMatSSFRelated(arr, arr2, arr4);
-         
-     };
+            {
+                col.PaintHeader();
+                col2.PaintHeader();
+                col3.PaintHeader();
+            };
 
             matssf.Invoke(null, EventArgs.Empty);
+
             pref.DoMatSSFChanged += matssf;
-      
+            pref.DoMatSSFChanged += DGVRefresher;
+
             EventHandler overrider = chilian;
             overrider += matssf;
+            overrider += DGVRefresher;
+
+            DGVRefresher.Invoke(null, EventArgs.Empty);
 
             pref.OverriderChanged += overrider;
-        }
 
-        private void paintChilianRelated(Color[] arr, Color[] arr3)
-        {
-            // string gfast = "GFast";
-
-            // string sep = "but";
-
-            string add = ASTERISK;
-            if (Interface.IPreferences.CurrentSSFPref.Overrides)
+            EventHandler rounding = delegate
             {
-                // this.SSFCh.HeaderText = "Ge(Ch) *"; this.GtCKS.HeaderText = "Gt(M) *";
+                col.SetRounding();
+                col2.SetRounding();
+                col3.SetRounding();
+                col4.SetRounding();
+                col5.SetRounding();
+            };
 
-                if (!SSFCh.ToolTipText.Contains(sep))
-                {
-                    this.SSFCh.ToolTipText += TOOLTIP_TEXT;
-                    this.GtCKS.ToolTipText += TOOLTIP_TEXT;
-                }
-                // this.GFast.HeaderText = "GFast *";
-            }
-            else
-            {
-                add = string.Empty;
-                if (SSFCh.ToolTipText.Contains(sep))
-                {
-                    this.SSFCh.ToolTipText = this.SSFCh.ToolTipText.Replace(TOOLTIP_TEXT, null);
-                    this.GtCKS.ToolTipText = this.GtCKS.ToolTipText.Replace(TOOLTIP_TEXT, null);
-                }
-            }
-
-            this.SSFCh.HeaderText = gech + add;
-            this.GtCKS.HeaderText = gch + add;
-
-            bool readOnly = !Interface.IPreferences.CurrentSSFPref.DoCK;
-            DataGridViewColumn columna = this.GtCKS;
-            Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr3);
-            // columna.Visible = readOnly;
-            columna = this.SSFCh;
-            Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr3);
-            // columna.Visible = readOnly;
-        }
-
-        private void paintMatSSFRelated(Color[] arr, Color[] arr2, Color[] arr4)
-        {
-            string add = ASTERISK;
-            if (Interface.IPreferences.CurrentSSFPref.Overrides)
-            {
-                if (!GFast.ToolTipText.Contains(sep))
-                {
-                    this.GFast.ToolTipText += TOOLTIP_TEXT;
-                    this.GtM.ToolTipText += TOOLTIP_TEXT;
-                    this.sSFDataGridViewTextBoxColumn.ToolTipText += TOOLTIP_TEXT;
-                }
-                // this.GFast.HeaderText = "GFast *";
-            }
-            else
-            {
-                add = string.Empty;
-                if (GFast.ToolTipText.Contains(sep))
-                {
-                    this.sSFDataGridViewTextBoxColumn.ToolTipText = this.sSFDataGridViewTextBoxColumn.ToolTipText.Replace(TOOLTIP_TEXT, null);
-                    this.GFast.ToolTipText = this.GFast.ToolTipText.Replace(TOOLTIP_TEXT, null);
-                    this.GtM.ToolTipText = this.GtM.ToolTipText.Replace(TOOLTIP_TEXT, null);
-                }
-
-                // sSFDataGridViewTextBoxColumn.HeaderText = "Ge(M)"; this.GFast.HeaderText =
-                // "GFast"; this.GtM.HeaderText = "Gt(M)";
-            }
-
-            this.GFast.HeaderText = gfast + add;
-            this.GtM.HeaderText = gm + add;
-            sSFDataGridViewTextBoxColumn.HeaderText = gem + add;
-
-            DataGridViewColumn columna;
-            columna = this.GtM;
-            bool readOnly = !Interface.IPreferences.CurrentSSFPref.DoMatSSF;
-            // columna.Visible = readOnly; Rsx.DGV.Control.PaintColumn(readOnly2, ref columna);
-            Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
-            columna = this.sSFDataGridViewTextBoxColumn;
-            // columna.Visible = readOnly; Rsx.DGV.Control.PaintColumn(readOnly2, ref columna);
-            Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr2);
-
-            columna = this.GFast;
-
-            // columna.Visible = readOnly; Rsx.DGV.Control.PaintColumn(readOnly2, ref columna);
-            Rsx.DGV.Control.PaintColumn(readOnly, ref columna, arr, arr4);
+            pref.RoundingChanged += rounding;
+            pref.RoundingChanged += DGVRefresher;
         }
 
         private void setBindings()
@@ -242,6 +201,15 @@ namespace DB.UI
             // Interface.IBS.Units = bs; //link to binding source
         }
 
+        private void setSSFColumn(ref IUnitSSFColumn col, int type, string bindingField, string roundingField)
+        {
+            col.SSFCellType = type;
+            col.BindableAsteriskField = Interface.IDB.SSFPref.OverridesColumn.ColumnName;
+            col.BindingPreferenceField = bindingField;
+            col.BindingRoundingField = roundingField;
+            col.BindingPreferenceRow = Interface.IPreferences.CurrentSSFPref;
+        }
+        /*
         private void UnitDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -249,11 +217,18 @@ namespace DB.UI
 
             if (e.ColumnIndex == this.sampleDGVColumn.Index)
             {
-                DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
-                Interface.IBS.SelectUnit(ref row);
+                Action<string, string, bool, bool> action = Interface.IReport.Msg;
+                DataRow row = Rsx.DGV.Control.GetDataRowFromDGV(ref sender, rowInder, action);
+                //    DataRow row = Interface.IBS.GetDataRowFromDGV(sender, rowInder);
+                UnitRow unit = row as UnitRow;
+                string title = SAMPLE;// + unit.Name;
+                title += unit.Name;
+                unit.ToDo = !unit.ToDo;
+                Interface.IReport.Msg(title + SELECTED_ROW, SELECTED); //report
+                return unit;
             }
         }
-
+        */
         /*
         private void UnitDGV_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {

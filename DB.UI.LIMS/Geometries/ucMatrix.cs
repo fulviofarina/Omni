@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using DB.Tools;
 using Rsx;
@@ -130,9 +131,9 @@ namespace DB.UI
                     }
                     else
                     {
-                        m.SetColumnError(this.Linaa.Matrix.XCOMColumn, null);   //nullifies the error in XCOM column
+                        EC.SetRowError(m, null);
 
-                        bool goIn = ((m.XCOM || !XcomCalled) || force.Checked);
+                        bool goIn = ((m.GetMUESRows().Count()==0 || !XcomCalled) || force.Checked);
                         goIn = !m.HasErrors() && goIn;
                         if (goIn)
                         {
@@ -187,7 +188,7 @@ namespace DB.UI
                 }
                 catch (SystemException ex)
                 {
-                    EC.SetRowError(m, this.Linaa.Matrix.XCOMColumn, ex);
+                    EC.SetRowError(m,  ex);
                     this.Linaa.AddException(ex);
                 }
             }

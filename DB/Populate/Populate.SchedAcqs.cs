@@ -46,44 +46,10 @@ namespace DB
 
         public void AddSchedule(string project, string sample, Int16 pos, string det, Int16 repeats, double preset, DateTime startOn, string useremail, bool cummu, bool Force)
         {
-            DB.LINAA.SchAcqsRow sch = this.FindASpecificSchedule(det, project, sample);
-            DialogResult result;
-            string Content = string.Empty;
-            if (sch == null) sch = addSchedule();
-            else
-            {
-              
-                Content = sch.GetReportString();
-                if (Force) result = DialogResult.No;
-                else
-                {
-                    string msg = "Sample " + sample + " was found in the schedule:\n\n" + Content + CREATE_NEW;
-                    result = MessageBox.Show(msg, MEASUREMENT_FOUND, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-
-                }
-
-                if (result == DialogResult.No) sch = addSchedule();
-                else if (result == DialogResult.Cancel) return;
-            }
-
-            sch.SetSchedule(project, sample, pos, det, repeats, preset, startOn, useremail, cummu);
-            sch.Reset();
-
-            Content = sch.GetReportString();
-
-            if (Force) result = DialogResult.OK;
-            else result = MessageBox.Show(MEASUREMENT_ADDED+ Content, CONFIRM, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (result == DialogResult.Cancel) sch.Delete();
-
-            this.Save<LINAA.SchAcqsDataTable>();
+            addScheduleMeasurement(project, sample, pos, det, repeats, preset, startOn, useremail, cummu, Force);
         }
 
-        private SchAcqsRow addSchedule()
-        {
-            SchAcqsRow sch = this.SchAcqs.NewSchAcqsRow();
-            this.SchAcqs.AddSchAcqsRow(sch);
-            return sch;
-        }
+      
 
 
         public void PopulateScheduledAcqs()

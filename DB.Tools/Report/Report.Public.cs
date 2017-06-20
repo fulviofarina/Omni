@@ -42,10 +42,16 @@ namespace DB.Tools
         }
         */
 
-        public Pop Msn
+        public IPop Msn
         {
             get { return msn; }
-            set { msn = value; }
+        //    set {
+
+         //       msn = value;
+
+            
+
+           // }
         }
 
         public string RestartFile
@@ -257,7 +263,7 @@ namespace DB.Tools
             DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
             string toolTip = cell.ToolTipText;
             if (string.IsNullOrEmpty(toolTip)) return;
-            Msg(toolTip, "This column represents");
+            Msg(toolTip, "The column " +cell.OwningColumn.HeaderText+ " represents:");
             Speak(toolTip);
         }
 
@@ -466,6 +472,8 @@ namespace DB.Tools
             if (msn == null)
             {
                 msn = new Pop(true);
+                msn.LogFilePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                    +"\\Temp\\" + "Log."+ DateTime.Today.DayOfYear +".txt";
                 // LIMS.Interface.IReport.Msn = msn; msn.ParentForm.Opacity = 100;
             }
         }
