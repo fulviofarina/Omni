@@ -209,7 +209,7 @@ namespace Rsx.DGV
       foreach (DataGridViewColumn c in dgv.Columns)
       {
         DataColumn dtcol = dt.Columns[c.DataPropertyName];
-
+        if (dtcol == null) continue;
         if (!dtcol.ReadOnly)
         {
           Font actual = c.InheritedStyle.Font;

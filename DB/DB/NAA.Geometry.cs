@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -49,24 +49,23 @@ namespace DB
         partial class MatrixDataTable : IColumn
         {
             public EventHandler CleanCompositionsHandler;
-            public EventHandler MUESRequiredHandler;
+          //  public EventHandler MUESRequiredHandler;
             public EventHandler AddCompositionsHandler;
-         /*
-            public  new DataColumn MatrixNameColumn
-                {
+            /*
+               public  new DataColumn MatrixNameColumn
+                   {
+                   get
+                   {
+                       this.columnMatrixName.ColumnName = "Prueba";
+                       return this.columnMatrixName;
+                   }
+                   set
 
-                get
-                {
-                    this.columnMatrixName.ColumnName = "Prueba";
-                    return this.columnMatrixName;
-                }
-                set
-
-                {
-                    this.columnMatrixName = value;
-                }
-                }
-            */
+                   {
+                       this.columnMatrixName = value;
+                   }
+                   }
+               */
             private IEnumerable<DataColumn> nonNullables;
 
             public IEnumerable<DataColumn> ForbiddenNullCols
@@ -111,7 +110,6 @@ namespace DB
             /// <summary>
             /// Retabifies the Matrix Composition
             /// </summary>
-           
         }
 
         //Requires attention on DataColumn Changing Handlers
@@ -136,9 +134,5 @@ namespace DB
                 }
             }
         }
-
-       
-
-       
     }
 }

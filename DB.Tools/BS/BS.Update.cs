@@ -3,27 +3,23 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
 {
     public partial class BS
     {
-
-      
-        private void updateVialOrRabbit(ref  BindingSource sender, bool selectedBs)
+        private void updateVialOrRabbit(ref BindingSource sender, bool selectedBs)
         {
             VialTypeRow c = null;
             if (sender.Equals(Rabbit))
             {
                 c = Interface.ICurrent.Rabbit as VialTypeRow;
-
             }
             else if (sender.Equals(Vial))
             {
                 c = Interface.ICurrent.Vial as VialTypeRow;
-
             }
 
             currentChanged(c, true, false, selectedBs);
@@ -39,10 +35,10 @@ namespace DB.Tools
                 c = Interface.ICurrent.SubSampleMatrix as MatrixRow;
             }
             currentChanged(c, true, false, selectedBs);
-         //   return selectedBs;
+            // return selectedBs;
         }
 
-        private void updateSubSampleOrUnit(ref  BindingSource sender, bool selectedBs)
+        private void updateSubSampleOrUnit(ref BindingSource sender, bool selectedBs)
         {
             SubSamplesRow r = null; //which one to send
                                     //the SubSample from the SubSample of the unit that called or
@@ -91,36 +87,33 @@ namespace DB.Tools
                 //take columns that should be ok
                 updateSubSample(r, doCascade, findItself);
                 SubSamplesRow s = r as SubSamplesRow;
-              
+
                 if (showErrors)
                 {
                     hasErrorsMethod = s.HasErrors;
                     IEnumerable<string> names = s.GetBasicColumnsInErrorNames();
-                    hasCompulsoryErrors(s, names.ToArray(),false);
+                    hasCompulsoryErrors(s, names.ToArray(), false);
                     hasErrorsMethod = s.UnitRow.HasErrors;
-                    hasCompulsoryErrors(s.UnitRow, null,true);
+                    hasCompulsoryErrors(s.UnitRow, null, true);
                 }
             }
             else if (isUnit)
             {
-             
                 updateUnit(r, doCascade, findItself);
                 UnitRow u = r as UnitRow;
-               
+
                 if (showErrors)
                 {
                     hasErrorsMethod = u.SubSamplesRow.HasErrors;
-                    IEnumerable<string> names=  u.SubSamplesRow.GetBasicColumnsInErrorNames();
-                    hasCompulsoryErrors(u.SubSamplesRow, names.ToArray(),false);
+                    IEnumerable<string> names = u.SubSamplesRow.GetBasicColumnsInErrorNames();
+                    hasCompulsoryErrors(u.SubSamplesRow, names.ToArray(), false);
                     hasErrorsMethod = u.HasErrors;
-                    hasCompulsoryErrors(u,null,true);
+                    hasCompulsoryErrors(u, null, true);
                 }
-  
             }
             else
             {
-             
-               if (isMatrix)
+                if (isMatrix)
                 {
                     //
                     updateMatrix(r, doCascade, findItself, selectedBS);
@@ -147,7 +140,6 @@ namespace DB.Tools
                     hasCompulsoryErrors(r);
                 }
             }
-
         }
 
         private void updateChannel<T>(T r, bool doCascade, bool findItself)
@@ -216,9 +208,9 @@ namespace DB.Tools
         private void updateMatrix<T>(T r, bool doCascade = true, bool findItself = false, bool selectedBS = false)
         {
             string column = Interface.IDB.Compositions.MatrixIDColumn.ColumnName;
-            
+
             string filter = column + " IS NULL";
-         //   string filterMatrixSelected = string.Empty;
+            // string filterMatrixSelected = string.Empty;
             column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
             string filterMatrixSelected = column + " IS NULL";
 
@@ -242,15 +234,23 @@ namespace DB.Tools
                 filter = column + " = '" + id + "'";
                 if (selectedBS)
                 {
-                  //  column2 = Interface.IDB.Matrix.TemplateIDColumn.ColumnName;
-                     column = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName;
+                    // column2 = Interface.IDB.Matrix.TemplateIDColumn.ColumnName;
+                    column = Interface.IDB.Matrix.SubSampleIDColumn.ColumnName;
                     //last matrix id
                     id = u.SubSampleID;
                     filterMatrixSelected = column + " = '" + id + "'";
                     column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
-                     id = u.MatrixID;
-                    //    filter += " AND " + column2 + " = '" + id + "'";
+                    id = u.MatrixID;
+                    // filter += " AND " + column2 + " = '" + id + "'";
                 }
+               // bool nulo = u.IsXCOMTableNull();
+                if (u.NeedsMUES )
+                {
+                    bool sql = !Interface.IPreferences.CurrentPref.Offline;
+                    MUESDataTable mu =   Interface.IPopulate.IGeometry.GetMUES(ref u, sql);
+                    Interface.IDB.MUES.Merge(mu);
+                }
+
 
                 if (findItself)
                 {
@@ -258,7 +258,8 @@ namespace DB.Tools
                     // bs.ResetBindings(false);
                 }
             }
-
+        
+            MUES.Filter = filter;
             bs2.Filter = filter; //sea cual sea este es el filtrro
             if (selectedBS) bs.Filter = filterMatrixSelected;
             // bs2.ResetBindings(false);
@@ -281,28 +282,23 @@ namespace DB.Tools
                     currentChanged<UnitRow>(row as UnitRow);
                 }
 
-              
                 if (findItself)
                 {
                     // string unitValID = Interface.IDB.SubSamples.SubSamplesIDColumn.ColumnName;
                     SubSamples.Position = SubSamples.Find(column, s.SubSamplesID);
                 }
 
-               
                 filter = column + " = '" + s.SubSamplesID + "'";
-                
             }
 
-                  SelectedSubSample.Filter = filter;
-            
+            SelectedSubSample.Filter = filter;
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="r"></param>
-        /// <param name="doCascade"></param>
+        /// <param name="r">         </param>
+        /// <param name="doCascade"> </param>
         /// <param name="findItself"></param>
         private void updateUnit<T>(T r, bool doCascade, bool findItself)
         {
@@ -323,7 +319,7 @@ namespace DB.Tools
                 DataRow row = s.SubSamplesRow;
                 //do childs parents or not?
                 doCascade = doCascade && !EC.IsNuDelDetch(row);
-              //TOD:  doCascade = doCascade && EnabledControls;
+                //TOD:  doCascade = doCascade && EnabledControls;
                 if (doCascade)
                 {
                     row = s.SubSamplesRow.VialTypeRow;
@@ -344,17 +340,17 @@ namespace DB.Tools
                     row = samp.MatrixRow;
                     currentChanged(row as MatrixRow, true, false, false);
                     IEnumerable<MatrixRow> ROWS = samp.GetMatrixRows();
-                   if (!EC.IsNuDelDetch(samp.MatrixRow))
-                  {
+                    if (!EC.IsNuDelDetch(samp.MatrixRow))
+                    {
                         //take Latest! child matrix then...
                         row = ROWS
-                              //  .Where(o => !o.IsTemplateIDNull())
+                                  // .Where(o => !o.IsTemplateIDNull())
                                   .FirstOrDefault(o => o.MatrixID == samp.MatrixID);
                     }
-                  //take any child matrix then
+                    //take any child matrix then
                     else row = ROWS.FirstOrDefault();
-                                    
-                 //   row = ROWS
+
+                    // row = ROWS
 
                     currentChanged(row as MatrixRow, true, true, true);
                 }

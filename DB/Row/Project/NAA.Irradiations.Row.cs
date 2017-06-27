@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {

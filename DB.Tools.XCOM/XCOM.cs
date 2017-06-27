@@ -1,13 +1,284 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-
+using Rsx.Dumb;
+using static DB.LINAA;
 namespace DB.Tools
 {
-    public class XCOM
+
+
+    public partial class XCOM : CalculateBase
+    {
+        protected static string XCOM_ERROR = "Problems comunicating with XCOM";
+        protected static string XCOM_TITLE = "XCOM did not answer the query";
+
+        public void Calculate(bool? BKG)
+        {
+            Interface.IBS.Matrix.EndEdit();
+            Interface.IBS.Compositions.EndEdit();
+
+            IsCalculating = true;
+
+            int position = 0;
+
+            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
+
+            if (pref.Loop)
+            {
+                Interface.IBS.Matrix.MoveLast();
+                position = Interface.IBS.Matrix.Position;
+                Interface.IBS.Matrix.MoveFirst();
+            }
+            else position = Interface.IBS.Matrix.Position;
+
+            _resetProgress?.Invoke(0);
+
+            double Totalend = pref.EndEnergy;
+            int NrEnergies = pref.Steps;  // STEP (in keV) for retrieving MUES for each keV
+
+            string notepad = "notepad.exe";
+
+            while (IsCalculating)
+            {
+                double start = pref.StartEnergy;
+
+                double end = (start + NrEnergies);
+                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
+                string fileName = m.MatrixName.Trim() + ".txt";
+                string composition = m.MatrixComposition;
+                string filePath = _startupPath + fileName;
+
+                try
+                {
+                    //finds the MUEs for each 1keV, given start and Totalend energies, by NrEnergies (keV) steps.
+                    m.RowError = string.Empty;
+
+                    if (pref.ASCIIOutput)
+                    {
+                        // the error in Density column because density is not necessary
+                        _resetProgress?.Invoke(2);
+
+                        //        string energiesListPath = Interface.IStore.FolderPath + DB.Properties.Resources.XCOMEnergies;
+                        byte[] arr = Interface.IPreferences.CurrentXCOMPref.ListOfEnergies;
+                        string EnergiesList = string.Empty;
+                        //          arr = Encoding.UTF8.GetBytes( DB.Properties.Resources.XCOM);
+                        if (!pref.UseList) EnergiesList = Encoding.UTF8.GetString(arr);
+                        else EnergiesList = DB.Properties.Resources.XCOM;
+
+                        string compositionList = XCOM.MakeCompositionsList(composition);
+
+                        FindTim(compositionList, EnergiesList, filePath, false);
+
+                        _showProgress?.Invoke(null, EventArgs.Empty);
+
+                        System.Diagnostics.Process proceso = new System.Diagnostics.Process();
+                        IO.Process(proceso, _startupPath, notepad, fileName, false, false, 1000);
+
+                        _showProgress?.Invoke(null, EventArgs.Empty);
+
+                    }
+                    else
+                    {
+
+                        _resetProgress?.Invoke(NrEnergies);
+
+                        bool goIn = (m.NeedsMUES || pref.Force);
+                        goIn = !m.HasErrors() && goIn;
+
+                        if (goIn)
+                        {
+                            string responde = string.Empty;
+                            responde = GetMuesFromXCOM(ref start, Totalend, NrEnergies, ref end, composition, m.MatrixDensity, m.MatrixID);
+                            if (string.IsNullOrEmpty(responde))
+                            {
+                                Interface.IReport.Msg(XCOM_ERROR, XCOM_TITLE);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (Interface.IBS.Matrix.Position == position) break;
+                    else Interface.IBS.Matrix.MoveNext();
+                }
+                catch (SystemException ex)
+                {
+                    EC.SetRowError(m, ex);
+                    Interface.IStore.AddException(ex);
+                }
+            }
+
+            IsCalculating = false;
+
+        }
+
+        public object[] GetDataToPlot()
+        {
+            MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
+
+            int matrixID = m.MatrixID;
+            string name;
+            double density;
+            getNameDensity(out name, out density);
+            string title = string.Empty;
+            bool sql = SQL;
+            double eh;//// = pref.EndEnergy;
+            double el;// = pref.StartEnergy;
+            bool logScale;
+            getEnergies(out eh, out el, out logScale);
+            bool specific = false;
+            MUESDataTable mues = null;
+            if (specific) mues = Interface.IPopulate.IGeometry.GetMUES(el, eh, matrixID);
+            else mues = Interface.IPopulate.IGeometry.GetMUES(ref m, sql);
+
+            DataColumn ene = mues.EnergyColumn;
+            DataColumn mu = mues.MATNCSColumn;
+
+            return new object[] { ene, mu,logScale,title };
+        }
+
+        public void getEnergies(out double eh, out double el, out bool logScale)
+        {
+            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
+
+            eh = pref.EndEnergy;
+            el = pref.StartEnergy;
+
+            logScale = pref.LogGraph;
+
+        }
+        public void getNameDensity(out string name, out double density)
+        {
+            MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
+            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
+            name = m.MatrixName;
+            density = m.MatrixDensity;
+            int matrixID = m.MatrixID;
+
+        }
+
+        public bool SQL
+        { 
+            get
+            {
+            return !(bool)Interface?.IPreferences.CurrentPref.Offline;
+            }
+}
+        protected internal string GetMuesFromXCOM(ref double start, double Totalend, int NrEnergies, ref double end, string composition, double density, int matrixID)
+        {
+            string headerWithContent = string.Empty;
+
+            try
+            {
+                string path = _startupPath + matrixID + ".";
+                string ext = ".txt";
+
+                int i = 0;
+                string Response = string.Empty;
+
+
+                MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
+
+                MUESDataTable mu = new MUESDataTable();
+
+                while (IsCalculating)
+                {
+                    double START = start;
+                    double END = end;
+
+                    Response = QueryXCOM(composition, NrEnergies, START, END);
+                    if (i == 0) headerWithContent = Response; //keep the header of the response
+
+                    string tempFile = path + i + ext;
+              
+
+                      _callBack?.Invoke(new object[] { tempFile, Response }, EventArgs.Empty);
+                    StreamReader reader = new StreamReader(tempFile);
+
+                    FindMu(density, ref reader, ref mu, matrixID);
+
+             
+                    _showProgress?.Invoke(null, EventArgs.Empty);
+
+             
+
+
+                    if (end >= Totalend) break;
+
+                    start += NrEnergies;
+                    end = start + NrEnergies;
+                    i++;
+                }
+
+
+                Interface.IDB.MUES.Merge(mu);
+
+                Action action = delegate
+                {
+                    if (SQL)
+                    {
+                        Interface.IStore.InsertMUES(ref mu, m.MatrixID);
+                    }
+                    byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref mu);
+                    m.XCOMTable = arr;
+                };
+                Action callBack = delegate
+                {
+
+                };
+
+                ILoader ld = new Loader();
+                ld.Set(action, callBack, null);
+                ld.RunWorkerAsync();
+
+            
+
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+
+            return headerWithContent;
+        }
+
+
+
+        protected internal  Interface Interface;
+        public XCOM() : base()
+        {
+
+        }
+        public void Set(ref Interface inter)
+        {
+            Interface = inter;
+
+        }
+
+        bool calculating = false;
+     //   private System.Web webBrowser;
+
+        public new bool IsCalculating
+        {
+      
+            get
+            {
+                return calculating;
+            }
+            set
+            {
+                calculating = value;
+            }
+        
+    }
+
+    }
+
+
+    public partial class XCOM
     {
         public static IList<string[]> ExtractComposition(String XCOMResponse, ref LINAA.ElementsDataTable elements)
         {
@@ -87,7 +358,16 @@ namespace DB.Tools
 
         public static string QueryXCOM(string MatrixComposition, int NrOfEnergies, double StartEnergy, double EndEnergy)
         {
-            string str = MakeCompositionsList(MatrixComposition);
+            IList<string[]> str0 = RegEx.StripComposition(MatrixComposition);
+            //STRING WAS DECODED INTO THE LIST ls
+            // string str = RegEx.StripMoreComposition(ref str0);
+            //    str = str.Replace('\n',' ');
+            string str = string.Empty;
+            foreach (string[] str5 in str0)
+            {
+                str += str5[0] + " " + str5[1] + "\n";
+            }
+            // string str1 = MakeCompositionsList(MatrixComposition);
             string str2 = MakeEnergiesList(NrOfEnergies, StartEnergy, EndEnergy);
 
             string completo = string.Empty;
@@ -128,7 +408,7 @@ namespace DB.Tools
             return completo;
         }
 
-        public static LINAA.MUESDataTable FindMu(double density, ref StreamReader reader)
+        public static void FindMu(double density, ref StreamReader reader, ref LINAA.MUESDataTable dt, int matrixID)
         {
             reader.ReadLine();
             reader.ReadLine();
@@ -152,43 +432,14 @@ namespace DB.Tools
             num++; //this is the initial row
             num2--; //this is the final row
 
-            LINAA.MUESDataTable dt = new LINAA.MUESDataTable();
-
             String[] temp = null;
 
             for (int j = num; j <= num2; j++)
             {
                 temp = strArray2[j].TrimStart().Split(' ');
-
                 LINAA.MUESRow r = dt.NewMUESRow();
-
-                if (temp.LongLength == 8)
-                {
-                    r.Energy = Convert.ToDouble(temp[0]) * 1000;
-                    r.Density = density;
-                    r.MACS = Convert.ToDouble(temp[1]);
-                    r.MAIS = Convert.ToDouble(temp[2]);
-                    r.PE = Convert.ToDouble(temp[3]);
-                    r.PPNF = Convert.ToDouble(temp[4]);
-                    r.PPEF = Convert.ToDouble(temp[5]);
-                    r.MATCS = Convert.ToDouble(temp[6]);
-                    r.MATNCS = Convert.ToDouble(temp[7]);
-                    r.Edge = String.Empty;
-                }
-                else if (temp.LongLength == 10)
-                {
-                    r.Energy = Convert.ToDouble(temp[2]) * 1000;
-                    r.Density = density;
-                    r.MACS = Convert.ToDouble(temp[3]);
-
-                    r.MAIS = Convert.ToDouble(temp[4]);
-                    r.PE = Convert.ToDouble(temp[5]);
-                    r.PPNF = Convert.ToDouble(temp[6]);
-                    r.PPEF = Convert.ToDouble(temp[7]);
-                    r.MATCS = Convert.ToDouble(temp[8]);
-                    r.MATNCS = Convert.ToDouble(temp[9]);
-                    r.Edge = temp[0] + temp[1];
-                }
+                r.MatrixID = matrixID;
+                SetMUESRow(density, temp, ref r);
                 dt.AddMUESRow(r);
             }
 
@@ -197,7 +448,37 @@ namespace DB.Tools
             reader = null;
 
             //photon cross sections in g/cm2 and energies in keV, photon * density = mu (linear attenuation)
-            return dt;
+        }
+
+        private static void SetMUESRow(double density, string[] temp, ref LINAA.MUESRow r)
+        {
+            if (temp.LongLength == 8)
+            {
+                r.Energy = Convert.ToDouble(temp[0]) * 1000;
+                r.Density = density;
+                r.MACS = Convert.ToDouble(temp[1]);
+                r.MAIS = Convert.ToDouble(temp[2]);
+                r.PE = Convert.ToDouble(temp[3]);
+                r.PPNF = Convert.ToDouble(temp[4]);
+                r.PPEF = Convert.ToDouble(temp[5]);
+                r.MATCS = Convert.ToDouble(temp[6]);
+                r.MATNCS = Convert.ToDouble(temp[7]);
+                r.Edge = String.Empty;
+            }
+            else if (temp.LongLength == 10)
+            {
+                r.Energy = Convert.ToDouble(temp[2]) * 1000;
+                r.Density = density;
+                r.MACS = Convert.ToDouble(temp[3]);
+
+                r.MAIS = Convert.ToDouble(temp[4]);
+                r.PE = Convert.ToDouble(temp[5]);
+                r.PPNF = Convert.ToDouble(temp[6]);
+                r.PPEF = Convert.ToDouble(temp[7]);
+                r.MATCS = Convert.ToDouble(temp[8]);
+                r.MATNCS = Convert.ToDouble(temp[9]);
+                r.Edge = temp[0] + temp[1];
+            }
         }
 
         /// <summary>

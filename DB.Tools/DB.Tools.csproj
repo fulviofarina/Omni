@@ -65,22 +65,14 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BS\BS.Others.cs" />
-    <Compile Include="Connections.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Connections.Designer.cs">
-      <DependentUpon>Connections.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Creator\Creator.SQL.cs" />
-    <Compile Include="Creator\Creator.Public.cs" />
     <Compile Include="BS\BS.Fields.cs" />
     <Compile Include="BS\BS.Update.cs" />
     <Compile Include="BS\BS.Public.cs" />
@@ -90,7 +82,6 @@
     <Compile Include="Current\ICurrent.cs" />
     <Compile Include="Populate\Populate.Fields.cs" />
     <Compile Include="Populate\Populate.cs" />
-    <Compile Include="Current\Preferences\Preferences.Fields.cs" />
     <Compile Include="Current\Preferences\Preferences.Public.cs" />
     <Compile Include="Current\Preferences\Preferences.cs" />
     <Compile Include="Report\IReport.cs" />
@@ -98,84 +89,28 @@
     <Compile Include="Report\Report.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Current\Preferences\IPreferences.cs" />
-    <Compile Include="SSF\Fields.Static.cs" />
-    <Compile Include="SSF\Main.cs" />
-    <Compile Include="SSF\IsCalculating.cs" />
-    <Compile Include="SSF\Engine.cs" />
-    <Compile Include="SSF\Fields.cs" />
-    <Compile Include="SSF\Engine.Parsers.cs" />
-    <Compile Include="WC\Fields.cs" />
-    <Compile Include="WC\Interface.cs" />
-    <Compile Include="WC\Properties.cs" />
-    <Compile Include="WC\Workers.cs" />
-    <Compile Include="WC\Static\Efficiency.cs" />
-    <Compile Include="Creator\Creator.cs" />
-    <Compile Include="WC\Static\NAA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WC\Public.cs" />
-    <Compile Include="WC\SolcoiEngine.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB.Linq\DB.Linq.csproj">
-      <Project>{4f5b1a09-8cfe-41ba-a1b1-5eeaecedd329}</Project>
-      <Name>DB.Linq</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Omni\Rsx.Dumb\Rsx.Dumb.csproj">
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Omni\Rsx.Math\Rsx.Math.csproj">
-      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
-      <Name>Rsx.Math</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DB.Tools.SOLCOI\DB.Tools.SOLCOI.csproj">
-      <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
-      <Name>DB.Tools.SOLCOI</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6AC9265B-3286-4C63-A924-5FA14FF1CBEA}</Project>
       <Name>DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
       <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
       <Name>Rsx.Emailer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx.Generic\Rsx.Generic.csproj">
-      <Project>{c0806053-7e45-4971-a846-28b93ce2f7d1}</Project>
-      <Name>Rsx.Generic</Name>
+    <ProjectReference Include="..\VTools.Msn\VTools.Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>VTools.Msn</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx\Rsx.SQL.csproj">
-      <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
-      <Name>Rsx.SQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
-      <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
-      <Name>VTools.Explorer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="WC\Static\Populate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="SSF\DIAGRAMSSF.cd" />
-    <None Include="SSF\MatSSF\MATSSF.CFG" />
-    <None Include="SSF\MatSSF\MATSSF.DAT" />
-    <None Include="SSF\MatSSF\matssf.for" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SSF\MatSSF\MATSSF_INP.TXT" />
-    <Content Include="SSF\MatSSF\MATSSF_LST.TXT" />
-    <Content Include="SSF\MatSSF\MATSSF_XSR.TXT" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Connections.resx">
-      <DependentUpon>Connections.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -170,12 +170,6 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Others\ucHyperLab.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Others\ucHyperLab.Designer.cs">
-      <DependentUpon>ucHyperLab.cs</DependentUpon>
-    </Compile>
     <None Include="app.config" />
     <None Include="Properties\DataSources\DB.LINAA.datasource" />
     <EmbeddedResource Include="Analysis\ucSamples\ucSamples.resx">
@@ -197,9 +191,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Analysis\ucPeaks\ucPeaks.resx">
       <DependentUpon>ucPeaks.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Others\ucHyperLab.resx">
-      <DependentUpon>ucHyperLab.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Analysis\ToDo\ucToDoPanel.cs">
       <SubType>UserControl</SubType>
@@ -671,6 +662,10 @@
       <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
       <Name>DB.Reports</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.Creator\DB.Tools.Creator.csproj">
+      <Project>{1043e3e2-21a7-494d-bbbb-99327d379422}</Project>
+      <Name>DB.Tools.Creator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.NuDat\DB.Tools.NuDat.csproj">
       <Project>{f7c2d211-65d8-4fda-ba14-4e39a7e8c036}</Project>
       <Name>DB.Tools.NuDat</Name>
@@ -683,13 +678,13 @@
       <Project>{094bec2a-1d8e-4b20-905e-aac94895ec59}</Project>
       <Name>DB.Tools.ToDo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.WC\DB.Tools.WC.csproj">
+      <Project>{3e0e1bf6-6dea-4df2-bc42-b00f3150bb82}</Project>
+      <Name>DB.Tools.WC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.UI.LIMS\DB.UI.LIMS.csproj">
       <Project>{4eee1204-d241-4fef-8188-0f6ca5a1a4c0}</Project>
       <Name>DB.UI.LIMS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
@@ -715,12 +710,18 @@
       <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
       <Name>VTools.Menu</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VTools.Msn\VTools.Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>VTools.Msn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VTools.TreeView\VTools.TreeView.csproj">
       <Project>{5e5cd6b3-e66f-4a73-b2bc-1350d3143192}</Project>
       <Name>VTools.TreeView</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

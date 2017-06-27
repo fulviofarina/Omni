@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 using Rsx.Math;
 
 namespace DB.Tools
@@ -452,7 +452,7 @@ namespace DB.Tools
                     foreach (DataColumn col in arrOfColToPush)
                     {
                         LINAA.ToDoAvgRow cl = clone.FirstOrDefault(c => c.ToDoNr == avg.ToDoNr);
-                        if (Rsx.EC.IsNuDelDetch(cl)) continue;
+                        if (EC.IsNuDelDetch(cl)) continue;
                         object valueToPush = avg.Field<object>(col.ColumnName);
                         cl.SetField<object>(col.ColumnName + "." + newColBase, valueToPush);
                     }

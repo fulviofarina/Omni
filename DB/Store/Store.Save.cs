@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DB.Properties;
 
 //using DB.Interfaces;
 using Rsx.Dumb;
-using Rsx;
-using DB.Properties;
-using System.Collections;
 
 namespace DB
 {
     public partial class LINAA : IStore
     {
 
-
+        public void InsertMUES(ref MUESDataTable mu, int matrixID)
+        {
+            TAM.MUESTableAdapter.DeleteByMatrixID(matrixID);
+            foreach (DB.LINAA.MUESRow row in mu.Rows)
+            {
+                TAM.MUESTableAdapter.Insert(row.MatrixID, row.Energy, row.MACS, row.MAIS, row.PE, row.PPNF, row.PPEF, row.MATCS, row.MATNCS, row.Density, row.Edge);
+            }
+        }
 
         public bool Save<T>()
         {
@@ -62,9 +67,9 @@ namespace DB
 
             if (useHandlers)
             {
-         //       setHandlers(false, ref dt);
+                // setHandlers(false, ref dt);
             }
-        //    setRowHandlers(ref dt, false);
+            // setRowHandlers(ref dt, false);
 
             dt.BeginLoadData();
 
@@ -72,16 +77,14 @@ namespace DB
 
             if (useHandlers)
             {
-        //        setHandlers(true, ref dt);
-        //        useHandlers = false;
+                // setHandlers(true, ref dt); useHandlers = false;
             }
             else
             {
-         //       useHandlers = true;
-         //       Save(ref rows);
+                // useHandlers = true; Save(ref rows);
             }
 
-      //      setRowHandlers(ref dt, true);
+            // setRowHandlers(ref dt, true);
 
             dt.EndLoadData();
 
@@ -104,16 +107,17 @@ namespace DB
                 this.AddException(ex);
             }
 
-         //   return rows;
+            // return rows;
         }
+
         public void Save<T>(ref T row)
         {
-          //  this.BeginEndLoadData(true);
-                List<T> list = new List<T>();
-                list.Add(row);
-                IEnumerable<T> rows = list.ToArray();
-                         Save(ref rows);
-         //   this.BeginEndLoadData(false);
+            // this.BeginEndLoadData(true);
+            List<T> list = new List<T>();
+            list.Add(row);
+            IEnumerable<T> rows = list.ToArray();
+            Save(ref rows);
+            // this.BeginEndLoadData(false);
         }
 
         public string SaveExceptions()
@@ -147,6 +151,9 @@ namespace DB
                 string LIMSPath = folderPath + Resources.Backups + Resources.Linaa;
                 string aux = "." + DateTime.Now.DayOfYear.ToString();
                 string LIMSDayPath = LIMSPath.Replace(".xml", aux + ".xml");
+             
+           //     CleanPreferences();
+                CleanOthers();
 
                 if (System.IO.File.Exists(LIMSPath))
                 {
@@ -163,14 +170,35 @@ namespace DB
             }
             return ok;
         }
-
-        public bool SaveRemote(ref IEnumerable<DataTable> tables)
+        /*
+        public bool ReadLocalCopy()
         {
             bool ok = false;
           
-
-                foreach (System.Data.DataTable t in tables)
+            try
+            {
+            
+                if (System.IO.File.Exists(LIMSPath))
                 {
+                    ReadXml(LIMSPath, XmlReadMode.ReadSchema);
+                }
+            
+
+                ok = true;
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
+            }
+            return ok;
+        }
+        */
+        public bool SaveRemote(ref IEnumerable<DataTable> tables)
+        {
+            bool ok = false;
+
+            foreach (System.Data.DataTable t in tables)
+            {
                 try
                 {
                     IEnumerable<DataRow> rows = t.AsEnumerable();
@@ -182,15 +210,12 @@ namespace DB
                 {
                     AddException(ex);
                 }
-
             }
 
             return ok;
         }
 
-
- 
-        private  void saveOthers<T>(ref IEnumerable<T> rows)
+        private void saveOthers<T>(ref IEnumerable<T> rows)
         {
             Type t = rows.First().GetType();
             ///deleted now (2 may 2012)
@@ -201,8 +226,8 @@ namespace DB
             {
                 IEnumerable<SubSamplesRow> samps = schs.Cast<SubSamplesRow>();
                 saveSamples(ref samps);
-                //  IEnumerable<UnitRow> units = samps.SelectMany(o => o.GetUnitRows()).ToArray();//.UnitRow).ToArray();
-                //  saveOthers(ref units);
+                // IEnumerable<UnitRow> units = samps.SelectMany(o =>
+                // o.GetUnitRows()).ToArray();//.UnitRow).ToArray(); saveOthers(ref units);
             }
             else if (t.Equals(typeof(SchAcqsRow))) this.tAM.SchAcqsTableAdapter.Update(schs);
             else if (t.Equals(typeof(OrdersRow))) this.tAM.OrdersTableAdapter.Update(schs);
@@ -216,28 +241,25 @@ namespace DB
             else if (t.Equals(typeof(StandardsRow))) this.tAM.StandardsTableAdapter.Update(schs);
             else if (t.Equals(typeof(MatrixRow)))
             {
-
-                //   LINAATableAdapters.MatrixTableAdapter ta = new LINAATableAdapters.MatrixTableAdapter();
+                // LINAATableAdapters.MatrixTableAdapter ta = new LINAATableAdapters.MatrixTableAdapter();
                 this.tAM.MatrixTableAdapter.Update(schs);
-              //   ta.Update(schs);
+                // ta.Update(schs);
 
-             //    ta.Dispose();
-             //   ta = null;
+                // ta.Dispose(); ta = null;
             }
-            //    else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
+            // else if (t.Equals(typeof(MatSSFRow))) this.tAM.MatSSFTableAdapter.Update(schs);
             else if (t.Equals(typeof(RefMaterialsRow))) this.tAM.RefMaterialsTableAdapter.Update(schs);
             else if (t.Equals(typeof(UnitRow)))
             {
                 this.tAM.UnitTableAdapter.Update(schs);
             }
-
             else if (t.Equals(typeof(GeometryRow))) this.tAM.GeometryTableAdapter.Update(schs);
             else if (t.Equals(typeof(IrradiationRequestsRow))) this.tAM.IrradiationRequestsTableAdapter.Update(schs);
             else if (t.Equals(typeof(ChannelsRow))) this.tAM.ChannelsTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsAbsorbersRow))) this.tAM.DetectorsAbsorbersTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsCurvesRow))) this.tAM.DetectorsCurvesTableAdapter.Update(schs);
             else if (t.Equals(typeof(DetectorsDimensionsRow))) this.tAM.DetectorsDimensionsTableAdapter.Update(schs);
-            //     else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
+            // else if (t.Equals(typeof(AcquisitionsRow))) this.tAM.AcquisitionsTableAdapter.Update(schs);
             else if (t.Equals(typeof(HoldersRow))) this.tAM.HoldersTableAdapter.Update(schs);
             else if (t.Equals(typeof(MeasurementsRow)))
             {
@@ -282,16 +304,14 @@ namespace DB
             {
                 this.tAM.tStudentTableAdapter.Update(schs);
             }
-
-
             else if (t.Equals(typeof(BlanksRow)))
             {
                 this.tAM.BlanksTableAdapter.Update(schs);
             }
             else if (t.Equals(typeof(CompositionsRow)))
             {
-                //        this.tAM.CompositionsTableAdapter.Update(schs);
-                // string path = folderPath + DB.Properties.Resources.Backups + "Compositions.xml";
+                // this.tAM.CompositionsTableAdapter.Update(schs); string path = folderPath +
+                // DB.Properties.Resources.Backups + "Compositions.xml";
                 // this.tableCompositions.AcceptChanges(); this.tableCompositions.WriteXml(path);
             }
             else if (t.Equals(typeof(ExceptionsRow)))
@@ -300,6 +320,7 @@ namespace DB
             }
             else throw new SystemException("Not implemented. Save<> Method");
         }
+
         /*
         public bool SaveOLD<T>(ref IEnumerable<T> rows)
         {
@@ -418,7 +439,7 @@ namespace DB
         }
         */
 
-        private  bool savePeaks<T>(ref IEnumerable<T> rows)
+        private bool savePeaks<T>(ref IEnumerable<T> rows)
         {
             bool wasPeaks = false;
             Type t = typeof(T);
@@ -445,9 +466,9 @@ namespace DB
             return wasPeaks;
         }
     }
+
     public partial class LINAA
     {
-
         protected internal void savePeaksIrrAvg(ref IEnumerable<IRequestsAveragesRow> irequests)
         {
             LINAATableAdapters.IRequestsAveragesTableAdapter ta = new LINAATableAdapters.IRequestsAveragesTableAdapter();
@@ -594,25 +615,20 @@ namespace DB
 
         protected internal void saveSamples(ref IEnumerable<SubSamplesRow> samps)
         {
-          //  LINAATableAdapters.SubSamplesTableAdapter ta = new LINAATableAdapters.SubSamplesTableAdapter();
+            // LINAATableAdapters.SubSamplesTableAdapter ta = new LINAATableAdapters.SubSamplesTableAdapter();
 
             try
             {
-
-             //   SubSamples.EndLoadData();
+                // SubSamples.EndLoadData();
 
                 TAM.SubSamplesTableAdapter.Update(samps.ToArray());
-
-              
-
             }
             catch (SystemException ex)
             {
                 this.AddException(ex);
             }
 
-          //  ta.Dispose();
-          //  ta = null;
+            // ta.Dispose(); ta = null;
         }
 
         /*
@@ -622,8 +638,6 @@ namespace DB
 
             try
             {
-               
-
                 IEnumerable<SubSamplesRow> deleteIR = (samps).Where(ir => ir.RowState == DataRowState.Deleted);
 
                 for (int i = deleteIR.Count() - 1; i >= 0; i--)
@@ -702,7 +716,6 @@ namespace DB
             ta.Dispose();
             ta = null;
         }
-
 
         */
     }

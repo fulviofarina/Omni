@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -14,9 +14,6 @@ namespace DB
         /// </summary>
         public partial class SubSamplesRow : IRow
         {
-           
-
-          
             public void Check()
             {
                 foreach (DataColumn column in this.tableSubSamples.Columns)
@@ -30,7 +27,6 @@ namespace DB
                 if (this.tableSubSamples.SimpleNonNullable.Contains(column))
                 {
                     EC.CheckNull(column, this);
-                   
                 }
                 else
                 if (this.tableSubSamples.GeometriesNonNullables.Contains(column))
@@ -86,7 +82,6 @@ namespace DB
                     //not used aymore??
                     if (IsDirectSolcoiNull()) DirectSolcoi = true;
                 }
-              
                 else if (this.tableSubSamples.GeometryNameColumn == column)
                 {
                     if (CheckGeometry())
@@ -105,7 +100,6 @@ namespace DB
                 }
             }
 
-
             protected internal EventData ebento = new EventData();
 
             private void checkUnitsColumns(DataColumn column)
@@ -113,15 +107,14 @@ namespace DB
                 bool calMass, calRad, calFh, calculateDensity;
                 //TODO: Mejorar esto
 
-            //    ebento = null;
+                // ebento = null;
                 this.tableSubSamples.CalcParametersHandler?.Invoke(this, ebento);
-               // SSFPrefRow pref = db.SSFPref.FirstOrDefault();
+                // SSFPrefRow pref = db.SSFPref.FirstOrDefault();
                 calMass = (bool)ebento.Args[0];// pref.CalcMass;
                 calRad = (bool)ebento.Args[1]; //  pref.AARadius;
                 calculateDensity = (bool)ebento.Args[2];// pref.CalcDensity;
                 calFh = (bool)ebento.Args[3];// pref.AAFillHeight;
 
-          
                 EC.CheckNull(column, this);
                 if (column == this.tableSubSamples.CalcDensityColumn)
                 {
@@ -242,14 +235,14 @@ namespace DB
                 int count = GetBasicColumnsInErrorNames().Count();
                 return (count != 0);
             }
+
             public IEnumerable<string> GetBasicColumnsInErrorNames()
             {
                 IEnumerable<DataColumn> colsInE = this.GetColumnsInError();
-              //  colsInE = colsInE.Intersect(this.tableSubSamples.NonNullableUnit);
+                // colsInE = colsInE.Intersect(this.tableSubSamples.NonNullableUnit);
                 colsInE = colsInE.Intersect(this.tableSubSamples.NonNullBasicUnits);
-                return colsInE.Select(o=> o.ColumnName);
+                return colsInE.Select(o => o.ColumnName);
             }
-
 
             public void SetParent<T>(ref T rowParent, object[] args = null)
             {
@@ -307,6 +300,7 @@ namespace DB
                     return Regex.Replace(this.IrradiationCode, "[a-z]", String.Empty, RegexOptions.IgnoreCase);
                 }
             }
+
             protected static string ASSIGN_MATRIX = "Plase assign a matrix either directly or through a geometry";
             protected static string THE_CALC_DENSITY = "The calculated density (in gr/cm3)";
             protected static string ASSIGN_IRR_START = "Set an Irradiation Start date/time";
@@ -323,7 +317,7 @@ namespace DB
             protected static string ASSIGN_GEOMETRY = "Please assign a valid geometry to this sample";
 
             protected static string SET_IRR_TIMES = "Set an Irradiation Time (in minutes) or an Irradiation Start and End date/times";
-            protected static string ASSIGN_RABBIT= "Assign an irradiation container";
+            protected static string ASSIGN_RABBIT = "Assign an irradiation container";
 
             public bool CheckGeometry()
             {
@@ -584,7 +578,7 @@ namespace DB
 
             public bool SetDescriptionFromMonitor()
             {
-               string description =  GetDescriptionFromMonitor();
+                string description = GetDescriptionFromMonitor();
                 if (!string.IsNullOrEmpty(description))
                 {
                     SubSampleDescription = description;
@@ -697,8 +691,6 @@ namespace DB
                 }
             }
 
-           
-
             public void SetIrradiationTime(double totalMins)
             {
                 DataColumn tCol = this.tableSubSamples.IrradiationTotalTimeColumn;
@@ -727,7 +719,7 @@ namespace DB
                     else SetIrradiationDates();
                 }
             }
-       
+
             public bool SetLastMatrix()
             {
                 this.SetColumnError(this.tableSubSamples.MatrixNameColumn, null);
@@ -741,8 +733,8 @@ namespace DB
                 }
                 else
                 {
-                     this.SetColumnError(this.tableSubSamples.MatrixIDColumn, ASSIGN_MATRIX);
-                     this.SetColumnError(this.tableSubSamples.MatrixNameColumn, ASSIGN_MATRIX);
+                    this.SetColumnError(this.tableSubSamples.MatrixIDColumn, ASSIGN_MATRIX);
+                    this.SetColumnError(this.tableSubSamples.MatrixNameColumn, ASSIGN_MATRIX);
                 }
 
                 return !EC.IsNuDelDetch(this.MatrixRow);
@@ -763,14 +755,12 @@ namespace DB
                 if (m == null)
                 {
                     MatrixRow toClone = this.MatrixRow;
-                    object[] args = new object[] { m, SubSamplesID, templateID, toClone,this };
+                    object[] args = new object[] { m, SubSamplesID, templateID, toClone, this };
                     EventData data = new EventData(args);
                     this.tableSubSamples.AddMatrixHandler?.Invoke(args, data);
                     m = data.Args[0] as MatrixRow;
-
                 }
                 if (IsMatrixIDNull() || MatrixID != m.MatrixID) MatrixID = m.MatrixID;
-
             }
 
             public bool SetMassFromMonitor(bool force = true)

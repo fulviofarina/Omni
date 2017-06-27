@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using DB.Tools;
 using DB.UI;
-using Msn;
-using VTools;
+
+
 
 namespace SSF
 {
     internal static class Program
     {
-        private static NotifyIcon con;
-
-      
-
         /// <summary>
         /// Function meant to Create a LINAA database datatables and load itto store and display data
         /// </summary>
@@ -31,38 +26,31 @@ namespace SSF
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
- 
 
                 Form aboutbox = new AboutBox();
 
                 LIMS.Interface = Creator.Build();
-
                 //create database
 
                 LIMS.CreateLIMS(ref aboutbox);
 
                 Creator.CheckDirectories();
-
                 Creator.PopulateBasic();
 
-                bool ok = Creator.CheckConnections();
-
+                bool ok = Creator.CheckConnections(true,true);
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
-
             
                 //EventHandler firstCallBack;
-                Form toShow =   LIMS.CreateSSFUserInterface();
-
+                Form toShow =   LIMS.CreateSSFApplication();
 
                 Creator.Run();
 
+            
+
                 PainterTimer();
 
-
                 Application.Run(toShow);
-
-             
 
             }
             catch (Exception ex)
@@ -76,7 +64,6 @@ namespace SSF
 
         public static void PainterTimer()
         {
-         
 
             //to repaint the form
             System.Timers.Timer painter = new System.Timers.Timer();
@@ -86,13 +73,6 @@ namespace SSF
               
                 Application.OpenForms[0]?.Invalidate();
 
-
-               
-
-
-
-
-
                 painter.Interval = 60 * 10 * 1000; //10 minutes
 
                 GC.Collect();
@@ -100,7 +80,7 @@ namespace SSF
                 painter.Enabled = true;
              
             };
-            painter.Interval = 15000;
+            painter.Interval = 30000;
             painter.Enabled = true;
         }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 
 //using DB.Interfaces;
 
@@ -17,19 +16,16 @@ namespace DB
             SigmasDataTable table = new LINAA.SigmasDataTable();
             foreach (SigmasRow item in rows)
             {
-
-                if (!hs.Add(item.Element+item.Target+item.Radioisotope)) continue;
+                if (!hs.Add(item.Element + item.Target + item.Radioisotope)) continue;
 
                 table.ImportRow(item);
-
             }
             Sigmas.Clear();
-        //    deleteSigmaColumns();
+            // deleteSigmaColumns();
 
             Sigmas.Merge(table);
         }
 
-      
         public void PopulateElements()
         {
             try
@@ -62,6 +58,7 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
         public void PopulatetStudent()
         {
             try
@@ -77,6 +74,7 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
         public void PopulateNAA()
         {
             try
@@ -92,6 +90,7 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
         public void Populatek0NAA()
         {
             try

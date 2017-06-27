@@ -24,6 +24,8 @@ namespace DB.Tools
     /// </summary>
     public partial class BS
     {
+        public BindingSource MUES;
+
         public BindingSource Channels;
         public BindingSource Compositions;
         public BindingSource Geometry;
@@ -34,6 +36,7 @@ namespace DB.Tools
         public BindingSource Orders;
         public BindingSource Preferences;
         public BindingSource Projects;
+        public BindingSource XCOMPref;
 
         ///This is an event handler that fires the function the user GUI provides
         ///the execution is called above on NotyPropertyChanged
@@ -109,6 +112,7 @@ namespace DB.Tools
         }
 
         protected internal bool showErrors = true;
+
         public bool ShowErrors
         {
             get
@@ -121,8 +125,5 @@ namespace DB.Tools
                 showErrors = value;
             }
         }
-
-
-
     }
 }

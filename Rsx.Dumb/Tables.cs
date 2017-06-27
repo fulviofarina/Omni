@@ -188,16 +188,16 @@ namespace Rsx.Dumb
 
             // auxiliar = null;
         }
-        public static void ReadDTBytesNoFile<T>( ref byte[] auxiliar, ref T DestinyDataTable)
+        public static void ReadDTBytes<T>( ref byte[] auxiliar, ref T DestinyDataTable)
         {
             //string file = startupPath + Guid.NewGuid().ToString() + ".xml";
 
           //  IO.WriteFileBytes(ref auxiliar, file);
             DataTable toLoad = DestinyDataTable as DataTable;
 
-                  
-            XmlDocument doc = new XmlDocument();
             string xml = Encoding.UTF8.GetString(auxiliar);
+
+            XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
             XmlNodeReader reader = new XmlNodeReader(doc);
             toLoad.ReadXml(reader);
@@ -221,6 +221,27 @@ namespace Rsx.Dumb
          //   dt.Dispose();
             byte[] arr = IO.ReadFileBytes(afile);
             System.IO.File.Delete(afile);
+            return arr;
+        }
+        public static byte[] MakeDTBytes<T2>(ref T2 dataTable)
+        {
+           
+        //   XmlDocument doc = new XmlDocument();
+         //  XmlNodeReader reader = new XmlNodeReader(doc);
+     
+
+            StringBuilder sb = new StringBuilder();
+            XmlWriter writer = XmlWriter.Create(sb);
+
+            DataTable dt = dataTable as DataTable;
+            dt.WriteXml(writer, XmlWriteMode.WriteSchema, true);
+
+           
+         //   writer.WriteNode(reader, true);
+            //  dt.Clear();
+            //   dt.Dispose();
+            byte[] arr =Encoding.UTF8.GetBytes(sb.ToString());
+      
             return arr;
         }
 

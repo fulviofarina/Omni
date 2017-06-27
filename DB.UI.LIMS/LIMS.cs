@@ -1,66 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
-//using DB.Interfaces;
 using Rsx.DGV;
 
 namespace DB.UI
 {
     public partial class LIMS : Form
     {
-        public LIMS()
-        {
-            InitializeComponent();
-
-            LIMS.IFind = new ucSearch();
-
-            this.halflife.Click += LIMS.SetItem;
-            this.setGeometry.Click += LIMS.SetItem;
-            this.setVials.Click += LIMS.SetItem;
-            this.setMonitor.Click += LIMS.SetItem;
-            this.setStandards.Click += LIMS.SetItem;
-            this.setSubSamples.Click += LIMS.SetItem;
-            this.setMatrix.Click += LIMS.SetItem;
-            this.setIrradCh.Click += LIMS.SetItem;
-            this.setRabbit.Click += LIMS.SetItem;
-
-            this.setMatrix.Tag = ControlNames.Matrices;
-            this.setGeometry.Tag = ControlNames.Geometries; //set geometries
-            this.setVials.Tag = ControlNames.Vials; // set vials
-            this.setMonitor.Tag = ControlNames.Monitors;
-            this.setStandards.Tag = ControlNames.Standards;
-            this.setSubSamples.Tag = ControlNames.Samples;
-            this.setIrradCh.Tag = ControlNames.Channels;
-            this.halflife.Tag = ControlNames.MonitorsFlags;
-            this.setRabbit.Tag = ControlNames.Rabbits; //for rabitt capsules channel
-
-            this.updateIrradiationDateToolStripMenuItem.Click += delegate
-            {
-                LIMS.Linaa.UpdateIrradiationDates();
-            };
-            this.unlockProtectedCellsToolStripMenuItem.Click += UnLockProtectedCells;
-        }
-
-        private void UnLockProtectedCells(object sender, System.EventArgs e)
-        {
-            DataGridView dgv = (this.CMS.SourceControl as DataGridView);
-
-            System.Data.DataTable dt = Rsx.DGV.Control.GetDataSource<System.Data.DataTable>(ref dgv);
-
-            foreach (DataGridViewColumn col in dgv.Columns)
-            {
-                bool IsreadOnly = dt.Columns[col.DataPropertyName].ReadOnly;
-
-                if (IsreadOnly)
-                {
-                    col.ReadOnly = unlockProtectedCellsToolStripMenuItem.Checked;
-                }
-            }
-        }
-
-        private void CMS_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        protected internal void CMS_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ContextMenuStrip cms = sender as ContextMenuStrip;
             string header = (cms.SourceControl as DataGridView).Name;
@@ -163,7 +113,22 @@ namespace DB.UI
             }
         }
 
-        private void Modules_MouseDoubleClick(object sender, MouseEventArgs e)
+        protected internal void limsFormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Visible = false;
+            e.Cancel = true;
+        }
+
+        protected internal void limsLoad(object sender, System.EventArgs e)
+        {
+            // if (Screen.AllScreens.Length == 2)
+            {
+                // this.Location = new System.Drawing.Point(Screen.AllScreens[1].WorkingArea.X + 100,
+                // Screen.AllScreens[1].WorkingArea.Y + 600);
+            }
+        }
+
+        protected internal void modules_DoubleClick(object sender, MouseEventArgs e)
         {
             ListViewItem mod = Modules.FocusedItem;
             string title = mod.Group.Header + " - " + mod.Text;
@@ -173,22 +138,7 @@ namespace DB.UI
             CreateForm(title, ref control);
         }
 
-        private void LIMS_Load(object sender, System.EventArgs e)
-        {
-            // if (Screen.AllScreens.Length == 2)
-            {
-                // this.Location = new System.Drawing.Point(Screen.AllScreens[1].WorkingArea.X + 100,
-                // Screen.AllScreens[1].WorkingArea.Y + 600);
-            }
-        }
-
-        private void LIMS_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.Visible = false;
-            e.Cancel = true;
-        }
-
-        private void refreshT_Click(object sender, EventArgs e)
+        protected internal void refreshT_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem t = sender as ToolStripMenuItem;
             ContextMenuStrip cms = t.GetCurrentParent() as ContextMenuStrip;
@@ -205,6 +155,59 @@ namespace DB.UI
             if (args == null || dgv == null || cv == null) return;
 
             cv.KeyUp(dgv, args);
+        }
+
+        protected internal void unLockProtectedCells(object sender, System.EventArgs e)
+        {
+            DataGridView dgv = (this.CMS.SourceControl as DataGridView);
+
+            DataTable dt = Rsx.DGV.Control.GetDataSource<DataTable>(ref dgv);
+
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                bool IsreadOnly = dt.Columns[col.DataPropertyName].ReadOnly;
+
+                if (IsreadOnly)
+                {
+                    col.ReadOnly = unlockProtectedCellsToolStripMenuItem.Checked;
+                }
+            }
+        }
+
+        public LIMS()
+        {
+            InitializeComponent();
+
+            this.FormClosing += this.limsFormClosing;
+            this.Load += this.limsLoad;
+
+            IFind = new ucSearch();
+
+            this.halflife.Click += SetItem;
+            this.setGeometry.Click += SetItem;
+            this.setVials.Click += SetItem;
+            this.setMonitor.Click += SetItem;
+            this.setStandards.Click += SetItem;
+            this.setSubSamples.Click += SetItem;
+            this.setMatrix.Click += SetItem;
+            this.setIrradCh.Click += SetItem;
+            this.setRabbit.Click += SetItem;
+
+            this.setMatrix.Tag = ControlNames.Matrices;
+            this.setGeometry.Tag = ControlNames.Geometries; //set geometries
+            this.setVials.Tag = ControlNames.Vials; // set vials
+            this.setMonitor.Tag = ControlNames.Monitors;
+            this.setStandards.Tag = ControlNames.Standards;
+            this.setSubSamples.Tag = ControlNames.Samples;
+            this.setIrradCh.Tag = ControlNames.Channels;
+            this.halflife.Tag = ControlNames.MonitorsFlags;
+            this.setRabbit.Tag = ControlNames.Rabbits; //for rabitt capsules channel
+
+            this.updateIrradiationDateToolStripMenuItem.Click += delegate
+            {
+                Linaa.UpdateIrradiationDates();
+            };
+            this.unlockProtectedCellsToolStripMenuItem.Click += unLockProtectedCells;
         }
     }
 }

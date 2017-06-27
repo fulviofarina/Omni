@@ -2,50 +2,24 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA
     {
-
-       public partial class EventData : EventArgs
-        {
-
-           
-            public EventData(object[] arguments=null) : base()
-            {
-                args = arguments;
-            }
-
-            object[] args = null;
-
-            public object[] Args
-            {
-                get
-                {
-                    return args;
-                }
-
-                set
-                {
-                    args = value;
-                }
-            }
-        }
+     
 
         /// <summary>
         /// Cleaned
         /// </summary>
         public partial class SubSamplesDataTable : IColumn
         {
+            public  EventHandler<EventData> CalcParametersHandler;
 
-            public EventHandler<EventData> CalcParametersHandler;
+            public  EventHandler InvokeCalculations;
 
-
-            public EventHandler InvokeCalculations;
-            
-            public EventHandler<EventData> AddMatrixHandler;
+            public  EventHandler<EventData> AddMatrixHandler;
 
             private DataColumn[] geometriesNonNullable = null;
 
@@ -103,19 +77,21 @@ namespace DB
                     return nonNullableUnit;
                 }
             }
+
             public IEnumerable<DataColumn> NonNullBasicUnits
             {
                 get
                 {
                     if (nonNullBasicUnits == null)
                     {
-                        nonNullBasicUnits = new DataColumn[] {  this.NetColumn, this.FillHeightColumn, this.RadiusColumn, this.columnMatrixID };
+                        nonNullBasicUnits = new DataColumn[] { this.NetColumn, this.FillHeightColumn, this.RadiusColumn, this.columnMatrixID };
                     }
 
                     return nonNullBasicUnits;
                 }
             }
-           protected internal DataColumn[] nonNullBasicUnits = null;
+
+            protected internal DataColumn[] nonNullBasicUnits = null;
 
             public IEnumerable<DataColumn> SimpleNonNullable
             {
@@ -172,6 +148,7 @@ namespace DB
                 }
             }
 
+          
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
                 // DataColumn c = e.Column;
@@ -211,7 +188,7 @@ namespace DB
                 this.AddIPeakAveragesRow(ip);
                 ip.k0ID = k0Id;
                 // ip.Radioisotope = iso; ip.Element = sym; ip.Energy = energy;
-                if (!Rsx.EC.IsNuDelDetch(s))
+                if (!EC.IsNuDelDetch(s))
                 {
                     ip.Sample = s.SubSampleName;
                     // if ( !s.IsIrradiationCodeNull()) ip.Project = s.IrradiationCode;
@@ -362,57 +339,6 @@ namespace DB
             }
         }
 
-        public bool CleanSSFs(ref IEnumerable<MatSSFRow> ssfs)
-        {
-            if (ssfs.Count() != 0)
-            {
-                Delete(ref ssfs);
-                MatSSF.AcceptChanges();
-            }
-            return true;
-        }
-
-        protected internal void addSSFEvent(object sender, EventArgs e)
-        {
-            UnitRow u = sender as UnitRow;
-            AddSSFs(ref u);
-        }
-
-        protected internal void cleanSSFEvent(object sender, EventArgs e)
-        {
-            IEnumerable<MatSSFRow> ssfs = sender as IEnumerable<MatSSFRow>;
-            CleanSSFs(ref ssfs);
-        }
-
-        protected internal void handlersSamples()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Standards));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Monitors));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Unit));
-
-            this.tableUnit.AddSSFsHandler += addSSFEvent;
-            this.tableUnit.CleanSSFsHandler += cleanSSFEvent;
-
-            // tableIRequestsAverages.ChThColumn.Expression = " ISNULL(1000 *
-            // Parent(SigmasSal_IRequestsAverages).sigmaSal / Parent(SigmasSal_IRequestsAverages).Mat
-            // ,'0')"; tableIRequestsAverages.ChEpiColumn.Expression = " ISNULL(1000 *
-            // Parent(Sigmas_IRequestsAverages).sigmaEp / Parent(Sigmas_IRequestsAverages).Mat,'0')
-            // "; tableIRequestsAverages.SDensityColumn.Expression = " 6.0221415 * 10 *
-            // Parent(SubSamples_IRequestsAverages).DryNet / (
-            // Parent(SubSamples_IRequestsAverages).Radius * (
-            // Parent(SubSamples_IRequestsAverages).Radius + Parent(SubSamples_IRequestsAverages).FillHeight))";
-        }
-
-        public void AddSSFs(ref UnitRow u)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
-            MatSSFDataTable dt = u.GetMatSSFTableNoFile();
-            this.tableMatSSF.Merge(dt, false, MissingSchemaAction.AddWithKey);
-        }
+      
     }
 }

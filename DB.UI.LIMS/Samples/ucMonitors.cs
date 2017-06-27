@@ -3,8 +3,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx.Dumb; using Rsx;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -17,25 +17,25 @@ namespace DB.UI
         {
             InitializeComponent();
         }
+
         private Interface Interface;
+
         public void Set(ref Interface inter)
         {
-
             Interface = inter;
 
             Dumb.FD(ref this.Linaa);
-           // Dumb.FD(ref this.Linaa);
+            // Dumb.FD(ref this.Linaa);
             Dumb.FD(ref bs);
 
             DGV.DataSource = Interface.IBS.Monitors;
 
-         //   this.Linaa = inter.Get();
+            // this.Linaa = inter.Get();
 
             //	Findbox.ComboBox.DataSource = this.BS;
             //Findbox.ComboBox.DisplayMember = this.Linaa.Monitors.MonNameColumn.ColumnName;
             //Findbox.ComboBox.ValueMember = this.Linaa.Monitors.MonNameColumn.ColumnName;
 
-           
             MonCodebox.ComboBox.DisplayMember = Interface.IDB.Standards.MonitorCodeColumn.ColumnName;
             MonCodebox.ComboBox.ValueMember = Interface.IDB.Standards.MonitorCodeColumn.ColumnName;
             MonCodebox.ComboBox.DataSource = Interface.IDB.Standards;
@@ -74,7 +74,7 @@ namespace DB.UI
             }
             Interface.IBS.Monitors.Sort = sortCode;
             Interface.IBS.Monitors.Filter = filterCode;
-         //   Rsx.Dumb.BS.LinkBS(ref Interface.IBS.Monitors, this.Linaa.Monitors, filterCode, sortCode);
+            // Rsx.Dumb.BS.LinkBS(ref Interface.IBS.Monitors, this.Linaa.Monitors, filterCode, sortCode);
         }
 
         public void RowAdded(ref DataRow row)
@@ -102,9 +102,7 @@ namespace DB.UI
 
         public bool ShouldPaintCell(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // DataGridViewRow r = DGV.Rows[e.RowIndex];
-            //  if (r.Tag != null) return false;
-            //   return true;
+            // DataGridViewRow r = DGV.Rows[e.RowIndex]; if (r.Tag != null) return false; return true;
             return (e.ColumnIndex == this.DecayDaysColumn.Index || e.ColumnIndex == this.GeometryName.Index);
         }
 

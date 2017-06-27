@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="DB.UI.ucSSF" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBQAAAABBCYiBoGBECbACQACwCEAAQQBwgYASkAihAA=</HashCode>
+      <FileName>ucSSF.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucSSFPanel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAGAioUBAGKABAAEAADMAAJCAEAgQQIAgEIAEAAIAMA=</HashCode>
+      <FileName>Panel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucSSFResults" Collapsed="true">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggBQIIEBADQKrHGGIAThTAACwCAAY4AwEAJGQQIAQgA=</HashCode>
+      <FileName>Results.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.UI.ucSSFData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAQAAAAADAIAAKBAACEAAACAEAIAQAAgAIKAAAA+AQ=</HashCode>
+      <FileName>Data.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucSSFDataNS" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAIQwmBBCAAJgAIDBDCAAgLAAAEQUCAgIMQQApCCBA=</HashCode>
+      <FileName>Data.NS.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucSSFDataSample" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAQABAAALAYDAqBBEHUEQACSAQAIQAAkIIEAAQA+CQ=</HashCode>
+      <FileName>Data.Sample.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="DB.UI.ISSF">
+    <Position X="2.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAEAAAAAAAACAAAAQAAAAAAAAABAA=</HashCode>
+      <FileName>ucSSF.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.IPanel">
+    <Position X="6.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAIAAAACABAAAAAAIAAIAAEAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Panel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.IDataItem">
+    <Position X="4.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.IData">
+    <Position X="6.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

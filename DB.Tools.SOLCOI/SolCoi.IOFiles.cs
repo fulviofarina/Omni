@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB.Tools
 {
@@ -53,7 +53,7 @@ namespace DB.Tools
                         File.Copy(infile, DirectoryPath + f, true);
                         if (f.Contains(".EXE"))
                         {
-                           IO.Process(new Process(), DirectoryPath, f, "/T:" + DirectoryPath, true, true, 1000000);
+                            IO.Process(new Process(), DirectoryPath, f, "/T:" + DirectoryPath, true, true, 1000000);
                         }
                     }
                 }

@@ -4,17 +4,27 @@
     {
         LINAA.PreferencesRow CurrentPref { get; }
 
-        void SavePreferences();
-       string  GetPreferencesPath();
-        bool IsSpectraPathOk { get; }
-        string GetSSFPreferencesPath();
-        string WindowsUser { get; }
-    //    bool SetConnections(string HLString, string LIMSString, string spectraSrv, string spectraPath);
-        void PopulatePreferences();
-
         LINAA.SSFPrefRow CurrentSSFPref { get; }
 
-        void RejectPreferencesChanges();
+        LINAA.XCOMPrefRow CurrentXCOMPref { get; }
+
+        bool IsSpectraPathOk { get; }
+
+        string WindowsUser { get; }
+
         void AcceptChanges();
+
+        string GetPreferencesPath();
+
+        string GetSSFPreferencesPath();
+
+        string GetXCOMPreferencesPath();
+
+        void PopulatePreferences();
+
+        void SavePreferences();
+
+        void ReportChanges();
+        void Clear();
     }
 }

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using DB.Reports;
-using Rsx.Dumb; using Rsx;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
     public partial class ucSSContent : UserControl
     {
         private DateTime minDate = DateTime.Now;
-        
+
         public ucSSContent()
         {
             InitializeComponent();
@@ -39,14 +35,14 @@ namespace DB.UI
 
         public void Set(ref Interface inter)
         {
-            //   DeLink();
+            // DeLink();
 
             Dumb.FD(ref Linaa);
             Dumb.FD(ref BS);
 
-        //    this.Linaa = inter.Get();
+            // this.Linaa = inter.Get();
 
-             BS = inter.IBS.SubSamples;
+            BS = inter.IBS.SubSamples;
 
             DGV.DataSource = BS;
             DGV2.DataSource = BS;
@@ -92,7 +88,7 @@ namespace DB.UI
         {
             if (sampleCellArgs == null) return;
             if (sampleCellArgs.Value == null) return;
-            //   if (sampleCellArgs.CellStyle.BackColor != Color.FromName("Window")) return;
+            // if (sampleCellArgs.CellStyle.BackColor != Color.FromName("Window")) return;
             string aux = sampleCellArgs.Value.ToString();
             if (aux.Contains(DB.Properties.Samples.Std))
             {

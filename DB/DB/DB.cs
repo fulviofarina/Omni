@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IDB
     {
+        protected static string[] matssftypes = new string[] { "0 = Isotropic", "1 = Wire flat", "2 = Foil/wire ch. axis" };
+
+        public string[] MatSSFTYPES
+        {
+            get
+            {
+                return matssftypes;
+            }
+        }
+
         protected List<int> dTWithHandlers = new List<int>();
 
         protected List<DataColumnChangeEventHandler> handlers = new List<DataColumnChangeEventHandler>();
 
         public void PopulateColumnExpresions()
         {
-
-
-          
-
             handlersIrradiations();
 
             handlersGeometries();

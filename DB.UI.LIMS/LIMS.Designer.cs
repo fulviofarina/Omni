@@ -310,7 +310,7 @@
             this.Modules.TileSize = new System.Drawing.Size(200, 60);
             this.Modules.UseCompatibleStateImageBehavior = false;
             this.Modules.View = System.Windows.Forms.View.Tile;
-            this.Modules.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Modules_MouseDoubleClick);
+            this.Modules.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.modules_DoubleClick);
             // 
             // images
             // 
@@ -370,8 +370,7 @@
             this.Name = "LIMS";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LIMS";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LIMS_FormClosing);
-            this.Load += new System.EventHandler(this.LIMS_Load);
+       
             this.CMS.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -51,6 +51,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,14 +61,75 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ucMUES.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucMUES.Designer.cs">
+      <DependentUpon>ucMUES.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucMatrix.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucMatrix.Designer.cs">
+      <DependentUpon>ucMatrix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucComposition.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucComposition.Designer.cs">
+      <DependentUpon>ucComposition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucMatrixSimple.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucMatrixSimple.Designer.cs">
+      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XCOM.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
+      <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
+      <Name>DB.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.Preferences\DB.UI.Preferences.csproj">
+      <Project>{e8086c4f-0dd5-4058-9f8f-abe43c43b161}</Project>
+      <Name>DB.UI.Preferences</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rsx.Dumb\Rsx.Dumb.csproj">
+      <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
+      <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Graph\VTools.Graph.csproj">
+      <Project>{3deca30c-9a3d-4268-8241-fa10f50bb78e}</Project>
+      <Name>VTools.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Menu\VTools.Menu.csproj">
+      <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
+      <Name>VTools.Menu</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ucMUES.resx">
+      <DependentUpon>ucMUES.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucMatrix.resx">
+      <DependentUpon>ucMatrix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucComposition.resx">
+      <DependentUpon>ucComposition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucMatrixSimple.resx">
+      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

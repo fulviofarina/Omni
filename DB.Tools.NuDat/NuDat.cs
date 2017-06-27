@@ -18,6 +18,7 @@ namespace DB.Tools
             string ele = isoName.Split('-')[0].Trim().ToUpper();
             return "http://www.nndc.bnl.gov/nudat2/decaysearchdirect.jsp?nuc=" + isoNr + ele + "&unc=nds";
         }
+
         public static LINAA.YieldsDataTable HtmlToTable(string htmltext, string isotope)
         {
             string[] res = htmltext.Split('\n');

@@ -1,4 +1,6 @@
-﻿using static DB.LINAA;
+﻿using System.Collections.Generic;
+using System.Data;
+using static DB.LINAA;
 
 /// <summary>
 /// DB (LINAA) interfaces
@@ -19,12 +21,21 @@ namespace DB
 
         void PopulateGeometry();
 
-        void PopulateMatrix();
+   //     void PopulateMatrix();
+        void PopulateMatrixSQL();
 
         void PopulateUnits();
 
         void PopulateVials();
 
         void PopulateMUESList();
+
+       
+   
+
+        IEnumerable<CompositionsRow> AddCompositions(ref MatrixRow m, IList<string[]> ls = null, bool code = true);
+      //  void AddMUES(ref MUESDataTable mu, ref MatrixRow m);
+        MUESDataTable GetMUES(ref MatrixRow m, bool sql = true);
+        MUESDataTable GetMUES(double el, double eh, int matrixID);
     }
 }

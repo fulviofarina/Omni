@@ -1,12 +1,14 @@
 ﻿using System;
-using Msn;
+using VTools;
 
 namespace DB.Tools
 {
     public interface IReport
     {
-        IPop Msn { get;  }
+        IPop Msn { get; }
+
         void GreetUser();
+
         void ReportToolTip(object sender, EventArgs ev);
 
         string RestartFile { get; }
@@ -30,5 +32,7 @@ namespace DB.Tools
         void Speak(string text);
 
         void SpeakLoadingFinished();
+
+        void InstallMSMQ();
     }
 }

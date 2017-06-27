@@ -43,7 +43,8 @@ namespace DB.Tools
             findTableAndPath<T>(out dt, out path);
 
             IEnumerable<DataRow> prefes = null;
-            prefes = dt.AsEnumerable().Where(o => string.IsNullOrEmpty(o.Field<string>(WINDOWS_USER)));
+            prefes = dt.AsEnumerable()
+                .Where(o => string.IsNullOrEmpty(o.Field<string>(WINDOWS_USER)));
             Interface.IStore.Delete(ref prefes);
 
             dt.EndLoadData();
@@ -58,15 +59,21 @@ namespace DB.Tools
         /// <param name="path"></param>
         private void findTableAndPath<T>(out DataTable dt, out string path)
         {
-            if (typeof(T).Equals(typeof(PreferencesDataTable)))
+            Type t = typeof(T);
+            if (t.Equals(typeof(PreferencesDataTable)))
             {
                 path = GetPreferencesPath();
                 dt = Interface.IDB.Preferences;
             }
-            else
+            else if (t.Equals(typeof(SSFPrefDataTable)))
             {
                 path = GetSSFPreferencesPath();
                 dt = Interface.IDB.SSFPref;
+            }
+            else //if (t.Equals(typeof(XCOMPrefDataTable)))
+            {
+                path = GetXCOMPreferencesPath();
+                dt = Interface.IDB.XCOMPref;
             }
         }
 
@@ -81,17 +88,16 @@ namespace DB.Tools
 
             findTableAndPath<T>(out dt, out path);
 
-            DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
-         //   bool add = false;
-
+            DataRow row = dt.AsEnumerable().FirstOrDefault(selector) ;
+            // bool add = false;
 
             if (row == null)
             {
                 Interface.IReport.GenerateUserInfoReport();
-             //   add = true;
+                // add = true;
             }
             Type tipo = typeof(T);
-          
+
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
                 PreferencesDataTable data = dt as PreferencesDataTable;
@@ -103,41 +109,52 @@ namespace DB.Tools
                     p = data.NewPreferencesRow();
                     data.AddPreferencesRow(p);
                     p.WindowsUser = WindowsUser;
-                    p.Check();
+                 
                     row = p as DataRow;
                 }
-                else p = row as PreferencesRow;
-              //  p.WindowsUser = WindowsUser;
+             //   else p = row as PreferencesRow;
+                
             }
-            else
+            else if (tipo.Equals(typeof(SSFPrefDataTable)))
             {
                 SSFPrefDataTable data = dt as SSFPrefDataTable;
                 SSFPrefRow p = null;
                 if (row == null)
                 {
-                     p = data.NewSSFPrefRow();
-                 
+                    p = data.NewSSFPrefRow();
                     p.WindowsUser = WindowsUser;
-                
-                 
                     data.AddSSFPrefRow(p);
-                    p.Check();
-               
                     row = p as DataRow;
                 }
-               else p = row as SSFPrefRow;
-
+             //   else p = row as SSFPrefRow;
+              
+            }
+            else if (tipo.Equals(typeof(XCOMPrefDataTable)))
+            {
+                XCOMPrefDataTable data = dt as XCOMPrefDataTable;
+                XCOMPrefRow p = null;
+                if (row == null)
+                {
+                    p = data.NewXCOMPrefRow();
+                    p.WindowsUser = WindowsUser;
+                    data.AddXCOMPrefRow(p);
+          
+                    row = p as DataRow;
+                }
+            //    else p = row as XCOMPrefRow;
 
                
             }
-          
-          //  if (add)
-          //  {
+
+
+                 (row as IRow).Check();
+            //  if (add)
+            //  {
             //    dt.LoadDataRow(row.ItemArray, true);
-          //  }
-         //   IRow r = row as IRow;
+            //  }
+            //   IRow r = row as IRow;
             //check
-       //     r.Check();
+            //     r.Check();
         }
 
         /*

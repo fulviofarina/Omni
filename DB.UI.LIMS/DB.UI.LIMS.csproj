@@ -49,82 +49,21 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NPlot, Version=0.9.10.0, Culture=neutral, PublicKeyToken=4eda430eb4395eb1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NPlot.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeometrySimple\ucComposition.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GeometrySimple\ucComposition.Designer.cs">
-      <DependentUpon>ucComposition.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SSF\IDGVs.cs" />
-    <Compile Include="SSF\ucSSFData.NS.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SSF\ucSSFData.NS.Designer.cs">
-      <DependentUpon>ucSSFData.NS.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SSF\ucSSFData.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SSF\ucSSFData.Designer.cs">
-      <DependentUpon>ucSSFData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SSF\ucSSF.Panel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SSF\ucSSF.Panel.Designer.cs">
-      <DependentUpon>ucSSF.Panel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GeometrySimple\ucCC.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GeometrySimple\ucCC.Designer.cs">
-      <DependentUpon>ucCC.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GeometrySimple\ucMatrixSimple.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GeometrySimple\ucMatrixSimple.Designer.cs">
-      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SSF\ucUnit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SSF\ucUnit.Designer.cs">
-      <DependentUpon>ucUnit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GeometrySimple\ucV.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GeometrySimple\ucV.Designer.cs">
-      <DependentUpon>ucV.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Preferences\ucPreferences.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Preferences\ucPreferences.Designer.cs">
-      <DependentUpon>ucPreferences.cs</DependentUpon>
+    <Compile Include="LIMS.Applications.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Samples\ucSubSamples.Content.cs">
       <SubType>UserControl</SubType>
@@ -132,13 +71,12 @@
     <Compile Include="Samples\ucSubSamples.Content.Designer.cs">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\ucSSF.cs">
+    <Compile Include="ucHyperLab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SSF\ucSSF.Designer.cs">
-      <DependentUpon>ucSSF.cs</DependentUpon>
+    <Compile Include="ucHyperLab.Designer.cs">
+      <DependentUpon>ucHyperLab.cs</DependentUpon>
     </Compile>
-    <Compile Include="SSF\DGVs.cs" />
     <Compile Include="UI\Auxiliar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,24 +94,6 @@
     </Compile>
     <Compile Include="LIMS.Static.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Geometries\ucGeometry.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Geometries\ucGeometry.Designer.cs">
-      <DependentUpon>ucGeometry.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Geometries\ucMatrix.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Geometries\ucMatrix.Designer.cs">
-      <DependentUpon>ucMatrix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Geometries\ucVialType.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Geometries\ucVialType.Designer.cs">
-      <DependentUpon>ucVialType.cs</DependentUpon>
     </Compile>
     <Compile Include="LIMS.cs">
       <SubType>Form</SubType>
@@ -237,11 +157,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControlNames.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -261,53 +176,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GeometrySimple\ucComposition.resx">
-      <DependentUpon>ucComposition.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucSSFData.NS.resx">
-      <DependentUpon>ucSSFData.NS.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucSSFData.resx">
-      <DependentUpon>ucSSFData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucSSF.Panel.resx">
-      <DependentUpon>ucSSF.Panel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GeometrySimple\ucCC.resx">
-      <DependentUpon>ucCC.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GeometrySimple\ucMatrixSimple.resx">
-      <DependentUpon>ucMatrixSimple.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucUnit.resx">
-      <DependentUpon>ucUnit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GeometrySimple\ucV.resx">
-      <DependentUpon>ucV.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Preferences\ucPreferences.resx">
-      <DependentUpon>ucPreferences.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SSF\ucSSF.resx">
-      <DependentUpon>ucSSF.cs</DependentUpon>
+    <EmbeddedResource Include="ucHyperLab.resx">
+      <DependentUpon>ucHyperLab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Auxiliar.resx">
       <DependentUpon>Auxiliar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Geometries\ucGeometry.resx">
-      <DependentUpon>ucGeometry.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Geometries\ucMatrix.resx">
-      <DependentUpon>ucMatrix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Geometries\ucVialType.resx">
-      <DependentUpon>ucVialType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIMS.resx">
       <DependentUpon>LIMS.cs</DependentUpon>
@@ -339,11 +218,6 @@
     <EmbeddedResource Include="SolCoi\ucDetectors.resx">
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
@@ -360,6 +234,10 @@
       <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
       <Name>DB.Reports</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.Creator\DB.Tools.Creator.csproj">
+      <Project>{1043e3e2-21a7-494d-bbbb-99327d379422}</Project>
+      <Name>DB.Tools.Creator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.NuDat\DB.Tools.NuDat.csproj">
       <Project>{f7c2d211-65d8-4fda-ba14-4e39a7e8c036}</Project>
       <Name>DB.Tools.NuDat</Name>
@@ -368,9 +246,17 @@
       <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
       <Name>DB.Tools.SOLCOI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
+      <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
+      <Name>DB.Tools.SSF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.ToDo\DB.Tools.ToDo.csproj">
       <Project>{094bec2a-1d8e-4b20-905e-aac94895ec59}</Project>
       <Name>DB.Tools.ToDo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.WC\DB.Tools.WC.csproj">
+      <Project>{3e0e1bf6-6dea-4df2-bc42-b00f3150bb82}</Project>
+      <Name>DB.Tools.WC</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools.XCOM\DB.Tools.XCOM.csproj">
       <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
@@ -380,13 +266,21 @@
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.UI.Geometry\DB.UI.Geometry.csproj">
+      <Project>{18c85541-1271-455e-85a6-6c14774c2d63}</Project>
+      <Name>DB.UI.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.Preferences\DB.UI.Preferences.csproj">
+      <Project>{e8086c4f-0dd5-4058-9f8f-abe43c43b161}</Project>
+      <Name>DB.UI.Preferences</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.SSF\DB.UI.SSF.csproj">
+      <Project>{b38c54ac-d6a3-4f36-b240-928ce415f702}</Project>
+      <Name>DB.UI.SSF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rsx.DGV\Rsx.DGV.csproj">
       <Project>{79f588d7-7be3-4882-a9c0-37810c5281ab}</Project>
@@ -396,21 +290,17 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
-      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
-      <Name>Rsx.Math</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
       <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
       <Name>VTools.Explorer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VTools.Graph\VTools.Graph.csproj">
-      <Project>{3deca30c-9a3d-4268-8241-fa10f50bb78e}</Project>
-      <Name>VTools.Graph</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VTools.Menu\VTools.Menu.csproj">
       <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
       <Name>VTools.Menu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Msn\VTools.Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>VTools.Msn</Name>
     </ProjectReference>
     <ProjectReference Include="..\VTools.TreeView\VTools.TreeView.csproj">
       <Project>{5e5cd6b3-e66f-4a73-b2bc-1350d3143192}</Project>
@@ -418,8 +308,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
+    <None Include="LIMS.cd" />
     <None Include="Properties\DataSources\DB.LINAA+PreferencesDataTable.datasource" />
     <None Include="Properties\DataSources\DB.LINAA+SSFPrefDataTable.datasource" />
     <None Include="Properties\DataSources\DB.LINAA.datasource" />

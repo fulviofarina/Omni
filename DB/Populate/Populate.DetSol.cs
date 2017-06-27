@@ -1,36 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 //using DB.Interfaces;
 using Rsx.Dumb;
-using Rsx;
-using System.Linq;
 
 namespace DB
 {
     public partial class LINAA : IDetSol
     {
-      
-            public LINAA.MeasurementsRow AddMeasurement(string measName)
-            {
-                MeasurementsRow meas = FindByMeas(measName);
-                if (Rsx.EC.IsNuDelDetch(meas)) meas = this.addMeasurement(measName);
+        public LINAA.MeasurementsRow AddMeasurement(string measName)
+        {
+            MeasurementsRow meas = FindByMeas(measName);
+            if (EC.IsNuDelDetch(meas)) meas = this.addMeasurement(measName);
 
-                return meas;
-            }
+            return meas;
+        }
 
-            public MeasurementsRow FindByMeas(string measName)
-            {
-                LINAA.MeasurementsRow meas = null;
-                Func<MeasurementsRow, bool> currSel = null;
-                string col = this.tableMeasurements.MeasurementColumn.ColumnName;
-                currSel = LINAA.SelectorByField<MeasurementsRow>(measName, col);
-                meas = this.tableMeasurements.FirstOrDefault(currSel);
-                return meas;
-            }
-
-        
-       
+        public MeasurementsRow FindByMeas(string measName)
+        {
+            LINAA.MeasurementsRow meas = null;
+            Func<MeasurementsRow, bool> currSel = null;
+            string col = this.tableMeasurements.MeasurementColumn.ColumnName;
+            currSel = LINAA.SelectorByField<MeasurementsRow>(measName, col);
+            meas = this.tableMeasurements.FirstOrDefault(currSel);
+            return meas;
+        }
 
         /// <summary>
         /// Gets a non-repeated list of Detectors in the database
@@ -48,7 +43,7 @@ namespace DB
             set { detectorsList = value; }
         }
 
-        //   #region Populate Detectors/Solang
+        // #region Populate Detectors/Solang
         public Action[] PMDetect()
         {
             Action[] populatorArray = null;
@@ -119,6 +114,7 @@ namespace DB
                 this.AddException(ex);
             }
         }
+
         public IEnumerable<Action> PMThree()
         {
             Action[] populatorOther = null;
@@ -135,15 +131,8 @@ namespace DB
             return populatorArray;
         }
 
-        public IEnumerable<Action> PMTwo()
-        {
-            IEnumerable<Action> populatorArray = null;
-            populatorArray = PMMatrix();
-            //   populatorArray = populatorArray.Union(PMMatrix());
+        
 
-            populatorArray = populatorArray.Union(PMDetect());
-            return populatorArray;
-        }
         public void PopulateDetectorHolders()
         {
             try
@@ -160,6 +149,6 @@ namespace DB
             }
         }
 
-        //  #endregion Populate Detectors/Solang
+        // #endregion Populate Detectors/Solang
     }
 }

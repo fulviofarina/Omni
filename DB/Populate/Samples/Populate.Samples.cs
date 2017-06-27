@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb;
 using Rsx.Math;
 
 //using DB.Interfaces;
@@ -168,11 +168,83 @@ namespace DB
         }
     }
 
-
-   
-
     public partial class LINAA : ISamples
     {
+
+          private Action<object, EventData> spectrumCalcParametersHandler;
+
+        public Action<object, EventData> SpectrumCalcParametersHandler
+        {
+          
+
+            set
+            {
+                spectrumCalcParametersHandler = value;
+            }
+        }
+
+        public void PopulatePeaksHL(int? id)
+        {
+            try
+            {
+                EventData d = new EventData();
+                spectrumCalcParametersHandler?.Invoke(null, d);
+                double minArea = (double)d.Args[0];
+                double maxUnc = (double)d.Args[1];
+                double winA = (double)d.Args[2];
+                double winB = (double)d.Args[3];
+               
+
+                LINAA.PeaksHLDataTable peakshl = PopulatePeaksHL(id, minArea, maxUnc);
+             
+               PeaksHL.Merge(peakshl);
+
+            }
+            catch (System.Exception ex)
+            {
+                AddException(ex);
+            }
+        }
+
+public PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc)
+        {
+            LINAATableAdapters.PeaksHLTableAdapter pta = new LINAATableAdapters.PeaksHLTableAdapter();
+            PeaksHLDataTable phl = new LINAA.PeaksHLDataTable();
+            pta.FillByMeasurementID(phl, (int)id, minArea, maxUnc);
+            pta.Dispose();
+
+            return phl;
+        }
+        public MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge)
+        {
+            LINAATableAdapters.MeasurementsTableAdapter mta = new LINAATableAdapters.MeasurementsTableAdapter();
+            MeasurementsDataTable meas = new MeasurementsDataTable();
+            try
+            {
+                int? id = mta.GetHLProjectID(project);
+                if (id != null)
+                {
+                    EventData d = new EventData();
+                    spectrumCalcParametersHandler?.Invoke(null, d);
+                
+                    mta.FillByHLProjectGeneric(meas, (int)id);
+
+                    foreach (MeasurementsRow item in meas)
+                    {
+                        item.ExtractData(ref d);
+                    }
+
+                    if (meas.Count() != 0) Measurements.Merge(meas);
+                }
+            }
+            catch (Exception ex)
+            {
+                AddException(ex);
+            }
+        
+            mta.Dispose();
+            return meas;
+        }
         //
         public void BeginEndLoadData(bool load)
         {
@@ -338,7 +410,7 @@ namespace DB
                         return;
                     }
               */
-                this.tableSubSamples.AddMatrixHandler += this.addMatrixEvent;
+               
                 this.tableSubSamples.BeginLoadData();
                 this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
                 this.tableSubSamples.AcceptChanges();
@@ -349,8 +421,6 @@ namespace DB
                 this.AddException(ex);
             }
         }
-
-      
 
         public void PopulateUnitsByProject(int irrReqId)
         {
@@ -373,7 +443,5 @@ namespace DB
                 this.AddException(ex);
             }
         }
-
-      
     }
 }

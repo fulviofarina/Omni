@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Rsx.Dumb;
 using static DB.LINAA;
 
 /// <summary>
@@ -10,6 +11,8 @@ namespace DB
 {
     public interface ISamples
     {
+        Action<object, EventData> SpectrumCalcParametersHandler { set; }
+
         IRequestsAveragesRow AddIRequestsAverage(Int32 NAAID, ref SubSamplesRow s);
 
         double CalculateAvgOfFCs(string irradiationCode);
@@ -45,6 +48,10 @@ namespace DB
         void PopulateStandards();
 
         void PopulateSubSamples(Int32 IrReqID);
+
         UnitRow GetUnitBySampleID(int subSampleID);
+       MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge);
+        PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc);
+        void PopulatePeaksHL(int? id);
     }
 }

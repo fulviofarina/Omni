@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Rsx.CAM;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -75,7 +76,7 @@ namespace DB
                 Position = Convert.ToInt16(DPN.Substring(1, 1));
                 Detector = DPN.Substring(0, 1);
                 Project = string.Empty;
-                if (!Rsx.EC.IsNuDelDetch(SubSamplesRow))
+                if (!EC.IsNuDelDetch(SubSamplesRow))
                 {
                     if (!SubSamplesRow.IsIrradiationCodeNull()) Project = SubSamplesRow.IrradiationCode;
                 }
@@ -103,6 +104,39 @@ namespace DB
                 {
                     return (this.GetPeaksRows().Count() == 0);
                 }
+            }
+
+            public void ExtractData(ref EventData d)
+            {
+                Int16 detIdx = (Int16)d.Args[4];
+                Int16 posIdx = (Int16)d.Args[5];
+                Int16 MeasIdx = (Int16)d.Args[6];
+
+                int i = Measurement.Length;
+
+                string aux = Measurement.Substring(i - detIdx, 1);
+                Detector = aux;
+             
+
+                aux = Measurement.Substring(i - posIdx, 1);
+              
+                Position = Convert.ToInt16(aux);
+
+                aux = Measurement.Substring(i - MeasIdx, 1);
+             
+                MeasurementNr = aux;
+
+                Int16[] arr = new Int16[] { detIdx, posIdx, MeasIdx };
+                arr = arr.OrderBy<short,short>( o => o).ToArray();
+                string sample = Measurement;
+                foreach (var item in arr)
+                {
+                 //   i = sample.Length;
+                    sample = sample.Remove(i - item, 1);
+                }
+
+                Sample = sample;
+
             }
         }
     }

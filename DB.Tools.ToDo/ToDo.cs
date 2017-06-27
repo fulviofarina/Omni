@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
 using Rsx.DGV;
+using Rsx.Dumb;
 using Rsx.Math;
 
 namespace DB.Tools

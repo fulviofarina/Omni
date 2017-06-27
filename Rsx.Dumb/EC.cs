@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 ///FULVIO
-namespace Rsx
+namespace Rsx.Dumb
 {
     /// <summary> STATIC CLASS FOR CHECKING ROWS & CONTROLS FOR ERRORS </summary>
     public static partial class EC

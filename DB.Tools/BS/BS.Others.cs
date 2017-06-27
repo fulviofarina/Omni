@@ -11,8 +11,10 @@ namespace DB.Tools
         private void resetPreferencesFilters()
         {
             string col = Interface.IDB.Preferences.WindowsUserColumn.ColumnName;
-            Preferences.Filter = col + " = '" + Interface.IPreferences.WindowsUser + "'";
-            SSFPreferences.Filter = Preferences.Filter;
+            string filter = col + " = '" + Interface.IPreferences.WindowsUser + "'";
+            Preferences.Filter = filter;
+            SSFPreferences.Filter = filter;
+            XCOMPref.Filter = filter;
         }
 
         private void resetIrradiationFilters()
@@ -47,13 +49,16 @@ namespace DB.Tools
             string filter = "SubSampleID IS NULL";
             Matrix.Filter = filter;
             Matrix.Sort = "MatrixID desc";
-            filter = Matrix.Filter + " AND MatrixID = 0";
+            string filter2 = "MatrixID = 0";
+            filter = Matrix.Filter + " AND " + filter2;
             SelectedMatrix.Filter = filter;
             sort = Interface.IDB.Compositions.IDColumn.ColumnName + " desc";
             Compositions.Sort = sort;
             Compositions.Filter = filter;
             SelectedCompositions.Filter = filter;
             SelectedCompositions.Sort = sort;
+
+            MUES.Filter = filter2;
         }
 
         private void initializeGeometryBindingSources()
@@ -63,9 +68,14 @@ namespace DB.Tools
             string name = Interface.IDB.Matrix.TableName;
             Matrix = new BindingSource(set, name);
             bindings.Add(name, Matrix);
+
             name = Interface.IDB.Compositions.TableName;
             Compositions = new BindingSource(set, name);
             bindings.Add(name, Compositions);
+
+            name = Interface.IDB.MUES.TableName;
+            MUES = new BindingSource(set, name);
+            bindings.Add(name, MUES);
 
             name = Interface.IDB.VialType.TableName;
             Rabbit = new BindingSource(set, name);
@@ -83,9 +93,14 @@ namespace DB.Tools
         private void initializePreferencesBindingSources()
         {
             LINAA set = Interface.Get();
+
             string name = Interface.IDB.Preferences.TableName;
             Preferences = new BindingSource(set, name);
             bindings.Add(name, Preferences);
+
+            name = Interface.IDB.XCOMPref.TableName;
+            XCOMPref = new BindingSource(set, name);
+            bindings.Add(name, XCOMPref);
 
             name = Interface.IDB.SSFPref.TableName;
             SSFPreferences = new BindingSource(set, name);

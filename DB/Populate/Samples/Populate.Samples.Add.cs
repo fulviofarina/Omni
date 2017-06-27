@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
-
-
-
     /// <summary>
     /// THIS IS QUITE CLEAN
     /// </summary>
     public partial class LINAA : ISamples
     {
-    
-
+        public bool CleanSSFs(ref IEnumerable<MatSSFRow> ssfs)
+        {
+            if (ssfs.Count() != 0)
+            {
+                Delete(ref ssfs);
+                MatSSF.AcceptChanges();
+            }
+            return true;
+        }
         public IRequestsAveragesRow AddIRequestsAverage(Int32 NAAID, ref SubSamplesRow s)
         {
             IRequestsAveragesRow irs = null;
@@ -23,7 +26,7 @@ namespace DB
             irs = addIRequestsAverage(NAAID);
             //irs.Radioisotope = iso;
             //	irs.Element = sym;
-            if (!Rsx.EC.IsNuDelDetch(s))
+            if (!EC.IsNuDelDetch(s))
             {
                 irs.Sample = s.SubSampleName;
                 // irs.Project = s.IrradiationCode;

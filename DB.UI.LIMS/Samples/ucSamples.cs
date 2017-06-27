@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Rsx.Dumb; using Rsx;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -11,17 +11,18 @@ namespace DB.UI
         {
             InitializeComponent();
         }
+
         private Interface Interface;
+
         public void Set(ref Interface inter)
         {
-
             Interface = inter;
             Dumb.FD(ref this.Linaa);
             Dumb.FD(ref BS);
 
             DGV.DataSource = Interface.IBS.Samples;
 
-     //       Dumb.BS.LinkBS(ref this.BS, this.Linaa.Samples);
+            // Dumb.BS.LinkBS(ref this.BS, this.Linaa.Samples);
 
             UIControl.FillABox(orderbox, Interface.IPopulate.IOrders.OrdersList, true, false);
         }
@@ -41,7 +42,7 @@ namespace DB.UI
                 catch (SystemException ex)
                 {
                     Interface.IStore.AddException(ex);
-               //     MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace);
+                    // MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace);
                 }
             }
         }

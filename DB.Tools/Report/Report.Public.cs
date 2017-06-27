@@ -5,15 +5,29 @@ using System.Linq;
 using System.Messaging;
 using System.Windows.Forms;
 using DB.Properties;
-using Msn;
 using Rsx;
 using Rsx.Dumb;
+using VTools;
 using static DB.LINAA;
 
 namespace DB.Tools
 {
     public partial class Report : IReport
     {
+        public void InstallMSMQ()
+        {
+            try
+            {
+                Msg(MSMQ_MSG, MSMQ_TITLE);
+
+                IO.InstallMSMQ(false);
+            }
+            catch (Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+        }
+
         /*
         public partial class MSMQInstaller
         {
@@ -45,13 +59,6 @@ namespace DB.Tools
         public IPop Msn
         {
             get { return msn; }
-        //    set {
-
-         //       msn = value;
-
-            
-
-           // }
         }
 
         public string RestartFile
@@ -72,7 +79,7 @@ namespace DB.Tools
                 string windowsUser = Interface.IPreferences.WindowsUser;
 
                 string[] txtTitle = generateGreeting();
-              
+
                 Speak(txtTitle[0]);
 
                 Msg(txtTitle[0], txtTitle[1]);
@@ -155,7 +162,7 @@ namespace DB.Tools
 
                 bugresult = qm.BeginReceive();
 
-               // GenerateUserInfoReport();
+                // GenerateUserInfoReport();
             }
             catch (Exception ex)
             {
@@ -227,7 +234,6 @@ namespace DB.Tools
                 string usrInfo = "UserInfo";
 
                 GenerateReport(enviropath, path, string.Empty, usrInfo, EMAIL_DEFAULT);
-
             }
             catch (SystemException ex)
             {
@@ -263,7 +269,7 @@ namespace DB.Tools
             DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
             string toolTip = cell.ToolTipText;
             if (string.IsNullOrEmpty(toolTip)) return;
-            Msg(toolTip, "The column " +cell.OwningColumn.HeaderText+ " represents:");
+            Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
             Speak(toolTip);
         }
 
@@ -307,7 +313,6 @@ namespace DB.Tools
             {
                 Msg("Some exceptions were found.\n I will send a report", "Loading finished!");
             }
-        
         }
 
         /// <summary>
@@ -323,7 +328,7 @@ namespace DB.Tools
 
             string path = Interface.IStore.FolderPath + Resources.Exceptions;
             IEnumerable<string> exceptions = Directory.EnumerateFiles(path);
-         //    int cnt = exceptions.Count();
+            // int cnt = exceptions.Count();
             if (exceptions.Count() != 0)
             {
                 int counter = 1;
@@ -340,7 +345,6 @@ namespace DB.Tools
                         counter++;
                     }
                     if (counter == maxBugsTables) break;
-                    
                 }
                 string file = Guid.NewGuid() + ".xml";
                 Interface.IDB.Exceptions.WriteXml(file);
@@ -473,7 +477,7 @@ namespace DB.Tools
             {
                 msn = new Pop(true);
                 msn.LogFilePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                    +"\\Temp\\" + "Log."+ DateTime.Today.DayOfYear +".txt";
+                    + "\\Temp\\" + "Log." + DateTime.Today.DayOfYear + ".txt";
                 // LIMS.Interface.IReport.Msn = msn; msn.ParentForm.Opacity = 100;
             }
         }

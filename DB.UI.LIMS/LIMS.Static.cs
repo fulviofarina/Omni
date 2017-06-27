@@ -4,8 +4,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using DB.Properties;
 using DB.Tools;
-using Msn;
 using Rsx.Dumb;
 using VTools;
 using static Rsx.DGV.Control;
@@ -17,31 +17,21 @@ namespace DB.UI
         public static LIMS Form = null;
         public static Rsx.DGV.IFind IFind = null;
         public static Interface Interface = null;
+
         /// <summary>
         /// database
         /// </summary>
         public static LINAA Linaa = null;
 
-        public static IList<object> UserControls = null;
-        protected static string HELP_FILE_PDF = "UserGuide.pdf";
-        protected static string PROJECT_LABEL = "PROJECT";
-        protected static string WINDOWS_EXPLORER = "explorer.exe";
+        protected internal static Form aboutBox;
 
-        private static Form aboutBox;
-
-        protected internal static Form AboutBox
+        public static IList<object> UserControls
         {
             get
             {
-                return aboutBox;
-            }
-
-            set
-            {
-                aboutBox = value;
+                return Creator.UserControls;
             }
         }
-
         public static void CreateForm(string title, ref UserControl control, bool show = true)
         {
             if (control == null) return;
@@ -52,136 +42,21 @@ namespace DB.UI
             form.Visible = show;
         }
 
-        public static void CreateLIMS(ref Form aboutbox)
+        public static void CreateLIMS(ref Form _aboutbox)
         {
-            AboutBox = aboutbox;
+            aboutBox = _aboutbox;
             Interface.IReport.Msg("Starting LIMS", "Starting...");
             Linaa = Interface.Get();
             Form = new LIMS(); //make a new UI LIMS
             Form.ShowInTaskbar = false;
             Form.Opacity = 0;
-            UserControls = new List<object>();
+
             //FIRST THIS IN CASE i NEED TO RESTART AGAIN IN SQL INSTALL
             Interface.IReport.Msg("LIMS Set up", "LIMS OK");
-           
         }
 
-        public static Form CreateSSFUserInterface( )
-        {
-
-            Bitmap icon = Properties.Resources.Logo;
 
 
-            Form form = Creator.CreateForm(ref icon);
-
-            IPreferences preferences = GetPreferences();
-            IOptions options = GetOptions();
-            //DEVELOPER MODE
-            //      options.SetDeveloperMode(false);
-
-            //1
-            UserControl control = CreateUI(ControlNames.SubSamples);
-            CreateForm("Samples", ref control, false);
-            ucSubSamples ucSubSamples = control as ucSubSamples;
-            ucSubSamples.ucContent.Set(ref Interface);
-
-            //2
-            IGenericCBox ucProjectBox = LIMS.GetProjectBox();
-
-            //3
-            BindingNavigator aBindingNavigator = ucSubSamples.BN;
-
-            //4
-            IPop msn = Interface.IReport.Msn;
-            Form frm2 = msn.ParentForm;
-            // firstCallBack.Invoke(null, EventArgs.Empty);
-
-            ucSSF ucSSF = new ucSSF();
-            ucSSF.AutoSizeMode = AutoSizeMode.GrowOnly;
-
-
-            EventHandler midCallBack;
-            midCallBack = delegate
-            {
-
-
-                Interface.IBS.ShowErrors = false;
-
-                //ESTE ORDEN ES FUNDAMENTAL!!!
-                Interface.IBS.ApplyFilters();
-                Interface.IBS.StartBinding();
-
-                ucSSF.Set(ref Interface);
-                ucSSF.AttachCtrl(ref ucProjectBox);
-                ucSSF.AttachCtrl(ref aBindingNavigator);
-
-                //si esto se dispara después,
-                //me resetea las preferencias!!!
-                Interface.IBS.EnabledControls = true;
-
-                // ARREGLAR ESTO
-                LINAA.SSFPrefRow pr = Interface.IPreferences.CurrentSSFPref;
-                pr.DoMatSSF = true;
-                pr.DoCK = false;
-                pr.Loop = true;
-                pr.CalcDensity = true;
-                Interface.IPreferences.CurrentPref.AutoLoad = true;
-                // ARREGLAR ESTO
-
-
-            };
-
-            EventHandler lastCallBack;
-            lastCallBack = delegate
-            {
-
-
-
-                //load last porject
-                bool autoload = Interface.IPreferences.CurrentPref.AutoLoad;
-                string lastProject = string.Empty;
-                if (autoload)
-                {
-                    lastProject = Interface.IPreferences.CurrentPref.LastIrradiationProject;
-                }
-
-                if (!autoload || string.IsNullOrEmpty(lastProject))
-                {
-                    Interface.IReport.GreetUser();
-                    Interface.IReport.SpeakLoadingFinished();
-                }
-                else ucProjectBox.TextContent = lastProject;
-
-
-                form.Controls.Add(ucSSF);
-                form.FormClosing += formClosing;
-
-
-                Interface.IBS.ShowErrors = true;
-
-                Application.DoEvents();
-                frm2.Opacity = 0;
-                ucSSF.AttachCtrl(ref msn);
-                frm2.Dispose();
-
-                ucSSF.SetTimer();
-
-                form.Opacity = 100;
-
-                //CleanSigmas();
-
-            };
-
-            Creator.LastCallBack = lastCallBack;
-
-            Creator.CallBack = midCallBack;
-
-
-            return form;
-           
-        }
-
-    
 
         public static UserControl CreateUI(string controlHeader, object[] args = null, bool noDGVControl = false)
         {
@@ -189,9 +64,9 @@ namespace DB.UI
             Rsx.DGV.Control.Refresher refresher = null;
             Rsx.DGV.Control.Loader loader = null;
             System.EventHandler postRefresh = null;
-            System.Windows.Forms.DataGridViewRowPostPaintEventHandler rowPostpainter = null;
-            System.Windows.Forms.DataGridViewRowPrePaintEventHandler rowPrepainter = null;
-            System.Windows.Forms.DataGridViewCellPaintingEventHandler cellpainter = null;
+            DataGridViewRowPostPaintEventHandler rowPostpainter = null;
+            DataGridViewRowPrePaintEventHandler rowPrepainter = null;
+            DataGridViewCellPaintingEventHandler cellpainter = null;
             Rsx.DGV.Control.CellPaintChecker shouldpaintCell = null;
             Rsx.DGV.Control.RowPostPaintChecker shouldpostpaintRow = null;
             Rsx.DGV.Control.RowPrePaintChecker shouldprepaintRow = null;
@@ -206,7 +81,7 @@ namespace DB.UI
                 Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
                 return null;
             }
-            UserControls.Add(control);
+            Creator.UserControls.Add(control);
 
             if (noDGVControl) return control;
 
@@ -250,8 +125,8 @@ namespace DB.UI
 
         public static void Explore()
         {
-            System.Data.DataSet set = Linaa;
-            VTools.Explorer explorer = new VTools.Explorer(ref set);
+            DataSet set = Linaa;
+            Explorer explorer = new Explorer(ref set);
 
             // Rsx.DGV.Control.Refresher refresher = explorer.RefreshTable;
             Rsx.DGV.Control ctr = new Rsx.DGV.Control(explorer.RefreshTable, Interface.IReport.Msg, ref IFind);
@@ -264,127 +139,14 @@ namespace DB.UI
             ctr.SaveMethod = Linaa.Save;
             ctr.SetSaver(explorer.saveBtton);
 
-            explorer.Box.Text = "Exceptions";
-            Auxiliar form = new Auxiliar();
+            Creator.UserControls.Add(explorer);
 
+            Auxiliar form = new Auxiliar();
             form.Populate(explorer);
             form.Text = "DataSet Explorer";
             form.Show();
 
-            UserControls.Add(explorer);
-        }
-
-        public static T FindLastControl<T>(string name)
-        {
-            Func<T, bool> finder = o =>
-            {
-                bool found = false;
-                UserControl os = o as UserControl;
-                if (os.Name.ToUpper().CompareTo(name) == 0) found = true;
-                return found;
-            };
-            return UserControls.OfType<T>().LastOrDefault(finder);
-        }
-
-        public static string GetHelpFile()
-        {
-            return Application.StartupPath + DB.Properties.Resources.DevFiles + HELP_FILE_PDF;
-        }
-
-        public static IOptions GetOptions()
-        {
-            IOptions options = UserControls.OfType<ucOptions>().FirstOrDefault();
-
-            if (options != null) return options;
-
-            options = new ucOptions();
-            options.Set();
-            AboutBox = AboutBox;
-            options.AboutBoxClick += delegate
-            {
-                AboutBox.Show();
-                // box.Show();
-            };
-            options.ConnectionBox += delegate
-            {
-                Creator.Connections();
-            };
-            options.SaveClick += delegate
-            {
-                Creator.SaveInFull(true);
-            };
-            options.ExplorerClick += delegate
-                 {
-                     // if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
-                     Explore();
-                 };
-            options.PreferencesClick += delegate
-            {
-                GetPreferences(true);
-            };
-            options.DropDownClicked += delegate
-            {
-                bool ok = Interface.IPreferences
-                .CurrentPref.AdvancedEditor;
-                options.DisableImportant = ok;
-            };
-            options.DatabaseClick += delegate
-             {
-                 ShowToUser();
-             };
-
-            options.RestoreFoldersClick += delegate
-                {
-                    Creator.CheckDirectories(true);
-            };
-            options.HelpClick += delegate
-            {
-                string helpFile = GetHelpFile();
-                System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
-            };
-            UserControls.Add(options);
-
-            return options;
-        }
-
-        public static IPreferences GetPreferences(bool show = false)
-        {
-            ucPreferences c = null;
-            try
-            {
-                c = UserControls.OfType<ucPreferences>().FirstOrDefault();
-
-                if (c == null)
-                {
-                    UserControl ucPref = null;
-                    ucPref = CreateUI(ControlNames.Preferences);
-                    CreateForm("Preferences", ref ucPref, false);
-                    c = ucPref as ucPreferences;
-                    c.ParentForm.VisibleChanged += delegate
-                    {
-                        bool reportChnages = Interface.IPreferences.CurrentPref.HasVersion(DataRowVersion.Current);
-                        reportChnages = reportChnages || Interface.IPreferences.CurrentSSFPref.HasVersion(DataRowVersion.Current);
-                        if (reportChnages)
-                        {
-                            Interface.IReport.Msg("A preference/setting was updated", "Preferences updated", true);
-                        }
-                        else Interface.IReport.Msg("No changes to the preferences/settings", "No changes", true);
-                    };
-                }
-                c.ParentForm.Visible = show;
-               // c.ParentForm.ControlBox = false;
-                c.ParentForm.MaximizeBox = false;
-                c.ParentForm.ShowInTaskbar = false;
-              
-                // c.ParentForm.Opacity = 100;
-                c.ParentForm.TopMost = show;
-                c.ParentForm.BringToFront();
-            }
-            catch (Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-            return c;
+            explorer.Box.Text = "Exceptions";
         }
 
         public static void SaveWorkspaceXML(string file)
@@ -408,7 +170,7 @@ namespace DB.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e">     </param>
-        public static void SetItem(object sender, System.EventArgs e)
+        public static void SetItem(object sender, EventArgs e)
         {
             //get the dgv associated to the tsmi
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
@@ -461,152 +223,7 @@ namespace DB.UI
             frm.IPicker = new Picker(ref dgv, ref from, false, ref exsDT, rel);  //the picker algorithm class
             frm.Module = control;    //this will show the module to pick from
         }
-
-        /// <summary>
-        /// Sets a ucGenericBox as a Project Box, with the corresponding methods
-        /// </summary>
-        /// <param name="comboBox"></param>
-        public static void SetProjectBox(ref ucGenericCBox comboBox)
-        {
-            IGenericCBox control = comboBox;
-
-            string column;
-            column = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
-            control.BindingField = column;
-            control.SetBindingSource(ref Interface.IBS.Irradiations, false);
-
-            //DB.UI.IGenericCBox control = comboBox;
-
-            control.DeveloperMethod += delegate
-            {
-                Interface.IPreferences.CurrentPref.AdvancedEditor = true;
-                Interface.IPreferences.SavePreferences();
-
-                control.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
-
-                GetPreferences(true);
-            };
-            control.PopulateListMethod += delegate
-            {
-                if (Interface == null) return; //puede pasar debido al Designer y tener contendio no nulo
-                control.InputProjects = Interface.IPopulate.IProjects.ProjectsList.ToArray();
-            };
-            control.RefreshMethod += delegate
-            {
-                bool[] result = Interface.IPopulate.LoadProject(control.EnterPressed, control.TextContent);
-
-                control.Rejected = result[0];
-                control.WasRefreshed = result[1];
-
-                if (control.Rejected)
-                {
-                    control.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
-                }
-            };
-
-            control.Label = PROJECT_LABEL;
-            control.LabelForeColor = System.Drawing.Color.Thistle;
-
-            //ad to users controls...
-            UserControls.Add(control);
-
-            /*
-            BindingSource bs = Interface.IBS.Irradiations;
-            string column;
-            column = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
-            control.BindingField = column;
-            control.SetBindingSource(ref bs);
-            */
-        }
-
-        public static void SetSampleBox(ref ucGenericCBox sampleBox)
-        {
-            EventHandler endEdit = delegate
-            {
-                Interface.IBS.EndEdit();
-            };
-
-            IGenericCBox control = sampleBox;
-            // control.Label = "Sample"; control.LabelForeColor = Color.LemonChiffon;
-            EventHandler fillsampleNames = delegate
-            {
-                control.InputProjects = Interface.ICurrent.SubSamplesNames.ToArray();
-            };
-            control.PopulateListMethod += fillsampleNames;
-
-            //invoke the handlers...
-            Interface.IBS.SubSamples.AddingNew += delegate
-            {
-                // filldescriptios.Invoke(null, EventArgs.Empty);
-                fillsampleNames.Invoke(null, EventArgs.Empty);
-            };
-
-            IGenericCBox cb = GetProjectBox();
-
-            if (cb != null) cb.RefreshMethod += delegate
-            {
-                if (cb.WasRefreshed) fillsampleNames.Invoke(null, EventArgs.Empty);
-            };
-            // control.PopulateListMethod += endEdit;
-        }
-
-        public static void SetSampleDescriptionBox(ref ucGenericCBox sampleBox)
-        {
-            IGenericCBox control2 = sampleBox;
-            // control2.Label = "Description"; control2.LabelForeColor = Color.White;
-            EventHandler filldescriptios = delegate
-            {
-                control2.InputProjects = Interface.ICurrent.SubSamplesDescriptions.ToArray();
-            };
-            control2.PopulateListMethod += filldescriptios;
-            // control2.PopulateListMethod += endEdit;
-
-            //invoke the handlers...
-            Interface.IBS.SubSamples.AddingNew += delegate
-            {
-                filldescriptios.Invoke(null, EventArgs.Empty);
-                // fillsampleNames.Invoke(null, EventArgs.Empty);
-            };
-
-            IGenericCBox cb = GetProjectBox();
-            if (cb != null) cb.RefreshMethod += delegate
-            {
-                if (cb.WasRefreshed) filldescriptios.Invoke(null, EventArgs.Empty);
-            };
-        }
-
-        public static void ShowToUser()
-        {
-            Form.Visible = true;
-            Form.Opacity = 100;
-
-            Form.BringToFront();
-        }
-
-        /// <summary>
-        /// Destroys the ouput, and puts the input on the output
-        /// </summary>
-        /// <param name="inpu">  </param>
-        /// <param name="output"></param>
-        public static void SwapLinaa(ref LINAA inpu, ref LINAA output)
-        {
-            if (output != null)
-            {
-                output.Dispose();
-            }
-            output = null;
-            output = inpu;
-        }
-
-        protected internal static void formClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = Creator.Close(ref LIMS.Linaa);
-            if (!e.Cancel)
-            {
-                Application.ExitThread();
-            }
-        }
-        private static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader stringOrFileLoader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref AdderEraser addedRow, ref EventHandler preRefresh, ref AdderEraser deletedRow)
+        protected internal static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader stringOrFileLoader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref AdderEraser addedRow, ref EventHandler preRefresh, ref AdderEraser deletedRow)
         {
             switch (controlHeader)
             {
@@ -614,8 +231,7 @@ namespace DB.UI
                     {
                         ucGeometry ucGeometry = new ucGeometry();
                         control = (UserControl)ucGeometry;
-                        ucGeometry.Set(ref LIMS.Interface);
-
+                        ucGeometry.Set(ref Interface);
                         refresher = Interface.IPopulate.IGeometry.PopulateGeometry;
                         break;
                     }
@@ -623,24 +239,33 @@ namespace DB.UI
                     {
                         ucVialType ucVialType = new ucVialType();
                         control = (UserControl)ucVialType;
-                        ucVialType.Set(ref LIMS.Interface);
+                        ucVialType.Set(ref Interface);
                         refresher = Interface.IPopulate.IGeometry.PopulateVials;
                         break;
                     }
                 case ControlNames.Matrices:
                     {
-                        ucMatrix mat = new ucMatrix();
-                        mat.Set(ref LIMS.Interface);
-                        control = (UserControl)mat;
-                        refresher = Interface.IPopulate.IGeometry.PopulateMatrix;
-                        preRefresh = mat.PreRefresh;
-                        postRefresh = mat.PostRefresh;
+                        CreateMatrixApplication(out control, out refresher);
+
+                        // preRefreshref = mat.PreRefresh; postRefresh = mat.PostRefresh;
                         break;
                     }
                 case ControlNames.Preferences:
                     {
-                        ucPreferences ucPreferences = new ucPreferences();
-                        ucPreferences.Set(ref LIMS.Interface);
+                        IPreferences ucPreferences = new ucPreferences();
+                        ucPreferences.IMain.Set(ref Interface);
+                        ucPreferences.ISSF.Set(ref Interface);
+
+                        control = (UserControl)ucPreferences;
+
+                        break;
+                    }
+                case ControlNames.XCOMPreferences:
+                    {
+                        IXCOMPreferences ucPreferences = new ucXCOMPreferences();
+                        ucPreferences.Set(ref Interface);
+                        // ucPreferences.ISSF.Set(ref Interface);
+
                         control = (UserControl)ucPreferences;
 
                         break;
@@ -648,7 +273,7 @@ namespace DB.UI
                 case ControlNames.Detectors:
                     {
                         ucDetectors ucDetectors = new ucDetectors();
-                        ucDetectors.Set(ref LIMS.Interface);
+                        ucDetectors.Set(ref Interface);
                         control = (UserControl)ucDetectors;
 
                         break;
@@ -656,7 +281,7 @@ namespace DB.UI
                 case ControlNames.Monitors:
                     {
                         ucMonitors mon = new ucMonitors();
-                        mon.Set(ref LIMS.Interface);
+                        mon.Set(ref Interface);
                         control = (UserControl)mon;
                         refresher = Interface.IPopulate.ISamples.PopulateMonitors;
                         postRefresh = mon.PostRefresh;
@@ -671,7 +296,7 @@ namespace DB.UI
                     {
                         ucStandards ucStandards = new ucStandards();
                         control = ucStandards as UserControl;
-                        ucStandards.Set(ref LIMS.Interface);
+                        ucStandards.Set(ref Interface);
 
                         refresher = Interface.IPopulate.ISamples.PopulateStandards;
                         break;
@@ -682,7 +307,7 @@ namespace DB.UI
 
                         ucSubSamples.ucContent = CreateUI(ControlNames.SubSamplesContent) as ucSSContent;
 
-                        ucSubSamples.Set(ref LIMS.Interface);
+                        ucSubSamples.Set(ref Interface);
                         // ucSubSamples.ucContent.Set(ref LIMS.Interface);
 
                         cellpainter = ucSubSamples.ucContent.PaintCells;
@@ -710,7 +335,7 @@ namespace DB.UI
                     {
                         ucMonitorsFlags ucMonitorsFlags = new ucMonitorsFlags();
                         control = ucMonitorsFlags as UserControl;
-                        ucMonitorsFlags.Set(ref LIMS.Interface);
+                        ucMonitorsFlags.Set(ref Interface);
 
                         refresher = Interface.IPopulate.ISamples.PopulateMonitorFlags;
 
@@ -720,14 +345,14 @@ namespace DB.UI
                     {
                         ucSamples ucSamples = new ucSamples();
                         control = ucSamples as UserControl;
-                        ucSamples.Set(ref LIMS.Interface);
+                        ucSamples.Set(ref Interface);
                         refresher = Interface.IPopulate.ISamples.PopulateStandards;
                         break;
                     }
                 case ControlNames.Irradiations:
                     {
                         ucIrradiationsRequests ucIrr = new ucIrradiationsRequests();
-                        ucIrr.Set(ref LIMS.Interface);
+                        ucIrr.Set(ref Interface);
                         control = (UserControl)ucIrr;
                         addedRow = ucIrr.RowAdded;
                         cellpainter = ucIrr.CellPainting;
@@ -739,7 +364,7 @@ namespace DB.UI
                     {
                         ucChannels ucChannels = new ucChannels();
                         control = ucChannels as UserControl;
-                        ucChannels.Set(ref LIMS.Interface);
+                        ucChannels.Set(ref Interface);
 
                         refresher = Interface.IPopulate.IIrradiations.PopulateChannels;
                         break;
@@ -749,35 +374,35 @@ namespace DB.UI
                     {
                         ucOrders ucOrders = new ucOrders();
                         control = ucOrders as UserControl;
-                        ucOrders.Set(ref LIMS.Interface);
+                        ucOrders.Set(ref Interface);
 
                         refresher = Interface.IPopulate.IOrders.PopulateOrders;
                         break;
                     }
-                case ControlNames.Units:
-                    {
-                        ucUnit ucUnit = new ucUnit();
-                        control = ucUnit as UserControl;
-                        ucUnit.Set(ref LIMS.Interface);
-                        // Rsx.DGV.IFind finder = new Rsx.DGV.ucSearch(); Rsx.DGV.IDGVControl ctrl =
-                        // cv; // new Rsx.DGV.Control(null, Interface.IReport.Msg, ref finder);
+                // case ControlNames.Units: { ucSSFResults ucUnit = new ucSSFResults(); control =
+                // ucUnit as UserControl; ucUnit.Set(ref Interface); Rsx.DGV.IFind finder = new
+                // Rsx.DGV.ucSearch(); Rsx.DGV.IDGVControl ctrl = cv; // new Rsx.DGV.Control(null,
+                // Interface.IReport.Msg, ref finder);
 
-                        //  ctrl.ICreate.DGVs = new DataGridView[] { this.unitDGV, this.SSFDGV };
-                        // Saver = Interface.IStore.Save;
-                        // ctrl.ICreate.UsrControl = this;
-                        //ctrl.ICreate.CreateDGVEvents();
+                //  ctrl.ICreate.DGVs = new DataGridView[] { this.unitDGV, this.SSFDGV };
+                // Saver = Interface.IStore.Save;
+                // ctrl.ICreate.UsrControl = this;
+                //ctrl.ICreate.CreateDGVEvents();
 
-                        // refresher = Interface.IPopulate.IOrders.PopulateOrders;
-                        break;
-                    }
+                // refresher = Interface.IPopulate.IOrders.PopulateOrders; break; }
                 default:
                     break;
             }
         }
 
-        private static IGenericCBox GetProjectBox()
+     
+        protected internal static void formClosing(object sender, FormClosingEventArgs e)
         {
-            return UserControls.OfType<ucGenericCBox>().FirstOrDefault(o => o.Label.CompareTo(PROJECT_LABEL) == 0);
+            e.Cancel = Creator.Close();
+            if (!e.Cancel)
+            {
+                Application.ExitThread();
+            }
         }
     }
 }

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Xml;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -20,13 +18,12 @@ namespace DB
             public bool IsBusy
             {
                 get { return isBusy; }
-                set {
-
+                set
+                {
                     isBusy = value;
 
                     if (isBusy)
                     {
-
                         SetGtChNull();
                         SetGtNull();
                         SetGtMCNull();
@@ -34,8 +31,8 @@ namespace DB
                         SetPXSNull();
                         SetEXSNull();
                         SetSSFTableNull();
-                        // UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated until the background computations upgrades them");
-
+                        // UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated
+                        // until the background computations upgrades them");
                     }
                     else
                     {
@@ -136,11 +133,7 @@ namespace DB
                 {
                     if (nullo) pEpi = 0.82;
                 }
-
-        
             }
-
-           
 
             /// <summary>
             /// OVERRIDEN
@@ -173,7 +166,7 @@ namespace DB
                 if (!IsSSFTableNull())
                 {
                     byte[] arr = SSFTable;
-                    Rsx.Dumb.Tables.ReadDTBytesNoFile(ref arr, ref dt);
+                    Rsx.Dumb.Tables.ReadDTBytes(ref arr, ref dt);
                 }
 
                 return dt;
@@ -229,8 +222,6 @@ namespace DB
                     SubSamplesRow.MatrixID = m.MatrixID;
                 }
             }
-
-           
         }
 
         public partial class UnitRow
@@ -242,7 +233,7 @@ namespace DB
             {
                 this.LastChanged = DateTime.Now;
                 ToDo = val;
-         
+
                 // Clean();
             }
 
@@ -314,7 +305,6 @@ namespace DB
                 }
                 this.ChCfg = c.FluxType;
                 this.SubSamplesRow.FC = c.FC;
-              
             }
 
             internal void setRabbit(ref VialTypeRow v)

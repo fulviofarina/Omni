@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data;
+using System.IO;
+using System.Linq;
 using System.Security.Principal;
 using DB.Properties;
 using static DB.LINAA;
@@ -11,8 +14,48 @@ namespace DB.Tools
 
     public partial class Current : IPreferences
     {
+        public bool IsSpectraPathOk
+        {
+            get
+            {
+                string spec = CurrentPref.Spectra;
+                if (string.IsNullOrEmpty(spec)) return false;
+                else return Directory.Exists(spec);
+            }
+        }
 
-       
+        /// <summary>
+        /// The current SSF Preferences
+        /// </summary>
+        public SSFPrefRow CurrentSSFPref
+        {
+            get
+            {
+                // currentSSFPref = Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
+                return Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
+            }
+        }
+
+        /// <summary>
+        /// The current preferences (Main)
+        /// </summary>
+        public PreferencesRow CurrentPref
+        {
+            get
+            {
+                // currentPref = Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
+                return Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
+            }
+        }
+
+        public XCOMPrefRow CurrentXCOMPref
+        {
+            get
+            {
+                // currentPref = Interface.IDB.Preferences.FirstOrDefault(selector) as PreferencesRow;
+                return Interface.IDB.XCOMPref.FirstOrDefault(selector) as XCOMPrefRow;
+            }
+        }
 
         public string GetSSFPreferencesPath()
         {
@@ -24,16 +67,30 @@ namespace DB.Tools
             return Interface.IStore.FolderPath + Resources.Preferences + XML_EXT;
         }
 
+        public string GetXCOMPreferencesPath()
+        {
+            return Interface.IStore.FolderPath + Resources.XCOMPreferences + XML_EXT;
+        }
+
+        /*
         public void RejectPreferencesChanges()
         {
             Interface.IPreferences.CurrentPref.RejectChanges();
-          //  Interface.IPreferences.CurrentSSFPref.RejectChanges();
+          // Interface.IPreferences.CurrentSSFPref.RejectChanges();
+        }
+        public void RejectXCOMChanges()
+        {
+            Interface.IPreferences.CurrentXCOMPref.RejectChanges();
+            // Interface.IPreferences.CurrentSSFPref.RejectChanges();
         }
         public void RejectSSFChanges()
         {
            // Interface.IPreferences.CurrentPref.RejectChanges();
             Interface.IPreferences.CurrentSSFPref.RejectChanges();
         }
+
+        */
+
         /// <summary>
         /// Populates the preferences
         /// </summary>
@@ -67,6 +124,20 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);
             }
+            try
+            {
+                bool ok = populatePreferences<XCOMPrefDataTable>();
+                if (ok)
+                {
+                    //cleaning
+                    cleanNullPreferences<XCOMPrefDataTable>();    //important
+                }
+                populateCurrentPreferences<XCOMPrefDataTable>();
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
         }
 
         /// <summary>
@@ -90,6 +161,7 @@ namespace DB.Tools
                 savePreferences<PreferencesDataTable>();
 
                 savePreferences<SSFPrefDataTable>();
+                savePreferences<XCOMPrefDataTable>();
             }
             catch (SystemException ex)
             {
@@ -101,6 +173,27 @@ namespace DB.Tools
         {
             Interface.IDB.Preferences.AcceptChanges();
             Interface.IDB.SSFPref.AcceptChanges();
+            Interface.IDB.XCOMPref.AcceptChanges();
+        }
+
+        public void ReportChanges()
+        {
+            bool reportChnages = CurrentPref.HasVersion(DataRowVersion.Current);
+            reportChnages = reportChnages || CurrentSSFPref.HasVersion(DataRowVersion.Current);
+            reportChnages = reportChnages || CurrentXCOMPref.HasVersion(DataRowVersion.Current);
+            if (reportChnages)
+            {
+                Interface.IReport.Msg("A preference/setting was updated", "Preferences updated", true);
+            }
+            else Interface.IReport.Msg("No changes to the preferences/settings", "No changes", true);
+        }
+
+        public void Clear()
+        {
+            Interface.IPreferences.SavePreferences();
+
+
+            Interface.IStore.CleanPreferences();
         }
 
         /*

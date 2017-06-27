@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using static DB.LINAA;
 
 namespace DB
 {
     public interface IStore
     {
         void Save<T>(ref T row);
-
+        void CleanOthers();
         string FolderPath
         {
             get;
             set;
         }
+        void InsertMUES(ref MUESDataTable mu, int matrixID);
 
         void AddException(Exception ex);
 
@@ -65,6 +67,7 @@ namespace DB
 
         //void LoadMonitorsFile(string file);
         void UpdateIrradiationDates();
+        void CleanPreferences();
 
         // void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
     }

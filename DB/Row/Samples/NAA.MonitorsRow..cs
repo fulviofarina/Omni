@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using Rsx;
 using Rsx.Dumb;
 
 namespace DB
@@ -46,7 +45,7 @@ namespace DB
                 throw new NotImplementedException();
             }
 
-           public new  bool  HasErrors()
+            public new bool HasErrors()
             {
                 return base.HasErrors;
             }

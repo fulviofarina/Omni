@@ -112,13 +112,12 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -150,16 +149,6 @@
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Content Include="Files\curves.bak">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -191,6 +180,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Tools.Creator\DB.Tools.Creator.csproj">
+      <Project>{1043e3e2-21a7-494d-bbbb-99327d379422}</Project>
+      <Name>DB.Tools.Creator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>
@@ -202,22 +195,6 @@
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
-      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
-      <Name>Msn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rsx.Math\Rsx.Math.csproj">
-      <Project>{fa4e76b3-ff57-4b1c-b25b-e9b44de263be}</Project>
-      <Name>Rsx.Math</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VTools.Explorer\VTools.Explorer.csproj">
-      <Project>{fe27c8a4-4457-48c3-878b-e20d8b8c5c1a}</Project>
-      <Name>VTools.Explorer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VTools.Menu\VTools.Menu.csproj">
-      <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
-      <Name>VTools.Menu</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -208,7 +208,7 @@ namespace k0X
             M.Box_KeyUp(this, e);
 
             ucSamples last = null;
-            last = LIMS.FindLastControl<ucSamples>(project);
+            last = Creator.FindLastControl<ucSamples>(project);
 
             if (last == null) return;
             if (last.IsDisposed) return;

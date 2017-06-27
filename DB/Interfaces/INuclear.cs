@@ -16,6 +16,7 @@ namespace DB
         void PopulateSigmasSal();
 
         void PopulateYields();
+
         void CleanSigmas();
     }
 }

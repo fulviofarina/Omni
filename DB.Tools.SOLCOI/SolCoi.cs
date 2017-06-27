@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB.Tools
 {
@@ -325,8 +325,16 @@ namespace DB.Tools
         {
             LINAA s = new LINAA();
             s.InitializeComponent();
-            IEnumerable<Action> populMethod = s.PMTwo();
-            foreach (Action a in populMethod) a.Invoke();
+    //        IEnumerable<Action> populMethod = s.PMTwo();
+
+            IEnumerable<Action> populatorArray = null;
+            populatorArray = s.PMMatrix();
+            // populatorArray = populatorArray.Union(PMMatrix());
+
+            populatorArray = populatorArray.Union(s.PMDetect());
+     //       return populatorArray;
+
+            foreach (Action a in populatorArray) a.Invoke();
             // Populate(ref s); Rsx.Dumb.Preserve(s, DataTablesToPreserve);
             Initialize(ref s);
         }

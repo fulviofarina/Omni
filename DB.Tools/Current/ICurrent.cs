@@ -9,7 +9,7 @@ namespace DB.Tools
         DataRow Irradiation { get; }
         bool IsSpectraPathOk { get; }
         DataRow Matrix { get; }
-        DataRow Rabbit { get;  }
+        DataRow Rabbit { get; }
         DataRow Vial { get; }
         DataRow SubSample { get; }
         DataRow SubSampleMatrix { get; }

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Messaging;
 using DB.Properties;
-using Msn;
+using VTools;
 
 namespace DB.Tools
 {
@@ -27,7 +27,9 @@ namespace DB.Tools
         // protected static string START_OR_EXIT = "Restart or Exit?";
         protected static string RESTARTING_OK = "Restarting succeeded...";
 
-     
+        protected static string MSMQ_TITLE = "Installing MSMQ...";
+
+        protected static string MSMQ_MSG = "MSMQ loading in progress";
     }
 
     public partial class Report
@@ -70,8 +72,8 @@ namespace DB.Tools
             string text;
             string title;
             int hours = DateTime.Now.TimeOfDay.Hours;
-            if (hours < 12) text = "Good morning " ;
-            else if ((hours < 16) && (hours >= 12)) text = "Good afternoon... " ;
+            if (hours < 12) text = "Good morning ";
+            else if ((hours < 16) && (hours >= 12)) text = "Good afternoon... ";
             else text = "Good evening... ";
 
             text += "\nPlease type in the name of the project";

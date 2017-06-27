@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -26,7 +26,7 @@ namespace DB
             }
             if (!reCode || listOfFormulasAndCompositions == null)
             {
-                listOfFormulasAndCompositions = m.StripComposition(m.MatrixComposition);
+                listOfFormulasAndCompositions = RegEx.StripComposition(m.MatrixComposition);
                 //to store matrix composition
             }
 
@@ -86,7 +86,7 @@ namespace DB
 
             foreach (MatrixRow item in matrices)
             {
-                IList<string[]> stripped = item.StripComposition(item.MatrixComposition);
+                IList<string[]> stripped = RegEx.StripComposition(item.MatrixComposition);
                 LINAA.MatrixRow m = item;
                 AddCompositions(ref m, stripped, true);
             }
@@ -120,6 +120,7 @@ namespace DB
             i.IrradiationCode = projetNoCd;
             return i;
         }
+
         private MatrixRow addMatrix()
         {
             MatrixRow v = Matrix.NewMatrixRow() as MatrixRow;
@@ -308,7 +309,7 @@ namespace DB
         {
             Delete(ref compos);
             this.Compositions.AcceptChanges();
-         //   return Save(ref compos);
+            // return Save(ref compos);
         }
 
         private void deleteSigmaColumns()

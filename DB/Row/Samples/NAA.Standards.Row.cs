@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -13,6 +13,7 @@ namespace DB
             {
                 return base.HasErrors;
             }
+
             public void Check()
             {
                 foreach (DataColumn column in this.tableStandards.Columns)

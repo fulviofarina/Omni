@@ -166,7 +166,7 @@
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
       <Name>DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Msn\Msn.csproj">
+    <ProjectReference Include="..\VTools.Msn\VTools.Msn.csproj">
       <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
       <Name>Msn</Name>
     </ProjectReference>

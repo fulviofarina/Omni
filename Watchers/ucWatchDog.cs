@@ -8,12 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using DB;
 using DB.Reports;
-using Rsx.Dumb; using Rsx;
+using DB.Tools;
+using Rsx;
 using Rsx.CAM;
 using Rsx.DGV;
-using DB.Tools;
-using Rsx.Generic;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
+
 namespace k0X
 {
     public interface IWatchDog
@@ -31,13 +31,13 @@ namespace k0X
 
     public partial class ucWatchDog : UserControl, IWatchDog
     {
-        private IWD adder = null;
+        private ILoader2 adder = null;
         private string basicmeasFilter = string.Empty;
+        private LINAA.PreferencesRow currentPreference;
         private LINAA.ExceptionsDataTable exceptionDT;
+        private Interface Interface;
         private CReport Irepo = null;
         private int? irrId = null;
-
-        private Interface Interface;
         private IEnumerable<LINAA.MeasurementsRow> meas = null;
 
         private string MeasFilter = string.Empty;
@@ -55,22 +55,6 @@ namespace k0X
         private string SampleSort = "SubSampleName asc";
 
         private DateTime start;
-
-        private LINAA.PreferencesRow currentPreference;
-
-        public ucWatchDog()
-        {
-            InitializeComponent();
-
-            this.Linaa.InitializeComponent();
-            this.Linaa.PopulateColumnExpresions();
-
-            Auxiliar form = new Auxiliar();
-            form.Populate(this);
-            form.Text = "WatchDog";
-            form.Show();
-        }
-
         public string Project
         {
             get { return project; }
@@ -163,8 +147,8 @@ namespace k0X
             exceptionDT = lims.IDB.Exceptions;
             this.Linaa.QTA = lims.IAdapter.QTA;
             currentPreference = lims.IPreferences.CurrentPref;
-            //          Interface.IPreferences.CurrentPref = lims.IPreferences.CurrentPref;
-        //    Interface.IReport.Notify = lims.IReport.Notify;
+            // Interface.IPreferences.CurrentPref = lims.IPreferences.CurrentPref;
+            // Interface.IReport.Notify = lims.IReport.Notify;
 
             project = Project.ToUpper();
             irrId = lims.IPopulate.IIrradiations.FindIrradiationID(project);
@@ -231,7 +215,7 @@ namespace k0X
         /// for post processing, basically speaking
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">     </param>
         private void AddMeasurement(ref object element, ref object toUseOnElement)
         {
             System.IO.FileInfo fin = element as System.IO.FileInfo;
@@ -334,7 +318,7 @@ namespace k0X
                 }
                 else m.KW = string.Empty;
 
-                if (!Rsx.EC.IsNuDelDetch(m.SubSamplesRow))
+                if (!EC.IsNuDelDetch(m.SubSamplesRow))
                 {
                     m.SubSamplesRow.Detector = m.Detector;
                     m.SubSamplesRow.Position = m.Position;
@@ -347,7 +331,7 @@ namespace k0X
                 if (!m.HL)
                 {
                     LINAA.MeasurementsRow old = meas.FirstOrDefault(d => d.Measurement.CompareTo(m.Measurement) == 0);
-                    if (!Rsx.EC.IsNuDelDetch(old)) m.HL = true;
+                    if (!EC.IsNuDelDetch(old)) m.HL = true;
                     else
                     {
                         int? measID = (int?)this.Linaa.QTA.GetMeasurementID(m.Measurement);
@@ -394,7 +378,7 @@ namespace k0X
             ///Create worker
             if (adder == null)
             {
-                adder = new WD();
+                adder = new Loader();
                 adder.CallBackMethod = CallBack;
                 adder.WorkMethod = AddMeasurement;
                 adder.ReportMethod = progress.PerformStep;
@@ -613,6 +597,19 @@ namespace k0X
                     watcher_Created(sender, e);
                 }
             }
+        }
+
+        public ucWatchDog()
+        {
+            InitializeComponent();
+
+            this.Linaa.InitializeComponent();
+            this.Linaa.PopulateColumnExpresions();
+
+            Auxiliar form = new Auxiliar();
+            form.Populate(this);
+            form.Text = "WatchDog";
+            form.Show();
         }
     }
 }

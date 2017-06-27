@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using Rsx;
-
-namespace DB
-{
-    /// <summary>
-    /// IMP{ORTATAAAAAANTE HACER ESTO FINO IMPLEMENTAR
-    /// </summary>
-}
+using Rsx.Dumb;
 
 namespace DB
 {

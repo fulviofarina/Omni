@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-
+using Rsx.Dumb;
 namespace k0X
 {
   public partial class Auxiliar : Form
@@ -37,7 +37,7 @@ namespace k0X
       if (typo.Equals(typeof(ucDetWatch)))
       {
         ucDetWatch uc = this.DisplayedControl as ucDetWatch;
-        if (!Rsx.EC.IsNuDelDetch(uc.LSchAcq)) uc.LSchAcq.NotCrashed = false;
+        if (!EC.IsNuDelDetch(uc.LSchAcq)) uc.LSchAcq.NotCrashed = false;
       }
 
       if (!e.Cancel)

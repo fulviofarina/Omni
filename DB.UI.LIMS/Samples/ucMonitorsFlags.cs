@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
-using Rsx.Dumb; using Rsx;
 using DB.Tools;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -18,7 +18,7 @@ namespace DB.UI
 
             DGV.DataSource = inter.IBS.MonitorsFlags;
 
-       //     Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.MonitorsFlags);
+            // Rsx.Dumb.BS.LinkBS(ref this.BS, this.Linaa.MonitorsFlags);
         }
     }
 }

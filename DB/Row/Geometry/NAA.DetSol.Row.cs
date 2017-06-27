@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Reports;
 using DB.Tools;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.UI
@@ -28,8 +28,6 @@ namespace DB.UI
             get { return daddy; }
             set { daddy = value; }
         }
-
-
 
         /// <summary>
         /// Hides the content of the PANEL 2 containers
@@ -88,7 +86,6 @@ namespace DB.UI
             this.sort = Interface.IBS.SubSamples.Sort;
             Rsx.Dumb.BS.DeLinkBS(ref Interface.IBS.SubSamples);
 
-            
             // ucContent.DeLink();
         }
 
@@ -179,33 +176,24 @@ namespace DB.UI
         /// </summary>
         /// <param name="row"></param>
 
-
         /*
         public void RowDeleted(ref DataRow row)
         {
             this.bindingNavigatorDeleteItem.Enabled = false;
-            //  Interface.IBS.SubSamples.SuspendBinding();
-            //    Interface.IBS.Units.SuspendBinding();
+            // Interface.IBS.SubSamples.SuspendBinding(); Interface.IBS.Units.SuspendBinding();
 
-
-            ///     Interface.IStore.Save<UnitRow>();
-            ///  Interface.IStore.Save<SubSamplesDataTable>();
+            /// Interface.IStore.Save<UnitRow>(); Interface.IStore.Save<SubSamplesDataTable>();
             LINAA.SubSamplesRow s = row as LINAA.SubSamplesRow;
             s.MatrixRow?.Delete();
-            //    Interface.IBS.SubSamples.ResumeBinding();
-            //      Interface.IBS.Units.ResumeBinding();
+            // Interface.IBS.SubSamples.ResumeBinding(); Interface.IBS.Units.ResumeBinding();
 
-         //   Interface.IBS.SelectedSubSample.ResetBindings(false);
+         // Interface.IBS.SelectedSubSample.ResetBindings(false);
 
             projectbox.CallBack?.Invoke();
 
             this.bindingNavigatorDeleteItem.Enabled = true;
         }
         */
-
-
-     
-    
 
         /// <summary>
         /// set interface and basics
@@ -220,12 +208,9 @@ namespace DB.UI
             this.DGV.DataSource = Interface.IBS.SubSamples;
             this.BN.BindingSource = Interface.IBS.SubSamples;
 
-            //  Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged;
-            //     projectbox.Set(ref Interface);
+            // Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged; projectbox.Set(ref Interface);
 
-         
-            LIMS.SetProjectBox(ref this.projectbox);
-          
+            Creator.SetProjectBox(ref this.projectbox);
 
             setUI();
             /*
@@ -236,7 +221,7 @@ namespace DB.UI
             */
             //other callBACKS CAN BE ADDED TO THIS ONE BY OTHER CONTROLS
 
-            //  Interface.IBS.SubSamples = this.BS;
+            // Interface.IBS.SubSamples = this.BS;
         }
 
         private void setUI()
@@ -291,9 +276,6 @@ namespace DB.UI
             }
         }
 
-       
-     
-
         /// <summary>
         /// something about a crystal report
         /// </summary>
@@ -315,7 +297,5 @@ namespace DB.UI
 
             reportBtton.Visible = false;
         }
-
-       
     }
 }

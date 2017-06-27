@@ -72,7 +72,7 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-            Creator.Connections();
+            Creator.ConnectionsUI();
 
            // if (!restart) return;
 
@@ -199,8 +199,8 @@ namespace k0X
 
             bufferedMsg = "\nListed:\n" + listed + "\n\nDisposed:\n" + disposed + "\n\nRemaining:\n" + reimaining;
 
-            LIMS.UserControls = null;
-            LIMS.UserControls = arr.ToList();
+            Creator.UserControls = null;
+            Creator.UserControls = arr.ToList();
             arr = null;
         }
     }

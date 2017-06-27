@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
+using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -14,10 +14,6 @@ namespace DB.Tools
 
     public partial class BS
     {
- 
-
-      
-
         private void addingNew(object sender, AddingNewEventArgs e)
         {
             try
@@ -80,11 +76,10 @@ namespace DB.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="r"></param>
-        protected bool hasCompulsoryErrors<T>(T r, string[] colsinError=null, bool accumulate = false)
+        protected bool hasCompulsoryErrors<T>(T r, string[] colsinError = null, bool accumulate = false)
         {
-            if (Rsx.EC.IsNuDelDetch(r as DataRow))
+            if (EC.IsNuDelDetch(r as DataRow))
             {
-
                 return true;
             }
             DataRow row = r as DataRow;
@@ -103,7 +98,7 @@ namespace DB.Tools
                     {
                         colsinError = row.GetColumnsInError().Select(o => o.ColumnName).ToArray();
                     }
-                    string result = Interface.GetDisplayColumName( tableName, colsinError);
+                    string result = Interface.GetDisplayColumName(tableName, colsinError);
                     ok = false;
                     msg = ROW_WITH_ERROR + result;
                     title = WARNING;
@@ -118,19 +113,18 @@ namespace DB.Tools
             hasErrorsMethod = null;
             return ok;
         }
-      
+
         private void currentChanged(object sender, EventArgs e)
         {
             BindingSource bs = sender as BindingSource;
             CurrentChanged(ref bs);
         }
 
-   
         private void listChanged_Preferences(object sender, ListChangedEventArgs e)
         {
             try
             {
-              //  if (e.ListChangedType != System.ComponentModel.ListChangedType.ItemChanged) return;
+                // if (e.ListChangedType != System.ComponentModel.ListChangedType.ItemChanged) return;
 
                 string main = "Main";
                 if (sender.Equals(Preferences))

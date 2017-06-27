@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Linq;
+﻿using System.Linq;
 
 namespace DB.Tools
 {
@@ -110,9 +109,9 @@ namespace DB.Tools
                 tableName = "geometry";
             }
         }
-        public string GetDisplayColumName( string tableName, string[] colsInError )
+
+        public string GetDisplayColumName(string tableName, string[] colsInError)
         {
-         
             //iterate
             for (int i = 0; i < colsInError.Count(); i++)
             {
@@ -124,7 +123,6 @@ namespace DB.Tools
                 if (col.Contains("FillHeight"))
                 {
                     colsInError[i] = "Length";
-
                 }
                 else if (col.Contains("Radius"))
                 {
@@ -142,14 +140,11 @@ namespace DB.Tools
                 {
                     colsInError[i] = "Mass";
                 }
-               
-
             }
             string sep = ", ";
             string result = colsInError.Aggregate((o, next) => o = o + sep + next);
             result = "\t" + result;
             return result;
         }
-
     }
 }

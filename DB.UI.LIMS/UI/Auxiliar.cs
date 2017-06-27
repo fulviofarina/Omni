@@ -1,10 +1,11 @@
+using System;
 using System.Windows.Forms;
 
 namespace DB.UI
 {
     public partial class Auxiliar : Form
     {
-        public UserControl DisplayedControl = null;
+        private UserControl _displayedControl = null;
 
         public Auxiliar()
         {
@@ -17,28 +18,32 @@ namespace DB.UI
             TLP.Controls.Clear();
             control.Dock = DockStyle.Fill;
             TLP.Controls.Add(control, 0, 0);
-            DisplayedControl = control;
+            _displayedControl = control;
             this.AutoSizeMode = AutoSizeMode.GrowOnly;
-            this.FormClosing +=this.formClosing;
-
+            this.FormClosing += this.formClosing;
         }
 
-        private void formClosing(object sender, FormClosingEventArgs e)
+        protected internal void formClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.DisplayedControl.GetType().Equals(typeof(ucPreferences)))
+            Type tipo = this._displayedControl.GetType();
+            if (tipo.Equals(typeof(ucPreferences)))
             {
                 LIMS.Interface.IPreferences.SavePreferences();
                 e.Cancel = true;
-              
+            }
+            else if (tipo.Equals(typeof(ucXCOMPreferences)))
+            {
+                LIMS.Interface.IPreferences.SavePreferences();
+                e.Cancel = true;
             }
             if (!e.Cancel)
             {
-                this.TLP.Controls.Remove(this.DisplayedControl);
+                this.TLP.Controls.Remove(this._displayedControl);
             }
             else this.Visible = false;
         }
 
-        private void controlRemoved(object sender, ControlEventArgs e)
+        protected internal void controlRemoved(object sender, ControlEventArgs e)
         {
             e.Control.Dispose();
             this.Dispose();

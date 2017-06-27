@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {

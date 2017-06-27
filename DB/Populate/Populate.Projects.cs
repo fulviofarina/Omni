@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 //using DB.Interfaces;
 using Rsx.Dumb;
-using Rsx;
-using System.Linq;
 
 namespace DB
 {
     public partial class LINAA : IProjects
     {
-
-
         public ProjectsRow FindBy(int? IrReqId, int? orderID, bool addIfNull)
         {
             LINAA.ProjectsRow pro = null;
@@ -27,7 +24,6 @@ namespace DB
 
             return pro;
         }
-
 
         protected ICollection<string> activeProjectsList;
         protected IList<string> projectsList;
@@ -67,7 +63,7 @@ namespace DB
             {
                 //Handlers(this.tableSubSamples, false);
 
-                //	Dumb.CleanColumnExpressions(Measurements);
+                // Dumb.CleanColumnExpressions(Measurements);
                 this.tableProjects.Clear();
 
                 this.TAM.ProjectsTableAdapter.Fill(this.tableProjects);
@@ -78,6 +74,30 @@ namespace DB
             {
                 this.AddException(ex);
             }
+        }
+
+        public IList<string> ListOfHLProjects()
+        {
+            LINAATableAdapters.MeasurementsTableAdapter mta = new LINAATableAdapters.MeasurementsTableAdapter();
+
+            IList<string> arr = new List<string>();
+            try
+            {
+                MeasurementsDataTable meas = new MeasurementsDataTable();
+                 mta.FillDataByHL(meas);
+                arr = meas.Select(o => o.Project).Distinct().ToList();
+                meas.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+                AddException(ex);
+            }
+
+
+            mta.Dispose();
+
+            return arr;
         }
     }
 }

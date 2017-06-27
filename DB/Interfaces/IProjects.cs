@@ -19,5 +19,6 @@ namespace DB
         void PopulateProjects();
 
         void PopulateToDoes();
+        IList<string> ListOfHLProjects();
     }
 }

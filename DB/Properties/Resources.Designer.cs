@@ -61,11 +61,51 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Atom {
+            get {
+                object obj = ResourceManager.GetObject("Atom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backups\.
         /// </summary>
         public static string Backups {
             get {
                 return ResourceManager.GetString("Backups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Bomb {
+            get {
+                object obj = ResourceManager.GetObject("Bomb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Browse {
+            get {
+                object obj = ResourceManager.GetObject("Browse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Clean {
+            get {
+                object obj = ResourceManager.GetObject("Clean", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -124,6 +164,46 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Geometries {
+            get {
+                object obj = ResourceManager.GetObject("Geometries", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Geometry {
+            get {
+                object obj = ResourceManager.GetObject("Geometry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Green {
+            get {
+                object obj = ResourceManager.GetObject("Green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Handpoint {
+            get {
+                object obj = ResourceManager.GetObject("Handpoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \k0-X\.
         /// </summary>
         public static string k0XFolder {
@@ -151,6 +231,45 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap LogoMenu {
+            get {
+                object obj = ResourceManager.GetObject("LogoMenu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Matrices {
+            get {
+                object obj = ResourceManager.GetObject("Matrices", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Matrices.xml.
+        /// </summary>
+        public static string MatricesFile {
+            get {
+                return ResourceManager.GetString("MatricesFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mcnpx.exe.
         /// </summary>
         public static string MCNPXExe {
@@ -169,11 +288,91 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Monitors {
+            get {
+                object obj = ResourceManager.GetObject("Monitors", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferences.
         /// </summary>
         public static string Preferences {
             get {
                 return ResourceManager.GetString("Preferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Project {
+            get {
+                object obj = ResourceManager.GetObject("Project", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Radioactive {
+            get {
+                object obj = ResourceManager.GetObject("Radioactive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Reaction {
+            get {
+                object obj = ResourceManager.GetObject("Reaction", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Reactor {
+            get {
+                object obj = ResourceManager.GetObject("Reactor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Reactors {
+            get {
+                object obj = ResourceManager.GetObject("Reactors", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Red {
+            get {
+                object obj = ResourceManager.GetObject("Red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap RefMat1 {
+            get {
+                object obj = ResourceManager.GetObject("RefMat1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -214,6 +413,16 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Springfield {
+            get {
+                object obj = ResourceManager.GetObject("Springfield", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MatSSF\.
         /// </summary>
         public static string SSFFolder {
@@ -241,20 +450,95 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WCalc.htm.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static string WCalc {
+        public static System.Drawing.Bitmap Standards {
             get {
-                return ResourceManager.GetString("WCalc", resourceCulture);
+                object obj = ResourceManager.GetObject("Standards", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to XCOMEnergies.txt.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static string XCOMEnergies {
+        public static System.Drawing.Bitmap SubSamples {
             get {
-                return ResourceManager.GetString("XCOMEnergies", resourceCulture);
+                object obj = ResourceManager.GetObject("SubSamples", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Vials {
+            get {
+                object obj = ResourceManager.GetObject("Vials", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Worker2 {
+            get {
+                object obj = ResourceManager.GetObject("Worker2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.004
+        ///0.005
+        ///0.006
+        ///0.008
+        ///0.01
+        ///0.015
+        ///0.02
+        ///0.03
+        ///0.04
+        ///0.05
+        ///0.06
+        ///0.08
+        ///0.1
+        ///0.15
+        ///0.2
+        ///0.3
+        ///0.4
+        ///0.5
+        ///0.6
+        ///0.8
+        ///1
+        ///1.022
+        ///1.25
+        ///1.5
+        ///2
+        ///2.044
+        ///3.
+        /// </summary>
+        public static string XCOM {
+            get {
+                return ResourceManager.GetString("XCOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XCOM\.
+        /// </summary>
+        public static string XCOMFolder {
+            get {
+                return ResourceManager.GetString("XCOMFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XCOMPreferences.
+        /// </summary>
+        public static string XCOMPreferences {
+            get {
+                return ResourceManager.GetString("XCOMPreferences", resourceCulture);
             }
         }
     }

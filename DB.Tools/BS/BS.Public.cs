@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Data;
 using System.Windows.Forms;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -13,14 +11,12 @@ namespace DB.Tools
     /// </summary>
     public partial class BS
     {
-       
-
         /// <summary>
         /// Selects a Unit Child Row or the Unit Row itself and assigns the respective Parent
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        public void AssignUnitChild<T>( ref T row)
+        public void AssignUnitChild<T>(ref T row)
         {
             try
             {
@@ -48,7 +44,6 @@ namespace DB.Tools
 
                 //do I need this? yes!
                 CurrentChanged<SubSamplesRow>(s, false, false, true);
-
             }
             catch (System.Exception ex)
             {
@@ -57,7 +52,6 @@ namespace DB.Tools
             }
         }
 
-       
         /*
         public UnitRow SelectUnit<T>(ref T row)
         {
@@ -70,6 +64,7 @@ namespace DB.Tools
             return unit;
         }
         */
+
         public void ResetBidings(bool v)
         {
             foreach (BindingSource bs in bindings.Values)
@@ -104,14 +99,13 @@ namespace DB.Tools
                 if (isCalculating)
                 {
                     EndEdit();
-                 //   EnabledControls = false;
+                    // EnabledControls = false;
                 }
                 //DO I NEED TO PUT ENABLED TRUE??
-            //    EnabledControls = !value;// else { EnabledControls = true; }
+                //    EnabledControls = !value;// else { EnabledControls = true; }
             }
         }
 
-       
         public void ApplyFilters()
         {
             try
@@ -139,7 +133,6 @@ namespace DB.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="r"></param>
-       
 
         /// <summary>
         /// EndEdit for each binding source
@@ -193,8 +186,7 @@ namespace DB.Tools
 
         public void StartBinding()
         {
-         //   SSFPreferences.ListChanged += listChanged_Preferences;
-          //  Preferences.ListChanged += listChanged_Preferences;
+            // SSFPreferences.ListChanged += listChanged_Preferences; Preferences.ListChanged += listChanged_Preferences;
 
             SubSamples.CurrentChanged += currentChanged;
             Channels.CurrentChanged += currentChanged;
@@ -241,7 +233,6 @@ namespace DB.Tools
         /// <param name="doCascade"></param>
         public void CurrentChanged<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
         {
-           
             try
             {
                 currentChanged(r, doCascade, findItself, selectedBS);
@@ -250,9 +241,7 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);
             }
-       
         }
-
 
         public void CurrentChanged(ref BindingSource sender)
         {
@@ -270,11 +259,9 @@ namespace DB.Tools
                     ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
                     currentChanged(c, true, false, selectedBs);
                 }
-
                 else if (sender.Equals(SubSamples) || sender.Equals(Units))
                 {
                     updateSubSampleOrUnit(ref sender, selectedBs);
-
                 }
                 else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
                 {
@@ -292,8 +279,6 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
             }
         }
-
-
 
         public BS()
         {

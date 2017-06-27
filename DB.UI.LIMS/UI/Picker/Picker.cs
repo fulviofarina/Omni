@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx;
 using Rsx.Dumb;
 
 //this works too good YEAH!!!

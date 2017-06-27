@@ -73,6 +73,10 @@
     <None Include="ToDoDiag.cd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB.Tools.WC\DB.Tools.WC.csproj">
+      <Project>{3e0e1bf6-6dea-4df2-bc42-b00f3150bb82}</Project>
+      <Name>DB.Tools.WC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>

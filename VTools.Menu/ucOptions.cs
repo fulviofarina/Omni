@@ -15,6 +15,8 @@ namespace VTools
 
     public interface IOptions
     {
+        bool DisableBasic { set; }
+        int Type { set; get; }
         //  Action AboutBoxAction { set; }
         event EventHandler DatabaseClick;
         event EventHandler HelpClick;
@@ -39,6 +41,14 @@ namespace VTools
         public ucOptions()
         {
             InitializeComponent();
+           
+
+         
+        }
+        public ucOptions(int tipo)
+        {
+            InitializeComponent();
+            type = tipo;
         }
 
         public event EventHandler RestoreFoldersClick
@@ -46,16 +56,17 @@ namespace VTools
             add
             {
                 this.folderRestoreTSMI.Click += value;
+               
             }
             remove
             {
                 this.folderRestoreTSMI.Click -= value;
+              
             }
         }
         public void Set()
         {
-            //basic
-            //then others attached
+     
 
             this.Save.Click += delegate
             {
@@ -81,11 +92,13 @@ namespace VTools
             add
             {
                 this.preferencesTSMI.Click += value;
+             
             }
 
             remove
             {
                 this.preferencesTSMI.Click -= value;
+           
             }
         }
 
@@ -94,12 +107,15 @@ namespace VTools
 
             add
             {
+             
                 limsTSMI.Click += value;
             }
             remove
             {
+
                 limsTSMI.Click -= value;
            
+           //     preferencesTSMI.Visible = false;
             }
         }
 
@@ -121,14 +137,14 @@ namespace VTools
         {
             add
             {
-
+           
                 this.Save.Click += value;
 
             }
 
             remove
             {
-           
+              
                 this.Save.Click -= value;
             
             }
@@ -140,11 +156,13 @@ namespace VTools
 
             add
             {
+             
                 connectionsTSMI.Click += value;
             }
             remove
             {
                 connectionsTSMI.Click -= value;
+             
             }
         }
       
@@ -154,10 +172,12 @@ namespace VTools
 
             add
             {
+              
                 explorerToolStripMenuItem.Click += value;
             }
             remove
             {
+              
                 explorerToolStripMenuItem.Click -= value;
             }
         }
@@ -187,8 +207,22 @@ namespace VTools
 
             set
             {
-                this.explorerToolStripMenuItem.Enabled = value;
-                this.limsTSMI.Enabled = value;
+                this.explorerToolStripMenuItem.Visible = value;
+                this.limsTSMI.Visible = value;
+            }
+        }
+
+
+        private int type = 0;
+        public int Type
+        {
+            get
+            {
+                return type;
+            }
+            set
+            {
+                type = value;
             }
         }
 
@@ -206,7 +240,22 @@ namespace VTools
             }
         }
 
-      
+      public bool DisableBasic
+        {
+            //basic
+            //then others attached
+            set
+            {
+                bool enable = value;
+               databaseToolStripMenuItem.Visible = enable;
+            
+                this.connectionsTSMI.Visible = enable;
+             //   this.Save.Enabled = Visible;
+             //   folderRestoreTSMI.Visible = enable;
+            
+            }
+        }
+
 
         public void ResetProgress (int max)
         {

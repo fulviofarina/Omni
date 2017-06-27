@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB.Tools
 {

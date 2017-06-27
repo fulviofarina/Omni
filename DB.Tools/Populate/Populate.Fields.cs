@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace DB.Tools
+﻿namespace DB.Tools
 {
     public partial class Populate
     {
@@ -14,7 +12,5 @@ namespace DB.Tools
         public ISchedAcqs ISchedAcqs;
         public IToDoes IToDoes;
         protected internal Interface Interface;
-
-     
     }
 }

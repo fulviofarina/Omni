@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -8,10 +8,8 @@ namespace DB
     {
         partial class ToDoResRow
         {
-            // internal decimal w = 0;
-            // internal decimal w2 = 0;
-            // internal decimal wX = 0;
-            // internal decimal wX2 = 0;
+            // internal decimal w = 0; internal decimal w2 = 0; internal decimal wX = 0; internal
+            // decimal wX2 = 0;
         }
 
         partial class ToDoResAvgDataTable
@@ -37,9 +35,9 @@ namespace DB
                 AddToDoResAvgRow(avi);
                 try
                 {
-                    //   avi.Key = res.Key;
+                    // avi.Key = res.Key;
                     avi.DP = res.DP;
-                    //   avi.KeyID = avi.Key.Replace("," + avi.DP, null);
+                    // avi.KeyID = avi.Key.Replace("," + avi.DP, null);
                     avi.ToDoNr = res.ToDoNr;
 
                     avi.Energy = res.Energy;
@@ -80,7 +78,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.EC.SetRowError(res, ex);
+                    EC.SetRowError(res, ex);
                 }
                 return res;
             }

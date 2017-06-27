@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -32,6 +32,7 @@ namespace DB
             else throw new SystemException("Not impletemented");
             return any;
         }
+
         public static Func<IRequestsAveragesRow, bool> IsComparator()
         {
             return x => x.Comparator && !EC.IsNuDelDetch(x.SubSamplesRow.MonitorsRow);
@@ -41,6 +42,7 @@ namespace DB
         {
             return x => x.Project.CompareTo(irradiationCode) == 0;
         }
+
         public static Func<T, bool> SelectorByField<T>(object value, string field)
         {
             Func<T, bool> any = null;

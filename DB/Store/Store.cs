@@ -6,13 +6,12 @@ using System.Xml;
 using System.Xml.Schema;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IStore
     {
-
         public void UpdateIrradiationDates()
         {
             foreach (LINAA.MonitorsRow m in this.tableMonitors.Rows)
@@ -34,10 +33,21 @@ namespace DB
             }
         }
 
-
-        public void Read(string filepath)
+        public void CleanOthers()
+        {
+            //Interface.IDB.SSFPref.Clear();
+            Exceptions.Clear();
+            MatSSF.Clear();
+    
+            MUES.Clear();
+            MUES.AcceptChanges();
+            MatSSF.AcceptChanges();
+            Exceptions.AcceptChanges();
+        }
+        public void Read(string filepath=null)
         {
             LINAA dt = null;
+
 
             // file.EnforceConstraints = false;
             XmlReader reader = null;
@@ -57,6 +67,14 @@ namespace DB
                 dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
 
                 this.Merge(dt);
+
+                //    DataSet set = Interface.Get();
+                //clear and repopulate
+        
+
+        
+            
+
                 //MergePreferences();
                 // this.PopulateSSFPreferences();
             }
@@ -67,7 +85,6 @@ namespace DB
 
             //return dt;
         }
-
 
         protected string folderPath = string.Empty;
 
@@ -84,6 +101,7 @@ namespace DB
             // this.PopulateColumnExpresions()
             this.tableExceptions.AddExceptionsRow(ex);
         }
+
         public void CloneDataSet(ref LINAA set)
         {
             this.InitializeComponent();
@@ -116,6 +134,14 @@ namespace DB
             return tables.Where(haschangesFunc);
         }
 
-      
+        public void CleanPreferences()
+        {
+            Preferences.Clear();
+            XCOMPref.Clear();
+            SSFPref.Clear();
+            Preferences.AcceptChanges();
+            XCOMPref.AcceptChanges();
+            SSFPref.AcceptChanges();
+        }
     }
 }

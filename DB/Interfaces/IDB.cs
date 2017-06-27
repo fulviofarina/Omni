@@ -29,7 +29,7 @@ namespace DB
         LINAA.IrradiationRequestsDataTable IrradiationRequests { get; }
 
         LINAA.k0NAADataTable k0NAA { get; }
-
+        string[] MatSSFTYPES { get; }
         LINAA.MatrixDataTable Matrix { get; }
 
         LINAA.MatSSFDataTable MatSSF { get; }
@@ -90,5 +90,6 @@ namespace DB
         LINAA.UnitDataTable Unit { get; }
         LINAA.VialTypeDataTable VialType { get; }
         LINAA.YieldsDataTable Yields { get; }
+        LINAA.XCOMPrefDataTable XCOMPref { get; }
     }
 }

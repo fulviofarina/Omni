@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace VTools
 {
 
-    public interface IGenericCBox
+    public interface IGenericBox
     {
         string BindingField { get; set; }
         Action CallBack { get; set; }
@@ -24,14 +24,14 @@ namespace VTools
         Color TextBackColor { get; set; }
         string TextContent { get; set; }
         Color TextForeColor { get; set; }
-
+        event EventHandler AddMethod;
         event EventHandler DeveloperMethod;
         event EventHandler PopulateListMethod;
         event EventHandler RefreshMethod;
-
+        void SetNoBindingSource();
         void SetBindingSource(ref BindingSource bsSample, bool shouldUpdate);
     }
-    public partial class ucGenericCBox : UserControl, IGenericCBox
+    public partial class ucGenericCBox : UserControl, IGenericBox
     {
         protected internal Binding binding;
         protected internal string bindingField = string.Empty;
@@ -163,12 +163,12 @@ namespace VTools
                 {
                     projectbox.Text = value.Trim().ToUpper();
 
-                    if (PopulateListMethod != null)
-                    {
+               //     if (PopulateListMethod != null)
+                 //   {
                         PopulateListMethod?.Invoke(null, EventArgs.Empty);
 
                         this.keyUpPressed(this.projectbox, new KeyEventArgs(Keys.Enter));
-                    }
+                   // }
                 };
                 hdl.Invoke(null, EventArgs.Empty);
                 //this.Invoke(hdl);
@@ -238,7 +238,10 @@ namespace VTools
 
             set { wasRefreshed = value; }
         }
-    //    public bool WasRefreshed { get;  set; }
+
+        public event EventHandler AddMethod;
+
+        //    public bool WasRefreshed { get;  set; }
 
         public event EventHandler DeveloperMethod;
 
@@ -252,19 +255,24 @@ namespace VTools
         public void SetBindingSource(ref BindingSource bsSample, bool ShouldUpdate)
         {
             shouldUpdate = ShouldUpdate;
-            DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
-            bool t = true;
-            // format = string.Empty; string text = "Text";
-            binding = new Binding("Text", bsSample, bindingField, t, mo, DBNull.Value, string.Empty);
-            binding.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
-            if (shouldUpdate)
-            {
-                projectbox.DataBindings.Add(binding);
-            }
+       
+           
+                DataSourceUpdateMode mo = DataSourceUpdateMode.OnPropertyChanged;
+                bool t = true;
+                // format = string.Empty; string text = "Text";
+                binding = new Binding("Text", bsSample, bindingField, t, mo, DBNull.Value, string.Empty);
+                binding.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
 
+                projectbox.DataBindings.Add(binding);
+          
+            SetNoBindingSource();
+        }
+        public void SetNoBindingSource()
+        {
+            PopulateListMethod?.Invoke(null, EventArgs.Empty);
             this.projectlabel.Click += openDropDown;
             this.projectbox.DropDownClosed += dropDownClosed;
-         
+
             this.projectbox.DropDown += setNoUpdates;
         }
         protected internal void dropDownClosed(object sender, EventArgs e)
@@ -321,6 +329,8 @@ namespace VTools
 
             if (enterPressed)
             {
+
+                AddMethod?.Invoke(sender, e);
                // setReceiveUpdates();
                 //the items list
                 PopulateListMethod?.Invoke(sender, e);

@@ -1,4 +1,5 @@
 ﻿using System;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -19,7 +20,7 @@ namespace DB
                 catch (SystemException ex)
                 {
                     t.use = false;
-                    Rsx.EC.SetRowError(t, ex);
+                    EC.SetRowError(t, ex);
                 }
                 return t;
             }
@@ -57,7 +58,7 @@ namespace DB
                 }
                 catch (SystemException ex)
                 {
-                    Rsx.EC.SetRowError(tu, ex);
+                    EC.SetRowError(tu, ex);
                 }
                 return tu;
             }

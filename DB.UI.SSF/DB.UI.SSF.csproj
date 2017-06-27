@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B38C54AC-D6A3-4F36-B240-928CE415F702}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DB.UI</RootNamespace>
+    <AssemblyName>DB.UI.SSF</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DGV\DGVs.cs" />
+    <Compile Include="DGV\IDGVs.cs" />
+    <Compile Include="ucSSF.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucSSF.Designer.cs">
+      <DependentUpon>ucSSF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panel.Designer.cs">
+      <DependentUpon>Panel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Results.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Results.Designer.cs">
+      <DependentUpon>Results.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Data.Designer.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data.NS.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Data.NS.Designer.cs">
+      <DependentUpon>Data.NS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data.Sample.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Data.Sample.Designer.cs">
+      <DependentUpon>Data.Sample.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DGV\DGV.cd" />
+    <None Include="ucSSF.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Panel.resx">
+      <DependentUpon>Panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Results.resx">
+      <DependentUpon>Results.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucSSF.resx">
+      <DependentUpon>ucSSF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data.NS.resx">
+      <DependentUpon>Data.NS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data.resx">
+      <DependentUpon>Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data.Sample.resx">
+      <DependentUpon>Data.Sample.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DB.Tools.Creator\DB.Tools.Creator.csproj">
+      <Project>{1043e3e2-21a7-494d-bbbb-99327d379422}</Project>
+      <Name>DB.Tools.Creator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.SSF\DB.Tools.SSF.csproj">
+      <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
+      <Name>DB.Tools.SSF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.XCOM\DB.Tools.XCOM.csproj">
+      <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
+      <Name>DB.Tools.XCOM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
+      <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
+      <Name>DB.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.Geometry\DB.UI.Geometry.csproj">
+      <Project>{18c85541-1271-455e-85a6-6c14774c2d63}</Project>
+      <Name>DB.UI.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.Preferences\DB.UI.Preferences.csproj">
+      <Project>{e8086c4f-0dd5-4058-9f8f-abe43c43b161}</Project>
+      <Name>DB.UI.Preferences</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
+      <Name>DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.DGV\Rsx.DGV.csproj">
+      <Project>{79f588d7-7be3-4882-a9c0-37810c5281ab}</Project>
+      <Name>Rsx.DGV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rsx.Dumb\Rsx.Dumb.csproj">
+      <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
+      <Name>Rsx.Dumb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Menu\VTools.Menu.csproj">
+      <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
+      <Name>VTools.Menu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTools.Msn\VTools.Msn.csproj">
+      <Project>{6c0291f8-1cac-40e4-b628-556d718d9b22}</Project>
+      <Name>VTools.Msn</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

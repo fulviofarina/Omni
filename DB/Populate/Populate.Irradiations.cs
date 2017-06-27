@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb;
 
 //using DB.Interfaces;
 
@@ -35,16 +35,12 @@ namespace DB
             return i;
         }
 
-      
-
         public ChannelsRow AddNewChannel()
         {
             // ChannelsRow v = e.NewObject as ChannelsRow;//Interface.IDB.Matrix.NewMatrixRow();
             ChannelsRow v = addChannel();
             return v;
         }
-
-     
     }
 
     public partial class LINAA : IIrradiations

@@ -160,6 +160,10 @@
       <Project>{7129c27d-6ff1-42d5-960f-02b2d8480a8e}</Project>
       <Name>DB.Tools.SOLCOI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DB.Tools.WC\DB.Tools.WC.csproj">
+      <Project>{3e0e1bf6-6dea-4df2-bc42-b00f3150bb82}</Project>
+      <Name>DB.Tools.WC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rsx.CAM\Rsx.CAM.csproj">
       <Project>{2cbbadc3-33cc-456e-ab51-44333efcb83c}</Project>
       <Name>Rsx.CAM</Name>
@@ -183,10 +187,6 @@
     <ProjectReference Include="..\Rsx.Emailer\Rsx.Emailer.csproj">
       <Project>{501d60dc-64d8-490a-8ac8-0ad16bb627d2}</Project>
       <Name>Rsx.Emailer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rsx.Generic\Rsx.Generic.csproj">
-      <Project>{c0806053-7e45-4971-a846-28b93ce2f7d1}</Project>
-      <Name>Rsx.Generic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

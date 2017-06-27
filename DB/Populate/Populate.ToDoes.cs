@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 //using DB.Interfaces;
-using Rsx.Dumb; using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -25,7 +25,7 @@ namespace DB
 
         public void PopulateToDoes()
         {
-            //  this.tAM.ToDoTableAdapter.DeleNulls();
+            // this.tAM.ToDoTableAdapter.DeleNulls();
             this.tableToDo.Clear();
             this.TAM.ToDoTableAdapter.Fill(this.tableToDo);
             this.tableToDo.AcceptChanges();

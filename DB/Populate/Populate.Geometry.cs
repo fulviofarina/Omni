@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using DB.Properties;
+using Rsx.Dumb;
 
 //using DB.Interfaces;
 
@@ -64,6 +67,7 @@ namespace DB
             }
             return m;
         }
+
         public MatrixRow AddMatrix()
         {
             MatrixRow v = null;//Interface.IDB.Matrix.NewMatrixRow();
@@ -98,8 +102,8 @@ namespace DB
             Action[] populatorArray = null;
 
             populatorArray = new Action[]   {
-        //    PopulateCompositions ,
-        PopulateMatrix,
+        // PopulateCompositions ,
+        PopulateMatrixSQL,
         // PopulateMUESList,
          PopulateVials,
             PopulateGeometry};
@@ -138,23 +142,23 @@ namespace DB
                 this.AddException(ex);
             }
         }
-
-        public void PopulateMatrix()
+       
+        public void PopulateMatrixSQL()
         {
             try
             {
-            //    this.tableMatrix.BeginLoadData();
+                // this.tableMatrix.BeginLoadData();
                 this.tableMatrix.Clear();
-               this.tableMatrix.AcceptChanges();
-                PopulateMUESList();
+                this.tableMatrix.AcceptChanges();
+                //  PopulateMUESList();
+
                 MatrixDataTable m = new MatrixDataTable();
-                tAM.MatrixTableAdapter.ClearBeforeFill = true;
-                tAM.MatrixTableAdapter.Fill(m);
+            
+                    tAM.MatrixTableAdapter.ClearBeforeFill = true;
+                    tAM.MatrixTableAdapter.Fill(m);
           
                 this.tableMatrix.Merge(m, false, System.Data.MissingSchemaAction.AddWithKey);
-            //    this.tableMatrix.EndLoadData();
-            //    Save(ref this.tableMatrix);
-           //     this.tableMatrix.AcceptChanges();
+                // this.tableMatrix.EndLoadData(); Save(ref this.tableMatrix); this.tableMatrix.AcceptChanges();
             }
             catch (SystemException ex)
             {
@@ -162,6 +166,7 @@ namespace DB
             }
         }
 
+   
         public void PopulateMUESList()
         {
             MUESDataTable mues = this.TAM.MUESTableAdapter.GetListOfMatrices();
@@ -200,6 +205,38 @@ namespace DB
             {
                 this.AddException(ex);
             }
+        }
+
+     
+
+   
+
+    
+
+        public MUESDataTable GetMUES(ref MatrixRow m, bool sql = true)
+        {
+        
+            MUESDataTable mu = new MUESDataTable();
+
+            if (sql)
+            {
+                TAM.MUESTableAdapter.FillByMatrixID(mu,m.MatrixID);
+            }
+            else
+            {
+
+                if (m.IsXCOMTableNull()) return mu;
+                byte[] arr = m.XCOMTable;
+                Rsx.Dumb.Tables.ReadDTBytes(ref arr, ref mu);
+            }
+            return mu;
+        }
+
+      
+
+        public MUESDataTable GetMUES(double el, double eh, int matrixID)
+        {
+            return TAM.MUESTableAdapter.GetDataByMatrixIDAndEnergy(el, eh, matrixID);
         }
     }
 }

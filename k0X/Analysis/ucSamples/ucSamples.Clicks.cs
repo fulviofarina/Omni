@@ -8,7 +8,7 @@ using DB.Properties;
 using DB.Reports;
 using DB.UI;
 using VTools;
-
+using Rsx.Dumb;
 namespace k0X
 {
     public partial class ucSamples
@@ -30,7 +30,7 @@ namespace k0X
             object tag = this.TV.SelectedNode.Tag;
             if (tag == null) return;
             DataRow row = tag as DataRow;
-            if (Rsx.EC.IsNuDelDetch(row)) return;
+            if (EC.IsNuDelDetch(row)) return;
 
             Logger log = null;
             object o = null;

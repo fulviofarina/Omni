@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 //using DB.Interfaces;
 using Rsx.Dumb;
-using Rsx;
-using System.Linq;
 
 namespace DB
 {
     public partial class LINAA : IOrders
     {
-
         public Int32? FindOrderID(String LabOrderRef)
         {
             Int32? OrderID = null;
@@ -22,7 +20,6 @@ namespace DB
 
             return OrderID;
         }
-
 
         protected ICollection<string> ordersList;
 
@@ -39,8 +36,6 @@ namespace DB
                 return ordersList;
             }
         }
-
-      
 
         public void PopulateOrders()
         {

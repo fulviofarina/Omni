@@ -1,14 +1,15 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using DB.Properties;
 using static DB.LINAA;
+using Rsx.Dumb;
 
 namespace DB.Tools
 {
     public partial class Populate
     {
-
         private void getPreferencesEvent(object sender, EventData e)
         {
-
             SSFPrefRow pref = Interface.IPreferences.CurrentSSFPref;
             object[] args = new object[]
             {
@@ -18,14 +19,30 @@ namespace DB.Tools
             pref.AAFillHeight
         };
 
-           
             e.Args = args;
         }
 
-        public bool[] LoadProject( bool enterPressed, string ProjectOrOrder)
+        private void getPreferencesSpectrumEvent(object sender, EventData e)
+        {
+            PreferencesRow pref = Interface.IPreferences.CurrentPref;
+            object[] args = new object[]
+            {
+                pref.minArea,
+            pref.maxUnc,
+             pref.windowA,
+            pref.windowB,
+            pref.DetectorIdx,
+            pref.PositionIdx,
+            pref.MeasIdx
+        };
+
+            e.Args = args;
+        }
+
+        public bool[] LoadProject(bool enterPressed, string ProjectOrOrder)
         {
             if (string.IsNullOrEmpty(ProjectOrOrder)) return new bool[] { false, false };
-            //    ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
+            // ProjectOrOrder = ProjectOrOrder.ToUpper().Trim();
             bool isAProjectOrOrder = Interface.IPopulate.IProjects.ProjectsList.Contains(ProjectOrOrder);
             if (!Interface.IBS.EnabledControls) return new bool[] { false, false };
             //eactivate box because it entered
@@ -40,13 +57,12 @@ namespace DB.Tools
             if (makeProject)
             {
                 //add project and update the flag
-                isAProjectOrOrder= Interface.IPopulate.AddProject(ref ProjectOrOrder);
+                isAProjectOrOrder = Interface.IPopulate.AddProject(ref ProjectOrOrder);
                 if (!isAProjectOrOrder) rejected = true;
                 if (rejected)
                 {
                     Interface.IReport.Msg("The user cancelled the project creation", "Project " + ProjectOrOrder + " not created", false);
                 }
-          
             }
             if (isAProjectOrOrder)
             {
@@ -60,8 +76,8 @@ namespace DB.Tools
             }
 
             return new bool[] { rejected, isAProjectOrOrder };
-
         }
+
         public bool AddProject(ref string ProjectOrOrder)
         {
             DialogResult result = DialogResult.No;
@@ -69,21 +85,20 @@ namespace DB.Tools
             Interface.IReport.Msg(text, "Not Found... " + ProjectOrOrder);
             result = MessageBox.Show(text, "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-        //    Application.DoEvents();
+            // Application.DoEvents();
             if (DialogResult.No == result)
             {
                 ProjectOrOrder = "NULL";
             }
             else
             {
-             
                 Interface.IPopulate.IIrradiations.AddNewIrradiation(ProjectOrOrder);
                 Interface.IStore.Save<LINAA.IrradiationRequestsDataTable>();
                 // LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
                 text = "Project created.\n\nPlease add some samples to it... ";
                 string created = "Project " + ProjectOrOrder + " created";
                 MessageBox.Show(text, created, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Interface.IReport.Msg(created, text );
+                Interface.IReport.Msg(created, text);
             }
             return result != DialogResult.No;
         }
@@ -106,10 +121,14 @@ namespace DB.Tools
             ISamples = (ISamples)aux;
             ISchedAcqs = (ISchedAcqs)aux;
             IToDoes = (IToDoes)aux;
+           // Interface.IDB.SubSamples.AddMatrixHandler += this.addMatrixEvent;
+          // Interface.IPopulate
+            Interface.IDB.SubSamples.CalcParametersHandler = getPreferencesEvent;
+            ISamples.SpectrumCalcParametersHandler = getPreferencesSpectrumEvent;
 
 
-            Interface.IDB.SubSamples.CalcParametersHandler += getPreferencesEvent;
-            
         }
+
+
     }
 }

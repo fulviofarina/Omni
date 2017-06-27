@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using Rsx;
+using Rsx.Dumb;
 
 namespace DB
 {
@@ -23,7 +23,7 @@ namespace DB
                 bool nu = EC.CheckNull(Column, this);
                 if (nu && Column == this.tableVialType.VialTypeRefColumn)
                 {
-                        VialTypeRef = "New @ " + DateTime.Now.ToLocalTime();
+                    VialTypeRef = "New @ " + DateTime.Now.ToLocalTime();
                 }
             }
 

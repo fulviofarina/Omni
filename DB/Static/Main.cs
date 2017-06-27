@@ -8,10 +8,11 @@ namespace DB
     public partial class LINAA
     {
         /// <summary>
-        /// Projects a referenced IEnumerable of DataRow into a new one with only distinct rows according to a given filter field and returns those eliminated
+        /// Projects a referenced IEnumerable of DataRow into a new one with only distinct rows
+        /// according to a given filter field and returns those eliminated
         /// </summary>
         /// <param name="peaks1"></param>
-        /// <param name="field"></param>
+        /// <param name="field"> </param>
         /// <returns></returns>
         public static IEnumerable<T> Distinct<T>(ref IEnumerable<T> peaks1, string field)
         {
@@ -28,12 +29,13 @@ namespace DB
             hashy = null;
             return aux;
         }
+
         public static double AverageOfFCs(string irradiationCode, ref IEnumerable<IRequestsAveragesRow> comparators)
         {
             double FC = 0;
             if (comparators.Count() != 0) comparators = comparators.Where(HasProjectName(irradiationCode));
             if (comparators.Count() != 0) comparators = comparators.Where(IsComparator());
-            //   if (comparators.Count() != 0) comparators = comparators.Where(x => !EC.IsNuDelDetch(x.SubSamplesRow.MonitorsRow));
+            // if (comparators.Count() != 0) comparators = comparators.Where(x => !EC.IsNuDelDetch(x.SubSamplesRow.MonitorsRow));
             if (comparators.Count() != 0) FC = comparators.Average(FCAverager);
             if (FC == 0) FC = 1;
             return FC;
@@ -58,15 +60,14 @@ namespace DB
             else throw new SystemException("FindSelected not Implemented");
         }
 
-
         public static Func<LINAA.IRequestsAveragesRow, double> FCAverager = x => { if (x.IsFcNull()) return 0; else return x.Fc; };
 
         /// <summary>
         /// Get Peaks in need of calculations
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="all"></param>
-        /// <param name="coin"></param>
+        /// <param name="all">         </param>
+        /// <param name="coin">        </param>
         /// <param name="sampleOrMeas"></param>
         /// <returns></returns>
         public static IEnumerable<PeaksRow> GetPeaksInNeedOf<T>(bool all, bool coin, T sampleOrMeas)
