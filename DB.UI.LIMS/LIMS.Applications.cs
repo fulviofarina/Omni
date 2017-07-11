@@ -23,8 +23,8 @@ namespace DB.UI
             Form form = Creator.CreateForm(ref icon);
 
             IPreferences preferences = GetPreferences();
-            bool ssf = true;
-            IOptions options = GetOptions(ref ssf);
+            int type = 0;
+            IOptions options = GetOptions( type);
             //DEVELOPER MODE
             //      options.SetDeveloperMode(false);
 
@@ -121,15 +121,13 @@ namespace DB.UI
         }
 
 
-        public static IOptions GetOptions(ref bool ssf )
+        public static IOptions GetOptions( int type )
         {
 
 
             IOptions[] optionArr = Creator.UserControls.OfType<ucOptions>().ToArray();
 
             IOptions options = null;
-            int type = 0;
-            if (!ssf) type = 1;
 
             options = optionArr.FirstOrDefault(o => o.Type == type);
             if (options != null) return options;
@@ -140,34 +138,32 @@ namespace DB.UI
             //start BINDING
             options.AboutBoxClick += delegate
             {
-                aboutBox.Show();
+                aboutBox?.Show();
             };
 
-         
+            //EXPLORER
                 options.ExplorerClick += delegate
                 {
                 // if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
                 Explore();
                 };
-          
-      //      bool sffApp = ssf;
+            //LIMS
+            options.DatabaseClick += delegate
+            {
+                Form.Visible = true;
+                Form.Opacity = 100;
+                Form.BringToFront();
+            };
+
+
+            //      bool sffApp = ssf;
             options.PreferencesClick += delegate
             {
                 if (type ==0) GetPreferences(true);
-                else GetXCOMPreferences(true);
+                else if (type==1) GetXCOMPreferences(true);
             };
-
         
-                options.DatabaseClick += delegate
-                {
-                    Form.Visible = true;
-                    Form.Opacity = 100;
-                    Form.BringToFront();
-                };
-
-          
-
-      
+         
 
             return options;
         }
@@ -240,8 +236,10 @@ namespace DB.UI
         public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
         {
             ucMatrix mat = new ucMatrix();
-            bool ssf = false;
-            IOptions options = GetOptions(ref ssf);
+         //   bool ssf = false;
+            int type = 1;
+      
+            IOptions options = GetOptions( type);
             IXCOMPreferences prefes = GetXCOMPreferences();
             mat.Set(ref Interface, ref prefes);
 

@@ -12,7 +12,7 @@ namespace DB.UI
 {
     public partial class ucHyperLab : UserControl
     {
-        private DB.LINAATableAdapters.PeaksHLTableAdapter HLTA;
+      //  private DB.LINAATableAdapters.PeaksHLTableAdapter HLTA;
         private Interface Interface;
 
         private LINAA.PeaksHLRow peak;
@@ -21,7 +21,7 @@ namespace DB.UI
 
         public void CreateHLProjectBox()
         {
-            VTools.IGenericBox IBoc = project;
+            VTools.IGenericBox IBoc = this.project;
           
            
             IBoc.PopulateListMethod += delegate
@@ -31,8 +31,10 @@ namespace DB.UI
 
             IBoc.RefreshMethod += delegate
             {
-                Interface.IPopulate.ISamples.PopulateMeasurementsGeneric(IBoc.TextContent, true);
-
+                string projectTXT = IBoc.TextContent;
+                Interface.IBS.EnabledControls = false;
+                Interface.IPopulate.ISamples.PopulateMeasurementsGeneric(projectTXT, true);
+                Interface.IBS.EnabledControls = true;
              
             };
 
@@ -53,9 +55,9 @@ namespace DB.UI
 
             // Interface.IDB.PopulateColumnExpresions(); Interface.IAdapter.InitializeAdapters();
 
-            Interface.IPopulate.IDetSol.PopulateDetectorDimensions();
-            Interface.IPopulate.IGeometry.PopulateGeometry();
-            Interface.IPopulate.IIrradiations.PopulateIrradiationRequests();
+           // Interface.IPopulate.IDetSol.PopulateDetectorDimensions();
+          //  Interface.IPopulate.IGeometry.PopulateGeometry();
+          //  Interface.IPopulate.IIrradiations.PopulateIrradiationRequests();
 
             Interface.IDB.Measurements.ProjectColumn.Expression = string.Empty;
             Interface.IDB.Measurements.ProjectColumn.ReadOnly = false;
@@ -67,7 +69,7 @@ namespace DB.UI
             this.GaTA.Fill(this.Linaa.Gammas);
 
             Interface.IAdapter.TAM.Connection.ConnectionString = Settings.Default.HLSNMNAAConnectionString;
-            HLTA = new LINAATableAdapters.PeaksHLTableAdapter();
+        //    HLTA = new LINAATableAdapters.PeaksHLTableAdapter();
 
             CreateHLProjectBox();
 
@@ -91,6 +93,7 @@ namespace DB.UI
 
             this.measBS.CurrentChanged += delegate
             {
+                if (!Interface.IBS.EnabledControls) return;
                 if (measBS.Count != 0)
                 {
                     picked = (LINAA.MeasurementsRow)((DataRowView)measBS.Current).Row;
@@ -102,6 +105,7 @@ namespace DB.UI
                 }
             };
 
+            /*
             this.peaksBS.CurrentChanged += delegate
             {
                 if (peaksBS.Count != 0)
@@ -120,8 +124,10 @@ namespace DB.UI
                 }
             };
             this.gammasBS.CurrentChanged += (this.gammasBS_CurrentItemChanged);
-
+            
         //    this.samplebox.TextChanged += (this.Fill_Click);
+            */
+
         }
 
 

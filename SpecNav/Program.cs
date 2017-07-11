@@ -51,16 +51,20 @@ namespace SpecNav
 
                 hl.Set(ref LIMS.Interface);
 
-                VTools.IOptions options = Creator.GetOptions(0);
+             //   IPreferences preferences = 
+                VTools.IOptions options = LIMS.GetOptions(0);
 
                 hl.Set(ref options);
                 
                 //   UserControl control = this;
                 hl.Dock = DockStyle.Fill;
-                form.AutoSizeMode = AutoSizeMode.GrowOnly;
+               // form.AutoSizeMode = AutoSizeMode.GrowOnly;
+               // form.AutoSize = true;
                 hl.AutoSizeMode = AutoSizeMode.GrowOnly;
-                form.Opacity = 100;
+                hl.AutoSize = true;
+                form.Size = hl.Size;
                 form.Controls.Add(hl);
+                form.Opacity = 100;
                 //    form.Populate(ref control);
                 form.Text = "A data browser for HyperLab users, by F. Farina Arboccò";
                 //     form.Show();
