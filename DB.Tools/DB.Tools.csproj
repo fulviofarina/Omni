@@ -82,13 +82,13 @@
     <Compile Include="Current\ICurrent.cs" />
     <Compile Include="Populate\Populate.Fields.cs" />
     <Compile Include="Populate\Populate.cs" />
-    <Compile Include="Current\Preferences\Preferences.Public.cs" />
-    <Compile Include="Current\Preferences\Preferences.cs" />
+    <Compile Include="Preferences\Preferences.Public.cs" />
+    <Compile Include="Preferences\Preferences.cs" />
     <Compile Include="Report\IReport.cs" />
     <Compile Include="Report\Report.Public.cs" />
     <Compile Include="Report\Report.cs" />
     <Compile Include="Interface.cs" />
-    <Compile Include="Current\Preferences\IPreferences.cs" />
+    <Compile Include="Preferences\IPreferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

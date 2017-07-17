@@ -81,7 +81,8 @@ namespace DB.Tools
             IPopulate = new Populate(ref inter);
             Current current = new Current(ref IBS, ref inter);
             ICurrent = current;
-            IPreferences = current;
+            Preference pref = new Preference(ref inter);
+            IPreferences = pref ;
 
             //attach interfaces of LINAA (DB)
         }

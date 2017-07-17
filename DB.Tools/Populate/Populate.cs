@@ -8,36 +8,7 @@ namespace DB.Tools
 {
     public partial class Populate
     {
-        private void getPreferencesEvent(object sender, EventData e)
-        {
-            SSFPrefRow pref = Interface.IPreferences.CurrentSSFPref;
-            object[] args = new object[]
-            {
-                pref.CalcMass,
-            pref.AARadius,
-             pref.CalcDensity,
-            pref.AAFillHeight
-        };
-
-            e.Args = args;
-        }
-
-        private void getPreferencesSpectrumEvent(object sender, EventData e)
-        {
-            PreferencesRow pref = Interface.IPreferences.CurrentPref;
-            object[] args = new object[]
-            {
-                pref.minArea,
-            pref.maxUnc,
-             pref.windowA,
-            pref.windowB,
-            pref.DetectorIdx,
-            pref.PositionIdx,
-            pref.MeasIdx
-        };
-
-            e.Args = args;
-        }
+    
 
         public bool[] LoadProject(bool enterPressed, string ProjectOrOrder)
         {
@@ -121,11 +92,7 @@ namespace DB.Tools
             ISamples = (ISamples)aux;
             ISchedAcqs = (ISchedAcqs)aux;
             IToDoes = (IToDoes)aux;
-           // Interface.IDB.SubSamples.AddMatrixHandler += this.addMatrixEvent;
-          // Interface.IPopulate
-            Interface.IDB.SubSamples.CalcParametersHandler = getPreferencesEvent;
-            ISamples.SpectrumCalcParametersHandler = getPreferencesSpectrumEvent;
-
+       
 
         }
 

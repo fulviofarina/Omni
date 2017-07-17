@@ -20,6 +20,8 @@
         public const string Preferences = "Preferences";
 
         public const string XCOMPreferences = "XCOMPreferences";
+        public const string SpecPreferences = "SpecPreferences";
+        public const string SpecNavigator = "SpecNavigator";
         // public const string Units = "Units";
     }
 }

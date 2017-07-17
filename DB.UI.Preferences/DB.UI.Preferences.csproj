@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Preferences\ucSpecPreferences.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Preferences\ucSpecPreferences.Designer.cs">
+      <DependentUpon>ucSpecPreferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Preferences\ucMainPreferences.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     <None Include="Preferences\Preferences.cd" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Preferences\ucSpecPreferences.resx">
+      <DependentUpon>ucSpecPreferences.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Preferences\ucMainPreferences.resx">
       <DependentUpon>ucMainPreferences.cs</DependentUpon>
     </EmbeddedResource>

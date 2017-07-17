@@ -46,6 +46,23 @@ namespace DB.UI
             (options as Control).Dock = DockStyle.Fill;
             TLP2.Controls.Add(options as Control);
         }
+
+        public void Set(ref ISpecPreferences pref)
+        {
+            pref.FilterChangedEvent += delegate
+             {
+
+
+
+             };
+
+            pref.IndexChangedEvent += delegate
+
+             {
+
+
+             };
+        }
         // private CamFileReader reader; private DetectorX preader; public MainForm MainForm;
         public void Set(ref Interface inter)
         {

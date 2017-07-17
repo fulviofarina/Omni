@@ -43,32 +43,24 @@ namespace SpecNav
                 //   LIMS.CreateForm("µ-Finder", ref control, false);
                 //  Form toShow = control.ParentForm;
 
+
+
                 //      LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
                 //      LIMS.Interface.IPreferences.CurrentPref.Offline = true;
                  Bitmap bt = DB.Properties.Resources.Matrices;
                  Form   form =  Creator.CreateForm(ref bt);
-                ucHyperLab hl = new ucHyperLab();
 
-                hl.Set(ref LIMS.Interface);
 
-             //   IPreferences preferences = 
-                VTools.IOptions options = LIMS.GetOptions(0);
+                UserControl hl = LIMS.CreateUI(ControlNames.SpecNavigator);
 
-                hl.Set(ref options);
-                
-                //   UserControl control = this;
-                hl.Dock = DockStyle.Fill;
-               // form.AutoSizeMode = AutoSizeMode.GrowOnly;
-               // form.AutoSize = true;
-                hl.AutoSizeMode = AutoSizeMode.GrowOnly;
-                hl.AutoSize = true;
+
                 form.Size = hl.Size;
                 form.Controls.Add(hl);
                 form.Opacity = 100;
                 //    form.Populate(ref control);
                 form.Text = "A data browser for HyperLab users, by F. Farina Arboccò";
                 //     form.Show();
-             //   form.Visible = true;
+                //   form.Visible = true;
 
                 //     Creator.PopulateBasic();
                 //      LIMS.Interface.IPreferences.CurrentPref.Offline = true;
@@ -80,6 +72,8 @@ namespace SpecNav
                 //   Form toShow = LIMS.CreateSSFApplication();
 
                 //   Creator.Run();
+
+                LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
                 PainterTimer();
 

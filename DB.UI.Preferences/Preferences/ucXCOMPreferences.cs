@@ -39,7 +39,15 @@ namespace DB.UI
 
             try
             {
-                setPreferencesbindings();
+                BindingSource bs = Interface.IBS.XCOMPref;
+                //   XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
+
+                //text binding
+                Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
+                setValueBindings(ref bindings2);
+
+                Hashtable bindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
+                setCheckStatebindings(ref bindings);
 
                 stepsBox.TextChanged += energyStep_TextChanged;
                 useListbox.CheckedChanged += ASCIIInput_Click;
@@ -70,9 +78,6 @@ namespace DB.UI
             if (useListbox.Checked)
             {
                 string filepath = Encoding.UTF8.GetString(Interface.IPreferences.CurrentXCOMPref.ListOfEnergies);
-
-
-
                 RichTextBox box= Rsx.Dumb.IO.RichTextBox(filepath , "Energies List", 14.25f);
 
                 (box.Parent as Form).FormClosed += delegate
@@ -89,15 +94,10 @@ namespace DB.UI
 
    
 
-        protected internal void setPreferencesbindings()
+
+        private void setValueBindings( ref Hashtable bindings2)
         {
-            BindingSource bs = Interface.IBS.XCOMPref;
-
             XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
-
-            //text binding
-            Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
-
             string colname = dt.StartEnergyColumn.ColumnName;
             this.minEneBox.DataBindings.Add(bindings2[colname] as Binding);
 
@@ -110,9 +110,11 @@ namespace DB.UI
             colname = Interface.IDB.XCOMPref.RoundingColumn.ColumnName;
 
             this.roundingTextBox.DataBindings.Add(bindings2[colname] as Binding);
+        }
 
-            Hashtable bindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
-
+        protected internal void setCheckStatebindings( ref Hashtable bindings)
+        {
+            XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
             string column = dt.LoopColumn.ColumnName;
             this.loopCheckBox.DataBindings.Add(bindings[column] as Binding);
 

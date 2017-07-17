@@ -235,6 +235,29 @@ namespace DB.UI
                         refresher = Interface.IPopulate.IGeometry.PopulateGeometry;
                         break;
                     }
+                    case ControlNames.SpecNavigator:
+                    {
+                        ucHyperLab hl = new ucHyperLab();
+                        ISpecPreferences prefes = GetPreferences<ISpecPreferences>();
+                        VTools.IOptions options = GetOptions(0);
+                        options.PreferencesClick += delegate
+                        {
+                            GetPreferences<ISpecPreferences>(true);
+                        };
+
+                        hl.Set(ref Interface);
+                        hl.Set(ref prefes);
+                        hl.Set(ref options);
+                        //   UserControl control = this;
+                        hl.Dock = DockStyle.Fill;
+                        // form.AutoSizeMode = AutoSizeMode.GrowOnly;
+                        // form.AutoSize = true;
+                        hl.AutoSizeMode = AutoSizeMode.GrowOnly;
+                        hl.AutoSize = true;
+
+                        control = (UserControl)hl;
+                        break;
+                    }
                 case ControlNames.Vials:
                     {
                         ucVialType ucVialType = new ucVialType();
@@ -248,26 +271,6 @@ namespace DB.UI
                         CreateMatrixApplication(out control, out refresher);
 
                         // preRefreshref = mat.PreRefresh; postRefresh = mat.PostRefresh;
-                        break;
-                    }
-                case ControlNames.Preferences:
-                    {
-                        IPreferences ucPreferences = new ucPreferences();
-                        ucPreferences.IMain.Set(ref Interface);
-                        ucPreferences.ISSF.Set(ref Interface);
-
-                        control = (UserControl)ucPreferences;
-
-                        break;
-                    }
-                case ControlNames.XCOMPreferences:
-                    {
-                        IXCOMPreferences ucPreferences = new ucXCOMPreferences();
-                        ucPreferences.Set(ref Interface);
-                        // ucPreferences.ISSF.Set(ref Interface);
-
-                        control = (UserControl)ucPreferences;
-
                         break;
                     }
                 case ControlNames.Detectors:
@@ -395,7 +398,43 @@ namespace DB.UI
             }
         }
 
-     
+        protected internal static void createPreference(string controlHeader, ref UserControl control)
+        {
+            switch (controlHeader)
+            {
+             
+                case ControlNames.Preferences:
+                    {
+                        IPreferences ucPreferences = new ucPreferences();
+                        ucPreferences.IMain.Set(ref Interface);
+                        ucPreferences.ISSF.Set(ref Interface);
+
+                        control = (UserControl)ucPreferences;
+
+                        break;
+                    }
+                case ControlNames.XCOMPreferences:
+                    {
+                        IXCOMPreferences ucPreferences = new ucXCOMPreferences();
+                        ucPreferences.Set(ref Interface);
+                        control = (UserControl)ucPreferences;
+
+                        break;
+                    }
+                case ControlNames.SpecPreferences:
+                    {
+                        ISpecPreferences ucPreferences = new ucSpecPreferences();
+                        ucPreferences.Set(ref Interface);
+                        control = (UserControl)ucPreferences;
+
+                        break;
+                    }
+              
+                default:
+                    break;
+            }
+        }
+
         protected internal static void formClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = Creator.Close();

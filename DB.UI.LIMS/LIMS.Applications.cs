@@ -22,9 +22,14 @@ namespace DB.UI
 
             Form form = Creator.CreateForm(ref icon);
 
-            IPreferences preferences = GetPreferences();
-            int type = 0;
-            IOptions options = GetOptions( type);
+            IPreferences preferences = GetPreferences<IPreferences>();
+          
+            IOptions options = GetOptions( 0);
+            options.PreferencesClick += delegate
+            {
+              GetPreferences<IPreferences>(true);
+            };
+
             //DEVELOPER MODE
             //      options.SetDeveloperMode(false);
 
@@ -154,52 +159,67 @@ namespace DB.UI
                 Form.Opacity = 100;
                 Form.BringToFront();
             };
-
-
-            //      bool sffApp = ssf;
-            options.PreferencesClick += delegate
-            {
-                if (type ==0) GetPreferences(true);
-                else if (type==1) GetXCOMPreferences(true);
-            };
-        
-         
-
             return options;
         }
 
-        public static IPreferences GetPreferences(bool show = false)
+        public static T GetPreferences<T>(bool show = false)
         {
-            ucPreferences c = null;
+            UserControl ucPref = null;
+            string controlName = string.Empty;
+            string formName = string.Empty;
             try
             {
-                c = Creator.UserControls.OfType<ucPreferences>().FirstOrDefault();
-
-                if (c == null)
+                Type t = typeof(T);
+                if (t.Equals(typeof(IPreferences)))
                 {
-                    UserControl ucPref = null;
-                    ucPref = CreateUI(ControlNames.Preferences);
-                    CreateForm("Preferences", ref ucPref, false);
-                    c = ucPref as ucPreferences;
-                    c.ParentForm.VisibleChanged += delegate
+                    ucPref = Creator.UserControls.OfType<ucPreferences>().FirstOrDefault();
+                    formName = "Program Preferences";
+                    controlName = ControlNames.Preferences;
+                }
+                else if (t.Equals(typeof(IXCOMPreferences)))
+                {
+                    ucPref = Creator.UserControls.OfType<ucXCOMPreferences>().FirstOrDefault();
+                    formName = "µ-Finder Preferences";
+                    controlName = ControlNames.XCOMPreferences;
+                }
+                else if (t.Equals(typeof(ISpecPreferences)))
+                {
+                    ucPref = Creator.UserControls.OfType<ucSpecPreferences>().FirstOrDefault();
+                    formName = "SpecNav Preferences";
+                    controlName = ControlNames.SpecPreferences;
+                }
+                Form f = null;
+                if (ucPref == null)
+                {
+                    createPreference(controlName, ref ucPref);
+                    Creator.UserControls.Add(ucPref);
+                    CreateForm(formName, ref ucPref, false);
+           
+                    f = ucPref.ParentForm;
+                    f.VisibleChanged += delegate
                     {
                         Interface.IPreferences.ReportChanges();
                     };
-                    c.ParentForm.MaximizeBox = false;
-                    c.ParentForm.ShowInTaskbar = false;
+                    f.MaximizeBox = false;
+                    f.ShowInTaskbar = false;
                 }
 
-                c.ParentForm.Visible = show;
-                c.ParentForm.TopMost = show;
-                c.ParentForm.BringToFront();
+                f = ucPref?.ParentForm;
+
+                if (f != null)
+                {
+                    f.Visible = show;
+                    f.TopMost = show;
+                    f.BringToFront();
+                }
             }
             catch (Exception ex)
             {
                 Interface.IStore.AddException(ex);
             }
-            return c;
+            return ucPref as dynamic;
         }
-
+        /*
         public static IXCOMPreferences GetXCOMPreferences(bool show = false)
         {
             ucXCOMPreferences c = null;
@@ -231,17 +251,23 @@ namespace DB.UI
             }
             return c;
         }
-
+*/
     
         public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
         {
             ucMatrix mat = new ucMatrix();
          //   bool ssf = false;
-            int type = 1;
-      
-            IOptions options = GetOptions( type);
-            IXCOMPreferences prefes = GetXCOMPreferences();
+        
+
+            IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
             mat.Set(ref Interface, ref prefes);
+
+        //    int type = 1;
+            IOptions options = GetOptions( 1);
+            options.PreferencesClick += delegate
+            {
+                GetPreferences<IXCOMPreferences>(true);
+            };
 
             mat.Set(ref options);
 
