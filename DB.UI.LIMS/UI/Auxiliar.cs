@@ -20,6 +20,8 @@ namespace DB.UI
             TLP.Controls.Add(control, 0, 0);
             _displayedControl = control;
             this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            this.SetDesktopLocation(0,0);
+         //   this.Location.Y = 0;
             this.FormClosing += this.formClosing;
         }
 

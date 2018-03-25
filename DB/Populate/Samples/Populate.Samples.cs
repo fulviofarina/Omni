@@ -183,6 +183,27 @@ namespace DB
             }
         }
 
+
+        public void UpdateIrradiationDates()
+        {
+            foreach (LINAA.MonitorsRow m in this.tableMonitors.Rows)
+            {
+                DateTime? dum0 = (DateTime?)this.QTA.GetOutReactorFromSubSampleDescription(m.MonName);
+                if (dum0 != null)
+                {
+                    if ((DateTime)dum0 > m.LastIrradiationDate)
+                    {
+                        m.LastIrradiationDate = (DateTime)dum0;
+                    }
+                }
+                Int32? dum1 = (Int32?)this.QTA.GetIrqIdFromSubSampleDescription(m.MonName);
+                if (dum1 != null)
+                {
+                    LINAA.IrradiationRequestsRow r = this.IrradiationRequests.FindByIrradiationRequestsID((int)dum1);
+                    if (r != null) m.LastProject = r.IrradiationCode;
+                }
+            }
+        }
         public void PopulatePeaksHL(int? id)
         {
             try

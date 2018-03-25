@@ -1,58 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.UI.ucGeometry" Collapsed="true">
-    <Position X="0.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ACgYAIQCgDAIhQOBIAKEIAASIEAAAAgAAAgAAAIhIQQ=</HashCode>
-      <FileName>Geometries\ucGeometry.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DB.UI.ucMatrix">
-    <Position X="7" Y="3.5" Width="1.5" />
+    <Position X="9.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAiJAY2ggiBgDAAsAQDEQgADAgAiIYgAJIFAgBADBiE=</HashCode>
-      <FileName>Geometries\ucMatrix.cs</FileName>
+      <HashCode>AACAAAEAIiAgRgSAAQDAAgADAAAAAQAAIACBAAABBiE=</HashCode>
+      <FileName>ucMatrix.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DB.UI.ucVialType">
-    <Position X="3" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAoQAIQGgDAABAMAIACEIAASAEAQAAhAEAAAAAABICA=</HashCode>
-      <FileName>Geometries\ucVialType.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.ucCC" Collapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>gCBJkUwYgDAgFGKAAgDCkB4SiBQkB0ABEIoDAGAIIAQ=</HashCode>
-      <FileName>GeometrySimple\ucCC.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.ucComposition" Collapsed="true">
-    <Position X="3" Y="0.5" Width="1.5" />
+  <Class Name="DB.UI.ucComposition">
+    <Position X="1.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IBYAIBACACAAFAQAAQDAAAASwAABARBAAAoCAAAgAAA=</HashCode>
-      <FileName>GeometrySimple\ucComposition.cs</FileName>
+      <FileName>ucComposition.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.ucMatrixSimple">
     <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAYAJAAgSCABAdAIADEIIASgAAABRBACAIDAABhAAA=</HashCode>
-      <FileName>GeometrySimple\ucMatrixSimple.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.ucV" Collapsed="true">
-    <Position X="0.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AJCQQFAAiCggBEYACIDABAADgAAAAQJAACICAEgACAw=</HashCode>
-      <FileName>GeometrySimple\ucV.cs</FileName>
+      <HashCode>ABAYAJAAgSCABAdQIADEIAASgAAABRBACAIDAABhIAA=</HashCode>
+      <FileName>ucMatrixSimple.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.XCOM">
     <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQgAAAAAAAABACAAAAAAQABAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAACQAAAAAQQAAAAAAEBA=</HashCode>
       <FileName>XCOM.cs</FileName>
     </TypeIdentifier>
   </Class>

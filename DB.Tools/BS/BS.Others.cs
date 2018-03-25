@@ -50,15 +50,18 @@ namespace DB.Tools
             Matrix.Filter = filter;
             Matrix.Sort = "MatrixID desc";
             string filter2 = "MatrixID = 0";
+
             filter = Matrix.Filter + " AND " + filter2;
-            SelectedMatrix.Filter = filter;
             sort = Interface.IDB.Compositions.IDColumn.ColumnName + " desc";
+            SelectedMatrix.Filter = filter;
             Compositions.Sort = sort;
             Compositions.Filter = filter;
             SelectedCompositions.Filter = filter;
             SelectedCompositions.Sort = sort;
 
+            sort = Interface.IDB.MUES.EnergyColumn.ColumnName + " desc";
             MUES.Filter = filter2;
+            MUES.Sort = sort;
         }
 
         private void initializeGeometryBindingSources()

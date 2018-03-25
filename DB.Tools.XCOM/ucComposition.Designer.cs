@@ -65,10 +65,6 @@
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.SC = new System.Windows.Forms.SplitContainer();
             this.compositionsDGV = new System.Windows.Forms.DataGridView();
-            this.elementDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uncDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
             this.matrixRTB = new System.Windows.Forms.RichTextBox();
@@ -80,6 +76,10 @@
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.elementDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uncDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityUnitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC)).BeginInit();
             this.SC.Panel1.SuspendLayout();
@@ -185,37 +185,6 @@
             this.compositionsDGV.Size = new System.Drawing.Size(700, 276);
             this.compositionsDGV.TabIndex = 8;
             // 
-            // elementDataGridViewTextBoxColumn
-            // 
-            this.elementDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
-            this.elementDataGridViewTextBoxColumn.HeaderText = "Element or Formula";
-            this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
-            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            this.quantityDataGridViewTextBoxColumn.ToolTipText = "in %";
-            this.quantityDataGridViewTextBoxColumn.Width = 95;
-            // 
-            // uncDataGridViewTextBoxColumn
-            // 
-            this.uncDataGridViewTextBoxColumn.DataPropertyName = "Unc";
-            this.uncDataGridViewTextBoxColumn.HeaderText = "Unc";
-            this.uncDataGridViewTextBoxColumn.Name = "uncDataGridViewTextBoxColumn";
-            this.uncDataGridViewTextBoxColumn.ToolTipText = "in %";
-            this.uncDataGridViewTextBoxColumn.Visible = false;
-            this.uncDataGridViewTextBoxColumn.Width = 61;
-            // 
-            // quantityUnitDataGridViewTextBoxColumn
-            // 
-            this.quantityUnitDataGridViewTextBoxColumn.DataPropertyName = "QuantityUnit";
-            this.quantityUnitDataGridViewTextBoxColumn.HeaderText = "Unit";
-            this.quantityUnitDataGridViewTextBoxColumn.Name = "quantityUnitDataGridViewTextBoxColumn";
-            this.quantityUnitDataGridViewTextBoxColumn.Width = 63;
-            // 
             // bs
             // 
             this.bs.DataMember = "Compositions";
@@ -301,6 +270,38 @@
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
+            // 
+            // elementDataGridViewTextBoxColumn
+            // 
+            this.elementDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
+            this.elementDataGridViewTextBoxColumn.HeaderText = "Element or Formula";
+            this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.quantityDataGridViewTextBoxColumn.ToolTipText = "in %";
+            this.quantityDataGridViewTextBoxColumn.Width = 95;
+            // 
+            // uncDataGridViewTextBoxColumn
+            // 
+            this.uncDataGridViewTextBoxColumn.DataPropertyName = "Unc";
+            this.uncDataGridViewTextBoxColumn.HeaderText = "Unc";
+            this.uncDataGridViewTextBoxColumn.Name = "uncDataGridViewTextBoxColumn";
+            this.uncDataGridViewTextBoxColumn.ToolTipText = "in %";
+            this.uncDataGridViewTextBoxColumn.Visible = false;
+            this.uncDataGridViewTextBoxColumn.Width = 61;
+            // 
+            // quantityUnitDataGridViewTextBoxColumn
+            // 
+            this.quantityUnitDataGridViewTextBoxColumn.DataPropertyName = "QuantityUnit";
+            this.quantityUnitDataGridViewTextBoxColumn.HeaderText = "Unit";
+            this.quantityUnitDataGridViewTextBoxColumn.Name = "quantityUnitDataGridViewTextBoxColumn";
+            this.quantityUnitDataGridViewTextBoxColumn.Visible = false;
+            this.quantityUnitDataGridViewTextBoxColumn.Width = 63;
             // 
             // ucComposition
             // 

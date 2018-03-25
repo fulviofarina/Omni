@@ -21,13 +21,15 @@ namespace µFinder
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
+                //create aboutBox
                 Form aboutbox = new AboutBox();
-
-                LIMS.Interface = Creator.Build();
-                //create database
+                //associate interface to LIMS UI
+                LIMS.Interface = Creator.Initialize();
+                //create database manager UI
                 LIMS.CreateLIMS(ref aboutbox);
+
                 Creator.CheckDirectories();
-                Creator.PopulateBasic();
+                Creator.PopulatePreferences();
                 LIMS.Interface.IPreferences.CurrentPref.Offline = true;
            //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
@@ -55,15 +57,14 @@ namespace µFinder
 
                 //   Creator.Run();
 
-                PainterTimer();
+              //  PainterTimer();
 
                 Application.Run(toShow);
 
             }
             catch (Exception ex)
             {
-           //     LIMS.Interface.IStore.AddException(ex);
-               // LIMS.Interface.IStore.SaveExceptions();
+          
                 MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
             }
 

@@ -8,6 +8,8 @@ namespace DB.UI
     public partial class ucMatrixSimple : UserControl
     {
         protected internal Interface Interface = null;
+        protected static string EDIT_STR = "EDIT";
+        protected static string VIEW_STR = "VIEW";
 
         /// <summary>
         /// DGV ITEM SELECTED
@@ -59,6 +61,26 @@ namespace DB.UI
         public ucMatrixSimple()
         {
             InitializeComponent();
+            editContentLBL.Text = VIEW_STR;
+
+            editContentLBL.Click += delegate
+            {
+                ChangeCompositionView();
+            };
         }
+
+        public void ChangeCompositionView()
+        {
+            if (editContentLBL.Text.Contains(EDIT_STR))
+            {
+                editContentLBL.Text = VIEW_STR;
+            }
+            else
+            {
+                editContentLBL.Text = EDIT_STR;
+            }
+            ucComposition1.ChangeFocus(null, System.EventArgs.Empty);
+        }
+
     }
 }

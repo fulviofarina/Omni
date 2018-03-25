@@ -179,14 +179,14 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
             }
         }
-
+        
         public void AcceptChanges()
         {
             Interface.IDB.Preferences.AcceptChanges();
             Interface.IDB.SSFPref.AcceptChanges();
             Interface.IDB.XCOMPref.AcceptChanges();
         }
-
+        
         public void ReportChanges()
         {
             bool reportChnages = CurrentPref.HasVersion(DataRowVersion.Current);
@@ -199,13 +199,7 @@ namespace DB.Tools
             else Interface.IReport.Msg("No changes to the preferences/settings", "No changes", true);
         }
 
-        public void Clear()
-        {
-            Interface.IPreferences.SavePreferences();
-
-
-            Interface.IStore.CleanPreferences();
-        }
+     
 
         /*
         public void MergePreferences()

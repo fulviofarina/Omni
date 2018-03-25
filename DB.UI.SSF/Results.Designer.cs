@@ -682,8 +682,8 @@
             // unitSSFColumn1
             // 
             this.unitSSFColumn1.BindableAsteriskField = "";
-            this.unitSSFColumn1.BindingPreferenceField = "";
-            this.unitSSFColumn1.BindingPreferenceRow = null;
+         //   this.unitSSFColumn1.bin
+        //    this.unitSSFColumn1.BindingRow = null;
             this.unitSSFColumn1.BindingRoundingField = "";
             this.unitSSFColumn1.DataPropertyName = "GFast";
             dataGridViewCellStyle17.Format = "N4";

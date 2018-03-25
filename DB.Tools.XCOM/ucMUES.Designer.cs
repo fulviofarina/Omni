@@ -12,13 +12,13 @@
 
         private DB.LINAA Linaa;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
+       // private System.Windows.Forms.DataGridViewTextBoxColumn matrixCompositionDataGridViewTextBoxColumn;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn;
+      //  private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixIDDataGridViewTextBoxColumn;
 
-        private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
+   //     private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn;
 
      //   private System.Windows.Forms.SplitContainer splitContainer4;
 
@@ -31,7 +31,7 @@
 
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 
-        private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn;
+   //     private System.Windows.Forms.DataGridViewCheckBoxColumn xCOMDataGridViewCheckBoxColumn;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -57,39 +57,36 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMUES));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.SC = new System.Windows.Forms.SplitContainer();
-            this.compositionsDGV = new System.Windows.Forms.DataGridView();
+            this.DGV = new System.Windows.Forms.DataGridView();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.Linaa = new DB.LINAA();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.grapher = new VTools.Graph();
             this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixCompositionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixDensityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xCOMDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.edgeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.energyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mACSDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mAISDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pEDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pPNFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pPEFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mATCSDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mATNCSDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mACSDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
+            this.mAISDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
+            this.pEDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
+            this.pPNFDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
+            this.pPEFDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
+            this.mATCSDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
+            this.mATNCSDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
             this.mUDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.edgeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC)).BeginInit();
             this.SC.Panel1.SuspendLayout();
             this.SC.Panel2.SuspendLayout();
             this.SC.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.compositionsDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
@@ -120,33 +117,33 @@
             // 
             // SC.Panel1
             // 
-            this.SC.Panel1.Controls.Add(this.compositionsDGV);
+            this.SC.Panel1.Controls.Add(this.DGV);
             // 
             // SC.Panel2
             // 
-            this.SC.Panel2.Controls.Add(this.webBrowser);
+            this.SC.Panel2.Controls.Add(this.grapher);
             this.SC.Size = new System.Drawing.Size(842, 487);
             this.SC.SplitterDistance = 237;
             this.SC.TabIndex = 8;
             // 
-            // compositionsDGV
+            // DGV
             // 
-            this.compositionsDGV.AllowUserToAddRows = false;
-            this.compositionsDGV.AllowUserToOrderColumns = true;
+            this.DGV.AllowUserToAddRows = false;
+            this.DGV.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            this.compositionsDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.compositionsDGV.AutoGenerateColumns = false;
-            this.compositionsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.compositionsDGV.BackgroundColor = System.Drawing.Color.LightSlateGray;
-            this.compositionsDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.compositionsDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
-            this.compositionsDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            this.compositionsDGV.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.DGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DGV.AutoGenerateColumns = false;
+            this.DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.DGV.BackgroundColor = System.Drawing.Color.LightSlateGray;
+            this.DGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.DGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.DGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            this.DGV.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -154,10 +151,9 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.compositionsDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.compositionsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.compositionsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.edgeDataGridViewTextBoxColumn,
+            this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.energyDataGridViewTextBoxColumn,
             this.mACSDataGridViewTextBoxColumn,
             this.mAISDataGridViewTextBoxColumn,
@@ -166,34 +162,34 @@
             this.pPEFDataGridViewTextBoxColumn,
             this.mATCSDataGridViewTextBoxColumn,
             this.mATNCSDataGridViewTextBoxColumn,
-            this.mUDataGridViewTextBoxColumn});
-            this.compositionsDGV.DataSource = this.bs;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.compositionsDGV.DefaultCellStyle = dataGridViewCellStyle3;
-            this.compositionsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compositionsDGV.EnableHeadersVisualStyles = false;
-            this.compositionsDGV.GridColor = System.Drawing.Color.Black;
-            this.compositionsDGV.Location = new System.Drawing.Point(0, 0);
-            this.compositionsDGV.MultiSelect = false;
-            this.compositionsDGV.Name = "compositionsDGV";
+            this.mUDataGridViewTextBoxColumn,
+            this.edgeDataGridViewTextBoxColumn});
+            this.DGV.DataSource = this.bs;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.compositionsDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.compositionsDGV.RowTemplate.Height = 24;
-            this.compositionsDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.compositionsDGV.Size = new System.Drawing.Size(842, 237);
-            this.compositionsDGV.TabIndex = 8;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV.DefaultCellStyle = dataGridViewCellStyle4;
+            this.DGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV.EnableHeadersVisualStyles = false;
+            this.DGV.GridColor = System.Drawing.Color.Black;
+            this.DGV.Location = new System.Drawing.Point(0, 0);
+            this.DGV.Name = "DGV";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.DGV.RowTemplate.Height = 24;
+            this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGV.Size = new System.Drawing.Size(842, 237);
+            this.DGV.TabIndex = 8;
             // 
             // bs
             // 
@@ -211,14 +207,13 @@
             this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             this.Linaa.TAM = null;
             // 
-            // webBrowser
+            // grapher
             // 
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(842, 246);
-            this.webBrowser.TabIndex = 3;
+            this.grapher.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grapher.Location = new System.Drawing.Point(0, 0);
+            this.grapher.Name = "grapher";
+            this.grapher.Size = new System.Drawing.Size(842, 246);
+            this.grapher.TabIndex = 1;
             // 
             // matrixIDDataGridViewTextBoxColumn
             // 
@@ -227,35 +222,6 @@
             this.matrixIDDataGridViewTextBoxColumn.Name = "matrixIDDataGridViewTextBoxColumn";
             this.matrixIDDataGridViewTextBoxColumn.ReadOnly = true;
             this.matrixIDDataGridViewTextBoxColumn.Width = 83;
-            // 
-            // matrixNameDataGridViewTextBoxColumn
-            // 
-            this.matrixNameDataGridViewTextBoxColumn.DataPropertyName = "MatrixName";
-            this.matrixNameDataGridViewTextBoxColumn.HeaderText = "MatrixName";
-            this.matrixNameDataGridViewTextBoxColumn.Name = "matrixNameDataGridViewTextBoxColumn";
-            this.matrixNameDataGridViewTextBoxColumn.Width = 107;
-            // 
-            // matrixCompositionDataGridViewTextBoxColumn
-            // 
-            this.matrixCompositionDataGridViewTextBoxColumn.DataPropertyName = "MatrixComposition";
-            this.matrixCompositionDataGridViewTextBoxColumn.HeaderText = "MatrixComposition";
-            this.matrixCompositionDataGridViewTextBoxColumn.Name = "matrixCompositionDataGridViewTextBoxColumn";
-            this.matrixCompositionDataGridViewTextBoxColumn.Width = 147;
-            // 
-            // matrixDensityDataGridViewTextBoxColumn
-            // 
-            this.matrixDensityDataGridViewTextBoxColumn.DataPropertyName = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn.HeaderText = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn.Name = "matrixDensityDataGridViewTextBoxColumn";
-            this.matrixDensityDataGridViewTextBoxColumn.Width = 117;
-            // 
-            // xCOMDataGridViewCheckBoxColumn
-            // 
-            this.xCOMDataGridViewCheckBoxColumn.DataPropertyName = "XCOM";
-            this.xCOMDataGridViewCheckBoxColumn.HeaderText = "XCOM";
-            this.xCOMDataGridViewCheckBoxColumn.Name = "xCOMDataGridViewCheckBoxColumn";
-            this.xCOMDataGridViewCheckBoxColumn.ReadOnly = true;
-            this.xCOMDataGridViewCheckBoxColumn.Width = 54;
             // 
             // cDataGridViewCheckBoxColumn
             // 
@@ -279,73 +245,105 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
-            // edgeDataGridViewTextBoxColumn
-            // 
-            this.edgeDataGridViewTextBoxColumn.DataPropertyName = "Edge";
-            this.edgeDataGridViewTextBoxColumn.HeaderText = "Edge";
-            this.edgeDataGridViewTextBoxColumn.Name = "edgeDataGridViewTextBoxColumn";
-            this.edgeDataGridViewTextBoxColumn.Width = 70;
-            // 
             // energyDataGridViewTextBoxColumn
             // 
+            this.energyDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.energyDataGridViewTextBoxColumn.DataPropertyName = "Energy";
-            this.energyDataGridViewTextBoxColumn.HeaderText = "Energy (keV)";
+            dataGridViewCellStyle3.Format = "n2";
+            this.energyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.energyDataGridViewTextBoxColumn.HeaderText = "Energy";
             this.energyDataGridViewTextBoxColumn.Name = "energyDataGridViewTextBoxColumn";
-            this.energyDataGridViewTextBoxColumn.Width = 124;
+            this.energyDataGridViewTextBoxColumn.ToolTipText = "Photon energy in keV";
+            this.energyDataGridViewTextBoxColumn.Width = 83;
             // 
             // mACSDataGridViewTextBoxColumn
             // 
+            this.mACSDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.mACSDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.mACSDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mACSDataGridViewTextBoxColumn.DataPropertyName = "MACS";
-            this.mACSDataGridViewTextBoxColumn.HeaderText = "µ (CS)";
+            this.mACSDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.mACSDataGridViewTextBoxColumn.HeaderText = "CS";
             this.mACSDataGridViewTextBoxColumn.Name = "mACSDataGridViewTextBoxColumn";
+            this.mACSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mACSDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Coherent Scattering (g/cm2)";
-            this.mACSDataGridViewTextBoxColumn.Width = 76;
+            this.mACSDataGridViewTextBoxColumn.Width = 52;
             // 
             // mAISDataGridViewTextBoxColumn
             // 
+            this.mAISDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.mAISDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.mAISDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mAISDataGridViewTextBoxColumn.DataPropertyName = "MAIS";
-            this.mAISDataGridViewTextBoxColumn.HeaderText = "µ (IS)";
+            this.mAISDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.mAISDataGridViewTextBoxColumn.HeaderText = "IS";
             this.mAISDataGridViewTextBoxColumn.Name = "mAISDataGridViewTextBoxColumn";
+            this.mAISDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mAISDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Incoherent Scattering (g/cm2)";
-            this.mAISDataGridViewTextBoxColumn.Width = 71;
+            this.mAISDataGridViewTextBoxColumn.Width = 47;
             // 
             // pEDataGridViewTextBoxColumn
             // 
+            this.pEDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.pEDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.pEDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.pEDataGridViewTextBoxColumn.DataPropertyName = "PE";
-            this.pEDataGridViewTextBoxColumn.HeaderText = "µ (PA)";
+            this.pEDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.pEDataGridViewTextBoxColumn.HeaderText = "PE";
             this.pEDataGridViewTextBoxColumn.Name = "pEDataGridViewTextBoxColumn";
+            this.pEDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.pEDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Photoelectric Absorption (g/cm2)";
-            this.pEDataGridViewTextBoxColumn.Width = 76;
+            this.pEDataGridViewTextBoxColumn.Width = 50;
             // 
             // pPNFDataGridViewTextBoxColumn
             // 
+            this.pPNFDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.pPNFDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.pPNFDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.pPNFDataGridViewTextBoxColumn.DataPropertyName = "PPNF";
-            this.pPNFDataGridViewTextBoxColumn.HeaderText = "µ (PPNF)";
+            this.pPNFDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.pPNFDataGridViewTextBoxColumn.HeaderText = "PP";
             this.pPNFDataGridViewTextBoxColumn.Name = "pPNFDataGridViewTextBoxColumn";
+            this.pPNFDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.pPNFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Pair Production Neutron Field (g/cm2)";
-            this.pPNFDataGridViewTextBoxColumn.Width = 95;
+            this.pPNFDataGridViewTextBoxColumn.Width = 51;
             // 
             // pPEFDataGridViewTextBoxColumn
             // 
+            this.pPEFDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.pPEFDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.pPEFDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.pPEFDataGridViewTextBoxColumn.DataPropertyName = "PPEF";
-            this.pPEFDataGridViewTextBoxColumn.HeaderText = "µ (PPEF)";
+            this.pPEFDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.pPEFDataGridViewTextBoxColumn.HeaderText = "PP (EF)";
             this.pPEFDataGridViewTextBoxColumn.Name = "pPEFDataGridViewTextBoxColumn";
+            this.pPEFDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.pPEFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation coefficient Pair Production Electron Field (g/cm2)";
-            this.pPEFDataGridViewTextBoxColumn.Width = 91;
+            this.pPEFDataGridViewTextBoxColumn.Width = 81;
             // 
             // mATCSDataGridViewTextBoxColumn
             // 
+            this.mATCSDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.mATCSDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.mATCSDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mATCSDataGridViewTextBoxColumn.DataPropertyName = "MATCS";
-            this.mATCSDataGridViewTextBoxColumn.HeaderText = "Total µ (CS)";
+            this.mATCSDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.mATCSDataGridViewTextBoxColumn.HeaderText = "TOT (CS)";
             this.mATCSDataGridViewTextBoxColumn.Name = "mATCSDataGridViewTextBoxColumn";
+            this.mATCSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mATCSDataGridViewTextBoxColumn.ToolTipText = "Total Mass attenuation with Coherent Scattering (g/cm2)";
-            this.mATCSDataGridViewTextBoxColumn.Width = 115;
+            this.mATCSDataGridViewTextBoxColumn.Width = 94;
             // 
             // mATNCSDataGridViewTextBoxColumn
             // 
+            this.mATNCSDataGridViewTextBoxColumn.BindingPreferenceField = "";
+            this.mATNCSDataGridViewTextBoxColumn.BindingPreferenceRow = null;
+            this.mATNCSDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mATNCSDataGridViewTextBoxColumn.DataPropertyName = "MATNCS";
-            this.mATNCSDataGridViewTextBoxColumn.HeaderText = "Total µ (NCS)";
+            this.mATNCSDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
+            this.mATNCSDataGridViewTextBoxColumn.HeaderText = "TOT (w/o CS)";
             this.mATNCSDataGridViewTextBoxColumn.Name = "mATNCSDataGridViewTextBoxColumn";
+            this.mATNCSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mATNCSDataGridViewTextBoxColumn.ToolTipText = "Total Mass attenuation without Coherent Scattering (g/cm2)";
             this.mATNCSDataGridViewTextBoxColumn.Width = 127;
             // 
@@ -357,6 +355,15 @@
             this.mUDataGridViewTextBoxColumn.ReadOnly = true;
             this.mUDataGridViewTextBoxColumn.Visible = false;
             this.mUDataGridViewTextBoxColumn.Width = 59;
+            // 
+            // edgeDataGridViewTextBoxColumn
+            // 
+            this.edgeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.edgeDataGridViewTextBoxColumn.DataPropertyName = "Edge";
+            this.edgeDataGridViewTextBoxColumn.HeaderText = "Edge";
+            this.edgeDataGridViewTextBoxColumn.Name = "edgeDataGridViewTextBoxColumn";
+            this.edgeDataGridViewTextBoxColumn.Visible = false;
+            this.edgeDataGridViewTextBoxColumn.Width = 70;
             // 
             // ucMUES
             // 
@@ -371,7 +378,7 @@
             this.SC.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SC)).EndInit();
             this.SC.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.compositionsDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
@@ -384,19 +391,19 @@
 
         private System.Windows.Forms.SplitContainer SC;
         private System.Windows.Forms.BindingSource bs;
-        private System.Windows.Forms.DataGridView compositionsDGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn formulaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn weightDataGridViewTextBoxColumn;
-        private System.Windows.Forms.WebBrowser webBrowser;
-        private System.Windows.Forms.DataGridViewTextBoxColumn edgeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridView DGV;
+     //   private System.Windows.Forms.DataGridViewTextBoxColumn formulaDataGridViewTextBoxColumn;
+    //    private System.Windows.Forms.DataGridViewTextBoxColumn weightDataGridViewTextBoxColumn;
+        private VTools.Graph grapher;
         private System.Windows.Forms.DataGridViewTextBoxColumn energyDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mACSDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mAISDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pEDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pPNFDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pPEFDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mATCSDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mATNCSDataGridViewTextBoxColumn;
+        private MUESColumn mACSDataGridViewTextBoxColumn;
+        private MUESColumn mAISDataGridViewTextBoxColumn;
+        private MUESColumn pEDataGridViewTextBoxColumn;
+        private MUESColumn pPNFDataGridViewTextBoxColumn;
+        private MUESColumn pPEFDataGridViewTextBoxColumn;
+        private MUESColumn mATCSDataGridViewTextBoxColumn;
+        private MUESColumn mATNCSDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn mUDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn edgeDataGridViewTextBoxColumn;
     }
 }

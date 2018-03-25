@@ -205,7 +205,7 @@ namespace DB.UI
 
             this.updateIrradiationDateToolStripMenuItem.Click += delegate
             {
-                Linaa.UpdateIrradiationDates();
+                Interface.IPopulate.ISamples.UpdateIrradiationDates();
             };
             this.unlockProtectedCellsToolStripMenuItem.Click += unLockProtectedCells;
         }

@@ -1,68 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.UI.SampleCell">
-    <Position X="0.75" Y="0.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAABAAAAAAEAAAAAABAAAAAgAAAAIAAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DB.UI.SampleColumn" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="1.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAAAAAoAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="DB.UI.UnitBoolColumn">
-    <Position X="8" Y="4.5" Width="2" />
+    <Position X="3.5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
+      <FileName>DGV\DGVs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.UI.UnitBoolColumn">
+    <Position X="7" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DGV\DGVs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.UnitSSFCell">
-    <Position X="8" Y="1.75" Width="1.75" />
+    <Position X="6.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAIAAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.UI.BindableDGVColumn" Collapsed="true">
-    <Position X="4.75" Y="0.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAAAAAoAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
+      <FileName>DGV\DGVs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.UnitSSFColumn" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="4.5" Width="2" />
+    <Position X="4.5" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>IBAAAAAgQABAIAAIAAAoCEEAACwAEAAAAAAAAAAQEAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
+      <FileName>DGV\DGVs.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DB.UI.UnitBoolCell">
-    <Position X="8.25" Y="6.25" Width="1.75" />
+    <Position X="7" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAIAAA=</HashCode>
-      <FileName>ucSSF\DGV\DGVs.cs</FileName>
+      <FileName>DGV\DGVs.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="DB.UI.ISampleColumn">
-    <Position X="3.75" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ucSSF\DGV\IDGVs.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
+  <Class Name="Rsx.DGV.BindableDGVColumn">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="DB.UI.IUnitSSFColumn">
-    <Position X="3.75" Y="4.75" Width="1.5" />
+    <Position X="3" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAgQAAAAAAAAAAoAAEAAAwAEAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ucSSF\DGV\IDGVs.cs</FileName>
+      <FileName>DGV\IDGVs.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="10" />

@@ -128,7 +128,7 @@ namespace DB.Tools
                 Interface.IStore.CleanOthers();
                 Interface.IDB.Compositions.Clear();
                 Interface.IPopulate.INuclear.CleanSigmas();
-                PopulateBasic();
+                PopulatePreferences();
           
                 foreach (var item in Interface.IDB.Matrix)
                 {

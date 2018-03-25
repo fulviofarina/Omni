@@ -50,10 +50,11 @@ namespace DB.UI
 
                 setBindings(ref Bind);
 
-                this.matrixRTB.MouseDoubleClick += focus;
-                this.compositionsDGV.MouseDoubleClick += focus;
+                this.matrixRTB.MouseDoubleClick += ChangeFocus;
+                this.compositionsDGV.MouseDoubleClick += ChangeFocus;
 
-                focus(null, EventArgs.Empty);
+                ChangeFocus(null, EventArgs.Empty);
+                ChangeFocus(null, EventArgs.Empty);
             }
             catch (System.Exception ex)
             {
@@ -68,7 +69,7 @@ namespace DB.UI
             this.matrixRTB.DataBindings.Add(mcompoBin);
         }
 
-        protected internal void focus(object sender, EventArgs e)
+        public void ChangeFocus(object sender, EventArgs e)
         {
             SC.Panel2Collapsed = advanced;
             SC.Panel1Collapsed = !advanced;

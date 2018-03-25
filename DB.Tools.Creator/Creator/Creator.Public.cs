@@ -35,13 +35,10 @@ namespace DB.Tools
         /// <param name="Linaa">  referenced database to build (can be a null reference)</param>
         /// <param name="notify"> referenced notifyIcon to give feedback of the process</param>
         /// <param name="handler">referenced handler to a method to run after completition</param>
-        public static Interface Build()
+        public static Interface Initialize()
         {
             LINAA LINAA = new LINAA();
             Interface = new Interface(ref LINAA);
-            //   Interface = inter;
-            //en este orden
-            // Application.DoEvents();
             Interface.IDB.PopulateColumnExpresions();
             return Interface;
         }
@@ -139,6 +136,9 @@ namespace DB.Tools
             // if (!System.IO.File.Exists(path)) return;
             IO.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
         }
+        /// <summary>
+        /// reads from the backup LIMS.xml file or the Developers version
+        /// </summary>
         public static void LoadFromFile()
         {
 
@@ -149,7 +149,11 @@ namespace DB.Tools
                 filePath = Application.StartupPath + Resources.DevFiles + Resources.Linaa;
             }
             Interface.IStore.Read(filePath);
-
+            DataSet set = Interface.Get();
+            foreach (DataTable dt in set.Tables)
+            {
+                dt.AcceptChanges();
+            }
       
         }
 
@@ -236,10 +240,11 @@ namespace DB.Tools
             // else throw new SystemException("No Populate Method was assigned");
         }
 
-        public static void PopulateBasic()
+        public static void PopulatePreferences()
         {
             Interface.IReport.Msg("Populating database structure", "Initializing...");
-            Interface.IPreferences.Clear();
+         //   Interface.IPreferences.SavePreferences();
+            Interface.IStore.CleanPreferences();
             Interface.IPreferences.PopulatePreferences();
             Interface.IPreferences.SavePreferences();
         }

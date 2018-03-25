@@ -32,7 +32,7 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        private System.Windows.Forms.ToolStripLabel contentLBL;
+        private System.Windows.Forms.ToolStripLabel editContentLBL;
         private System.Windows.Forms.ToolStripTextBox contentNameBox;
 
         private System.Windows.Forms.ToolStrip contentTS;
@@ -98,7 +98,7 @@
             this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.contentTS = new System.Windows.Forms.ToolStrip();
-            this.contentLBL = new System.Windows.Forms.ToolStripLabel();
+            this.editContentLBL = new System.Windows.Forms.ToolStripLabel();
             this.contentNameBox = new System.Windows.Forms.ToolStripTextBox();
             this.MatrixBN = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
@@ -150,7 +150,7 @@
             this.TLPMatrix.RowCount = 2;
             this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TLPMatrix.Size = new System.Drawing.Size(706, 493);
+            this.TLPMatrix.Size = new System.Drawing.Size(706, 578);
             this.TLPMatrix.TabIndex = 6;
             // 
             // matrixDGV
@@ -208,7 +208,7 @@
             this.matrixDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.matrixDGV.RowTemplate.Height = 24;
             this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.matrixDGV.Size = new System.Drawing.Size(360, 458);
+            this.matrixDGV.Size = new System.Drawing.Size(360, 543);
             this.matrixDGV.TabIndex = 7;
             // 
             // MatrixBS
@@ -233,7 +233,7 @@
             this.contentTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.contentTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contentLBL,
+            this.editContentLBL,
             this.contentNameBox});
             this.contentTS.Location = new System.Drawing.Point(366, 0);
             this.contentTS.Name = "contentTS";
@@ -243,14 +243,14 @@
             this.contentTS.TabIndex = 5;
             this.contentTS.Text = "toolStrip8";
             // 
-            // contentLBL
+            // editContentLBL
             // 
-            this.contentLBL.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contentLBL.ForeColor = System.Drawing.Color.Blue;
-            this.contentLBL.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.contentLBL.Name = "contentLBL";
-            this.contentLBL.Size = new System.Drawing.Size(106, 26);
-            this.contentLBL.Text = "CONTENT OF";
+            this.editContentLBL.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editContentLBL.ForeColor = System.Drawing.Color.Blue;
+            this.editContentLBL.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.editContentLBL.Name = "editContentLBL";
+            this.editContentLBL.Size = new System.Drawing.Size(48, 26);
+            this.editContentLBL.Text = "VIEW";
             // 
             // contentNameBox
             // 
@@ -390,7 +390,7 @@
             this.ucComposition1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ucComposition1.Location = new System.Drawing.Point(369, 32);
             this.ucComposition1.Name = "ucComposition1";
-            this.ucComposition1.Size = new System.Drawing.Size(334, 458);
+            this.ucComposition1.Size = new System.Drawing.Size(334, 543);
             this.ucComposition1.TabIndex = 8;
             // 
             // matrixIDDataGridViewTextBoxColumn
@@ -465,7 +465,7 @@
             // 
             this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density (g/cm3)";
+            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density";
             this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
             this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or Known Density for this Matrix (in g/cm3)";
             // 
@@ -476,7 +476,7 @@
             this.Controls.Add(this.TLPMatrix);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucMatrixSimple";
-            this.Size = new System.Drawing.Size(706, 493);
+            this.Size = new System.Drawing.Size(706, 578);
             this.TLPMatrix.ResumeLayout(false);
             this.TLPMatrix.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).EndInit();

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using DB.Properties;
 using Rsx.Dumb;
+using System.Text;
 
 //using DB.Interfaces;
 
@@ -225,8 +226,15 @@ namespace DB
             else
             {
 
-                if (m.IsXCOMTableNull()) return mu;
-                byte[] arr = m.XCOMTable;
+             //   if (m.IsXCOMTableNull()) return mu;
+           //     byte[] arr = m.XCOMTable;
+             //   string tempfile = ASCIIEncoding.ASCII.GetString(arr);
+                string tempfile = folderPath + Resources.XCOMFolder;
+                tempfile += m.MatrixID;
+                if (!System.IO.File.Exists(tempfile)) return mu;
+
+                byte[] arr = System.IO.File.ReadAllBytes(tempfile);
+
                 Rsx.Dumb.Tables.ReadDTBytes(ref arr, ref mu);
             }
             return mu;

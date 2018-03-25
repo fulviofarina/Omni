@@ -26,11 +26,11 @@ namespace SpecNav
 
                 Form aboutbox = new AboutBox();
 
-                LIMS.Interface = Creator.Build();
+                LIMS.Interface = Creator.Initialize();
                 //create database
                 LIMS.CreateLIMS(ref aboutbox);
                 Creator.CheckDirectories();
-                Creator.PopulateBasic();
+                Creator.PopulatePreferences();
              //   LIMS.Interface.IPreferences.CurrentPref.Offline = true;
                 //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 

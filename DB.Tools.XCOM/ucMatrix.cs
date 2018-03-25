@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 using DB.Properties;
 using DB.Tools;
@@ -32,12 +33,13 @@ namespace DB.UI
                 minimiZe = value;
             }
         }
-        EventHandler showProg = null;
-        Action<int> resetProgress = null;
+      private  EventHandler showProg = null;
+       private  Action<int> resetProgress = null;
         public void Set(ref IOptions options)
         {
-             resetProgress = options.ResetProgress;
-           showProg = options.ShowProgress;
+            resetProgress = options.ResetProgress;
+          //  resetProgress(0);
+            showProg = options.ShowProgress;
 
             string path = Interface.IStore.FolderPath + Resources.XCOMFolder;
             XCom = new XCOM();
@@ -46,25 +48,32 @@ namespace DB.UI
             ucCalculate1.CancelMethod += delegate
             {
                 XCom.IsCalculating = false;
+                ucCalculate1.EnableCalculate = true;
+            
             };
             ucCalculate1.CalculateMethod += delegate
             {
                 this.Validate();
+                ucMatrixSimple1.ChangeCompositionView();
                 ucMUES1.Focus(false);
+                ucCalculate1.EnableCalculate = false;
                 XCom.Calculate(null);
                 ucMUES1.Focus(true);
+                ucMatrixSimple1.ChangeCompositionView();
+                //  preparePlot();
 
-                UpdateMatrixMUESUserInterface();
-             
             };
 
             DBTLP.Controls.Add(options as UserControl);
+        
         }
 
         public void Set(ref UserControl ctrl)
         {
+            this.SuspendLayout();
             ctrl.Dock = DockStyle.Fill;
             DBTLP.Controls.Add(ctrl as UserControl);
+            this.ResumeLayout(true);
         }
         public void Set(ref Interface inter, ref IXCOMPreferences preferences)
         {
@@ -76,20 +85,19 @@ namespace DB.UI
 
             Interface.IBS.Matrix.CurrentChanged += delegate
             {
-                UpdateMatrixMUESUserInterface();
+                MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
+                callmeBack(m, EventArgs.Empty);
+
             };
 
-            grapher.Name = "graph";
+          
 
-            this.ResumeLayout(true);
 
             ucMUES1.Set(ref inter, ref preferences);
 
-
+            this.ResumeLayout(true);
 
         }
-
-
 
         protected internal void addCompositions(ref MatrixRow m, string responde)
         {
@@ -119,46 +127,27 @@ namespace DB.UI
 
       
 
-        public void UpdateMatrixMUESUserInterface()
-        {
-            try
-            {
-                resetProgress(0);
-                resetProgress(2);
-                showProg(null, EventArgs.Empty);
-                preparePlot();
-                showProg(null, EventArgs.Empty);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-        }
-
-        private void preparePlot()
-        {
-         
-            object[] arr = XCom.GetDataToPlot();
-            DataColumn ene = (DataColumn) arr[0];
-            DataColumn mu = (DataColumn) arr[1];
-          
-
-
-            this.grapher.SetGraph(ref ene, 1, (bool)arr[2], 10, ref mu, 1, true, 10,(string)arr[3]);
-
-            DataTable dt = ene.Table;
-
-        
-
-            Dumb.FD(ref dt);
-        }
+   
 
         private void callmeBack(object sender, EventArgs e)
         {
-            object[] arr = (sender as object[]);
-            string tempFile = arr[0] as string;
-            string Response = arr[1] as string;
-            ucMUES1.SendToBrowser(tempFile, Response);
+           
+                MatrixRow m = sender as MatrixRow;
+                Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
+
+                //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
+
+                Uri uri = new Uri(XCom.StartupPath + m.MatrixID + ".png");
+                webBrowser1.Navigate(uri);
+
+
+           //
+
+            if (!XCom.IsCalculating)
+            {
+                ucCalculate1.EnableCalculate = true;
+            }
+
         }
         private void ucLinaaMatrix_Load(object sender, EventArgs e)
         {

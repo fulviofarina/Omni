@@ -6,20 +6,45 @@ using DB.Properties;
 
 //using DB.Interfaces;
 using Rsx.Dumb;
+using System.IO;
 
 namespace DB
 {
     public partial class LINAA : IStore
     {
 
-        public void InsertMUES(ref MUESDataTable mu, int matrixID)
+       public bool SaveMUES(ref MUESDataTable mu, ref MatrixRow m, bool sql = true)
         {
-            TAM.MUESTableAdapter.DeleteByMatrixID(matrixID);
-            foreach (DB.LINAA.MUESRow row in mu.Rows)
+            IEnumerable<MUESRow> mues = m.GetMUESRows();
+            Delete(ref mues);
+
+            if (sql)
             {
-                TAM.MUESTableAdapter.Insert(row.MatrixID, row.Energy, row.MACS, row.MAIS, row.PE, row.PPNF, row.PPEF, row.MATCS, row.MATNCS, row.Density, row.Edge);
+                TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
+                foreach (DB.LINAA.MUESRow row in mu.Rows)
+                {
+                    TAM.MUESTableAdapter.Insert(row.MatrixID, row.Energy, row.MACS, row.MAIS, row.PE, row.PPNF, row.PPEF, row.MATCS, row.MATNCS, row.Density, row.Edge);
+                }
             }
+
+            byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref mu);
+
+            string tempfile = folderPath + Resources.XCOMFolder;
+            tempfile += m.MatrixID;
+
+            File.WriteAllBytes(tempfile, arr);
+
+
+
+            //////////// HASTA AQUI
+
+      
+
+
+            return File.Exists(tempfile);
         }
+
+      
 
         public bool Save<T>()
         {

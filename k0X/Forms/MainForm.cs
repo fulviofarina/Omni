@@ -356,7 +356,7 @@ namespace k0X
                 msn = new Pop(false);
 
                 //Build
-                Creator.Build();
+                Creator.Initialize();
 
                 UserControl IConn = new VTools.ucSQLConnection();
                 // dynamic connectionControl = IConn;

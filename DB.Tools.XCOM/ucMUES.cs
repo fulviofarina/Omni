@@ -1,15 +1,58 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using System.Windows.Forms;
-
+using System.Linq;
 using DB.Tools;
 using Rsx.Dumb;
+using static DB.LINAA;
+using System.Collections.Generic;
 
 namespace DB.UI
 {
     public partial class ucMUES : UserControl
     {
-        protected internal bool advanced = true;
+
+        /// <summary>
+        /// not used
+        /// </summary>
+        /// <param name="m"></param>
+        private void getDataToPlot(ref MatrixRow m)
+        {
+
+
+            int matrixID = m.MatrixID;
+            string name;
+            double density;
+            name = m.MatrixName;
+            density = m.MatrixDensity;
+
+            string title = string.Empty;
+
+            double eh;//// = pref.EndEnergy;
+            double el;// = pref.StartEnergy;
+            bool logScale;
+            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
+            eh = pref.EndEnergy;
+            el = pref.StartEnergy;
+            logScale = pref.LogGraph;
+            bool sql = true;
+            MUESDataTable mues = null;
+            //   if (specific) mues = Interface.IPopulate.IGeometry.GetMUES(el, eh, matrixID);
+            mues = Interface.IPopulate.IGeometry.GetMUES(ref m, sql);
+
+            DataColumn ene = mues.EnergyColumn;
+            DataColumn mu = mues.MATNCSColumn;
+
+            this.grapher.SetGraph(ref ene, 1, logScale, 10, ref mu, 1, true, 10, title);
+            this.grapher.Refresh();
+            DataTable dt = ene.Table;
+            Dumb.FD(ref dt);
+        }
+
+      
+
+      //  protected internal bool advanced = true;
         protected internal Interface Interface = null;
 
         /// <summary>
@@ -21,42 +64,44 @@ namespace DB.UI
             try
             {
                 Dumb.FD(ref this.Linaa);
-                this.compositionsDGV.DataSource = null;
+                this.DGV.DataSource = null;
                 Dumb.FD(ref this.bs);
 
                 Interface = LinaaInterface;
                 // BindingSource bsCompositions = null;
 
-                this.compositionsDGV.BackgroundColor = System.Drawing.Color.Thistle;
+                this.DGV.BackgroundColor = System.Drawing.Color.Thistle;
 
                 // bsCompositions = Interface.IBS.MUES;
 
                 // this.compositionsDGV.DataMember = string.Empty;
-                this.compositionsDGV.DataSource = Interface.IBS.MUES;
-                this.compositionsDGV.RowHeadersVisible = false;
+                this.DGV.DataSource = Interface.IBS.MUES;
+                //  this.compositionsDGV.RowHeadersVisible = false;
+                bindDGVColumns();
 
+              //  FormClosingEventHandler closing = delegate
+              //  {
+               //     refreshDGV();
+              //  };
 
+              //  pref.Parent.FormClosing += closing;
 
-                // this.compositionsDGV.MouseDoubleClick += WebBrowser_MouseDoubleClick;
-                //   this.webBrowser.cl += WebBrowser_MouseDoubleClick;
+                EventHandler action = delegate
+                {
+                    // string rounding2 = Interface.IPreferences.CurrentXCOMPref.Rounding;
+                    //setDGVRounding(rounding2);
+                    refreshDGV();
+                };
 
-                // string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName; Binding
-                // mcompoBin = Rsx.Dumb.BS.ABinding(ref Bind, column);
-                // this.matrixRTB.DataBindings.Add(mcompoBin); this.matrixRTB.MouseLeave += focus;
-                // this.compositionsDGV.MouseHover += focus;
-         
-                pref.RoundingChanged += delegate
-                  {
-                      string rounding2 = Interface.IPreferences.CurrentXCOMPref.Rounding;
-                      SetDGVRounding(rounding2);
-                  };
+                pref.RoundingChanged += action;
 
-                string rounding = Interface.IPreferences.CurrentXCOMPref.Rounding;
-                SetDGVRounding(rounding);
-
+                action.Invoke(null, EventArgs.Empty);
 
                 Focus(true);
-                    // focus(null, EventArgs.Empty);
+
+                grapher.Name = "graph";
+
+
             }
             catch (System.Exception ex)
             {
@@ -64,12 +109,56 @@ namespace DB.UI
             }
         }
 
-        private void WebBrowser_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void refreshDGV()
         {
-        
-            Focus(advanced);
-            advanced = !advanced;
+
+            IEnumerable<MUESColumn> cols = DGV.Columns.OfType<MUESColumn>();
+            foreach (MUESColumn c in cols)
+            {
+                if (!c.Visible && c!=this.mUDataGridViewTextBoxColumn) c.Visible = true;
+                c.SetRounding();
+            }
         }
+
+        private void bindDGVColumns()
+        {
+
+           LINAA.XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
+
+            Rsx.DGV.IBindableDGVColumn col = null;
+
+            col = this.mACSDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.CSColumn.ColumnName;
+        
+
+            col = this.mAISDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.ISColumn.ColumnName;
+         
+
+            col = this.pEDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.PEColumn.ColumnName;
+        
+            col = this.pPEFDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.PPEFColumn.ColumnName;
+        
+            col = this.pPNFDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.PPNFColumn.ColumnName;
+
+            col = this.mATNCSDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.TNCSColumn.ColumnName;
+       
+            col = this.mATCSDataGridViewTextBoxColumn;
+            col.BindingPreferenceField = Interface.IDB.XCOMPref.TCSColumn.ColumnName;
+
+
+            IEnumerable<MUESColumn> cols =  DGV.Columns.OfType<MUESColumn>();
+            foreach (MUESColumn c in cols)
+            {
+                c.BindingRoundingField = Interface.IDB.XCOMPref.RoundingColumn.ColumnName;
+                c.BindingPreferenceRow = pref;//as DataRow;
+            }
+        }
+
 
         public void Focus(bool table)
         {
@@ -78,31 +167,29 @@ namespace DB.UI
     
         }
 
+        public void PrintDGV(string file)
+        {
+            try
+            {
+                DataTable mu = Rsx.Dumb.Tables.DGVToTable(this.DGV);
+
+                mu.WriteXml(file, XmlWriteMode.IgnoreSchema);
+            }
+            catch (Exception ex)
+            {
+
+               
+            }
+         
+
+        }
+
         public ucMUES()
         {
             InitializeComponent();
         }
+   
        
-        public void SetDGVRounding(string rounding)
-        {
-            foreach (DataGridViewColumn item in compositionsDGV.Columns)
-            {
-                bool okCol = item.DataPropertyName[0].CompareTo('M') == 0;
-                okCol = okCol || item.DataPropertyName[0].CompareTo('P') == 0;
-                if (okCol)
-                {
-                    item.DefaultCellStyle.Format = rounding;
-                }
-            }
-        }
-
-        public void SendToBrowser(string tempFile, string response)
-        {
-            File.WriteAllText(tempFile, response);
-            webBrowser.Url = null;
-            Uri uri = new Uri(tempFile);
-            webBrowser.Url = uri;
-            webBrowser.Show();
-        }
+      
     }
 }

@@ -113,11 +113,15 @@ namespace DB.Tools
                 path = GetSSFPreferencesPath();
                 dt = Interface.IDB.SSFPref;
             }
-            else //if (t.Equals(typeof(XCOMPrefDataTable)))
+            else// if (t.Equals(typeof(XCOMPrefDataTable)))
             {
                 path = GetXCOMPreferencesPath();
                 dt = Interface.IDB.XCOMPref;
             }
+         //   else
+          //  {
+
+         //   }
         }
 
         /// <summary>
@@ -132,14 +136,26 @@ namespace DB.Tools
             findTableAndPath<T>(out dt, out path);
 
             DataRow row = dt.AsEnumerable().FirstOrDefault(selector) ;
-            // bool add = false;
+             bool add = false;
 
             if (row == null)
             {
                 Interface.IReport.GenerateUserInfoReport();
-                // add = true;
+
+                //row = dt.NewRow();
+               
+              //  row.SetField<string>("WindowsUser", WindowsUser);
+              //  add = true;
             }
+
+
+
+          
+
             Type tipo = typeof(T);
+
+
+
 
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
@@ -188,13 +204,16 @@ namespace DB.Tools
 
                
             }
-
+           
 
                  (row as IRow).Check();
-            //  if (add)
-            //  {
-            //    dt.LoadDataRow(row.ItemArray, true);
-            //  }
+
+
+
+              if (add)
+              {
+           //      dt.LoadDataRow(row.ItemArray, true);
+              }
             //   IRow r = row as IRow;
             //check
             //     r.Check();

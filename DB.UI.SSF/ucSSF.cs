@@ -148,9 +148,6 @@ namespace DB.UI
                 ucUnit.Set(ref Interface, ref pref);
 
 
-              
-
-
                 Interface.IBS.PropertyChangedHandler += delegate
                 {
                     bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
@@ -169,8 +166,6 @@ namespace DB.UI
                 //EN ESTE ORDEN!!!!
                 IPanel.On = this.CalcTab;
                 IPanel.Off = this.MatrixTab;
-
-             
 
                 //
                 this.templatesTabCtrl.Selected += delegate

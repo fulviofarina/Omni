@@ -19,7 +19,8 @@ namespace DB.UI
         public static Interface Interface = null;
 
         /// <summary>
-        /// database
+        /// only kept for compatibility with k0-X, remove when possible
+        /// make necessary changes
         /// </summary>
         public static LINAA Linaa = null;
 
@@ -125,7 +126,7 @@ namespace DB.UI
 
         public static void Explore()
         {
-            DataSet set = Linaa;
+            DataSet set = Interface.Get();
             Explorer explorer = new Explorer(ref set);
 
             // Rsx.DGV.Control.Refresher refresher = explorer.RefreshTable;
@@ -133,9 +134,7 @@ namespace DB.UI
             DataGridView[] dgv = new DataGridView[] { explorer.DGV };
 
             ctr.SetContext("Explorer", ref dgv, LIMS.Form.CMS);
-
             ctr.CreateDGVEvents();
-
             ctr.SaveMethod = Linaa.Save;
             ctr.SetSaver(explorer.saveBtton);
 

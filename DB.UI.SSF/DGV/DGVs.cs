@@ -4,81 +4,20 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx.Dumb;
+using Rsx.DGV;
 using static DB.LINAA;
 
 namespace DB.UI
 {
-    public partial class SampleCell : DataGridViewTextBoxCell
-    {
-        protected internal Color[] arrayOfBackColors = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.White };
-        protected internal Color[] arrayOfForeColors = new Color[] { Color.Yellow, Color.Black, Color.Black };
-
-        protected internal SampleColumn parent
-        {
-            get
-            {
-                return this.OwningColumn as SampleColumn;
-            }
-        }
-
-        /// <summary>
-        /// Sets the Style
-        /// </summary>
-        /// <param name="readonlyMode"></param>
-        protected internal void setCellReadOnlyOrNormal(bool readonlyMode)
-        {
-            if (readonlyMode)
-            {
-                Style.BackColor = arrayOfBackColors[0];
-                this.Style.ForeColor = arrayOfForeColors[0];
-
-                this.Style.SelectionBackColor = arrayOfBackColors[0];
-                this.Style.SelectionForeColor = arrayOfForeColors[0];
-            }
-            else
-            {
-                Style.BackColor = arrayOfBackColors[2];
-                Style.ForeColor = arrayOfForeColors[2];
-                Style.SelectionBackColor = arrayOfBackColors[1];
-                Style.SelectionForeColor = arrayOfForeColors[1];
-            }
-        }
-
-        /// <summary>
-        /// Sets if should be read only or not
-        /// </summary>
-        protected internal void setReadOnlyOrNot()
-        {
-            if (!string.IsNullOrEmpty(parent?.BindingPreferenceField))
-            {
-                bool Isreadonly = false;
-                Isreadonly = (bool)parent?.BindingPreferenceRow[parent?.BindingPreferenceField];
-                setCellReadOnlyOrNormal(Isreadonly);
-                if (Isreadonly != this.OwningColumn.ReadOnly)
-                {
-                    this.OwningColumn.ReadOnly = Isreadonly;
-                }
-            }
-        }
-
-        protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
-        {
-            setReadOnlyOrNot();
-
-            base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
-        }
-
-        public SampleCell() : base()
-        {
-            Style.Font = new Font("Segoe UI", 14.25f, FontStyle.Bold);
-        }
-    }
-
+   
+    /*
     public partial class SampleColumn : DataGridViewTextBoxColumn, ISampleColumn
     {
         protected internal string bindingField = string.Empty;
 
         protected internal DataRow bindingRow = null;
+
+       // protected internal Action
 
         public string BindingPreferenceField
         {
@@ -114,8 +53,21 @@ namespace DB.UI
             CellTemplate = new SampleCell();
         }
     }
+    */
 
-    public partial class UnitBoolColumn : DataGridViewTextBoxColumn
+    public  class SampleColumn : BindableDGVColumn
+    {
+        public SampleColumn()
+            : base()
+        {
+            CellTemplate = new BindableDGVCell();
+             this.DefaultAction = DefaultAction.ReadOnly;
+       //  this.arrayOfBackColors = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.White };
+     //   this.arrayOfForeColors = new Color[] { Color.Yellow, Color.Black, Color.Black };
+
+    }
+}
+    public  class UnitBoolColumn : DataGridViewTextBoxColumn
     {
         public UnitBoolColumn()
             : base()
@@ -124,7 +76,7 @@ namespace DB.UI
         }
     }
 
-    public partial class UnitSSFCell : DataGridViewTextBoxCell
+    public  class UnitSSFCell : DataGridViewTextBoxCell
     {
         protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
         {
@@ -172,93 +124,18 @@ namespace DB.UI
         }
     }
 
-    public partial class BindableDGVColumn : DataGridViewTextBoxColumn
-    {
-        public BindableDGVColumn() : base()
-        {
-        }
 
-        protected internal string bindingField = string.Empty;
-
-        protected internal DataRow bindingRow = null;
-
-        public string BindingPreferenceField
-        {
-            get
-            {
-                return bindingField;
-            }
-
-            set
-            {
-                bindingField = value;
-            }
-        }
-
-        public DataRow BindingPreferenceRow
-        {
-            get
-            {
-                return bindingRow;
-            }
-
-            set
-            {
-                bindingRow = value;
-            }
-        }
-    }
-
-    public partial class UnitSSFColumn : DataGridViewTextBoxColumn, IUnitSSFColumn
+  
+    public  class UnitSSFColumn : BindableDGVColumn, IUnitSSFColumn
     {
         public UnitSSFColumn() : base()
         {
+            base.DefaultAction = DefaultAction.Enable;
             base.CellTemplate = new UnitSSFCell();
         }
 
         protected internal string bindableAsteriskField = string.Empty;
 
-        protected internal string bindingField = string.Empty;
-
-        protected internal DataRow bindingRow = null;
-
-        public string BindingPreferenceField
-        {
-            get
-            {
-                return bindingField;
-            }
-
-            set
-            {
-                bindingField = value;
-            }
-        }
-
-        public DataRow BindingPreferenceRow
-        {
-            get
-            {
-                return bindingRow;
-            }
-
-            set
-            {
-                bindingRow = value;
-            }
-        }
-
-        public void SetEnable()
-        {
-            if (bindingRow != null)
-            {
-                if (!string.IsNullOrEmpty(BindingPreferenceField))
-                {
-                    bool enable = (bool)bindingRow.Field<bool>(BindingPreferenceField);
-                    this.ReadOnly = !enable;
-                }
-            }
-        }
 
         public void PaintHeader()
         {
@@ -297,37 +174,7 @@ namespace DB.UI
             HeaderText = originalHeaderText + add;
         }
 
-        public void SetRounding()
-        {
-            SSFPrefRow pref = bindingRow as SSFPrefRow;
-
-            if (pref != null)
-            {
-                try
-                {
-                    string rounding = (string)pref?.Field<string>(bindingRoundingField);
-
-                    if (rounding.Count() == 2)
-                    {
-                        char first = rounding.ToUpper()[0];
-                        char[] formatchars = { 'G', 'F', 'N', 'E', 'C' };
-                        if (formatchars.Contains(first))
-                        {
-                            char second = rounding[1];
-                            if (char.IsNumber(second))
-                            {
-                                this.DefaultCellStyle.Format = rounding;
-                            }
-                        }
-                    }
-                    this.DataGridView.InvalidateColumn(this.Index);
-                }
-                catch (FormatException)
-                {
-                }
-            }
-        }
-
+    
         public string BindableAsteriskField
         {
             get
@@ -388,24 +235,12 @@ namespace DB.UI
             }
         }
 
-        protected internal string bindingRoundingField = string.Empty;
-
-        public string BindingRoundingField
-        {
-            get
-            {
-                return bindingRoundingField;
-            }
-            set
-            {
-                bindingRoundingField = value;
-            }
-        }
+    
     }
 
-    public partial class UnitBoolCell : DataGridViewTextBoxCell
+    public  class UnitBoolCell : DataGridViewTextBoxCell
     {
-        protected internal Color defaultColor = Color.DarkRed;
+      //  protected internal Color defaultColor = Color.DarkRed;
 
         protected override void OnMouseClick(DataGridViewCellMouseEventArgs e)
         {
@@ -413,7 +248,6 @@ namespace DB.UI
             if (!EC.IsNuDelDetch(u))
             {
                 u.ToDo = !u.ToDo;
-
                 base.DataGridView.NotifyCurrentCellDirty(true);
                 base.DataGridView.ClearSelection();
             }
@@ -427,13 +261,12 @@ namespace DB.UI
             base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, this.Style, advancedBorderStyle, paintParts);
         }
 
+
         protected internal void setCellColor()
         {
-            DataRowView rv = this.OwningRow?.DataBoundItem as DataRowView;
-            if (rv != null)
-            {
-                UnitRow u = (rv.Row) as UnitRow;
-                if (!EC.IsNuDelDetch(u))
+            UnitRow u = ((this.OwningRow?.DataBoundItem as DataRowView)?.Row) as UnitRow;
+
+            if (!EC.IsNuDelDetch(u))
                 {
                     Color colr = Color.DarkGreen;
                     if (u.ToDo && u.IsBusy)
@@ -447,7 +280,7 @@ namespace DB.UI
                     Style.BackColor = colr;
                     Style.ForeColor = colr;
                 }
-            }
+            
         }
 
         public UnitBoolCell() : base()
@@ -455,6 +288,7 @@ namespace DB.UI
             Style.SelectionBackColor = Color.Transparent;
             Style.SelectionForeColor = Color.Transparent;
 
+            Color defaultColor = Color.DarkRed;
             Style.BackColor = defaultColor;
             Style.ForeColor = defaultColor;
         }

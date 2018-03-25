@@ -11,6 +11,9 @@ namespace DB
 {
     public interface ISamples
     {
+
+        void UpdateIrradiationDates();
+
         Action<object, EventData> SpectrumCalcParametersHandler { set; }
 
         IRequestsAveragesRow AddIRequestsAverage(Int32 NAAID, ref SubSamplesRow s);

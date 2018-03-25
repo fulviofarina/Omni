@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using DB.Tools;
+using Rsx.DGV;
 using Rsx.Dumb;
 
 namespace DB.UI
@@ -83,23 +84,29 @@ namespace DB.UI
         {
             LINAA.SSFPrefRow pref = Interface.IPreferences.CurrentSSFPref;
 
-            ISampleColumn columna = null;
+            IBindableDGVColumn columna = null;
 
             columna = this.fillHeightDataGridViewTextBoxColumn;
+       
             columna.BindingPreferenceField = Interface.IDB.SSFPref.AAFillHeightColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
+            
 
             columna = this.gross1DataGridViewTextBoxColumn;
+        
             columna.BindingPreferenceField = Interface.IDB.SSFPref.CalcMassColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
 
             columna = this.radiusDataGridViewTextBoxColumn;
+         
             columna.BindingPreferenceField = Interface.IDB.SSFPref.AARadiusColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
 
             columna = this.calcDensityDataGridViewTextBoxColumn;
+          
             columna.BindingPreferenceField = Interface.IDB.SSFPref.CalcDensityColumn.ColumnName;
             columna.BindingPreferenceRow = pref;
+
         }
 
         private void popupMessage()

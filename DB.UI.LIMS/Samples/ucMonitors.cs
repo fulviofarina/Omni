@@ -44,7 +44,7 @@ namespace DB.UI
 
         public void PostRefresh(object sender, EventArgs e)
         {
-            LIMS.Linaa.UpdateIrradiationDates();
+            Interface.IPopulate.ISamples.UpdateIrradiationDates();
             MonCodebox_SelectedIndexChanged(sender, e);
         }
 

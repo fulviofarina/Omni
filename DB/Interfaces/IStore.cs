@@ -7,6 +7,7 @@ namespace DB
 {
     public interface IStore
     {
+        bool SaveMUES(ref MUESDataTable mu, ref MatrixRow m, bool sql = true);
         void Save<T>(ref T row);
         void CleanOthers();
         string FolderPath
@@ -14,7 +15,7 @@ namespace DB
             get;
             set;
         }
-        void InsertMUES(ref MUESDataTable mu, int matrixID);
+    //    void InsertMUES(ref MUESDataTable mu, int matrixID);
 
         void AddException(Exception ex);
 
@@ -66,7 +67,7 @@ namespace DB
        // bool SaveSSF(bool offline, string file);
 
         //void LoadMonitorsFile(string file);
-        void UpdateIrradiationDates();
+   
         void CleanPreferences();
 
         // void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);

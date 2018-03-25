@@ -11,7 +11,7 @@ namespace DB.UI
     public interface IXCOMPreferences
     {
         event EventHandler RoundingChanged;
-
+        Form Parent { get; }
         void Set(ref Interface inter);
     }
 
@@ -19,6 +19,10 @@ namespace DB.UI
     {
         protected internal Interface Interface;
 
+        public new Form Parent 
+        {
+            get { return this.ParentForm; }
+        }
         protected internal event EventHandler roundingChanged = null;
 
         public event EventHandler RoundingChanged
@@ -49,7 +53,7 @@ namespace DB.UI
                 Hashtable bindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
                 setCheckStatebindings(ref bindings);
 
-                stepsBox.TextChanged += energyStep_TextChanged;
+            //    stepsBox.TextChanged += energyStep_TextChanged;
                 useListbox.CheckedChanged += ASCIIInput_Click;
                 this.roundingTextBox.KeyUp += roundingTextBox_TextChanged;
             }
@@ -63,15 +67,15 @@ namespace DB.UI
         {
             roundingChanged?.Invoke(sender, e);
         }
-
+        /*
         protected internal void energyStep_TextChanged(object sender, EventArgs e)
         {
             if (!stepsBox.Text.Equals(String.Empty))
             {
-                if (Convert.ToInt16(stepsBox.Text) > 75) stepsBox.Text = "75";
+                if (Convert.ToInt32(stepsBox.Text) > 75) stepsBox.Text = "75";
             }
         }
-
+        */
         protected internal void ASCIIInput_Click(object sender, EventArgs e)
         {
 
@@ -79,14 +83,14 @@ namespace DB.UI
             {
                 string filepath = Encoding.UTF8.GetString(Interface.IPreferences.CurrentXCOMPref.ListOfEnergies);
                 RichTextBox box= Rsx.Dumb.IO.RichTextBox(filepath , "Energies List", 14.25f);
-
-                (box.Parent as Form).FormClosed += delegate
+                Form fm = (box.Parent as Form);
+                fm.FormClosed += delegate
                 {
                     Interface.IPreferences.CurrentXCOMPref.ListOfEnergies = Encoding.UTF8.GetBytes(box.Text);
                     Interface.IPreferences.SavePreferences();
 
                 };
-                (box.Parent as Form).Show();
+                fm.Show();
 
 
             }
@@ -129,7 +133,34 @@ namespace DB.UI
 
             column = dt.ForceColumn.ColumnName;
             this.forceBox.DataBindings.Add(bindings[column] as Binding);
+
+
+
+            column = dt.ISColumn.ColumnName;
+            this.isbox.DataBindings.Add(bindings[column] as Binding);
+            this.isbox.CheckedChanged += roundingTextBox_TextChanged;
+            column = dt.CSColumn.ColumnName;
+            this.csbox.DataBindings.Add(bindings[column] as Binding);
+            this.csbox.CheckedChanged += roundingTextBox_TextChanged;
+            column = dt.PPEFColumn.ColumnName;
+            this.ppefbox.DataBindings.Add(bindings[column] as Binding);
+            this.ppefbox.CheckedChanged += roundingTextBox_TextChanged;
+            column = dt.PPNFColumn.ColumnName;
+            this.ppnfbox.DataBindings.Add(bindings[column] as Binding);
+            this.ppnfbox.CheckedChanged += roundingTextBox_TextChanged;
+            column = dt.TNCSColumn.ColumnName;
+            this.totncs.DataBindings.Add(bindings[column] as Binding);
+            this.totncs.CheckedChanged += roundingTextBox_TextChanged;
+            column = dt.TCSColumn.ColumnName;
+            this.totcs.DataBindings.Add(bindings[column] as Binding);
+            this.totcs.CheckedChanged += roundingTextBox_TextChanged;
+            column = dt.PEColumn.ColumnName;
+            this.pebox.DataBindings.Add(bindings[column] as Binding);
+            this.pebox.CheckedChanged += roundingTextBox_TextChanged;
+
         }
+
+     
 
         public ucXCOMPreferences()
         {

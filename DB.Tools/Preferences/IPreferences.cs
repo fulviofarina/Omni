@@ -25,6 +25,6 @@
         void SavePreferences();
 
         void ReportChanges();
-        void Clear();
+      //  void Clear();
     }
 }

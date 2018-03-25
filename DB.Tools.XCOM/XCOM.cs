@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows.Forms;
 using Rsx.Dumb;
 using static DB.LINAA;
+
 namespace DB.Tools
 {
-
-
     public partial class XCOM : CalculateBase
     {
-        protected static string XCOM_ERROR = "Problems comunicating with XCOM";
-        protected static string XCOM_TITLE = "XCOM did not answer the query";
+
+      
 
         public void Calculate(bool? BKG)
         {
@@ -23,247 +24,151 @@ namespace DB.Tools
 
             IsCalculating = true;
 
+            _resetProgress?.Invoke(0);
+
+
             int position = 0;
 
-            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
-
-            if (pref.Loop)
+            EventHandler runWorker = delegate
             {
-                Interface.IBS.Matrix.MoveLast();
-                position = Interface.IBS.Matrix.Position;
+                ILoader l = loaders.Values.OfType<ILoader>()?.FirstOrDefault(o => !o.IsBusy);
+                l?.RunWorkerAsync();
+            };
+
+            if (Interface.IPreferences.CurrentXCOMPref.Loop)
+            {
+                position = Interface.IBS.Matrix.Count - 1;
                 Interface.IBS.Matrix.MoveFirst();
             }
             else position = Interface.IBS.Matrix.Position;
 
-            _resetProgress?.Invoke(0);
+           
 
-            double Totalend = pref.EndEnergy;
-            int NrEnergies = pref.Steps;  // STEP (in keV) for retrieving MUES for each keV
-
-            string notepad = "notepad.exe";
-
-            while (IsCalculating)
+            while (calculating)
             {
-                double start = pref.StartEnergy;
-
-                double end = (start + NrEnergies);
-                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
-                string fileName = m.MatrixName.Trim() + ".txt";
-                string composition = m.MatrixComposition;
-                string filePath = _startupPath + fileName;
 
                 try
                 {
-                    //finds the MUEs for each 1keV, given start and Totalend energies, by NrEnergies (keV) steps.
-                    m.RowError = string.Empty;
+                    MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
 
-                    if (pref.ASCIIOutput)
-                    {
-                        // the error in Density column because density is not necessary
-                        _resetProgress?.Invoke(2);
+                    IList<Action> ls =  CalculateUnit(m);
 
-                        //        string energiesListPath = Interface.IStore.FolderPath + DB.Properties.Resources.XCOMEnergies;
-                        byte[] arr = Interface.IPreferences.CurrentXCOMPref.ListOfEnergies;
-                        string EnergiesList = string.Empty;
-                        //          arr = Encoding.UTF8.GetBytes( DB.Properties.Resources.XCOM);
-                        if (!pref.UseList) EnergiesList = Encoding.UTF8.GetString(arr);
-                        else EnergiesList = DB.Properties.Resources.XCOM;
-
-                        string compositionList = XCOM.MakeCompositionsList(composition);
-
-                        FindTim(compositionList, EnergiesList, filePath, false);
-
-                        _showProgress?.Invoke(null, EventArgs.Empty);
-
-                        System.Diagnostics.Process proceso = new System.Diagnostics.Process();
-                        IO.Process(proceso, _startupPath, notepad, fileName, false, false, 1000);
-
-                        _showProgress?.Invoke(null, EventArgs.Empty);
-
-                    }
-                    else
+                    if (ls.Count != 0)
                     {
 
-                        _resetProgress?.Invoke(NrEnergies);
+                        _resetProgress?.Invoke(ls.Count);
 
-                        bool goIn = (m.NeedsMUES || pref.Force);
-                        goIn = !m.HasErrors() && goIn;
-
-                        if (goIn)
+                        Action<int> report = x =>
                         {
-                            string responde = string.Empty;
-                            responde = GetMuesFromXCOM(ref start, Totalend, NrEnergies, ref end, composition, m.MatrixDensity, m.MatrixID);
-                            if (string.IsNullOrEmpty(responde))
+                            _showProgress?.Invoke(null, EventArgs.Empty);
+                        };
+                        Action callBack = delegate
+                        {
+                            if (loaders.Contains(m.MatrixID))
                             {
-                                Interface.IReport.Msg(XCOM_ERROR, XCOM_TITLE);
-                                break;
+                                loaders.Remove(m.MatrixID);
                             }
-                        }
+
+                            if (loaders.Count == 0) calculating = false;
+                            else runWorker.Invoke(null, EventArgs.Empty);
+
+                            _callBack?.Invoke(m, EventArgs.Empty);
+                         
+                        };
+
+                        ILoader ld = new Loader();
+                        ld.Set(ls, callBack, report);
+                        loaders.Add(m.MatrixID, ld);
                     }
+
+                    Application.DoEvents();
 
                     if (Interface.IBS.Matrix.Position == position) break;
                     else Interface.IBS.Matrix.MoveNext();
                 }
                 catch (SystemException ex)
                 {
-                    EC.SetRowError(m, ex);
                     Interface.IStore.AddException(ex);
                 }
             }
 
-            IsCalculating = false;
+            runWorker.Invoke(null,EventArgs.Empty);
+            runWorker.Invoke(null, EventArgs.Empty);
+            runWorker.Invoke(null, EventArgs.Empty);
 
         }
 
-        public object[] GetDataToPlot()
+        public IList<Action> CalculateUnit(MatrixRow m)
         {
-            MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
+            //finds the MUEs for each 1keV, given start and Totalend energies, by NrEnergies (keV) steps.
+          
+            List<Action> ls = new List<Action>();
 
-            int matrixID = m.MatrixID;
-            string name;
-            double density;
-            getNameDensity(out name, out density);
-            string title = string.Empty;
-            bool sql = SQL;
-            double eh;//// = pref.EndEnergy;
-            double el;// = pref.StartEnergy;
-            bool logScale;
-            getEnergies(out eh, out el, out logScale);
-            bool specific = false;
-            MUESDataTable mues = null;
-            if (specific) mues = Interface.IPopulate.IGeometry.GetMUES(el, eh, matrixID);
-            else mues = Interface.IPopulate.IGeometry.GetMUES(ref m, sql);
-
-            DataColumn ene = mues.EnergyColumn;
-            DataColumn mu = mues.MATNCSColumn;
-
-            return new object[] { ene, mu,logScale,title };
-        }
-
-        public void getEnergies(out double eh, out double el, out bool logScale)
-        {
+            m.RowError = string.Empty;
             XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
-
-            eh = pref.EndEnergy;
-            el = pref.StartEnergy;
-
-            logScale = pref.LogGraph;
-
-        }
-        public void getNameDensity(out string name, out double density)
-        {
-            MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
-            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
-            name = m.MatrixName;
-            density = m.MatrixDensity;
-            int matrixID = m.MatrixID;
-
-        }
-
-        public bool SQL
-        { 
-            get
+            bool goIn = !m.HasErrors() || pref.Force;
+            if (goIn)
             {
-            return !(bool)Interface?.IPreferences.CurrentPref.Offline;
-            }
-}
-        protected internal string GetMuesFromXCOM(ref double start, double Totalend, int NrEnergies, ref double end, string composition, double density, int matrixID)
-        {
-            string headerWithContent = string.Empty;
-
-            try
-            {
-                string path = _startupPath + matrixID + ".";
-                string ext = ".txt";
-
                 int i = 0;
-                string Response = string.Empty;
-
-
-                MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
-
-                MUESDataTable mu = new MUESDataTable();
-
-                while (IsCalculating)
-                {
-                    double START = start;
-                    double END = end;
-
-                    Response = QueryXCOM(composition, NrEnergies, START, END);
-                    if (i == 0) headerWithContent = Response; //keep the header of the response
-
-                    string tempFile = path + i + ext;
-              
-
-                      _callBack?.Invoke(new object[] { tempFile, Response }, EventArgs.Empty);
-                    StreamReader reader = new StreamReader(tempFile);
-
-                    FindMu(density, ref reader, ref mu, matrixID);
-
-             
-                    _showProgress?.Invoke(null, EventArgs.Empty);
-
-             
-
-
-                    if (end >= Totalend) break;
-
-                    start += NrEnergies;
-                    end = start + NrEnergies;
-                    i++;
-                }
-
-
-                Interface.IDB.MUES.Merge(mu);
-
                 Action action = delegate
                 {
-                    if (SQL)
-                    {
-                        Interface.IStore.InsertMUES(ref mu, m.MatrixID);
-                    }
-                    byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref mu);
-                    m.XCOMTable = arr;
+                    i = makeFiles(ref m, ref pref);
                 };
-                Action callBack = delegate
+
+                Action action3 = delegate
                 {
-
+                     makePic(ref m, ref pref);
                 };
 
-                ILoader ld = new Loader();
-                ld.Set(action, callBack, null);
-                ld.RunWorkerAsync();
-
-            
-
+                Action action2 = delegate
+                {
+                    MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
+                    while (i >= 0)
+                    {
+                        getMUES(m.MatrixDensity, _startupPath, ref mu, m.MatrixID, i);
+                        i--;
+                    }
+                    if (mu.Count == 0) return;
+                    Interface.IStore.SaveMUES(ref mu, ref m, SQL);
+                };
+             
+                ls.Add(action);
+                ls.Add(action2);
+                ls.Add(action3);
             }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
 
-            return headerWithContent;
+            return ls;
         }
 
 
+       
 
-        protected internal  Interface Interface;
+        public bool SQL
+        {
+            get
+            {
+                return !(bool)Interface?.IPreferences.CurrentPref.Offline;
+            }
+        }
+
+    
+
         public XCOM() : base()
         {
-
         }
+
+
+
+     
         public void Set(ref Interface inter)
         {
             Interface = inter;
-
         }
 
-        bool calculating = false;
-     //   private System.Web webBrowser;
+        private bool calculating = false;
 
         public new bool IsCalculating
         {
-      
             get
             {
                 return calculating;
@@ -271,14 +176,22 @@ namespace DB.Tools
             set
             {
                 calculating = value;
+
+                if (!calculating)
+                {
+                    //check if cancelled
+                    if (loaders.Count!=0)
+                    {
+                        //    IEnumerable<ILoader> lds = loaders.Values.OfType<ILoader>();
+                        //   lds = lds.Where(o => !o.IsBusy);
+                    }
+                }
+                loaders.Clear();
             }
-        
+        }
     }
 
-    }
-
-
-    public partial class XCOM
+    public partial class XCOM 
     {
         public static IList<string[]> ExtractComposition(String XCOMResponse, ref LINAA.ElementsDataTable elements)
         {
@@ -312,6 +225,7 @@ namespace DB.Tools
             return ls;
         }
 
+        /*
         public static string MakeCompositionsList(string MatrixComposition)
         {
             string str = string.Empty;
@@ -340,76 +254,128 @@ namespace DB.Tools
             }
             return str;
         }
+        */
 
-        public static string MakeEnergiesList(int NrOfEnergies, double StartEnergy, double EndEnergy)
+        public static int GetNumberOfLines(double step, double StartEnergy, double EndEnergy)
+        {
+            double lines = (EndEnergy - StartEnergy) / (step);
+
+            int NrOfEnergies = Convert.ToInt32(Math.Ceiling((lines)));
+            return NrOfEnergies;
+        }
+
+        public static string MakeEnergiesList(double step, double StartEnergy, int NrOfEnergies)
         {
             string str = string.Empty;
 
             double Energy = 0;
-            double step = ((EndEnergy - StartEnergy) / (NrOfEnergies));
+
             for (int i = 0; i < NrOfEnergies; i++)
             {
                 Energy = StartEnergy + (step * i);
                 str = str + ((Energy * 0.001)).ToString() + "\n";
-                //Energy += step;
             }
             return str;
         }
 
-        public static string QueryXCOM(string MatrixComposition, int NrOfEnergies, double StartEnergy, double EndEnergy)
+        public static Uri XCOMUri = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
+        public static Uri XCOMUriPic = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3");
+        public static string QueryXCOM(string composition, string energies,string name = "default matrix", bool picture = false)
         {
-            IList<string[]> str0 = RegEx.StripComposition(MatrixComposition);
-            //STRING WAS DECODED INTO THE LIST ls
-            // string str = RegEx.StripMoreComposition(ref str0);
-            //    str = str.Replace('\n',' ');
-            string str = string.Empty;
-            foreach (string[] str5 in str0)
+            byte[] bytes = null;
+        
+            if ((composition != null) && (energies != null))
             {
-                str += str5[0] + " " + str5[1] + "\n";
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+                ASCIIEncoding encoding = new ASCIIEncoding();
+                string s = "Formulae=" + composition + "&Energies=" + energies;
+                //   string s = s2;
+                if (picture)
+                {
+                    s += "&Name =" + name + "&Graph1=on";
+                    s += "&Graph2=on" + "&Graph3=on" + "&Graph4=on" + "&Graph5=on" + "&Graph6=on" + "&Graph7=on";
+                    s += "&NumAdd=1" + "&Output=off";// + "&Graph4=on" + "&Graph5=on" + "&Graph6=on" + "&Graph7=on";
+                  
+                }
+                bytes = encoding.GetBytes(s);
+                //bytes2 = encoding.GetBytes(s2);
             }
-            // string str1 = MakeCompositionsList(MatrixComposition);
-            string str2 = MakeEnergiesList(NrOfEnergies, StartEnergy, EndEnergy);
 
             string completo = string.Empty;
+          
 
-            if ((str != null) && (str2 != null))
+            if (bytes != null)
             {
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                string s = "Formulae=" + str + "&Energies=" + str2;
-                byte[] bytes = encoding.GetBytes(s);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = bytes.Length;
-
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
-                requestStream.Close();
-                requestStream.Dispose();
-                requestStream = null;
-
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream responseStream = response.GetResponseStream();
-
-                StreamReader reader = new StreamReader(responseStream);
-
-                completo = reader.ReadToEnd();
-                reader.Close();
-                reader.Dispose();
-                reader = null;
-                responseStream.Close();
-                responseStream.Dispose();
-                responseStream = null;
-
-                response = null;
-                request = null;
+                completo = getHTTPQuery(bytes,picture);
             }
 
             return completo;
         }
 
-        public static void FindMu(double density, ref StreamReader reader, ref LINAA.MUESDataTable dt, int matrixID)
+        public static string GetCompositionString(string MatrixComposition)
         {
+            IList<string[]> str0 = RegEx.StripComposition(MatrixComposition);
+            string str = string.Empty;
+            foreach (string[] str5 in str0)
+            {
+                str += str5[0] + " " + str5[1] + "\n";
+            }
+
+            return str;
+        }
+
+        protected static string XCOM_ERROR = "Problems comunicating with XCOM";
+        protected static string XCOM_TITLE = "XCOM did not answer the query";
+      //  protected static string ext = ".txt";
+    //    protected static string ext2 = ".v2.xml";
+
+        private static string getHTTPQuery(byte[] bytes, bool picture = false)
+        {
+            string completo;
+            // HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://physics.nist.gov/cgi-bin/Xcom/xcom2");
+            //   HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3");
+            HttpWebRequest request = null;
+            if (picture) request = (HttpWebRequest)WebRequest.Create(XCOMUriPic);
+            else request = (HttpWebRequest)WebRequest.Create(XCOMUri);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = bytes.Length;
+            //request.ProtocolVersion = HttpVersion.Version10;
+            //  request.ProtocolVersion = HttpVersion.Version11;
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Close();
+            requestStream.Dispose();
+            requestStream = null;
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(responseStream);
+
+            completo = reader.ReadToEnd();
+            reader.Close();
+            reader.Dispose();
+            reader = null;
+
+            responseStream.Close();
+            responseStream.Dispose();
+            responseStream = null;
+
+            response = null;
+            request = null;
+            return completo;
+        }
+
+        private static void getMUES(double density, string path, ref LINAA.MUESDataTable dt, int matrixID, int subsection)
+        {
+
+            string tempFile = path + matrixID + "." + subsection;
+            if (!File.Exists(tempFile)) return;
+
+            StreamReader reader = new StreamReader(tempFile);
+
             reader.ReadLine();
             reader.ReadLine();
             string[] strArray2 = reader.ReadToEnd().Split(new char[] { '\n' });
@@ -437,9 +403,15 @@ namespace DB.Tools
             for (int j = num; j <= num2; j++)
             {
                 temp = strArray2[j].TrimStart().Split(' ');
-                LINAA.MUESRow r = dt.NewMUESRow();
+                LINAA.MUESRow r = dt.NewMUESRow(); //dt.FirstOrDefault(o => o.Energy ==null);
                 r.MatrixID = matrixID;
-                SetMUESRow(density, temp, ref r);
+                setMUESRow(density, temp, ref r);
+
+                LINAA.MUESRow destiny = dt.FirstOrDefault(o => o.Energy == r.Energy);
+                if (destiny != null)
+                {
+                    dt.RemoveMUESRow(destiny);
+                }
                 dt.AddMUESRow(r);
             }
 
@@ -447,10 +419,11 @@ namespace DB.Tools
             reader.Dispose();
             reader = null;
 
+            File.Delete(tempFile);
             //photon cross sections in g/cm2 and energies in keV, photon * density = mu (linear attenuation)
         }
 
-        private static void SetMUESRow(double density, string[] temp, ref LINAA.MUESRow r)
+        private static void setMUESRow(double density, string[] temp, ref LINAA.MUESRow r)
         {
             if (temp.LongLength == 8)
             {
@@ -481,252 +454,155 @@ namespace DB.Tools
             }
         }
 
-        /// <summary>
-        /// Obtains the mass attenuation coefficients for total absorbtion without coherent
-        /// scattering and compton and returns a table
-        /// </summary>
-        /// <param name="MatrixComposition"></param>
-        /// <param name="NrOfEnergies">     </param>
-        /// <param name="StartEnergy">      </param>
-        /// <param name="EndEnergy">        </param>
-        /// <returns></returns>
-        public static System.Data.DataTable FindXCOMBasic(string MatrixComposition, int NrOfEnergies, double StartEnergy, double EndEnergy)
+    }
+
+    public partial class XCOM
+    {
+
+        private Hashtable loaders = new Hashtable();
+
+        protected internal Interface Interface;
+        private string png = ".png";
+       
+        private void makePic(ref MatrixRow m, ref XCOMPrefRow pref)
         {
-            string str = MakeCompositionsList(MatrixComposition);
-            string str2 = MakeEnergiesList(NrOfEnergies, StartEnergy, EndEnergy);
+            int i = 0;
 
-            System.Data.DataTable dt = new System.Data.DataTable();
+            double start = pref.StartEnergy;
+            double Totalend = pref.EndEnergy;
 
-            if ((str != null) && (str2 != null))
-            {
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                string s = "Formulae=" + str + "&Energies=" + str2;
-                byte[] bytes = encoding.GetBytes(s);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = bytes.Length;
+            string compositions = GetCompositionString(m.MatrixComposition);
 
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
-                requestStream.Close();
-                requestStream.Dispose();
-                requestStream = null;
+          //  start = pref.StartEnergy;
+            string   listOfenergies = MakeEnergiesList(Totalend - start, start, 2);
 
-                Stream responseStream = ((HttpWebResponse)request.GetResponse()).GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
+            string  Response = QueryXCOM(compositions, listOfenergies, m.MatrixName, true);
 
-                request = null;
+            if (string.IsNullOrEmpty(Response)) return;
+            string aux = getPicTag(ref Response);
 
-                reader.ReadLine();
-                reader.ReadLine();
-                string[] strArray2 = reader.ReadToEnd().Split(new char[] { '\n' });
-                responseStream.Close();
-                responseStream.Dispose();
-                responseStream = null;
-                reader.Close();
-                reader.Dispose();
-                reader = null;
+            if (aux.Contains("Error")) return;
+           
+            string     tempFile = _startupPath + m.MatrixID + png;
 
-                int num = 0;
-                int num2 = 1;
-                for (int i = 0; i < strArray2.LongLength; i++)
-                {
-                    if (strArray2[i].Equals(string.Empty)) //find initial row
-                    {
-                        num = i;
-                        num2 = 0;
-                    }
-                    else if ((num2 == 0) && strArray2[i].Contains("</pre>")) //find end row
-                    {
-                        num2 = i;
-                        break;
-                    }
-                }
-                num++; //this is the initial row
-                num2--; //this is the final row
+            string uriString = "https://physics.nist.gov/PhysRefData/Xcom/tmp/graph" + "_" + aux + png;
+            Uri uri = new Uri(uriString);
 
-                String[] temp = null;
 
-                dt.Columns.Add("Energy", typeof(double));
-                dt.Columns.Add("Absorbtion", typeof(double));
-                dt.Columns.Add("Compton", typeof(double));
+            WebClient client = new WebClient();
+                client.DownloadFile(uri, tempFile);
+                client.Dispose();
+                // Or you can get the file content without saving it:
+                //     string htmlCode = client.DownloadString("http://yoursite.com/page.html");
+                //...
+           
 
-                for (int j = num; j <= num2; j++)
-                {
-                    temp = strArray2[j].TrimStart().Split(' ');
-
-                    System.Data.DataRow r = dt.NewRow();
-                    r[0] = Convert.ToDouble(temp[0]) * 1000;  //gives the energy
-                    r[1] = Convert.ToDouble(temp[7]);       //gives the total attenuation without coherent scattering
-                    r[2] = Convert.ToDouble(temp[2]);
-                    dt.Rows.Add(r);
-                }
-            }
-
-            return dt;
+          //  return File.ReadAllBytes(tempFile);
+            
         }
 
-        /// <summary>
-        /// Obtains the mass attenuation coefficients for total absorbtion without coherent
-        /// scattering and compton and returns a path toRow the ascii file
-        /// </summary>
-        /// <param name="MatrixComposition"></param>
-        /// <param name="NrOfEnergies">     </param>
-        /// <param name="StartEnergy">      </param>
-        /// <param name="EndEnergy">        </param>
-        /// <returns></returns>
-        public static void FindTim(string MatrixComposition, int NrOfEnergies, double StartEnergy, double EndEnergy, string path, bool append)
+        private int makeFiles(ref MatrixRow m, ref XCOMPrefRow pref)
         {
-            string str = MakeCompositionsList(MatrixComposition);
-            string str2 = MakeEnergiesList(NrOfEnergies, StartEnergy, EndEnergy);
+            int i = 0;
 
-            System.IO.TextWriter writer = new System.IO.StreamWriter(path, append); //create fromRow file
+            double start = pref.StartEnergy;
+            double Totalend = pref.EndEnergy;
+            double step = pref.Steps;
+            int NrEnergies = GetNumberOfLines(step, start, Totalend);
+            //maximum number of energies per query
+            int maxEnergies = 75;
+            //increment in energy
+            double delta = (maxEnergies * step);
+            //end energy
+            double end = start + delta;
 
-            if ((str != null) && (str2 != null))
+            string listOfenergies = string.Empty;
+
+            string compositions = GetCompositionString(m.MatrixComposition);
+
+            // arr = Encoding.UTF8.GetBytes( DB.Properties.Resources.XCOM);
+            if (pref.UseList)
             {
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                string s = "Formulae=" + str + "&Energies=" + str2;
-                byte[] bytes = encoding.GetBytes(s);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = bytes.Length;
+                byte[] arr = Interface.IPreferences.CurrentXCOMPref.ListOfEnergies;
+                listOfenergies = Encoding.UTF8.GetString(arr);
+                string[] energies = listOfenergies.Split('\n');
+                NrEnergies = energies.Count();
+                start = Convert.ToDouble(energies.First()) * 1000;
+                end = Convert.ToDouble(energies.Last()) * 1000;
+                Totalend = end;
+            }
+            string Response = string.Empty;
+            string tempFile = string.Empty;
 
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
-                requestStream.Close();
-                requestStream.Dispose();
-                requestStream = null;
+            while (end <= Totalend)
+            {
 
-                Stream responseStream = ((HttpWebResponse)request.GetResponse()).GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
-
-                reader.ReadLine();
-                reader.ReadLine();
-                string[] strArray2 = reader.ReadToEnd().Split(new char[] { '\n' });
-                responseStream.Close();
-                responseStream.Dispose();
-                responseStream = null;
-
-                reader.Close();
-                reader.Dispose();
-                reader = null;
-
-                int num = 0;
-                int num2 = 1;
-                for (int i = 0; i < strArray2.LongLength; i++)
+                try
                 {
-                    if (strArray2[i].Equals(string.Empty)) //find initial row
+
+                    if (!pref.UseList)
                     {
-                        num = i;
-                        num2 = 0;
+                        int lines = GetNumberOfLines(step, start, end);
+                        listOfenergies = MakeEnergiesList(step, start, lines);
                     }
-                    else if ((num2 == 0) && strArray2[i].Contains("</pre>")) //find end row
-                    {
-                        num2 = i;
-                        break;
-                    }
-                }
-                num++; //this is the initial row
-                num2--; //this is the final row
 
-                String[] temp = null;
+                    Response = string.Empty;
+                    Response = QueryXCOM(compositions, listOfenergies);
 
-                double energy = 0;
-                double absor = 0;
-                double compton = 0;
+                    tempFile = _startupPath + m.MatrixID + "." + i ;
+                    File.WriteAllText(tempFile, Response);
 
-                for (int j = num; j <= num2; j++)
+              
+
+                string text = "Working on: " + m.MatrixName + "\n";
+                text += "Lines = " + NrEnergies + "\n";
+                text += "Start (keV) = " + start + "\t";
+                text += "End (keV) = " + end + "\n";
+                string title = "Busy";
+                if (string.IsNullOrEmpty(Response))
                 {
-                    temp = strArray2[j].TrimStart().Split(' ');
-
-                    // System.Data.DataRow r = dt.NewRow();
-                    energy = Convert.ToDouble(temp[0]) * 1000;
-                    absor = Convert.ToDouble(temp[7]);     //total attenuation coefficient without coherent scattering
-                    compton = Convert.ToDouble(temp[2]);      //compton or incoherent scattering
-
-                    writer.WriteLine(energy.ToString() + " " + absor + " " + compton);  //gives the energy
+                    title = "FAILED CONNECTION\n";
                 }
+                Interface.IReport.Msg(text, title);
+
+                }
+                catch (SystemException ex)
+                {
+
+                    Interface.IStore.AddException(ex);
+                }
+
+                start += delta;
+                end += delta;
+
+                i++;
             }
 
-            writer.Close();
-            writer.Dispose();
-            writer = null;
+          
+
+
+            return i;
         }
 
-        public static void FindTim(string MatrixCompositionList, string EnergiesList, string path, bool append)
+        private static string getPicTag(ref string Response)
         {
-            System.IO.TextWriter writer = new System.IO.StreamWriter(path, append); //create fromRow file
-
-            if ((MatrixCompositionList != null) && (EnergiesList != null))
+            string aux = string.Empty;
+            string[] split = Response.Split('\n');
+            for (int j = 0; j < split.Length; j++)
             {
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                string s = "Formulae=" + MatrixCompositionList + "&Energies=" + EnergiesList;
-                byte[] bytes = encoding.GetBytes(s);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = bytes.Length;
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
-                requestStream.Close();
-                requestStream.Dispose();
-                requestStream = null;
-
-                Stream responseStream = ((HttpWebResponse)request.GetResponse()).GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
-                responseStream.Close();
-                responseStream.Dispose();
-                responseStream = null;
-
-                reader.ReadLine();
-                reader.ReadLine();
-                string[] strArray2 = reader.ReadToEnd().Split(new char[] { '\n' });
-                reader.Close();
-                reader.Dispose();
-                reader = null;
-
-                int num = 0;
-                int num2 = 1;
-                for (int i = 0; i < strArray2.LongLength; i++)
+                aux = split[j];
+                if (aux.Contains("<td><img src="))
                 {
-                    if (strArray2[i].Equals(string.Empty)) //find initial row
-                    {
-                        num = i;
-                        num2 = 0;
-                    }
-                    else if ((num2 == 0) && strArray2[i].Contains("</pre>")) //find end row
-                    {
-                        num2 = i;
-                        break;
-                    }
+                    aux = aux.Split('.').First();
+                    aux = aux.Split('_').Last();
+                    break;
                 }
-                num++; //this is the initial row
-                num2--; //this is the final row
 
-                String[] temp = null;
-
-                double energy = 0;
-                double absor = 0;
-                double compton = 0;
-
-                for (int j = num; j <= num2; j++)
-                {
-                    temp = strArray2[j].TrimStart().Split(' ');
-
-                    // System.Data.DataRow r = dt.NewRow();
-                    energy = Convert.ToDouble(temp[0]) * 1000;
-                    absor = Convert.ToDouble(temp[7]);     //total attenuation coefficient without coherent scattering
-                    compton = Convert.ToDouble(temp[2]);      //compton or incoherent scattering
-
-                    writer.WriteLine(energy.ToString() + " " + absor + " " + compton);  //gives the energy
-                }
             }
 
-            writer.Close();
-            writer.Dispose();
-            writer = null;
+            return aux;
         }
+
+
     }
 }

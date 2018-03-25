@@ -260,6 +260,7 @@ namespace DB.Tools
             }
         
             MUES.Filter = filter;
+    
             bs2.Filter = filter; //sea cual sea este es el filtrro
             if (selectedBS) bs.Filter = filterMatrixSelected;
             // bs2.ResetBindings(false);

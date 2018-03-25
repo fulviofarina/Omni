@@ -256,9 +256,6 @@ namespace DB.UI
         public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
         {
             ucMatrix mat = new ucMatrix();
-         //   bool ssf = false;
-        
-
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
             mat.Set(ref Interface, ref prefes);
 
@@ -289,8 +286,8 @@ namespace DB.UI
                 if (offline)
                 {
                     Creator.LoadFromFile();
-                    Interface.IPopulate.INuclear.CleanSigmas();
-                    Creator.PopulateBasic();
+                 //   Interface.IPopulate.INuclear.CleanSigmas();
+                //    Creator.PopulatePreferences();
                  
                 }
                 else Interface.IPopulate.IGeometry.PopulateMatrixSQL();

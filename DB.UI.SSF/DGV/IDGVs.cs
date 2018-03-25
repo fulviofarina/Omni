@@ -2,11 +2,7 @@
 
 namespace DB.UI
 {
-    public interface ISampleColumn
-    {
-        string BindingPreferenceField { get; set; }
-        DataRow BindingPreferenceRow { get; set; }
-    }
+   
 
     public interface IUnitSSFColumn
     {
