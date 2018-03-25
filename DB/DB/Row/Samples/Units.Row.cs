@@ -20,6 +20,7 @@ namespace DB
                 get { return isBusy; }
                 set
                 {
+
                     isBusy = value;
 
                     if (isBusy)
