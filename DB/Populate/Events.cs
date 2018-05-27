@@ -81,8 +81,11 @@ namespace DB
         {
             // MatrixRow m = sender as MatrixRow;
             IEnumerable<CompositionsRow> compos = sender as IEnumerable<CompositionsRow>;
-            cleanCompositions(ref compos);
+            CleanCompositions(ref compos);
         }
+
+
+      
     }
 
     public partial class LINAA
@@ -156,6 +159,7 @@ namespace DB
             this.tableMatrix.AddCompositionsHandler += addCompositionsEvent;
     //        this.tableMatrix.MUESRequiredHandler += mUESRequiredEvent;
             this.tableMatrix.CleanCompositionsHandler += cleanCompositionsEvent;
+            this.tableMatrix.CleanMUESHandler += cleanMUESEvent;
 
             handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Matrix));
@@ -168,6 +172,15 @@ namespace DB
 
             handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(SubSamples));
+        }
+
+        private void cleanMUESEvent(object sender, EventArgs e)
+        {
+            MatrixRow u = sender as MatrixRow;
+            EventData b = e as EventData;
+          
+            CleanMUES(ref u,(bool)b.Args[0] );
+
         }
     }
 }

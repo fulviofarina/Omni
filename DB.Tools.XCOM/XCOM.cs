@@ -106,13 +106,13 @@ namespace DB.Tools
 
             m.RowError = string.Empty;
             XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
-            bool goIn = !m.HasErrors() || pref.Force;
+            bool goIn = (!m.HasErrors() && m.ToDo) || pref.Force;
             if (goIn)
             {
-                int i = 0;
+                int numberOfFiles = 0;
                 Action action = delegate
                 {
-                    i = makeFiles(ref m, ref pref);
+                    numberOfFiles = makeFiles(ref m, ref pref);
                 };
 
                 Action action3 = delegate
@@ -123,18 +123,22 @@ namespace DB.Tools
                 Action action2 = delegate
                 {
                     MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
-                    while (i >= 0)
+                    while (numberOfFiles >= 0)
                     {
-                        getMUES(m.MatrixDensity, _startupPath, ref mu, m.MatrixID, i);
-                        i--;
+                        getMUES(m.MatrixDensity, _startupPath, ref mu, m.MatrixID, numberOfFiles);
+                        numberOfFiles--;
                     }
                     if (mu.Count == 0) return;
                     Interface.IStore.SaveMUES(ref mu, ref m, SQL);
+                    m.IsBusy = false;
                 };
              
                 ls.Add(action);
                 ls.Add(action2);
                 ls.Add(action3);
+
+                m.IsBusy = true;
+
             }
 
             return ls;

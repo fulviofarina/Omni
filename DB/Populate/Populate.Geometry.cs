@@ -32,13 +32,97 @@ namespace DB
         {
             try
             {
-                matrices = addCompositions(ref matrices);
+                if (matrices == null) matrices = this.Matrix.AsEnumerable();
+
+                foreach (MatrixRow item in matrices)
+                {
+                    IList<string[]> stripped = RegEx.StripComposition(item.MatrixComposition);
+                    LINAA.MatrixRow m = item;
+                    AddCompositions(ref m, stripped, true);
+                }
+
             }
             catch (SystemException ex)
             {
                 AddException(ex);
             }
         }
+
+
+
+        private void addCompositions(ref MatrixRow m, IList<string[]> listOfFormulasAndCompositions, bool reCode, ref IList<CompositionsRow> compos)
+        {
+            bool nulo = EC.CheckNull(this.tableMatrix.MatrixCompositionColumn, m);
+            if (nulo)
+            {
+                compos = new List<CompositionsRow>();
+                return;
+            }
+            if (!reCode || listOfFormulasAndCompositions == null)
+            {
+                listOfFormulasAndCompositions = RegEx.StripComposition(m.MatrixComposition);
+                //to store matrix composition
+            }
+
+            // .. IList<CompositionsRow> compos = new List<CompositionsRow>();
+            string fullComposition = string.Empty;
+            //ilst of element and Quantity
+            foreach (string[] formCompo in listOfFormulasAndCompositions)
+            {
+                try
+                {
+                    //decompose
+                    string element = formCompo[0].Trim();
+                    // double formulaweight = 0;
+                    double quantity = Convert.ToDouble(formCompo[1].Trim());
+                    // elementQuantity(formCompo, out element, out quantity, out formulaweight);
+                    //CODE COMPOSITION
+                    if (reCode)
+                    {
+                        fullComposition += "#" + element.Trim() + "   (" + quantity.ToString() + ")   ";
+                        continue;
+                    }
+
+                    CompositionsRow c = addComposition(element, quantity, ref m);
+                    compos.Add(c);
+                }
+                catch (SystemException ex)
+                {
+                    AddException(ex);
+                }
+            }
+            if (reCode) m.MatrixComposition = fullComposition;
+        }
+
+        private CompositionsRow addComposition(string element, double quantity, ref MatrixRow m)
+        {
+            CompositionsRow c = m.FindComposition(element);
+            if (c == null)
+            {
+                c = this.Compositions.NewCompositionsRow();
+                Compositions.AddCompositionsRow(c);
+            }
+            else quantity += c.Quantity; //add new quantity
+
+            c.SetValues(m.MatrixID, quantity, element);
+
+            if (!EC.IsNuDelDetch(m.SubSamplesRow))
+            {
+                c.SubSampleID = m.SubSamplesRow.SubSamplesID;
+            }
+
+            return c;
+        }
+
+
+        public void CleanCompositions(ref IEnumerable<CompositionsRow> compos)
+        {
+            Delete(ref compos);
+            this.Compositions.AcceptChanges();
+            // return Save(ref compos);
+        }
+
+
 
         public IEnumerable<CompositionsRow> AddCompositions(ref MatrixRow m, IList<string[]> listOfFormulasAndCompositions = null, bool code = true)
         {
@@ -54,12 +138,14 @@ namespace DB
             return compos;
         }
 
-        public MatrixRow AddMatrix(int SubSamplesID, int templateID)
+        public MatrixRow AddMatrix(int? SubSamplesID=null, int? templateID=null)
         {
             MatrixRow m = null;
             try
             {
-                m = addMatrix();
+                m = Matrix.NewMatrixRow() as MatrixRow;
+                Matrix.AddMatrixRow(m);
+            //    return v;
                 m.setBasic(SubSamplesID, templateID);
             }
             catch (SystemException ex)
@@ -69,19 +155,18 @@ namespace DB
             return m;
         }
 
-        public MatrixRow AddMatrix()
-        {
-            MatrixRow v = null;//Interface.IDB.Matrix.NewMatrixRow();
-            v = addMatrix();
-            return v;
-        }
+       
 
         public VialTypeRow AddVial(bool aRabbit)
         {
             VialTypeRow v = null;
             try
             {
-                v = addVial(aRabbit);
+                v = VialType.NewVialTypeRow() as VialTypeRow;
+                VialType.AddVialTypeRow(v);
+                if (aRabbit) v.IsRabbit = true;
+                else v.IsRabbit = false;
+               
             }
             catch (SystemException ex)
             {
@@ -225,12 +310,10 @@ namespace DB
             }
             else
             {
-
-             //   if (m.IsXCOMTableNull()) return mu;
-           //     byte[] arr = m.XCOMTable;
-             //   string tempfile = ASCIIEncoding.ASCII.GetString(arr);
-                string tempfile = folderPath + Resources.XCOMFolder;
-                tempfile += m.MatrixID;
+                //   if (m.IsXCOMTableNull()) return mu;
+                //     byte[] arr = m.XCOMTable;
+                //   string tempfile = ASCIIEncoding.ASCII.GetString(arr);
+                string tempfile = GetMUESFile(ref m);
                 if (!System.IO.File.Exists(tempfile)) return mu;
 
                 byte[] arr = System.IO.File.ReadAllBytes(tempfile);
@@ -240,7 +323,36 @@ namespace DB
             return mu;
         }
 
-      
+        public string GetMUESFile(ref MatrixRow m)
+        {
+            string tempfile = folderPath + Resources.XCOMFolder;
+            tempfile += m.MatrixID;
+            return tempfile;
+        }
+
+        public bool CleanMUES(ref MatrixRow m, bool sql = true)
+        {
+
+            //    MUESDataTable mu = new MUESDataTable();
+            bool ok = false;
+            if (sql)
+            {
+                TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
+            }
+            else
+            {
+                string tempfile = GetMUESFile(ref m);
+                if (System.IO.File.Exists(tempfile)) System.IO.File.Delete(tempfile);
+            }
+            IEnumerable<MUESRow> mues = m.GetMUESRows();
+            Delete<MUESRow>(ref mues);
+            this.MUES.AcceptChanges();
+
+            ok = GetMUES(ref m, sql).Count ==0;
+            return ok;
+           
+        }
+
 
         public MUESDataTable GetMUES(double el, double eh, int matrixID)
         {

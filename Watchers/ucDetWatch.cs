@@ -490,7 +490,7 @@ namespace k0X
                 {
                     //get current sample
                     int? id = this.Linaa.FindIrradiationID(project);
-                    this.currentSample = this.Linaa.AddSamples(sample, id);
+                    this.currentSample = this.Linaa.AddSample(sample, id);
                     if (!IsNDD(this.currentSample))
                     {
                         this.currentSample.SetDetectorPosition(det, project);

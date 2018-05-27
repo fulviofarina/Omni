@@ -138,9 +138,9 @@
       <Project>{9dbd5b78-587b-404a-afd1-add1de1d8f7a}</Project>
       <Name>DB.Tools.SSF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DB.Tools.XCOM\DB.Tools.XCOM.csproj">
+    <ProjectReference Include="..\DB.Tools.XCOM\DB.UI.XCOM.csproj">
       <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
-      <Name>DB.Tools.XCOM</Name>
+      <Name>DB.UI.XCOM</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>

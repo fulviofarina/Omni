@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 
 //using DB.Interfaces;
 
@@ -7,6 +8,19 @@ namespace DB
 {
     public partial class LINAA : INuclear
     {
+
+
+        public void DeleteSigmaColumns()
+        {
+            DataColumn col = Sigmas.Columns["Element1"];
+            Sigmas.Columns.Remove(col);
+            col = Sigmas.Columns["Target1"];
+            Sigmas.Columns.Remove(col);
+            // col = Interface.IDB.Sigmas.Columns["Radioisotope1"]; Interface.IDB.Sigmas.Columns.Remove(col);
+            col = Sigmas.Columns["ID1"];
+            Sigmas.Columns.Remove(col);
+        }
+
         //
         public void CleanSigmas()
         {

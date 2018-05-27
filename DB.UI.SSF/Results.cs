@@ -66,6 +66,8 @@ namespace DB.UI
 
             unitDGV.DataSource = Interface.IBS.Units;
             unitDGV.RowHeadersVisible = false;
+          
+            // this.ToDoCol.BindingColumn = Interface.IDB.Unit.ToDoColumn.ColumnName;
             SSFDGV.DataSource = Interface.IBS.SSF;
 
             configurePreferences(ref pref);

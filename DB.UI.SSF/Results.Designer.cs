@@ -108,7 +108,7 @@
             this.lastCal = new System.Windows.Forms.ToolStripTextBox();
             this.cfgSC = new System.Windows.Forms.SplitContainer();
             this.unitDGV = new System.Windows.Forms.DataGridView();
-            this.ToDoCol = new DB.UI.UnitBoolColumn();
+            this.ToDoCol = new Rsx.DGV.CalculableColumn();
             this.sampleDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GtM = new DB.UI.UnitSSFColumn();
             this.GtCKS = new DB.UI.UnitSSFColumn();
@@ -389,6 +389,8 @@
             this.ToDoCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ToDoCol.ToolTipText = "Red for samples that require calculations";
             this.ToDoCol.Width = 46;
+        
+          //  this.ToDoCol.bind
             // 
             // sampleDGVColumn
             // 
@@ -797,7 +799,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SigB;
         private System.Windows.Forms.DataGridViewTextBoxColumn ChEpi;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitID;
-        private UnitBoolColumn ToDoCol;
+        private Rsx.DGV.CalculableColumn ToDoCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn sampleDGVColumn;
         private UnitSSFColumn GtM;
         private UnitSSFColumn GtCKS;

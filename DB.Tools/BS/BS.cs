@@ -44,7 +44,7 @@ namespace DB.Tools
                 else if (sender.Equals(SubSamples))
                 {
                     IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
-                    SubSamplesRow s = Interface.IPopulate.ISamples.AddSamples(ref ir);
+                    SubSamplesRow s = Interface.IPopulate.ISamples.AddSample(ref ir);
                     e.NewObject = s;
                     currentChanged(s, false, true);
 

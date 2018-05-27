@@ -67,14 +67,7 @@ namespace DB.UI
 
     }
 }
-    public  class UnitBoolColumn : DataGridViewTextBoxColumn
-    {
-        public UnitBoolColumn()
-            : base()
-        {
-            CellTemplate = new UnitBoolCell();
-        }
-    }
+   
 
     public  class UnitSSFCell : DataGridViewTextBoxCell
     {
@@ -238,6 +231,19 @@ namespace DB.UI
     
     }
 
+
+
+
+    /*
+
+    public class UnitBoolColumn : DataGridViewTextBoxColumn
+    {
+        public UnitBoolColumn()
+            : base()
+        {
+            CellTemplate = new UnitBoolCell();
+        }
+    }
     public  class UnitBoolCell : DataGridViewTextBoxCell
     {
       //  protected internal Color defaultColor = Color.DarkRed;
@@ -293,4 +299,7 @@ namespace DB.UI
             Style.ForeColor = defaultColor;
         }
     }
+
+
+    */
 }

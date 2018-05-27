@@ -8,8 +8,54 @@ namespace DB
 {
     public partial class LINAA
     {
-        partial class MatrixRow : IRow
+
+        public partial class MatrixRow : Rsx.Dumb.ICalculableRow
         {
+            protected internal bool isBusy = false; // { get; set; }
+            public bool IsBusy
+            {
+                get
+                {
+                    return isBusy;
+                }
+
+                set
+                {
+
+                    isBusy = value;
+
+                    if (isBusy)
+                    {
+                       // SetGtChNull();
+                       // SetGtNull();
+                       // SetGtMCNull();
+                       // SetMCLNull();
+                       // SetPXSNull();
+                      //  SetEXSNull();
+                      //  SetSSFTableNull();
+                        // UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated
+                        // until the background computations upgrades them");
+                    }
+                    else
+                    {
+                        //set DONE
+                        ToDo = false;
+                        MatrixDate = DateTime.Now;
+                     //   LastCalc = DateTime.Now;
+                        SetColumnError(this.tableMatrix.MatrixNameColumn, null);
+                    }
+                }
+            }
+
+          
+        }
+
+
+
+        public partial class MatrixRow : IRow
+        {
+
+
             public bool NeedsMUES
             {
                 get
@@ -32,32 +78,37 @@ namespace DB
             {
                 bool nulo = EC.CheckNull(col, this);
 
-                object[] obj = new object[] { this, renew };
-
-                if (col == this.tableMatrix.MatrixDensityColumn)
+                //     object[] obj = new object[] { this, ToDo };
+                if (col == this.tableMatrix.ToDoColumn)
+                {
+                    if (nulo) ToDo = true;
+                }
+                else if (col == this.tableMatrix.MatrixDensityColumn)
                 {
                     checkMatrixDensity();
                 }
+              
                 else if (col == this.tableMatrix.MatrixDateColumn)
                 {
                     if (nulo) MatrixDate = DateTime.Now;
                 }
                 else if (col == this.tableMatrix.MatrixCompositionColumn)
                 {
-                    nulo = checkMatrixComposition();
+                    checkMatrixComposition();
                 }
                 else if (col == this.tableMatrix.MatrixNameColumn)
                 {
                     if (nulo)
                     {
-                        MatrixName = "New @ " + DateTime.Now.ToLocalTime();
+                        MatrixName = "NEW @ " + DateTime.Now.ToShortDateString();
                     }
                 }
             }
-
+            private bool compositionRenew = false; // { get; set; }
+            private bool densityRenew = false; // { get; set; }
             public void Checking(DataColumn col, object propo, object val)
             {
-                renew = false;
+              
 
                 if (DBNull.Value == propo) return; //if null go away
                 if (val == DBNull.Value) return; //idem
@@ -67,20 +118,22 @@ namespace DB
 
                 if (col == this.tableMatrix.MatrixDensityColumn)
                 {
+                    densityRenew = false;
                     double density = (double)propo;
                     double old = (double)val;
                     if (old != density)
                     {
-                        renew = true;
+                        densityRenew = true;
                     }
                 }
                 else if (col == tableMatrix.MatrixCompositionColumn)
                 {
+                    compositionRenew = false;
                     string newcomposition = (string)propo;
                     string oldcomposition = (string)val;
                     if (oldcomposition.Trim().CompareTo(newcomposition.Trim()) != 0)
                     {
-                        renew = true;
+                        compositionRenew = true;
                     }
                 }
             }
@@ -162,36 +215,45 @@ namespace DB
                 }
             }
 
-            protected internal bool renew = false;
+            //  protected internal bool ToDo = false;
 
-    
-            internal void setBasic(int subSamplesID, int templateID)
+
+            protected internal void setBasic(int? subSamplesID, int? templateID)
             {
-                SubSampleID = subSamplesID; //the ID to identify
+                if (subSamplesID!=null) SubSampleID = (int)subSamplesID; //the ID to identify
+               if (templateID!=null) TemplateID = (int)templateID;
+                MatrixDate = DateTime.Now;
                 MatrixComposition = string.Empty;
                 MatrixName = string.Empty;
                 //important, to rellocate the Parent MATRIX
-                TemplateID = templateID;
+              
             }
 
-            protected internal bool checkMatrixComposition()
+            private bool checkMatrixComposition()
             {
                 DataColumn col = this.tableMatrix.MatrixCompositionColumn;
                 bool nulo = EC.CheckNull(col, this);
+                //check compositions
                 IEnumerable<CompositionsRow> compos = GetCompositionsRows();
-                if (compos.Count() == 0 || renew)
+                if (compos.Count() == 0 || compositionRenew)
                 {
-                    if (renew)
+                    //needs renewal
+                    if (compositionRenew)
                     {
+                        EventData ebento = new EventData();
+                        this.tableMatrix.CalcParametersHandler?.Invoke(null, ebento);
+                        this.tableMatrix.CleanMUESHandler?.Invoke(this, ebento);
+                     
                         this.tableMatrix.CleanCompositionsHandler?
                             .Invoke(compos, EventArgs.Empty);
+                        ToDo = true;
                         MatrixDate = DateTime.Now;
                         if (!EC.IsNuDelDetch(this.SubSamplesRow))
                         {
                             this.SubSamplesRow?.UnitRow?.ValueChanged(true);
                         }
                         this.SetCompositionTableNull();
-                        renew = false;
+                        compositionRenew = false;
                     }
                     this.tableMatrix.AddCompositionsHandler?
                         .Invoke(this, EventArgs.Empty);
@@ -205,13 +267,13 @@ namespace DB
                 return nulo;
             }
 
-            protected internal void checkMatrixDensity()
+            private void checkMatrixDensity()
             {
-                if (renew)
+               if (densityRenew)
                 {
-                  //  this.tableMatrix.MUESRequiredHandler?
-                  //      .Invoke(this, EventArgs.Empty);
-                    renew = false;
+                    //  this.tableMatrix.MUESRequiredHandler?
+                    //      .Invoke(this, EventArgs.Empty);
+                    densityRenew = false;
                 }
             }
 

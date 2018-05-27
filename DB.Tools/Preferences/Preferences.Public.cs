@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using DB.Properties;
+using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -21,10 +22,14 @@ namespace DB.Tools
 
             // Interface.IDB.SubSamples.AddMatrixHandler += this.addMatrixEvent;
             // Interface.IPopulate
+            Interface.IDB.Matrix.CalcParametersHandler = getSQLPreferenceEvent;
             Interface.IDB.SubSamples.CalcParametersHandler = getPreferencesEvent;
             Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferencesSpectrumEvent;
 
         }
+
+     
+
         public bool IsSpectraPathOk
         {
             get

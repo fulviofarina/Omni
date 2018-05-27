@@ -33,7 +33,21 @@ namespace DB
         /// <returns></returns>
         public IrradiationRequestsRow AddNewIrradiation(string project)
         {
-            IrradiationRequestsRow i = addIrradiation(project);
+            string projetNoCd = project.Trim().ToUpper();
+
+            if (projetNoCd.Length > 2)
+            {
+                if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(DB.Properties.Misc.Cd) == 0)
+                {
+                    projetNoCd = projetNoCd.Replace(DB.Properties.Misc.Cd, null);
+                }
+            }
+            IrradiationRequestsRow i = this.IrradiationRequests.NewIrradiationRequestsRow();
+            this.IrradiationRequests.AddIrradiationRequestsRow(i);
+
+            i.IrradiationStartDateTime = DateTime.Now;
+            i.IrradiationCode = projetNoCd;
+          //  return i;
 
             return i;
         }
@@ -41,7 +55,8 @@ namespace DB
         public ChannelsRow AddNewChannel()
         {
             // ChannelsRow v = e.NewObject as ChannelsRow;//Interface.IDB.Matrix.NewMatrixRow();
-            ChannelsRow v = addChannel();
+            ChannelsRow v = Channels.NewChannelsRow();
+            Channels.AddChannelsRow(v);
             return v;
         }
     }

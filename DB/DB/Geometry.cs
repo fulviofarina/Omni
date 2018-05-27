@@ -47,7 +47,10 @@ namespace DB
         }
 
         partial class MatrixDataTable : IColumn
+
         {
+            public EventHandler<EventData> CalcParametersHandler;
+            public EventHandler CleanMUESHandler;
             public EventHandler CleanCompositionsHandler;
           //  public EventHandler MUESRequiredHandler;
             public EventHandler AddCompositionsHandler;
@@ -76,7 +79,7 @@ namespace DB
                     {
                         nonNullables = new DataColumn[]
                         {
-                           // this.columnMatrixDensity,
+                           this.columnToDo,
                             this.columnMatrixName,
                             this.columnMatrixComposition,
                             this.columnMatrixDate
@@ -92,13 +95,13 @@ namespace DB
             /// </summary>
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
-                int col = e.Column.Ordinal;
-                object propo = e.ProposedValue; //new value
-                object val = e.Row[e.Column]; //old value
+           
+               // object propo //new value
+              //  object val  //old value
                 MatrixRow m = (MatrixRow)e.Row;
                 try
                 {
-                    m.Checking(e.Column, propo, val);
+                    m.Checking(e.Column, e.ProposedValue, e.Row[e.Column]);
                 }
                 catch (SystemException ex)
                 {

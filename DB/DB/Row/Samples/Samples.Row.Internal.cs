@@ -100,13 +100,13 @@ namespace DB
                 }
             }
 
-            protected internal EventData ebento = new EventData();
+         //   protected internal EventData ebento = new EventData();
 
             private void checkUnitsColumns(DataColumn column)
             {
                 bool calMass, calRad, calFh, calculateDensity;
                 //TODO: Mejorar esto
-
+                EventData ebento = new EventData();
                 // ebento = null;
                 this.tableSubSamples.CalcParametersHandler?.Invoke(this, ebento);
                 // SSFPrefRow pref = db.SSFPref.FirstOrDefault();
@@ -114,6 +114,8 @@ namespace DB
                 calRad = (bool)ebento.Args[1]; //  pref.AARadius;
                 calculateDensity = (bool)ebento.Args[2];// pref.CalcDensity;
                 calFh = (bool)ebento.Args[3];// pref.AAFillHeight;
+
+                ebento = null;
 
                 EC.CheckNull(column, this);
                 if (column == this.tableSubSamples.CalcDensityColumn)

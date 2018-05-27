@@ -20,9 +20,9 @@ namespace DB
 
         double CalculateAvgOfFCs(string irradiationCode);
 
-        SubSamplesRow AddSamples(ref IrradiationRequestsRow ir, string sampleName = "");
+        SubSamplesRow AddSample(ref IrradiationRequestsRow ir, string sampleName = "");
 
-        SubSamplesRow AddSamples(string project, string sampleName = "");
+        SubSamplesRow AddSample(string project, string sampleName = "");
 
         IEnumerable<LINAA.SubSamplesRow> AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool save = true);
 
@@ -34,7 +34,7 @@ namespace DB
 
         void PopulatedMonitors(string file);
 
-        SubSamplesRow AddSamples(string sampleName, int? IrrReqID = null);
+        SubSamplesRow AddSample(string sampleName, int? IrrReqID = null);
 
         void BeginEndLoadData(bool load);
 

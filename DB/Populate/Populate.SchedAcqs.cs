@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace DB
 {
@@ -26,7 +27,7 @@ namespace DB
             SchAcqsRow NEXT = todo.FirstOrDefault(SelectorSchAcqsBy(ahora, false, false));
             SchAcqsRow NOW = todo.FirstOrDefault(SelectorSchAcqsBy(ahora, true, true));
 
-            return new DB.LINAA.SchAcqsRow[] { NOW, NEXT };
+            return new SchAcqsRow[] { NOW, NEXT };
         }
 
         public IEnumerable<SchAcqsRow> FindDetectorSchedules(string det)
@@ -42,10 +43,42 @@ namespace DB
             DateTime ahora = DateTime.Now;
             return todo.Where(SelectorSchAcqsBy(ahora, true, true));
         }
-
+        private SchAcqsRow addSchedule()
+        {
+            SchAcqsRow sch = this.SchAcqs.NewSchAcqsRow();
+            this.SchAcqs.AddSchAcqsRow(sch);
+            return sch;
+        }
         public void AddSchedule(string project, string sample, Int16 pos, string det, Int16 repeats, double preset, DateTime startOn, string useremail, bool cummu, bool Force)
         {
-            addScheduleMeasurement(project, sample, pos, det, repeats, preset, startOn, useremail, cummu, Force);
+            SchAcqsRow sch = this.FindASpecificSchedule(det, project, sample);
+            DialogResult result;
+            string Content = string.Empty;
+            if (sch == null) sch = addSchedule();
+            else
+            {
+                Content = sch.GetReportString();
+                if (Force) result = DialogResult.No;
+                else
+                {
+                    string msg = "Sample " + sample + " was found in the schedule:\n\n" + Content + CREATE_NEW;
+                    result = MessageBox.Show(msg, MEASUREMENT_FOUND, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                }
+
+                if (result == DialogResult.No) sch = addSchedule();
+                else if (result == DialogResult.Cancel) return;
+            }
+
+            sch.SetSchedule(project, sample, pos, det, repeats, preset, startOn, useremail, cummu);
+            sch.Reset();
+
+            Content = sch.GetReportString();
+
+            if (Force) result = DialogResult.OK;
+            else result = MessageBox.Show(MEASUREMENT_ADDED + Content, CONFIRM, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (result == DialogResult.Cancel) sch.Delete();
+
+            this.Save<SchAcqsDataTable>();
         }
 
         public void PopulateScheduledAcqs()
@@ -53,7 +86,7 @@ namespace DB
             try
             {
                 this.tableSchAcqs.BeginLoadData();
-                DB.LINAA.SchAcqsDataTable table = this.TAM.SchAcqsTableAdapter.GetData();
+                SchAcqsDataTable table = this.TAM.SchAcqsTableAdapter.GetData();
                 this.tableSchAcqs.Merge(table, false, MissingSchemaAction.AddWithKey);
                 this.tableSchAcqs.EndLoadData();
             }

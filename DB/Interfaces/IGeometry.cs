@@ -9,7 +9,7 @@ namespace DB
 {
     public interface IGeometry
     {
-        MatrixRow AddMatrix();
+       MatrixRow AddMatrix(int? SubSamplesID = null, int? templateID = null);
 
         VialTypeRow AddVial(bool aRabbit);
 

@@ -133,7 +133,7 @@ namespace DB.Tools
                 foreach (var item in Interface.IDB.Matrix)
                 {
                     item.SetCompositionTableNull();
-                    item.SetXCOMTableNull();
+                   // item.SetXCOMTableNull();
                 }
                 // CleanOthers();
                 IEnumerable<DataTable> tables = Interface.Get().Tables.OfType<DataTable>();

@@ -8,10 +8,8 @@ namespace DB
 {
     public partial class LINAA
     {
-        /// <summary>
-        /// Cleaned
-        /// </summary>
-        public partial class UnitRow : IRow
+
+        public partial class UnitRow: Rsx.Dumb.ICalculableRow
         {
             protected internal bool isBusy = false; // { get; set; }
 
@@ -45,6 +43,13 @@ namespace DB
                     }
                 }
             }
+        }
+        /// <summary>
+        /// Cleaned
+        /// </summary>
+        public partial class UnitRow : IRow
+        {
+       
 
             public void Check()
             {

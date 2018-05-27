@@ -24,22 +24,24 @@ namespace DB.UI
                 Dumb.FD(ref this.bs);
 
                 Interface = LinaaInterface;
-                BindingSource bsCompositions = null;
+                BindingSource bsCompositions = Interface.IBS.SelectedCompositions;
                 //take respective BS
 
-                BindingSource Bind = null;
+                BindingSource Bind =  Interface.IBS.SelectedMatrix;
 
                 // bsCompositions = Bind;
                 if (!selectedMatrix)
                 {
                     Bind = Interface.IBS.Matrix;
+                   
                     bsCompositions = Interface.IBS.Compositions;
                 }
                 else
                 {
+                    //I think SelectedCompositions is not used
                     this.compositionsDGV.BackgroundColor = System.Drawing.Color.Thistle;
-                    Bind = Interface.IBS.SelectedMatrix;
-                    bsCompositions = Interface.IBS.SelectedCompositions;
+               //     Bind = Interface.IBS.SelectedMatrix;
+                   // bsCompositions = Interface.IBS.SelectedCompositions;
                 }
 
                 // this.compositionDGV.AutoGenerateColumns = true;

@@ -123,6 +123,7 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ToDo = new Rsx.DGV.CalculableColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
@@ -182,7 +183,8 @@
             this.matrixDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.matrixDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.matrixNameDataGridViewTextBoxColumn1,
-            this.matrixDensityDataGridViewTextBoxColumn1});
+            this.matrixDensityDataGridViewTextBoxColumn1,
+            this.ToDo});
             this.matrixDGV.DataSource = this.MatrixBS;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
@@ -469,11 +471,21 @@
             this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
             this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or Known Density for this Matrix (in g/cm3)";
             // 
+            // ToDo
+            // 
+            this.ToDo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ToDo.DataPropertyName = "ToDo";
+            this.ToDo.HeaderText = "ToDo";
+            this.ToDo.Name = "ToDo";
+            this.ToDo.ReadOnly = true;
+            this.ToDo.Width = 71;
+            // 
             // ucMatrixSimple
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TLPMatrix);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucMatrixSimple";
             this.Size = new System.Drawing.Size(706, 578);
@@ -498,5 +510,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn cDataGridViewCheckBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixNameDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn matrixDensityDataGridViewTextBoxColumn1;
+        private Rsx.DGV.CalculableColumn ToDo;
     }
 }

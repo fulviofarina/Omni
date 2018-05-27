@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -6,6 +7,94 @@ using System.Windows.Forms;
 
 namespace Rsx.DGV
 {
+
+
+    public class CalculableColumn : DataGridViewTextBoxColumn
+    {
+
+        public CalculableColumn()
+            : base()
+        {
+            CellTemplate = new CalculableCell();
+        }
+    }
+    public class CalculableCell : DataGridViewTextBoxCell
+    {
+        //  protected internal Color defaultColor = Color.DarkRed;
+
+
+        protected override void OnMouseDoubleClick (DataGridViewCellMouseEventArgs e)
+        {
+            DataRow u = ((this.OwningRow?.DataBoundItem as DataRowView)?.Row) as DataRow;
+            if (!EC.IsNuDelDetch(u))
+            {
+                ICalculableRow Icalc = u as ICalculableRow;
+           
+                Icalc.ToDo = !Icalc.ToDo;
+               
+                base.DataGridView.NotifyCurrentCellDirty(true);
+                base.DataGridView.ClearSelection();
+            }
+            base.OnMouseDoubleClick(e);
+        }
+
+
+        protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
+        {
+            bool changed = setCellColor();
+            //   this.Style
+         //   if (changed)
+            {
+                base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, this.Style, advancedBorderStyle, paintParts);
+            }
+        }
+
+
+        protected internal bool setCellColor()
+        {
+            //   UnitRow u = ((this.OwningRow?.DataBoundItem as DataRowView)?.Row) as UnitRow;
+            DataRow u = ((this.OwningRow?.DataBoundItem as DataRowView)?.Row) as DataRow;
+            bool changed = false;
+            if (!EC.IsNuDelDetch(u))
+            {
+                //    CalculableColumn c = (CalculableColumn)this.OwningColumn;
+                //   bool todo = u.Field<bool>(c.BindingColumn);
+                ICalculableRow Icalc = u as ICalculableRow;
+                Color colr = Color.DarkGreen;
+              
+                    if (Icalc.ToDo && Icalc.IsBusy)
+                    {
+                        colr = Color.DarkOrange;
+                    }
+                    else if (Icalc.ToDo && !Icalc.IsBusy)
+                    {
+                        colr = Color.DarkRed;
+                    }
+                if (colr != Style.BackColor)
+                {
+                    Style.BackColor = colr;
+                    Style.ForeColor = colr;
+                    changed = true;
+
+                }
+            }
+            return changed;
+        }
+
+        public CalculableCell() : base()
+        {
+            Style.SelectionBackColor = Color.Transparent;
+            Style.SelectionForeColor = Color.Transparent;
+
+            Color defaultColor = Color.DarkRed;
+            Style.BackColor = defaultColor;
+            Style.ForeColor = defaultColor;
+        }
+    }
+
+
+
+
     public interface IBindableDGVColumn
     {
         DefaultAction DefaultAction { set; }

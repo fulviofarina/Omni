@@ -20,7 +20,16 @@ namespace DB.Tools
                 return p => p.Field<string>(label).CompareTo(WindowsUser) == 0;
             }
         }
+        private void getSQLPreferenceEvent(object sender, EventData e)
+        {
+            PreferencesRow pref = CurrentPref;
+            object[] args = new object[]
+            {
+             pref.IsSQL
+        };
 
+            e.Args = args;
+        }
         private void getPreferencesEvent(object sender, EventData e)
         {
             SSFPrefRow pref = CurrentSSFPref;

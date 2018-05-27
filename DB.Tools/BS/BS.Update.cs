@@ -219,12 +219,12 @@ namespace DB.Tools
             {
                 bs2 = SelectedCompositions;
             }
-            BindingSource bs = null;
+            BindingSource bs = Matrix;
             if (selectedBS)
             {
                 bs = SelectedMatrix;
             }
-            else bs = Matrix;
+          
 
             if (!EC.IsNuDelDetch(r as DataRow))
             {
