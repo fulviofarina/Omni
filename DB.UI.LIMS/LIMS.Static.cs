@@ -14,6 +14,11 @@ namespace DB.UI
 {
     public partial class LIMS
     {
+        protected static string CRITICAL_FAILURE = "Failed to generate the User interface";
+         protected static  string CRITICAL_FAILURETXT = "Could not load ";
+
+
+
         public static LIMS Form = null;
         public static Rsx.DGV.IFind IFind = null;
         public static Interface Interface = null;
@@ -79,8 +84,11 @@ namespace DB.UI
 
             if (control == null)
             {
-                Interface.IReport.Msg("Failed to generate the User interface", "Could not load " + controlHeader, false);
-                return null;
+            
+                string txt = CRITICAL_FAILURETXT + controlHeader;
+                Interface.IReport.Msg(CRITICAL_FAILURE, txt, false);
+                throw new Exception(CRITICAL_FAILURE + "\n" + txt);
+            
             }
             Creator.UserControls.Add(control);
 

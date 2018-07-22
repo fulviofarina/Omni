@@ -7,6 +7,8 @@ namespace µFinder
 {
     static class Program
     {
+
+       // public static string TITLE = "µ-Finder";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -17,7 +19,7 @@ namespace µFinder
 
             try
             {
-
+               
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
@@ -39,7 +41,7 @@ namespace µFinder
                 UserControl control = LIMS.CreateUI(ControlNames.Matrices);
               //  CreateMatrixApplication(out control, out refresher);
 
-                LIMS.CreateForm("µ-Finder", ref control, false);
+                LIMS.CreateForm(Application.ProductName, ref control, false);
                 Form toShow = control.ParentForm;
 
           //      LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
