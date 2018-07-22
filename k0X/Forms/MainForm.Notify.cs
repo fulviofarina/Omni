@@ -23,7 +23,7 @@ namespace k0X
         private void SFD_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            LIMS.SaveWorkspaceXML(SFD.FileName);
+            LIMSUI.SaveWorkspaceXML(SFD.FileName);
             Cursor.Current = Cursors.Default;
         }
 
@@ -47,17 +47,17 @@ namespace k0X
             bool check = (sender as ToolStripMenuItem).Checked;
             if (sender.Equals(this.autoload))
             {
-                LIMS.Interface.IPreferences.CurrentPref.AutoLoad = check;
+                LIMSUI.Interface.IPreferences.CurrentPref.AutoLoad = check;
             }
             else if (sender.Equals(this.fillbyHL))
             {
-                LIMS.Interface.IPreferences.CurrentPref.FillByHL = check;
+                LIMSUI.Interface.IPreferences.CurrentPref.FillByHL = check;
             }
             else if (sender.Equals(this.fillBySpectra))
             {
-                LIMS.Interface.IPreferences.CurrentPref.FillBySpectra = check;
+                LIMSUI.Interface.IPreferences.CurrentPref.FillBySpectra = check;
             }
-            LIMS.Interface.IPreferences.SavePreferences();
+            LIMSUI.Interface.IPreferences.SavePreferences();
         }
 
         private void Help_Click(object sender, EventArgs e)
@@ -82,7 +82,7 @@ namespace k0X
         protected internal void EmailerMenu_Click(object sender, EventArgs e)
         {
             string sendFrom = "k0x.help@gmail.com";
-            string wUser = LIMS.Interface.IPreferences.CurrentPref.WindowsUser;
+            string wUser = LIMSUI.Interface.IPreferences.CurrentPref.WindowsUser;
             if (wUser.Contains("\\"))
             {
                 int ind = wUser.IndexOf('\\');
@@ -121,7 +121,7 @@ namespace k0X
         {
             if (!string.IsNullOrEmpty(this.bufferedMsg))
             {
-                LIMS.Interface.IReport.Msg(this.bufferedMsg, "Buffered Controls!");
+                LIMSUI.Interface.IReport.Msg(this.bufferedMsg, "Buffered Controls!");
             }
             else
             {
@@ -132,7 +132,7 @@ namespace k0X
 
         private void BugReportMenu_Click(object sender, EventArgs e)
         {
-            LIMS.Interface.IReport.GenerateBugReport();
+            LIMSUI.Interface.IReport.GenerateBugReport();
         }
 
         private void Quit_Click(object sender, EventArgs e)
@@ -151,7 +151,7 @@ namespace k0X
 
             int disposedNr = 0;
 
-            IList<object> arr = LIMS.UserControls.ToList();
+            IList<object> arr = LIMSUI.UserControls.ToList();
 
             for (int i = arr.Count - 1; i >= 0; i--)
             {

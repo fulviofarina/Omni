@@ -32,7 +32,7 @@ namespace k0X
 
             Link();
 
-            openControls = LIMS.UserControls.OfType<ucSamples>();
+            openControls = LIMSUI.UserControls.OfType<ucSamples>();
 
             this.ResumeLayout(false);
 
@@ -372,11 +372,11 @@ namespace k0X
             ucToDoPanel panel = null;
 
             MainForm main = Application.OpenForms.OfType<MainForm>().First();
-            panel = LIMS.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
+            panel = LIMSUI.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
             if (panel == null)
             {
                 main.Panel_Click(this, EventArgs.Empty);
-                panel = LIMS.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
+                panel = LIMSUI.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
                 ArenaSC.Panel2.Controls.Add(panel);
                 panel.Dock = DockStyle.Fill;
                 this.ArenaInternalSC.Panel2.Controls.Add(panel.ucToDoData);

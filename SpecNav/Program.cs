@@ -26,9 +26,9 @@ namespace SpecNav
 
                 Form aboutbox = new AboutBox();
 
-                LIMS.Interface = Creator.Initialize();
+                LIMSUI.Interface = Creator.Initialize();
                 //create database
-                LIMS.CreateLIMS(ref aboutbox);
+                LIMSUI.CreateLIMS(ref aboutbox);
                 Creator.CheckDirectories();
                 Creator.PopulatePreferences();
              //   LIMS.Interface.IPreferences.CurrentPref.Offline = true;
@@ -51,7 +51,7 @@ namespace SpecNav
                  Form   form =  Creator.CreateForm(ref bt);
 
 
-                UserControl hl = LIMS.CreateUI(ControlNames.SpecNavigator);
+                UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator);
 
 
                 form.Size = hl.Size;
@@ -73,7 +73,7 @@ namespace SpecNav
 
                 //   Creator.Run();
 
-                LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+                LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
                 PainterTimer();
 

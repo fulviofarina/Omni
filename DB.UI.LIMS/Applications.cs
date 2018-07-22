@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DB.Properties;
 using DB.Tools;
-using Rsx.Dumb;
 using VTools;
 using static Rsx.DGV.Control;
 
 namespace DB.UI
 {
-    public partial class LIMS
+    public partial class LIMSUI
     {
 
 

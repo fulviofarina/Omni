@@ -66,9 +66,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LIMS.Applications.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Applications.cs" />
     <Compile Include="Samples\ucSubSamples.Content.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,9 +94,7 @@
     <Compile Include="UI\Picker\PickerForm.designer.cs">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LIMS.Static.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Static.cs" />
     <Compile Include="LIMS.cs">
       <SubType>Form</SubType>
     </Compile>

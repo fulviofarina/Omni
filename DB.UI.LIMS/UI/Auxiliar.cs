@@ -30,12 +30,12 @@ namespace DB.UI
             Type tipo = this._displayedControl.GetType();
             if (tipo.Equals(typeof(ucPreferences)))
             {
-                LIMS.Interface.IPreferences.SavePreferences();
+                LIMSUI.Interface.IPreferences.SavePreferences();
                 e.Cancel = true;
             }
             else if (tipo.Equals(typeof(ucXCOMPreferences)))
             {
-                LIMS.Interface.IPreferences.SavePreferences();
+                LIMSUI.Interface.IPreferences.SavePreferences();
                 e.Cancel = true;
             }
             if (!e.Cancel)

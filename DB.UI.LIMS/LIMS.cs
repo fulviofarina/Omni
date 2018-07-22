@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-
+using DB.Tools;
 using Rsx.DGV;
 
 namespace DB.UI
@@ -133,9 +133,9 @@ namespace DB.UI
             ListViewItem mod = Modules.FocusedItem;
             string title = mod.Group.Header + " - " + mod.Text;
 
-            UserControl control = CreateUI(mod.Text);
+            UserControl control = LIMSUI.CreateUI(mod.Text);
 
-            CreateForm(title, ref control);
+            LIMSUI.CreateForm(title, ref control);
         }
 
         protected internal void refreshT_Click(object sender, EventArgs e)
@@ -178,20 +178,30 @@ namespace DB.UI
         {
             InitializeComponent();
 
+        }
+
+        private Interface Interface;
+     
+
+        public LIMS(ref Interface inter)
+        {
+            InitializeComponent();
+
+            Interface = inter;
             this.FormClosing += this.limsFormClosing;
             this.Load += this.limsLoad;
 
-            IFind = new ucSearch();
+         
 
-            this.halflife.Click += SetItem;
-            this.setGeometry.Click += SetItem;
-            this.setVials.Click += SetItem;
-            this.setMonitor.Click += SetItem;
-            this.setStandards.Click += SetItem;
-            this.setSubSamples.Click += SetItem;
-            this.setMatrix.Click += SetItem;
-            this.setIrradCh.Click += SetItem;
-            this.setRabbit.Click += SetItem;
+            this.halflife.Click += LIMSUI.SetItem;
+            this.setGeometry.Click += LIMSUI.SetItem;
+            this.setVials.Click += LIMSUI.SetItem;
+            this.setMonitor.Click += LIMSUI.SetItem;
+            this.setStandards.Click += LIMSUI.SetItem;
+            this.setSubSamples.Click += LIMSUI.SetItem;
+            this.setMatrix.Click += LIMSUI.SetItem;
+            this.setIrradCh.Click += LIMSUI.SetItem;
+            this.setRabbit.Click += LIMSUI.SetItem;
 
             this.setMatrix.Tag = ControlNames.Matrices;
             this.setGeometry.Tag = ControlNames.Geometries; //set geometries
@@ -209,5 +219,6 @@ namespace DB.UI
             };
             this.unlockProtectedCellsToolStripMenuItem.Click += unLockProtectedCells;
         }
+
     }
 }

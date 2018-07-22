@@ -30,7 +30,7 @@ namespace DB.UI
 
             IEnumerable<ToolStripMenuItem> tsmi = this.detabsCMS.Items.OfType<ToolStripMenuItem>().Where(s => s.Text.Contains("Set"));
 
-            foreach (ToolStripMenuItem i in tsmi) i.Click += LIMS.SetItem;
+            foreach (ToolStripMenuItem i in tsmi) i.Click += LIMSUI.SetItem;
         }
 
         private void detabsDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -69,19 +69,19 @@ namespace DB.UI
             Type t = table.GetType();
             if (t.Equals(typeof(LINAA.DetectorsCurvesDataTable)))
             {
-                LIMS.Interface.IStore.Save<LINAA.DetectorsCurvesDataTable>();
+                LIMSUI.Interface.IStore.Save<LINAA.DetectorsCurvesDataTable>();
             }
             else if (t.Equals(typeof(LINAA.DetectorsDimensionsDataTable)))
             {
-                LIMS.Interface.IStore.Save<LINAA.DetectorsDimensionsDataTable>();
+                LIMSUI.Interface.IStore.Save<LINAA.DetectorsDimensionsDataTable>();
             }
             else if (t.Equals(typeof(LINAA.DetectorsAbsorbersDataTable)))
             {
-                LIMS.Interface.IStore.Save<LINAA.DetectorsAbsorbersDataTable>();
+                LIMSUI.Interface.IStore.Save<LINAA.DetectorsAbsorbersDataTable>();
             }
             else if (t.Equals(typeof(LINAA.HoldersDataTable)))
             {
-                LIMS.Interface.IStore.Save<LINAA.HoldersDataTable>();
+                LIMSUI.Interface.IStore.Save<LINAA.HoldersDataTable>();
             }
         }
 

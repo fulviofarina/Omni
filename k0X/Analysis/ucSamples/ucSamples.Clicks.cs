@@ -81,7 +81,7 @@ namespace k0X
                 {
                     wD = new ucWatchDog();
 
-                    LIMS.UserControls.Add(wD);
+                    LIMSUI.UserControls.Add(wD);
 
                     wD.Link(ref Interface, this.Name);
                     if (!Interface.IPreferences.IsSpectraPathOk)

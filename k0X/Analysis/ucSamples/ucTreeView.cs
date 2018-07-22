@@ -558,7 +558,7 @@ namespace k0X
                         {
                             MainForm main = Application.OpenForms.OfType<MainForm>().First();
                             main.Panel_Click(this, EventArgs.Empty);
-                            ucSample.pTable = LIMS.UserControls.OfType<ucPeriodicTable>().Where(o => !o.IsDisposed).FirstOrDefault();
+                            ucSample.pTable = LIMSUI.UserControls.OfType<ucPeriodicTable>().Where(o => !o.IsDisposed).FirstOrDefault();
                             if (ucSample.pTable != null) ucSample.pTable.Query(ref l);
                         }
                     }

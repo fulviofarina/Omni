@@ -6,21 +6,22 @@ using System.Linq;
 using System.Windows.Forms;
 using DB.Properties;
 using DB.Tools;
+using Rsx.DGV;
 using Rsx.Dumb;
 using VTools;
 using static Rsx.DGV.Control;
 
 namespace DB.UI
 {
-    public partial class LIMS
+    public partial class LIMSUI
     {
         protected static string CRITICAL_FAILURE = "Failed to generate the User interface";
          protected static  string CRITICAL_FAILURETXT = "Could not load ";
 
 
-
+        public static IFind IFind = null;
         public static LIMS Form = null;
-        public static Rsx.DGV.IFind IFind = null;
+      
         public static Interface Interface = null;
 
         /// <summary>
@@ -53,7 +54,8 @@ namespace DB.UI
             aboutBox = _aboutbox;
             Interface.IReport.Msg("Starting LIMS", "Starting...");
             Linaa = Interface.Get();
-            Form = new LIMS(); //make a new UI LIMS
+            IFind = new ucSearch();
+            Form = new LIMS(ref Interface); //make a new UI LIMS
             Form.ShowInTaskbar = false;
             Form.Opacity = 0;
 
@@ -108,7 +110,7 @@ namespace DB.UI
             cv.ShouldPrePaintRowMethod = shouldprepaintRow;
             cv.RowAddedMethod = addedRow;
             cv.RowDeletedMethod = deleteRow;
-            cv.SaveMethod = LIMS.Interface.IStore.Save;
+            cv.SaveMethod = LIMSUI.Interface.IStore.Save;
 
             DataGridView[] dgvs = UIControl.GetChildControls<DataGridView>(control).ToArray();
 
@@ -141,7 +143,7 @@ namespace DB.UI
             Rsx.DGV.Control ctr = new Rsx.DGV.Control(explorer.RefreshTable, Interface.IReport.Msg, ref IFind);
             DataGridView[] dgv = new DataGridView[] { explorer.DGV };
 
-            ctr.SetContext("Explorer", ref dgv, LIMS.Form.CMS);
+            ctr.SetContext("Explorer", ref dgv, LIMSUI.Form.CMS);
             ctr.CreateDGVEvents();
             ctr.SaveMethod = Linaa.Save;
             ctr.SetSaver(explorer.saveBtton);

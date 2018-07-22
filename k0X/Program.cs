@@ -63,7 +63,7 @@ namespace k0X
 
             int seconds = (DateTime.Now - idleStart).Seconds;
 
-            DB.UI.LIMS.Interface.IReport.Msg(" seconds - counter ", seconds.ToString() + " - " + counter.ToString());
+            DB.UI.LIMSUI.Interface.IReport.Msg(" seconds - counter ", seconds.ToString() + " - " + counter.ToString());
 
             if (seconds > 2) return;
 
@@ -72,7 +72,7 @@ namespace k0X
                 case 4:
                     {
                         //  timer.Enabled = false;
-                        DB.UI.LIMS.Interface.IReport.Speak("I am not doing anything at all.. I could calculate stuff, I just need functions here... Would you please add some?");
+                        DB.UI.LIMSUI.Interface.IReport.Speak("I am not doing anything at all.. I could calculate stuff, I just need functions here... Would you please add some?");
                         //   isIdle = false;
                     }
                     break;
@@ -80,7 +80,7 @@ namespace k0X
                 case 8:
                     {
                         //  timer.Enabled = false;
-                        DB.UI.LIMS.Interface.IReport.Speak("Aha, second stage reached. I could do a second-step calculations here, since I am bored");
+                        DB.UI.LIMSUI.Interface.IReport.Speak("Aha, second stage reached. I could do a second-step calculations here, since I am bored");
                         //  isIdle = false;
                     }
                     break;
@@ -88,7 +88,7 @@ namespace k0X
                 case 12:
                     {
                         //  timer.Enabled = false;
-                        DB.UI.LIMS.Interface.IReport.Speak("Great!... The third stage was reached. I could resume stuff that were paused.... Pachamama lives!!!");
+                        DB.UI.LIMSUI.Interface.IReport.Speak("Great!... The third stage was reached. I could resume stuff that were paused.... Pachamama lives!!!");
                         //  isIdle = false;
                     }
                     break;
@@ -96,7 +96,7 @@ namespace k0X
                 case 16:
                     {
                         timer.Enabled = false;
-                        DB.UI.LIMS.Interface.IReport.Speak("Have you ever been light years away?... I had to come back, but if I wanted...  I will do it again,  I will do it again, I will do it again...");
+                        DB.UI.LIMSUI.Interface.IReport.Speak("Have you ever been light years away?... I had to come back, but if I wanted...  I will do it again,  I will do it again, I will do it again...");
                         isIdle = false;
                     }
                     break;

@@ -29,10 +29,10 @@ namespace SSF
 
                 Form aboutbox = new AboutBox();
 
-                LIMS.Interface = Creator.Initialize();
+                LIMSUI.Interface = Creator.Initialize();
                 //create database
 
-                LIMS.CreateLIMS(ref aboutbox);
+                LIMSUI.CreateLIMS(ref aboutbox);
 
                 Creator.CheckDirectories();
                 Creator.PopulatePreferences();
@@ -42,7 +42,7 @@ namespace SSF
                 else throw new Exception("Could not start loading the database");
             
                 //EventHandler firstCallBack;
-                Form toShow =   LIMS.CreateSSFApplication();
+                Form toShow =   LIMSUI.CreateSSFApplication();
 
                 Creator.Run();
 
@@ -55,8 +55,8 @@ namespace SSF
             }
             catch (Exception ex)
             {
-                LIMS.Interface.IStore.AddException(ex);
-                LIMS.Interface.IStore.SaveExceptions();
+                LIMSUI.Interface.IStore.AddException(ex);
+                LIMSUI.Interface.IStore.SaveExceptions();
                 MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
             }
     

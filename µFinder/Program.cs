@@ -26,26 +26,26 @@ namespace µFinder
                 //create aboutBox
                 Form aboutbox = new AboutBox();
                 //associate interface to LIMS UI
-                LIMS.Interface = Creator.Initialize();
+                LIMSUI.Interface = Creator.Initialize();
                 //create database manager UI
-                LIMS.CreateLIMS(ref aboutbox);
+                LIMSUI.CreateLIMS(ref aboutbox);
 
                 Creator.CheckDirectories();
                 Creator.PopulatePreferences();
-                LIMS.Interface.IPreferences.CurrentPref.Offline = true;
+                LIMSUI.Interface.IPreferences.CurrentPref.Offline = true;
            //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
                 //  bool ok = Creator.CheckConnections(true, true);
                 // if (ok) Creator.LoadMethods(0);
                 //  else throw new Exception("Could not start loading the database");
-                UserControl control = LIMS.CreateUI(ControlNames.Matrices);
+                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices);
               //  CreateMatrixApplication(out control, out refresher);
 
-                LIMS.CreateForm(Application.ProductName, ref control, false);
+                LIMSUI.CreateForm(Application.ProductName, ref control, false);
                 Form toShow = control.ParentForm;
 
           //      LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
-                LIMS.Interface.IPreferences.CurrentPref.Offline = true;
+                LIMSUI.Interface.IPreferences.CurrentPref.Offline = true;
 
               
                 //     Creator.PopulateBasic();

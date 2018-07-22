@@ -43,7 +43,7 @@ namespace k0X
                 ISS = Creator.FindLastControl<ucSubSamples>(project);
                 if (ISS == null)
                 {
-                    UserControl control = DB.UI.LIMS.CreateUI(ControlNames.SubSamples);
+                    UserControl control = DB.UI.LIMSUI.CreateUI(ControlNames.SubSamples);
                     if (control == null)
                     {
                         return;
@@ -55,7 +55,7 @@ namespace k0X
                     // ISS.Project = project;
                     ISS.projectbox.Offline = !load;
                     ISS.projectbox.Enabled = false;
-                    ISS.ucContent.Set(ref LIMS.Interface);
+                    ISS.ucContent.Set(ref LIMSUI.Interface);
                     AuxiliarForm form = new AuxiliarForm();
                     form.Populate(ref control);
                 }
@@ -65,10 +65,10 @@ namespace k0X
 
                 // Interface interf = LIMS.Interface;
 
-                ucSamples = new ucSamples(ref LIMS.Interface);
+                ucSamples = new ucSamples(ref LIMSUI.Interface);
                 ucSamples.ISubS = ISS;
                 ucSamples.Name = project;
-                LIMS.UserControls.Add(ucSamples);
+                LIMSUI.UserControls.Add(ucSamples);
                 newForm = true;
 
                 ucSamples.IsClone = clone;
@@ -99,12 +99,12 @@ namespace k0X
         public static ucOrder CreateOrder(string ProjectOrOrder)
         {
             ucOrder ucOrder = null;
-            ucOrder = LIMS.UserControls.OfType<ucOrder>().FirstOrDefault(o => o.Box.Text.CompareTo(ProjectOrOrder) == 0);
+            ucOrder = LIMSUI.UserControls.OfType<ucOrder>().FirstOrDefault(o => o.Box.Text.CompareTo(ProjectOrOrder) == 0);
             if (ucOrder == null || ucOrder.IsDisposed)
             {
                 ucOrder = null;
-                ucOrder = new ucOrder(ref LIMS.Linaa, ProjectOrOrder);
-                LIMS.UserControls.Add(ucOrder);
+                ucOrder = new ucOrder(ref LIMSUI.Linaa, ProjectOrOrder);
+                LIMSUI.UserControls.Add(ucOrder);
             }
 
             return ucOrder;
@@ -117,13 +117,13 @@ namespace k0X
             string ProjectOrOrder = Box.Text.Trim();
             if (ProjectOrOrder.Equals(string.Empty)) return;
 
-            string possiblefile = LIMS.Linaa.FolderPath + DB.Properties.Resources.Backups + ProjectOrOrder + ".xml";
+            string possiblefile = LIMSUI.Linaa.FolderPath + DB.Properties.Resources.Backups + ProjectOrOrder + ".xml";
 
-            if (LIMS.Linaa.ProjectsList.Contains(ProjectOrOrder.ToUpper()))
+            if (LIMSUI.Linaa.ProjectsList.Contains(ProjectOrOrder.ToUpper()))
             {
                 Cursor.Current = Cursors.WaitCursor;
                 ProjectOrOrder = ProjectOrOrder.ToUpper();
-                LIMS.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
+                LIMSUI.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
                 // LIMS.IReport.Speak("Found... " + ProjectOrOrder + "...");
 
                 Create(sender, true, ProjectOrOrder);
@@ -131,15 +131,15 @@ namespace k0X
             else if (e.KeyCode == Keys.Enter)
             {
                 bool fromFile = System.IO.File.Exists(possiblefile);
-                bool usrCall = LIMS.Linaa.OrdersList.Contains(ProjectOrOrder);
+                bool usrCall = LIMSUI.Linaa.OrdersList.Contains(ProjectOrOrder);
 
                 if (fromFile || usrCall)
                 {
                     Cursor.Current = Cursors.WaitCursor;
 
-                    LIMS.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
+                    LIMSUI.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
 
-                    if (fromFile) LIMS.Linaa.Read(possiblefile);
+                    if (fromFile) LIMSUI.Linaa.Read(possiblefile);
 
                     Application.DoEvents();
 
@@ -147,7 +147,7 @@ namespace k0X
 
                     if (fromFile)
                     {
-                        ICollection<string> ls = LIMS.Linaa.ActiveProjectsList;
+                        ICollection<string> ls = LIMSUI.Linaa.ActiveProjectsList;
                         foreach (string project in ls) Create(ucOrder, false, project.ToUpper());
                     }
                     else ucOrder.Populate();
@@ -161,7 +161,7 @@ namespace k0X
                     if (sender.Equals(Box))
                     {
                         string text = "This Irradiation Project does not exist.\nCreate new one?";
-                        LIMS.Interface.IReport.Msg(text, "Not Found... " + ProjectOrOrder);
+                        LIMSUI.Interface.IReport.Msg(text, "Not Found... " + ProjectOrOrder);
                         result = MessageBox.Show(text, "Important", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     }
 
@@ -169,36 +169,36 @@ namespace k0X
 
                     ProjectOrOrder = ProjectOrOrder.ToUpper();
 
-                    UserControl control = LIMS.CreateUI(ControlNames.Irradiations);
+                    UserControl control = LIMSUI.CreateUI(ControlNames.Irradiations);
 
                     // if (control == null) return;
 
-                    LIMS.UserControls.Add(control);
+                    LIMSUI.UserControls.Add(control);
 
                     ucIrradiationsRequests ucIrrReq = control as ucIrradiationsRequests;
                     ucIrrReq.Name = ProjectOrOrder + " - New Irradiation";
 
                     Application.DoEvents();
-                    LIMS.Interface.IPopulate.IIrradiations.AddNewIrradiation(ProjectOrOrder);
-                    LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
+                    LIMSUI.Interface.IPopulate.IIrradiations.AddNewIrradiation(ProjectOrOrder);
+                    LIMSUI.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
 
                     this.Box_KeyUp(sender, e);
                     return;
                 }
             }
 
-            if (LIMS.Interface.IPreferences.CurrentPref.RowState == System.Data.DataRowState.Added)
+            if (LIMSUI.Interface.IPreferences.CurrentPref.RowState == System.Data.DataRowState.Added)
             {
-                LIMS.Interface.IReport.Msg("You can change your preferences any time, such as:\n\nPeak-search window...;\nMinimum Peak-Area...;\nMaximum Peak-Uncertainty...;\netc...\n\nI will retrieve, use and store your latest preferences", "Hi, you are a new user!...");
-                LIMS.Interface.IPreferences.CurrentPref.AcceptChanges();
+                LIMSUI.Interface.IReport.Msg("You can change your preferences any time, such as:\n\nPeak-search window...;\nMinimum Peak-Area...;\nMaximum Peak-Uncertainty...;\netc...\n\nI will retrieve, use and store your latest preferences", "Hi, you are a new user!...");
+                LIMSUI.Interface.IPreferences.CurrentPref.AcceptChanges();
             }
 
             if (Box.Text.Equals(string.Empty)) return;
 
             if (Cursor.Current == Cursors.WaitCursor)
             {
-                LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject = Box.Text;
-                LIMS.Interface.IPreferences.SavePreferences();
+                LIMSUI.Interface.IPreferences.CurrentPref.LastIrradiationProject = Box.Text;
+                LIMSUI.Interface.IPreferences.SavePreferences();
                 Box.Text = string.Empty;
 
                 Cursor.Current = Cursors.Default;
@@ -208,12 +208,12 @@ namespace k0X
 
         public void Link()
         {
-            UIControl.FillABox(this.Box, LIMS.Linaa.ProjectsList, true, false);
-            UIControl.FillABox(this.Box, LIMS.Linaa.OrdersList, false, false);
+            UIControl.FillABox(this.Box, LIMSUI.Linaa.ProjectsList, true, false);
+            UIControl.FillABox(this.Box, LIMSUI.Linaa.OrdersList, false, false);
 
-            this.autoload.Checked = LIMS.Interface.IPreferences.CurrentPref.AutoLoad;
-            this.fillbyHL.Checked = LIMS.Interface.IPreferences.CurrentPref.FillByHL;
-            this.fillBySpectra.Checked = LIMS.Interface.IPreferences.CurrentPref.FillBySpectra;
+            this.autoload.Checked = LIMSUI.Interface.IPreferences.CurrentPref.AutoLoad;
+            this.fillbyHL.Checked = LIMSUI.Interface.IPreferences.CurrentPref.FillByHL;
+            this.fillBySpectra.Checked = LIMSUI.Interface.IPreferences.CurrentPref.FillBySpectra;
         }
 
         public void Panel_Click(object sender, EventArgs e)
@@ -222,33 +222,33 @@ namespace k0X
 
             if (sender == this.ToDoPanel || sender.GetType().Equals(typeof(ucPeaks)))
             {
-                ucToDoPanel todo = new ucToDoPanel(ref LIMS.Interface);
-                LIMS.UserControls.Add(todo);
-                LIMS.UserControls.Add(todo.ucToDoData);
-                todo.panel1box.Text = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
-                todo.panel2box.Text = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                ucToDoPanel todo = new ucToDoPanel(ref LIMSUI.Interface);
+                LIMSUI.UserControls.Add(todo);
+                LIMSUI.UserControls.Add(todo.ucToDoData);
+                todo.panel1box.Text = LIMSUI.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                todo.panel2box.Text = LIMSUI.Interface.IPreferences.CurrentPref.LastIrradiationProject;
             }
             else if (sender == this.Analysis || sender.GetType().Equals(typeof(ucSamples)))
             {
                 if (ucPeriodic == null || ucPeriodic.IsDisposed)
                 {
-                    object dataset = LIMS.Linaa;
+                    object dataset = LIMSUI.Linaa;
 
                     IPeaks ucP = new ucPeaks(ref dataset);
-                    LIMS.UserControls.Add(ucP);
-                    IEnumerable<LINAA.ElementsRow> elements = LIMS.Linaa.Elements.AsEnumerable();
+                    LIMSUI.UserControls.Add(ucP);
+                    IEnumerable<LINAA.ElementsRow> elements = LIMSUI.Linaa.Elements.AsEnumerable();
                     ucPeriodic = new ucPeriodicTable(ref elements);  //creates the interface
                     ucP.IPeriodicTable = ucPeriodic;  //docks the ucPeriodic interface
-                    LIMS.UserControls.Add(ucPeriodic);
+                    LIMSUI.UserControls.Add(ucPeriodic);
                 }
 
-                ucPeriodic.Projects = Hash.HashFrom<string>(LIMS.Linaa.SubSamples.IrradiationCodeColumn);
+                ucPeriodic.Projects = Hash.HashFrom<string>(LIMSUI.Linaa.SubSamples.IrradiationCodeColumn);
             }
             else if (sender.Equals(this.SolCoiPanel))
             {
-                ucSolcoi sol = new ucSolcoi(ref LIMS.Interface);
-                LIMS.UserControls.Add(sol);
-                LIMS.UserControls.Add(sol.ucDetectors);
+                ucSolcoi sol = new ucSolcoi(ref LIMSUI.Interface);
+                LIMSUI.UserControls.Add(sol);
+                LIMSUI.UserControls.Add(sol.ucDetectors);
             }
             else if (sender.Equals(this.HyperLabData))
             {
@@ -258,12 +258,12 @@ namespace k0X
             }
             else if (sender.Equals(this.ExplorerMenu))
             {
-                LIMS.Explore();
+                LIMSUI.Explore();
             }
             else if (sender.Equals(this.LIMSData))
             {
-                LIMS.Form.Show();
-                LIMS.Form.Activate();
+                LIMSUI.Form.Show();
+                LIMSUI.Form.Activate();
             }
 
             Cursor.Current = Cursors.Default;
@@ -362,14 +362,14 @@ namespace k0X
                 // dynamic connectionControl = IConn;
                 bool ok = Creator.PrepareSQL(ref IConn);
                 // bool ok = Creator.PrepareSQL();
-                LIMS.Interface.IPreferences
+                LIMSUI.Interface.IPreferences
                  .CurrentPref.IsSQL = ok;
 
-                LIMS.Interface.IReport.CheckRestartFile();
+                LIMSUI.Interface.IReport.CheckRestartFile();
 
                 if (ok)
                 {
-                    LIMS.Interface.IPreferences.SavePreferences();
+                    LIMSUI.Interface.IPreferences.SavePreferences();
 
                     Creator.LoadMethods(0);
                 }
@@ -379,8 +379,8 @@ namespace k0X
                 DB.Tools.Creator.CallBack = delegate
                 {
                     //this is OK
-                    LIMS.Linaa = LIMS.Interface.Get();
-                    LIMS.Form = new LIMS(); //make a new UI LIMS
+                    LIMSUI.Linaa = LIMSUI.Interface.Get();
+                    LIMSUI.Form = new LIMS(ref LIMSUI.Interface); //make a new UI LIMS
                                             //make a new interface
                                             //      LIMS.Interface = new Interface(ref LIMS.Linaa);
 
@@ -392,11 +392,11 @@ namespace k0X
                     //is autoload Activated?
                     if (!this.autoload.Checked) return; //if auto-load last project is activated...
                                                         // find project to autoload
-                    bool projectNull = LIMS.Interface.IPreferences.CurrentPref
+                    bool projectNull = LIMSUI.Interface.IPreferences.CurrentPref
                     .IsLastIrradiationProjectNull();
                     if (!projectNull)
                     {
-                        Box.Text = LIMS.Interface.IPreferences.CurrentPref.LastIrradiationProject;
+                        Box.Text = LIMSUI.Interface.IPreferences.CurrentPref.LastIrradiationProject;
                         KeyEventArgs ev = new KeyEventArgs(Keys.Enter);
                         Box_KeyUp(this.Box, ev);
                     }
@@ -411,7 +411,7 @@ namespace k0X
                     if (watch == null)
                     {
                         // Interface Inter = LIMS.Interface;
-                        watch = new k0X.Watch(ref LIMS.Interface);
+                        watch = new k0X.Watch(ref LIMSUI.Interface);
                         this.talkTSMI.Click -= watch.TalkHandler;
                         this.Detectors.Click -= watch.DetectorsHandler;
                         this.talkTSMI.Click += watch.TalkHandler;
@@ -463,7 +463,7 @@ namespace k0X
             this.timer.Tick += delegate
             {
                 ReleaseMemory(this.Release);
-                LIMS.Interface.IReport.GenerateBugReport();
+                LIMSUI.Interface.IReport.GenerateBugReport();
             };
 
             this.ResumeLayout(true);
