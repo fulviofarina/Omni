@@ -52,6 +52,9 @@ namespace DB.UI
             XCom.Set(path, callmeBack, resetProgress, showProg);
             XCom.Set(ref Interface);
 
+
+            ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+
             ucCalculate1.CancelMethod += delegate
             {
                 XCom.IsCalculating = false;
@@ -87,6 +90,9 @@ namespace DB.UI
 
 
             };
+
+
+
 
             DBTLP.Controls.Add(options as UserControl);
         
@@ -134,7 +140,10 @@ namespace DB.UI
                 //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
                 if (m != null)
                 {
-                    showInBrowser(m.MatrixID);
+
+                    ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
+
+                //    showInBrowser(m.MatrixID);
                
                 }
                 //    callmeBack(m, EventArgs.Empty);
@@ -182,33 +191,24 @@ namespace DB.UI
 
             if (m == null) return;
 
-            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
-            //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
-            showInBrowser(m.MatrixID);
-            //
-            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+       
+               if (!XCom.IsCalculating)
+             {
+                Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
 
-            //   if (!XCom.IsCalculating)
-            // {
-            ucCalculate1.EnableCalculate = !XCom.IsCalculating;
+                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
+                ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
 
-            //  }
+                ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+              
+            }
 
             ucMatrixSimple1.RefreshDGV();
 
          //   XCom.CheckIfFinished();
         }
 
-        private void showInBrowser(int matrixID)
-        {
-            string file = XCom.StartupPath + matrixID + ".png";
-            Uri uri = new Uri("about:blank");
-            if (System.IO.File.Exists(file))
-            {
-                 uri = new Uri(file);
-            }
-            webBrowser1.Navigate(uri);
-        }
+      
 
         private void ucLinaaMatrix_Load(object sender, EventArgs e)
         {

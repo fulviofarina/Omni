@@ -228,19 +228,21 @@ namespace DB.Tools
 
             string listOfenergies, compositions;
 
+
+
+
+
             setValuesForQuery(m, ref start, ref totalEnd, step, useList, out delta, out end, out listOfenergies);
 
            
 
-            string Response = string.Empty;
-            string tempFile = string.Empty;
-
+         
 
             //    MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
             // int added = 0;
             compositions = GetCompositionString(m.MatrixComposition);
 
-
+        
             while (end <= totalEnd)
             {
 
@@ -249,7 +251,8 @@ namespace DB.Tools
                     int lines = GetNumberOfLines(step, start, end);
                     listOfenergies = MakeEnergiesList(step, start, lines);
                 }
-                Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions);
+                string labelName = m.MatrixName + " " + start + " to " + end + " keV";
+                Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions, labelName, start, end);
 
                 start += delta;
                 end += delta;
@@ -281,13 +284,24 @@ namespace DB.Tools
                 //   log += "action2\n";
             };
             Action action3 = delegate
-                {
-                     makePic(ref m, initialStart, totalEnd);
+            {
 
-                  //  log += "action3\n";
-                };
+                string labelName = m.MatrixName + " " + initialStart + " to " + totalEnd + " keV";
 
-          
+                listOfenergies = MakeEnergiesList(totalEnd - initialStart, initialStart, 2);
+                string Response = QueryXCOM(compositions, listOfenergies, m.MatrixName, true);
+
+                if (string.IsNullOrEmpty(Response)) return;
+
+                string tempFile = _startupPath + m.MatrixID + ".FULL RANGE" + PictureExtension;
+
+                getPicture(ref Response, tempFile);
+
+
+                //  log += "action3\n";
+            };
+
+
             ls.Add(action3);
             ls.Add(action2);
 
@@ -298,7 +312,20 @@ namespace DB.Tools
             return ls;
         }
 
-        private Action setMainAction(int matrixID, int numberOfFiles, string listOfenergies, string compositions)
+        private void getPicture(ref string Response, string tempFile)
+        {
+            File.Delete(tempFile);
+            string aux = getPicTag(ref Response);
+            if (aux.Contains("Error")) return;
+
+            string uriString = "https://physics.nist.gov/PhysRefData/Xcom/tmp/graph" + "_" + aux + PictureExtension;
+            Uri uri = new Uri(uriString);
+            WebClient client = new WebClient();
+            client.DownloadFile(uri, tempFile);
+            client.Dispose();
+        }
+
+        private Action setMainAction(int matrixID, int numberOfFiles, string listOfenergies, string compositions, string labelName, double start, double end)
         {
             Action action = delegate
             {
@@ -311,10 +338,17 @@ namespace DB.Tools
 
                     string Response = string.Empty;
                     string  tempFile = string.Empty;
-                    Response = QueryXCOM(compositions, listOfenergies);
+                   
+                    Response = QueryXCOM(compositions, listOfenergies,labelName,false);
 
-                    tempFile = _startupPath + matrixID + "." + numberOfFiles;
-                    File.WriteAllText(tempFile, Response);
+                    tempFile = _startupPath + matrixID + ".";
+                    File.WriteAllText(tempFile + numberOfFiles, Response);
+
+                    //      tempFile += XCOM.PictureExtension;
+                    Response = QueryXCOM(compositions, listOfenergies, labelName, true);
+
+
+                    getPicture(ref Response, tempFile +start.ToString()+" - "+end.ToString()+ PictureExtension);
 
 
 
@@ -408,14 +442,14 @@ namespace DB.Tools
             }
         }
 
-     
-
-       
+      
     }
 
     public partial class XCOM 
     {
-      //  protected static ASCIIEncoding encoding = new ASCIIEncoding();
+
+        public static string PictureExtension = ".png";
+        //  protected static ASCIIEncoding encoding = new ASCIIEncoding();
 
         protected static string CALCULATING_MSG = "Number of calculations pending ";
         protected static string CALCULATING_TITLE = "Still calculating...";
@@ -646,6 +680,7 @@ namespace DB.Tools
             reader.ReadLine();
             reader.ReadLine();
             string[] strArray2 = reader.ReadToEnd().Split(new char[] { '\n' });
+            
 
             int num = 0;
             int num2 = 1;
@@ -732,44 +767,9 @@ namespace DB.Tools
         private Hashtable loaders = new Hashtable();
 
         protected internal Interface Interface;
-        private string png = ".png";
+     //   private string png = ".png";
        
-        private void makePic(ref MatrixRow m, double start, double Totalend)
-        {
-            int i = 0;
-
-         
-
-            string compositions = GetCompositionString(m.MatrixComposition);
-
-          //  start = pref.StartEnergy;
-            string   listOfenergies = MakeEnergiesList(Totalend - start, start, 2);
-
-            string  Response = QueryXCOM(compositions, listOfenergies, m.MatrixName, true);
-
-            if (string.IsNullOrEmpty(Response)) return;
-            string aux = getPicTag(ref Response);
-
-            if (aux.Contains("Error")) return;
-           
-            string     tempFile = _startupPath + m.MatrixID + png;
-
-            string uriString = "https://physics.nist.gov/PhysRefData/Xcom/tmp/graph" + "_" + aux + png;
-            Uri uri = new Uri(uriString);
-
-
-            WebClient client = new WebClient();
-                client.DownloadFile(uri, tempFile);
-                client.Dispose();
-                // Or you can get the file content without saving it:
-                //     string htmlCode = client.DownloadString("http://yoursite.com/page.html");
-                //...
-           
-
-          //  return File.ReadAllBytes(tempFile);
-            
-        }
-
+      
       
 
         private void setValuesForQuery(MatrixRow m, ref double start, ref double Totalend, double step, bool useList, out double delta, out double end, out string listOfenergies)

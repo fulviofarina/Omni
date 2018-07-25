@@ -31,12 +31,12 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DBTLP = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ucMatrixSimple1 = new DB.UI.ucMatrixSimple();
             this.ucCalculate1 = new VTools.ucCalculate();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.ucMatrixSimple1 = new DB.UI.ucMatrixSimple();
+            this.ucPicNav1 = new VTools.ucPicNav();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ucMUES1 = new DB.UI.ucMUES();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -45,8 +45,8 @@
             this.DBTLP.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -97,6 +97,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(621, 641);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
+            // ucMatrixSimple1
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.ucMatrixSimple1, 2);
+            this.ucMatrixSimple1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMatrixSimple1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ucMatrixSimple1.Location = new System.Drawing.Point(3, 3);
+            this.ucMatrixSimple1.Name = "ucMatrixSimple1";
+            this.ucMatrixSimple1.Size = new System.Drawing.Size(615, 635);
+            this.ucMatrixSimple1.TabIndex = 0;
+            // 
             // ucCalculate1
             // 
             this.ucCalculate1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -117,6 +127,25 @@
             this.tabControl1.Size = new System.Drawing.Size(852, 876);
             this.tabControl1.TabIndex = 1;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.ucPicNav1);
+            this.tabPage4.Location = new System.Drawing.Point(4, 34);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(844, 838);
+            this.tabPage4.TabIndex = 4;
+            this.tabPage4.Text = "Graph";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // ucPicNav1
+            // 
+            this.ucPicNav1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucPicNav1.Location = new System.Drawing.Point(0, 0);
+            this.ucPicNav1.Margin = new System.Windows.Forms.Padding(6);
+            this.ucPicNav1.Name = "ucPicNav1";
+            this.ucPicNav1.Size = new System.Drawing.Size(844, 838);
+            this.ucPicNav1.TabIndex = 0;
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.ucMUES1);
@@ -127,35 +156,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Mass Attenuation Coefficients";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.webBrowser1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 34);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(844, 838);
-            this.tabPage4.TabIndex = 4;
-            this.tabPage4.Text = "Graph";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // webBrowser1
-            // 
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(844, 838);
-            this.webBrowser1.TabIndex = 0;
-            // 
-            // ucMatrixSimple1
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.ucMatrixSimple1, 2);
-            this.ucMatrixSimple1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMatrixSimple1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucMatrixSimple1.Location = new System.Drawing.Point(3, 3);
-            this.ucMatrixSimple1.Name = "ucMatrixSimple1";
-            this.ucMatrixSimple1.Size = new System.Drawing.Size(615, 635);
-            this.ucMatrixSimple1.TabIndex = 0;
             // 
             // ucMUES1
             // 
@@ -182,8 +182,8 @@
             this.DBTLP.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -200,6 +200,6 @@
         private ucMUES ucMUES1;
         private VTools.ucCalculate ucCalculate1;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private VTools.ucPicNav ucPicNav1;
     }
 }

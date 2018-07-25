@@ -68,6 +68,12 @@
     <Compile Include="TVFilter.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ucPicNav.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucPicNav.Designer.cs">
+      <DependentUpon>ucPicNav.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rsx.DGV\Rsx.DGV.csproj">
@@ -78,6 +84,11 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ucPicNav.resx">
+      <DependentUpon>ucPicNav.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

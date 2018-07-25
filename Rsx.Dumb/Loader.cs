@@ -108,9 +108,11 @@ namespace Rsx.Dumb
         private void worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
 
+            this.Dispose();
+
             callback?.Invoke();
 
-            this.Dispose();
+        
 
 
           //  isDisposed = true;

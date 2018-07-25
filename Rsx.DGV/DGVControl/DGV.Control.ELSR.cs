@@ -160,6 +160,7 @@ namespace Rsx.DGV
 
         private static void makeCSVFile(string path, string matrixID, ref DataObject o)
         {
+            if (o == null) return;
             string csv = (string)o.GetData("Csv");
             System.IO.File.WriteAllText(path + matrixID + ".csv", csv);
         }
@@ -168,12 +169,13 @@ namespace Rsx.DGV
         {
             dgv.SelectAll();
             DataObject o = dgv.GetClipboardContent();
-
+          
             makeHtmlFile(path, matrixID,ref o);
         }
 
         private static void makeHtmlFile(string path, string matrixID, ref DataObject  o)
         {
+            if (o == null) return;
             MemoryStream doc = (MemoryStream)o.GetData("HTML Format");
             byte[] arr = doc.ToArray();
             System.IO.File.WriteAllBytes(path + matrixID + ".xls", arr);
