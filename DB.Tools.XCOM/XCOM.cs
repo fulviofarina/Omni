@@ -19,6 +19,9 @@ namespace DB.Tools
        private Stopwatch stopwatch;
         private string log = string.Empty;
 
+
+   
+
         public void Calculate(bool? BKG)
         {
 
@@ -43,11 +46,28 @@ namespace DB.Tools
 
             if (rows.Count == 0)
             {
-                Interface.IReport.Msg("No matrices where selected", "Nothing to do...", false);
+
+           
+                Interface.IReport.Msg(NOMATRIX_ERROR, NOMATRIX_TITLE, false);
                 return;
 
             }
             _resetProgress?.Invoke(0);
+
+
+
+         bool connection =   CheckForInternetConnection();
+
+
+            if (!connection)
+            {
+                Interface.IReport.Msg(NOINTERNET_ERROR, NOINTERNET_TITLE, false);
+                return;
+            }
+            else
+            {
+                Interface.IReport.Msg(INTERNET_MSG, INTERNET_TITLE, false);
+            }
 
             IsCalculating = true;
 
@@ -65,8 +85,8 @@ namespace DB.Tools
                 MatrixRow m = rows.FirstOrDefault();
                 try
                 {
-                  
 
+                 
 
                     Action<int> report = x =>
                     {
@@ -101,9 +121,14 @@ namespace DB.Tools
 
                     addToLoaders(ref m, report, callBack, start, Totalend, step, useList, force);
 
+                    Interface.IReport.Msg(m.MatrixName + " was selected", "Preparing...", true);
+
+
                 }
                 catch (SystemException ex)
                 {
+                    Interface.IReport.Msg(m.MatrixName + " was not selected", "Failed!", false);
+
                     Interface.IStore.AddException(ex);
                 }
 
@@ -205,7 +230,7 @@ namespace DB.Tools
             Action action = delegate
                 {
                     numberOfFiles = makeFiles(ref m, start,totalEnd,step,useList);
-                    log += "action1\n";
+                    //log += "action1\n";
                 };
             Action action2 = delegate
             {
@@ -219,13 +244,13 @@ namespace DB.Tools
 
                 Interface.IStore.SaveMUES(ref mu, ref m, SQL);
 
-                log += "action2\n";
+             //   log += "action2\n";
             };
             Action action3 = delegate
                 {
                      makePic(ref m, start,totalEnd);
 
-                    log += "action3\n";
+                  //  log += "action3\n";
                 };
              
                 ls.Add(action);
@@ -282,15 +307,15 @@ namespace DB.Tools
                 if (!calculating)
                 {
                     stopwatch.Stop();
-
+                    Interface.IBS.EnabledControls = true;
                     log += stopwatch.Elapsed.TotalSeconds;
 
                    
                 }
-
-                if (calculating)
+                else
                 {
-            //      Interface.IBS.SuspendBindings();
+                    Interface.IBS.EnabledControls = false;
+                    //      Interface.IBS.SuspendBindings();
                     loaders.Clear();
                     log = string.Empty;
                     stopwatch.Start();
@@ -304,13 +329,15 @@ namespace DB.Tools
             //check if cancelled
             if (loaders.Count != 0)
             {
-                Interface.IReport.Msg("Number of calculations pending " + loaders.Count, "Still calculating...", true);
+
+             
+                Interface.IReport.Msg(CALCULATING_MSG+ loaders.Count, CALCULATING_TITLE, true);
                 //    IEnumerable<ILoader> lds = loaders.Values.OfType<ILoader>();
                 //   lds = lds.Where(o => !o.IsBusy);
             }
             else
             {
-                Interface.IReport.Msg(Log, "All finished", true);
+                Interface.IReport.Msg(log, DONE_TITLE, true);
             }
         }
 
@@ -327,6 +354,50 @@ namespace DB.Tools
 
     public partial class XCOM 
     {
+      //  protected static ASCIIEncoding encoding = new ASCIIEncoding();
+
+        protected static string CALCULATING_MSG = "Number of calculations pending ";
+        protected static string CALCULATING_TITLE = "Still calculating...";
+
+        protected static string DONE_MSG = "Number of calculations pending ";
+        protected static string DONE_TITLE = "All finished";
+
+        public static Uri XCOMTestUri = new Uri("https://physics.nist.gov/");
+        public static Uri XCOMUri = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
+        public static Uri XCOMUriPic = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3");
+
+
+        protected static string XCOM_ERROR = "Problems comunicating with XCOM";
+        protected static string XCOM_TITLE = "XCOM did not answer the query";
+
+        protected static string NOMATRIX_ERROR = "No matrices where selected";
+        protected static string NOMATRIX_TITLE = "Nothing to do...";
+
+        protected static string INTERNET_MSG = "The Internet connection is valid";
+        protected static string INTERNET_TITLE = "Server available!";
+
+        protected static string NOINTERNET_ERROR = "No Internet connection found\nThis program requires a valid Internet connection";
+        protected static string NOINTERNET_TITLE = "Server not available!";
+
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+                using (var client = new WebClient())
+                using (client.OpenRead(XCOMTestUri))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static IList<string[]> ExtractComposition(String XCOMResponse, ref LINAA.ElementsDataTable elements)
         {
             StringSplitOptions o = StringSplitOptions.RemoveEmptyEntries;
@@ -346,7 +417,7 @@ namespace DB.Tools
 
                 int z = Convert.ToInt32(Z);
 
-                LINAA.ElementsRow ele = elements.OfType<LINAA.ElementsRow>().FirstOrDefault(a => a.Z == z);
+                ElementsRow ele = elements.OfType<ElementsRow>().FirstOrDefault(a => a.Z == z);
 
                 if (ele != null)
                 {
@@ -412,18 +483,14 @@ namespace DB.Tools
             return str;
         }
 
-        public static Uri XCOMUri = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
-        public static Uri XCOMUriPic = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3");
+     
+
         public static string QueryXCOM(string composition, string energies,string name = "default matrix", bool picture = false)
         {
             byte[] bytes = null;
         
             if ((composition != null) && (energies != null))
             {
-                ServicePointManager.Expect100Continue = true;
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-
-                ASCIIEncoding encoding = new ASCIIEncoding();
                 string s = "Formulae=" + composition + "&Energies=" + energies;
                 //   string s = s2;
                 if (picture)
@@ -433,7 +500,11 @@ namespace DB.Tools
                     s += "&NumAdd=1" + "&Output=off";// + "&Graph4=on" + "&Graph5=on" + "&Graph6=on" + "&Graph7=on";
                   
                 }
+                ASCIIEncoding encoding = new ASCIIEncoding();
+
                 bytes = encoding.GetBytes(s);
+
+               
                 //bytes2 = encoding.GetBytes(s2);
             }
 
@@ -460,8 +531,7 @@ namespace DB.Tools
             return str;
         }
 
-        protected static string XCOM_ERROR = "Problems comunicating with XCOM";
-        protected static string XCOM_TITLE = "XCOM did not answer the query";
+   
       //  protected static string ext = ".txt";
     //    protected static string ext2 = ".v2.xml";
 
@@ -643,7 +713,8 @@ namespace DB.Tools
             //maximum number of energies per query
             int maxEnergies = 75;
             //increment in energy
-            double delta = (maxEnergies * step);
+         //   double delta = (maxEnergies * step);
+            double delta = (NrEnergies * step);
             //end energy
             double end = start + delta;
 
@@ -685,16 +756,16 @@ namespace DB.Tools
 
               
 
-                string text = "Working on: " + m.MatrixName + "\n";
-                text += "Lines = " + NrEnergies + "\n";
-                text += "Start (keV) = " + start + "\t";
-                text += "End (keV) = " + end + "\n";
-                string title = "Busy";
-                if (string.IsNullOrEmpty(Response))
-                {
-                    title = "FAILED CONNECTION\n";
-                }
-                Interface.IReport.Msg(text, title);
+             //   string text = "Working on: " + m.MatrixName + "\n";
+              //  text += "Lines = " + NrEnergies + "\n";
+              //  text += "Start (keV) = " + start + "\t";
+               // text += "End (keV) = " + end + "\n";
+             //   string title = "Busy";
+            //    if (string.IsNullOrEmpty(Response))
+             //   {
+                 //   title = "FAILED CONNECTION\n";
+              //  }
+              //  Interface.IReport.Msg(text, title);
 
                 }
                 catch (SystemException ex)

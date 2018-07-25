@@ -59,18 +59,26 @@ namespace DB.UI
             {
                 this.Validate();
 
-                ucMatrixSimple1.ChangeCompositionView();
-                ucMUES1.Focus(false);
+                Application.DoEvents();
 
-        
+                ucCalculate1.EnableCalculate = false;
+
+                //    ucMatrixSimple1.ChangeCompositionView();
+              //  ucMUES1.Focus(false);
+
+                Application.DoEvents();
+
                 XCom.Calculate(null);
 
                 ucCalculate1.EnableCalculate = !XCom.IsCalculating;
 
-                Interface.IBS.EnabledControls = !XCom.IsCalculating;
+           
 
-                ucMUES1.Focus(true);
-                ucMatrixSimple1.ChangeCompositionView();
+             //   ucMUES1.Focus(true);
+
+                Application.DoEvents();
+
+                //    ucMatrixSimple1.ChangeCompositionView();
                 //  preparePlot();
 
             };
@@ -93,7 +101,7 @@ namespace DB.UI
 
             this.ResumeLayout(true);
         }
-        public void Set(ref Interface inter, ref IXCOMPreferences preferences)
+        public void Set(ref Interface inter)
         {
             this.SuspendLayout();
 
@@ -101,16 +109,28 @@ namespace DB.UI
 
             ucMatrixSimple1.Set(ref inter);
 
+          
+
+         //   ucMUES1.Set(ref inter, ref preferences);
+
+            this.ResumeLayout(true);
+
+        }
+        public void Set(ref IXCOMPreferences preferences)
+        {
+            this.SuspendLayout();
+
+
+            ucMUES1.Set(ref Interface, ref preferences);
+
             Interface.IBS.Matrix.CurrentChanged += delegate
             {
                 MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
                 //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
-                showInBrowser(m.MatrixID);
-             //   callmeBack(m, EventArgs.Empty);
+                if (m != null) showInBrowser(m.MatrixID);
+                //   callmeBack(m, EventArgs.Empty);
 
             };
-
-            ucMUES1.Set(ref inter, ref preferences);
 
             this.ResumeLayout(true);
 
@@ -158,6 +178,7 @@ namespace DB.UI
             if (!XCom.IsCalculating)
             {
                 ucCalculate1.EnableCalculate = true;
+                
             }
 
             XCom.CheckIfFinished();

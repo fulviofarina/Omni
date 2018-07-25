@@ -253,22 +253,10 @@ namespace DB.UI
         public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
         {
             ucMatrix mat = new ucMatrix();
-            IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
-            mat.Set(ref Interface, ref prefes);
+           
+            mat.Set(ref Interface);
 
-        //    int type = 1;
-            IOptions options = GetOptions( 1);
-            options.PreferencesClick += delegate
-            {
-                GetPreferences<IXCOMPreferences>(true);
-            };
-
-            mat.Set(ref options);
-
-            IPop msn = Interface.IReport.Msn;
-            UserControl ctrl = msn as UserControl;
-            mat.Set(ref ctrl);
-            msn.ParentForm?.Dispose();
+         
 
             //ESTE ORDEN ES FUNDAMENTAL!!!
             Interface.IBS.ApplyFilters();
@@ -296,7 +284,25 @@ namespace DB.UI
             };
 
             refre.Invoke();
-        
+
+
+            IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
+            IOptions options = GetOptions(1);
+            options.PreferencesClick += delegate
+            {
+                GetPreferences<IXCOMPreferences>(true);
+            };
+
+         
+            mat.Set(ref prefes);
+            mat.Set(ref options);
+
+            IPop msn = Interface.IReport.Msn;
+            UserControl ctrl = msn as UserControl;
+            mat.Set(ref ctrl);
+            msn.ParentForm?.Dispose();
+
+          
 
             refresher = refre;
         }

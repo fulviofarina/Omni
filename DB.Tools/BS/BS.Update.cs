@@ -104,11 +104,14 @@ namespace DB.Tools
 
                 if (showErrors)
                 {
-                    hasErrorsMethod = u.SubSamplesRow.HasErrors;
-                    IEnumerable<string> names = u.SubSamplesRow.GetBasicColumnsInErrorNames();
-                    hasCompulsoryErrors(u.SubSamplesRow, names.ToArray(), false);
-                    hasErrorsMethod = u.HasErrors;
-                    hasCompulsoryErrors(u, null, true);
+                    if (!EC.IsNuDelDetch(u.SubSamplesRow))
+                    {
+                        hasErrorsMethod = u.SubSamplesRow.HasErrors;
+                        IEnumerable<string> names = u.SubSamplesRow.GetBasicColumnsInErrorNames();
+                        hasCompulsoryErrors(u.SubSamplesRow, names.ToArray(), false);
+                        hasErrorsMethod = u.HasErrors;
+                        hasCompulsoryErrors(u, null, true);
+                    }
                 }
             }
             else
@@ -258,9 +261,10 @@ namespace DB.Tools
                     // bs.ResetBindings(false);
                 }
             }
-        
-            MUES.Filter = filter;
-    
+
+         //   MUES.Filter = string.Empty;
+              MUES.Filter = filter;
+
             bs2.Filter = filter; //sea cual sea este es el filtrro
             if (selectedBS) bs.Filter = filterMatrixSelected;
             // bs2.ResetBindings(false);

@@ -151,6 +151,7 @@ namespace DB.Tools
             Interface.IStore.Read(filePath);
             DataSet set = Interface.Get();
             PopulatePreferences();
+            Interface.IDB.MUES.Clear();
             foreach (DataTable dt in set.Tables)
             {
                 dt.AcceptChanges();
