@@ -26,6 +26,9 @@ namespace DB.UI
         public void Set(ref Interface LinaaInterface, bool selected = false)
         {
             Interface = LinaaInterface;
+            matrixDGV.DataSource = null;
+            this.MatrixBN.BindingSource = null;
+
             Dumb.FD(ref this.lINAA);
             Dumb.FD(ref this.MatrixBS);
 
@@ -47,6 +50,8 @@ namespace DB.UI
 
             this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
+            this.matrixDGV.DataError += MatrixDGV_DataError;
+
             string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
             Binding mlabel = Rsx.Dumb.BS.ABinding(ref bs, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
@@ -56,6 +61,13 @@ namespace DB.UI
             // this.bindingNavigatorAddNewItem.Click += addNewVialChannel_Click;// new System.EventHandler(this.addNewVialChannel_Click);
 
             // matrixDGV.MouseHover += dGV_MouseHover;
+        }
+
+        private void MatrixDGV_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+
+          //  throw new System.NotImplementedException();
         }
 
         public ucMatrixSimple()

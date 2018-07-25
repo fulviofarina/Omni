@@ -190,9 +190,10 @@ namespace VTools
             {
                 EventHandler pros = delegate
                 {
-                    Application.DoEvents();
+                 
                     this.progressBar.PerformStep();
                     Application.DoEvents();
+                    //     Application.DoEvents();
                 };
 
                 return pros;

@@ -15,18 +15,21 @@ namespace DB
 
        public bool SaveMUES(ref MUESDataTable mu, ref MatrixRow m, bool sql = true)
         {
-            IEnumerable<MUESRow> mues = m.GetMUESRows();
+            IEnumerable<MUESRow> mues = m?.GetMUESRows();
             Delete(ref mues);
+
 
             if (sql)
             {
-                TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-                foreach (DB.LINAA.MUESRow row in mu.Rows)
-                {
-                    TAM.MUESTableAdapter.Insert(row.MatrixID, row.Energy, row.MACS, row.MAIS, row.PE, row.PPNF, row.PPEF, row.MATCS, row.MATNCS, row.Density, row.Edge);
-                }
+                saveMUES_SQL(ref mu, ref m);
             }
 
+            bool filesOk = saveMUES_File(ref mu, m);
+            return filesOk;
+        }
+
+        private bool saveMUES_File(ref MUESDataTable mu, MatrixRow m)
+        {
             byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref mu);
 
             string tempfile = folderPath + Resources.XCOMFolder;
@@ -34,17 +37,21 @@ namespace DB
 
             File.WriteAllBytes(tempfile, arr);
 
-
-
-            //////////// HASTA AQUI
-
-      
-
-
             return File.Exists(tempfile);
         }
 
-      
+        private void saveMUES_SQL(ref MUESDataTable mu, ref MatrixRow m)
+        {
+            LINAATableAdapters.MUESTableAdapter muta = new LINAATableAdapters.MUESTableAdapter();
+            muta.DeleteByMatrixID(m.MatrixID);
+            foreach (MUESRow row in mu.Rows)
+            {
+                muta.Insert(row.MatrixID, row.Energy, row.MACS, row.MAIS, row.PE, row.PPNF, row.PPEF, row.MATCS, row.MATNCS, row.Density, row.Edge);
+            }
+            muta.Dispose();
+            muta =null;
+        }
+
 
         public bool Save<T>()
         {

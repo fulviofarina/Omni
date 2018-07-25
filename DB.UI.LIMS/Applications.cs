@@ -284,7 +284,7 @@ namespace DB.UI
                 {
                     Creator.LoadFromFile();
                  //   Interface.IPopulate.INuclear.CleanSigmas();
-                //    Creator.PopulatePreferences();
+                   
                  
                 }
                 else Interface.IPopulate.IGeometry.PopulateMatrixSQL();

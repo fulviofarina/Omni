@@ -150,6 +150,7 @@ namespace DB.Tools
             }
             Interface.IStore.Read(filePath);
             DataSet set = Interface.Get();
+            PopulatePreferences();
             foreach (DataTable dt in set.Tables)
             {
                 dt.AcceptChanges();

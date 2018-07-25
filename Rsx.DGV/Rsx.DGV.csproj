@@ -60,11 +60,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindable.cs" />
+    <Compile Include="Calendar.cs" />
+    <Compile Include="Calculable.cs" />
     <Compile Include="DGVControl\DGV.Control.Basic.cs" />
     <Compile Include="DGVControl\DGV.Control.cs" />
     <Compile Include="DGVControl\DGV.Control.DGV.cs" />
     <Compile Include="DGVControl\DGV.Control.ELSR.cs" />
-    <Compile Include="DGV.cs" />
+    <Compile Include="DGVLights.cs" />
     <Compile Include="DGVControl\IDGVControl.cs" />
     <Compile Include="DGVControl\IDGVControlInvoke.cs" />
     <Compile Include="DGVControl\IDGVControlCreate.cs" />
@@ -90,6 +93,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="README.MD" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
