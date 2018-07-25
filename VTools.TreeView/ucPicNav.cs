@@ -90,27 +90,41 @@ namespace VTools
             watcher.EnableRaisingEvents = true;
         }
 
+
+        string punto = ".";
         public void RefreshList(string baseFilename, string filter)
         {
 
             listView1.Items.Clear();
             imageList1.Images.Clear();
-
+        
+            //get files
             string[] files = Directory.GetFiles(folderPath, baseFilename+filter+imageExtension);
             files = files.Select(o => o.Replace(folderPath, null)).ToArray();
+            //ordered
+            files =  files.OrderBy(o => o[0]).ToArray();
             foreach (var item in files)
             {
                 Image img = Image.FromFile(folderPath + item);
                 string itemName = item.Replace(imageExtension, null);
-                itemName = itemName.Replace(baseFilename, null);
-                itemName = itemName.Replace(".", null);
-                imageList1.Images.Add(itemName, img); 
-            }
+                itemName = itemName.Replace(baseFilename +punto, null);
 
-                foreach (var item in imageList1.Images.Keys)
-            {
-                ListViewItem i = new ListViewItem(item, imageList1.Images.IndexOfKey(item));
-                i.Name = baseFilename + ".";
+                string itemBase = baseFilename + punto;
+
+                //si contiene punto aun está numerado
+                if (itemName.Contains(punto))
+                {
+                    int numberIndex = itemName.IndexOf(punto);
+                    string number = itemName.Substring(0, numberIndex);
+                    itemBase += number + punto;
+                    itemName = itemName.Substring(numberIndex+1);
+                }
+                
+                int index = imageList1.Images.Count-1;
+                imageList1.Images.Add(itemName, img); 
+         
+                ListViewItem i = new ListViewItem(itemName, index);
+                i.Name = itemBase;
 
                 listView1.Items.Add(i);
             }

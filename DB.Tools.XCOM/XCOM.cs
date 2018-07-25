@@ -349,8 +349,8 @@ namespace DB.Tools
                    
                     Response = QueryXCOM(compositions, listOfenergies,labelName,false);
 
-                    tempFile = _startupPath + matrixID + ".";
-                    File.WriteAllText(tempFile + numberOfFiles, Response);
+                    tempFile = _startupPath + matrixID + ".N"+ numberOfFiles + ".";
+                    File.WriteAllText(tempFile , Response);
 
                     //      tempFile += XCOM.PictureExtension;
                     Response = QueryXCOM(compositions, listOfenergies, labelName, true);
@@ -680,7 +680,7 @@ namespace DB.Tools
 
             int added = 0;
 
-            string tempFile = path + matrixID + "." + subsection;
+            string tempFile = path + matrixID + "N." + subsection;
             if (!File.Exists(tempFile)) return added;
 
             StreamReader reader = new StreamReader(tempFile);
