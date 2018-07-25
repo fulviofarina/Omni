@@ -251,7 +251,7 @@ namespace DB.Tools
                     int lines = GetNumberOfLines(step, start, end);
                     listOfenergies = MakeEnergiesList(step, start, lines);
                 }
-                string labelName = m.MatrixName + " " + start + " to " + end + " keV";
+                string labelName = m.MatrixName + ": " + start + " to " + end + " keV";
                 Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions, labelName, start, end);
 
                 start += delta;
@@ -285,11 +285,19 @@ namespace DB.Tools
             };
             Action action3 = delegate
             {
+                double max = 1e7;
 
-                string labelName = m.MatrixName + " " + initialStart + " to " + totalEnd + " keV";
+                double min = 1;
+                string labelName = m.MatrixName + ": " + min.ToString() + " to " + (max).ToString() + " keV";
 
-                listOfenergies = MakeEnergiesList(totalEnd - initialStart, initialStart, 2);
-                string Response = QueryXCOM(compositions, listOfenergies, m.MatrixName, true);
+                listOfenergies = MakeEnergiesList(max - min, min, 2);
+
+             //   string labelName = m.MatrixName + " " + initialStart + " to " + totalEnd + " keV";
+
+              //  listOfenergies = MakeEnergiesList(totalEnd - initialStart, initialStart, 2);
+
+
+                string Response = QueryXCOM(compositions, listOfenergies, labelName, true);
 
                 if (string.IsNullOrEmpty(Response)) return;
 
