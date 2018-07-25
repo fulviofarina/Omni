@@ -35,6 +35,9 @@ namespace DB.UI
         }
       private  EventHandler showProg = null;
        private  Action<int> resetProgress = null;
+
+        string path = string.Empty;
+
         public void Set(ref IOptions options)
         {
             resetProgress = options.ResetProgress;
@@ -43,7 +46,7 @@ namespace DB.UI
 
           
 
-            string path = Interface.IStore.FolderPath + Resources.XCOMFolder;
+             path = Interface.IStore.FolderPath + Resources.XCOMFolder;
 
             XCom = new XCOM();
             XCom.Set(path, callmeBack, resetProgress, showProg);
@@ -58,34 +61,30 @@ namespace DB.UI
             ucCalculate1.CalculateMethod += delegate
             {
 
-                Application.DoEvents();
+              //  Application.DoEvents();
 
                 this.Validate();
+
+                Application.DoEvents();
 
                 ucCalculate1.EnableCalculate = false;
 
                 //    ucMatrixSimple1.ChangeCompositionView();
-                //  ucMUES1.Focus(false);
+               // ucMUES1.Focus(false);
 
                 Application.DoEvents();
 
                 XCom.Calculate(null);
 
 
-                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
-
+                this.ucMatrixSimple1.RefreshDGV();
 
                 Application.DoEvents();
 
+                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
 
-                this.ucMatrixSimple1.RefreshDGV();
+             //   this.ucMatrixSimple1.ChangeCompositionView();
 
-             //   ucMUES1.Focus(true);
-
-             //   Application.DoEvents();
-
-                //    ucMatrixSimple1.ChangeCompositionView();
-                //  preparePlot();
 
             };
 
@@ -133,7 +132,11 @@ namespace DB.UI
             {
                 MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
                 //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
-                if (m!=null) showInBrowser(m.MatrixID);
+                if (m != null)
+                {
+                    showInBrowser(m.MatrixID);
+               
+                }
                 //    callmeBack(m, EventArgs.Empty);
 
             };
@@ -183,10 +186,11 @@ namespace DB.UI
             //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
             showInBrowser(m.MatrixID);
             //
+            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
 
-         //   if (!XCom.IsCalculating)
-           // {
-                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
+            //   if (!XCom.IsCalculating)
+            // {
+            ucCalculate1.EnableCalculate = !XCom.IsCalculating;
 
             //  }
 
@@ -197,7 +201,12 @@ namespace DB.UI
 
         private void showInBrowser(int matrixID)
         {
-            Uri uri = new Uri(XCom.StartupPath + matrixID + ".png");
+            string file = XCom.StartupPath + matrixID + ".png";
+            Uri uri = new Uri("about:blank");
+            if (System.IO.File.Exists(file))
+            {
+                 uri = new Uri(file);
+            }
             webBrowser1.Navigate(uri);
         }
 

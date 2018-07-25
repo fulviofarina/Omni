@@ -21,6 +21,7 @@ namespace DB.UI
             set
             {
                 this.ToDo.Visible = false;
+                this.matrixDensityDataGridViewTextBoxColumn1.Visible = true;
                 this.matrixDGV.RowHeadersVisible = true;
                 this.matrixDGV.RowHeaderMouseDoubleClick += value;
             }
@@ -75,15 +76,20 @@ namespace DB.UI
         {
             InitializeComponent();
 
+        //    this.ToDo.Visible = false;
+            this.matrixDensityDataGridViewTextBoxColumn1.Visible = false;
+
             editContentLBL.Text = VIEW_STR;
 
             editContentLBL.Click += delegate
             {
-                changeCompositionView();
+                ChangeCompositionView();
             };
+
+
         }
 
-        private void changeCompositionView()
+        public void ChangeCompositionView()
         {
             if (editContentLBL.Text.Contains(EDIT_STR))
             {
@@ -96,7 +102,7 @@ namespace DB.UI
             ucComposition1.ChangeFocus(null, System.EventArgs.Empty);
         }
 
-        internal void RefreshDGV()
+        public void RefreshDGV()
         {
             matrixDGV.ClearSelection();
         }

@@ -55,6 +55,10 @@ namespace DB.UI
                 this.matrixRTB.MouseDoubleClick += ChangeFocus;
                 this.compositionsDGV.MouseDoubleClick += ChangeFocus;
 
+
+                this.compositionsDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+
+
                 ChangeFocus(null, EventArgs.Empty);
                 ChangeFocus(null, EventArgs.Empty);
             }

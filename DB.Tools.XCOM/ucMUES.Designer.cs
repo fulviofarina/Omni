@@ -266,7 +266,7 @@
             this.mACSDataGridViewTextBoxColumn.HeaderText = "CS";
             this.mACSDataGridViewTextBoxColumn.Name = "mACSDataGridViewTextBoxColumn";
             this.mACSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.mACSDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Coherent Scattering (g/cm2)";
+            this.mACSDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation for Coherent Scattering (g/cm2)";
             this.mACSDataGridViewTextBoxColumn.Width = 52;
             // 
             // mAISDataGridViewTextBoxColumn
@@ -279,7 +279,7 @@
             this.mAISDataGridViewTextBoxColumn.HeaderText = "IS";
             this.mAISDataGridViewTextBoxColumn.Name = "mAISDataGridViewTextBoxColumn";
             this.mAISDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.mAISDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Incoherent Scattering (g/cm2)";
+            this.mAISDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation for Incoherent Scattering (g/cm2)";
             this.mAISDataGridViewTextBoxColumn.Width = 47;
             // 
             // pEDataGridViewTextBoxColumn
@@ -292,7 +292,7 @@
             this.pEDataGridViewTextBoxColumn.HeaderText = "PE";
             this.pEDataGridViewTextBoxColumn.Name = "pEDataGridViewTextBoxColumn";
             this.pEDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.pEDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Photoelectric Absorption (g/cm2)";
+            this.pEDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation for Photoelectric Absorption (g/cm2)";
             this.pEDataGridViewTextBoxColumn.Width = 50;
             // 
             // pPNFDataGridViewTextBoxColumn
@@ -305,7 +305,7 @@
             this.pPNFDataGridViewTextBoxColumn.HeaderText = "PP";
             this.pPNFDataGridViewTextBoxColumn.Name = "pPNFDataGridViewTextBoxColumn";
             this.pPNFDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.pPNFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation Pair Production Neutron Field (g/cm2)";
+            this.pPNFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation by Pair Production under Neutron Field (g/cm2)";
             this.pPNFDataGridViewTextBoxColumn.Width = 51;
             // 
             // pPEFDataGridViewTextBoxColumn
@@ -318,7 +318,7 @@
             this.pPEFDataGridViewTextBoxColumn.HeaderText = "PP (EF)";
             this.pPEFDataGridViewTextBoxColumn.Name = "pPEFDataGridViewTextBoxColumn";
             this.pPEFDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.pPEFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation coefficient Pair Production Electron Field (g/cm2)";
+            this.pPEFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation by Pair Production under Electron Field (g/cm2)";
             this.pPEFDataGridViewTextBoxColumn.Width = 81;
             // 
             // mATCSDataGridViewTextBoxColumn

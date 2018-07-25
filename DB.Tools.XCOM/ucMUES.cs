@@ -78,13 +78,16 @@ namespace DB.UI
                 this.DGV.DataSource = Interface.IBS.MUES;
                 //  this.compositionsDGV.RowHeadersVisible = false;
                 bindDGVColumns();
+                this.DGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
-              //  FormClosingEventHandler closing = delegate
-              //  {
-               //     refreshDGV();
-              //  };
+                //  compositionsDGV
 
-              //  pref.Parent.FormClosing += closing;
+                //  FormClosingEventHandler closing = delegate
+                //  {
+                //     refreshDGV();
+                //  };
+
+                //  pref.Parent.FormClosing += closing;
 
                 EventHandler action = delegate
                 {
@@ -118,6 +121,20 @@ namespace DB.UI
                 if (!c.Visible && c!=this.mUDataGridViewTextBoxColumn) c.Visible = true;
                 c.SetRounding();
             }
+        }
+
+        internal void MakeFile(string matrixID, string path)
+        {
+         
+
+            DataGridView dgv = this.DGV;
+       //    this.matrixIDDataGridViewTextBoxColumn1.Visible = true;
+
+            Rsx.DGV.Control.MakeHTMLFile(path, matrixID, ref dgv);
+            Rsx.DGV.Control.MakeCSVFile(path, matrixID, ref dgv);
+
+            //   this.matrixIDDataGridViewTextBoxColumn.Visible = false;
+
         }
 
         private void bindDGVColumns()

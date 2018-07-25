@@ -95,9 +95,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMatrixSimple));
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.matrixDGV = new System.Windows.Forms.DataGridView();
-            this.ToDo = new Rsx.DGV.CalculableColumn();
-            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.contentTS = new System.Windows.Forms.ToolStrip();
@@ -124,6 +121,9 @@
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToDo = new Rsx.DGV.CalculableColumn();
+            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
@@ -215,33 +215,6 @@
             this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.matrixDGV.Size = new System.Drawing.Size(360, 543);
             this.matrixDGV.TabIndex = 7;
-            // 
-            // ToDo
-            // 
-            this.ToDo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
-            this.ToDo.DataPropertyName = "ToDo";
-            this.ToDo.HeaderText = "";
-            this.ToDo.Name = "ToDo";
-            this.ToDo.ReadOnly = true;
-            this.ToDo.ToolTipText = "ToDo?";
-            this.ToDo.Width = 5;
-            // 
-            // matrixNameDataGridViewTextBoxColumn1
-            // 
-            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
-            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "Label";
-            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
-            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for the Matrix";
-            // 
-            // matrixDensityDataGridViewTextBoxColumn1
-            // 
-            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density";
-            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
-            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or known Density for this Matrix (in g/cm3)";
-            this.matrixDensityDataGridViewTextBoxColumn1.Width = 87;
             // 
             // MatrixBS
             // 
@@ -483,6 +456,33 @@
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
+            // 
+            // ToDo
+            // 
+            this.ToDo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
+            this.ToDo.DataPropertyName = "ToDo";
+            this.ToDo.HeaderText = "";
+            this.ToDo.Name = "ToDo";
+            this.ToDo.ReadOnly = true;
+            this.ToDo.ToolTipText = "Matrix to Do?";
+            this.ToDo.Width = 5;
+            // 
+            // matrixNameDataGridViewTextBoxColumn1
+            // 
+            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
+            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "Label";
+            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
+            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for the Matrix";
+            // 
+            // matrixDensityDataGridViewTextBoxColumn1
+            // 
+            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density";
+            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
+            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or known Density for this Matrix (in g/cm3)";
+            this.matrixDensityDataGridViewTextBoxColumn1.Width = 87;
             // 
             // ucMatrixSimple
             // 

@@ -270,6 +270,13 @@ namespace DB.Tools
             string toolTip = cell.ToolTipText;
             if (string.IsNullOrEmpty(toolTip)) return;
             Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
+            char parentesis = '(';
+            if (toolTip.Contains(parentesis))
+            {
+                toolTip = toolTip.Split(parentesis)[0];
+            }
+            if (string.IsNullOrEmpty(toolTip)) return;
+        //    Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
             Speak(toolTip);
         }
 
