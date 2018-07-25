@@ -271,9 +271,11 @@ namespace DB.UI
                 if (offline)
                 {
                     Creator.LoadFromFile();
-                 //   Interface.IPopulate.INuclear.CleanSigmas();
-                   
-                 
+                    //   Interface.IPopulate.INuclear.CleanSigmas();
+                    Creator.PopulatePreferences();
+                    Interface.IDB.MUES.Clear();
+                    Interface.IDB.AcceptChanges();
+               
                 }
                 else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
                 Interface.IBS.ShowErrors = true;
@@ -284,6 +286,7 @@ namespace DB.UI
             };
 
             refre.Invoke();
+             Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded",true);
 
 
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();

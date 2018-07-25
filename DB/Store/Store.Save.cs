@@ -15,12 +15,13 @@ namespace DB
 
        public bool SaveMUES(ref MUESDataTable mu, ref MatrixRow m, bool sql = true)
         {
-            IEnumerable<MUESRow> mues = m?.GetMUESRows();
-            Delete(ref mues);
+       
 
 
             if (sql)
             {
+                 IEnumerable<MUESRow> mues = m?.GetMUESRows();
+                 Delete(ref mues);
                 saveMUES_SQL(ref mu, ref m);
             }
 

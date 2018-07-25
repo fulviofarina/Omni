@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 using DB.Tools;
 using Rsx.Dumb;
@@ -19,6 +20,8 @@ namespace DB.UI
             ///FIRST TIME AND ONLY
             set
             {
+                this.ToDo.Visible = false;
+                this.matrixDGV.RowHeadersVisible = true;
                 this.matrixDGV.RowHeaderMouseDoubleClick += value;
             }
         }
@@ -32,6 +35,20 @@ namespace DB.UI
             Dumb.FD(ref this.lINAA);
             Dumb.FD(ref this.MatrixBS);
 
+            setBindings(selected);
+
+            ucComposition1.Set(ref Interface, selected);
+
+
+            //    this.matrixDGV.DataError += MatrixDGV_DataError;
+
+            this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+
+
+        }
+
+        private void setBindings(bool selected)
+        {
             BindingSource bs = null;
             if (selected)
             {
@@ -46,42 +63,27 @@ namespace DB.UI
             }
 
             this.MatrixBN.BindingSource = bs;
-            matrixDGV.DataSource = bs;
 
-            this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-
-            this.matrixDGV.DataError += MatrixDGV_DataError;
+            this.matrixDGV.DataSource = bs;
 
             string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
             Binding mlabel = Rsx.Dumb.BS.ABinding(ref bs, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
-
-            ucComposition1.Set(ref Interface, selected);
-
-            // this.bindingNavigatorAddNewItem.Click += addNewVialChannel_Click;// new System.EventHandler(this.addNewVialChannel_Click);
-
-            // matrixDGV.MouseHover += dGV_MouseHover;
-        }
-
-        private void MatrixDGV_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-
-
-          //  throw new System.NotImplementedException();
         }
 
         public ucMatrixSimple()
         {
             InitializeComponent();
+
             editContentLBL.Text = VIEW_STR;
 
             editContentLBL.Click += delegate
             {
-                ChangeCompositionView();
+                changeCompositionView();
             };
         }
 
-        public void ChangeCompositionView()
+        private void changeCompositionView()
         {
             if (editContentLBL.Text.Contains(EDIT_STR))
             {
@@ -94,5 +96,9 @@ namespace DB.UI
             ucComposition1.ChangeFocus(null, System.EventArgs.Empty);
         }
 
+        internal void RefreshDGV()
+        {
+            matrixDGV.ClearSelection();
+        }
     }
 }

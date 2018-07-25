@@ -37,7 +37,7 @@ namespace DB
                 if (IsStartEnergyNull()) StartEnergy = 1;
                 if (IsEndEnergyNull()) EndEnergy = 3500;
                 if (IsStepsNull()) Steps = 1;
-                 if (IsForceNull()) Force = true;
+              //   if (IsForceNull()) Force = true;
                 if (IsRoundingNull()) Rounding = "e3";
                 if (IsPENull()) PE = true;
                 if (IsPPEFNull()) PPEF = true;
@@ -53,7 +53,7 @@ namespace DB
                     ListOfEnergies = Encoding.UTF8.GetBytes(DB.Properties.Resources.XCOM);
                 }
                     //  if (IsASCIIOutputNull()) ASCIIOutput = false;
-                if (IsLogGraphNull()) LogGraph = true;
+               // if (IsLogGraphNull()) LogGraph = true;
 
                 // if ()
                 bool nulow = EC.CheckNull(Column, this);

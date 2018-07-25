@@ -149,17 +149,13 @@ namespace DB.Tools
                 filePath = Application.StartupPath + Resources.DevFiles + Resources.Linaa;
             }
             Interface.IStore.Read(filePath);
-            DataSet set = Interface.Get();
-            PopulatePreferences();
-            Interface.IDB.MUES.Clear();
-            foreach (DataTable dt in set.Tables)
-            {
-                dt.AcceptChanges();
-            }
-      
+
+           
         }
 
        
+
+
         /// <summary>
         /// Load the list of methods to apply. It does not apply them until Run() is called
         /// </summary>

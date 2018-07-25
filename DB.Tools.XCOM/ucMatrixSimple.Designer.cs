@@ -158,6 +158,8 @@
             // 
             this.matrixDGV.AllowUserToAddRows = false;
             this.matrixDGV.AllowUserToOrderColumns = true;
+            this.matrixDGV.AllowUserToResizeColumns = false;
+            this.matrixDGV.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
@@ -168,7 +170,7 @@
             this.matrixDGV.AutoGenerateColumns = false;
             this.matrixDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.matrixDGV.BackgroundColor = System.Drawing.Color.Plum;
-            this.matrixDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.matrixDGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.matrixDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.matrixDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.matrixDGV.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;

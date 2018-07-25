@@ -119,22 +119,24 @@ namespace DB.UI
         protected internal void setCheckStatebindings( ref Hashtable bindings)
         {
             XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
-            string column = dt.LoopColumn.ColumnName;
-            this.loopCheckBox.DataBindings.Add(bindings[column] as Binding);
+            string column;// = dt.LoopColumn.ColumnName;
+         //   this.loopCheckBox.DataBindings.Add(bindings[column] as Binding);
 
             column = dt.UseListColumn.ColumnName;
             this.useListbox.DataBindings.Add(bindings[column] as Binding);
 
-            column = dt.LogGraphColumn.ColumnName;
-            this.logscaleBox.DataBindings.Add(bindings[column] as Binding);
+          //  column = dt.LogGraphColumn.ColumnName;
+         //   this.logscaleBox.DataBindings.Add(bindings[column] as Binding);
 
             column = dt.ASCIIOutputColumn.ColumnName;
             this.asciibox.DataBindings.Add(bindings[column] as Binding);
 
-            column = dt.ForceColumn.ColumnName;
-            this.forceBox.DataBindings.Add(bindings[column] as Binding);
+            //    column = dt.ForceColumn.ColumnName;
+            //  this.forceBox.DataBindings.Add(bindings[column] as Binding);
 
-
+            this.logscaleBox.Visible = false;
+            this.forceBox.Visible = false;
+            this.loopCheckBox.Visible = false;
 
             column = dt.ISColumn.ColumnName;
             this.isbox.DataBindings.Add(bindings[column] as Binding);

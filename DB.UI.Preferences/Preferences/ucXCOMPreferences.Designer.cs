@@ -40,6 +40,13 @@
             this.minEneBox = new System.Windows.Forms.TextBox();
             this.roundingTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.totcs = new System.Windows.Forms.CheckBox();
+            this.totncs = new System.Windows.Forms.CheckBox();
+            this.ppnfbox = new System.Windows.Forms.CheckBox();
+            this.ppefbox = new System.Windows.Forms.CheckBox();
+            this.pebox = new System.Windows.Forms.CheckBox();
+            this.csbox = new System.Windows.Forms.CheckBox();
+            this.isbox = new System.Windows.Forms.CheckBox();
             this.logscaleBox = new System.Windows.Forms.CheckBox();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
             this.forceBox = new System.Windows.Forms.CheckBox();
@@ -47,13 +54,6 @@
             this.asciibox = new System.Windows.Forms.CheckBox();
             this.overridesCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.isbox = new System.Windows.Forms.CheckBox();
-            this.csbox = new System.Windows.Forms.CheckBox();
-            this.pebox = new System.Windows.Forms.CheckBox();
-            this.ppefbox = new System.Windows.Forms.CheckBox();
-            this.ppnfbox = new System.Windows.Forms.CheckBox();
-            this.totncs = new System.Windows.Forms.CheckBox();
-            this.totcs = new System.Windows.Forms.CheckBox();
             minAreaLabel = new System.Windows.Forms.Label();
             maxUncLabel = new System.Windows.Forms.Label();
             windowALabel = new System.Windows.Forms.Label();
@@ -250,6 +250,88 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(280, 470);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
+            // totcs
+            // 
+            this.totcs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totcs.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totcs.ForeColor = System.Drawing.Color.LightBlue;
+            this.totcs.Location = new System.Drawing.Point(3, 407);
+            this.totcs.Name = "totcs";
+            this.totcs.Size = new System.Drawing.Size(274, 26);
+            this.totcs.TabIndex = 22;
+            this.totcs.Text = "Total (with Coherent Scattering)";
+            this.totcs.UseVisualStyleBackColor = true;
+            // 
+            // totncs
+            // 
+            this.totncs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totncs.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totncs.Location = new System.Drawing.Point(3, 439);
+            this.totncs.Name = "totncs";
+            this.totncs.Size = new System.Drawing.Size(274, 28);
+            this.totncs.TabIndex = 21;
+            this.totncs.Text = "Total (w/o Coherent Scattering)";
+            this.totncs.UseVisualStyleBackColor = true;
+            // 
+            // ppnfbox
+            // 
+            this.ppnfbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ppnfbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ppnfbox.ForeColor = System.Drawing.Color.Khaki;
+            this.ppnfbox.Location = new System.Drawing.Point(3, 343);
+            this.ppnfbox.Name = "ppnfbox";
+            this.ppnfbox.Size = new System.Drawing.Size(274, 26);
+            this.ppnfbox.TabIndex = 20;
+            this.ppnfbox.Text = "Pair Production (Neutron Field)";
+            this.ppnfbox.UseVisualStyleBackColor = true;
+            // 
+            // ppefbox
+            // 
+            this.ppefbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ppefbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ppefbox.ForeColor = System.Drawing.Color.LemonChiffon;
+            this.ppefbox.Location = new System.Drawing.Point(3, 375);
+            this.ppefbox.Name = "ppefbox";
+            this.ppefbox.Size = new System.Drawing.Size(274, 26);
+            this.ppefbox.TabIndex = 19;
+            this.ppefbox.Text = "Pair Production (Electron Field)";
+            this.ppefbox.UseVisualStyleBackColor = true;
+            // 
+            // pebox
+            // 
+            this.pebox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pebox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pebox.ForeColor = System.Drawing.Color.MistyRose;
+            this.pebox.Location = new System.Drawing.Point(3, 311);
+            this.pebox.Name = "pebox";
+            this.pebox.Size = new System.Drawing.Size(274, 26);
+            this.pebox.TabIndex = 18;
+            this.pebox.Text = "Photoelectric Effect";
+            this.pebox.UseVisualStyleBackColor = true;
+            // 
+            // csbox
+            // 
+            this.csbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.csbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.csbox.ForeColor = System.Drawing.Color.LightBlue;
+            this.csbox.Location = new System.Drawing.Point(3, 279);
+            this.csbox.Name = "csbox";
+            this.csbox.Size = new System.Drawing.Size(274, 26);
+            this.csbox.TabIndex = 17;
+            this.csbox.Text = "Coherent Scattering";
+            this.csbox.UseVisualStyleBackColor = true;
+            // 
+            // isbox
+            // 
+            this.isbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.isbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.isbox.Location = new System.Drawing.Point(3, 247);
+            this.isbox.Name = "isbox";
+            this.isbox.Size = new System.Drawing.Size(274, 26);
+            this.isbox.TabIndex = 16;
+            this.isbox.Text = "Incoherent Scattering";
+            this.isbox.UseVisualStyleBackColor = true;
+            // 
             // logscaleBox
             // 
             this.logscaleBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -259,7 +341,7 @@
             this.logscaleBox.Name = "logscaleBox";
             this.logscaleBox.Size = new System.Drawing.Size(274, 26);
             this.logscaleBox.TabIndex = 15;
-            this.logscaleBox.Text = "Log Scale (plot)";
+            this.logscaleBox.Text = "None";
             this.logscaleBox.UseVisualStyleBackColor = true;
             // 
             // loopCheckBox
@@ -270,7 +352,7 @@
             this.loopCheckBox.Name = "loopCheckBox";
             this.loopCheckBox.Size = new System.Drawing.Size(274, 26);
             this.loopCheckBox.TabIndex = 10;
-            this.loopCheckBox.Text = "Process all units";
+            this.loopCheckBox.Text = "None";
             this.loopCheckBox.UseVisualStyleBackColor = true;
             // 
             // forceBox
@@ -284,7 +366,7 @@
             this.forceBox.Name = "forceBox";
             this.forceBox.Size = new System.Drawing.Size(274, 26);
             this.forceBox.TabIndex = 8;
-            this.forceBox.Text = "Force calculations";
+            this.forceBox.Text = "None";
             this.forceBox.UseVisualStyleBackColor = true;
             // 
             // useListbox
@@ -334,88 +416,6 @@
             this.label1.Size = new System.Drawing.Size(274, 20);
             this.label1.TabIndex = 14;
             this.label1.Text = "Other Preferences";
-            // 
-            // isbox
-            // 
-            this.isbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.isbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.isbox.Location = new System.Drawing.Point(3, 247);
-            this.isbox.Name = "isbox";
-            this.isbox.Size = new System.Drawing.Size(274, 26);
-            this.isbox.TabIndex = 16;
-            this.isbox.Text = "Incoherent Scattering";
-            this.isbox.UseVisualStyleBackColor = true;
-            // 
-            // csbox
-            // 
-            this.csbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.csbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.csbox.ForeColor = System.Drawing.Color.LightBlue;
-            this.csbox.Location = new System.Drawing.Point(3, 279);
-            this.csbox.Name = "csbox";
-            this.csbox.Size = new System.Drawing.Size(274, 26);
-            this.csbox.TabIndex = 17;
-            this.csbox.Text = "Coherent Scattering";
-            this.csbox.UseVisualStyleBackColor = true;
-            // 
-            // pebox
-            // 
-            this.pebox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pebox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pebox.ForeColor = System.Drawing.Color.MistyRose;
-            this.pebox.Location = new System.Drawing.Point(3, 311);
-            this.pebox.Name = "pebox";
-            this.pebox.Size = new System.Drawing.Size(274, 26);
-            this.pebox.TabIndex = 18;
-            this.pebox.Text = "Photoelectric Effect";
-            this.pebox.UseVisualStyleBackColor = true;
-            // 
-            // ppefbox
-            // 
-            this.ppefbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ppefbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ppefbox.ForeColor = System.Drawing.Color.LemonChiffon;
-            this.ppefbox.Location = new System.Drawing.Point(3, 375);
-            this.ppefbox.Name = "ppefbox";
-            this.ppefbox.Size = new System.Drawing.Size(274, 26);
-            this.ppefbox.TabIndex = 19;
-            this.ppefbox.Text = "Pair Production (Electron Field)";
-            this.ppefbox.UseVisualStyleBackColor = true;
-            // 
-            // ppnfbox
-            // 
-            this.ppnfbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ppnfbox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ppnfbox.ForeColor = System.Drawing.Color.Khaki;
-            this.ppnfbox.Location = new System.Drawing.Point(3, 343);
-            this.ppnfbox.Name = "ppnfbox";
-            this.ppnfbox.Size = new System.Drawing.Size(274, 26);
-            this.ppnfbox.TabIndex = 20;
-            this.ppnfbox.Text = "Pair Production (Neutron Field)";
-            this.ppnfbox.UseVisualStyleBackColor = true;
-            // 
-            // totncs
-            // 
-            this.totncs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totncs.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totncs.Location = new System.Drawing.Point(3, 439);
-            this.totncs.Name = "totncs";
-            this.totncs.Size = new System.Drawing.Size(274, 28);
-            this.totncs.TabIndex = 21;
-            this.totncs.Text = "Total (w/o Coherent Scattering)";
-            this.totncs.UseVisualStyleBackColor = true;
-            // 
-            // totcs
-            // 
-            this.totcs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totcs.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totcs.ForeColor = System.Drawing.Color.LightBlue;
-            this.totcs.Location = new System.Drawing.Point(3, 407);
-            this.totcs.Name = "totcs";
-            this.totcs.Size = new System.Drawing.Size(274, 26);
-            this.totcs.TabIndex = 22;
-            this.totcs.Text = "Total (with Coherent Scattering)";
-            this.totcs.UseVisualStyleBackColor = true;
             // 
             // ucXCOMPreferences
             // 

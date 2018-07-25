@@ -91,5 +91,7 @@ namespace DB
         LINAA.VialTypeDataTable VialType { get; }
         LINAA.YieldsDataTable Yields { get; }
         LINAA.XCOMPrefDataTable XCOMPref { get; }
+
+        void AcceptChanges();
     }
 }

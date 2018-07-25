@@ -57,26 +57,32 @@ namespace DB.UI
             };
             ucCalculate1.CalculateMethod += delegate
             {
-                this.Validate();
 
                 Application.DoEvents();
+
+                this.Validate();
 
                 ucCalculate1.EnableCalculate = false;
 
                 //    ucMatrixSimple1.ChangeCompositionView();
-              //  ucMUES1.Focus(false);
+                //  ucMUES1.Focus(false);
 
                 Application.DoEvents();
 
                 XCom.Calculate(null);
 
+
                 ucCalculate1.EnableCalculate = !XCom.IsCalculating;
 
-           
+
+                Application.DoEvents();
+
+
+                this.ucMatrixSimple1.RefreshDGV();
 
              //   ucMUES1.Focus(true);
 
-                Application.DoEvents();
+             //   Application.DoEvents();
 
                 //    ucMatrixSimple1.ChangeCompositionView();
                 //  preparePlot();
@@ -107,8 +113,7 @@ namespace DB.UI
 
             Interface = inter;
 
-            ucMatrixSimple1.Set(ref inter);
-
+        
           
 
          //   ucMUES1.Set(ref inter, ref preferences);
@@ -120,6 +125,7 @@ namespace DB.UI
         {
             this.SuspendLayout();
 
+            ucMatrixSimple1.Set(ref Interface);
 
             ucMUES1.Set(ref Interface, ref preferences);
 
@@ -127,8 +133,8 @@ namespace DB.UI
             {
                 MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
                 //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
-                if (m != null) showInBrowser(m.MatrixID);
-                //   callmeBack(m, EventArgs.Empty);
+                if (m!=null) showInBrowser(m.MatrixID);
+                //    callmeBack(m, EventArgs.Empty);
 
             };
 
@@ -170,18 +176,23 @@ namespace DB.UI
         {
 
             MatrixRow m = sender as MatrixRow;
-            //    Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
+
+            if (m == null) return;
+
+            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
             //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
-           showInBrowser(m.MatrixID);
+            showInBrowser(m.MatrixID);
             //
 
-            if (!XCom.IsCalculating)
-            {
-                ucCalculate1.EnableCalculate = true;
-                
-            }
+         //   if (!XCom.IsCalculating)
+           // {
+                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
 
-            XCom.CheckIfFinished();
+            //  }
+
+            ucMatrixSimple1.RefreshDGV();
+
+         //   XCom.CheckIfFinished();
         }
 
         private void showInBrowser(int matrixID)
@@ -196,6 +207,9 @@ namespace DB.UI
             {
                 splitContainer1.Panel2Collapsed = true;
             }
+
+            this.ucMatrixSimple1.RefreshDGV();
+
         }
 
         public ucMatrix()

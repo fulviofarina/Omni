@@ -31,11 +31,11 @@ namespace DB.UI
 
             double eh;//// = pref.EndEnergy;
             double el;// = pref.StartEnergy;
-            bool logScale;
+         //   bool logScale;
             XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
             eh = pref.EndEnergy;
             el = pref.StartEnergy;
-            logScale = pref.LogGraph;
+         //   logScale = pref.LogGraph;
             bool sql = true;
             MUESDataTable mues = null;
             //   if (specific) mues = Interface.IPopulate.IGeometry.GetMUES(el, eh, matrixID);
@@ -44,7 +44,7 @@ namespace DB.UI
             DataColumn ene = mues.EnergyColumn;
             DataColumn mu = mues.MATNCSColumn;
 
-            this.grapher.SetGraph(ref ene, 1, logScale, 10, ref mu, 1, true, 10, title);
+            this.grapher.SetGraph(ref ene, 1, true, 10, ref mu, 1, true, 10, title);
             this.grapher.Refresh();
             DataTable dt = ene.Table;
             Dumb.FD(ref dt);

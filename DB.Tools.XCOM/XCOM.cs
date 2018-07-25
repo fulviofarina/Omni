@@ -17,9 +17,7 @@ namespace DB.Tools
     {
 
        private Stopwatch stopwatch;
-        private string log = string.Empty;
-
-
+       
    
 
         public void Calculate(bool? BKG)
@@ -29,7 +27,6 @@ namespace DB.Tools
             Interface.IBS.Compositions.EndEdit();
             Interface.IBS.SelectedMatrix.EndEdit();
             Interface.IBS.SelectedCompositions.EndEdit();
-
             Interface.IBS.MUES.EndEdit();
 
 
@@ -39,21 +36,18 @@ namespace DB.Tools
             double Totalend = pref.EndEnergy;
             double step = pref.Steps;
             bool useList = pref.UseList;
-            bool force = pref.Force;
-            bool loop = pref.Loop;
+      
 
-            IList<MatrixRow> rows = pickSelected(loop);
+            IList<MatrixRow> rows;
+            rows = Interface.IDB.Matrix.Rows.OfType<MatrixRow>().Where(o => o.ToDo).ToList();
+          
 
             if (rows.Count == 0)
             {
-
-           
                 Interface.IReport.Msg(NOMATRIX_ERROR, NOMATRIX_TITLE, false);
                 return;
-
             }
             _resetProgress?.Invoke(0);
-
 
 
          bool connection =   CheckForInternetConnection();
@@ -71,7 +65,6 @@ namespace DB.Tools
 
             IsCalculating = true;
 
-
           
 
             EventHandler runWorker = delegate
@@ -85,13 +78,9 @@ namespace DB.Tools
                 MatrixRow m = rows.FirstOrDefault();
                 try
                 {
-
-                 
-
                     Action<int> report = x =>
                     {
                         _showProgress?.Invoke(null, EventArgs.Empty);
-
 
                         string msg = m.MatrixName + "\nProgress:\t" + x.ToString() + " %";
                         string title = "Finished with...";
@@ -115,11 +104,9 @@ namespace DB.Tools
 
                             _callBack?.Invoke(m, EventArgs.Empty);
 
-                           
-
                         };
 
-                    addToLoaders(ref m, report, callBack, start, Totalend, step, useList, force);
+                    addToLoaders(ref m, report, callBack, start, Totalend, step, useList);
 
                     Interface.IReport.Msg(m.MatrixName + " was selected", "Preparing...", true);
 
@@ -148,31 +135,36 @@ namespace DB.Tools
 
         }
 
+        /*
+
         private IList<MatrixRow> pickSelected(bool loop = true)
         {
             IList<MatrixRow> rows = null;
-            if (loop)
-            {
+        //    if (loop)
+          //  {
                 rows = Interface.IDB.Matrix.Rows.OfType<MatrixRow>().Where(o => o.ToDo).ToList();
-            }
-            else
-            {
-                rows = new List<MatrixRow>();
-                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
-                if (m!=null)      rows.Add(m);
-            }
+          //  }
+          //  else
+          //  {
+           //     rows = new List<MatrixRow>();
+          //      MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
+          //      if (m!=null)      rows.Add(m);
+          //  }
 
             return rows;
         }
+        */
 
-        private void addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool useList = true, bool force = true)
+        private void addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool useList = true)
         {
-          
-            
 
-                    bool goIn = checkMatrix(ref m, force);
 
-                    if (!goIn) throw new SystemException("The matrix has errors");
+
+            m.RowError = string.Empty;
+
+            bool goIn = (!m.HasErrors() && m.ToDo);
+
+            if (!goIn) throw new SystemException("The matrix has errors");
 
                     IList<Action> actions = generateActions(ref m, start, Totalend, step, useList);
 
@@ -188,13 +180,7 @@ namespace DB.Tools
             
         }
 
-        private bool checkMatrix(ref MatrixRow m, bool force)
-        {
-            m.RowError = string.Empty;
-         
-            bool goIn = (!m.HasErrors() && m.ToDo) || force;
-            return goIn;
-        }
+      
 
         private void updateLoaders( EventHandler runWorker,  int matrixID)
         {
@@ -203,14 +189,21 @@ namespace DB.Tools
                 {
                     loaders.Remove(matrixID);
                 }
-            if (loaders.Count == 0)
+            if (loaders.Count == 0 && IsCalculating)
             {
                 IsCalculating = false;
-              
-            }
-            else runWorker.Invoke(null, EventArgs.Empty);
 
-          //  CheckIfFinished();
+            }
+            else if (loaders.Count != 0)
+            {
+                if (IsCalculating)
+                {
+                    Interface.IReport.Msg(CALCULATING_MSG + loaders.Count, CALCULATING_TITLE, true);
+                }
+                runWorker.Invoke(null, EventArgs.Empty);
+            }
+
+    
 
         }
 
@@ -224,36 +217,77 @@ namespace DB.Tools
 
 
             MatrixRow m = matrix;
+         //   int numberOfFiles = 0;
             int numberOfFiles = 0;
 
+            double initialStart = start;
 
-            Action action = delegate
+                 //   numberOfFiles = 0;
+
+                    double delta, end;
+
+            string listOfenergies, compositions;
+
+            setValuesForQuery(m, ref start, ref totalEnd, step, useList, out delta, out end, out listOfenergies);
+
+           
+
+            string Response = string.Empty;
+            string tempFile = string.Empty;
+
+
+            //    MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
+            // int added = 0;
+            compositions = GetCompositionString(m.MatrixComposition);
+
+
+            while (end <= totalEnd)
+            {
+
+                if (!useList)
                 {
-                    numberOfFiles = makeFiles(ref m, start,totalEnd,step,useList);
-                    //log += "action1\n";
-                };
+                    int lines = GetNumberOfLines(step, start, end);
+                    listOfenergies = MakeEnergiesList(step, start, lines);
+                }
+                Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions);
+
+                start += delta;
+                end += delta;
+
+                numberOfFiles++;
+
+                ls.Add(action);
+
+            }
+
+
+
+            //  numberOfFiles = makeFiles(ref m, start,totalEnd,step,useList);
+            //log += "action1\n";
+            //  };
             Action action2 = delegate
             {
-                MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
-                while (numberOfFiles >= 0)
-                {
+                  MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
+                   while (numberOfFiles >= 0)
+                  {
                     getMUESFromNIST(m.MatrixDensity, _startupPath, ref mu, m.MatrixID, numberOfFiles);
                     numberOfFiles--;
-                }
-             
+                  }
 
-                Interface.IStore.SaveMUES(ref mu, ref m, SQL);
+                  Interface.IStore.SaveMUES(ref mu, ref m, SQL);
 
-             //   log += "action2\n";
+
+
+                //   log += "action2\n";
             };
             Action action3 = delegate
                 {
-                     makePic(ref m, start,totalEnd);
+                     makePic(ref m, initialStart, totalEnd);
 
                   //  log += "action3\n";
                 };
-             
-                ls.Add(action);
+
+          
             ls.Add(action3);
             ls.Add(action2);
 
@@ -264,8 +298,40 @@ namespace DB.Tools
             return ls;
         }
 
+        private Action setMainAction(int matrixID, int numberOfFiles, string listOfenergies, string compositions)
+        {
+            Action action = delegate
+            {
 
-       
+                try
+                {
+
+
+                    //  setValuesForQuery(m, ref start, ref totalEnd, step, useList, out delta, out end);
+
+                    string Response = string.Empty;
+                    string  tempFile = string.Empty;
+                    Response = QueryXCOM(compositions, listOfenergies);
+
+                    tempFile = _startupPath + matrixID + "." + numberOfFiles;
+                    File.WriteAllText(tempFile, Response);
+
+
+
+                }
+                catch (SystemException ex)
+                {
+
+                    Interface.IStore.AddException(ex);
+                }
+
+
+
+            };
+            return action;
+        }
+
+
 
         public bool SQL
         {
@@ -307,49 +373,44 @@ namespace DB.Tools
                 if (!calculating)
                 {
                     stopwatch.Stop();
-                    Interface.IBS.EnabledControls = true;
-                    log += stopwatch.Elapsed.TotalSeconds;
 
-                   
+                    Interface.IBS.EnabledControls = true;
+                      string log = string.Empty;
+
+
+                  decimal seconds = Decimal.Round(Convert.ToDecimal(stopwatch.Elapsed.TotalSeconds), 0);
+                    bool ok = true;
+                    string title = "Completed!";
+                    if (loaders.Count == 0) log = "Everything completed in ";
+                    else
+                    {
+                        foreach (ILoader item in loaders.Values)
+                        {
+                            item.CancelLoader();
+                        }
+                         ok  = false;
+                        loaders.Clear();
+                        title = "Cancelled!";
+                        log = "Computations cancelled after ";
+                    }
+                    log+=  seconds + " seconds";
+
+                    Interface.IReport.Msg(log, title, ok);
                 }
                 else
                 {
                     Interface.IBS.EnabledControls = false;
                     //      Interface.IBS.SuspendBindings();
                     loaders.Clear();
-                    log = string.Empty;
+             //       log = string.Empty;
                     stopwatch.Start();
                 }
             }
         }
 
-        public void CheckIfFinished()
-        {
-            //   Interface.IBS.ResumeBindings();
-            //check if cancelled
-            if (loaders.Count != 0)
-            {
+     
 
-             
-                Interface.IReport.Msg(CALCULATING_MSG+ loaders.Count, CALCULATING_TITLE, true);
-                //    IEnumerable<ILoader> lds = loaders.Values.OfType<ILoader>();
-                //   lds = lds.Where(o => !o.IsBusy);
-            }
-            else
-            {
-                Interface.IReport.Msg(log, DONE_TITLE, true);
-            }
-        }
-
-        public string Log
-        {
-            get
-            {
-                return log;
-            }
-
-           
-        }
+       
     }
 
     public partial class XCOM 
@@ -572,11 +633,13 @@ namespace DB.Tools
             return completo;
         }
 
-        private static void getMUESFromNIST(double density, string path, ref LINAA.MUESDataTable dt, int matrixID, int subsection)
+        private static int getMUESFromNIST(double density, string path, ref LINAA.MUESDataTable dt, int matrixID, int subsection)
         {
 
+            int added = 0;
+
             string tempFile = path + matrixID + "." + subsection;
-            if (!File.Exists(tempFile)) return;
+            if (!File.Exists(tempFile)) return added;
 
             StreamReader reader = new StreamReader(tempFile);
 
@@ -617,6 +680,7 @@ namespace DB.Tools
                     dt.RemoveMUESRow(destiny);
                 }
                 dt.AddMUESRow(r);
+                added++;
             }
 
             reader.Close();
@@ -624,9 +688,11 @@ namespace DB.Tools
             reader = null;
 
             File.Delete(tempFile);
+
+            return added;
             //photon cross sections in g/cm2 and energies in keV, photon * density = mu (linear attenuation)
         }
-
+       public static int maxEnergies = 75;
         private static void setMUESRow(double density, string[] temp, ref LINAA.MUESRow r)
         {
             if (temp.LongLength == 8)
@@ -704,86 +770,46 @@ namespace DB.Tools
             
         }
 
-        private int makeFiles(ref MatrixRow m, double start, double Totalend, double step, bool useList = false)
-        {
-            int i = 0;
+      
 
-          
+        private void setValuesForQuery(MatrixRow m, ref double start, ref double Totalend, double step, bool useList, out double delta, out double end, out string listOfenergies)
+        {
             int NrEnergies = GetNumberOfLines(step, start, Totalend);
             //maximum number of energies per query
-            int maxEnergies = 75;
+
+
+            delta = 0;
+            if (maxEnergies > NrEnergies)
+            {
+                delta = (NrEnergies * step);
+
+            }
+            else delta = (maxEnergies * step);
             //increment in energy
-         //   double delta = (maxEnergies * step);
-            double delta = (NrEnergies * step);
+            //   double delta = (maxEnergies * step);
+            //    delta = (maxEnergies * step);
             //end energy
-            double end = start + delta;
+            end = start + delta;
 
-            string listOfenergies = string.Empty;
-
-            string compositions = GetCompositionString(m.MatrixComposition);
-
-            // arr = Encoding.UTF8.GetBytes( DB.Properties.Resources.XCOM);
+            listOfenergies = string.Empty;
             if (useList)
             {
+                double factor = 1000;
                 byte[] arr = Interface.IPreferences.CurrentXCOMPref.ListOfEnergies;
                 listOfenergies = Encoding.UTF8.GetString(arr);
                 string[] energies = listOfenergies.Split('\n');
                 NrEnergies = energies.Count();
-                start = Convert.ToDouble(energies.First()) * 1000;
-                end = Convert.ToDouble(energies.Last()) * 1000;
+                start = Convert.ToDouble(energies.First()) * factor;
+                string lastEnergy = energies.Last();
+                if (NrEnergies > maxEnergies)
+                {
+                    lastEnergy = energies.ElementAt(maxEnergies - 1);
+                }
+                end = Convert.ToDouble(lastEnergy) * factor;
                 Totalend = end;
             }
-            string Response = string.Empty;
-            string tempFile = string.Empty;
+            // arr = Encoding.UTF8.GetBytes( DB.Properties.Resources.XCOM);
 
-            while (end <= Totalend)
-            {
-
-                try
-                {
-
-                    if (!useList)
-                    {
-                        int lines = GetNumberOfLines(step, start, end);
-                        listOfenergies = MakeEnergiesList(step, start, lines);
-                    }
-
-                    Response = string.Empty;
-                    Response = QueryXCOM(compositions, listOfenergies);
-
-                    tempFile = _startupPath + m.MatrixID + "." + i ;
-                    File.WriteAllText(tempFile, Response);
-
-              
-
-             //   string text = "Working on: " + m.MatrixName + "\n";
-              //  text += "Lines = " + NrEnergies + "\n";
-              //  text += "Start (keV) = " + start + "\t";
-               // text += "End (keV) = " + end + "\n";
-             //   string title = "Busy";
-            //    if (string.IsNullOrEmpty(Response))
-             //   {
-                 //   title = "FAILED CONNECTION\n";
-              //  }
-              //  Interface.IReport.Msg(text, title);
-
-                }
-                catch (SystemException ex)
-                {
-
-                    Interface.IStore.AddException(ex);
-                }
-
-                start += delta;
-                end += delta;
-
-                i++;
-            }
-
-          
-
-
-            return i;
         }
 
         private static string getPicTag(ref string Response)
