@@ -47,7 +47,15 @@ namespace DB.UI
             form.Populate(control);
             form.Text = title;
             form.Visible = show;
+
+
+         //   if (control.GetType().Equals(typeof(ucMatrix)))
+         //   {
+            //    ucMatrix ctrl = control as ucMatrix;
+            //    form.Load += ctrl.ParentForm_Load;
+          //  }
         }
+
 
         public static void CreateLIMS(ref Form _aboutbox)
         {

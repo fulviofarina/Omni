@@ -25,7 +25,7 @@ namespace DB.Tools
             PreferencesRow pref = CurrentPref;
             object[] args = new object[]
             {
-             pref.IsSQL
+             !pref.Offline
         };
 
             e.Args = args;

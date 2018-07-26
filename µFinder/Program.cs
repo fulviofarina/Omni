@@ -17,9 +17,14 @@ namespace µFinder
         private static void Main()
         {
 
+            string crashFile = "crash.txt";
+            bool offline = true;
+
+
+
             try
             {
-               
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
@@ -32,44 +37,46 @@ namespace µFinder
 
                 Creator.CheckDirectories();
                 Creator.PopulatePreferences();
-                LIMSUI.Interface.IPreferences.CurrentPref.Offline = true;
-           //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
-                //  bool ok = Creator.CheckConnections(true, true);
-                // if (ok) Creator.LoadMethods(0);
-                //  else throw new Exception("Could not start loading the database");
+                LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
+                //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+
                 UserControl control = LIMSUI.CreateUI(ControlNames.Matrices);
-              //  CreateMatrixApplication(out control, out refresher);
 
-                LIMSUI.CreateForm(Application.ProductName, ref control, false);
+                bool show = false;
+                LIMSUI.CreateForm(Application.ProductName, ref control, show);
                 Form toShow = control.ParentForm;
 
-          //      LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
-                LIMSUI.Interface.IPreferences.CurrentPref.Offline = true;
-
-              
-                //     Creator.PopulateBasic();
-                //      LIMS.Interface.IPreferences.CurrentPref.Offline = true;
-
-                //    LIMS.Interface.IPopulate.IGeometry.PopulateMatrix();
-                //    LIMS.CreateForm("µ-Finder", ref control, false);
-                //   ucSubSamples ucSubSamples = control as ucSubSamples;
-                //EventHandler firstCallBack;
-                //   Form toShow = LIMS.CreateSSFApplication();
-
-                //   Creator.Run();
-
-              //  PainterTimer();
+                LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
 
                 Application.Run(toShow);
+
+                readCrash(crashFile);
 
             }
             catch (Exception ex)
             {
-          
-                MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
+                writeCrash(crashFile, ex);
+
             }
 
+        }
+
+        private static void readCrash(string crashFile)
+        {
+            if (!System.IO.File.Exists(crashFile)) return;
+        
+                string error = System.IO.File.ReadAllText(crashFile);
+                string crashtitle = "The program just recovered from a crash";
+                MessageBox.Show(error, crashtitle, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                System.IO.File.Delete(crashFile);
+          
+        }
+
+        private static void writeCrash(string crashFile, Exception ex)
+        {
+            string error = "Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace;
+            System.IO.File.WriteAllText(crashFile, error);
         }
 
         public static void PainterTimer()

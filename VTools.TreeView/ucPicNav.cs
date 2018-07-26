@@ -91,10 +91,16 @@ namespace VTools
         }
 
 
-        string punto = ".";
+       private  string punto = ".";
+
+        public void HideList()
+        {
+            listView1.Visible = false;
+        }
         public void RefreshList(string baseFilename, string filter)
         {
 
+            listView1.Visible = true;
             listView1.Items.Clear();
             imageList1.Images.Clear();
         

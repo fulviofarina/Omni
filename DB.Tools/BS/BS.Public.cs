@@ -280,6 +280,16 @@ namespace DB.Tools
             }
         }
 
+        public void EndEditGeometries()
+        {
+            Matrix.EndEdit();
+            Geometry.EndEdit();
+            Compositions.EndEdit();
+            SelectedMatrix.EndEdit();
+            SelectedCompositions.EndEdit();
+            MUES.EndEdit();
+        }
+
         public BS()
         {
         }

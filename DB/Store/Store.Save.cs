@@ -187,7 +187,7 @@ namespace DB
              
            //     CleanPreferences();
                 CleanOthers();
-
+                AcceptChanges();
                 if (System.IO.File.Exists(LIMSPath))
                 {
                     System.IO.File.Copy(LIMSPath, LIMSDayPath, true);

@@ -24,17 +24,20 @@ namespace Rsx.DGV
     /// </summary>
     public class CalculableCell : DataGridViewTextBoxCell
     {
-        protected override void OnMouseClick(DataGridViewCellMouseEventArgs e)
+        protected override void OnMouseDoubleClick(DataGridViewCellMouseEventArgs e)
         {
-            ICalculableRow Icalc = GetICalculable();
+          //  if (this.OwningRow.Index < 0) return;
+
+            ICalculableRow Icalc = GetICalculable(e.RowIndex);
             if (Icalc != null)
             {
                 Icalc.ToDo = !Icalc.ToDo;
             
             }
-            base.DataGridView.NotifyCurrentCellDirty(true);
-            base.DataGridView.ClearSelection();
-            //  base.OnMouseDoubleClick(e);
+           
+             base.DataGridView.NotifyCurrentCellDirty(true);
+             base.DataGridView.ClearSelection();
+              base.OnMouseDoubleClick(e);
 
         }
 
@@ -54,26 +57,37 @@ namespace Rsx.DGV
         /// <param name="paintParts">         </param>
         protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
         {
+
+            //if (this.OwningRow.Index < 0) return;
+
             //changed is not used
             //but could be used
-            ICalculableRow Icalc = GetICalculable();
+            ICalculableRow Icalc = GetICalculable(rowIndex);
 
             bool? todo = Icalc?.ToDo;
             bool? isBusy = Icalc?.IsBusy;
             Color colr = getColor(todo, isBusy);
-            bool changed = hasChanged(ref cellStyle, ref colr);
+             bool changed = hasChanged(ref cellStyle, ref colr);
+
+        
 
             base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
+
+        //    base.DataGridView.NotifyCurrentCellDirty(true);
+          //  base.DataGridView.ClearSelection();
         }
 
         /// <summary>
         /// Gets the ICalculableRow Interface to the Row that this DGV cell is binded to
         /// </summary>
         /// <returns></returns>
-        public ICalculableRow GetICalculable()
+        public ICalculableRow GetICalculable(int rowIndex)
         {
             ICalculableRow Icalc = null;
-            DataRow u = ((this.OwningRow?.DataBoundItem as DataRowView)?.Row) as DataRow;
+            if (rowIndex < 0) return Icalc;
+            DataGridViewRow r = this.DataGridView.Rows[rowIndex];
+            DataRowView v = r?.DataBoundItem as DataRowView;
+            DataRow u = (v?.Row) as DataRow;
             if (!EC.IsNuDelDetch(u))
             {
                 Icalc = u as ICalculableRow;

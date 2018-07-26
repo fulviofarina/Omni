@@ -146,5 +146,27 @@ namespace DB
                 setRowHandlers(ref dt, activate);
             }
         }
+
+        public void CheckMatrixToDoes(bool offline)
+        {
+            foreach (MatrixRow item in this.tableMatrix)
+            {
+
+                if (offline)
+                {
+                    MatrixRow m = item;
+                    string tempfile = GetMUESFile(ref m);
+                    m.ToDo = !System.IO.File.Exists(tempfile);
+                }
+                else
+                {
+
+                    int? o = QTA.CheckMatrixInMUES(item.MatrixID);
+                    if (o != null) item.ToDo = false;
+                    else item.ToDo = true;
+
+                }
+            }
+        }
     }
 }

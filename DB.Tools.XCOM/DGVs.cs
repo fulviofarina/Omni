@@ -1,15 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using Rsx.DGV;
 using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Rsx.Dumb;
-using Rsx.DGV;
-using static DB.LINAA;
 
 namespace DB.UI
 {
-   
     /*
     public partial class SampleColumn : DataGridViewTextBoxColumn, ISampleColumn
     {
@@ -55,7 +48,7 @@ namespace DB.UI
     }
     */
 
-    public  class MUESColumn : BindableDGVColumn
+    public class MUESColumn : BindableDGVColumn
     {
         public MUESColumn()
             : base()
@@ -65,12 +58,12 @@ namespace DB.UI
             CellTemplate = new BindableDGVCell();
             CellTemplate.Style.Font = new Font(CellTemplate.Style.Font.Name, 12f, FontStyle.Regular);
 
-         
-      //   this.arrayOfBackColors = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.White };
-     //   this.arrayOfForeColors = new Color[] { Color.Yellow, Color.Black, Color.Black };
-
+            // this.arrayOfBackColors = new Color[] { Color.FromArgb(64, 64, 64), Color.White,
+            // Color.White }; this.arrayOfForeColors = new Color[] { Color.Yellow, Color.Black,
+            // Color.Black };
+        }
     }
-}
+
     /*
     public  class UnitBoolColumn : DataGridViewTextBoxColumn
     {
@@ -129,8 +122,6 @@ namespace DB.UI
         }
     }
 
-
-  
     public  class UnitSSFColumn : DataGridViewTextBoxColumn, IUnitSSFColumn
     {
         public UnitSSFColumn() : base()
@@ -172,13 +163,11 @@ namespace DB.UI
 
         public void SetEnable()
         {
-         
                 if (!string.IsNullOrEmpty(BindingPreferenceField))
                 {
                     bool enable = (bool)bindingRow?.Field<bool>(BindingPreferenceField);
                     this.ReadOnly = !enable;
                 }
-           
         }
 
         public void PaintHeader()
@@ -382,5 +371,4 @@ namespace DB.UI
     }
 
 */
-
 }

@@ -93,5 +93,6 @@ namespace DB
         LINAA.XCOMPrefDataTable XCOMPref { get; }
 
         void AcceptChanges();
+        void CheckMatrixToDoes(bool offline);
     }
 }

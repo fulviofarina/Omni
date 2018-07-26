@@ -49,6 +49,9 @@ namespace DB
 
                 this.Merge(dt);
 
+              
+
+                this.AcceptChanges();
                 //    DataSet set = Interface.Get();
                 //clear and repopulate
 

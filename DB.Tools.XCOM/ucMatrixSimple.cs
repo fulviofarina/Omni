@@ -30,6 +30,7 @@ namespace DB.UI
         public void Set(ref Interface LinaaInterface, bool selected = false)
         {
             Interface = LinaaInterface;
+       //     matrixDGV.SuspendLayout();
             matrixDGV.DataSource = null;
             this.MatrixBN.BindingSource = null;
 
@@ -45,7 +46,12 @@ namespace DB.UI
 
             this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
+            ChangeCompositionView();
 
+            this.matrixDGV.Refresh();
+
+      //      matrixDGV.ResumeLayout();
+            //   RefreshDGV();
         }
 
         private void setBindings(bool selected)
@@ -70,7 +76,18 @@ namespace DB.UI
             string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
             Binding mlabel = Rsx.Dumb.BS.ABinding(ref bs, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
+
+
+            if (bs.Count != 0)
+            {
+                bs.Position = 1;
+                bs.Position = 0;
+            }
         }
+
+     
+
+      
 
         public ucMatrixSimple()
         {
@@ -86,8 +103,10 @@ namespace DB.UI
                 ChangeCompositionView();
             };
 
-
+           
         }
+
+     
 
         public void ChangeCompositionView()
         {
@@ -104,7 +123,17 @@ namespace DB.UI
 
         public void RefreshDGV()
         {
+      //      matrixDGV.InvalidateColumn(this.ToDo.Index);
+          
+      //      matrixDGV.Invalidate(true);
+            matrixDGV.Refresh();
+        //    matrixDGV.PerformLayout();
+
+            matrixDGV.SelectAll();
             matrixDGV.ClearSelection();
+            matrixDGV.PerformLayout();
+
+          //  matrixDGV.Invalidate();
         }
     }
 }

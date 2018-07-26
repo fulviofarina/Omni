@@ -275,16 +275,17 @@
             // 
             this.elementDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
-            this.elementDataGridViewTextBoxColumn.HeaderText = "Element or Formula";
+            this.elementDataGridViewTextBoxColumn.HeaderText = "Formula";
             this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
+            this.elementDataGridViewTextBoxColumn.ToolTipText = "Elemental or compound formula";
             // 
             // quantityDataGridViewTextBoxColumn
             // 
             this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Percent";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             this.quantityDataGridViewTextBoxColumn.ToolTipText = "in %";
-            this.quantityDataGridViewTextBoxColumn.Width = 95;
+            this.quantityDataGridViewTextBoxColumn.Width = 88;
             // 
             // uncDataGridViewTextBoxColumn
             // 

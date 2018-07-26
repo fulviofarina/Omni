@@ -252,32 +252,36 @@ namespace DB.UI
     
         public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
         {
-            ucMatrix mat = new ucMatrix();
-           
-            mat.Set(ref Interface);
-
+          
+        
          
 
             //ESTE ORDEN ES FUNDAMENTAL!!!
             Interface.IBS.ApplyFilters();
             Interface.IBS.StartBinding();
 
-            control = (UserControl)mat;
 
-            Refresher refre = delegate
+
+            refresher = delegate
             {
                 Interface.IBS.ShowErrors = false;
                 bool offline = Interface.IPreferences.CurrentPref.Offline;
                 if (offline)
                 {
                     Creator.LoadFromFile();
-                    //   Interface.IPopulate.INuclear.CleanSigmas();
-                    Creator.PopulatePreferences();
                     Interface.IDB.MUES.Clear();
+                    Interface.IDB.Preferences.Clear();
+                    Creator.PopulatePreferences();
+               //     Interface.IPreferences.CurrentPref.IsSQL = offline;
                     Interface.IDB.AcceptChanges();
-               
+
+                    Interface.IDB.CheckMatrixToDoes(offline);
+
                 }
                 else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
+
+           
+
                 Interface.IBS.ShowErrors = true;
 
                 //y esto? quitar?
@@ -285,8 +289,12 @@ namespace DB.UI
 
             };
 
-            refre.Invoke();
+            refresher.Invoke();
              Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded",true);
+
+            ucMatrix mat = new ucMatrix();
+            mat.Set(ref Interface);
+            control = (UserControl)mat;
 
 
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
@@ -296,18 +304,20 @@ namespace DB.UI
                 GetPreferences<IXCOMPreferences>(true);
             };
 
-         
-            mat.Set(ref prefes);
+
             mat.Set(ref options);
+            mat.Set(ref prefes);
+            mat.SetXCOM();
+         
+        
 
             IPop msn = Interface.IReport.Msn;
             UserControl ctrl = msn as UserControl;
             mat.Set(ref ctrl);
             msn.ParentForm?.Dispose();
-
           
 
-            refresher = refre;
+           
         }
 
      

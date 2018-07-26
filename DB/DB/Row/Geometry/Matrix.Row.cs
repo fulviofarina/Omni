@@ -82,6 +82,9 @@ namespace DB
                 if (col == this.tableMatrix.ToDoColumn)
                 {
                     if (nulo) ToDo = true;
+
+                   
+                 //   if (this.GetMUESRows().Count() == 0) ToDo = true;
                 }
                 else if (col == this.tableMatrix.MatrixDensityColumn)
                 {
@@ -104,6 +107,9 @@ namespace DB
                     }
                 }
             }
+
+          
+
             private bool compositionRenew = false; // { get; set; }
             private bool densityRenew = false; // { get; set; }
             public void Checking(DataColumn col, object propo, object val)

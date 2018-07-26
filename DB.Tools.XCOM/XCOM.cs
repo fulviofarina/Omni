@@ -15,57 +15,51 @@ namespace DB.Tools
 {
     public partial class XCOM : CalculateBase
     {
+        private decimal seconds = 0;
 
-       private Stopwatch stopwatch;
-       
-   
+        private bool calculating = false;
+        private Stopwatch stopwatch;
+        XCOMPrefRow pref;
+        IList<MatrixRow> rows;
+        Action<string, string, bool, bool> reporter;
+        Action<Exception> exceptionAdder;
+        bool offline = false;
 
         public void Calculate(bool? BKG)
         {
 
-            Interface.IBS.Matrix.EndEdit();
-            Interface.IBS.Compositions.EndEdit();
-            Interface.IBS.SelectedMatrix.EndEdit();
-            Interface.IBS.SelectedCompositions.EndEdit();
-            Interface.IBS.MUES.EndEdit();
-
-
-            XCOMPrefRow pref;
-            pref = Interface.IPreferences.CurrentXCOMPref;
+        
             double start = pref.StartEnergy;
             double Totalend = pref.EndEnergy;
             double step = pref.Steps;
             bool useList = pref.UseList;
-      
-
-            IList<MatrixRow> rows;
-            rows = Interface.IDB.Matrix.Rows.OfType<MatrixRow>().Where(o => o.ToDo).ToList();
-          
+           
+            listOfEnergiesBytes = pref.ListOfEnergies;
 
             if (rows.Count == 0)
             {
-                Interface.IReport.Msg(NOMATRIX_ERROR, NOMATRIX_TITLE, false);
+                reporter(NOMATRIX_ERROR, NOMATRIX_TITLE, false,false);
                 return;
             }
+
             _resetProgress?.Invoke(0);
 
+            reporter("A total of " + rows.Count + " matrices were selected", "Checking...", true,false);
 
-         bool connection =   CheckForInternetConnection();
+            bool connection =   CheckForInternetConnection();
 
 
             if (!connection)
             {
-                Interface.IReport.Msg(NOINTERNET_ERROR, NOINTERNET_TITLE, false);
+                reporter(NOINTERNET_ERROR, NOINTERNET_TITLE, false,false);
                 return;
             }
             else
             {
-                Interface.IReport.Msg(INTERNET_MSG, INTERNET_TITLE, false);
+                reporter(INTERNET_MSG, INTERNET_TITLE, false,false);
             }
 
             IsCalculating = true;
-
-          
 
             EventHandler runWorker = delegate
             {
@@ -75,109 +69,104 @@ namespace DB.Tools
 
             while (rows.Count != 0)
             {
+
+                int actionCount = 0;
+
                 MatrixRow m = rows.FirstOrDefault();
+
+                string msg = m.MatrixName + " was ";
+                bool ok = true;
+                string title = "Preparing...";
+             
                 try
                 {
-                    Action<int> report = x =>
+
+                    Action<int> report = progress =>
                     {
                         _showProgress?.Invoke(null, EventArgs.Empty);
-
-                        string msg = m.MatrixName + "\nProgress:\t" + x.ToString() + " %";
-                        string title = "Finished with...";
-                        if (x != 100)
-                        {
-                            title = "Working on...";
-                        }
-                        else
+                        bool finito = reportProgress(progress, m.MatrixName);
+                        if (finito)
                         {
                             m.IsBusy = false;
+                            m.MatrixDate = DateTime.Now;
                         }
-
-                        Interface.IReport.Msg(msg, title, true);
-
                     };
 
                     Action callBack =
                         delegate
                         {
                             updateLoaders(runWorker, m.MatrixID);
-
                             _callBack?.Invoke(m, EventArgs.Empty);
 
                         };
 
-                    addToLoaders(ref m, report, callBack, start, Totalend, step, useList);
-
-                    Interface.IReport.Msg(m.MatrixName + " was selected", "Preparing...", true);
-
+                      actionCount +=  addToLoaders(ref m, report, callBack, start, Totalend, step, useList);
 
                 }
                 catch (SystemException ex)
                 {
-                    Interface.IReport.Msg(m.MatrixName + " was not selected", "Failed!", false);
-
-                    Interface.IStore.AddException(ex);
+                    exceptionAdder(ex);
+                    ok = false;
+                    msg += "not ";
+                    title = "Failed!";
                 }
 
+                msg += "selected";
+
+                reporter(msg, title, ok, false);
 
                 rows.Remove(m);
+
+                _resetProgress?.Invoke(actionCount);
+
+
             }
 
 
-            Interface.IReport.Msg("A total of " + loaders.Count + " where selected", "Starting...", true);
+            reporter("A total of " + loaders.Count + " matrices were prepared", "Starting...", true,false);
 
 
             runWorker.Invoke(null, EventArgs.Empty);
             runWorker.Invoke(null, EventArgs.Empty);
             runWorker.Invoke(null, EventArgs.Empty);
 
-            //   Application.DoEvents();
+         
 
         }
 
-        /*
-
-        private IList<MatrixRow> pickSelected(bool loop = true)
+        private bool reportProgress(int x, string matrixName)
         {
-            IList<MatrixRow> rows = null;
-        //    if (loop)
-          //  {
-                rows = Interface.IDB.Matrix.Rows.OfType<MatrixRow>().Where(o => o.ToDo).ToList();
-          //  }
-          //  else
-          //  {
-           //     rows = new List<MatrixRow>();
-          //      MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
-          //      if (m!=null)      rows.Add(m);
-          //  }
-
-            return rows;
+            string msg = matrixName + "\nProgress:\t" + x.ToString() + " %\n";
+            string title = "Finished with...";
+            bool finito = (x == 100);
+            if (!finito)
+            {
+                title = "Working on...";
+            }
+            reporter(msg, title, true, false);
+            return finito;
         }
-        */
 
-        private void addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool useList = true)
+
+        private int addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool useList = true)
         {
-
 
 
             m.RowError = string.Empty;
-
             bool goIn = (!m.HasErrors() && m.ToDo);
 
             if (!goIn) throw new SystemException("The matrix has errors");
 
-                    IList<Action> actions = generateActions(ref m, start, Totalend, step, useList);
+                    IList<Action> actions = generateActions(ref m, start, Totalend, step, offline, useList);
 
                     if (actions.Count == 0) throw new SystemException("The Actions list for the Matrix is empty");
-
-                    _resetProgress?.Invoke(actions.Count);
 
                     ILoader ld = new Loader();
                     ld.Set(actions, callBack, report);
                     loaders.Add(m.MatrixID, ld);
 
-             
-            
+            return actions.Count;
+
         }
 
       
@@ -198,51 +187,38 @@ namespace DB.Tools
             {
                 if (IsCalculating)
                 {
-                    Interface.IReport.Msg(CALCULATING_MSG + loaders.Count, CALCULATING_TITLE, true);
+                    reporter(CALCULATING_MSG + loaders.Count, CALCULATING_TITLE, true,false);
                 }
                 runWorker.Invoke(null, EventArgs.Empty);
             }
-
     
 
         }
 
     
 
-        public IList<Action> generateActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool useList =false)
+        public IList<Action> generateActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool offline, bool useList =false)
         {
             //finds the MUEs for each 1keV, given start and Totalend energies, by NrEnergies (keV) steps.
-          
+
             List<Action> ls = new List<Action>();
 
 
             MatrixRow m = matrix;
-         //   int numberOfFiles = 0;
-            int numberOfFiles = 0;
 
+            int numberOfFiles = 0;
             double initialStart = start;
 
-                 //   numberOfFiles = 0;
-
-                    double delta, end;
+            double delta, end;
 
             string listOfenergies, compositions;
 
 
 
-
-
             setValuesForQuery(m, ref start, ref totalEnd, step, useList, out delta, out end, out listOfenergies);
 
-           
-
-         
-
-            //    MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
-            // int added = 0;
             compositions = GetCompositionString(m.MatrixComposition);
 
-        
             while (end <= totalEnd)
             {
 
@@ -263,50 +239,33 @@ namespace DB.Tools
 
             }
 
+            numberOfFiles--;
 
-
-            //  numberOfFiles = makeFiles(ref m, start,totalEnd,step,useList);
-            //log += "action1\n";
-            //  };
             Action action2 = delegate
             {
-                  MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, SQL);
-                   while (numberOfFiles >= 0)
-                  {
+                MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, !offline);
+                while (numberOfFiles >= 0)
+                {
                     getMUESFromNIST(m.MatrixDensity, _startupPath, ref mu, m.MatrixID, numberOfFiles);
                     numberOfFiles--;
-                  }
-
-                  Interface.IStore.SaveMUES(ref mu, ref m, SQL);
-
-
-
-                //   log += "action2\n";
+                }
+                Interface.IStore.SaveMUES(ref mu, ref m, !offline);
             };
+
             Action action3 = delegate
             {
                 double max = 1e7;
 
                 double min = 1;
                 string labelName = m.MatrixName + ": " + min.ToString() + " to " + (max).ToString() + " keV";
-
                 listOfenergies = MakeEnergiesList(max - min, min, 2);
 
-             //   string labelName = m.MatrixName + " " + initialStart + " to " + totalEnd + " keV";
-
-              //  listOfenergies = MakeEnergiesList(totalEnd - initialStart, initialStart, 2);
-
-
                 string Response = QueryXCOM(compositions, listOfenergies, labelName, true);
-
                 if (string.IsNullOrEmpty(Response)) return;
 
                 string tempFile = _startupPath + m.MatrixID + ".FULL RANGE" + PictureExtension;
-
                 getPicture(ref Response, tempFile);
 
-
-                //  log += "action3\n";
             };
 
 
@@ -315,10 +274,11 @@ namespace DB.Tools
 
             m.IsBusy = true;
 
-        
 
             return ls;
         }
+
+    
 
         private void getPicture(ref string Response, string tempFile)
         {
@@ -340,31 +300,22 @@ namespace DB.Tools
 
                 try
                 {
-
-
-                    //  setValuesForQuery(m, ref start, ref totalEnd, step, useList, out delta, out end);
-
                     string Response = string.Empty;
                     string  tempFile = string.Empty;
                    
                     Response = QueryXCOM(compositions, listOfenergies,labelName,false);
-
-                    tempFile = _startupPath + matrixID + ".N"+ numberOfFiles + ".";
+                    tempFile = _startupPath + matrixID + punto +"N" + numberOfFiles + punto;
                     File.WriteAllText(tempFile , Response);
 
-                    //      tempFile += XCOM.PictureExtension;
                     Response = QueryXCOM(compositions, listOfenergies, labelName, true);
-
-
                     getPicture(ref Response, tempFile +start.ToString()+" - "+end.ToString()+ PictureExtension);
-
 
 
                 }
                 catch (SystemException ex)
                 {
 
-                    Interface.IStore.AddException(ex);
+                    exceptionAdder(ex);
                 }
 
 
@@ -400,7 +351,7 @@ namespace DB.Tools
             Interface = inter;
         }
 
-        private bool calculating = false;
+    
 
         public new bool IsCalculating
         {
@@ -414,47 +365,111 @@ namespace DB.Tools
 
                 if (!calculating)
                 {
-                    stopwatch.Stop();
-
-                    Interface.IBS.EnabledControls = true;
-                      string log = string.Empty;
-
-
-                  decimal seconds = Decimal.Round(Convert.ToDecimal(stopwatch.Elapsed.TotalSeconds), 0);
-                    bool ok = true;
-                    string title = "Completed!";
-                    if (loaders.Count == 0) log = "Everything completed in ";
-                    else
-                    {
-                        foreach (ILoader item in loaders.Values)
-                        {
-                            item.CancelLoader();
-                        }
-                         ok  = false;
-                        loaders.Clear();
-                        title = "Cancelled!";
-                        log = "Computations cancelled after ";
-                    }
-                    log+=  seconds + " seconds";
-
-                    Interface.IReport.Msg(log, title, ok);
+                 
+                    CheckCompletedOrCancelled();
                 }
                 else
                 {
-                    Interface.IBS.EnabledControls = false;
-                    //      Interface.IBS.SuspendBindings();
                     loaders.Clear();
-             //       log = string.Empty;
                     stopwatch.Start();
+                    seconds = 0;
                 }
             }
         }
 
-      
+     
+        public void CheckCompletedOrCancelled()
+        {
+            if (stopwatch.IsRunning)
+            {
+                stopwatch.Stop();
+                seconds = Decimal.Round(Convert.ToDecimal(stopwatch.Elapsed.TotalSeconds), 0);
+            }
+            string log = string.Empty;
+            bool ok = true;
+            string title = "Completed!";
+            if (loaders.Count == 0)
+            {
+                log = "Everything completed in ";
+            }
+            else
+            {
+                foreach (ILoader item in loaders.Values)
+                {
+                    item.CancelLoader();
+                }
+                ok = false;
+                loaders.Clear();
+                title = "Cancelled!";
+                log = "Computations cancelled after ";
+            }
+            log += seconds + " seconds";
+
+            reporter(log, title, ok, false);
+        }
+
+        public Action<string, string, bool, bool> Reporter
+        {
+           
+
+            set
+            {
+                reporter = value;
+            }
+        }
+
+        public XCOMPrefRow Preferences
+        {
+            set
+            {
+                pref = value;
+            }
+        }
+
+        public IList<MatrixRow> Rows
+        {
+            get
+            {
+                return rows;
+            }
+
+            set
+            {
+                rows = value;
+            }
+        }
+
+        public Action<Exception> ExceptionAdder
+        {
+            get
+            {
+                return exceptionAdder;
+            }
+
+            set
+            {
+                exceptionAdder = value;
+            }
+        }
+
+        public bool Offline
+        {
+            get
+            {
+                return offline;
+            }
+
+            set
+            {
+                offline = value;
+            }
+        }
     }
 
     public partial class XCOM 
     {
+        public static int maxEnergies = 75;
+        protected static string punto = ".";
 
         public static string PictureExtension = ".png";
         //  protected static ASCIIEncoding encoding = new ASCIIEncoding();
@@ -674,13 +689,13 @@ namespace DB.Tools
             request = null;
             return completo;
         }
-
-        private static int getMUESFromNIST(double density, string path, ref LINAA.MUESDataTable dt, int matrixID, int subsection)
+  
+        private static int getMUESFromNIST(double density, string path, ref MUESDataTable dt, int matrixID, int subsection)
         {
 
             int added = 0;
 
-            string tempFile = path + matrixID + "N." + subsection;
+            string tempFile = path + matrixID + punto + "N" + subsection+ punto;
             if (!File.Exists(tempFile)) return added;
 
             StreamReader reader = new StreamReader(tempFile);
@@ -735,8 +750,28 @@ namespace DB.Tools
             return added;
             //photon cross sections in g/cm2 and energies in keV, photon * density = mu (linear attenuation)
         }
-       public static int maxEnergies = 75;
-        private static void setMUESRow(double density, string[] temp, ref LINAA.MUESRow r)
+     
+
+        private static string getPicTag(ref string Response)
+        {
+            string aux = string.Empty;
+            string[] split = Response.Split('\n');
+            for (int j = 0; j < split.Length; j++)
+            {
+                aux = split[j];
+                if (aux.Contains("<td><img src="))
+                {
+                    aux = aux.Split('.').First();
+                    aux = aux.Split('_').Last();
+                    break;
+                }
+
+            }
+
+            return aux;
+        }
+
+        private static void setMUESRow(double density, string[] temp, ref MUESRow r)
         {
             if (temp.LongLength == 8)
             {
@@ -775,10 +810,10 @@ namespace DB.Tools
         private Hashtable loaders = new Hashtable();
 
         protected internal Interface Interface;
-     //   private string png = ".png";
-       
-      
-      
+        //   private string png = ".png";
+
+
+        byte[] listOfEnergiesBytes=null;
 
         private void setValuesForQuery(MatrixRow m, ref double start, ref double Totalend, double step, bool useList, out double delta, out double end, out string listOfenergies)
         {
@@ -803,8 +838,8 @@ namespace DB.Tools
             if (useList)
             {
                 double factor = 1000;
-                byte[] arr = Interface.IPreferences.CurrentXCOMPref.ListOfEnergies;
-                listOfenergies = Encoding.UTF8.GetString(arr);
+             
+                listOfenergies = Encoding.UTF8.GetString(listOfEnergiesBytes);
                 string[] energies = listOfenergies.Split('\n');
                 NrEnergies = energies.Count();
                 start = Convert.ToDouble(energies.First()) * factor;
@@ -820,24 +855,7 @@ namespace DB.Tools
 
         }
 
-        private static string getPicTag(ref string Response)
-        {
-            string aux = string.Empty;
-            string[] split = Response.Split('\n');
-            for (int j = 0; j < split.Length; j++)
-            {
-                aux = split[j];
-                if (aux.Contains("<td><img src="))
-                {
-                    aux = aux.Split('.').First();
-                    aux = aux.Split('_').Last();
-                    break;
-                }
-
-            }
-
-            return aux;
-        }
+     
 
 
     }

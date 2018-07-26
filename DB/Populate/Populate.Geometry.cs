@@ -244,6 +244,8 @@ namespace DB
                     tAM.MatrixTableAdapter.Fill(m);
           
                 this.tableMatrix.Merge(m, false, System.Data.MissingSchemaAction.AddWithKey);
+
+                CheckMatrixToDoes(false);
                 // this.tableMatrix.EndLoadData(); Save(ref this.tableMatrix); this.tableMatrix.AcceptChanges();
             }
             catch (SystemException ex)
@@ -310,9 +312,7 @@ namespace DB
             }
             else
             {
-                //   if (m.IsXCOMTableNull()) return mu;
-                //     byte[] arr = m.XCOMTable;
-                //   string tempfile = ASCIIEncoding.ASCII.GetString(arr);
+              
                 string tempfile = GetMUESFile(ref m);
                 if (!System.IO.File.Exists(tempfile)) return mu;
 

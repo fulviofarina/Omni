@@ -8,6 +8,7 @@ using DB.Tools;
 using Rsx.Dumb;
 using VTools;
 using static DB.LINAA;
+using System.Linq;
 
 namespace DB.UI
 {
@@ -38,20 +39,20 @@ namespace DB.UI
 
         string path = string.Empty;
 
-        public void Set(ref IOptions options)
+
+        IOptions op = null;
+
+        public void SetXCOM()
         {
-            resetProgress = options.ResetProgress;
-          //  resetProgress(0);
-            showProg = options.ShowProgress;
-
-          
-
-             path = Interface.IStore.FolderPath + Resources.XCOMFolder;
+            path = Interface.IStore.FolderPath + Resources.XCOMFolder;
 
             XCom = new XCOM();
+        
             XCom.Set(path, callmeBack, resetProgress, showProg);
+            XCom.Reporter = Interface.IReport.Msg;
+            XCom.ExceptionAdder =Interface.IStore.AddException;
+            XCom.Preferences = Interface.IPreferences.CurrentXCOMPref;
             XCom.Set(ref Interface);
-
 
             ucPicNav1.Set(path, "*", XCOM.PictureExtension);
 
@@ -59,12 +60,11 @@ namespace DB.UI
             {
                 XCom.IsCalculating = false;
                 ucCalculate1.EnableCalculate = true;
-            
+
             };
             ucCalculate1.CalculateMethod += delegate
             {
 
-              //  Application.DoEvents();
 
                 this.Validate();
 
@@ -73,80 +73,63 @@ namespace DB.UI
                 ucCalculate1.EnableCalculate = false;
 
                 //    ucMatrixSimple1.ChangeCompositionView();
-               // ucMUES1.Focus(false);
+                // ucMUES1.Focus(false);
 
                 Application.DoEvents();
 
+                Interface.IBS.EndEditGeometries();
+
+                ucPicNav1.HideList();
+
+                XCom.Offline = Interface.IPreferences.CurrentPref.Offline;
+                XCom.Rows = Interface.IDB.Matrix.Where(o => o.ToDo).ToList();
                 XCom.Calculate(null);
 
-
-                this.ucMatrixSimple1.RefreshDGV();
+                Interface.IBS.EnabledControls = !XCom.IsCalculating;
 
                 Application.DoEvents();
 
                 ucCalculate1.EnableCalculate = !XCom.IsCalculating;
 
-             //   this.ucMatrixSimple1.ChangeCompositionView();
-
+                //   this.ucMatrixSimple1.ChangeCompositionView();
 
             };
 
+            ucMatrixSimple1.Set(ref Interface);
 
-
-
-            DBTLP.Controls.Add(options as UserControl);
-        
         }
 
-     
-
+        public void Set(ref IOptions options)
+        {
+            op = options;
+            resetProgress = options.ResetProgress;
+            showProg = options.ShowProgress;
+            DBTLP.Controls.Add(options as UserControl);
+        }
         public void Set(ref UserControl ctrl)
         {
             this.SuspendLayout();
             ctrl.Dock = DockStyle.Fill;
             DBTLP.Controls.Add(ctrl as UserControl);
-
-
-           
-
-
             this.ResumeLayout(true);
         }
         public void Set(ref Interface inter)
         {
-            this.SuspendLayout();
-
             Interface = inter;
-
-        
-          
-
-         //   ucMUES1.Set(ref inter, ref preferences);
-
-            this.ResumeLayout(true);
-
         }
         public void Set(ref IXCOMPreferences preferences)
         {
             this.SuspendLayout();
 
-            ucMatrixSimple1.Set(ref Interface);
-
             ucMUES1.Set(ref Interface, ref preferences);
 
             Interface.IBS.Matrix.CurrentChanged += delegate
             {
-                MatrixRow m = (Interface.ICurrent.Matrix as MatrixRow);
-                //     ucMUES1.PrintDGV(XCom.StartupPath + m.MatrixID + "2.xml");
+                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
                 if (m != null)
                 {
-
                     ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
-
-                //    showInBrowser(m.MatrixID);
-               
                 }
-                //    callmeBack(m, EventArgs.Empty);
 
             };
 
@@ -180,9 +163,6 @@ namespace DB.UI
             Application.DoEvents();
         }
 
-      
-
-   
 
         private void callmeBack(object sender, EventArgs e)
         {
@@ -191,24 +171,35 @@ namespace DB.UI
 
             if (m == null) return;
 
-       
-               if (!XCom.IsCalculating)
-             {
+            if (!XCom.IsCalculating)
+            {
+                Interface.IBS.EnabledControls = !XCom.IsCalculating;
+
                 Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
 
-                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
+                ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+
+                XCom.CheckCompletedOrCancelled();
+
+               
+                if (Interface.IPreferences.CurrentPref.Offline)
+                {
+                    Interface.IStore.SaveLocalCopy();
+                }
+                else
+                {
+                    IEnumerable< DataTable> tables = new DataTable[] { Interface.IDB.Matrix, Interface.IDB.Compositions };
+                    Interface.IStore.SaveRemote(ref tables);
+                }
+
                 ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
 
-                ucMUES1.MakeFile(m.MatrixID.ToString(), path);
-              
+                ucCalculate1.EnableCalculate = !XCom.IsCalculating;
+
             }
-
-            ucMatrixSimple1.RefreshDGV();
-
-         //   XCom.CheckIfFinished();
+   
         }
 
-      
 
         private void ucLinaaMatrix_Load(object sender, EventArgs e)
         {
@@ -216,17 +207,15 @@ namespace DB.UI
             {
                 splitContainer1.Panel2Collapsed = true;
             }
-
-            this.ucMatrixSimple1.RefreshDGV();
-
         }
 
         public ucMatrix()
         {
             InitializeComponent();
 
-            this.Load += this.ucLinaaMatrix_Load;
+           this.Load += this.ucLinaaMatrix_Load;
         }
+
 
         // private ToolStripLabel label = new ToolStripLabel();
 
