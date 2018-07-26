@@ -94,16 +94,23 @@ namespace DB.UI
 
             if (control == null)
             {
-            
+
                 string txt = CRITICAL_FAILURETXT + controlHeader;
                 Interface.IReport.Msg(CRITICAL_FAILURE, txt, false);
                 throw new Exception(CRITICAL_FAILURE + "\n" + txt);
-            
+
             }
             Creator.UserControls.Add(control);
 
             if (noDGVControl) return control;
 
+            createDGVHandler(controlHeader, ref control, ref refresher, ref loader, ref postRefresh, ref rowPostpainter, ref rowPrepainter, ref cellpainter, ref shouldpaintCell, ref shouldpostpaintRow, ref shouldprepaintRow,  ref addedRow, ref deleteRow, ref preRefresh);
+
+            return control;
+        }
+
+        private static void createDGVHandler(string controlHeader, ref UserControl control, ref Refresher refresher, ref Rsx.DGV.Control.Loader loader, ref EventHandler postRefresh, ref DataGridViewRowPostPaintEventHandler rowPostpainter, ref DataGridViewRowPrePaintEventHandler rowPrepainter, ref DataGridViewCellPaintingEventHandler cellpainter, ref CellPaintChecker shouldpaintCell, ref RowPostPaintChecker shouldpostpaintRow, ref RowPrePaintChecker shouldprepaintRow, ref AdderEraser addedRow, ref AdderEraser deleteRow, ref EventHandler preRefresh)
+        {
             //create the DGV controller... and
             //set methods...
             Rsx.DGV.Control cv = new Rsx.DGV.Control(refresher, Interface.IReport.Msg, ref IFind);
@@ -138,8 +145,6 @@ namespace DB.UI
 
             control.Tag = cv;   //sets the CV as a TAG for the control
             cv.UsrControl = control; //set the control as a tag for the CV
-
-            return control;
         }
 
         public static void Explore()

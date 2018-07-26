@@ -21,7 +21,7 @@ namespace µFinder
             bool offline = true;
 
 
-
+         crashFile =    Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\" +crashFile;
             try
             {
 
@@ -41,15 +41,17 @@ namespace µFinder
                 LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
                 //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
-                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices);
+                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, null,true);
 
                 bool show = false;
                 LIMSUI.CreateForm(Application.ProductName, ref control, show);
                 Form toShow = control.ParentForm;
 
-                LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
+          //      LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
 
                 Application.Run(toShow);
+
+               
 
                 readCrash(crashFile);
 

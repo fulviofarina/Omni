@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-
-using DB.Tools;
+﻿using DB.Tools;
 using Rsx.Dumb;
+using System.Windows.Forms;
+using System;
 
 namespace DB.UI
 {
@@ -17,7 +16,6 @@ namespace DB.UI
         /// </summary>
         public DataGridViewCellMouseEventHandler RowHeaderMouseClick
         {
-            ///FIRST TIME AND ONLY
             set
             {
                 this.ToDo.Visible = false;
@@ -27,31 +25,30 @@ namespace DB.UI
             }
         }
 
-        public void Set(ref Interface LinaaInterface, bool selected = false)
+        public void Set(ref Interface inter, bool selected = false)
         {
-            Interface = LinaaInterface;
-       //     matrixDGV.SuspendLayout();
-            matrixDGV.DataSource = null;
-            this.MatrixBN.BindingSource = null;
+            Interface = inter;
 
-            Dumb.FD(ref this.lINAA);
-            Dumb.FD(ref this.MatrixBS);
+            destroy();
 
             setBindings(selected);
 
             ucComposition1.Set(ref Interface, selected);
 
-
-            //    this.matrixDGV.DataError += MatrixDGV_DataError;
+            changeCompositionView();
 
             this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-
-            ChangeCompositionView();
-
             this.matrixDGV.Refresh();
 
-      //      matrixDGV.ResumeLayout();
-            //   RefreshDGV();
+
+        }
+
+        private void destroy()
+        {
+            matrixDGV.DataSource = null;
+            this.MatrixBN.BindingSource = null;
+            Dumb.FD(ref this.MatrixBS);
+            Dumb.FD(ref this.lINAA);
         }
 
         private void setBindings(bool selected)
@@ -77,7 +74,6 @@ namespace DB.UI
             Binding mlabel = Rsx.Dumb.BS.ABinding(ref bs, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
 
-
             if (bs.Count != 0)
             {
                 bs.Position = 1;
@@ -85,30 +81,22 @@ namespace DB.UI
             }
         }
 
-     
-
-      
-
         public ucMatrixSimple()
         {
             InitializeComponent();
 
-        //    this.ToDo.Visible = false;
+            // this.ToDo.Visible = false;
             this.matrixDensityDataGridViewTextBoxColumn1.Visible = false;
 
             editContentLBL.Text = VIEW_STR;
 
             editContentLBL.Click += delegate
             {
-                ChangeCompositionView();
+                changeCompositionView();
             };
-
-           
         }
 
-     
-
-        public void ChangeCompositionView()
+        private void changeCompositionView()
         {
             if (editContentLBL.Text.Contains(EDIT_STR))
             {
@@ -123,17 +111,9 @@ namespace DB.UI
 
         public void RefreshDGV()
         {
-      //      matrixDGV.InvalidateColumn(this.ToDo.Index);
-          
-      //      matrixDGV.Invalidate(true);
-            matrixDGV.Refresh();
-        //    matrixDGV.PerformLayout();
-
-            matrixDGV.SelectAll();
-            matrixDGV.ClearSelection();
-            matrixDGV.PerformLayout();
-
-          //  matrixDGV.Invalidate();
+            this.matrixDGV.Invalidate(true);
+            this.matrixDGV.Refresh();
+            this.matrixDGV.ClearSelection();
         }
     }
 }

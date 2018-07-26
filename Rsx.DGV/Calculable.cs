@@ -84,7 +84,7 @@ namespace Rsx.DGV
         public ICalculableRow GetICalculable(int rowIndex)
         {
             ICalculableRow Icalc = null;
-            if (rowIndex < 0) return Icalc;
+            if (rowIndex <= -1) return Icalc;
             DataGridViewRow r = this.DataGridView.Rows[rowIndex];
             DataRowView v = r?.DataBoundItem as DataRowView;
             DataRow u = (v?.Row) as DataRow;

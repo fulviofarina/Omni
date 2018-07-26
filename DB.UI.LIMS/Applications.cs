@@ -260,7 +260,7 @@ namespace DB.UI
             Interface.IBS.ApplyFilters();
             Interface.IBS.StartBinding();
 
-
+            Application.DoEvents();
 
             refresher = delegate
             {
@@ -268,19 +268,23 @@ namespace DB.UI
                 bool offline = Interface.IPreferences.CurrentPref.Offline;
                 if (offline)
                 {
+
                     Creator.LoadFromFile();
+
+                    Application.DoEvents();
+
                     Interface.IDB.MUES.Clear();
                     Interface.IDB.Preferences.Clear();
+
+                    Application.DoEvents();
                     Creator.PopulatePreferences();
-               //     Interface.IPreferences.CurrentPref.IsSQL = offline;
+                    Interface.IPreferences.CurrentPref.Offline = offline;
                     Interface.IDB.AcceptChanges();
 
                     Interface.IDB.CheckMatrixToDoes(offline);
 
                 }
                 else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
-
-           
 
                 Interface.IBS.ShowErrors = true;
 
@@ -290,12 +294,17 @@ namespace DB.UI
             };
 
             refresher.Invoke();
-             Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded",true);
+
+            Application.DoEvents();
+      
+
+            Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded",true);
 
             ucMatrix mat = new ucMatrix();
             mat.Set(ref Interface);
             control = (UserControl)mat;
 
+            Application.DoEvents();
 
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
             IOptions options = GetOptions(1);
@@ -304,16 +313,19 @@ namespace DB.UI
                 GetPreferences<IXCOMPreferences>(true);
             };
 
+            Application.DoEvents();
 
             mat.Set(ref options);
             mat.Set(ref prefes);
             mat.SetXCOM();
-         
-        
+
+            Application.DoEvents();
 
             IPop msn = Interface.IReport.Msn;
             UserControl ctrl = msn as UserControl;
             mat.Set(ref ctrl);
+
+            Application.DoEvents();
             msn.ParentForm?.Dispose();
           
 

@@ -93,9 +93,15 @@ namespace VTools
 
        private  string punto = ".";
 
-        public void HideList()
+        public void HideList(bool hide)
         {
-            listView1.Visible = false;
+            listView1.Visible = !hide;
+            if (hide)
+            {
+                showInBrowser(string.Empty);
+                listView1.Clear();
+                imageList1.Images.Clear();
+            }
         }
         public void RefreshList(string baseFilename, string filter)
         {
@@ -109,6 +115,8 @@ namespace VTools
             files = files.Select(o => o.Replace(folderPath, null)).ToArray();
             //ordered
             files =  files.OrderBy(o => o[0]).ToArray();
+
+           
             foreach (var item in files)
             {
                 Image img = Image.FromFile(folderPath + item);
@@ -134,6 +142,12 @@ namespace VTools
 
                 listView1.Items.Add(i);
             }
+
+            ListViewItem d = listView1.Items[0];
+            d.Selected = true;
+       //     listView1.FindItemWithText(d.Text);
+
+
           //  listView1.RedrawItems(i, i, false);
 
         }

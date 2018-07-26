@@ -107,10 +107,10 @@ namespace Rsx.Dumb
      
         private void worker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-
+            callback?.Invoke();
             this.Dispose();
 
-            callback?.Invoke();
+         
 
         
 
