@@ -40,7 +40,10 @@ namespace DB.UI
             }
             if (!e.Cancel)
             {
-                this.TLP.Controls.Remove(this._displayedControl);
+                if (this.TLP.Controls.Contains(this._displayedControl))
+                {
+                    this.TLP.Controls.Remove(this._displayedControl);
+                }
             }
             else this.Visible = false;
         }

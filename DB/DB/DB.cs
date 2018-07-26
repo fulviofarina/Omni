@@ -92,7 +92,8 @@ namespace DB
             if (e.Action != DataRowAction.Add && e.Action != DataRowAction.Commit) return;
 
             // if( e.Action != DataRowAction.Commit) return;
-            if (e.Row.RowState == DataRowState.Deleted) return;
+            if (EC.IsNuDelDetch(e.Row)) return;
+      //      if (e.Row.RowState == DataRowState.Deleted) return;
             e.Row.ClearErrors();
             // dynamic table; table = e.Row.Table.DataSet;
             IEnumerable<DataColumn> cols = e.Row.Table.Columns.OfType<DataColumn>();

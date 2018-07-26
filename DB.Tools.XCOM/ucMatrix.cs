@@ -68,6 +68,9 @@ namespace DB.UI
 
             Application.DoEvents();
 
+            //salva primero, ok
+            saveMethod();
+
             ucCalculate1.EnableCalculate = false;
 
             Interface.IBS.EnabledControls = false;
@@ -171,7 +174,7 @@ namespace DB.UI
         {
 
 
-       
+
 
             MatrixRow m = sender as MatrixRow;
 
@@ -180,28 +183,20 @@ namespace DB.UI
             ucMatrixSimple1.RefreshDGV();
 
             if (XCom.IsCalculating) return;
-            
-                Interface.IBS.EnabledControls = !XCom.IsCalculating;
 
-           
+            Interface.IBS.EnabledControls = !XCom.IsCalculating;
 
-                ucMUES1.MakeFile(m.MatrixID.ToString(), path);
 
-                XCom.CheckCompletedOrCancelled();
 
-                if (Interface.IPreferences.CurrentPref.Offline)
-                {
-                    Interface.IStore.SaveLocalCopy();
-                }
-                else
-                {
-                    IEnumerable<DataTable> tables = new DataTable[] { Interface.IDB.Matrix, Interface.IDB.Compositions };
-                    Interface.IStore.SaveRemote(ref tables);
-                }
+            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+
+            XCom.CheckCompletedOrCancelled();
+
+            saveMethod();
 
             Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
 
-          
+
             //   ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
 
             ucCalculate1.EnableCalculate = !XCom.IsCalculating;
@@ -209,6 +204,19 @@ namespace DB.UI
             ucMatrixSimple1.RefreshDGV();
 
 
+        }
+
+        private void saveMethod()
+        {
+            if (Interface.IPreferences.CurrentPref.Offline)
+            {
+                Interface.IStore.SaveLocalCopy();
+            }
+            else
+            {
+                IEnumerable<DataTable> tables = new DataTable[] { Interface.IDB.Matrix, Interface.IDB.Compositions };
+                Interface.IStore.SaveRemote(ref tables);
+            }
         }
 
         public ucMatrix()

@@ -36,7 +36,7 @@ namespace DB
                 // if (IsLoopNull()) Loop = false; if (IsUseListNull()) UseList = false;
                 if (IsStartEnergyNull()) StartEnergy = 1;
                 if (IsEndEnergyNull()) EndEnergy = 3500;
-                if (IsStepsNull()) Steps = 1;
+                if (IsStepsNull()) Steps = 100;
               //   if (IsForceNull()) Force = true;
                 if (IsRoundingNull()) Rounding = "e3";
                 if (IsPENull()) PE = true;
