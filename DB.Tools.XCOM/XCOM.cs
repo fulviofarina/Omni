@@ -99,6 +99,7 @@ namespace DB.Tools
             }
         }
 
+     
         public void Calculate(bool? BKG)
         {
             double start = pref.StartEnergy;
@@ -268,6 +269,8 @@ namespace DB.Tools
             end = start + delta;
 
 
+
+
             string listOfenergies, compositions;
             listOfenergies = string.Empty;
 
@@ -291,9 +294,6 @@ namespace DB.Tools
                     int lines = GetNumberOfLines(step, start, end);
                     listOfenergies = MakeEnergiesList(step, start, lines);
                 }
-
-             
-         
            
                 string labelName = m.MatrixName + ": " + start + " to " + end + " keV";
                 Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions, labelName, start, end);
@@ -345,13 +345,13 @@ namespace DB.Tools
 
                 labelName = mstrixName + ": " + initialStart.ToString() + " to " + totalEnd.ToString() + " keV";
                 range = ".LAST";
-                makefullPic(out listOfenergies, compositions, totalEnd, initialStart, matrixID, labelName, range);
+                makefullPic(compositions, totalEnd, initialStart, matrixID, labelName, range);
 
 
 
                 labelName = mstrixName + ": " + min.ToString() + " keV to " + maxDisplay.ToString() + " GeV";
                  range = ".FULL";
-                 makefullPic(out listOfenergies, compositions, max, min, matrixID, labelName, range);
+                 makefullPic( compositions, max, min, matrixID, labelName, range);
 
             
 
@@ -367,15 +367,19 @@ namespace DB.Tools
             return ls;
         }
 
-        private void makefullPic(out string listOfenergies, string compositions, double max, double min, int matrixID, string labelName, string range)
+        private void makefullPic(string compositions, double max, double min, int matrixID, string labelName, string range)
         {
+            string listOfenergies = string.Empty;
             listOfenergies = MakeEnergiesList(max - min, min, 2);
 
             string Response = QueryXCOM(compositions, listOfenergies, labelName, true);
             if (string.IsNullOrEmpty(Response)) return;
 
-            string tempFile = _startupPath + matrixID + range + PictureExtension;
+            string tempFile = _startupPath + matrixID + range+ PictureExtension;
             getPicture(ref Response, tempFile);
+
+       //     File.WriteAllText(tempFile+HTMLExtension, Response);
+
         }
 
         public void Set(ref Interface inter)
@@ -423,11 +427,25 @@ namespace DB.Tools
                     string tempFile = string.Empty;
 
                     Response = QueryXCOM(compositions, listOfenergies, labelName, false);
-                    tempFile = _startupPath + matrixID + punto + "N" + numberOfFiles + punto;
+
+                    string range = punto + "N" + numberOfFiles ;
+
+                    tempFile = _startupPath + matrixID +  range ;
                     File.WriteAllText(tempFile, Response);
 
-                    Response = QueryXCOM(compositions, listOfenergies, labelName, true);
-                    getPicture(ref Response, tempFile + start.ToString() + " - " + end.ToString() + PictureExtension);
+                 //   Response = QueryXCOM(compositions, listOfenergies, labelName, true);
+
+                  //  File.WriteAllText(tempFile+HTMLExtension, Response);
+
+                    //    File.WriteAllText(tempFile + HTMLExtension, Response);
+
+                    range += punto + start.ToString() + " - " + end.ToString();
+                    makefullPic(compositions, end,start , matrixID, labelName, range);
+
+
+               //     string listOfEnergiesForPic = start + "\n" + end + "\n";
+                 //   Response = QueryXCOM(compositions, listOfEnergiesForPic, labelName, true);
+                  //  getPicture(ref Response, tempFile + start.ToString() + " - " + end.ToString() + PictureExtension);
                 }
                 catch (SystemException ex)
                 {

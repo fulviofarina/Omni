@@ -27,6 +27,7 @@ namespace DB.Tools
         protected static string NOINTERNET_ERROR = "Check your Internet connection";
         protected static string NOINTERNET_TITLE = "Server not available!";
 
+       
 
 
     }
@@ -35,6 +36,7 @@ namespace DB.Tools
     {
         protected static int maxEnergies = 75;
         protected static string punto = ".";
+        public static string HTMLExtension = ".html";
 
         public static string PictureExtension = ".png";
     
@@ -242,11 +244,11 @@ namespace DB.Tools
             return completo;
         }
 
-        private static int getMUESFromNIST(double density, string path, ref MUESDataTable dt, int matrixID, int subsection)
+        private static int getMUESFromNIST(double density, string path, ref MUESDataTable dt, int matrixID, int numberofFiles)
         {
             int added = 0;
 
-            string tempFile = path + matrixID + punto + "N" + subsection + punto;
+            string tempFile = path + matrixID + punto + "N" + numberofFiles ;
             if (!File.Exists(tempFile)) return added;
 
             StreamReader reader = new StreamReader(tempFile);
@@ -278,16 +280,9 @@ namespace DB.Tools
             for (int j = num; j <= num2; j++)
             {
                 temp = strArray2[j].TrimStart().Split(' ');
-                MUESRow r = dt.NewMUESRow(); //dt.FirstOrDefault(o => o.Energy ==null);
-                r.MatrixID = matrixID;
-                setMUESRow(density, temp, ref r);
 
-                MUESRow destiny = dt.FirstOrDefault(o => o.Energy == r.Energy);
-                if (destiny != null)
-                {
-                    dt.RemoveMUESRow(destiny);
-                }
-                dt.AddMUESRow(r);
+                addMUESRow(density, ref dt, matrixID, ref temp);
+
                 added++;
             }
 
@@ -300,9 +295,25 @@ namespace DB.Tools
             return added;
             //photon cross sections in g/cm2 and energies in keV, photon * density = mu (linear attenuation)
         }
-    
 
-      
+        private static void addMUESRow(double density, ref MUESDataTable dt, int matrixID, ref string[] temp)
+        {
+            MUESRow r = dt.NewMUESRow(); //dt.FirstOrDefault(o => o.Energy ==null);
+            r.MatrixID = matrixID;
+            setMUESRow(density, ref temp, ref r);
+            removeMUESRow(ref dt, r.Energy);
+            dt.AddMUESRow(r);
+        }
+
+        private static void removeMUESRow(ref MUESDataTable dt, double energy)
+        {
+            MUESRow destiny = dt.FirstOrDefault(o => o.Energy == energy);
+            if (destiny != null)
+            {
+                dt.RemoveMUESRow(destiny);
+            }
+        }
+
         private static void useCustomList(out double start, out double Totalend, out double end, out string listOfenergies, out int NrEnergies)
         {
             double factor = 1000;
@@ -338,7 +349,7 @@ namespace DB.Tools
             return aux;
         }
 
-        private static void setMUESRow(double density, string[] temp, ref MUESRow r)
+        private static void setMUESRow(double density, ref string[] temp, ref MUESRow r)
         {
             if (temp.LongLength == 8)
             {
