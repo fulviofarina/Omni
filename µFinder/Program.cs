@@ -47,13 +47,17 @@ namespace µFinder
                 LIMSUI.CreateForm(Application.ProductName, ref control, show);
                 Form toShow = control.ParentForm;
 
-          //      LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
+                //      LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
+
+
+                //    readCrash(crashFile);
+              
 
                 Application.Run(toShow);
 
                
 
-                readCrash(crashFile);
+             
 
             }
             catch (Exception ex)

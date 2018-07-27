@@ -128,7 +128,8 @@ namespace DB.Tools
 
         public static int GetNumberOfLines(double step, double StartEnergy, double EndEnergy)
         {
-            double lines = (EndEnergy - StartEnergy) / (step);
+            double lines = (EndEnergy - StartEnergy);
+            lines = lines / (double)step;
 
             int NrOfEnergies = Convert.ToInt32(Math.Ceiling((lines)));
             return NrOfEnergies;
@@ -301,38 +302,22 @@ namespace DB.Tools
         }
     
 
-        private static void setValuesForQuery(ref double start, ref double Totalend, double step, bool useList, out double delta, out double end, out string listOfenergies)
+      
+        private static void useCustomList(out double start, out double Totalend, out double end, out string listOfenergies, out int NrEnergies)
         {
-            int NrEnergies = GetNumberOfLines(step, start, Totalend);
-            //maximum number of energies per query
+            double factor = 1000;
 
-            delta = 0;
-            if (maxEnergies > NrEnergies)
+            listOfenergies = Encoding.UTF8.GetString(listOfEnergiesBytes);
+            string[] energies = listOfenergies.Split('\n');
+            NrEnergies = energies.Count();
+            start = Convert.ToDouble(energies.First()) * factor;
+            string lastEnergy = energies.Last();
+            if (NrEnergies > maxEnergies)
             {
-                delta = (NrEnergies * step);
+                lastEnergy = energies.ElementAt(maxEnergies - 1);
             }
-            else delta = (maxEnergies * step);
-
-            end = start + delta;
-
-            listOfenergies = string.Empty;
-            if (useList)
-            {
-                double factor = 1000;
-
-                listOfenergies = Encoding.UTF8.GetString(listOfEnergiesBytes);
-                string[] energies = listOfenergies.Split('\n');
-                NrEnergies = energies.Count();
-                start = Convert.ToDouble(energies.First()) * factor;
-                string lastEnergy = energies.Last();
-                if (NrEnergies > maxEnergies)
-                {
-                    lastEnergy = energies.ElementAt(maxEnergies - 1);
-                }
-                end = Convert.ToDouble(lastEnergy) * factor;
-                Totalend = end;
-            }
-
+            end = Convert.ToDouble(lastEnergy) * factor;
+            Totalend = end;
         }
 
         private static string getPicTag(ref string Response)

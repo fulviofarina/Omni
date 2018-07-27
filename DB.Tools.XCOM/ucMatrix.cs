@@ -112,10 +112,28 @@ namespace DB.UI
 
         public void Set(ref UserControl ctrl)
         {
-          //  this.SuspendLayout();
+            //  this.SuspendLayout();
             ctrl.Dock = DockStyle.Fill;
             DBTLP.Controls.Add(ctrl as UserControl);
-          //  this.ResumeLayout(true);
+
+            cleanerList();
+
+            //  this.ResumeLayout(true);
+        }
+
+        private void cleanerList()
+        {
+            EventHandler hl = delegate
+            {
+                ucPicNav1.HideList(true);
+            };
+
+            Interface.IDB.Matrix.CleanMUESHandler += hl;
+            this.Disposed += delegate
+            {
+                Interface.IDB.Matrix.CleanMUESHandler -= hl;
+
+            };
         }
 
         public void Set(ref Interface inter)
@@ -124,6 +142,9 @@ namespace DB.UI
 
             ucMatrixSimple1.Set(ref Interface);
             ucMUES1.Set(ref Interface);
+
+
+
 
         }
 

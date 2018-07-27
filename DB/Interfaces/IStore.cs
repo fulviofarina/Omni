@@ -59,16 +59,17 @@ namespace DB
         /// <summary>
         /// not used
         /// </summary>
-       // void SaveSSF();
+        // void SaveSSF();
 
         /// <summary>
         /// not used
         /// </summary>
-       // bool SaveSSF(bool offline, string file);
+        // bool SaveSSF(bool offline, string file);
 
         //void LoadMonitorsFile(string file);
-   
+    //    bool CleanMUESPics(ref MatrixRow u);
         void CleanPreferences();
+    //    bool cleanMUES(ref MatrixRow m, bool sql);
 
         // void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
     }

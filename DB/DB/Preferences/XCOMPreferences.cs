@@ -37,7 +37,7 @@ namespace DB
                 if (IsStartEnergyNull()) StartEnergy = 1;
                 if (IsEndEnergyNull()) EndEnergy = 3500;
                 if (IsStepsNull()) Steps = 100;
-              //   if (IsForceNull()) Force = true;
+                 if (IsAccumulateResultsNull()) AccumulateResults = true;
                 if (IsRoundingNull()) Rounding = "e3";
                 if (IsPENull()) PE = true;
                 if (IsPPEFNull()) PPEF = true;

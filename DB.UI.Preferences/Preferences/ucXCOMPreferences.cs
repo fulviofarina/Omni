@@ -131,11 +131,11 @@ namespace DB.UI
             column = dt.ASCIIOutputColumn.ColumnName;
             this.asciibox.DataBindings.Add(bindings[column] as Binding);
 
-            //    column = dt.ForceColumn.ColumnName;
-            //  this.forceBox.DataBindings.Add(bindings[column] as Binding);
+                column = dt.AccumulateResultsColumn.ColumnName;
+             this.accumulateBox.DataBindings.Add(bindings[column] as Binding);
 
             this.logscaleBox.Visible = false;
-            this.forceBox.Visible = false;
+         //   this.forceBox.Visible = false;
             this.loopCheckBox.Visible = false;
 
             column = dt.ISColumn.ColumnName;

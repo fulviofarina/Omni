@@ -49,7 +49,7 @@
             this.isbox = new System.Windows.Forms.CheckBox();
             this.logscaleBox = new System.Windows.Forms.CheckBox();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
-            this.forceBox = new System.Windows.Forms.CheckBox();
+            this.accumulateBox = new System.Windows.Forms.CheckBox();
             this.useListbox = new System.Windows.Forms.CheckBox();
             this.asciibox = new System.Windows.Forms.CheckBox();
             this.overridesCheckBox = new System.Windows.Forms.CheckBox();
@@ -220,7 +220,7 @@
             this.tableLayoutPanel2.Controls.Add(this.isbox, 0, 8);
             this.tableLayoutPanel2.Controls.Add(this.logscaleBox, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.loopCheckBox, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.forceBox, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.accumulateBox, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.useListbox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.asciibox, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.overridesCheckBox, 0, 5);
@@ -357,17 +357,17 @@
             // 
             // forceBox
             // 
-            this.forceBox.Checked = true;
-            this.forceBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.forceBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.forceBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.forceBox.ForeColor = System.Drawing.Color.Gold;
-            this.forceBox.Location = new System.Drawing.Point(3, 55);
-            this.forceBox.Name = "forceBox";
-            this.forceBox.Size = new System.Drawing.Size(274, 26);
-            this.forceBox.TabIndex = 8;
-            this.forceBox.Text = "None";
-            this.forceBox.UseVisualStyleBackColor = true;
+            this.accumulateBox.Checked = true;
+            this.accumulateBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.accumulateBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accumulateBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.accumulateBox.ForeColor = System.Drawing.Color.Gold;
+            this.accumulateBox.Location = new System.Drawing.Point(3, 55);
+            this.accumulateBox.Name = "forceBox";
+            this.accumulateBox.Size = new System.Drawing.Size(274, 26);
+            this.accumulateBox.TabIndex = 8;
+            this.accumulateBox.Text = "Accumulate Results";
+            this.accumulateBox.UseVisualStyleBackColor = true;
             // 
             // useListbox
             // 
@@ -380,7 +380,7 @@
             this.useListbox.Name = "useListbox";
             this.useListbox.Size = new System.Drawing.Size(274, 26);
             this.useListbox.TabIndex = 6;
-            this.useListbox.Text = "Use my Energies List";
+            this.useListbox.Text = "Use Custom Energies List";
             this.useListbox.UseVisualStyleBackColor = true;
             // 
             // asciibox
@@ -443,7 +443,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.CheckBox forceBox;
+        private System.Windows.Forms.CheckBox accumulateBox;
         private System.Windows.Forms.CheckBox useListbox;
         private System.Windows.Forms.CheckBox asciibox;
         private System.Windows.Forms.TextBox stepsBox;

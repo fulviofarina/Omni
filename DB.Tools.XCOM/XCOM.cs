@@ -105,6 +105,7 @@ namespace DB.Tools
             double Totalend = pref.EndEnergy;
             double step = pref.Steps;
             bool useList = pref.UseList;
+            bool accumulate = pref.AccumulateResults;
 
             listOfEnergiesBytes = pref.ListOfEnergies;
 
@@ -150,6 +151,12 @@ namespace DB.Tools
 
                 try
                 {
+
+                    if (!accumulate)
+                    {
+                        m.CleanMUES();
+                    }
+
                     Action<int> report = progress =>
                     {
                         _showProgress?.Invoke(null, EventArgs.Empty);
@@ -168,7 +175,7 @@ namespace DB.Tools
                             _callBack?.Invoke(m, EventArgs.Empty);
                         };
 
-                    actionCount = addToLoaders(ref m, report, callBack, start, Totalend, step, useList);
+                    actionCount = addToLoaders(ref m, report, callBack, start, Totalend, step,accumulate, useList);
 
                     _resetProgress?.Invoke(actionCount);
                 }
@@ -226,7 +233,7 @@ namespace DB.Tools
             reporter(log, title, ok, false);
         }
 
-        public IList<Action> generateActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool offline, bool useList = false)
+        public IList<Action> generateActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool offline, bool accumulate, bool useList = false)
         {
             //finds the MUEs for each 1keV, given start and Totalend energies, by NrEnergies (keV) steps.
 
@@ -239,24 +246,69 @@ namespace DB.Tools
 
             double delta, end;
 
-            string listOfenergies, compositions;
 
-            setValuesForQuery(ref start, ref totalEnd, step, useList, out delta, out end, out listOfenergies);
+            //maximum number of energies per query
+            int NrEnergies = GetNumberOfLines(step, start, totalEnd);
+
+            int nrOfQueries = 1;
+
+         //    NrEnergies++;
+
+            delta = 0;
+            if (maxEnergies > NrEnergies)
+            {
+                delta = (NrEnergies * step);
+                totalEnd = start + delta;
+            }
+            else
+            {
+                nrOfQueries = Convert.ToInt32(Math.Ceiling(((double)NrEnergies / (double)maxEnergies)));
+                delta = (maxEnergies * step);
+            }
+            end = start + delta;
+
+
+            string listOfenergies, compositions;
+            listOfenergies = string.Empty;
+
+            if (useList)
+            {
+                useCustomList(out start, out totalEnd, out end, out listOfenergies, out NrEnergies);
+            }
 
             compositions = GetCompositionString(m.MatrixComposition);
 
-            while (end <= totalEnd)
+
+            while (nrOfQueries>0)
             {
+
+                //finishing next round
+                if (nrOfQueries - 1 == 0) end = totalEnd+step;
+
+
                 if (!useList)
                 {
                     int lines = GetNumberOfLines(step, start, end);
                     listOfenergies = MakeEnergiesList(step, start, lines);
                 }
+
+             
+         
+           
                 string labelName = m.MatrixName + ": " + start + " to " + end + " keV";
                 Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions, labelName, start, end);
 
-                start += delta;
+
+                start = end;
                 end += delta;
+                /*
+                //si sobrepasó totalEnd
+                if (end >= totalEnd)
+                {
+                    end = totalEnd + step;
+                }
+                */
+                nrOfQueries--;
 
                 numberOfFiles++;
 
@@ -276,20 +328,36 @@ namespace DB.Tools
                 Interface.IStore.SaveMUES(ref mu, ref m, !offline);
             };
 
+
+
             Action action3 = delegate
             {
-                double max = 1e7;
 
+                int matrixID = m.MatrixID;
+                string mstrixName = m.MatrixName;
+
+                double max = 1e8;
+                double maxDisplay = max * 1e-6;
                 double min = 1;
-                string labelName = m.MatrixName + ": " + min.ToString() + " to " + (max).ToString() + " keV";
-                listOfenergies = MakeEnergiesList(max - min, min, 2);
+                string labelName = string.Empty;
+                string range = string.Empty;
 
-                string Response = QueryXCOM(compositions, listOfenergies, labelName, true);
-                if (string.IsNullOrEmpty(Response)) return;
 
-                string tempFile = _startupPath + m.MatrixID + ".FULL RANGE" + PictureExtension;
-                getPicture(ref Response, tempFile);
+                labelName = mstrixName + ": " + initialStart.ToString() + " to " + totalEnd.ToString() + " keV";
+                range = ".LAST";
+                makefullPic(out listOfenergies, compositions, totalEnd, initialStart, matrixID, labelName, range);
+
+
+
+                labelName = mstrixName + ": " + min.ToString() + " keV to " + maxDisplay.ToString() + " GeV";
+                 range = ".FULL";
+                 makefullPic(out listOfenergies, compositions, max, min, matrixID, labelName, range);
+
+            
+
             };
+
+
             ls.Add(action2);
             ls.Add(action3);
           
@@ -299,19 +367,30 @@ namespace DB.Tools
             return ls;
         }
 
+        private void makefullPic(out string listOfenergies, string compositions, double max, double min, int matrixID, string labelName, string range)
+        {
+            listOfenergies = MakeEnergiesList(max - min, min, 2);
+
+            string Response = QueryXCOM(compositions, listOfenergies, labelName, true);
+            if (string.IsNullOrEmpty(Response)) return;
+
+            string tempFile = _startupPath + matrixID + range + PictureExtension;
+            getPicture(ref Response, tempFile);
+        }
+
         public void Set(ref Interface inter)
         {
             Interface = inter;
         }
 
-        private int addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool useList = true)
+        private int addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool accumulate, bool useList = true)
         {
             m.RowError = string.Empty;
             bool goIn = (!m.HasErrors() && m.ToDo);
 
             if (!goIn) throw new SystemException("The matrix has errors");
 
-            IList<Action> actions = generateActions(ref m, start, Totalend, step, offline, useList);
+            IList<Action> actions = generateActions(ref m, start, Totalend, step, offline, accumulate, useList);
 
             if (actions.Count == 0) throw new SystemException("The Actions list for the Matrix is empty");
 

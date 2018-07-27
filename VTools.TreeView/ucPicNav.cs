@@ -26,13 +26,16 @@ namespace VTools
             
             watcher.Changed += Watcher_Changed;
             listView1.ItemSelectionChanged += ListView1_ItemSelectionChanged;
-           // listView1.ItemActivate += ListView1_ItemActivate;
+
+            Application.EnableVisualStyles();
+            // listView1.ItemActivate += ListView1_ItemActivate;
         }
 
         private void ListView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
 
-            showInBrowser(folderPath +e.Item.Name  + e.Item.Text + imageExtension);
+                     
+            showInBrowser(e.Item.Tag.ToString());
 
         }
 
@@ -40,41 +43,23 @@ namespace VTools
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            //  throw new NotImplementedException();
             if (e.ChangeType == WatcherChangeTypes.Changed)
             {
-             
-                //     i = imageList1.Images.Keys.IndexOf(e.Name);
-              //  
-              //  addImage(e.Name,e.FullPath);
                 showInBrowser(e.FullPath);
-                //listView1.Items.Clear();
-
-
-                //     webBrowser1
-
             }
-        }
-
-        private void addImage(string name, string fullPath)
-        {
-            Image img = Image.FromFile(fullPath);
-         
-            if (imageList1.Images.Keys.Contains(name))
-            {
-                int i = imageList1.Images.Keys.IndexOf(name);
-                imageList1.Images.RemoveAt(i);
-            }
-            imageList1.Images.Add(name, img);
         }
 
         private void showInBrowser(string file)
         {
           //  string file = XCom.StartupPath + matrixID + XCOM.PictureExtension;
+
             Uri uri = new Uri("about:blank");
             if (System.IO.File.Exists(file))
             {
-                uri = new Uri(file);
+                string newFile = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
+                newFile += file.Replace(folderPath, null);
+                File.Copy(file, newFile, true);
+                uri = new Uri(newFile);
             }
             webBrowser1.Navigate(uri);
         }
@@ -99,58 +84,104 @@ namespace VTools
             if (hide)
             {
                 showInBrowser(string.Empty);
-                listView1.Clear();
-                imageList1.Images.Clear();
+                cleanList();
             }
         }
         public void RefreshList(string baseFilename, string filter)
         {
 
-            listView1.Visible = true;
-            listView1.Items.Clear();
-            imageList1.Images.Clear();
-        
-            //get files
-            string[] files = Directory.GetFiles(folderPath, baseFilename+filter+imageExtension);
-            files = files.Select(o => o.Replace(folderPath, null)).ToArray();
-            //ordered
-            files =  files.OrderBy(o => o[0]).ToArray();
 
-           
+            //get files
+            string[] files = Directory.GetFiles(folderPath, baseFilename + filter + imageExtension);
+            files = files.Select(o => o.Replace(folderPath, null).Replace(baseFilename + punto, null)).ToArray();
+
+      //      files = files.OrderBy(o => o.Substring(1, o.IndexOf(punto))).ToArray();
+            files = files.OrderBy(o => o.Length).ToArray();
+
+
+            listView1.Visible = true;
+            listView1.ShowGroups = true;
+            listView1.View = View.SmallIcon;
+
+            cleanList();
+
+     //       if (imageList1.Images.Count!=0)   imageList1.Images.Clear();
+
+            List<ListViewItem> ls = new List<ListViewItem>();
+
+
             foreach (var item in files)
             {
-                Image img = Image.FromFile(folderPath + item);
-                string itemName = item.Replace(imageExtension, null);
-                itemName = itemName.Replace(baseFilename +punto, null);
-
-                string itemBase = baseFilename + punto;
+                string file = folderPath + baseFilename + punto + item;
+                Image img = Image.FromFile(file);
+                string itemText = item.Replace(imageExtension, null);
+        
+                string itemName = baseFilename + punto;
 
                 //si contiene punto aun está numerado
-                if (itemName.Contains(punto))
+                if (itemText.Contains(punto))
                 {
-                    int numberIndex = itemName.IndexOf(punto);
-                    string number = itemName.Substring(0, numberIndex);
-                    itemBase += number + punto;
-                    itemName = itemName.Substring(numberIndex+1);
+                    int numberIndex = itemText.IndexOf(punto);
+                    string number = itemText.Substring(0, numberIndex);
+                    itemName += number + punto;
+                    itemText = itemText.Substring(numberIndex+1);
                 }
-                
-                int index = imageList1.Images.Count-1;
-                imageList1.Images.Add(itemName, img); 
          
-                ListViewItem i = new ListViewItem(itemName, index);
-                i.Name = itemBase;
+                ListViewItem i = new ListViewItem(itemText);
+             
+                i.Tag = folderPath + itemName + itemText + imageExtension;
 
-                listView1.Items.Add(i);
+                ls.Add(i);
+
             }
 
-            ListViewItem d = listView1.Items[0];
+            foreach (var item in ls)
+            {
+                string count = item.Text.Count().ToString();
+                 ListViewGroup g = listView1.Groups[count];
+
+                 if (g == null)
+                  {
+                
+                    g = new ListViewGroup(count, string.Empty);
+                    g.HeaderAlignment = HorizontalAlignment.Left;
+                 
+                    listView1.Groups.Add(g);
+                 
+             
+                  //  g.ListView.View = View.Tile;
+                }
+            
+
+           
+             
+                listView1.Items.Add(item);
+            
+                item.EnsureVisible();
+                item.Group = g;
+           //     g.Items.Add(item);
+
+                // item.Group = g;
+
+            }
+
+         //   ls.Clear();
+      //      listView1.ShowGroups = true;
+        //    listView1.PerformLayout();
+            //   listView1.RedrawItems(0, listView1.Items.Count, false); 
+            //      listView1.VirtualMode = true;
+            ListViewItem d = listView1.Groups[0].Items[0];
             d.Selected = true;
-       //     listView1.FindItemWithText(d.Text);
 
-
-          //  listView1.RedrawItems(i, i, false);
+       
 
         }
 
+        private void cleanList()
+        {
+
+            if (listView1.Items.Count != 0) listView1.Items.Clear();
+            if (listView1.Groups.Count != 0) listView1.Groups.Clear();
+        }
     }
 }

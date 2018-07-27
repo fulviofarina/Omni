@@ -12,19 +12,7 @@ namespace DB
 {
     public partial class LINAA : IStore
     {
-      
 
-        public void CleanOthers()
-        {
-            //Interface.IDB.SSFPref.Clear();
-            Exceptions.Clear();
-            MatSSF.Clear();
-    
-            MUES.Clear();
-            MUES.AcceptChanges();
-            MatSSF.AcceptChanges();
-            Exceptions.AcceptChanges();
-        }
         public void Read(string filepath)
         {
             LINAA dt = null;

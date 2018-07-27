@@ -95,7 +95,7 @@
     <Compile Include="Adapter\Adapter.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
-    <Compile Include="DB\DB.cs" />
+    <Compile Include="DB\Tables\DB.cs" />
     <Compile Include="DB\Preferences\XCOMPreferences.cs" />
     <Compile Include="DB\Preferences\SSFPreferences.cs" />
     <Compile Include="LINAA.cs">
@@ -107,14 +107,14 @@
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
     <Compile Include="Populate\Events.cs" />
-    <Compile Include="DB\Row\Geometry\Geometry.Row.cs" />
-    <Compile Include="DB\Row\Geometry\Matrix.Row.cs" />
-    <Compile Include="DB\Exceptions.cs" />
-    <Compile Include="DB\Row\Geometry\Measurements.Row.cs" />
-    <Compile Include="DB\Row\Samples\MonitorsRow..cs" />
-    <Compile Include="DB\Row\Samples\Samples.Row.Internal.cs" />
-    <Compile Include="DB\Row\Samples\Samples.Row.cs" />
-    <Compile Include="DB\Row\Samples\Units.Row.cs" />
+    <Compile Include="DB\Tables\Geometry\Geometry.Row.cs" />
+    <Compile Include="DB\Tables\Geometry\Matrix.Row.cs" />
+    <Compile Include="DB\Tables\Exceptions.cs" />
+    <Compile Include="DB\Tables\Geometry\Measurements.Row.cs" />
+    <Compile Include="DB\Tables\Samples\MonitorsRow..cs" />
+    <Compile Include="DB\Tables\Samples\Samples.Row.Internal.cs" />
+    <Compile Include="DB\Tables\Samples\Samples.Row.cs" />
+    <Compile Include="DB\Tables\Samples\Units.Row.cs" />
     <Compile Include="Interfaces\IColumn.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Interfaces\IIrradiations.cs" />
@@ -147,21 +147,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Row\Geometry\DetSol.Row.cs" />
-    <Compile Include="DB\Geometry.cs" />
-    <Compile Include="DB\Row\Geometry\CompositionsRow.cs" />
-    <Compile Include="DB\Row\Geometry\Vial.Row.cs" />
+    <Compile Include="DB\Tables\Geometry\DetSol.Row.cs" />
+    <Compile Include="DB\Tables\Geometry.cs" />
+    <Compile Include="DB\Tables\Geometry\CompositionsRow.cs" />
+    <Compile Include="DB\Tables\Geometry\Vial.Row.cs" />
     <Compile Include="Populate\Populate.DetSol.cs" />
     <Compile Include="Populate\Populate.Geometry.cs" />
     <Compile Include="Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Components.cs" />
     <Compile Include="Basura\Main.cs" />
-    <Compile Include="DB\Row\Project\Channels.Row.cs" />
-    <Compile Include="DB\Projects.cs" />
-    <Compile Include="DB\Row\Samples\Element.Row.cs" />
+    <Compile Include="DB\Tables\Project\Channels.Row.cs" />
+    <Compile Include="DB\Tables\Projects.cs" />
+    <Compile Include="DB\Tables\Samples\Element.Row.cs" />
     <Compile Include="Populate\Populate.Nuclear.cs" />
     <Compile Include="DB\Preferences\Preferences.cs" />
-    <Compile Include="DB\Row\Project\Irradiations.Row.cs" />
+    <Compile Include="DB\Tables\Project\Irradiations.Row.cs" />
     <Compile Include="Populate\Populate.Irradiations.cs" />
     <Compile Include="Populate\Populate.Orders.cs" />
     <Compile Include="Populate\Populate.Projects.cs" />
@@ -170,13 +170,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QM.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Row\Samples\IPeaksAvg.Row.cs" />
-    <Compile Include="DB\Row\Samples\IReqAvg.Row.cs" />
-    <Compile Include="DB\Row\Samples\Standards.Row.cs" />
-    <Compile Include="DB\Row\Samples\Peak.Row.cs" />
-    <Compile Include="DB\Samples.cs" />
+    <Compile Include="DB\Tables\Samples\IPeaksAvg.Row.cs" />
+    <Compile Include="DB\Tables\Samples\IReqAvg.Row.cs" />
+    <Compile Include="DB\Tables\Samples\Standards.Row.cs" />
+    <Compile Include="DB\Tables\Samples\Peak.Row.cs" />
+    <Compile Include="DB\Tables\Samples.cs" />
     <Compile Include="Populate\Samples\Populate.Samples.cs" />
-    <Compile Include="DB\Row\Geometry\SchedAcqs.Row.cs" />
+    <Compile Include="DB\Tables\Geometry\SchedAcqs.Row.cs" />
     <Compile Include="Populate\Populate.SchedAcqs.cs" />
     <Compile Include="Static\Comparers.cs" />
     <Compile Include="Static\Main.cs" />
@@ -185,6 +185,7 @@
     <Compile Include="Static\Selector.SchedAcqs.cs" />
     <Compile Include="Store\Store.cs" />
     <Compile Include="Store\Store.Delete.cs" />
+    <Compile Include="Store\Store.Save.Private.cs" />
     <Compile Include="Store\Store.Save.cs" />
     <Compile Include="Populate\Populate.ToDoes.cs" />
     <Compile Include="ToDo\ToDo.Avg.cs" />

@@ -330,28 +330,7 @@ namespace DB
             return tempfile;
         }
 
-        public bool CleanMUES(ref MatrixRow m, bool sql = true)
-        {
-
-            //    MUESDataTable mu = new MUESDataTable();
-            bool ok = false;
-            if (sql)
-            {
-                TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-            }
-            else
-            {
-                string tempfile = GetMUESFile(ref m);
-                if (System.IO.File.Exists(tempfile)) System.IO.File.Delete(tempfile);
-            }
-            IEnumerable<MUESRow> mues = m.GetMUESRows();
-            Delete<MUESRow>(ref mues);
-            this.MUES.AcceptChanges();
-
-            ok = GetMUES(ref m, sql).Count ==0;
-            return ok;
-           
-        }
+    
 
 
         public MUESDataTable GetMUES(double el, double eh, int matrixID)

@@ -160,6 +160,8 @@ namespace DB
     //        this.tableMatrix.MUESRequiredHandler += mUESRequiredEvent;
             this.tableMatrix.CleanCompositionsHandler += cleanCompositionsEvent;
             this.tableMatrix.CleanMUESHandler += cleanMUESEvent;
+          //  this.tableMatrix.CleanMUESPicturesHandler += cleanMUESPics;
+
 
             handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Matrix));
@@ -173,13 +175,15 @@ namespace DB
             handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(SubSamples));
         }
+      
 
         private void cleanMUESEvent(object sender, EventArgs e)
         {
             MatrixRow u = sender as MatrixRow;
             EventData b = e as EventData;
           
-            CleanMUES(ref u,(bool)b.Args[0] );
+            cleanMUES(ref u,(bool)b.Args[0] );
+            cleanMUESPics(ref u);
 
         }
     }
