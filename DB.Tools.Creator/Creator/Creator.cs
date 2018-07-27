@@ -85,7 +85,9 @@ namespace DB.Tools
 
 
                 Creator.CheckDirectories(true);
-                             
+
+             //   Creator.SaveInFull(true);
+
 
             };
             options.HelpClick += delegate

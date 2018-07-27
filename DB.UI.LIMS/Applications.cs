@@ -297,6 +297,8 @@ namespace DB.UI
 
                 Application.DoEvents();
 
+            //    Creator.SaveInFull(true);
+
                 Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
 
 

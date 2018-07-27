@@ -33,8 +33,7 @@ namespace DB.UI
             XCom.Set(path, callmeBack, resetProgress, showProg);
             XCom.Reporter = Interface.IReport.Msg;
             XCom.ExceptionAdder = Interface.IStore.AddException;
-            XCom.Preferences = Interface.IPreferences.CurrentXCOMPref;
-
+       
             XCom.Set(ref Interface);
 
             ucPicNav1.Set(path, "*", XCOM.PictureExtension);
@@ -70,6 +69,11 @@ namespace DB.UI
 
             //salva primero, ok
             saveMethod();
+
+
+            XCom.Preferences = Interface.IPreferences.CurrentXCOMPref;
+
+
 
             ucCalculate1.EnableCalculate = false;
 
