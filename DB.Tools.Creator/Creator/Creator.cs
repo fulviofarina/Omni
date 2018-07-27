@@ -82,7 +82,11 @@ namespace DB.Tools
             };
             options.RestoreFoldersClick += delegate
             {
+
+
                 Creator.CheckDirectories(true);
+                             
+
             };
             options.HelpClick += delegate
             {

@@ -286,21 +286,31 @@ namespace DB.Tools
             {
 
                 //finishing next round
-                if (nrOfQueries - 1 == 0) end = totalEnd+step;
+            
 
 
                 if (!useList)
                 {
+                    if (nrOfQueries - 1 == 0) end = totalEnd + step;
+
                     int lines = GetNumberOfLines(step, start, end);
                     listOfenergies = MakeEnergiesList(step, start, lines);
+
+                    if (nrOfQueries - 1 == 0) end = totalEnd ;
+
                 }
-           
+
                 string labelName = m.MatrixName + ": " + start + " to " + end + " keV";
                 Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions, labelName, start, end);
 
 
-                start = end;
-                end += delta;
+                if (!useList)
+                {
+                    start = end;
+                    end += delta;
+                    numberOfFiles++;
+                }
+
                 /*
                 //si sobrepasó totalEnd
                 if (end >= totalEnd)
@@ -308,9 +318,8 @@ namespace DB.Tools
                     end = totalEnd + step;
                 }
                 */
-                nrOfQueries--;
 
-                numberOfFiles++;
+                nrOfQueries--;
 
                 ls.Add(action);
             }
@@ -433,19 +442,11 @@ namespace DB.Tools
                     tempFile = _startupPath + matrixID +  range ;
                     File.WriteAllText(tempFile, Response);
 
-                 //   Response = QueryXCOM(compositions, listOfenergies, labelName, true);
-
-                  //  File.WriteAllText(tempFile+HTMLExtension, Response);
-
-                    //    File.WriteAllText(tempFile + HTMLExtension, Response);
 
                     range += punto + start.ToString() + " - " + end.ToString();
                     makefullPic(compositions, end,start , matrixID, labelName, range);
 
 
-               //     string listOfEnergiesForPic = start + "\n" + end + "\n";
-                 //   Response = QueryXCOM(compositions, listOfEnergiesForPic, labelName, true);
-                  //  getPicture(ref Response, tempFile + start.ToString() + " - " + end.ToString() + PictureExtension);
                 }
                 catch (SystemException ex)
                 {

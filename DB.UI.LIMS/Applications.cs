@@ -257,13 +257,16 @@ namespace DB.UI
          
 
             //ESTE ORDEN ES FUNDAMENTAL!!!
-            Interface.IBS.ApplyFilters();
-            Interface.IBS.StartBinding();
+       
 
             Application.DoEvents();
 
             refresher = delegate
             {
+
+                Interface.IBS.ApplyFilters();
+                Interface.IBS.StartBinding();
+
                 Interface.IBS.ShowErrors = false;
                 bool offline = Interface.IPreferences.CurrentPref.Offline;
                 if (offline)
@@ -279,6 +282,7 @@ namespace DB.UI
                     Application.DoEvents();
                     Creator.PopulatePreferences();
                     Interface.IPreferences.CurrentPref.Offline = offline;
+
                     Interface.IDB.AcceptChanges();
 
                     Interface.IDB.CheckMatrixToDoes(offline);
@@ -291,15 +295,16 @@ namespace DB.UI
                 //y esto? quitar?
                 Interface.IBS.EnabledControls = true;
 
+                Application.DoEvents();
+
+                Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
+
+
             };
 
             refresher.Invoke();
 
-            Application.DoEvents();
-      
-
-            Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded",true);
-
+        
             ucMatrix mat = new ucMatrix();
             mat.Set(ref Interface);
             control = (UserControl)mat;
@@ -313,6 +318,12 @@ namespace DB.UI
                 GetPreferences<IXCOMPreferences>(true);
             };
 
+            Refresher dos = refresher;
+
+            options.RestoreFoldersClick += delegate
+            {
+                dos.Invoke();
+            };
             Application.DoEvents();
 
             mat.Set(ref options);

@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <LINAA>
   <xs:schema id="LINAA" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
-    <xs:element name="LINAA" msdata:IsDataSet="true" msdata:Locale="en" msdata:FolderPath="C:\Users\Fulvio\AppData\Local\k0-X\" msdata:EnforceConstraints="False">
+    <xs:element name="LINAA" msdata:IsDataSet="true" msdata:Locale="en" msdata:FolderPath="D:\Skydrive\Documents\k0-X\" msdata:EnforceConstraints="False">
       <xs:complexType>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="SubSamples">
@@ -1985,6 +1985,7 @@
                 <xs:element name="TCS" type="xs:boolean" minOccurs="0" />
                 <xs:element name="TNCS" type="xs:boolean" minOccurs="0" />
                 <xs:element name="IS" type="xs:boolean" minOccurs="0" />
+                <xs:element name="AccumulateResults" type="xs:boolean" minOccurs="0" />
                 <xs:element name="WindowsUser" minOccurs="0">
                   <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -2269,37 +2270,37 @@
         <xs:selector xpath=".//VialType" />
         <xs:field xpath="MatrixID" />
       </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersHolderSupport" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+      <xs:keyref name="Matrix_DetectorsAbsorbersOtherAbsorber" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="HolderSupportMatrixID" />
-      </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersCrystal" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="CrystalMatrixID" />
-      </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersCanTop" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="CanTopMatrixID" />
-      </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersCrystalHolder" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="CrystalHolderMatrixID" />
-      </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersCanSide" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="CanSideMatrixID" />
-      </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersContactLayer" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="ContactLayerMatrixID" />
+        <xs:field xpath="OtherAbsorberMatrixID" />
       </xs:keyref>
       <xs:keyref name="Matrix_DetectorsAbsorberstopDeadLayer" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//DetectorsAbsorbers" />
         <xs:field xpath="TopDeadLayerMatrixID" />
       </xs:keyref>
-      <xs:keyref name="Matrix_DetectorsAbsorbersOtherAbsorber" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+      <xs:keyref name="Matrix_DetectorsAbsorbersContactLayer" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//DetectorsAbsorbers" />
-        <xs:field xpath="OtherAbsorberMatrixID" />
+        <xs:field xpath="ContactLayerMatrixID" />
+      </xs:keyref>
+      <xs:keyref name="Matrix_DetectorsAbsorbersCanSide" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//DetectorsAbsorbers" />
+        <xs:field xpath="CanSideMatrixID" />
+      </xs:keyref>
+      <xs:keyref name="Matrix_DetectorsAbsorbersCrystalHolder" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//DetectorsAbsorbers" />
+        <xs:field xpath="CrystalHolderMatrixID" />
+      </xs:keyref>
+      <xs:keyref name="Matrix_DetectorsAbsorbersCanTop" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//DetectorsAbsorbers" />
+        <xs:field xpath="CanTopMatrixID" />
+      </xs:keyref>
+      <xs:keyref name="Matrix_DetectorsAbsorbersCrystal" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//DetectorsAbsorbers" />
+        <xs:field xpath="CrystalMatrixID" />
+      </xs:keyref>
+      <xs:keyref name="Matrix_DetectorsAbsorbersHolderSupport" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//DetectorsAbsorbers" />
+        <xs:field xpath="HolderSupportMatrixID" />
       </xs:keyref>
       <xs:keyref name="DetectorsAbsorbers_DetectorsDimensions" refer="DetectorsAbsorbers_Constraint2" msdata:IsNested="true" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//DetectorsDimensions" />
@@ -2309,13 +2310,13 @@
         <xs:selector xpath=".//Holders" />
         <xs:field xpath="Detector" />
       </xs:keyref>
-      <xs:keyref name="VialType_Geometry" refer="VialType_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//Geometry" />
-        <xs:field xpath="VialTypeID" />
-      </xs:keyref>
       <xs:keyref name="Matrix_Geometry" refer="Matrix_Constraint1" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//Geometry" />
         <xs:field xpath="MatrixID" />
+      </xs:keyref>
+      <xs:keyref name="VialType_Geometry" refer="VialType_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//Geometry" />
+        <xs:field xpath="VialTypeID" />
       </xs:keyref>
       <xs:keyref name="SubSamples_Matrix" refer="Constraint1" msdata:AcceptRejectRule="Cascade">
         <xs:selector xpath=".//Matrix" />
@@ -2325,41 +2326,41 @@
         <xs:selector xpath=".//IrradiationRequests" />
         <xs:field xpath="ChannelsID" />
       </xs:keyref>
-      <xs:keyref name="Matrix_SubSamples" refer="Matrix_Constraint1" msdata:AcceptRejectRule="Cascade" msdata:DeleteRule="SetNull">
+      <xs:keyref name="VialType_SubSamples" refer="VialType_Constraint1" msdata:AcceptRejectRule="Cascade" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="MatrixID" />
-      </xs:keyref>
-      <xs:keyref name="Monitors_SubSamples" refer="Monitors_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="MonitorsID" />
-      </xs:keyref>
-      <xs:keyref name="Standards_SubSamples" refer="Standards_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="StandardsID" />
-      </xs:keyref>
-      <xs:keyref name="SamplesSubSamples" refer="Samples_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="SamplesID" />
-      </xs:keyref>
-      <xs:keyref name="IrradiationRequests_SubSamples" refer="IrradiationRequests_Constraint1" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="IrradiationRequestsID" />
-      </xs:keyref>
-      <xs:keyref name="Geometry_SubSamples" refer="Geometry_Constraint2" msdata:DeleteRule="SetNull">
-        <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="GeometryName" />
-      </xs:keyref>
-      <xs:keyref name="FK_RefMaterials_SubSamples" refer="RefMaterials_Constraint1" msdata:AcceptRejectRule="Cascade">
-        <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="ReferenceMaterialID" />
+        <xs:field xpath="CapsulesID" />
       </xs:keyref>
       <xs:keyref name="ChCapsule_SubSamples" refer="VialType_Constraint1" msdata:AcceptRejectRule="Cascade" msdata:DeleteRule="SetNull">
         <xs:selector xpath=".//SubSamples" />
         <xs:field xpath="ChCapsuleID" />
       </xs:keyref>
-      <xs:keyref name="VialType_SubSamples" refer="VialType_Constraint1" msdata:AcceptRejectRule="Cascade" msdata:DeleteRule="SetNull">
+      <xs:keyref name="FK_RefMaterials_SubSamples" refer="RefMaterials_Constraint1" msdata:AcceptRejectRule="Cascade">
         <xs:selector xpath=".//SubSamples" />
-        <xs:field xpath="CapsulesID" />
+        <xs:field xpath="ReferenceMaterialID" />
+      </xs:keyref>
+      <xs:keyref name="Geometry_SubSamples" refer="Geometry_Constraint2" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//SubSamples" />
+        <xs:field xpath="GeometryName" />
+      </xs:keyref>
+      <xs:keyref name="IrradiationRequests_SubSamples" refer="IrradiationRequests_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//SubSamples" />
+        <xs:field xpath="IrradiationRequestsID" />
+      </xs:keyref>
+      <xs:keyref name="SamplesSubSamples" refer="Samples_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//SubSamples" />
+        <xs:field xpath="SamplesID" />
+      </xs:keyref>
+      <xs:keyref name="Standards_SubSamples" refer="Standards_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//SubSamples" />
+        <xs:field xpath="StandardsID" />
+      </xs:keyref>
+      <xs:keyref name="Monitors_SubSamples" refer="Monitors_Constraint1" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//SubSamples" />
+        <xs:field xpath="MonitorsID" />
+      </xs:keyref>
+      <xs:keyref name="Matrix_SubSamples" refer="Matrix_Constraint1" msdata:AcceptRejectRule="Cascade" msdata:DeleteRule="SetNull">
+        <xs:selector xpath=".//SubSamples" />
+        <xs:field xpath="MatrixID" />
       </xs:keyref>
     </xs:element>
     <xs:annotation>
@@ -2511,8 +2512,8 @@
     <MonGrossMass2>21.675</MonGrossMass2>
     <LastMassDate>2012-09-27T13:32:49.31-04:30</LastMassDate>
     <LastIrradiationDate>2012-01-31T15:46:00-04:30</LastIrradiationDate>
-    <Difference>2127</Difference>
-    <NumberOfDays>2367</NumberOfDays>
+    <Difference>2128</Difference>
+    <NumberOfDays>2368</NumberOfDays>
     <IsLocked>false</IsLocked>
     <MonitorCode>CR</MonitorCode>
     <MonGrossMassAvg>21.675</MonGrossMassAvg>
@@ -2525,8 +2526,8 @@
     <MonGrossMass2>16.742</MonGrossMass2>
     <LastMassDate>2012-07-04T16:42:03.473-04:30</LastMassDate>
     <LastIrradiationDate>2012-07-03T16:15:00-04:30</LastIrradiationDate>
-    <Difference>2212</Difference>
-    <NumberOfDays>2213</NumberOfDays>
+    <Difference>2213</Difference>
+    <NumberOfDays>2214</NumberOfDays>
     <IsLocked>false</IsLocked>
     <MonitorCode>AU</MonitorCode>
     <MonGrossMassAvg>16.742</MonGrossMassAvg>
@@ -2537,17 +2538,17 @@
     <MatrixName>AlZnVIn</MatrixName>
     <MatrixComposition>#Al   (20)   #V   (10)   #Mn   (20)   </MatrixComposition>
     <MatrixDensity>2</MatrixDensity>
-    <MatrixDate>2018-07-26T00:47:09.0088584-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:10.7627656-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xNzwvSUQ+DQogICAgPE1hdHJpeElEPjEwPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5BbDwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MjA8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPkFsWm5WSW48L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMTg8L0lEPg0KICAgIDxNYXRyaXhJRD4xMDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VjwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTA8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPkFsWm5WSW48L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMTk8L0lEPg0KICAgIDxNYXRyaXhJRD4xMDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TW48L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5BbFpuVkluPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
-    <ToDo>true</ToDo>
+    <ToDo>false</ToDo>
   </Matrix>
   <Matrix>
     <MatrixID>11</MatrixID>
     <MatrixName>Monazite</MatrixName>
-    <MatrixComposition>#Ce2O3   (26)   #La2O3   (11)   #Nd2O3   (10)   #Th1O2   (7)   #Y2O3   (3.2)   #Pr6O11   (2.9)   #Sm2O3   (2.3)   #Gd2O3   (1.7)   #P   (35)   #U1O2   (0.4)   </MatrixComposition>
+    <MatrixComposition>#Ce2O3   (26)   #La2O3   (11)   #Nd2O3   (10)   #Y2O3   (3.2)   #Pr6O11   (2.9)   #Sm2O3   (2.3)   #Gd2O3   (1.7)   #P   (35)   #U1O2   (0.4)   </MatrixComposition>
     <MatrixDensity>0</MatrixDensity>
-    <MatrixDate>2018-07-26T00:46:34.5393626-04:00</MatrixDate>
-    <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yMDwvSUQ+DQogICAgPE1hdHJpeElEPjExPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5DZTJPMzwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MjY8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPk1vbmF6aXRlPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTIxPC9JRD4NCiAgICA8TWF0cml4SUQ+MTE8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PkxhMk8zPC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT4xMTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjI8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TmQyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yMzwvSUQ+DQogICAgPE1hdHJpeElEPjExPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5UaDFPMjwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+NzwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjQ8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+WTJPMzwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+My4yPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNTwvSUQ+DQogICAgPE1hdHJpeElEPjExPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5QcjZPMTE8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIuOTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjY8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+U20yTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIuMzwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjc8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+R2QyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEuNzwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjg8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+UDwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MzU8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPk1vbmF6aXRlPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTI5PC9JRD4NCiAgICA8TWF0cml4SUQ+MTE8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PlUxTzI8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjAuNDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KPC9OZXdEYXRhU2V0Pg==</CompositionTable>
+    <MatrixDate>2018-07-27T02:06:14.3666688-04:00</MatrixDate>
+    <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xOTM8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+Q2UyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjI2PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xOTQ8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TGEyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjExPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xOTU8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TmQyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xOTY8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+WTJPMzwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+My4yPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xOTc8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+UHI2TzExPC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT4yLjk8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPk1vbmF6aXRlPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTE5ODwvSUQ+DQogICAgPE1hdHJpeElEPjExPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5TbTJPMzwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+Mi4zPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xOTk8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+R2QyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEuNzwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+TW9uYXppdGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjAwPC9JRD4NCiAgICA8TWF0cml4SUQ+MTE8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PlA8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjM1PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yMDE8L0lEPg0KICAgIDxNYXRyaXhJRD4xMTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VTFPMjwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MC40PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5Nb25heml0ZTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQo8L05ld0RhdGFTZXQ+</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
   <Matrix>
@@ -2555,7 +2556,7 @@
     <MatrixName>Plexi</MatrixName>
     <MatrixComposition>#C9H16O4   (100)   </MatrixComposition>
     <MatrixDensity>0</MatrixDensity>
-    <MatrixDate>2018-07-26T00:45:56.6346215-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:49:59.1349104-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi00OTwvSUQ+DQogICAgPE1hdHJpeElEPjIwPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5DOUgxNk80PC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT4xMDA8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPlBsZXhpPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2573,7 +2574,7 @@
     <MatrixName>UF4</MatrixName>
     <MatrixComposition>#U   (76)   #F   (24)   </MatrixComposition>
     <MatrixDensity>0</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.773-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:27.6572001-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMDM8L0lEPg0KICAgIDxNYXRyaXhJRD40MDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+NzY8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPlVGNDwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMDQ8L0lEPg0KICAgIDxNYXRyaXhJRD40MDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+RjwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MjQ8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPlVGNDwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQo8L05ld0RhdGFTZXQ+</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2582,7 +2583,7 @@
     <MatrixName>Water</MatrixName>
     <MatrixComposition>#H2O1   (100)   </MatrixComposition>
     <MatrixDensity>1</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.773-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:23.7038779-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMDU8L0lEPg0KICAgIDxNYXRyaXhJRD40MTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+SDJPMTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTAwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5XYXRlcjwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQo8L05ld0RhdGFTZXQ+</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2591,7 +2592,7 @@
     <MatrixName>Wiron</MatrixName>
     <MatrixComposition>#Ni   (65)   #Cr   (22.5)   #Mo   (9.5)   #Nb   (1)   #Si   (1)   #Fe   (0.5)   #Ce   (0.5)   </MatrixComposition>
     <MatrixDensity>0</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.773-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:23.322987-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMDY8L0lEPg0KICAgIDxNYXRyaXhJRD40MjwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+Tmk8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjY1PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5XaXJvbjwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMDc8L0lEPg0KICAgIDxNYXRyaXhJRD40MjwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+Q3I8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIyLjU8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPldpcm9uPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTEwODwvSUQ+DQogICAgPE1hdHJpeElEPjQyPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5NbzwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+OS41PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5XaXJvbjwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMDk8L0lEPg0KICAgIDxNYXRyaXhJRD40MjwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TmI8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjE8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPldpcm9uPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTExMDwvSUQ+DQogICAgPE1hdHJpeElEPjQyPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5TaTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+V2lyb248L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMTExPC9JRD4NCiAgICA8TWF0cml4SUQ+NDI8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PkZlPC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT4wLjU8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPldpcm9uPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTExMjwvSUQ+DQogICAgPE1hdHJpeElEPjQyPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5DZTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MC41PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5XaXJvbjwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQo8L05ld0RhdGFTZXQ+</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2600,7 +2601,7 @@
     <MatrixName>ZOUT_Bitum</MatrixName>
     <MatrixComposition>#Na   (30)   #Al   (5)   #Ca   (10)   #N   (40)   #Ba   (15)   </MatrixComposition>
     <MatrixDensity>0</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.773-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:19.2026087-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMTM8L0lEPg0KICAgIDxNYXRyaXhJRD40MzwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TmE8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjMwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5aT1VUX0JpdHVtPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTExNDwvSUQ+DQogICAgPE1hdHJpeElEPjQzPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5BbDwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+NTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+Wk9VVF9CaXR1bTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMTU8L0lEPg0KICAgIDxNYXRyaXhJRD40MzwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+Q2E8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5aT1VUX0JpdHVtPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTExNjwvSUQ+DQogICAgPE1hdHJpeElEPjQzPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5OPC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT40MDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+Wk9VVF9CaXR1bTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xMTc8L0lEPg0KICAgIDxNYXRyaXhJRD40MzwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+QmE8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjE1PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5aT1VUX0JpdHVtPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2609,7 +2610,7 @@
     <MatrixName>U type</MatrixName>
     <MatrixComposition>#U   (1)   #C6H10O5   (98.99)   #Na   (0.01)   </MatrixComposition>
     <MatrixDensity>1.28</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.783-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:49:58.6422132-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xNDk8L0lEPg0KICAgIDxNYXRyaXhJRD42NzwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+VSBJQ1A8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMTUwPC9JRD4NCiAgICA8TWF0cml4SUQ+Njc8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PkM2SDEwTzU8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5Pjk4Ljk5PC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5VIElDUDwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xNTE8L0lEPg0KICAgIDxNYXRyaXhJRD42NzwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TmE8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjAuMDE8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPlUgSUNQPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2618,7 +2619,7 @@
     <MatrixName>Ba Oxide</MatrixName>
     <MatrixComposition>#Ba1O1   (100)   </MatrixComposition>
     <MatrixDensity>5.72</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.8-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:01.5564238-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xNzE8L0lEPg0KICAgIDxNYXRyaXhJRD44MDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+QmExTzE8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+QmEgT3hpZGU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KPC9OZXdEYXRhU2V0Pg==</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2630,7 +2631,7 @@
 #Al2Ta2 (10)
 </MatrixComposition>
     <MatrixDensity>7.4</MatrixDensity>
-    <MatrixDate>2018-07-23T05:11:31.4472237-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:15.2010388-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xNzc8L0lEPg0KICAgIDxNYXRyaXhJRD44NDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+RXUyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+T3hpZGUgRXU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KPC9OZXdEYXRhU2V0Pg==</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2639,7 +2640,7 @@
     <MatrixName>Oxide Yb</MatrixName>
     <MatrixComposition>#Yb2O3   (100)   </MatrixComposition>
     <MatrixDensity>9.17</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.803-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T01:50:14.8272702-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xNzg8L0lEPg0KICAgIDxNYXRyaXhJRD44NTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+WWIyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+T3hpZGUgWWI8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KPC9OZXdEYXRhU2V0Pg==</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2648,7 +2649,7 @@
     <MatrixName>Oxide Erbium</MatrixName>
     <MatrixComposition>#Er2O3   (100)   </MatrixComposition>
     <MatrixDensity>8.64</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.803-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T02:03:32.3462004-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xODE8L0lEPg0KICAgIDxNYXRyaXhJRD44ODwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+RXIyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+T3hpZGUgRXJiaXVtPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -2657,7 +2658,7 @@
     <MatrixName>Oxide Tm</MatrixName>
     <MatrixComposition>#Tm2O3   (100)   </MatrixComposition>
     <MatrixDensity>8.6</MatrixDensity>
-    <MatrixDate>2017-05-27T22:10:30.807-04:00</MatrixDate>
+    <MatrixDate>2018-07-27T02:04:10.5078388-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0xODI8L0lEPg0KICAgIDxNYXRyaXhJRD44OTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VG0yTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+T3hpZGUgVG08L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KPC9OZXdEYXRhU2V0Pg==</CompositionTable>
     <ToDo>false</ToDo>
   </Matrix>
@@ -13096,4203 +13097,857 @@
   </NAA>
   <MUES>
     <MUID>-1</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>226</Energy>
-    <MAIS>0.1079</MAIS>
-    <MATNCS>0.1162</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1</Energy>
+    <MAIS>0.008535</MAIS>
+    <MATNCS>5498</MATNCS>
     <Edge />
-    <MACS>0.005388</MACS>
-    <PE>0.008373</PE>
+    <MACS>5.89</MACS>
+    <PE>5498</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1216</MATCS>
-    <Density>2</Density>
+    <MATCS>5504</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-2</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>227</Energy>
-    <MAIS>0.1077</MAIS>
-    <MATNCS>0.116</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>101</Energy>
+    <MAIS>0.1232</MAIS>
+    <MATNCS>1.263</MATNCS>
     <Edge />
-    <MACS>0.005342</MACS>
-    <PE>0.008262</PE>
+    <MACS>0.07053</MACS>
+    <PE>1.139</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1213</MATCS>
-    <Density>2</Density>
+    <MATCS>1.333</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-3</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>228</Energy>
-    <MAIS>0.1076</MAIS>
-    <MATNCS>0.1157</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>201</Energy>
+    <MAIS>0.1063</MAIS>
+    <MATNCS>0.2734</MATNCS>
     <Edge />
-    <MACS>0.005297</MACS>
-    <PE>0.008153</PE>
+    <MACS>0.0204</MACS>
+    <PE>0.1671</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.121</MATCS>
-    <Density>2</Density>
+    <MATCS>0.2938</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-4</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>229</Energy>
-    <MAIS>0.1074</MAIS>
-    <MATNCS>0.1155</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>301</Energy>
+    <MAIS>0.0937</MAIS>
+    <MATNCS>0.1484</MATNCS>
     <Edge />
-    <MACS>0.005252</MACS>
-    <PE>0.008046</PE>
+    <MACS>0.009563</MACS>
+    <PE>0.05472</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1207</MATCS>
-    <Density>2</Density>
+    <MATCS>0.158</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-5</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>230</Energy>
-    <MAIS>0.1073</MAIS>
-    <MATNCS>0.1152</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>401</Energy>
+    <MAIS>0.08451</MAIS>
+    <MATNCS>0.1101</MATNCS>
     <Edge />
-    <MACS>0.005208</MACS>
-    <PE>0.007941</PE>
+    <MACS>0.005519</MACS>
+    <PE>0.02554</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1204</MATCS>
-    <Density>2</Density>
+    <MATCS>0.1156</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-6</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>231</Energy>
-    <MAIS>0.1071</MAIS>
-    <MATNCS>0.115</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>501</Energy>
+    <MAIS>0.07747</MAIS>
+    <MATNCS>0.09199</MATNCS>
     <Edge />
-    <MACS>0.005165</MACS>
-    <PE>0.007837</PE>
+    <MACS>0.003587</MACS>
+    <PE>0.01452</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1201</MATCS>
-    <Density>2</Density>
+    <MATCS>0.09558</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-7</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>232</Energy>
-    <MAIS>0.107</MAIS>
-    <MATNCS>0.1147</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>601</Energy>
+    <MAIS>0.07182</MAIS>
+    <MATNCS>0.08118</MATNCS>
     <Edge />
-    <MACS>0.005122</MACS>
-    <PE>0.007736</PE>
+    <MACS>0.002515</MACS>
+    <PE>0.009352</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1198</MATCS>
-    <Density>2</Density>
+    <MATCS>0.08369</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-8</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>233</Energy>
-    <MAIS>0.1068</MAIS>
-    <MATNCS>0.1145</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>701</Energy>
+    <MAIS>0.06718</MAIS>
+    <MATNCS>0.07373</MATNCS>
     <Edge />
-    <MACS>0.00508</MACS>
-    <PE>0.007636</PE>
+    <MACS>0.001861</MACS>
+    <PE>0.006552</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1196</MATCS>
-    <Density>2</Density>
+    <MATCS>0.07559</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-9</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>234</Energy>
-    <MAIS>0.1067</MAIS>
-    <MATNCS>0.1142</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>801</Energy>
+    <MAIS>0.06326</MAIS>
+    <MATNCS>0.06813</MATNCS>
     <Edge />
-    <MACS>0.005038</MACS>
-    <PE>0.007538</PE>
+    <MACS>0.001432</MACS>
+    <PE>0.004875</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1193</MATCS>
-    <Density>2</Density>
+    <MATCS>0.06956</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-10</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>235</Energy>
-    <MAIS>0.1065</MAIS>
-    <MATNCS>0.114</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>901</Energy>
+    <MAIS>0.05987</MAIS>
+    <MATNCS>0.06367</MATNCS>
     <Edge />
-    <MACS>0.004996</MACS>
-    <PE>0.007442</PE>
+    <MACS>0.001136</MACS>
+    <PE>0.003793</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.119</MATCS>
-    <Density>2</Density>
+    <MATCS>0.0648</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-11</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>236</Energy>
-    <MAIS>0.1064</MAIS>
-    <MATNCS>0.1137</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1000.9999999999999</Energy>
+    <MAIS>0.05695</MAIS>
+    <MATNCS>0.06</MATNCS>
     <Edge />
-    <MACS>0.004955</MACS>
-    <PE>0.007347</PE>
+    <MACS>0.0009225</MACS>
+    <PE>0.003052</PE>
     <PPNF>0</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1187</MATCS>
-    <Density>2</Density>
+    <MATCS>0.06092</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-12</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>237</Energy>
-    <MAIS>0.1063</MAIS>
-    <MATNCS>0.1135</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1101</Energy>
+    <MAIS>0.05437</MAIS>
+    <MATNCS>0.0569</MATNCS>
     <Edge />
-    <MACS>0.004915</MACS>
-    <PE>0.007254</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0007641</MACS>
+    <PE>0.002522</PE>
+    <PPNF>9.023E-06</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1184</MATCS>
-    <Density>2</Density>
+    <MATCS>0.05767</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-13</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>238</Energy>
-    <MAIS>0.1061</MAIS>
-    <MATNCS>0.1133</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1201</Energy>
+    <MAIS>0.05204</MAIS>
+    <MATNCS>0.05425</MATNCS>
     <Edge />
-    <MACS>0.004875</MACS>
-    <PE>0.007163</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0006432</MACS>
+    <PE>0.002129</PE>
+    <PPNF>7.403E-05</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1182</MATCS>
-    <Density>2</Density>
+    <MATCS>0.05489</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-14</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>239</Energy>
-    <MAIS>0.106</MAIS>
-    <MATNCS>0.113</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1301</Energy>
+    <MAIS>0.04995</MAIS>
+    <MATNCS>0.05199</MATNCS>
     <Edge />
-    <MACS>0.004836</MACS>
-    <PE>0.007073</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0005488</MACS>
+    <PE>0.00183</PE>
+    <PPNF>0.0002058</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1179</MATCS>
-    <Density>2</Density>
+    <MATCS>0.05254</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-15</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>240</Energy>
-    <MAIS>0.1058</MAIS>
-    <MATNCS>0.1128</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1401</Energy>
+    <MAIS>0.04807</MAIS>
+    <MATNCS>0.05006</MATNCS>
     <Edge />
-    <MACS>0.004797</MACS>
-    <PE>0.006985</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0004738</MACS>
+    <PE>0.001596</PE>
+    <PPNF>0.0003926</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1176</MATCS>
-    <Density>2</Density>
+    <MATCS>0.05053</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-16</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>241</Energy>
-    <MAIS>0.1057</MAIS>
-    <MATNCS>0.1126</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1501</Energy>
+    <MAIS>0.04636</MAIS>
+    <MATNCS>0.04839</MATNCS>
     <Edge />
-    <MACS>0.004758</MACS>
-    <PE>0.006898</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0004131</MACS>
+    <PE>0.001409</PE>
+    <PPNF>0.000621</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1173</MATCS>
-    <Density>2</Density>
+    <MATCS>0.0488</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-17</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>242</Energy>
-    <MAIS>0.1055</MAIS>
-    <MATNCS>0.1124</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1601</Energy>
+    <MAIS>0.04479</MAIS>
+    <MATNCS>0.04692</MATNCS>
     <Edge />
-    <MACS>0.00472</MACS>
-    <PE>0.006813</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0003633</MACS>
+    <PE>0.001256</PE>
+    <PPNF>0.0008804</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1171</MATCS>
-    <Density>2</Density>
+    <MATCS>0.04728</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-18</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>243</Energy>
-    <MAIS>0.1054</MAIS>
-    <MATNCS>0.1121</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1701</Energy>
+    <MAIS>0.04333</MAIS>
+    <MATNCS>0.04563</MATNCS>
     <Edge />
-    <MACS>0.004683</MACS>
-    <PE>0.006729</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.000322</MACS>
+    <PE>0.001129</PE>
+    <PPNF>0.001163</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1168</MATCS>
-    <Density>2</Density>
+    <MATCS>0.04595</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-19</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>244</Energy>
-    <MAIS>0.1053</MAIS>
-    <MATNCS>0.1119</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1801</Energy>
+    <MAIS>0.04199</MAIS>
+    <MATNCS>0.04448</MATNCS>
     <Edge />
-    <MACS>0.004646</MACS>
-    <PE>0.006646</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.0002873</MACS>
+    <PE>0.001023</PE>
+    <PPNF>0.001462</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1166</MATCS>
-    <Density>2</Density>
+    <MATCS>0.04476</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-20</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>245</Energy>
-    <MAIS>0.1051</MAIS>
-    <MATNCS>0.1117</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>1901</Energy>
+    <MAIS>0.04074</MAIS>
+    <MATNCS>0.04345</MATNCS>
     <Edge />
-    <MACS>0.004609</MACS>
-    <PE>0.006565</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.000258</MACS>
+    <PE>0.0009332</PE>
+    <PPNF>0.001774</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.1163</MATCS>
-    <Density>2</Density>
+    <MATCS>0.04371</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-21</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>246</Energy>
-    <MAIS>0.105</MAIS>
-    <MATNCS>0.1115</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2001</Energy>
+    <MAIS>0.03958</MAIS>
+    <MATNCS>0.04253</MATNCS>
     <Edge />
-    <MACS>0.004573</MACS>
-    <PE>0.006486</PE>
-    <PPNF>0</PPNF>
+    <MACS>0.000233</MACS>
+    <PE>0.0008563</PE>
+    <PPNF>0.002094</PPNF>
     <PPEF>0</PPEF>
-    <MATCS>0.116</MATCS>
-    <Density>2</Density>
+    <MATCS>0.04276</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-22</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>247</Energy>
-    <MAIS>0.1048</MAIS>
-    <MATNCS>0.1113</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2101</Energy>
+    <MAIS>0.03849</MAIS>
+    <MATNCS>0.0417</MATNCS>
     <Edge />
-    <MACS>0.004537</MACS>
-    <PE>0.006407</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1158</MATCS>
-    <Density>2</Density>
+    <MACS>0.0002115</MACS>
+    <PE>0.00079</PE>
+    <PPNF>0.002419</PPNF>
+    <PPEF>5.713E-09</PPEF>
+    <MATCS>0.04191</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-23</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>248</Energy>
-    <MAIS>0.1047</MAIS>
-    <MATNCS>0.111</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2201</Energy>
+    <MAIS>0.03747</MAIS>
+    <MATNCS>0.04095</MATNCS>
     <Edge />
-    <MACS>0.004501</MACS>
-    <PE>0.00633</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1155</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001928</MACS>
+    <PE>0.0007324</PE>
+    <PPNF>0.002745</PPNF>
+    <PPEF>1.062E-07</PPEF>
+    <MATCS>0.04114</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-24</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>249</Energy>
-    <MAIS>0.1046</MAIS>
-    <MATNCS>0.1108</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2301</Energy>
+    <MAIS>0.03652</MAIS>
+    <MATNCS>0.04027</MATNCS>
     <Edge />
-    <MACS>0.004466</MACS>
-    <PE>0.006254</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1153</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001764</MACS>
+    <PE>0.0006819</PE>
+    <PPNF>0.003071</PPNF>
+    <PPEF>4.165E-07</PPEF>
+    <MATCS>0.04045</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-25</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>250</Energy>
-    <MAIS>0.1044</MAIS>
-    <MATNCS>0.1106</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2401</Energy>
+    <MAIS>0.03562</MAIS>
+    <MATNCS>0.03965</MATNCS>
     <Edge />
-    <MACS>0.004432</MACS>
-    <PE>0.00618</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.115</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001621</MACS>
+    <PE>0.0006374</PE>
+    <PPNF>0.003395</PPNF>
+    <PPEF>1.003E-06</PPEF>
+    <MATCS>0.03982</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-26</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>251</Energy>
-    <MAIS>0.1043</MAIS>
-    <MATNCS>0.1104</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2501</Energy>
+    <MAIS>0.03477</MAIS>
+    <MATNCS>0.03909</MATNCS>
     <Edge />
-    <MACS>0.004398</MACS>
-    <PE>0.006106</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1148</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001494</MACS>
+    <PE>0.0005978</PE>
+    <PPNF>0.003717</PPNF>
+    <PPEF>1.896E-06</PPEF>
+    <MATCS>0.03924</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-27</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>252</Energy>
-    <MAIS>0.1042</MAIS>
-    <MATNCS>0.1102</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2601</Energy>
+    <MAIS>0.03397</MAIS>
+    <MATNCS>0.03857</MATNCS>
     <Edge />
-    <MACS>0.004364</MACS>
-    <PE>0.006034</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1146</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001382</MACS>
+    <PE>0.0005625</PE>
+    <PPNF>0.004035</PPNF>
+    <PPEF>3.108E-06</PPEF>
+    <MATCS>0.03871</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-28</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>253</Energy>
-    <MAIS>0.104</MAIS>
-    <MATNCS>0.11</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2701</Energy>
+    <MAIS>0.03322</MAIS>
+    <MATNCS>0.0381</MATNCS>
     <Edge />
-    <MACS>0.00433</MACS>
-    <PE>0.005963</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1143</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001281</MACS>
+    <PE>0.0005308</PE>
+    <PPNF>0.004351</PPNF>
+    <PPEF>4.632E-06</PPEF>
+    <MATCS>0.03823</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-29</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>254</Energy>
-    <MAIS>0.1039</MAIS>
-    <MATNCS>0.1098</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2801</Energy>
+    <MAIS>0.0325</MAIS>
+    <MATNCS>0.03767</MATNCS>
     <Edge />
-    <MACS>0.004297</MACS>
-    <PE>0.005893</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1141</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001191</MACS>
+    <PE>0.0005022</PE>
+    <PPNF>0.004662</PPNF>
+    <PPEF>6.457E-06</PPEF>
+    <MATCS>0.03779</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-30</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>255</Energy>
-    <MAIS>0.1037</MAIS>
-    <MATNCS>0.1096</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>2901</Energy>
+    <MAIS>0.03181</MAIS>
+    <MATNCS>0.03727</MATNCS>
     <Edge />
-    <MACS>0.004265</MACS>
-    <PE>0.005824</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1138</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001111</MACS>
+    <PE>0.0004763</PE>
+    <PPNF>0.00497</PPNF>
+    <PPEF>8.561E-06</PPEF>
+    <MATCS>0.03738</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-31</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>256</Energy>
-    <MAIS>0.1036</MAIS>
-    <MATNCS>0.1094</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3001</Energy>
+    <MAIS>0.03116</MAIS>
+    <MATNCS>0.0369</MATNCS>
     <Edge />
-    <MACS>0.004232</MACS>
-    <PE>0.005757</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1136</MATCS>
-    <Density>2</Density>
+    <MACS>0.0001038</MACS>
+    <PE>0.0004527</PE>
+    <PPNF>0.005273</PPNF>
+    <PPEF>1.092E-05</PPEF>
+    <MATCS>0.037</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-32</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>257</Energy>
-    <MAIS>0.1035</MAIS>
-    <MATNCS>0.1092</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3101</Energy>
+    <MAIS>0.03054</MAIS>
+    <MATNCS>0.03655</MATNCS>
     <Edge />
-    <MACS>0.0042</MACS>
-    <PE>0.00569</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1134</MATCS>
-    <Density>2</Density>
+    <MACS>9.723E-05</MACS>
+    <PE>0.0004312</PE>
+    <PPNF>0.005573</PPNF>
+    <PPEF>1.352E-05</PPEF>
+    <MATCS>0.03665</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-33</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>258</Energy>
-    <MAIS>0.1033</MAIS>
-    <MATNCS>0.109</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3201</Energy>
+    <MAIS>0.02994</MAIS>
+    <MATNCS>0.03624</MATNCS>
     <Edge />
-    <MACS>0.004169</MACS>
-    <PE>0.005624</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1131</MATCS>
-    <Density>2</Density>
+    <MACS>9.126E-05</MACS>
+    <PE>0.0004115</PE>
+    <PPNF>0.005868</PPNF>
+    <PPEF>1.633E-05</PPEF>
+    <MATCS>0.03633</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-34</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>259</Energy>
-    <MAIS>0.1032</MAIS>
-    <MATNCS>0.1088</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3301</Energy>
+    <MAIS>0.02937</MAIS>
+    <MATNCS>0.03595</MATNCS>
     <Edge />
-    <MACS>0.004138</MACS>
-    <PE>0.00556</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1129</MATCS>
-    <Density>2</Density>
+    <MACS>8.582E-05</MACS>
+    <PE>0.0003934</PE>
+    <PPNF>0.006158</PPNF>
+    <PPEF>1.934E-05</PPEF>
+    <MATCS>0.03603</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-35</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>260</Energy>
-    <MAIS>0.1031</MAIS>
-    <MATNCS>0.1086</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3401</Energy>
+    <MAIS>0.02883</MAIS>
+    <MATNCS>0.03567</MATNCS>
     <Edge />
-    <MACS>0.004107</MACS>
-    <PE>0.005496</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1127</MATCS>
-    <Density>2</Density>
+    <MACS>8.086E-05</MACS>
+    <PE>0.0003767</PE>
+    <PPNF>0.006445</PPNF>
+    <PPEF>2.252E-05</PPEF>
+    <MATCS>0.03576</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-36</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>261</Energy>
-    <MAIS>0.1029</MAIS>
-    <MATNCS>0.1084</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3501</Energy>
+    <MAIS>0.02831</MAIS>
+    <MATNCS>0.03542</MATNCS>
     <Edge />
-    <MACS>0.004076</MACS>
-    <PE>0.005434</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1125</MATCS>
-    <Density>2</Density>
+    <MACS>7.631E-05</MACS>
+    <PE>0.0003612</PE>
+    <PPNF>0.006728</PPNF>
+    <PPEF>2.585E-05</PPEF>
+    <MATCS>0.0355</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-37</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>262</Energy>
-    <MAIS>0.1028</MAIS>
-    <MATNCS>0.1082</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3601</Energy>
+    <MAIS>0.02781</MAIS>
+    <MATNCS>0.03519</MATNCS>
     <Edge />
-    <MACS>0.004046</MACS>
-    <PE>0.005372</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1122</MATCS>
-    <Density>2</Density>
+    <MACS>7.214E-05</MACS>
+    <PE>0.0003469</PE>
+    <PPNF>0.007006</PPNF>
+    <PPEF>2.934E-05</PPEF>
+    <MATCS>0.03526</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-38</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>263</Energy>
-    <MAIS>0.1027</MAIS>
-    <MATNCS>0.108</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3701</Energy>
+    <MAIS>0.02733</MAIS>
+    <MATNCS>0.03498</MATNCS>
     <Edge />
-    <MACS>0.004016</MACS>
-    <PE>0.005312</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.112</MATCS>
-    <Density>2</Density>
+    <MACS>6.83E-05</MACS>
+    <PE>0.0003337</PE>
+    <PPNF>0.00728</PPNF>
+    <PPEF>3.295E-05</PPEF>
+    <MATCS>0.03504</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-39</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>264</Energy>
-    <MAIS>0.1026</MAIS>
-    <MATNCS>0.1078</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3801</Energy>
+    <MAIS>0.02687</MAIS>
+    <MATNCS>0.03478</MATNCS>
     <Edge />
-    <MACS>0.003987</MACS>
-    <PE>0.005252</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1118</MATCS>
-    <Density>2</Density>
+    <MACS>6.475E-05</MACS>
+    <PE>0.0003213</PE>
+    <PPNF>0.007551</PPNF>
+    <PPEF>3.669E-05</PPEF>
+    <MATCS>0.03484</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-40</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>265</Energy>
-    <MAIS>0.1024</MAIS>
-    <MATNCS>0.1076</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>3901</Energy>
+    <MAIS>0.02642</MAIS>
+    <MATNCS>0.03459</MATNCS>
     <Edge />
-    <MACS>0.003958</MACS>
-    <PE>0.005193</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1116</MATCS>
-    <Density>2</Density>
+    <MACS>6.148E-05</MACS>
+    <PE>0.0003098</PE>
+    <PPNF>0.007818</PPNF>
+    <PPEF>4.055E-05</PPEF>
+    <MATCS>0.03465</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-41</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>266</Energy>
-    <MAIS>0.1023</MAIS>
-    <MATNCS>0.1074</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4001.0000000000005</Energy>
+    <MAIS>0.026</MAIS>
+    <MATNCS>0.03442</MATNCS>
     <Edge />
-    <MACS>0.003929</MACS>
-    <PE>0.005135</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1114</MATCS>
-    <Density>2</Density>
+    <MACS>5.845E-05</MACS>
+    <PE>0.000299</PE>
+    <PPNF>0.00808</PPNF>
+    <PPEF>4.452E-05</PPEF>
+    <MATCS>0.03448</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-42</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>267</Energy>
-    <MAIS>0.1022</MAIS>
-    <MATNCS>0.1072</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4101</Energy>
+    <MAIS>0.02558</MAIS>
+    <MATNCS>0.03426</MATNCS>
     <Edge />
-    <MACS>0.0039</MACS>
-    <PE>0.005079</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1111</MATCS>
-    <Density>2</Density>
+    <MACS>5.564E-05</MACS>
+    <PE>0.0002889</PE>
+    <PPNF>0.008339</PPNF>
+    <PPEF>4.859E-05</PPEF>
+    <MATCS>0.03432</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-43</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>268</Energy>
-    <MAIS>0.102</MAIS>
-    <MATNCS>0.1071</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4201</Energy>
+    <MAIS>0.02519</MAIS>
+    <MATNCS>0.03411</MATNCS>
     <Edge />
-    <MACS>0.003872</MACS>
-    <PE>0.005022</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1109</MATCS>
-    <Density>2</Density>
+    <MACS>5.302E-05</MACS>
+    <PE>0.0002794</PE>
+    <PPNF>0.008595</PPNF>
+    <PPEF>5.276E-05</PPEF>
+    <MATCS>0.03417</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-44</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>269</Energy>
-    <MAIS>0.1019</MAIS>
-    <MATNCS>0.1069</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4301</Energy>
+    <MAIS>0.0248</MAIS>
+    <MATNCS>0.03398</MATNCS>
     <Edge />
-    <MACS>0.003844</MACS>
-    <PE>0.004967</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1107</MATCS>
-    <Density>2</Density>
+    <MACS>5.058E-05</MACS>
+    <PE>0.0002705</PE>
+    <PPNF>0.008846</PPNF>
+    <PPEF>5.702E-05</PPEF>
+    <MATCS>0.03403</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-45</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>270</Energy>
-    <MAIS>0.1018</MAIS>
-    <MATNCS>0.1067</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4401</Energy>
+    <MAIS>0.02443</MAIS>
+    <MATNCS>0.03385</MATNCS>
     <Edge />
-    <MACS>0.003816</MACS>
-    <PE>0.004913</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1105</MATCS>
-    <Density>2</Density>
+    <MACS>4.831E-05</MACS>
+    <PE>0.0002622</PE>
+    <PPNF>0.009095</PPNF>
+    <PPEF>6.136E-05</PPEF>
+    <MATCS>0.0339</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-46</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>271</Energy>
-    <MAIS>0.1017</MAIS>
-    <MATNCS>0.1065</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4501</Energy>
+    <MAIS>0.02408</MAIS>
+    <MATNCS>0.03374</MATNCS>
     <Edge />
-    <MACS>0.003789</MACS>
-    <PE>0.004859</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1103</MATCS>
-    <Density>2</Density>
+    <MACS>4.619E-05</MACS>
+    <PE>0.0002542</PE>
+    <PPNF>0.009339</PPNF>
+    <PPEF>6.577E-05</PPEF>
+    <MATCS>0.03378</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-47</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>272</Energy>
-    <MAIS>0.1015</MAIS>
-    <MATNCS>0.1063</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4601</Energy>
+    <MAIS>0.02373</MAIS>
+    <MATNCS>0.03363</MATNCS>
     <Edge />
-    <MACS>0.003762</MACS>
-    <PE>0.004806</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1101</MATCS>
-    <Density>2</Density>
+    <MACS>4.421E-05</MACS>
+    <PE>0.0002468</PE>
+    <PPNF>0.00958</PPNF>
+    <PPEF>7.024E-05</PPEF>
+    <MATCS>0.03367</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-48</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>273</Energy>
-    <MAIS>0.1014</MAIS>
-    <MATNCS>0.1062</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4701</Energy>
+    <MAIS>0.0234</MAIS>
+    <MATNCS>0.03353</MATNCS>
     <Edge />
-    <MACS>0.003735</MACS>
-    <PE>0.004754</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1099</MATCS>
-    <Density>2</Density>
+    <MACS>4.235E-05</MACS>
+    <PE>0.0002397</PE>
+    <PPNF>0.009818</PPNF>
+    <PPEF>7.477E-05</PPEF>
+    <MATCS>0.03357</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-49</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>274</Energy>
-    <MAIS>0.1013</MAIS>
-    <MATNCS>0.106</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4801</Energy>
+    <MAIS>0.02307</MAIS>
+    <MATNCS>0.03343</MATNCS>
     <Edge />
-    <MACS>0.003709</MACS>
-    <PE>0.004703</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1097</MATCS>
-    <Density>2</Density>
+    <MACS>4.06E-05</MACS>
+    <PE>0.000233</PE>
+    <PPNF>0.01005</PPNF>
+    <PPEF>7.935E-05</PPEF>
+    <MATCS>0.03348</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-50</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>275</Energy>
-    <MAIS>0.1011</MAIS>
-    <MATNCS>0.1058</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>4901</Energy>
+    <MAIS>0.02276</MAIS>
+    <MATNCS>0.03335</MATNCS>
     <Edge />
-    <MACS>0.003682</MACS>
-    <PE>0.004653</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1095</MATCS>
-    <Density>2</Density>
+    <MACS>3.896E-05</MACS>
+    <PE>0.0002267</PE>
+    <PPNF>0.01028</PPNF>
+    <PPEF>8.397E-05</PPEF>
+    <MATCS>0.03339</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-51</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>276</Energy>
-    <MAIS>0.101</MAIS>
-    <MATNCS>0.1056</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5001</Energy>
+    <MAIS>0.02245</MAIS>
+    <MATNCS>0.03327</MATNCS>
     <Edge />
-    <MACS>0.003656</MACS>
-    <PE>0.004603</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1093</MATCS>
-    <Density>2</Density>
+    <MACS>3.742E-05</MACS>
+    <PE>0.0002207</PE>
+    <PPNF>0.01051</PPNF>
+    <PPEF>8.862E-05</PPEF>
+    <MATCS>0.03331</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-52</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>277</Energy>
-    <MAIS>0.1009</MAIS>
-    <MATNCS>0.1055</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5101</Energy>
+    <MAIS>0.02216</MAIS>
+    <MATNCS>0.0332</MATNCS>
     <Edge />
-    <MACS>0.003631</MACS>
-    <PE>0.004554</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1091</MATCS>
-    <Density>2</Density>
+    <MACS>3.597E-05</MACS>
+    <PE>0.0002149</PE>
+    <PPNF>0.01073</PPNF>
+    <PPEF>9.33E-05</PPEF>
+    <MATCS>0.03323</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-53</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>278</Energy>
-    <MAIS>0.1008</MAIS>
-    <MATNCS>0.1053</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5201</Energy>
+    <MAIS>0.02187</MAIS>
+    <MATNCS>0.03313</MATNCS>
     <Edge />
-    <MACS>0.003605</MACS>
-    <PE>0.004506</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1089</MATCS>
-    <Density>2</Density>
+    <MACS>3.46E-05</MACS>
+    <PE>0.0002095</PE>
+    <PPNF>0.01096</PPNF>
+    <PPEF>9.8E-05</PPEF>
+    <MATCS>0.03317</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-54</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>279</Energy>
-    <MAIS>0.1006</MAIS>
-    <MATNCS>0.1051</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5301</Energy>
+    <MAIS>0.02159</MAIS>
+    <MATNCS>0.03307</MATNCS>
     <Edge />
-    <MACS>0.00358</MACS>
-    <PE>0.004458</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1087</MATCS>
-    <Density>2</Density>
+    <MACS>3.331E-05</MACS>
+    <PE>0.0002043</PE>
+    <PPNF>0.01117</PPNF>
+    <PPEF>0.0001027</PPEF>
+    <MATCS>0.0331</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-55</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>280</Energy>
-    <MAIS>0.1005</MAIS>
-    <MATNCS>0.1049</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5401</Energy>
+    <MAIS>0.02132</MAIS>
+    <MATNCS>0.03301</MATNCS>
     <Edge />
-    <MACS>0.003555</MACS>
-    <PE>0.004411</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1085</MATCS>
-    <Density>2</Density>
+    <MACS>3.209E-05</MACS>
+    <PE>0.0001993</PE>
+    <PPNF>0.01139</PPNF>
+    <PPEF>0.0001075</PPEF>
+    <MATCS>0.03305</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-56</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>281</Energy>
-    <MAIS>0.1004</MAIS>
-    <MATNCS>0.1048</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5501</Energy>
+    <MAIS>0.02105</MAIS>
+    <MATNCS>0.03296</MATNCS>
     <Edge />
-    <MACS>0.003531</MACS>
-    <PE>0.004365</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1083</MATCS>
-    <Density>2</Density>
+    <MACS>3.093E-05</MACS>
+    <PE>0.0001946</PE>
+    <PPNF>0.0116</PPNF>
+    <PPEF>0.0001122</PPEF>
+    <MATCS>0.03299</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-57</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>282</Energy>
-    <MAIS>0.1003</MAIS>
-    <MATNCS>0.1046</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5601</Energy>
+    <MAIS>0.0208</MAIS>
+    <MATNCS>0.03292</MATNCS>
     <Edge />
-    <MACS>0.003506</MACS>
-    <PE>0.00432</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1081</MATCS>
-    <Density>2</Density>
+    <MACS>2.984E-05</MACS>
+    <PE>0.0001901</PE>
+    <PPNF>0.01181</PPNF>
+    <PPEF>0.000117</PPEF>
+    <MATCS>0.03295</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-58</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>283</Energy>
-    <MAIS>0.1002</MAIS>
-    <MATNCS>0.1044</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5701</Energy>
+    <MAIS>0.02055</MAIS>
+    <MATNCS>0.03287</MATNCS>
     <Edge />
-    <MACS>0.003482</MACS>
-    <PE>0.004275</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1079</MATCS>
-    <Density>2</Density>
+    <MACS>2.88E-05</MACS>
+    <PE>0.0001858</PE>
+    <PPNF>0.01202</PPNF>
+    <PPEF>0.0001217</PPEF>
+    <MATCS>0.0329</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-59</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>284</Energy>
-    <MAIS>0.1</MAIS>
-    <MATNCS>0.1043</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5801</Energy>
+    <MAIS>0.02031</MAIS>
+    <MATNCS>0.03284</MATNCS>
     <Edge />
-    <MACS>0.003458</MACS>
-    <PE>0.004231</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1077</MATCS>
-    <Density>2</Density>
+    <MACS>2.782E-05</MACS>
+    <PE>0.0001816</PE>
+    <PPNF>0.01222</PPNF>
+    <PPEF>0.0001265</PPEF>
+    <MATCS>0.03286</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-60</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>285</Energy>
-    <MAIS>0.09991</MAIS>
-    <MATNCS>0.1041</MATNCS>
+    <MatrixID>11</MatrixID>
+    <Energy>5901</Energy>
+    <MAIS>0.02007</MAIS>
+    <MATNCS>0.0328</MATNCS>
     <Edge />
-    <MACS>0.003435</MACS>
-    <PE>0.004187</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1075</MATCS>
-    <Density>2</Density>
+    <MACS>2.688E-05</MACS>
+    <PE>0.0001777</PE>
+    <PPNF>0.01242</PPNF>
+    <PPEF>0.0001312</PPEF>
+    <MATCS>0.03283</MATCS>
+    <Density>0</Density>
   </MUES>
   <MUES>
     <MUID>-61</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>286</Energy>
-    <MAIS>0.09979</MAIS>
-    <MATNCS>0.1039</MATNCS>
-    <Edge />
-    <MACS>0.003411</MACS>
-    <PE>0.004144</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1073</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-62</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>287</Energy>
-    <MAIS>0.09967</MAIS>
-    <MATNCS>0.1038</MATNCS>
-    <Edge />
-    <MACS>0.003388</MACS>
-    <PE>0.004102</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1072</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-63</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>288</Energy>
-    <MAIS>0.09955</MAIS>
-    <MATNCS>0.1036</MATNCS>
-    <Edge />
-    <MACS>0.003365</MACS>
-    <PE>0.00406</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.107</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-64</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>289</Energy>
-    <MAIS>0.09943</MAIS>
-    <MATNCS>0.1034</MATNCS>
-    <Edge />
-    <MACS>0.003343</MACS>
-    <PE>0.004019</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1068</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-65</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>290</Energy>
-    <MAIS>0.09931</MAIS>
-    <MATNCS>0.1033</MATNCS>
-    <Edge />
-    <MACS>0.00332</MACS>
-    <PE>0.003978</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1066</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-66</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>291</Energy>
-    <MAIS>0.09919</MAIS>
-    <MATNCS>0.1031</MATNCS>
-    <Edge />
-    <MACS>0.003298</MACS>
-    <PE>0.003938</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1064</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-67</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>292</Energy>
-    <MAIS>0.09907</MAIS>
-    <MATNCS>0.103</MATNCS>
-    <Edge />
-    <MACS>0.003276</MACS>
-    <PE>0.003899</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1062</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-68</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>293</Energy>
-    <MAIS>0.09895</MAIS>
-    <MATNCS>0.1028</MATNCS>
-    <Edge />
-    <MACS>0.003254</MACS>
-    <PE>0.00386</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1061</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-69</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>294</Energy>
-    <MAIS>0.09884</MAIS>
-    <MATNCS>0.1027</MATNCS>
-    <Edge />
-    <MACS>0.003233</MACS>
-    <PE>0.003821</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1059</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-70</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>295</Energy>
-    <MAIS>0.09872</MAIS>
-    <MATNCS>0.1025</MATNCS>
-    <Edge />
-    <MACS>0.003211</MACS>
-    <PE>0.003784</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1057</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-71</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>296</Energy>
-    <MAIS>0.0986</MAIS>
-    <MATNCS>0.1023</MATNCS>
-    <Edge />
-    <MACS>0.00319</MACS>
-    <PE>0.003746</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1055</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-72</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>297</Energy>
-    <MAIS>0.09848</MAIS>
-    <MATNCS>0.1022</MATNCS>
-    <Edge />
-    <MACS>0.003169</MACS>
-    <PE>0.003709</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1054</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-73</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>298</Energy>
-    <MAIS>0.09837</MAIS>
-    <MATNCS>0.102</MATNCS>
-    <Edge />
-    <MACS>0.003149</MACS>
-    <PE>0.003673</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1052</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-74</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>299</Energy>
-    <MAIS>0.09825</MAIS>
-    <MATNCS>0.1019</MATNCS>
-    <Edge />
-    <MACS>0.003128</MACS>
-    <PE>0.003637</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.105</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-75</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>300</Energy>
-    <MAIS>0.09814</MAIS>
-    <MATNCS>0.1017</MATNCS>
-    <Edge />
-    <MACS>0.003108</MACS>
-    <PE>0.003602</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1048</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-76</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>151</Energy>
-    <MAIS>0.1209</MAIS>
-    <MATNCS>0.1497</MATNCS>
-    <Edge />
-    <MACS>0.01165</MACS>
-    <PE>0.02883</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1614</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-77</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>152</Energy>
-    <MAIS>0.1207</MAIS>
-    <MATNCS>0.1489</MATNCS>
-    <Edge />
-    <MACS>0.01151</MACS>
-    <PE>0.02824</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1604</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-78</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>153</Energy>
-    <MAIS>0.1205</MAIS>
-    <MATNCS>0.1482</MATNCS>
-    <Edge />
-    <MACS>0.01137</MACS>
-    <PE>0.02768</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1595</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-79</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>154</Energy>
-    <MAIS>0.1203</MAIS>
-    <MATNCS>0.1474</MATNCS>
-    <Edge />
-    <MACS>0.01123</MACS>
-    <PE>0.02713</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1586</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-80</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>155</Energy>
-    <MAIS>0.1201</MAIS>
-    <MATNCS>0.1467</MATNCS>
-    <Edge />
-    <MACS>0.01109</MACS>
-    <PE>0.02659</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1578</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-81</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>156</Energy>
-    <MAIS>0.1199</MAIS>
-    <MATNCS>0.146</MATNCS>
-    <Edge />
-    <MACS>0.01096</MACS>
-    <PE>0.02606</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1569</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-82</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>157</Energy>
-    <MAIS>0.1197</MAIS>
-    <MATNCS>0.1453</MATNCS>
-    <Edge />
-    <MACS>0.01082</MACS>
-    <PE>0.02555</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1561</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-83</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>158</Energy>
-    <MAIS>0.1195</MAIS>
-    <MATNCS>0.1446</MATNCS>
-    <Edge />
-    <MACS>0.01069</MACS>
-    <PE>0.02506</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1553</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-84</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>159</Energy>
-    <MAIS>0.1193</MAIS>
-    <MATNCS>0.1439</MATNCS>
-    <Edge />
-    <MACS>0.01057</MACS>
-    <PE>0.02457</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1545</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-85</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>160</Energy>
-    <MAIS>0.1191</MAIS>
-    <MATNCS>0.1432</MATNCS>
-    <Edge />
-    <MACS>0.01044</MACS>
-    <PE>0.0241</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1537</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-86</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>161</Energy>
-    <MAIS>0.1189</MAIS>
-    <MATNCS>0.1426</MATNCS>
-    <Edge />
-    <MACS>0.01032</MACS>
-    <PE>0.02364</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1529</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-87</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>162</Energy>
-    <MAIS>0.1187</MAIS>
-    <MATNCS>0.1419</MATNCS>
-    <Edge />
-    <MACS>0.0102</MACS>
-    <PE>0.0232</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1521</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-88</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>163</Energy>
-    <MAIS>0.1185</MAIS>
-    <MATNCS>0.1413</MATNCS>
-    <Edge />
-    <MACS>0.01008</MACS>
-    <PE>0.02276</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1514</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-89</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>164</Energy>
-    <MAIS>0.1184</MAIS>
-    <MATNCS>0.1407</MATNCS>
-    <Edge />
-    <MACS>0.009964</MACS>
-    <PE>0.02233</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1507</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-90</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>165</Energy>
-    <MAIS>0.1182</MAIS>
-    <MATNCS>0.1401</MATNCS>
-    <Edge />
-    <MACS>0.009849</MACS>
-    <PE>0.02192</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1499</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-91</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>166</Energy>
-    <MAIS>0.118</MAIS>
-    <MATNCS>0.1395</MATNCS>
-    <Edge />
-    <MACS>0.009737</MACS>
-    <PE>0.02151</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1492</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-92</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>167</Energy>
-    <MAIS>0.1178</MAIS>
-    <MATNCS>0.1389</MATNCS>
-    <Edge />
-    <MACS>0.009626</MACS>
-    <PE>0.02112</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1485</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-93</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>168</Energy>
-    <MAIS>0.1176</MAIS>
-    <MATNCS>0.1383</MATNCS>
-    <Edge />
-    <MACS>0.009517</MACS>
-    <PE>0.02073</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1479</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-94</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>169</Energy>
-    <MAIS>0.1174</MAIS>
-    <MATNCS>0.1378</MATNCS>
-    <Edge />
-    <MACS>0.00941</MACS>
-    <PE>0.02036</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1472</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-95</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>170</Energy>
-    <MAIS>0.1172</MAIS>
-    <MATNCS>0.1372</MATNCS>
-    <Edge />
-    <MACS>0.009305</MACS>
-    <PE>0.01999</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1465</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-96</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>171</Energy>
-    <MAIS>0.117</MAIS>
-    <MATNCS>0.1367</MATNCS>
-    <Edge />
-    <MACS>0.009202</MACS>
-    <PE>0.01963</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1459</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-97</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>172</Energy>
-    <MAIS>0.1169</MAIS>
-    <MATNCS>0.1361</MATNCS>
-    <Edge />
-    <MACS>0.0091</MACS>
-    <PE>0.01928</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1452</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-98</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>173</Energy>
-    <MAIS>0.1167</MAIS>
-    <MATNCS>0.1356</MATNCS>
-    <Edge />
-    <MACS>0.009</MACS>
-    <PE>0.01894</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1446</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-99</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>174</Energy>
-    <MAIS>0.1165</MAIS>
-    <MATNCS>0.1351</MATNCS>
-    <Edge />
-    <MACS>0.008902</MACS>
-    <PE>0.01861</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.144</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-100</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>175</Energy>
-    <MAIS>0.1163</MAIS>
-    <MATNCS>0.1346</MATNCS>
-    <Edge />
-    <MACS>0.008805</MACS>
-    <PE>0.01828</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1434</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-101</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>176</Energy>
-    <MAIS>0.1161</MAIS>
-    <MATNCS>0.1341</MATNCS>
-    <Edge />
-    <MACS>0.00871</MACS>
-    <PE>0.01797</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1428</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-102</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>177</Energy>
-    <MAIS>0.116</MAIS>
-    <MATNCS>0.1336</MATNCS>
-    <Edge />
-    <MACS>0.008616</MACS>
-    <PE>0.01766</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1422</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-103</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>178</Energy>
-    <MAIS>0.1158</MAIS>
-    <MATNCS>0.1331</MATNCS>
-    <Edge />
-    <MACS>0.008524</MACS>
-    <PE>0.01735</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1416</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-104</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>179</Energy>
-    <MAIS>0.1156</MAIS>
-    <MATNCS>0.1326</MATNCS>
-    <Edge />
-    <MACS>0.008433</MACS>
-    <PE>0.01706</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1411</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-105</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>180</Energy>
-    <MAIS>0.1154</MAIS>
-    <MATNCS>0.1322</MATNCS>
-    <Edge />
-    <MACS>0.008344</MACS>
-    <PE>0.01677</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1405</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-106</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>181</Energy>
-    <MAIS>0.1152</MAIS>
-    <MATNCS>0.1317</MATNCS>
-    <Edge />
-    <MACS>0.008256</MACS>
-    <PE>0.01648</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.14</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-107</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>182</Energy>
-    <MAIS>0.1151</MAIS>
-    <MATNCS>0.1313</MATNCS>
-    <Edge />
-    <MACS>0.008169</MACS>
-    <PE>0.01621</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1394</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-108</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>183</Energy>
-    <MAIS>0.1149</MAIS>
-    <MATNCS>0.1308</MATNCS>
-    <Edge />
-    <MACS>0.008084</MACS>
-    <PE>0.01594</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1389</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-109</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>184</Energy>
-    <MAIS>0.1147</MAIS>
-    <MATNCS>0.1304</MATNCS>
-    <Edge />
-    <MACS>0.008</MACS>
-    <PE>0.01567</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1384</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-110</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>185</Energy>
-    <MAIS>0.1145</MAIS>
-    <MATNCS>0.1299</MATNCS>
-    <Edge />
-    <MACS>0.007918</MACS>
-    <PE>0.01541</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1379</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-111</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>186</Energy>
-    <MAIS>0.1144</MAIS>
-    <MATNCS>0.1295</MATNCS>
-    <Edge />
-    <MACS>0.007837</MACS>
-    <PE>0.01516</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1373</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-112</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>187</Energy>
-    <MAIS>0.1142</MAIS>
-    <MATNCS>0.1291</MATNCS>
-    <Edge />
-    <MACS>0.007757</MACS>
-    <PE>0.01491</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1368</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-113</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>188</Energy>
-    <MAIS>0.114</MAIS>
-    <MATNCS>0.1287</MATNCS>
-    <Edge />
-    <MACS>0.007678</MACS>
-    <PE>0.01467</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1364</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-114</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>189</Energy>
-    <MAIS>0.1138</MAIS>
-    <MATNCS>0.1283</MATNCS>
-    <Edge />
-    <MACS>0.0076</MACS>
-    <PE>0.01443</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1359</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-115</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>190</Energy>
-    <MAIS>0.1137</MAIS>
-    <MATNCS>0.1279</MATNCS>
-    <Edge />
-    <MACS>0.007524</MACS>
-    <PE>0.0142</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1354</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-116</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>191</Energy>
-    <MAIS>0.1135</MAIS>
-    <MATNCS>0.1275</MATNCS>
-    <Edge />
-    <MACS>0.007448</MACS>
-    <PE>0.01398</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1349</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-117</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>192</Energy>
-    <MAIS>0.1133</MAIS>
-    <MATNCS>0.1271</MATNCS>
-    <Edge />
-    <MACS>0.007374</MACS>
-    <PE>0.01375</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1344</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-118</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>193</Energy>
-    <MAIS>0.1131</MAIS>
-    <MATNCS>0.1267</MATNCS>
-    <Edge />
-    <MACS>0.007301</MACS>
-    <PE>0.01354</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.134</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-119</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>194</Energy>
-    <MAIS>0.113</MAIS>
-    <MATNCS>0.1263</MATNCS>
-    <Edge />
-    <MACS>0.007229</MACS>
-    <PE>0.01333</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1335</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-120</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>195</Energy>
-    <MAIS>0.1128</MAIS>
-    <MATNCS>0.1259</MATNCS>
-    <Edge />
-    <MACS>0.007158</MACS>
-    <PE>0.01312</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1331</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-121</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>196</Energy>
-    <MAIS>0.1126</MAIS>
-    <MATNCS>0.1256</MATNCS>
-    <Edge />
-    <MACS>0.007088</MACS>
-    <PE>0.01291</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1326</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-122</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>197</Energy>
-    <MAIS>0.1125</MAIS>
-    <MATNCS>0.1252</MATNCS>
-    <Edge />
-    <MACS>0.007019</MACS>
-    <PE>0.01271</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1322</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-123</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>198</Energy>
-    <MAIS>0.1123</MAIS>
-    <MATNCS>0.1248</MATNCS>
-    <Edge />
-    <MACS>0.006951</MACS>
-    <PE>0.01252</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1318</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-124</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>199</Energy>
-    <MAIS>0.1121</MAIS>
-    <MATNCS>0.1245</MATNCS>
-    <Edge />
-    <MACS>0.006884</MACS>
-    <PE>0.01233</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1313</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-125</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>200</Energy>
-    <MAIS>0.112</MAIS>
-    <MATNCS>0.1241</MATNCS>
-    <Edge />
-    <MACS>0.006818</MACS>
-    <PE>0.01214</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1309</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-126</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>201</Energy>
-    <MAIS>0.1118</MAIS>
-    <MATNCS>0.1238</MATNCS>
-    <Edge />
-    <MACS>0.006753</MACS>
-    <PE>0.01196</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1305</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-127</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>202</Energy>
-    <MAIS>0.1116</MAIS>
-    <MATNCS>0.1234</MATNCS>
-    <Edge />
-    <MACS>0.006689</MACS>
-    <PE>0.01178</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1301</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-128</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>203</Energy>
-    <MAIS>0.1115</MAIS>
-    <MATNCS>0.1231</MATNCS>
-    <Edge />
-    <MACS>0.006626</MACS>
-    <PE>0.0116</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1297</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-129</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>204</Energy>
-    <MAIS>0.1113</MAIS>
-    <MATNCS>0.1227</MATNCS>
-    <Edge />
-    <MACS>0.006564</MACS>
-    <PE>0.01143</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1293</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-130</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>205</Energy>
-    <MAIS>0.1111</MAIS>
-    <MATNCS>0.1224</MATNCS>
-    <Edge />
-    <MACS>0.006502</MACS>
-    <PE>0.01126</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1289</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-131</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>206</Energy>
-    <MAIS>0.111</MAIS>
-    <MATNCS>0.1221</MATNCS>
-    <Edge />
-    <MACS>0.006442</MACS>
-    <PE>0.01109</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1285</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-132</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>207</Energy>
-    <MAIS>0.1108</MAIS>
-    <MATNCS>0.1218</MATNCS>
-    <Edge />
-    <MACS>0.006382</MACS>
-    <PE>0.01093</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1281</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-133</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>208</Energy>
-    <MAIS>0.1107</MAIS>
-    <MATNCS>0.1214</MATNCS>
-    <Edge />
-    <MACS>0.006323</MACS>
-    <PE>0.01077</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1278</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-134</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>209</Energy>
-    <MAIS>0.1105</MAIS>
-    <MATNCS>0.1211</MATNCS>
-    <Edge />
-    <MACS>0.006265</MACS>
-    <PE>0.01062</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1274</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-135</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>210</Energy>
-    <MAIS>0.1103</MAIS>
-    <MATNCS>0.1208</MATNCS>
-    <Edge />
-    <MACS>0.006208</MACS>
-    <PE>0.01046</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.127</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-136</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>211</Energy>
-    <MAIS>0.1102</MAIS>
-    <MATNCS>0.1205</MATNCS>
-    <Edge />
-    <MACS>0.006151</MACS>
-    <PE>0.01031</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1267</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-137</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>212</Energy>
-    <MAIS>0.11</MAIS>
-    <MATNCS>0.1202</MATNCS>
-    <Edge />
-    <MACS>0.006095</MACS>
-    <PE>0.01017</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1263</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-138</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>213</Energy>
-    <MAIS>0.1099</MAIS>
-    <MATNCS>0.1199</MATNCS>
-    <Edge />
-    <MACS>0.00604</MACS>
-    <PE>0.01002</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1259</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-139</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>214</Energy>
-    <MAIS>0.1097</MAIS>
-    <MATNCS>0.1196</MATNCS>
-    <Edge />
-    <MACS>0.005986</MACS>
-    <PE>0.009879</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1256</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-140</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>215</Energy>
-    <MAIS>0.1096</MAIS>
-    <MATNCS>0.1193</MATNCS>
-    <Edge />
-    <MACS>0.005933</MACS>
-    <PE>0.00974</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1252</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-141</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>216</Energy>
-    <MAIS>0.1094</MAIS>
-    <MATNCS>0.119</MATNCS>
-    <Edge />
-    <MACS>0.00588</MACS>
-    <PE>0.009604</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1249</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-142</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>217</Energy>
-    <MAIS>0.1092</MAIS>
-    <MATNCS>0.1187</MATNCS>
-    <Edge />
-    <MACS>0.005828</MACS>
-    <PE>0.00947</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1245</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-143</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>218</Energy>
-    <MAIS>0.1091</MAIS>
-    <MATNCS>0.1184</MATNCS>
-    <Edge />
-    <MACS>0.005776</MACS>
-    <PE>0.009339</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1242</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-144</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>219</Energy>
-    <MAIS>0.1089</MAIS>
-    <MATNCS>0.1181</MATNCS>
-    <Edge />
-    <MACS>0.005725</MACS>
-    <PE>0.00921</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1239</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-145</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>220</Energy>
-    <MAIS>0.1088</MAIS>
-    <MATNCS>0.1179</MATNCS>
-    <Edge />
-    <MACS>0.005675</MACS>
-    <PE>0.009084</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1235</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-146</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>221</Energy>
-    <MAIS>0.1086</MAIS>
-    <MATNCS>0.1176</MATNCS>
-    <Edge />
-    <MACS>0.005626</MACS>
-    <PE>0.00896</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1232</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-147</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>222</Energy>
-    <MAIS>0.1085</MAIS>
-    <MATNCS>0.1173</MATNCS>
-    <Edge />
-    <MACS>0.005577</MACS>
-    <PE>0.008838</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1229</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-148</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>223</Energy>
-    <MAIS>0.1083</MAIS>
-    <MATNCS>0.117</MATNCS>
-    <Edge />
-    <MACS>0.005529</MACS>
-    <PE>0.008719</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1226</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-149</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>224</Energy>
-    <MAIS>0.1082</MAIS>
-    <MATNCS>0.1168</MATNCS>
-    <Edge />
-    <MACS>0.005481</MACS>
-    <PE>0.008601</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1223</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-150</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>225</Energy>
-    <MAIS>0.108</MAIS>
-    <MATNCS>0.1165</MATNCS>
-    <Edge />
-    <MACS>0.005434</MACS>
-    <PE>0.008486</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1219</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-151</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>76</Energy>
-    <MAIS>0.1366</MAIS>
-    <MATNCS>0.3792</MATNCS>
-    <Edge />
-    <MACS>0.04114</MACS>
-    <PE>0.2425</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4203</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-152</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>77</Energy>
-    <MAIS>0.1364</MAIS>
-    <MATNCS>0.3694</MATNCS>
-    <Edge />
-    <MACS>0.0402</MACS>
-    <PE>0.2329</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4096</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-153</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>78</Energy>
-    <MAIS>0.1362</MAIS>
-    <MATNCS>0.3601</MATNCS>
-    <Edge />
-    <MACS>0.0393</MACS>
-    <PE>0.2238</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3993</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-154</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>79</Energy>
-    <MAIS>0.1361</MAIS>
-    <MATNCS>0.3512</MATNCS>
-    <Edge />
-    <MACS>0.03842</MACS>
-    <PE>0.2152</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3896</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-155</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>80</Energy>
-    <MAIS>0.1359</MAIS>
-    <MATNCS>0.3428</MATNCS>
-    <Edge />
-    <MACS>0.03757</MACS>
-    <PE>0.2069</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3804</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-156</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>81</Energy>
-    <MAIS>0.1357</MAIS>
-    <MATNCS>0.3348</MATNCS>
-    <Edge />
-    <MACS>0.03675</MACS>
-    <PE>0.1991</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3715</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-157</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>82</Energy>
-    <MAIS>0.1355</MAIS>
-    <MATNCS>0.3272</MATNCS>
-    <Edge />
-    <MACS>0.03595</MACS>
-    <PE>0.1917</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3631</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-158</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>83</Energy>
-    <MAIS>0.1353</MAIS>
-    <MATNCS>0.3199</MATNCS>
-    <Edge />
-    <MACS>0.03518</MACS>
-    <PE>0.1846</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3551</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-159</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>84</Energy>
-    <MAIS>0.1351</MAIS>
-    <MATNCS>0.313</MATNCS>
-    <Edge />
-    <MACS>0.03444</MACS>
-    <PE>0.1779</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3474</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-160</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>85</Energy>
-    <MAIS>0.1349</MAIS>
-    <MATNCS>0.3064</MATNCS>
-    <Edge />
-    <MACS>0.03371</MACS>
-    <PE>0.1715</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3401</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-161</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>86</Energy>
-    <MAIS>0.1346</MAIS>
-    <MATNCS>0.3</MATNCS>
-    <Edge />
-    <MACS>0.03301</MACS>
-    <PE>0.1654</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3331</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-162</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>87</Energy>
-    <MAIS>0.1344</MAIS>
-    <MATNCS>0.294</MATNCS>
-    <Edge />
-    <MACS>0.03233</MACS>
-    <PE>0.1596</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3264</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-163</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>88</Energy>
-    <MAIS>0.1342</MAIS>
-    <MATNCS>0.2883</MATNCS>
-    <Edge />
-    <MACS>0.03167</MACS>
-    <PE>0.154</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3199</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-164</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>89</Energy>
-    <MAIS>0.134</MAIS>
-    <MATNCS>0.2827</MATNCS>
-    <Edge />
-    <MACS>0.03104</MACS>
-    <PE>0.1487</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3138</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-165</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>90</Energy>
-    <MAIS>0.1338</MAIS>
-    <MATNCS>0.2775</MATNCS>
-    <Edge />
-    <MACS>0.03042</MACS>
-    <PE>0.1436</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3079</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-166</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>91</Energy>
-    <MAIS>0.1336</MAIS>
-    <MATNCS>0.2724</MATNCS>
-    <Edge />
-    <MACS>0.02981</MACS>
-    <PE>0.1388</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.3022</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-167</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>92</Energy>
-    <MAIS>0.1334</MAIS>
-    <MATNCS>0.2676</MATNCS>
-    <Edge />
-    <MACS>0.02923</MACS>
-    <PE>0.1342</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2968</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-168</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>93</Energy>
-    <MAIS>0.1332</MAIS>
-    <MATNCS>0.2629</MATNCS>
-    <Edge />
-    <MACS>0.02866</MACS>
-    <PE>0.1298</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2916</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-169</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>94</Energy>
-    <MAIS>0.133</MAIS>
-    <MATNCS>0.2585</MATNCS>
-    <Edge />
-    <MACS>0.02811</MACS>
-    <PE>0.1255</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2866</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-170</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>95</Energy>
-    <MAIS>0.1328</MAIS>
-    <MATNCS>0.2542</MATNCS>
-    <Edge />
-    <MACS>0.02758</MACS>
-    <PE>0.1215</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2818</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-171</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>96</Energy>
-    <MAIS>0.1325</MAIS>
-    <MATNCS>0.2501</MATNCS>
-    <Edge />
-    <MACS>0.02706</MACS>
-    <PE>0.1176</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2772</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-172</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>97</Energy>
-    <MAIS>0.1323</MAIS>
-    <MATNCS>0.2462</MATNCS>
-    <Edge />
-    <MACS>0.02655</MACS>
-    <PE>0.1139</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2727</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-173</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>98</Energy>
-    <MAIS>0.1321</MAIS>
-    <MATNCS>0.2424</MATNCS>
-    <Edge />
-    <MACS>0.02606</MACS>
-    <PE>0.1103</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2685</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-174</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>99</Energy>
-    <MAIS>0.1319</MAIS>
-    <MATNCS>0.2388</MATNCS>
-    <Edge />
-    <MACS>0.02558</MACS>
-    <PE>0.1069</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2643</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-175</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>100</Energy>
-    <MAIS>0.1317</MAIS>
-    <MATNCS>0.2353</MATNCS>
-    <Edge />
-    <MACS>0.02511</MACS>
-    <PE>0.1036</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2604</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-176</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>101</Energy>
-    <MAIS>0.1315</MAIS>
-    <MATNCS>0.2319</MATNCS>
-    <Edge />
-    <MACS>0.02466</MACS>
-    <PE>0.1004</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2565</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-177</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>102</Energy>
-    <MAIS>0.1312</MAIS>
-    <MATNCS>0.2286</MATNCS>
-    <Edge />
-    <MACS>0.02422</MACS>
-    <PE>0.0974</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2529</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-178</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>103</Energy>
-    <MAIS>0.131</MAIS>
-    <MATNCS>0.2255</MATNCS>
-    <Edge />
-    <MACS>0.02379</MACS>
-    <PE>0.0945</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2493</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-179</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>104</Energy>
-    <MAIS>0.1308</MAIS>
-    <MATNCS>0.2225</MATNCS>
-    <Edge />
-    <MACS>0.02337</MACS>
-    <PE>0.0917</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2459</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-180</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>105</Energy>
-    <MAIS>0.1306</MAIS>
-    <MATNCS>0.2196</MATNCS>
-    <Edge />
-    <MACS>0.02296</MACS>
-    <PE>0.08902</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2426</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-181</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>106</Energy>
-    <MAIS>0.1304</MAIS>
-    <MATNCS>0.2168</MATNCS>
-    <Edge />
-    <MACS>0.02257</MACS>
-    <PE>0.08643</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2394</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-182</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>107</Energy>
-    <MAIS>0.1302</MAIS>
-    <MATNCS>0.2141</MATNCS>
-    <Edge />
-    <MACS>0.02218</MACS>
-    <PE>0.08395</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2363</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-183</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>108</Energy>
-    <MAIS>0.1299</MAIS>
-    <MATNCS>0.2115</MATNCS>
-    <Edge />
-    <MACS>0.0218</MACS>
-    <PE>0.08156</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2333</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-184</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>109</Energy>
-    <MAIS>0.1297</MAIS>
-    <MATNCS>0.209</MATNCS>
-    <Edge />
-    <MACS>0.02144</MACS>
-    <PE>0.07925</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2304</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-185</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>110</Energy>
-    <MAIS>0.1295</MAIS>
-    <MATNCS>0.2065</MATNCS>
-    <Edge />
-    <MACS>0.02108</MACS>
-    <PE>0.07704</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2276</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-186</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>111</Energy>
-    <MAIS>0.1293</MAIS>
-    <MATNCS>0.2042</MATNCS>
-    <Edge />
-    <MACS>0.02073</MACS>
-    <PE>0.0749</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2249</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-187</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>112</Energy>
-    <MAIS>0.1291</MAIS>
-    <MATNCS>0.2019</MATNCS>
-    <Edge />
-    <MACS>0.02039</MACS>
-    <PE>0.07284</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2223</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-188</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>113</Energy>
-    <MAIS>0.1288</MAIS>
-    <MATNCS>0.1997</MATNCS>
-    <Edge />
-    <MACS>0.02006</MACS>
-    <PE>0.07086</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2198</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-189</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>114</Energy>
-    <MAIS>0.1286</MAIS>
-    <MATNCS>0.1976</MATNCS>
-    <Edge />
-    <MACS>0.01973</MACS>
-    <PE>0.06895</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2173</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-190</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>115</Energy>
-    <MAIS>0.1284</MAIS>
-    <MATNCS>0.1955</MATNCS>
-    <Edge />
-    <MACS>0.01941</MACS>
-    <PE>0.0671</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2149</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-191</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>116</Energy>
-    <MAIS>0.1282</MAIS>
-    <MATNCS>0.1935</MATNCS>
-    <Edge />
-    <MACS>0.01911</MACS>
-    <PE>0.06532</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2126</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-192</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>117</Energy>
-    <MAIS>0.128</MAIS>
-    <MATNCS>0.1916</MATNCS>
-    <Edge />
-    <MACS>0.0188</MACS>
-    <PE>0.0636</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2104</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-193</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>118</Energy>
-    <MAIS>0.1278</MAIS>
-    <MATNCS>0.1897</MATNCS>
-    <Edge />
-    <MACS>0.01851</MACS>
-    <PE>0.06194</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2082</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-194</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>119</Energy>
-    <MAIS>0.1275</MAIS>
-    <MATNCS>0.1879</MATNCS>
-    <Edge />
-    <MACS>0.01822</MACS>
-    <PE>0.06034</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2061</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-195</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>120</Energy>
-    <MAIS>0.1273</MAIS>
-    <MATNCS>0.1861</MATNCS>
-    <Edge />
-    <MACS>0.01794</MACS>
-    <PE>0.05879</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2041</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-196</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>121</Energy>
-    <MAIS>0.1271</MAIS>
-    <MATNCS>0.1844</MATNCS>
-    <Edge />
-    <MACS>0.01766</MACS>
-    <PE>0.05729</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2021</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-197</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>122</Energy>
-    <MAIS>0.1269</MAIS>
-    <MATNCS>0.1827</MATNCS>
-    <Edge />
-    <MACS>0.0174</MACS>
-    <PE>0.05585</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.2001</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-198</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>123</Energy>
-    <MAIS>0.1267</MAIS>
-    <MATNCS>0.1811</MATNCS>
-    <Edge />
-    <MACS>0.01713</MACS>
-    <PE>0.05445</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1983</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-199</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>124</Energy>
-    <MAIS>0.1265</MAIS>
-    <MATNCS>0.1796</MATNCS>
-    <Edge />
-    <MACS>0.01688</MACS>
-    <PE>0.0531</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1964</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-200</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>125</Energy>
-    <MAIS>0.1263</MAIS>
-    <MATNCS>0.178</MATNCS>
-    <Edge />
-    <MACS>0.01662</MACS>
-    <PE>0.05179</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1947</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-201</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>126</Energy>
-    <MAIS>0.126</MAIS>
-    <MATNCS>0.1766</MATNCS>
-    <Edge />
-    <MACS>0.01638</MACS>
-    <PE>0.05052</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1929</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-202</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>127</Energy>
-    <MAIS>0.1258</MAIS>
-    <MATNCS>0.1751</MATNCS>
-    <Edge />
-    <MACS>0.01614</MACS>
-    <PE>0.0493</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1913</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-203</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>128</Energy>
-    <MAIS>0.1256</MAIS>
-    <MATNCS>0.1737</MATNCS>
-    <Edge />
-    <MACS>0.0159</MACS>
-    <PE>0.04811</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1896</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-204</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>129</Energy>
-    <MAIS>0.1254</MAIS>
-    <MATNCS>0.1724</MATNCS>
-    <Edge />
-    <MACS>0.01567</MACS>
-    <PE>0.04697</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.188</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-205</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>130</Energy>
-    <MAIS>0.1252</MAIS>
-    <MATNCS>0.171</MATNCS>
-    <Edge />
-    <MACS>0.01545</MACS>
-    <PE>0.04585</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1865</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-206</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>131</Energy>
-    <MAIS>0.125</MAIS>
-    <MATNCS>0.1698</MATNCS>
-    <Edge />
-    <MACS>0.01523</MACS>
-    <PE>0.04478</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.185</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-207</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>132</Energy>
-    <MAIS>0.1248</MAIS>
-    <MATNCS>0.1685</MATNCS>
-    <Edge />
-    <MACS>0.01501</MACS>
-    <PE>0.04373</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1835</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-208</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>133</Energy>
-    <MAIS>0.1246</MAIS>
-    <MATNCS>0.1673</MATNCS>
-    <Edge />
-    <MACS>0.0148</MACS>
-    <PE>0.04272</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1821</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-209</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>134</Energy>
-    <MAIS>0.1244</MAIS>
-    <MATNCS>0.1661</MATNCS>
-    <Edge />
-    <MACS>0.0146</MACS>
-    <PE>0.04174</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1807</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-210</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>135</Energy>
-    <MAIS>0.1241</MAIS>
-    <MATNCS>0.1649</MATNCS>
-    <Edge />
-    <MACS>0.01439</MACS>
-    <PE>0.04079</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1793</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-211</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>136</Energy>
-    <MAIS>0.1239</MAIS>
-    <MATNCS>0.1638</MATNCS>
-    <Edge />
-    <MACS>0.0142</MACS>
-    <PE>0.03986</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.178</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-212</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>137</Energy>
-    <MAIS>0.1237</MAIS>
-    <MATNCS>0.1627</MATNCS>
-    <Edge />
-    <MACS>0.014</MACS>
-    <PE>0.03897</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1767</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-213</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>138</Energy>
-    <MAIS>0.1235</MAIS>
-    <MATNCS>0.1616</MATNCS>
-    <Edge />
-    <MACS>0.01381</MACS>
-    <PE>0.0381</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1754</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-214</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>139</Energy>
-    <MAIS>0.1233</MAIS>
-    <MATNCS>0.1606</MATNCS>
-    <Edge />
-    <MACS>0.01362</MACS>
-    <PE>0.03726</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1742</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-215</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>140</Energy>
-    <MAIS>0.1231</MAIS>
-    <MATNCS>0.1595</MATNCS>
-    <Edge />
-    <MACS>0.01344</MACS>
-    <PE>0.03644</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.173</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-216</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>141</Energy>
-    <MAIS>0.1229</MAIS>
-    <MATNCS>0.1585</MATNCS>
-    <Edge />
-    <MACS>0.01326</MACS>
-    <PE>0.03564</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1718</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-217</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>142</Energy>
-    <MAIS>0.1227</MAIS>
-    <MATNCS>0.1576</MATNCS>
-    <Edge />
-    <MACS>0.01309</MACS>
-    <PE>0.03487</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1707</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-218</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>143</Energy>
-    <MAIS>0.1225</MAIS>
-    <MATNCS>0.1566</MATNCS>
-    <Edge />
-    <MACS>0.01292</MACS>
-    <PE>0.03412</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1695</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-219</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>144</Energy>
-    <MAIS>0.1223</MAIS>
-    <MATNCS>0.1557</MATNCS>
-    <Edge />
-    <MACS>0.01275</MACS>
-    <PE>0.03339</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1684</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-220</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>145</Energy>
-    <MAIS>0.1221</MAIS>
-    <MATNCS>0.1548</MATNCS>
-    <Edge />
-    <MACS>0.01258</MACS>
-    <PE>0.03268</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1673</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-221</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>146</Energy>
-    <MAIS>0.1219</MAIS>
-    <MATNCS>0.1539</MATNCS>
-    <Edge />
-    <MACS>0.01242</MACS>
-    <PE>0.03199</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1663</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-222</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>147</Energy>
-    <MAIS>0.1217</MAIS>
-    <MATNCS>0.153</MATNCS>
-    <Edge />
-    <MACS>0.01226</MACS>
-    <PE>0.03133</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1653</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-223</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>148</Energy>
-    <MAIS>0.1215</MAIS>
-    <MATNCS>0.1522</MATNCS>
-    <Edge />
-    <MACS>0.0121</MACS>
-    <PE>0.03067</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1643</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-224</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>149</Energy>
-    <MAIS>0.1213</MAIS>
-    <MATNCS>0.1513</MATNCS>
-    <Edge />
-    <MACS>0.01195</MACS>
-    <PE>0.03004</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1633</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-225</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>150</Energy>
-    <MAIS>0.1211</MAIS>
-    <MATNCS>0.1505</MATNCS>
-    <Edge />
-    <MACS>0.0118</MACS>
-    <PE>0.02943</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.1623</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-226</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>1</Energy>
-    <MAIS>0.01155</MAIS>
-    <MATNCS>5007</MATNCS>
-    <Edge />
-    <MACS>3.363</MACS>
-    <PE>5007</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>5010</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-227</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>2</Energy>
-    <MAIS>0.02713</MAIS>
-    <MATNCS>1692</MATNCS>
-    <Edge />
-    <MACS>2.84</MACS>
-    <PE>1692</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1695</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-228</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>3</Energy>
-    <MAIS>0.03922</MAIS>
-    <MATNCS>581.8</MATNCS>
-    <Edge />
-    <MACS>2.387</MACS>
-    <PE>581.7</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>584.1</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-229</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>4</Energy>
-    <MAIS>0.04966</MAIS>
-    <MATNCS>265.6</MATNCS>
-    <Edge />
-    <MACS>2.017</MACS>
-    <PE>265.5</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>267.6</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-230</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>5</Energy>
-    <MAIS>0.05911</MAIS>
-    <MATNCS>142.7</MATNCS>
-    <Edge />
-    <MACS>1.714</MACS>
-    <PE>142.6</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>144.4</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-231</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>6</Energy>
-    <MAIS>0.0677</MAIS>
-    <MATNCS>167.8</MATNCS>
-    <Edge />
-    <MACS>1.464</MACS>
-    <PE>167.7</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>169.3</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-232</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>7</Energy>
-    <MAIS>0.07547</MAIS>
-    <MATNCS>244.5</MATNCS>
-    <Edge />
-    <MACS>1.261</MACS>
-    <PE>244.4</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>245.8</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-233</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>8</Energy>
-    <MAIS>0.08245</MAIS>
-    <MATNCS>172.7</MATNCS>
-    <Edge />
-    <MACS>1.096</MACS>
-    <PE>172.7</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>173.8</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-234</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>9</Energy>
-    <MAIS>0.08866</MAIS>
-    <MATNCS>126</MATNCS>
-    <Edge />
-    <MACS>0.9616</MACS>
-    <PE>125.9</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>126.9</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-235</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>10</Energy>
-    <MAIS>0.09413</MAIS>
-    <MATNCS>94.53</MATNCS>
-    <Edge />
-    <MACS>0.8524</MACS>
-    <PE>94.43</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>95.38</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-236</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>11</Energy>
-    <MAIS>0.09895</MAIS>
-    <MATNCS>72.77</MATNCS>
-    <Edge />
-    <MACS>0.7627</MACS>
-    <PE>72.67</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>73.54</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-237</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>12</Energy>
-    <MAIS>0.1032</MAIS>
-    <MATNCS>57.25</MATNCS>
-    <Edge />
-    <MACS>0.6877</MACS>
-    <PE>57.15</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>57.94</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-238</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>13</Energy>
-    <MAIS>0.1069</MAIS>
-    <MATNCS>45.85</MATNCS>
-    <Edge />
-    <MACS>0.6242</MACS>
-    <PE>45.75</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>46.48</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-239</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>14</Energy>
-    <MAIS>0.1103</MAIS>
-    <MATNCS>37.29</MATNCS>
-    <Edge />
-    <MACS>0.5697</MACS>
-    <PE>37.18</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>37.86</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-240</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>15</Energy>
-    <MAIS>0.1132</MAIS>
-    <MATNCS>30.73</MATNCS>
-    <Edge />
-    <MACS>0.5223</MACS>
-    <PE>30.62</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>31.26</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-241</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>16</Energy>
-    <MAIS>0.1159</MAIS>
-    <MATNCS>25.62</MATNCS>
-    <Edge />
-    <MACS>0.4809</MACS>
-    <PE>25.5</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>26.1</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-242</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>17</Energy>
-    <MAIS>0.1182</MAIS>
-    <MATNCS>21.57</MATNCS>
-    <Edge />
-    <MACS>0.4443</MACS>
-    <PE>21.45</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>22.02</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-243</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>18</Energy>
-    <MAIS>0.1204</MAIS>
-    <MATNCS>18.33</MATNCS>
-    <Edge />
-    <MACS>0.4117</MACS>
-    <PE>18.21</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>18.75</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-244</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>19</Energy>
-    <MAIS>0.1223</MAIS>
-    <MATNCS>15.71</MATNCS>
-    <Edge />
-    <MACS>0.3825</MACS>
-    <PE>15.59</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>16.09</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-245</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>20</Energy>
-    <MAIS>0.124</MAIS>
-    <MATNCS>13.57</MATNCS>
-    <Edge />
-    <MACS>0.3562</MACS>
-    <PE>13.44</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>13.92</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-246</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>21</Energy>
-    <MAIS>0.1256</MAIS>
-    <MATNCS>11.79</MATNCS>
-    <Edge />
-    <MACS>0.3324</MACS>
-    <PE>11.67</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>12.13</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-247</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>22</Energy>
-    <MAIS>0.127</MAIS>
-    <MATNCS>10.32</MATNCS>
-    <Edge />
-    <MACS>0.3108</MACS>
-    <PE>10.19</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>10.63</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-248</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>23</Energy>
-    <MAIS>0.1284</MAIS>
-    <MATNCS>9.081</MATNCS>
-    <Edge />
-    <MACS>0.2912</MACS>
-    <PE>8.953</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>9.372</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-249</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>24</Energy>
-    <MAIS>0.1296</MAIS>
-    <MATNCS>8.034</MATNCS>
-    <Edge />
-    <MACS>0.2733</MACS>
-    <PE>7.904</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>8.307</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-250</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>25</Energy>
-    <MAIS>0.1306</MAIS>
-    <MATNCS>7.143</MATNCS>
-    <Edge />
-    <MACS>0.2571</MACS>
-    <PE>7.012</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>7.4</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-251</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>26</Energy>
-    <MAIS>0.1316</MAIS>
-    <MATNCS>6.38</MATNCS>
-    <Edge />
-    <MACS>0.2422</MACS>
-    <PE>6.248</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>6.622</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-252</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>27</Energy>
-    <MAIS>0.1325</MAIS>
-    <MATNCS>5.723</MATNCS>
-    <Edge />
-    <MACS>0.2285</MACS>
-    <PE>5.59</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>5.951</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-253</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>28</Energy>
-    <MAIS>0.1334</MAIS>
-    <MATNCS>5.154</MATNCS>
-    <Edge />
-    <MACS>0.216</MACS>
-    <PE>5.021</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>5.37</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-254</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>29</Energy>
-    <MAIS>0.1341</MAIS>
-    <MATNCS>4.659</MATNCS>
-    <Edge />
-    <MACS>0.2045</MACS>
-    <PE>4.525</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>4.864</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-255</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>30</Energy>
-    <MAIS>0.1348</MAIS>
-    <MATNCS>4.227</MATNCS>
-    <Edge />
-    <MACS>0.1939</MACS>
-    <PE>4.092</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>4.421</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-256</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>31</Energy>
-    <MAIS>0.1354</MAIS>
-    <MATNCS>3.847</MATNCS>
-    <Edge />
-    <MACS>0.1841</MACS>
-    <PE>3.712</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>4.031</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-257</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>32</Energy>
-    <MAIS>0.136</MAIS>
-    <MATNCS>3.513</MATNCS>
-    <Edge />
-    <MACS>0.1751</MACS>
-    <PE>3.377</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>3.688</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-258</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>33</Energy>
-    <MAIS>0.1365</MAIS>
-    <MATNCS>3.217</MATNCS>
-    <Edge />
-    <MACS>0.1667</MACS>
-    <PE>3.081</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>3.384</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-259</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>34</Energy>
-    <MAIS>0.1369</MAIS>
-    <MATNCS>2.954</MATNCS>
-    <Edge />
-    <MACS>0.1589</MACS>
-    <PE>2.817</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>3.113</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-260</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>35</Energy>
-    <MAIS>0.1373</MAIS>
-    <MATNCS>2.721</MATNCS>
-    <Edge />
-    <MACS>0.1517</MACS>
-    <PE>2.583</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>2.872</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-261</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>36</Energy>
-    <MAIS>0.1377</MAIS>
-    <MATNCS>2.512</MATNCS>
-    <Edge />
-    <MACS>0.1449</MACS>
-    <PE>2.374</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>2.657</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-262</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>37</Energy>
-    <MAIS>0.138</MAIS>
-    <MATNCS>2.324</MATNCS>
-    <Edge />
-    <MACS>0.1386</MACS>
-    <PE>2.186</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>2.463</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-263</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>38</Energy>
-    <MAIS>0.1383</MAIS>
-    <MATNCS>2.156</MATNCS>
-    <Edge />
-    <MACS>0.1328</MACS>
-    <PE>2.018</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>2.289</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-264</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>39</Energy>
-    <MAIS>0.1386</MAIS>
-    <MATNCS>2.004</MATNCS>
-    <Edge />
-    <MACS>0.1273</MACS>
-    <PE>1.866</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>2.132</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-265</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>40</Energy>
-    <MAIS>0.1388</MAIS>
-    <MATNCS>1.867</MATNCS>
-    <Edge />
-    <MACS>0.1221</MACS>
-    <PE>1.729</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.99</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-266</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>41</Energy>
-    <MAIS>0.139</MAIS>
-    <MATNCS>1.743</MATNCS>
-    <Edge />
-    <MACS>0.1173</MACS>
-    <PE>1.604</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.861</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-267</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>42</Energy>
-    <MAIS>0.1391</MAIS>
-    <MATNCS>1.631</MATNCS>
-    <Edge />
-    <MACS>0.1127</MACS>
-    <PE>1.492</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.744</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-268</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>43</Energy>
-    <MAIS>0.1393</MAIS>
-    <MATNCS>1.528</MATNCS>
-    <Edge />
-    <MACS>0.1084</MACS>
-    <PE>1.389</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.637</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-269</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>44</Energy>
-    <MAIS>0.1394</MAIS>
-    <MATNCS>1.435</MATNCS>
-    <Edge />
-    <MACS>0.1044</MACS>
-    <PE>1.296</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.539</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-270</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>45</Energy>
-    <MAIS>0.1395</MAIS>
-    <MATNCS>1.35</MATNCS>
-    <Edge />
-    <MACS>0.1006</MACS>
-    <PE>1.21</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.45</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-271</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>46</Energy>
-    <MAIS>0.1395</MAIS>
-    <MATNCS>1.272</MATNCS>
-    <Edge />
-    <MACS>0.09701</MACS>
-    <PE>1.132</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.369</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-272</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>47</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>1.2</MATNCS>
-    <Edge />
-    <MACS>0.09361</MACS>
-    <PE>1.06</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.294</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-273</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>48</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>1.134</MATNCS>
-    <Edge />
-    <MACS>0.09039</MACS>
-    <PE>0.9946</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.225</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-274</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>49</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>1.074</MATNCS>
-    <Edge />
-    <MACS>0.08733</MACS>
-    <PE>0.9341</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.161</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-275</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>50</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>1.018</MATNCS>
-    <Edge />
-    <MACS>0.08443</MACS>
-    <PE>0.8783</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.102</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-276</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>51</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>0.9664</MATNCS>
-    <Edge />
-    <MACS>0.08168</MACS>
-    <PE>0.8268</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>1.048</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-277</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>52</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>0.9188</MATNCS>
-    <Edge />
-    <MACS>0.07906</MACS>
-    <PE>0.7792</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.9979</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-278</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>53</Energy>
-    <MAIS>0.1396</MAIS>
-    <MATNCS>0.8747</MATNCS>
-    <Edge />
-    <MACS>0.07656</MACS>
-    <PE>0.7351</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.9513</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-279</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>54</Energy>
-    <MAIS>0.1395</MAIS>
-    <MATNCS>0.8338</MATNCS>
-    <Edge />
-    <MACS>0.07419</MACS>
-    <PE>0.6943</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.908</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-280</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>55</Energy>
-    <MAIS>0.1395</MAIS>
-    <MATNCS>0.7959</MATNCS>
-    <Edge />
-    <MACS>0.07192</MACS>
-    <PE>0.6564</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.8678</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-281</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>56</Energy>
-    <MAIS>0.1394</MAIS>
-    <MATNCS>0.7606</MATNCS>
-    <Edge />
-    <MACS>0.06976</MACS>
-    <PE>0.6211</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.8303</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-282</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>57</Energy>
-    <MAIS>0.1394</MAIS>
-    <MATNCS>0.7277</MATNCS>
-    <Edge />
-    <MACS>0.06769</MACS>
-    <PE>0.5883</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.7954</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-283</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>58</Energy>
-    <MAIS>0.1393</MAIS>
-    <MATNCS>0.6971</MATNCS>
-    <Edge />
-    <MACS>0.06572</MACS>
-    <PE>0.5578</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.7628</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-284</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>59</Energy>
-    <MAIS>0.1392</MAIS>
-    <MATNCS>0.6685</MATNCS>
-    <Edge />
-    <MACS>0.06383</MACS>
-    <PE>0.5293</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.7323</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-285</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>60</Energy>
-    <MAIS>0.1391</MAIS>
-    <MATNCS>0.6417</MATNCS>
-    <Edge />
-    <MACS>0.06203</MACS>
-    <PE>0.5027</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.7038</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-286</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>61</Energy>
-    <MAIS>0.139</MAIS>
-    <MATNCS>0.6167</MATNCS>
-    <Edge />
-    <MACS>0.0603</MACS>
-    <PE>0.4778</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.677</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-287</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>62</Energy>
-    <MAIS>0.1389</MAIS>
-    <MATNCS>0.5933</MATNCS>
-    <Edge />
-    <MACS>0.05864</MACS>
-    <PE>0.4545</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.652</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-288</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>63</Energy>
-    <MAIS>0.1387</MAIS>
-    <MATNCS>0.5714</MATNCS>
-    <Edge />
-    <MACS>0.05705</MACS>
-    <PE>0.4326</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.6284</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-289</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>64</Energy>
-    <MAIS>0.1386</MAIS>
-    <MATNCS>0.5508</MATNCS>
-    <Edge />
-    <MACS>0.05552</MACS>
-    <PE>0.4122</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.6063</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-290</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>65</Energy>
-    <MAIS>0.1385</MAIS>
-    <MATNCS>0.5314</MATNCS>
-    <Edge />
-    <MACS>0.05406</MACS>
-    <PE>0.393</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.5855</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-291</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>66</Energy>
-    <MAIS>0.1383</MAIS>
-    <MATNCS>0.5132</MATNCS>
-    <Edge />
-    <MACS>0.05265</MACS>
-    <PE>0.3749</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.5659</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-292</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>67</Energy>
-    <MAIS>0.1382</MAIS>
-    <MATNCS>0.4961</MATNCS>
-    <Edge />
-    <MACS>0.05129</MACS>
-    <PE>0.3579</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.5474</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-293</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>68</Energy>
-    <MAIS>0.138</MAIS>
-    <MATNCS>0.48</MATNCS>
-    <Edge />
-    <MACS>0.04999</MACS>
-    <PE>0.3419</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.53</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-294</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>69</Energy>
-    <MAIS>0.1379</MAIS>
-    <MATNCS>0.4647</MATNCS>
-    <Edge />
-    <MACS>0.04874</MACS>
-    <PE>0.3269</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.5135</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-295</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>70</Energy>
-    <MAIS>0.1377</MAIS>
-    <MATNCS>0.4504</MATNCS>
-    <Edge />
-    <MACS>0.04753</MACS>
-    <PE>0.3127</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4979</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-296</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>71</Energy>
-    <MAIS>0.1375</MAIS>
-    <MATNCS>0.4368</MATNCS>
-    <Edge />
-    <MACS>0.04637</MACS>
-    <PE>0.2993</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4832</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-297</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>72</Energy>
-    <MAIS>0.1374</MAIS>
-    <MATNCS>0.424</MATNCS>
-    <Edge />
-    <MACS>0.04525</MACS>
-    <PE>0.2866</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4692</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-298</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>73</Energy>
-    <MAIS>0.1372</MAIS>
-    <MATNCS>0.4119</MATNCS>
-    <Edge />
-    <MACS>0.04416</MACS>
-    <PE>0.2747</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.456</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-299</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>74</Energy>
-    <MAIS>0.137</MAIS>
-    <MATNCS>0.4004</MATNCS>
-    <Edge />
-    <MACS>0.04312</MACS>
-    <PE>0.2634</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4435</MATCS>
-    <Density>2</Density>
-  </MUES>
-  <MUES>
-    <MUID>-300</MUID>
-    <MatrixID>10</MatrixID>
-    <Energy>75</Energy>
-    <MAIS>0.1368</MAIS>
-    <MATNCS>0.3895</MATNCS>
-    <Edge />
-    <MACS>0.04211</MACS>
-    <PE>0.2527</PE>
-    <PPNF>0</PPNF>
-    <PPEF>0</PPEF>
-    <MATCS>0.4316</MATCS>
-    <Density>2</Density>
+    <MatrixID>11</MatrixID>
+    <Energy>6001</Energy>
+    <MAIS>0.01984</MAIS>
+    <MATNCS>0.03277</MATNCS>
+    <Edge />
+    <MACS>2.6E-05</MACS>
+    <PE>0.0001739</PE>
+    <PPNF>0.01262</PPNF>
+    <PPEF>0.000136</PPEF>
+    <MATCS>0.0328</MATCS>
+    <Density>0</Density>
   </MUES>
   <pValues>
     <Target>Fe-58</Target>
@@ -28967,96 +25622,6 @@
     <Name>AlZnVIn</Name>
   </Compositions>
   <Compositions>
-    <ID>-20</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Ce2O3</Element>
-    <Quantity>26</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-21</ID>
-    <MatrixID>11</MatrixID>
-    <Element>La2O3</Element>
-    <Quantity>11</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-22</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Nd2O3</Element>
-    <Quantity>10</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-23</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Th1O2</Element>
-    <Quantity>7</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-24</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Y2O3</Element>
-    <Quantity>3.2</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-25</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Pr6O11</Element>
-    <Quantity>2.9</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-26</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Sm2O3</Element>
-    <Quantity>2.3</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-27</ID>
-    <MatrixID>11</MatrixID>
-    <Element>Gd2O3</Element>
-    <Quantity>1.7</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-28</ID>
-    <MatrixID>11</MatrixID>
-    <Element>P</Element>
-    <Quantity>35</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-29</ID>
-    <MatrixID>11</MatrixID>
-    <Element>U1O2</Element>
-    <Quantity>0.4</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Monazite</Name>
-  </Compositions>
-  <Compositions>
     <ID>-49</ID>
     <MatrixID>20</MatrixID>
     <Element>C9H16O4</Element>
@@ -29297,6 +25862,87 @@
     <Quantity>100</Quantity>
     <Unc>0</Unc>
     <QuantityUnit>%</QuantityUnit>
+  </Compositions>
+  <Compositions>
+    <ID>-193</ID>
+    <MatrixID>11</MatrixID>
+    <Element>Ce2O3</Element>
+    <Quantity>26</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-194</ID>
+    <MatrixID>11</MatrixID>
+    <Element>La2O3</Element>
+    <Quantity>11</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-195</ID>
+    <MatrixID>11</MatrixID>
+    <Element>Nd2O3</Element>
+    <Quantity>10</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-196</ID>
+    <MatrixID>11</MatrixID>
+    <Element>Y2O3</Element>
+    <Quantity>3.2</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-197</ID>
+    <MatrixID>11</MatrixID>
+    <Element>Pr6O11</Element>
+    <Quantity>2.9</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-198</ID>
+    <MatrixID>11</MatrixID>
+    <Element>Sm2O3</Element>
+    <Quantity>2.3</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-199</ID>
+    <MatrixID>11</MatrixID>
+    <Element>Gd2O3</Element>
+    <Quantity>1.7</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-200</ID>
+    <MatrixID>11</MatrixID>
+    <Element>P</Element>
+    <Quantity>35</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-201</ID>
+    <MatrixID>11</MatrixID>
+    <Element>U1O2</Element>
+    <Quantity>0.4</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Monazite</Name>
   </Compositions>
   <Yields>
     <ID>1</ID>
@@ -31297,7 +27943,7 @@
    at DB.Tools.BS.updateSubSampleOrUnit(BindingSource&amp; sender, Boolean selectedBs) in D:\Dropbox\My Software\Omni\DB.Tools\BS\BS.Update.cs:line 54
    at DB.Tools.BS.CurrentChanged(BindingSource&amp; sender) in D:\Dropbox\My Software\Omni\DB.Tools\BS\BS.Public.cs:line 264</StackTrace>
     <WindowsUser>DB.Tools</WindowsUser>
-    <Date>2018-07-26T04:18:09.4342764-04:00</Date>
+    <Date>2018-07-27T02:06:42.4323229-04:00</Date>
   </Exceptions>
   <SSFPref>
     <ID>-1</ID>
@@ -31307,7 +27953,7 @@
     <AAFillHeight>false</AAFillHeight>
     <CalcDensity>true</CalcDensity>
     <DoMatSSF>true</DoMatSSF>
-    <DoCK>false</DoCK>
+    <DoCK>true</DoCK>
     <CalcMass>false</CalcMass>
     <ShowMatSSF>false</ShowMatSSF>
     <Loop>true</Loop>
@@ -31319,7 +27965,7 @@
     <ID>-1</ID>
     <WindowsUser>FLUX\FULVIO</WindowsUser>
     <LastIrradiationProject />
-    <LastAccessDate>2018-07-26T04:15:06.975876-04:00</LastAccessDate>
+    <LastAccessDate>2018-07-27T02:03:08.7428942-04:00</LastAccessDate>
     <DoSolang>false</DoSolang>
     <minArea>500</minArea>
     <maxUnc>50</maxUnc>
@@ -31328,18 +27974,17 @@
     <ShowSolang>false</ShowSolang>
     <ShowSampleDescription>false</ShowSampleDescription>
     <RunInBackground>false</RunInBackground>
-    <AutoLoad>true</AutoLoad>
-    <LIMS>Data Source=(localDB)\MSSQLLocalDB;Initial Catalog=k0NAA;Persist Security Info=True;Connect Timeout=5;Enlist=False;Pooling=False;Integrated Security=True</LIMS>
+    <AutoLoad>false</AutoLoad>
+    <LIMS>Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=k0NAA;Integrated Security=True;Persist Security Info=True;Enlist=False;Pooling=False;Connect Timeout=5</LIMS>
     <HL>Data Source=flux\sql14;Initial Catalog=HL14;Persist Security Info=True;User ID=sa;Password=naa;Connect Timeout=10</HL>
-    <LastToDo />
     <Spectra>c:\</Spectra>
     <SpectraSvr>PC1533</SpectraSvr>
-    <FillByHL>true</FillByHL>
-    <FillBySpectra>true</FillBySpectra>
+    <FillByHL>false</FillByHL>
+    <FillBySpectra>false</FillBySpectra>
     <Offline>true</Offline>
-    <AdvancedEditor>true</AdvancedEditor>
-    <IsMSMQ>true</IsMSMQ>
-    <IsSQL>true</IsSQL>
+    <AdvancedEditor>false</AdvancedEditor>
+    <IsMSMQ>false</IsMSMQ>
+    <IsSQL>false</IsSQL>
     <DetectorIdx>3</DetectorIdx>
     <MeasIdx>1</MeasIdx>
     <PositionIdx>2</PositionIdx>
@@ -31347,11 +27992,11 @@
   <XCOMPref>
     <ID>-1</ID>
     <ASCIIOutput>false</ASCIIOutput>
-    <ListOfEnergies>MC4wMDQKMC4wMDUKMC4wMDYKMC4wMDgKMC4wMQowLjAxNQowLjAyCjAuMDMKMC4wNAowLjA1CjAuMDYKMC4wOAowLjEKMC4xNQowLjIKMC4zCjAuNAowLjUKMC42CjAuOAoxCjEuMDIyCjEuMjUKMS41CjIKMi4wNDQKMw==</ListOfEnergies>
+    <ListOfEnergies>MC4wMDQNCjAuMDA1DQowLjAwNg0KMC4wMDgNCjAuMDENCjAuMDE1DQowLjAyDQowLjAzDQowLjA0DQowLjA1DQowLjA2DQowLjA4DQowLjENCjAuMTUNCjAuMg0KMC4zDQowLjQNCjAuNQ0KMC42DQowLjgNCjENCjEuMDIyDQoxLjI1DQoxLjUNCjINCjIuMDQ0DQoz</ListOfEnergies>
     <UseList>false</UseList>
     <Rounding>e3</Rounding>
-    <Steps>1</Steps>
-    <EndEnergy>350</EndEnergy>
+    <Steps>100</Steps>
+    <EndEnergy>6000</EndEnergy>
     <StartEnergy>1</StartEnergy>
     <PPEF>true</PPEF>
     <PPNF>true</PPNF>
@@ -31360,6 +28005,7 @@
     <TCS>true</TCS>
     <TNCS>true</TNCS>
     <IS>true</IS>
+    <AccumulateResults>false</AccumulateResults>
     <WindowsUser>FLUX\FULVIO</WindowsUser>
   </XCOMPref>
 </LINAA>

@@ -35,11 +35,13 @@ namespace DB
 
                 dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
 
+            //    this.AcceptChanges();
+
                 this.Merge(dt);
 
               
 
-                this.AcceptChanges();
+          //      this.AcceptChanges();
                 //    DataSet set = Interface.Get();
                 //clear and repopulate
 

@@ -11,6 +11,8 @@ namespace DB.Tools
 {
     public partial class Creator
     {
+        public static string MainLIMSResource { get; set; }
+
         /// <summary>
         /// Prepare the needed methods and the worker
         /// </summary>
@@ -160,6 +162,8 @@ namespace DB.Tools
 
             return ok;
         }
+
+      
 
         private static bool cloneDatabase(string localDB, string developerDB)
         {

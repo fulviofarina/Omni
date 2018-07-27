@@ -59,5 +59,21 @@ namespace µFinder.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+        ///&lt;LINAA&gt;
+        ///  &lt;xs:schema id=&quot;LINAA&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot; xmlns:msprop=&quot;urn:schemas-microsoft-com:xml-msprop&quot;&gt;
+        ///    &lt;xs:element name=&quot;LINAA&quot; msdata:IsDataSet=&quot;true&quot; msdata:Locale=&quot;en&quot; msdata:FolderPath=&quot;D:\Skydrive\Documents\k0-X\&quot; msdata:EnforceConstraints=&quot;False&quot;&gt;
+        ///      &lt;xs:complexType&gt;
+        ///        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+        ///          &lt;xs:element name=&quot;SubSamples&quot;&gt;
+        ///  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LIMS {
+            get {
+                return ResourceManager.GetString("LIMS", resourceCulture);
+            }
+        }
     }
 }

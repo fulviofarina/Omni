@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("µFinder by F. Farina Arboccò")]
+[assembly: AssemblyTitle("µFinder")]
 [assembly: AssemblyDescription("Finds the Mass Attenuation Coefficients for photons between 1 keV to 10 GeV")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fulvio Farina Arboccò")]
-[assembly: AssemblyProduct("µFinder")]
+[assembly: AssemblyProduct("µFinder by F. Farina Arboccò")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.0.1.0")]
+[assembly: AssemblyFileVersion("2.0.1.0")]
 [assembly: NeutralResourcesLanguage("en")]
 

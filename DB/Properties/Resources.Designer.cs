@@ -119,7 +119,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \Files\.
+        ///   Looks up a localized string similar to \DevFiles\.
         /// </summary>
         public static string DevFiles {
             get {
@@ -395,7 +395,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SolCoi\.
+        ///   Looks up a localized string similar to Soleffi\.
         /// </summary>
         public static string SolCoiFolder {
             get {
@@ -423,7 +423,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MatSSF\.
+        ///   Looks up a localized string similar to SSF\.
         /// </summary>
         public static string SSFFolder {
             get {
@@ -525,7 +525,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to XCOM\.
+        ///   Looks up a localized string similar to uFinder\.
         /// </summary>
         public static string XCOMFolder {
             get {
@@ -534,7 +534,7 @@ namespace DB.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to XCOMPreferences.
+        ///   Looks up a localized string similar to uFinderPreferences.
         /// </summary>
         public static string XCOMPreferences {
             get {

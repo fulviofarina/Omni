@@ -71,6 +71,11 @@ namespace DB.Tools
             //populate resources
             Interface.IReport.Msg(checking, checking + resources);
             populateResources(overriderFound);
+
+            //create developer file from mainLIMSResource
+            Creator.PopulateDeveloperFile(Creator.MainLIMSResource, Resources.Linaa);
+
+
         }
 
         /// <summary>
@@ -146,8 +151,12 @@ namespace DB.Tools
             //if it does not exist, then read the developer file
             if (!System.IO.File.Exists(filePath))
             {
-                filePath = Application.StartupPath + Resources.DevFiles + Resources.Linaa;
+                //esto cambio en uFinder asi que arreglar en MSTFF, usar lims.xml como un resource y empotrarlo
+                filePath = Interface.IStore.FolderPath + Resources.DevFiles + Resources.Linaa;
             }
+            Interface.Get().Clear();
+            Interface.IDB.AcceptChanges();
+
             Interface.IStore.Read(filePath);
 
            
@@ -318,7 +327,7 @@ namespace DB.Tools
         private static void populateBaseDirectory(bool restore = false)
         {
             //assign folderpath (like a App\Local folder)
-            Interface.IStore.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            Interface.IStore.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             Interface.IStore.FolderPath += Resources.k0XFolder; //cambiar esto
 
             //populate main directory at folderPath
@@ -331,6 +340,13 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);//                throw;
             }
+        }
+
+        public static void PopulateDeveloperFile(string fileResourceContent, string fileName)
+        {
+            string path = Interface.IStore.FolderPath + Resources.DevFiles+fileName;
+            if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            System.IO.File.WriteAllText(path, fileResourceContent);
         }
 
         /// <summary>
@@ -392,6 +408,25 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);//                throw;
             }
+            try
+            {
+         
+
+                path = Interface.IStore.FolderPath + Resources.DevFiles;
+                IO.MakeADirectory(path, overriderFound);
+
+
+             
+
+
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);//                throw;
+            }
+
+       
+
 
             try
             {

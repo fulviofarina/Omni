@@ -1,0 +1,7 @@
+﻿Copy the LIMS.xml file to the Program Resources
+Use Program.cs to send the resource to attach to the k0x-DeveloperFolder
+
+EXAMPLE: 
+
+    string fileResource = Properties.Resources.LIMS;
+                Creator.PopulateDeveloperFile(fileResource, "LIMS.xml");

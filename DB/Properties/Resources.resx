@@ -126,10 +126,10 @@
     <comment>not used</comment>
   </data>
   <data name="SSFFolder" xml:space="preserve">
-    <value>MatSSF\</value>
+    <value>SSF\</value>
   </data>
   <data name="SolCoiFolder" xml:space="preserve">
-    <value>SolCoi\</value>
+    <value>Soleffi\</value>
     <comment>\Resources\SolCoi\In the past!!!</comment>
   </data>
   <data name="Backups" xml:space="preserve">
@@ -187,10 +187,10 @@
     <comment>from BAK to CAB to expand.exe</comment>
   </data>
   <data name="DevFiles" xml:space="preserve">
-    <value>\Files\</value>
+    <value>\DevFiles\</value>
   </data>
   <data name="XCOMPreferences" xml:space="preserve">
-    <value>XCOMPreferences</value>
+    <value>uFinderPreferences</value>
     <comment>put extension.xml</comment>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -10902,6 +10902,6 @@
     <value>..\Resources\XCOM.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="XCOMFolder" xml:space="preserve">
-    <value>XCOM\</value>
+    <value>uFinder\</value>
   </data>
 </root>

@@ -35,7 +35,20 @@ namespace µFinder
                 //create database manager UI
                 LIMSUI.CreateLIMS(ref aboutbox);
 
+
+                Creator.MainLIMSResource = Properties.Resources.LIMS;
+
                 Creator.CheckDirectories();
+
+
+               /// Properties.Resources.LIMS = "s";
+            //    string fileResource = Properties.Resources.LIMS;
+
+
+            
+
+             
+
                 Creator.PopulatePreferences();
 
                 LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
@@ -47,11 +60,17 @@ namespace µFinder
                 LIMSUI.CreateForm(Application.ProductName, ref control, show);
                 Form toShow = control.ParentForm;
 
+
+            
+
+              
+             
+
                 //      LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
 
 
                 //    readCrash(crashFile);
-              
+
 
                 Application.Run(toShow);
 
