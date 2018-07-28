@@ -1,4 +1,4 @@
-﻿namespace DB.UI
+﻿namespace DB.Tools
 {
     partial class Connections
     {

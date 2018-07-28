@@ -127,6 +127,7 @@
             // 
             // compositionsDGV
             // 
+            this.compositionsDGV.AllowUserToAddRows = false;
             this.compositionsDGV.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
@@ -171,6 +172,7 @@
             this.compositionsDGV.Location = new System.Drawing.Point(0, 0);
             this.compositionsDGV.MultiSelect = false;
             this.compositionsDGV.Name = "compositionsDGV";
+            this.compositionsDGV.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -190,6 +192,7 @@
             this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
             this.elementDataGridViewTextBoxColumn.HeaderText = "FORMULA";
             this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
+            this.elementDataGridViewTextBoxColumn.ReadOnly = true;
             this.elementDataGridViewTextBoxColumn.ToolTipText = "Elemental or compound formula";
             // 
             // quantityDataGridViewTextBoxColumn
@@ -197,6 +200,7 @@
             this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
             this.quantityDataGridViewTextBoxColumn.HeaderText = "%";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
             this.quantityDataGridViewTextBoxColumn.ToolTipText = "in %";
             this.quantityDataGridViewTextBoxColumn.Width = 46;
             // 
@@ -205,6 +209,7 @@
             this.uncDataGridViewTextBoxColumn.DataPropertyName = "Unc";
             this.uncDataGridViewTextBoxColumn.HeaderText = "Unc";
             this.uncDataGridViewTextBoxColumn.Name = "uncDataGridViewTextBoxColumn";
+            this.uncDataGridViewTextBoxColumn.ReadOnly = true;
             this.uncDataGridViewTextBoxColumn.ToolTipText = "in %";
             this.uncDataGridViewTextBoxColumn.Visible = false;
             this.uncDataGridViewTextBoxColumn.Width = 61;
@@ -214,6 +219,7 @@
             this.quantityUnitDataGridViewTextBoxColumn.DataPropertyName = "QuantityUnit";
             this.quantityUnitDataGridViewTextBoxColumn.HeaderText = "Unit";
             this.quantityUnitDataGridViewTextBoxColumn.Name = "quantityUnitDataGridViewTextBoxColumn";
+            this.quantityUnitDataGridViewTextBoxColumn.ReadOnly = true;
             this.quantityUnitDataGridViewTextBoxColumn.Visible = false;
             this.quantityUnitDataGridViewTextBoxColumn.Width = 63;
             // 

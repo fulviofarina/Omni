@@ -17,6 +17,26 @@ namespace DB.UI
 
         protected internal XCOM XCom;
 
+
+        private void test()
+        {
+            foreach (var item in Interface.IDB.Matrix)
+
+            {
+                item.SetCompositionTableNull();
+            //    item.MatrixComposition= item.MatrixComposition.Replace("(", " ");
+             //   item.MatrixComposition= item.MatrixComposition.Replace(")", " ");
+                //      IEnumerable<CompositionsRow> compos = item.GetCompositionsRows();
+                //  foreach (var item2 in compos)
+                //   {
+                //    item2.Element= item2.Element.Replace("(", " ");
+                //   item2.Element = item2.Element.Replace(")", " ");
+                //  }
+
+
+            }
+           
+        }
        // private IOptions op = null;
         private string path = string.Empty;
         private Action<int> resetProgress = null;
@@ -39,6 +59,15 @@ namespace DB.UI
             ctrl.Dock = DockStyle.Fill;
             DBTLP.Controls.Add(ctrl as UserControl);
 
+
+
+            MatrixRow mlast =     Interface.IDB.Matrix.OrderBy(o => o.MatrixDate).FirstOrDefault();
+            Interface.IBS.Matrix.Position = 1;
+
+            Interface.IBS.Matrix.Position = Interface.IBS.Matrix.Find(Interface.IDB.Matrix.MatrixDateColumn.ColumnName, mlast.MatrixDate);
+        
+
+
             // this.ResumeLayout(true);
         }
 
@@ -48,6 +77,9 @@ namespace DB.UI
 
             ucMatrixSimple1.Set(ref Interface);
             ucMUES1.Set(ref Interface);
+
+
+          
         }
 
         public void Set(ref IXCOMPreferences preferences)
@@ -56,21 +88,7 @@ namespace DB.UI
 
             ucMUES1.Set(ref preferences);
 
-            EventHandler changed = delegate
-             {
-                 MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
-                 if (m != null)
-                 {
-                     ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
-                 }
-             };
-
-            Interface.IBS.Matrix.CurrentChanged += changed;
-
-            this.Disposed += delegate
-             {
-                 Interface.IBS.Matrix.CurrentChanged -= changed;
-             };
+          
 
             // this.ResumeLayout(true);
         }
@@ -85,9 +103,10 @@ namespace DB.UI
             XCom.Set(ref Interface);
             XCom.Reporter = Interface.IReport.Msg;
             XCom.ExceptionAdder = Interface.IStore.AddException;
-           
 
-            ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+
+
+            // XCOM.PictureExtension
 
             EventHandler navigatorRefresh = delegate
             {
@@ -119,6 +138,9 @@ namespace DB.UI
 
             ucCalculate1.CalculateMethod += delegate
              {
+
+                 ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+
                  ucCalculate1.EnableCalculate = false;
                  Application.DoEvents();
                  this.Validate(true);
@@ -138,10 +160,35 @@ namespace DB.UI
             ucCalculate1.CalculateMethod += enableCtrols;
 
             Interface.IDB.Matrix.CleanMUESHandler += navigatorRefresh;
+         
+
+
+            EventHandler changed = delegate
+            {
+                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
+                if (m != null)
+                {
+                    ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
+                }
+            };
+
+            Interface.IBS.Matrix.CurrentChanged += changed;
+
+          //  callmeBack += changed;
+
             this.Disposed += delegate
             {
                 Interface.IDB.Matrix.CleanMUESHandler -= navigatorRefresh;
             };
+
+            this.Disposed += delegate
+            {
+                Interface.IBS.Matrix.CurrentChanged -= changed;
+            };
+
+
+
+            //  test();
         }
         /*
         protected internal void addCompositions(ref MatrixRow m, string responde)
@@ -169,11 +216,14 @@ namespace DB.UI
 
             if (m == null) return;
 
+            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
+            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+            ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
 
             if (!XCom.IsCalculating)
             {
                 XCom.CheckCompletedOrCancelled();
-                ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+          
                 saveMethod();
             }
             //   ucMatrixSimple1.RefreshDGV();
@@ -181,8 +231,8 @@ namespace DB.UI
 
             if (XCom.IsCalculating) return;
 
-            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
-
+          //  Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
+          //  ucMUES1.MakeFile(m.MatrixID.ToString(), path);
             // ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
 
             ucCalculate1.EnableCalculate = !XCom.IsCalculating;

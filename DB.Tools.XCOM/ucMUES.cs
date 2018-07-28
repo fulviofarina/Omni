@@ -164,6 +164,13 @@ namespace DB.UI
                 c.BindingRoundingField = Interface.IDB.XCOMPref.RoundingColumn.ColumnName;
                 c.BindingPreferenceRow = pref;
             }
+
+
+            Interface.IBS.EnableControlsChanged += delegate
+            {
+                bool ctrlcanBeenable = Interface.IBS.EnabledControls;
+                this.Enabled = ctrlcanBeenable;
+            };
         }
 
         private void focus(bool table)

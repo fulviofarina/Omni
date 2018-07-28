@@ -48,8 +48,9 @@ namespace DB
                 if (m.IsCompositionTableNull())
                 {
                     //averiguar argumentos...
-                    IEnumerable<CompositionsRow> compos = AddCompositions(ref m, null, false);
-                    string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
+                    IEnumerable<CompositionsRow> compos = null;
+                    AddCompositions(ref m, ref compos, null, false);
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
 
                     dt = new CompositionsDataTable(false);
                     foreach (CompositionsRow item in compos)

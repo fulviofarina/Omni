@@ -37,19 +37,24 @@ namespace Rsx.Dumb
 
             string matCompo = composition.Trim();
 
-            if (matCompo.Contains(';')) matCompo = matCompo.Replace(';', ')');///
+         //   if (matCompo.Contains(';')) matCompo = matCompo.Replace(';', ')');///
 
             string[] strArray = null;
-            if (matCompo.Contains(')')) strArray = matCompo.Split(')');
+            if (matCompo.Contains('\t')) matCompo = matCompo.Replace('\t', ' ');
+            if (matCompo.Contains('\n')) matCompo = matCompo.Replace('\n',' ');
+            if (matCompo.Contains('#')) strArray = matCompo.Split('#');
+            else if (matCompo.Contains(';')) strArray = matCompo.Split(';');
+          //  else if (matCompo.Contains('\n')) strArray = matCompo.Split('\n');
             else strArray = new string[] { matCompo };
-            strArray = strArray.Where(o => !string.IsNullOrEmpty(o.Trim())).ToArray();
+            strArray = strArray.Select(o => o.Trim()).Where(o=> !string.IsNullOrEmpty(o)).ToArray();
 
             ls = new List<string[]>();
 
             for (int index = 0; index < strArray.Length; index++)
             {
-                string[] strArray2 = strArray[index].Trim().Split('(');
-                string formula = strArray2[0].Trim().Replace("#", null);
+                string[] strArray2 = strArray[index].Trim().Split(' ').Where(o=> !string.IsNullOrEmpty(o)).ToArray();
+                //      string formula = strArray2[0].Trim().Replace("#", null);
+                string formula = strArray2[0].Trim();
                 string quantity = strArray2[1].Trim();
 
                 string[] formCompo = new string[] { formula, quantity };

@@ -51,17 +51,28 @@ namespace VTools
 
         private void showInBrowser(string file)
         {
-          //  string file = XCom.StartupPath + matrixID + XCOM.PictureExtension;
+            //  string file = XCom.StartupPath + matrixID + XCOM.PictureExtension;
 
-            Uri uri = new Uri("about:blank");
-            if (System.IO.File.Exists(file))
+            try
             {
-                string newFile = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
-                newFile += file.Replace(folderPath, null);
-                File.Copy(file, newFile, true);
-                uri = new Uri(newFile);
+                Uri uri = new Uri("about:blank");
+                if (System.IO.File.Exists(file))
+                {
+                    string newFile = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
+                    newFile += file.Replace(folderPath, Guid.NewGuid().ToString().Substring(0, 8));
+                   // newFile +=".html";
+                    File.Copy(file, newFile, true);
+                    uri = new Uri(newFile);
+                }
+               
+                webBrowser1.Navigate(uri);
             }
-            webBrowser1.Navigate(uri);
+            catch (Exception)
+            {
+
+               
+            }
+          
         }
 
         public void Set(string path,  string filter, string imageExt)
@@ -71,12 +82,17 @@ namespace VTools
 
             watcher.EnableRaisingEvents = false;
             watcher.Path = folderPath;
-            watcher.Filter = filter+ imageExtension;//= new FileSystemWatcher(path, filter);
+            watcher.Filter = filter+ imageExt;//= new FileSystemWatcher(path, filter);
             watcher.EnableRaisingEvents = true;
+       //     watcher.NotifyFilter = NotifyFilters.LastWrite;
+         
+      
         }
 
+      
 
-       private  string punto = ".";
+
+        private string punto = ".";
 
         public void HideList(bool hide)
         {
@@ -87,12 +103,12 @@ namespace VTools
                 cleanList();
             }
         }
-        public void RefreshList(string baseFilename, string filter)
+        public void RefreshList(string baseFilename, string filter, string enumerator)
         {
 
 
             //get files
-            string[] files = Directory.GetFiles(folderPath, baseFilename + filter + imageExtension);
+            string[] files = Directory.GetFiles(folderPath, baseFilename + filter);
             files = files.Select(o => o.Replace(folderPath, null).Replace(baseFilename + punto, null)).ToArray();
 
       //      files = files.OrderBy(o => o.Substring(1, o.IndexOf(punto))).ToArray();
@@ -112,24 +128,52 @@ namespace VTools
 
             foreach (var item in files)
             {
-                string file = folderPath + baseFilename + punto + item;
-                Image img = Image.FromFile(file);
-                string itemText = item.Replace(imageExtension, null);
-        
-                string itemName = baseFilename + punto;
-
+                string itemText = item;
+                string file = folderPath;
                 //si contiene punto aun está numerado
-                if (itemText.Contains(punto))
+                //   file+= baseFilename + punto;
+
+
+                if (itemText.Contains(imageExtension))
                 {
+                    //   file += baseFilename + punto;
+
+                    file += baseFilename + punto + itemText;
+
+                    Image img = Image.FromFile(file);
+                    itemText = itemText.Replace(imageExtension, null);
+
+
+                }
+                else if (itemText.CompareTo(baseFilename) == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    file += baseFilename + punto + itemText;
+                }
+
+
+
+                if (itemText.Contains(punto) && itemText.Contains(enumerator))
+                {
+                    //   file += baseFilename + punto;
+
                     int numberIndex = itemText.IndexOf(punto);
                     string number = itemText.Substring(0, numberIndex);
-                    itemName += number + punto;
-                    itemText = itemText.Substring(numberIndex+1);
+
+                    itemText = itemText.Substring(numberIndex + 1);
+
+
                 }
-         
+             
+
+
+
                 ListViewItem i = new ListViewItem(itemText);
              
-                i.Tag = folderPath + itemName + itemText + imageExtension;
+                i.Tag = file;
 
                 ls.Add(i);
 
@@ -165,13 +209,15 @@ namespace VTools
 
             }
 
-         //   ls.Clear();
-      //      listView1.ShowGroups = true;
-        //    listView1.PerformLayout();
+
+
+            //   ls.Clear();
+            //      listView1.ShowGroups = true;
+            //    listView1.PerformLayout();
             //   listView1.RedrawItems(0, listView1.Items.Count, false); 
             //      listView1.VirtualMode = true;
-            ListViewItem d = listView1.Groups[0].Items[0];
-            d.Selected = true;
+            ListViewItem d = listView1.Items.Find("FULL",true).FirstOrDefault();
+            if(d!=null) d.Selected = true;
 
        
 

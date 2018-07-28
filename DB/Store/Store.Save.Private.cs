@@ -171,7 +171,10 @@ namespace DB
 
             string tempfile = folderPath + Resources.XCOMFolder;
             tempfile += m.MatrixID;
-
+            if (File.Exists(tempfile))
+            {
+                File.Delete(tempfile);
+            }
             File.WriteAllBytes(tempfile, arr);
 
             return File.Exists(tempfile);

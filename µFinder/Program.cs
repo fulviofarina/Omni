@@ -52,9 +52,14 @@ namespace µFinder
                 Creator.PopulatePreferences();
 
                 LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
-                //     LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+                LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+//
+                bool noDGVControls = false;
+                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, null, noDGVControls);
 
-                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, null,true);
+       //         LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+
+
 
                 bool show = false;
                 LIMSUI.CreateForm(Application.ProductName, ref control, show);
@@ -63,6 +68,7 @@ namespace µFinder
 
 
 
+           
                 toShow.StartPosition = FormStartPosition.CenterScreen;
                 toShow.WindowState = FormWindowState.Maximized;
               //  toShow.ControlBox = false;

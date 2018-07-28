@@ -38,7 +38,8 @@ namespace DB
                 {
                     IList<string[]> stripped = RegEx.StripComposition(item.MatrixComposition);
                     LINAA.MatrixRow m = item;
-                    AddCompositions(ref m, stripped, true);
+                    IEnumerable<CompositionsRow> compos = null;
+                    AddCompositions(ref m, ref compos, stripped, true);
                 }
 
             }
@@ -49,20 +50,27 @@ namespace DB
         }
 
 
-
-        private void addCompositions(ref MatrixRow m, IList<string[]> listOfFormulasAndCompositions, bool reCode, ref IList<CompositionsRow> compos)
+        /// <summary>
+        /// Add compositions
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <param name="compos">If null, it will be found from the matrix</param>
+        /// <param name="listOfFormulasAndCompositions">If null it will be found from matrix composition, as long as recode is False</param>
+        /// <param name="reCode">If true and compositions are provided, this will update the matrix composition instead</param>
+        public void AddCompositions(ref MatrixRow m, ref IEnumerable<CompositionsRow> compos, IList<string[]> listOfFormulasAndCompositions, bool reCode)
         {
             bool nulo = EC.CheckNull(this.tableMatrix.MatrixCompositionColumn, m);
-            if (nulo)
+            if (nulo || compos ==null)
             {
                 compos = new List<CompositionsRow>();
-                return;
+                if (nulo) return;
             }
-            if (!reCode || listOfFormulasAndCompositions == null)
+            if (!reCode && listOfFormulasAndCompositions == null)
             {
+
                 listOfFormulasAndCompositions = RegEx.StripComposition(m.MatrixComposition);
                 //to store matrix composition
-            }
+        
 
             // .. IList<CompositionsRow> compos = new List<CompositionsRow>();
             string fullComposition = string.Empty;
@@ -77,21 +85,37 @@ namespace DB
                     double quantity = Convert.ToDouble(formCompo[1].Trim());
                     // elementQuantity(formCompo, out element, out quantity, out formulaweight);
                     //CODE COMPOSITION
-                    if (reCode)
-                    {
-                        fullComposition += "#" + element.Trim() + "   (" + quantity.ToString() + ")   ";
-                        continue;
-                    }
+                
 
                     CompositionsRow c = addComposition(element, quantity, ref m);
-                    compos.Add(c);
+                    (compos as IList<CompositionsRow>).Add(c);
                 }
                 catch (SystemException ex)
                 {
                     AddException(ex);
                 }
             }
-            if (reCode) m.MatrixComposition = fullComposition;
+
+            }
+            else if (reCode)
+            {
+                try
+                {
+                    string totalComposition = string.Empty;
+                foreach (CompositionsRow item in compos)
+                {
+                    totalComposition += "#" + item.Element + "\t" + item.Quantity + "\n";
+                }
+                m.MatrixComposition = totalComposition;
+            }
+                catch (SystemException ex)
+            {
+                AddException(ex);
+            }
+
+        }
+
+          
         }
 
         private CompositionsRow addComposition(string element, double quantity, ref MatrixRow m)
@@ -124,19 +148,7 @@ namespace DB
 
 
 
-        public IEnumerable<CompositionsRow> AddCompositions(ref MatrixRow m, IList<string[]> listOfFormulasAndCompositions = null, bool code = true)
-        {
-            IList<CompositionsRow> compos = new List<CompositionsRow>();
-            try
-            {
-                addCompositions(ref m, listOfFormulasAndCompositions, code, ref compos);
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);
-            }
-            return compos;
-        }
+    
 
         public MatrixRow AddMatrix(int? SubSamplesID=null, int? templateID=null)
         {

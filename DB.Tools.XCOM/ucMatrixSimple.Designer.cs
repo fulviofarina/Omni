@@ -213,7 +213,7 @@
             this.matrixDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.matrixDGV.RowHeadersVisible = false;
             this.matrixDGV.RowTemplate.Height = 24;
-            this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.matrixDGV.Size = new System.Drawing.Size(360, 547);
             this.matrixDGV.TabIndex = 7;
             // 

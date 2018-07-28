@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DB.Linq;
+using DB.Properties;
+using Rsx.SQL;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Linq;
-using DB.Properties;
-using Rsx.SQL;
 
 namespace DB.Tools
 {
@@ -20,7 +20,7 @@ namespace DB.Tools
         /// <returns></returns>
         public static bool PrepareSQL(ref UserControl connectionUsrControl)
         {
-        //    Cursor.Current = Cursors.WaitCursor;
+            // Cursor.Current = Cursors.WaitCursor;
 
             Interface.IReport.Msg("Set up", "Checking SQL...");
             Application.DoEvents();
@@ -29,12 +29,10 @@ namespace DB.Tools
            {
                Interface.IAdapter.InitializeComponent();
                Interface.IAdapter.InitializeAdapters(); //why was this after the next code? //check
-
            };
 
-
             adapterInitializer.Invoke();
-         
+
             bool makeDatabase = false;
 
             string userDB = Settings.Default.localDB;
@@ -58,10 +56,9 @@ namespace DB.Tools
 
                 //show no connection Intro
                 //could not connect
-              //  Cursor.Current = Cursors.Default;
+                //  Cursor.Current = Cursors.Default;
                 MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-//
-        //        Cursor.Current = Cursors.WaitCursor;
+                // Cursor.Current = Cursors.WaitCursor;
 
                 //provide path to SQL files for deploy (installation)
                 string path = Application.StartupPath + DB.Properties.Resources.DevFiles;
@@ -82,7 +79,7 @@ namespace DB.Tools
                 //chequea si ya tiene servidores SQL
 
                 //ask to populate or Not
-             //   Cursor.Current = Cursors.Default;
+                //   Cursor.Current = Cursors.Default;
 
                 DialogResult result = MessageBox
                     .Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -99,7 +96,7 @@ namespace DB.Tools
                     makeDatabase = false;
                     //TODO: populate?
                 }
-//Cursor.Current = Cursors.WaitCursor;
+                //Cursor.Current = Cursors.WaitCursor;
 
                 Interface.IPreferences.CurrentPref.LIMS = defaultConnection;
                 // Interface.IPreferences.SavePreferences();
@@ -111,7 +108,6 @@ namespace DB.Tools
                 Interface.IAdapter.DisposeAdapters();
 
                 Interface.IAdapter.SetConnections(defaultConnection);
-
 
                 adapterInitializer.Invoke();
 
@@ -131,11 +127,11 @@ namespace DB.Tools
                 Interface.IDB.Compositions.Clear();
                 Interface.IPopulate.INuclear.CleanSigmas();
                 PopulatePreferences();
-          
+
                 foreach (var item in Interface.IDB.Matrix)
                 {
                     item.SetCompositionTableNull();
-                   // item.SetXCOMTableNull();
+                    // item.SetXCOMTableNull();
                 }
                 // CleanOthers();
                 IEnumerable<DataTable> tables = Interface.Get().Tables.OfType<DataTable>();
@@ -154,8 +150,7 @@ namespace DB.Tools
             //again restart Adapters...
             adapterInitializer.Invoke();
 
-
-        //    Cursor.Current = Cursors.Default;
+            // Cursor.Current = Cursors.Default;
             Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
 
             Interface.IPreferences.CurrentPref.IsSQL = ok;
@@ -163,12 +158,20 @@ namespace DB.Tools
             return ok;
         }
 
-      
+        public static void ConnectionsUI()
+        {
+            LINAA.PreferencesRow prefe = Interface.IPreferences.CurrentPref;
+            Action<SystemException> addException = Interface.IStore.AddException;
+            Action savemethod = Interface.IPreferences.SavePreferences;
+            Action undoMethod = Interface.IPreferences.CurrentPref.RejectChanges;
 
-        private static bool cloneDatabase(string localDB, string developerDB)
+            Connections.ConnectionsUI(ref prefe, ref addException, ref savemethod, ref undoMethod);
+        }
+
+        protected static bool cloneDatabase(string localDB, string developerDB)
         {
             bool ok;
-          
+
             //now clone to the USER!!!
             //o do something more selective!
             //DEVELOPER MODE COPY
@@ -178,36 +181,5 @@ namespace DB.Tools
             Interface.IPreferences.CurrentPref.LIMS = localDB;
             return ok;
         }
-    }
-
-    public partial class Creator
-    {
-        // private static string defaultLocal = "(localdb)\\MSSQLLocalDB";
-        protected static string CHECKING_SQL_TITLE = "Please wait while testing the SQL connection...";
-
-        protected static string ABOUT_TO_POPULATE = "The program will now populate the Database for the first time\n\nWould you like to proceed?\n\nThis might take some time, please be patient\n\n" +
-            "Click NO to avoid the database population";
-
-        protected static string ABOUT_TO_POPULATE_TITLE = "Database population starting...";
-        protected static string ASK_TO_SAVE = "Changes in the database have not been saved yet\n\nDo you want to save the changes on the following tables?\n\n";
-
-        // private static string chamgeConnectionString = "Would you like to change the Connection
-        // string?"; private static string changeConnection = "Would you like to modify the
-        // Connection string?\n\n";
-        protected static string CHECKING_SQL = "Checking the database connections";
-
-        protected static string NO_CONNECTION = "The current database connection is not ok.\n\n" +
-            "The reasons might be:\n\n" +
-               "1) The program database does not exist (first time users)\n" +
-            "2) The SQL Server is down/stopped\n" +
-            "3) The SQL Server is not installed on this computer\n" +
-            "4) The Connection string to the database is wrong.\n\n\n" +
-            "This program will attempt to:\n\n" +
-            "1) Restart the server\n" +
-            "2) Detect other SQL Server instances when present or,\n" +
-            "3) Reinstall the SQL Server and the program database.\n\n" +
-            "You will have the option to change the connection string (if desired)";
-
-        protected static string NO_CONNECTION_TITLE = "Connection to the database failed";
     }
 }

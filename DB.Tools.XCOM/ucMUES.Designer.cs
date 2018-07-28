@@ -59,18 +59,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMUES));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMUES));
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.SC = new System.Windows.Forms.SplitContainer();
             this.DGV = new System.Windows.Forms.DataGridView();
-            this.bs = new System.Windows.Forms.BindingSource(this.components);
-            this.Linaa = new DB.LINAA();
-            this.grapher = new VTools.Graph();
-            this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.energyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mACSDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
             this.mAISDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
@@ -81,6 +74,13 @@
             this.mATNCSDataGridViewTextBoxColumn = new DB.UI.MUESColumn();
             this.mUDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.edgeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
+            this.Linaa = new DB.LINAA();
+            this.grapher = new VTools.Graph();
+            this.matrixIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC)).BeginInit();
             this.SC.Panel1.SuspendLayout();
@@ -139,7 +139,7 @@
             this.DGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV.AutoGenerateColumns = false;
             this.DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.DGV.BackgroundColor = System.Drawing.Color.LightSlateGray;
+            this.DGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.DGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.DGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.DGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
@@ -190,60 +190,6 @@
             this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV.Size = new System.Drawing.Size(842, 237);
             this.DGV.TabIndex = 8;
-            // 
-            // bs
-            // 
-            this.bs.DataMember = "MUES";
-            this.bs.DataSource = this.Linaa;
-            // 
-            // Linaa
-            // 
-            this.Linaa.DataSetName = "LINAA";
-            this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
-            this.Linaa.EnforceConstraints = false;
-            this.Linaa.FolderPath = null;
-            this.Linaa.Locale = new System.Globalization.CultureInfo("");
-            this.Linaa.QTA = null;
-            this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            this.Linaa.TAM = null;
-            // 
-            // grapher
-            // 
-            this.grapher.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grapher.Location = new System.Drawing.Point(0, 0);
-            this.grapher.Name = "grapher";
-            this.grapher.Size = new System.Drawing.Size(842, 246);
-            this.grapher.TabIndex = 1;
-            // 
-            // matrixIDDataGridViewTextBoxColumn
-            // 
-            this.matrixIDDataGridViewTextBoxColumn.DataPropertyName = "MatrixID";
-            this.matrixIDDataGridViewTextBoxColumn.HeaderText = "MatrixID";
-            this.matrixIDDataGridViewTextBoxColumn.Name = "matrixIDDataGridViewTextBoxColumn";
-            this.matrixIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.matrixIDDataGridViewTextBoxColumn.Width = 83;
-            // 
-            // cDataGridViewCheckBoxColumn
-            // 
-            this.cDataGridViewCheckBoxColumn.DataPropertyName = "C";
-            this.cDataGridViewCheckBoxColumn.HeaderText = "C";
-            this.cDataGridViewCheckBoxColumn.Name = "cDataGridViewCheckBoxColumn";
-            this.cDataGridViewCheckBoxColumn.ReadOnly = true;
-            this.cDataGridViewCheckBoxColumn.Width = 23;
-            // 
-            // splitContainer5
-            // 
-            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer5.Location = new System.Drawing.Point(355, 3);
-            this.splitContainer5.Name = "splitContainer5";
-            this.splitContainer5.Size = new System.Drawing.Size(374, 23);
-            this.splitContainer5.SplitterDistance = 123;
-            this.splitContainer5.TabIndex = 9;
-            // 
-            // toolStripSeparator15
-            // 
-            this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
             // energyDataGridViewTextBoxColumn
             // 
@@ -363,7 +309,60 @@
             this.edgeDataGridViewTextBoxColumn.HeaderText = "Edge";
             this.edgeDataGridViewTextBoxColumn.Name = "edgeDataGridViewTextBoxColumn";
             this.edgeDataGridViewTextBoxColumn.Visible = false;
-            this.edgeDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // bs
+            // 
+            this.bs.DataMember = "MUES";
+            this.bs.DataSource = this.Linaa;
+            // 
+            // Linaa
+            // 
+            this.Linaa.DataSetName = "LINAA";
+            this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
+            this.Linaa.EnforceConstraints = false;
+            this.Linaa.FolderPath = null;
+            this.Linaa.Locale = new System.Globalization.CultureInfo("");
+            this.Linaa.QTA = null;
+            this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.Linaa.TAM = null;
+            // 
+            // grapher
+            // 
+            this.grapher.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grapher.Location = new System.Drawing.Point(0, 0);
+            this.grapher.Name = "grapher";
+            this.grapher.Size = new System.Drawing.Size(842, 246);
+            this.grapher.TabIndex = 1;
+            // 
+            // matrixIDDataGridViewTextBoxColumn
+            // 
+            this.matrixIDDataGridViewTextBoxColumn.DataPropertyName = "MatrixID";
+            this.matrixIDDataGridViewTextBoxColumn.HeaderText = "MatrixID";
+            this.matrixIDDataGridViewTextBoxColumn.Name = "matrixIDDataGridViewTextBoxColumn";
+            this.matrixIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.matrixIDDataGridViewTextBoxColumn.Width = 83;
+            // 
+            // cDataGridViewCheckBoxColumn
+            // 
+            this.cDataGridViewCheckBoxColumn.DataPropertyName = "C";
+            this.cDataGridViewCheckBoxColumn.HeaderText = "C";
+            this.cDataGridViewCheckBoxColumn.Name = "cDataGridViewCheckBoxColumn";
+            this.cDataGridViewCheckBoxColumn.ReadOnly = true;
+            this.cDataGridViewCheckBoxColumn.Width = 23;
+            // 
+            // splitContainer5
+            // 
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.Location = new System.Drawing.Point(355, 3);
+            this.splitContainer5.Name = "splitContainer5";
+            this.splitContainer5.Size = new System.Drawing.Size(374, 23);
+            this.splitContainer5.SplitterDistance = 123;
+            this.splitContainer5.TabIndex = 9;
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
             // ucMUES
             // 

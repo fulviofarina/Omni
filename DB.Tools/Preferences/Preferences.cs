@@ -35,10 +35,10 @@ namespace DB.Tools
             SSFPrefRow pref = CurrentSSFPref;
             object[] args = new object[]
             {
-                pref.CalcMass,
-            pref.AARadius,
-             pref.CalcDensity,
-            pref.AAFillHeight
+                pref?.CalcMass,
+            pref?.AARadius,
+             pref?.CalcDensity,
+            pref?.AAFillHeight
         };
 
             e.Args = args;

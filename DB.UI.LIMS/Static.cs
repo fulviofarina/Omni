@@ -261,7 +261,9 @@ namespace DB.UI
                     {
                         ucHyperLab hl = new ucHyperLab();
                         ISpecPreferences prefes = GetPreferences<ISpecPreferences>();
-                        VTools.IOptions options = GetOptions(0);
+                        bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+
+                        IOptions options = DBOptions.GetOptions(0, advEditor);
                         options.PreferencesClick += delegate
                         {
                             GetPreferences<ISpecPreferences>(true);
@@ -290,8 +292,13 @@ namespace DB.UI
                     }
                 case ControlNames.Matrices:
                     {
-                        CreateMatrixApplication(out control, out refresher);
-
+                        bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+                        EventHandler handler;
+                        CreateMatrixApplication(out control, out handler, advEditor);
+                        refresher = delegate
+                        {
+                            handler.Invoke(null, EventArgs.Empty);
+                        };
                         // preRefreshref = mat.PreRefresh; postRefresh = mat.PostRefresh;
                         break;
                     }

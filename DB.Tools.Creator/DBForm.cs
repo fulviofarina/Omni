@@ -1,28 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VTools;
-using System.Windows.Forms;
 using System.Drawing;
-using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Forms;
 
-using System.Data;
-
-using System.IO;
-
-using DB.Properties;
-using DB.UI;
-using Rsx.Dumb;
-
-
-using VTools;
 namespace DB.Tools
 {
-   public  class DBForm : System.Windows.Forms.Form
+    public class DBForm : System.Windows.Forms.Form
     {
         public static string TITLE = System.Windows.Forms.Application.ProductName + " v" + System.Windows.Forms.Application.ProductVersion + " (Beta)";
+
         public static Form CreateForm(ref Bitmap image)
         {
             Form form = new DBForm(ref image, TITLE);
@@ -46,6 +31,7 @@ namespace DB.Tools
             */
             return form;
         }
+
         public DBForm(ref Bitmap image, string TITLE) : base()
         {
             Opacity = 0;
@@ -64,7 +50,5 @@ namespace DB.Tools
             StartPosition = FormStartPosition.CenterParent;
             SetDesktopLocation(0, 0);
         }
-
     }
-
 }

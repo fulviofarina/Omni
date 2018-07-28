@@ -202,6 +202,7 @@ namespace DB.UI
         public void Set(ref Interface inter)
         {
             Interface = inter;
+            this.DGV.DataSource = null;
             Dumb.FD(ref Linaa);
             Dumb.FD(ref this.bs);
 

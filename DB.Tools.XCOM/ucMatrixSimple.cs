@@ -76,10 +76,16 @@ namespace DB.UI
 
             Interface.IBS.EnableControlsChanged += delegate
               {
+                  bool ctrlcanBeenable = Interface.IBS.EnabledControls;
+                  this.Enabled = ctrlcanBeenable;
+
+
                   this.matrixDGV.Invalidate(true);
                   this.matrixDGV.Refresh();
                   this.matrixDGV.ClearSelection();
               };
+
+
 
             /*
             if (bs.Count != 0)

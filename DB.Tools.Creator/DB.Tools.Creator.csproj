@@ -75,8 +75,12 @@
     <Compile Include="Creator\Creator.Others.cs" />
     <Compile Include="Creator\Creator.cs" />
     <Compile Include="Creator\Creator.Public.cs" />
+    <Compile Include="Creator\Creator.SQL.Messages.cs" />
     <Compile Include="Creator\Creator.SQL.cs" />
-    <Compile Include="Creator\ucDBOptions.cs">
+    <Compile Include="DBOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DBForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +119,9 @@
       <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
       <Name>VTools.Menu</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

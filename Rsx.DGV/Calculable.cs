@@ -58,6 +58,8 @@ namespace Rsx.DGV
         protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
         {
 
+            setDefaultCellStyle();
+
             //if (this.OwningRow.Index < 0) return;
 
             //changed is not used
@@ -141,14 +143,19 @@ namespace Rsx.DGV
         public CalculableCell() : base()
         {
 
+            setDefaultCellStyle();
+        }
+
+        private void setDefaultCellStyle()
+        {
             Color defaultColor = Color.Transparent;
             Color defaultColor2 = Color.Transparent;
 
 
-            Style.SelectionBackColor = defaultColor2;
+            Style.SelectionBackColor = defaultColor;
             Style.SelectionForeColor = defaultColor2;
 
-       
+
             Style.BackColor = defaultColor;
             Style.ForeColor = defaultColor;
         }

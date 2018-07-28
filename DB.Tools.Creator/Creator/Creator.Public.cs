@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DB.Properties;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Properties;
-using Rsx.Dumb;
 
 namespace DB.Tools
 {
@@ -18,6 +19,8 @@ namespace DB.Tools
             get { return Creator.mainCallBack; }
             set { Creator.mainCallBack = value; }
         }
+
+        protected static string notepadApp = "notepad.exe";
 
         /// <summary>
         /// Another Call back method (last one)
@@ -74,8 +77,6 @@ namespace DB.Tools
 
             //create developer file from mainLIMSResource
             Creator.PopulateDeveloperFile(Creator.MainLIMSResource, Resources.Linaa);
-
-
         }
 
         /// <summary>
@@ -139,14 +140,15 @@ namespace DB.Tools
             bool features = populateReplaceFile(currentpath, path);
             if (!features) return;
             // if (!System.IO.File.Exists(path)) return;
-            IO.Process(new System.Diagnostics.Process(), Application.StartupPath, "notepad.exe", path, false, false, 0);
+            Process proceso = new Process();
+            IO.Process(proceso, Application.StartupPath, notepadApp, path, false, false, 0);
         }
+
         /// <summary>
         /// reads from the backup LIMS.xml file or the Developers version
         /// </summary>
         public static void LoadFromFile()
         {
-
             string filePath = Interface.IStore.FolderPath + Resources.Backups + Resources.Linaa;
             //if it does not exist, then read the developer file
             if (!System.IO.File.Exists(filePath))
@@ -158,12 +160,7 @@ namespace DB.Tools
             Interface.IDB.AcceptChanges();
 
             Interface.IStore.Read(filePath);
-
-           
         }
-
-       
-
 
         /// <summary>
         /// Load the list of methods to apply. It does not apply them until Run() is called
@@ -250,7 +247,7 @@ namespace DB.Tools
         public static void PopulatePreferences()
         {
             Interface.IReport.Msg("Populating database structure", "Initializing...");
-         //   Interface.IPreferences.SavePreferences();
+            // Interface.IPreferences.SavePreferences();
             Interface.IStore.CleanPreferences();
             Interface.IPreferences.PopulatePreferences();
             Interface.IPreferences.SavePreferences();
@@ -305,7 +302,7 @@ namespace DB.Tools
                 }
 
                 bool savedlocaly = Interface.IStore.SaveLocalCopy();
-             
+
                 Interface.IReport.Msg("Saved into local XML file", "Saved!");
 
                 // Interface.IReport.Msg("Saving", "Saving completed!");
@@ -324,14 +321,11 @@ namespace DB.Tools
             return ok;
         }
 
-   
         public static void PopulateDeveloperFile(string fileResourceContent, string fileName)
         {
-            string path = Interface.IStore.FolderPath + Resources.DevFiles+fileName;
+            string path = Interface.IStore.FolderPath + Resources.DevFiles + fileName;
             if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
             System.IO.File.WriteAllText(path, fileResourceContent);
         }
-
-
     }
 }

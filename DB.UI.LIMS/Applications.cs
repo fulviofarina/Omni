@@ -20,8 +20,8 @@ namespace DB.UI
             Form form = DBForm.CreateForm(ref icon);
 
             IPreferences preferences = GetPreferences<IPreferences>();
-          
-            IOptions options = GetOptions( 0);
+            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+            IOptions options = GetOptions( 0, advEditor);
             options.PreferencesClick += delegate
             {
               GetPreferences<IPreferences>(true);
@@ -128,7 +128,7 @@ namespace DB.UI
         }
 
 
-        public static IOptions GetOptions( int type )
+        public static IOptions GetOptions( int type, bool advancedEdtior = false )
         {
 
 
@@ -140,7 +140,9 @@ namespace DB.UI
             if (options != null) return options;
 
             //created but not in list
-            options = Creator.GetOptions(type);
+  
+
+            options = DBOptions.GetOptions(type,advancedEdtior);
 
             //start BINDING
             options.AboutBoxClick += delegate
@@ -268,7 +270,7 @@ namespace DB.UI
             return Application.StartupPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
         }
 
-        public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
+        public static void CreateMatrixApplication(out UserControl control, out EventHandler refresher, bool advEditor = false)
         {
           
         
@@ -278,6 +280,18 @@ namespace DB.UI
        
 
             Application.DoEvents();
+
+
+            ucMatrix mat = new ucMatrix();
+            mat.Set(ref Interface);
+            control = (UserControl)mat;
+
+            Application.DoEvents();
+
+
+
+
+
 
             refresher = delegate
             {
@@ -323,19 +337,17 @@ namespace DB.UI
                 Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
 
 
+
+
+               
             };
 
-            refresher.Invoke();
+            refresher.Invoke(null,EventArgs.Empty);
 
-        
-            ucMatrix mat = new ucMatrix();
-            mat.Set(ref Interface);
-            control = (UserControl)mat;
-
-            Application.DoEvents();
 
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
-            IOptions options = GetOptions(1);
+
+            IOptions options = GetOptions(1, advEditor);
             options.PreferencesClick += delegate
             {
                 GetPreferences<IXCOMPreferences>(true);
@@ -344,18 +356,17 @@ namespace DB.UI
             options.HelpClick += delegate
             {
                 string helpFile = string.Empty;
-            
+
                 helpFile = getHelpFileµFinder();
                 System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
             };
 
 
-            Refresher dos = refresher;
 
-            options.RestoreFoldersClick += delegate
-            {
-                dos.Invoke();
-            };
+ 
+
+            options.RestoreFoldersClick += refresher;
+      
             Application.DoEvents();
 
             mat.Set(ref options);
@@ -364,17 +375,21 @@ namespace DB.UI
 
             Application.DoEvents();
 
+
+
+
             IPop msn = Interface.IReport.Msn;
             UserControl ctrl = msn as UserControl;
             mat.Set(ref ctrl);
 
             Application.DoEvents();
             msn.ParentForm?.Dispose();
-          
 
-           
+
+       
+
         }
 
-     
+
     }
 }

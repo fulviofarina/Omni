@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using DB.Properties;
-using DB.UI;
+﻿using DB.Properties;
 using Rsx.Dumb;
-using VTools;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace DB.Tools
 {
-   
-
     public partial class Creator
     {
         private static Interface Interface = null;
@@ -27,18 +19,10 @@ namespace DB.Tools
         /// <summary>
         /// disposes the worker that loads the data
         /// </summary>
-  
-      
-    
-    
-
     }
 
     public partial class Creator
     {
-
-
-
         /// <summary>
         /// Populates Solcoi, MatSSF and other resources
         /// </summary>
@@ -46,7 +30,6 @@ namespace DB.Tools
         {
             string path = string.Empty;
             string developerPath = string.Empty;
-
 
             try
             {
@@ -60,8 +43,8 @@ namespace DB.Tools
 
             try
             {
-                //  path = Interface.IStore.FolderPath + Resources.XCOMEnergies;
-                // developerPath = Application.StartupPath + Resources.DevFiles + Resources.XCOMEnergies;
+                // path = Interface.IStore.FolderPath + Resources.XCOMEnergies; developerPath =
+                // Application.StartupPath + Resources.DevFiles + Resources.XCOMEnergies;
                 // populateReplaceFile(path, developerPath);
             }
             catch (SystemException ex)
@@ -100,23 +83,13 @@ namespace DB.Tools
             }
             try
             {
-
-
                 path = Interface.IStore.FolderPath + Resources.DevFiles;
                 IO.MakeADirectory(path, overriderFound);
-
-
-
-
-
             }
             catch (SystemException ex)
             {
                 Interface.IStore.AddException(ex);//                throw;
             }
-
-
-
 
             try
             {
@@ -136,6 +109,7 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);//                throw;
             }
         }
+
         private static void populateBaseDirectory(bool restore = false)
         {
             //assign folderpath (like a App\Local folder)
@@ -153,6 +127,7 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);//                throw;
             }
         }
+
         /// <summary>
         /// populates MatSSF resources only
         /// </summary>

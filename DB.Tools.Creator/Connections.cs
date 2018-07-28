@@ -1,12 +1,38 @@
-﻿using System;
+﻿using DB.Tools;
+using System;
+using System.Data;
 using System.Windows.Forms;
 
-namespace DB.UI
+namespace DB.Tools
 {
+
+
     public partial class Connections : Form
     {
         protected internal Action<SystemException> exceptions = null;
         protected internal DB.LINAA.PreferencesRow pref;
+
+
+        public static void ConnectionsUI(ref LINAA.PreferencesRow prefe,ref  Action<SystemException> addException, ref Action saveMethod,ref  Action undoMethod)
+        {
+       
+            Connections cform = new Connections(ref prefe, ref addException);
+            cform.ShowDialog();
+
+            if ((prefe as DataRow).RowState != DataRowState.Modified) return;
+
+            DialogResult res = MessageBox.Show("Would you like to Save/Accept the connection changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.No)
+            {
+                undoMethod.Invoke();
+            }
+            else
+            {
+                prefe.Check();
+                saveMethod.Invoke();
+                Application.Restart();
+            }
+        }
 
         private void closingForm(object sender, FormClosingEventArgs e)
         {

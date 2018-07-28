@@ -1,47 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Properties;
-using DB.UI;
-using Rsx.Dumb;
 using VTools;
 
 namespace DB.Tools
 {
     public partial class Creator
     {
-    
-   
         protected static string PROJECT_LABEL = "PROJECT";
 
         public static IList<object> UserControls = new List<object>();
-
-        public static void ConnectionsUI()
-        {
-            LINAA.PreferencesRow prefe = Interface.IPreferences.CurrentPref;
-            Action<SystemException> addException = Interface.IStore.AddException;
-            Connections cform = new Connections(ref prefe, ref addException);
-            cform.ShowDialog();
-
-            if ((prefe as DataRow).RowState != DataRowState.Modified) return;
-
-            DialogResult res = MessageBox.Show("Would you like to Save/Accept the connection changes?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == DialogResult.No)
-            {
-                Interface.IPreferences.CurrentPref.RejectChanges();
-                // Interface.IPreferences.RejectPreferencesChanges();
-            }
-            else
-            {
-                prefe.Check();
-                Interface.IPreferences.SavePreferences();
-                Application.Restart();
-            }
-        }
 
         public static T FindLastControl<T>(string name)
         {
@@ -55,46 +24,6 @@ namespace DB.Tools
             return UserControls.OfType<T>().LastOrDefault(finder);
         }
 
-        public static IOptions GetOptions(int type)
-        {
-          
-            bool ok = Interface.IPreferences
-            .CurrentPref.AdvancedEditor;
-
-            IOptions options = new ucDBOptions(type,ok);
-
-            /*
-            options.Set();
-
-            options.SaveClick += delegate
-            {
-                Creator.SaveInFull(true);
-            };
-
-            options.DropDownClicked += delegate
-            {
-                bool ok = Interface.IPreferences
-                .CurrentPref.AdvancedEditor;
-                options.DisableImportant = ok;
-                bool ssf = type == 0;
-                options.DisableBasic = ssf;
-            };
-            options.RestoreFoldersClick += delegate
-            {
-                Creator.CheckDirectories(true);
-             //   Creator.SaveInFull(true);
-            };
-       
-            options.ConnectionBox += delegate
-            {
-                Creator.ConnectionsUI();
-            };
-            //NOW ADD IT
-            Creator.UserControls.Add(options);
-            */
-            return options;
-        }
-
         public static IGenericBox GetProjectBox()
         {
             return UserControls.OfType<ucGenericCBox>().FirstOrDefault(o => o.Label.CompareTo(PROJECT_LABEL) == 0);
@@ -106,7 +35,7 @@ namespace DB.Tools
 
             string column;
             column = Interface.IDB.IrradiationRequests.IrradiationCodeColumn.ColumnName;
-           
+
             //eveloper method
             control.DeveloperMethod += delegate
             {
@@ -243,8 +172,5 @@ namespace DB.Tools
 
             return ok;
         }
-
     }
-
-   
 }

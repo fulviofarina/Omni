@@ -171,9 +171,11 @@ namespace DB.Tools
                             m.IsBusy = false;
                             m.ToDo = false;
                             m.MatrixDate = DateTime.Now;
+
+                        //    _callBack?.Invoke(m, EventArgs.Empty);
                         }
 
-                    
+                      
 
                     };
 
@@ -461,6 +463,11 @@ namespace DB.Tools
                     string range = punto + "N" + numberOfFiles ;
 
                     tempFile = _startupPath + matrixID +  range ;
+
+                    if (File.Exists(tempFile))
+                    {
+                        File.Delete(tempFile);
+                    }
                     File.WriteAllText(tempFile, Response);
 
 

@@ -151,26 +151,46 @@ namespace Rsx.DGV
 
         public static void MakeCSVFile(string path, string matrixID, ref DataGridView dgv)
         {
-            dgv.SelectAll();
+            try
+            {
+                dgv.SelectAll();
             DataObject o = dgv.GetClipboardContent();
 
             makeCSVFile(path, matrixID, ref  o);
+            }
+            catch (Exception)
+            {
 
+
+            }
         }
 
         private static void makeCSVFile(string path, string matrixID, ref DataObject o)
         {
             if (o == null) return;
             string csv = (string)o.GetData("Csv");
-            System.IO.File.WriteAllText(path + matrixID + ".csv", csv);
+
+            string file = path + matrixID + ".csv";
+            if (File.Exists(file)) File.Delete(file);
+            File.WriteAllText(file, csv);
+       
         }
 
         public static void MakeHTMLFile(string path, string matrixID, ref DataGridView dgv)
         {
-            dgv.SelectAll();
-            DataObject o = dgv.GetClipboardContent();
-          
-            makeHtmlFile(path, matrixID,ref o);
+            try
+            {
+                dgv.SelectAll();
+                DataObject o = dgv.GetClipboardContent();
+
+                makeHtmlFile(path, matrixID, ref o);
+            }
+            catch (Exception)
+            {
+
+               
+            }
+         
         }
 
         private static void makeHtmlFile(string path, string matrixID, ref DataObject  o)
@@ -178,7 +198,9 @@ namespace Rsx.DGV
             if (o == null) return;
             MemoryStream doc = (MemoryStream)o.GetData("HTML Format");
             byte[] arr = doc.ToArray();
-            System.IO.File.WriteAllBytes(path + matrixID + ".xls", arr);
+            string file = path + matrixID + ".xls";
+            if (File.Exists(file))         File.Delete(file);
+           File.WriteAllBytes(file, arr);
         }
 
         protected void SetSaveButtonState(bool changed)
