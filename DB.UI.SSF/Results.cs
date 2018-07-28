@@ -25,7 +25,7 @@ namespace DB.UI
         {
             if (e.RowIndex < 0) return;
             int rowInder = e.RowIndex;
-            Action<string, string, bool, bool> action = Interface.IReport.Msg;
+            Action<string, string, object, bool> action = Interface.IReport.Msg;
 
             DataRow row = Rsx.DGV.Control.GetDataRowFromDGV(ref sender, rowInder);
 

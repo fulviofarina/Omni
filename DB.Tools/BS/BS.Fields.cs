@@ -6,6 +6,10 @@ namespace DB.Tools
 {
     public partial class BS
     {
+
+        protected const string ENABLE_CONTROLS_FIELD = "EnabledControls";
+
+
         protected static string CHECKED = "CHECKED";
         protected static string ERROR = "ERROR";
         protected static string NO_ROWS = "No Rows found in the DataGridView.";
@@ -40,7 +44,7 @@ namespace DB.Tools
 
         ///This is an event handler that fires the function the user GUI provides
         ///the execution is called above on NotyPropertyChanged
-        public PropertyChangedEventHandler PropertyChangedHandler = null;
+        public PropertyChangedEventHandler EnableControlsChanged = null;
 
         public BindingSource Rabbit;
         public BindingSource Samples;
@@ -84,8 +88,7 @@ namespace DB.Tools
         protected internal Hashtable bindings;
         protected internal bool enabledControls = false;
         protected internal Interface Interface;
-        protected internal const string ENABLE_CONTROLS_FIELD = "EnabledControls";
-
+  
         /// <summary>
         /// Notifies the controls the BS is busy calculating
         /// </summary>

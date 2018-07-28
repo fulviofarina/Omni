@@ -324,24 +324,7 @@ namespace DB.Tools
             return ok;
         }
 
-        private static void populateBaseDirectory(bool restore = false)
-        {
-            //assign folderpath (like a App\Local folder)
-            Interface.IStore.FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Interface.IStore.FolderPath += Resources.k0XFolder; //cambiar esto
-
-            //populate main directory at folderPath
-            try
-            {
-                if (restore) System.IO.Directory.Delete(Interface.IStore.FolderPath, true);
-                IO.MakeADirectory(Interface.IStore.FolderPath);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-        }
-
+   
         public static void PopulateDeveloperFile(string fileResourceContent, string fileName)
         {
             string path = Interface.IStore.FolderPath + Resources.DevFiles+fileName;
@@ -349,102 +332,6 @@ namespace DB.Tools
             System.IO.File.WriteAllText(path, fileResourceContent);
         }
 
-        /// <summary>
-        /// Populates Solcoi, MatSSF and other resources
-        /// </summary>
-        private static void populateResources(bool overriderFound)
-        {
-            string path = string.Empty;
-            string developerPath = string.Empty;
 
-
-            try
-            {
-                path = Interface.IStore.FolderPath + Resources.XCOMFolder;
-                IO.MakeADirectory(path, overriderFound);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-
-            try
-            {
-              //  path = Interface.IStore.FolderPath + Resources.XCOMEnergies;
-               // developerPath = Application.StartupPath + Resources.DevFiles + Resources.XCOMEnergies;
-               // populateReplaceFile(path, developerPath);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-            /*
-            try
-            {
-                path = Interface.IStore.FolderPath + Resources.WCalc;
-                developerPath = Application.StartupPath + Resources.DevFiles + Resources.WCalc;
-                populateReplaceFile(path, developerPath);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-            */
-            try
-            {
-                path = Interface.IStore.FolderPath + Resources.Exceptions;
-                IO.MakeADirectory(path, overriderFound);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-            try
-            {
-                path = Interface.IStore.FolderPath + Resources.Backups;
-                IO.MakeADirectory(path, overriderFound);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-            try
-            {
-         
-
-                path = Interface.IStore.FolderPath + Resources.DevFiles;
-                IO.MakeADirectory(path, overriderFound);
-
-
-             
-
-
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-
-       
-
-
-            try
-            {
-                populateSolCoiResource(overriderFound);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-
-            try
-            {
-                populateMatSSFResource(overriderFound);
-            }
-            catch (SystemException ex)
-            {
-                Interface.IStore.AddException(ex);//                throw;
-            }
-        }
     }
 }

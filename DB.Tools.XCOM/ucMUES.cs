@@ -129,7 +129,7 @@ namespace DB.UI
         private void bindDGVColumns()
         {
 
-            this.DGV.BackgroundColor = System.Drawing.Color.Thistle;
+            this.DGV.BackgroundColor = System.Drawing.Color.FromArgb(255,35,35,35);
             this.DGV.DataSource = Interface.IBS.MUES;
             this.DGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 

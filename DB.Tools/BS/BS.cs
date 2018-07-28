@@ -67,7 +67,11 @@ namespace DB.Tools
 
         private void notifyPropertyChanged(/*[CallerMemberName]*/ String propertyName = "")
         {
-            PropertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyName.CompareTo(ENABLE_CONTROLS_FIELD) == 0)
+            {
+                EnableControlsChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            //put some other handlers to execute (invoke) when other properties are changed
         }
 
         /// <summary>

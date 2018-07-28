@@ -121,13 +121,13 @@ namespace Rsx.DGV
         /// <returns></returns>
         private static Color getColor(bool? todo, bool? isBusy)
         {
-            Color colr = Color.DarkGreen;
+            Color colr = Color.PaleGreen;
             if (todo != null && todo == true)
             {
                 if (isBusy != null)
                 {
-                    if (isBusy == true) colr = Color.DarkOrange;
-                    else colr = Color.DarkRed;
+                    if (isBusy == true) colr = Color.Orange;
+                    else colr = Color.Coral;
                 }
             }
 

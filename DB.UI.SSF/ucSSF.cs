@@ -148,7 +148,7 @@ namespace DB.UI
                 ucUnit.Set(ref Interface, ref pref);
 
 
-                Interface.IBS.PropertyChangedHandler += delegate
+                Interface.IBS.EnableControlsChanged += delegate
                 {
                     bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                     ucCalculate1.Enabled = ThereIsData;

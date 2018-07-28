@@ -14,10 +14,18 @@ namespace DB
 
         private bool cleanMUESPics(ref MatrixRow u)
         {
+
+            bool ok = false;
+
+
             string path = this.folderPath + Properties.Resources.XCOMFolder;
 
             string[] files = System.IO.Directory.GetFiles(path, u.MatrixID.ToString() + ".*");
-            bool ok = true;
+
+            if (files.Count() == 0) return ok;
+
+             ok = true;
+
 
             foreach (var item in files)
             {

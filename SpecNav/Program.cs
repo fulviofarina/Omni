@@ -48,7 +48,7 @@ namespace SpecNav
                 //      LIMS.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
                 //      LIMS.Interface.IPreferences.CurrentPref.Offline = true;
                  Bitmap bt = DB.Properties.Resources.Matrices;
-                 Form   form =  Creator.CreateForm(ref bt);
+                 Form   form =  DBForm.CreateForm(ref bt);
 
 
                 UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator);

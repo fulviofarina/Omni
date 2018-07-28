@@ -23,7 +23,7 @@ namespace DB.Tools
 
         void GenerateUserInfoReport();
 
-        void Msg(string msg, string title, bool ok = true, bool accumulate = false);
+        void Msg(string msg, string title, object ok = null, bool accumulate = false);
 
         void ReportProgress(int percentage);
 

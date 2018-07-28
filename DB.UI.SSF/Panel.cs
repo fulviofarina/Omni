@@ -128,7 +128,7 @@ namespace DB.UI
 
                 viewChanged(null, EventArgs.Empty);//.PerformClick();
 
-                Interface.IBS.PropertyChangedHandler += delegate
+                Interface.IBS.EnableControlsChanged += delegate
                 {
                     //turns off or disables the controls.
                     //necessary protection for user interface

@@ -81,11 +81,13 @@ namespace DB.Tools
             }
             set
             {
+
                 enabledControls = value;
+              
                 notifyPropertyChanged(ENABLE_CONTROLS_FIELD);
             }
         }
-
+     
         public bool IsCalculating
         {
             get
@@ -139,11 +141,11 @@ namespace DB.Tools
         /// </summary>
         public void EndEdit()
         {
-            foreach (BindingSource b in bindings.Values)
+            foreach (BindingSource b in bindings?.Values)
             {
                 try
                 {
-                    b.EndEdit();
+                    b?.EndEdit();
                 }
                 catch (Exception ex)
                 {
@@ -279,8 +281,8 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
             }
         }
-
-        public void EndEditGeometries()
+/*
+     public void EndEditGeometries()
         {
             Matrix.EndEdit();
             Geometry.EndEdit();
@@ -289,7 +291,7 @@ namespace DB.Tools
             SelectedCompositions.EndEdit();
             MUES.EndEdit();
         }
-
+        */
         public BS()
         {
         }

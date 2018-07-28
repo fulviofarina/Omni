@@ -17,7 +17,7 @@ namespace DB.UI
         {
             Bitmap icon = Resources.Logo;
 
-            Form form = Creator.CreateForm(ref icon);
+            Form form = DBForm.CreateForm(ref icon);
 
             IPreferences preferences = GetPreferences<IPreferences>();
           
@@ -26,7 +26,12 @@ namespace DB.UI
             {
               GetPreferences<IPreferences>(true);
             };
-
+            options.HelpClick += delegate
+            {
+                string helpFile = string.Empty;
+                helpFile = getHelpFileSSF();
+                System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
+            };
             //DEVELOPER MODE
             //      options.SetDeveloperMode(false);
 
@@ -127,11 +132,11 @@ namespace DB.UI
         {
 
 
-            IOptions[] optionArr = Creator.UserControls.OfType<ucOptions>().ToArray();
+            IOptions[] optionArr = Creator.UserControls?.OfType<ucOptions>().ToArray();
 
             IOptions options = null;
 
-            options = optionArr.FirstOrDefault(o => o.Type == type);
+            options = optionArr?.FirstOrDefault(o => o.Type == type);
             if (options != null) return options;
 
             //created but not in list
@@ -249,7 +254,20 @@ namespace DB.UI
             return c;
         }
 */
-    
+        protected static string WINDOWS_EXPLORER = "explorer.exe";
+        protected static string HELP_FILE_SSF_PDF = "UserGuide.pdf";
+
+        public static string HELP_FILE_µFINDER_PDF = "µFinderUserGuide.pdf";
+
+        protected internal static string getHelpFileSSF()
+        {
+            return Application.StartupPath + Resources.DevFiles + HELP_FILE_SSF_PDF;
+        }
+        protected internal static string getHelpFileµFinder()
+        {
+            return Application.StartupPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
+        }
+
         public static void CreateMatrixApplication(out UserControl control, out Refresher refresher)
         {
           
@@ -268,10 +286,13 @@ namespace DB.UI
                 Interface.IBS.StartBinding();
 
                 Interface.IBS.ShowErrors = false;
+
+           
+
                 bool offline = Interface.IPreferences.CurrentPref.Offline;
                 if (offline)
                 {
-
+                
                     Creator.LoadFromFile();
 
                     Application.DoEvents();
@@ -319,6 +340,15 @@ namespace DB.UI
             {
                 GetPreferences<IXCOMPreferences>(true);
             };
+
+            options.HelpClick += delegate
+            {
+                string helpFile = string.Empty;
+            
+                helpFile = getHelpFileµFinder();
+                System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
+            };
+
 
             Refresher dos = refresher;
 

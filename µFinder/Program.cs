@@ -61,9 +61,11 @@ namespace µFinder
                 Form toShow = control.ParentForm;
 
 
-            
 
-              
+
+                toShow.StartPosition = FormStartPosition.CenterScreen;
+                toShow.WindowState = FormWindowState.Maximized;
+              //  toShow.ControlBox = false;
              
 
                 //      LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;

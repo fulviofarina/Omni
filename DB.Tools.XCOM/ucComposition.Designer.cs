@@ -137,7 +137,7 @@
             this.compositionsDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.compositionsDGV.AutoGenerateColumns = false;
             this.compositionsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.compositionsDGV.BackgroundColor = System.Drawing.Color.Thistle;
+            this.compositionsDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.compositionsDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.compositionsDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.compositionsDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
@@ -188,17 +188,17 @@
             // 
             this.elementDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.elementDataGridViewTextBoxColumn.DataPropertyName = "Element";
-            this.elementDataGridViewTextBoxColumn.HeaderText = "Formula";
+            this.elementDataGridViewTextBoxColumn.HeaderText = "FORMULA";
             this.elementDataGridViewTextBoxColumn.Name = "elementDataGridViewTextBoxColumn";
             this.elementDataGridViewTextBoxColumn.ToolTipText = "Elemental or compound formula";
             // 
             // quantityDataGridViewTextBoxColumn
             // 
             this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Percent";
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "%";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             this.quantityDataGridViewTextBoxColumn.ToolTipText = "in %";
-            this.quantityDataGridViewTextBoxColumn.Width = 88;
+            this.quantityDataGridViewTextBoxColumn.Width = 46;
             // 
             // uncDataGridViewTextBoxColumn
             // 
@@ -235,8 +235,10 @@
             // 
             // matrixRTB
             // 
+            this.matrixRTB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.matrixRTB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.matrixRTB.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixRTB.ForeColor = System.Drawing.SystemColors.Info;
             this.matrixRTB.Location = new System.Drawing.Point(0, 0);
             this.matrixRTB.Margin = new System.Windows.Forms.Padding(5);
             this.matrixRTB.Name = "matrixRTB";

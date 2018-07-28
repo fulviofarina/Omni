@@ -17,7 +17,7 @@ namespace DB.Tools
         private Hashtable loaders = new Hashtable();
         private bool offline = false;
         private XCOMPrefRow pref;
-        private Action<string, string, bool, bool> reporter;
+        private Action<string, string, object, bool> reporter;
         private IList<MatrixRow> rows;
         private decimal seconds = 0;
         private Stopwatch stopwatch;
@@ -78,7 +78,7 @@ namespace DB.Tools
             }
         }
 
-        public Action<string, string, bool, bool> Reporter
+        public Action<string, string, object, bool> Reporter
         {
             set
             {
@@ -140,11 +140,14 @@ namespace DB.Tools
                 l?.RunWorkerAsync();
             };
 
-            while (rows.Count != 0)
+
+            int contador = rows.Count;
+
+            while (contador != 0)
             {
                 int actionCount = 0;
 
-                MatrixRow m = rows.FirstOrDefault();
+                MatrixRow m = rows[contador - 1];
 
                 string msg = m.MatrixName + " was ";
                 bool ok = true;
@@ -162,11 +165,16 @@ namespace DB.Tools
                     {
                         _showProgress?.Invoke(null, EventArgs.Empty);
                         bool finito = reportProgress(progress, m.MatrixName);
+                     
                         if (finito)
                         {
                             m.IsBusy = false;
+                            m.ToDo = false;
                             m.MatrixDate = DateTime.Now;
                         }
+
+                    
+
                     };
 
                     Action callBack =
@@ -192,9 +200,11 @@ namespace DB.Tools
 
                 reporter(msg, title, ok, false);
 
-                rows.Remove(m);
 
-             
+                contador--;
+             //   rows.Remove(m);
+
+
             }
 
             reporter("A total of " + loaders.Count + " matrices were prepared", "Starting...", true, false);
@@ -220,9 +230,20 @@ namespace DB.Tools
             }
             else
             {
-                foreach (ILoader item in loaders.Values)
+                foreach (int i in loaders.Keys)
                 {
+                    ILoader item = (ILoader) loaders[i];
                     item.CancelLoader();
+
+                    MatrixRow toCancel =  rows.Where(o=> o.IsBusy).FirstOrDefault(o => o.MatrixID == i);
+                    toCancel.IsBusy = false;
+                    toCancel.ToDo = true;
+                    toCancel.MatrixDate = DateTime.Now;
+                    toCancel.CleanMUES();
+                    toCancel.RowError = "Cancelled";
+
+              //   bool o =   toCancel.ToDo;
+
                 }
                 ok = false;
                 loaders.Clear();
@@ -416,14 +437,14 @@ namespace DB.Tools
 
         private bool reportProgress(int x, string matrixName)
         {
-            string msg = matrixName + "\nProgress:\t" + x.ToString() + " %\n";
+            string msg = "Matrix: " + matrixName + "\nProgress:\t" + x.ToString() + " %\n";
             string title = "Finished with...";
             bool finito = (x == 100);
             if (!finito)
             {
                 title = "Working on...";
             }
-            reporter(msg, title, true, false);
+            reporter(msg, title, x, false);
             return finito;
         }
         private Action setMainAction(int matrixID, int numberOfFiles, string listOfenergies, string compositions, string labelName, double start, double end)

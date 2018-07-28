@@ -14,7 +14,7 @@ namespace VTools
         void FillLog(string msg);
         void MakeForm();
       //  void Msg(string msg, string title, ToolTipIcon icon, bool accumulate = false);
-        void Msg(string msg, string title, bool ok , bool accumulate);
+        void Msg(string msg, string title, object ok=null , bool accumulate = false);
         void ReportProgress(int percentage);
         void Speak(string text);
     }

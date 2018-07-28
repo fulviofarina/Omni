@@ -95,6 +95,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucMatrixSimple));
             this.TLPMatrix = new System.Windows.Forms.TableLayoutPanel();
             this.matrixDGV = new System.Windows.Forms.DataGridView();
+            this.ToDo = new Rsx.DGV.CalculableColumn();
+            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MatrixBS = new System.Windows.Forms.BindingSource(this.components);
             this.lINAA = new DB.LINAA();
             this.contentTS = new System.Windows.Forms.ToolStrip();
@@ -121,9 +124,6 @@
             this.cDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToDo = new Rsx.DGV.CalculableColumn();
-            this.matrixNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matrixDensityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLPMatrix.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matrixDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatrixBS)).BeginInit();
@@ -137,6 +137,7 @@
             // 
             // TLPMatrix
             // 
+            this.TLPMatrix.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.TLPMatrix.ColumnCount = 2;
             this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.983F));
             this.TLPMatrix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.017F));
@@ -149,8 +150,8 @@
             this.TLPMatrix.Location = new System.Drawing.Point(0, 0);
             this.TLPMatrix.Name = "TLPMatrix";
             this.TLPMatrix.RowCount = 2;
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.32526F));
+            this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.67474F));
             this.TLPMatrix.Size = new System.Drawing.Size(706, 578);
             this.TLPMatrix.TabIndex = 6;
             // 
@@ -169,7 +170,7 @@
             this.matrixDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.matrixDGV.AutoGenerateColumns = false;
             this.matrixDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.matrixDGV.BackgroundColor = System.Drawing.Color.Plum;
+            this.matrixDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.matrixDGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.matrixDGV.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.matrixDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
@@ -199,7 +200,7 @@
             this.matrixDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.matrixDGV.EnableHeadersVisualStyles = false;
             this.matrixDGV.GridColor = System.Drawing.Color.Black;
-            this.matrixDGV.Location = new System.Drawing.Point(3, 32);
+            this.matrixDGV.Location = new System.Drawing.Point(3, 28);
             this.matrixDGV.MultiSelect = false;
             this.matrixDGV.Name = "matrixDGV";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -213,8 +214,35 @@
             this.matrixDGV.RowHeadersVisible = false;
             this.matrixDGV.RowTemplate.Height = 24;
             this.matrixDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.matrixDGV.Size = new System.Drawing.Size(360, 543);
+            this.matrixDGV.Size = new System.Drawing.Size(360, 547);
             this.matrixDGV.TabIndex = 7;
+            // 
+            // ToDo
+            // 
+            this.ToDo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
+            this.ToDo.DataPropertyName = "ToDo";
+            this.ToDo.HeaderText = "";
+            this.ToDo.Name = "ToDo";
+            this.ToDo.ReadOnly = true;
+            this.ToDo.ToolTipText = "Matrix to Do?";
+            this.ToDo.Width = 5;
+            // 
+            // matrixNameDataGridViewTextBoxColumn1
+            // 
+            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
+            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "LABEL";
+            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
+            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for the Matrix";
+            // 
+            // matrixDensityDataGridViewTextBoxColumn1
+            // 
+            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
+            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "DENSITY";
+            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
+            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or known Density for this Matrix (in g/cm3)";
+            this.matrixDensityDataGridViewTextBoxColumn1.Width = 96;
             // 
             // MatrixBS
             // 
@@ -234,7 +262,7 @@
             // 
             // contentTS
             // 
-            this.contentTS.BackColor = System.Drawing.SystemColors.Menu;
+            this.contentTS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.contentTS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentTS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.contentTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -244,37 +272,40 @@
             this.contentTS.Name = "contentTS";
             this.contentTS.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.contentTS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contentTS.Size = new System.Drawing.Size(340, 29);
+            this.contentTS.Size = new System.Drawing.Size(340, 25);
             this.contentTS.TabIndex = 5;
             this.contentTS.Text = "toolStrip8";
             // 
             // editContentLBL
             // 
+            this.editContentLBL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.editContentLBL.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editContentLBL.ForeColor = System.Drawing.Color.Blue;
+            this.editContentLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.editContentLBL.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.editContentLBL.Name = "editContentLBL";
-            this.editContentLBL.Size = new System.Drawing.Size(48, 26);
+            this.editContentLBL.Size = new System.Drawing.Size(48, 22);
             this.editContentLBL.Text = "VIEW";
             // 
             // contentNameBox
             // 
-            this.contentNameBox.BackColor = System.Drawing.SystemColors.Control;
+            this.contentNameBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.contentNameBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contentNameBox.ForeColor = System.Drawing.SystemColors.Info;
             this.contentNameBox.Name = "contentNameBox";
-            this.contentNameBox.Size = new System.Drawing.Size(140, 29);
+            this.contentNameBox.Size = new System.Drawing.Size(250, 25);
             this.contentNameBox.Text = "Nothing";
             this.contentNameBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MatrixBN
             // 
             this.MatrixBN.AddNewItem = this.bindingNavigatorAddNewItem;
-            this.MatrixBN.BackColor = System.Drawing.SystemColors.Control;
+            this.MatrixBN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.MatrixBN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.MatrixBN.BindingSource = this.MatrixBS;
             this.MatrixBN.CountItem = this.bindingNavigatorCountItem;
             this.MatrixBN.DeleteItem = this.bindingNavigatorDeleteItem;
             this.MatrixBN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MatrixBN.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MatrixBN.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.MatrixBN.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.MatrixBN.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
@@ -296,8 +327,7 @@
             this.MatrixBN.Name = "MatrixBN";
             this.MatrixBN.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.MatrixBN.PositionItem = this.bindingNavigatorPositionItem;
-            this.MatrixBN.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MatrixBN.Size = new System.Drawing.Size(366, 29);
+            this.MatrixBN.Size = new System.Drawing.Size(366, 25);
             this.MatrixBN.TabIndex = 1;
             this.MatrixBN.Text = "bindingNavigator1";
             // 
@@ -307,14 +337,15 @@
             this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
             // bindingNavigatorCountItem
             // 
-            this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.bindingNavigatorCountItem.ForeColor = System.Drawing.Color.White;
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(49, 26);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(49, 22);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
             // 
@@ -324,7 +355,7 @@
             this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
             // bindingNavigatorMoveFirstItem
@@ -333,7 +364,7 @@
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorMoveFirstItem.Text = "Move first";
             // 
             // bindingNavigatorMovePreviousItem
@@ -342,19 +373,21 @@
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorMovePreviousItem.Text = "Move previous";
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 29);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
             // 
             // bindingNavigatorPositionItem
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Position";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.ForeColor = System.Drawing.Color.Black;
+            this.bindingNavigatorPositionItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.bindingNavigatorPositionItem.ForeColor = System.Drawing.Color.White;
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(55, 29);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -364,7 +397,7 @@
             // bindingNavigatorSeparator1
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 29);
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // bindingNavigatorMoveNextItem
             // 
@@ -372,7 +405,7 @@
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorMoveNextItem.Text = "Move next";
             // 
             // bindingNavigatorMoveLastItem
@@ -381,21 +414,22 @@
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 26);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 29);
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // ucComposition1
             // 
+            this.ucComposition1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ucComposition1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucComposition1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ucComposition1.Location = new System.Drawing.Point(369, 32);
+            this.ucComposition1.Location = new System.Drawing.Point(369, 28);
             this.ucComposition1.Name = "ucComposition1";
-            this.ucComposition1.Size = new System.Drawing.Size(334, 543);
+            this.ucComposition1.Size = new System.Drawing.Size(334, 547);
             this.ucComposition1.TabIndex = 8;
             // 
             // matrixIDDataGridViewTextBoxColumn
@@ -457,37 +491,11 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 30);
             // 
-            // ToDo
-            // 
-            this.ToDo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
-            this.ToDo.DataPropertyName = "ToDo";
-            this.ToDo.HeaderText = "";
-            this.ToDo.Name = "ToDo";
-            this.ToDo.ReadOnly = true;
-            this.ToDo.ToolTipText = "Matrix to Do?";
-            this.ToDo.Width = 5;
-            // 
-            // matrixNameDataGridViewTextBoxColumn1
-            // 
-            this.matrixNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.matrixNameDataGridViewTextBoxColumn1.DataPropertyName = "MatrixName";
-            this.matrixNameDataGridViewTextBoxColumn1.HeaderText = "Label";
-            this.matrixNameDataGridViewTextBoxColumn1.Name = "matrixNameDataGridViewTextBoxColumn1";
-            this.matrixNameDataGridViewTextBoxColumn1.ToolTipText = "A Label for the Matrix";
-            // 
-            // matrixDensityDataGridViewTextBoxColumn1
-            // 
-            this.matrixDensityDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.matrixDensityDataGridViewTextBoxColumn1.DataPropertyName = "MatrixDensity";
-            this.matrixDensityDataGridViewTextBoxColumn1.HeaderText = "Density";
-            this.matrixDensityDataGridViewTextBoxColumn1.Name = "matrixDensityDataGridViewTextBoxColumn1";
-            this.matrixDensityDataGridViewTextBoxColumn1.ToolTipText = "Estimated or known Density for this Matrix (in g/cm3)";
-            this.matrixDensityDataGridViewTextBoxColumn1.Width = 87;
-            // 
             // ucMatrixSimple
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.Controls.Add(this.TLPMatrix);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

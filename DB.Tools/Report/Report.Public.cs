@@ -247,7 +247,7 @@ namespace DB.Tools
         /// </summary>
         /// <param name="msg">  Message to display</param>
         /// <param name="title">title of the message</param>
-        public void Msg(string msg, string title, bool ok = true, bool accumulate = false)
+        public void Msg(string msg, string title, object ok=null, bool accumulate = false)
         {
             this.msn.Msg(msg, title, ok, accumulate);
         }
@@ -483,9 +483,9 @@ namespace DB.Tools
             if (msn == null)
             {
                 msn = new Pop(true);
-                msn.LogFilePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                    + "\\Temp\\" + "Log." + DateTime.Today.DayOfYear + ".txt";
-                // LIMS.Interface.IReport.Msn = msn; msn.ParentForm.Opacity = 100;
+                msn.LogFilePath = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache)
+                    + "\\" + "Log." + DateTime.Today.DayOfYear + ".doc";
+              
             }
         }
     }

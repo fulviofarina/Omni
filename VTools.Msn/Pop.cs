@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-
+using System.Speech.Synthesis;
 namespace VTools
 {
     public partial class Pop : UserControl, IPop
@@ -11,11 +11,11 @@ namespace VTools
         protected internal string _LAST_MSG_SPEAK = string.Empty;
         protected internal string _LAST_MSG = string.Empty;
 
-        protected internal System.Speech.Synthesis.SpeechSynthesizer _LORITO;
+        protected internal SpeechSynthesizer _LORITO;
 
         protected internal Timer _TIMER;
 
-        protected internal Font _FONT = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold);
+        protected internal Font _FONT = new Font("Verdana", 16, FontStyle.Italic);
         private string logFilePath = string.Empty;
 
         public int DisplayInterval
@@ -107,26 +107,38 @@ namespace VTools
             // f.StartPosition = FormStartPosition.CenterScreen; f.Opacity = 0;
         }
 
-        public void Msg(string msg, string title, bool ok=true, bool accumulate = false)
+        public void Msg(string msg, string title, object ok=null, bool accumulate = false)
         {
             EventHandler hdl = delegate
             {
-                // string pre = string.Empty;
-                System.Windows.Forms.ToolTipIcon icon = System.Windows.Forms.ToolTipIcon.Error;
-                string pre = "OK";
-                if (!ok)
-                {
-                    pre = "=(";
-                }
-                this.iconic.Image = Notifier.MakeBitMap(pre, _FONT, Color.White);
-
-                message(msg, title,  accumulate);
+                makeDefaultIcon(ok);
+                messageMainFunction(msg, title, accumulate);
             };
             this?.Invoke(hdl);
         }
 
+        private void makeDefaultIcon(object ok)
+        {
+            if (ok != null)
+            {
+                if (ok.GetType().Equals(typeof(bool)))
+                {
+                    string pre = "OK";
+                    if (!(bool)ok)
+                    {
+                        pre = "=(";
+                    }
+                    makeDefinedIcon(pre, Color.White);
+                }
+                else if (ok.GetType().Equals(typeof(int)))
+                {
+                    makeProgressIcon((int)ok);
 
-        private void message( string msg, string title, bool accumulate = false)
+                }
+            }
+        }
+
+        private void messageMainFunction( string msg, string title, bool accumulate = false)
         {
            
                
@@ -159,48 +171,86 @@ namespace VTools
             System.IO.File.AppendAllText(logFilePath, DateTime.Now.ToLocalTime() + "\t" + msg + "\n");
         }
 
+        string reporAppender = string.Empty;
+
         public void ReportProgress(int percentage)
         {
-
-        //    EventHandler hdl = delegate
+            //    EventHandler hdl = delegate
             //{
-                this.iconic.Image = Notifier.MakeBitMap(percentage.ToString() + "%", _FONT, Color.White);
-                //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
+        //    makeProgressIcon(percentage);
+            //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
 
             //    Application.DoEvents();
 
-                string msg = "Loading... ";
-                string title = "Please wait...";
-                if (percentage == 100)
-                {
-                    msg = "Loaded ";
-                    this.iconic.Image = Notifier.MakeBitMap(":)", _FONT, Color.White);
-                    title = "Ready to go...";
-                }
-                message( msg +  percentage + "%", title);
+            string msg = "Loading... ";
+            string title = "Please wait...";
+            if (percentage == 0) reporAppender = string.Empty;
 
-          //      Application.DoEvents();
-                //   Application.DoEvents();
-          //  };
-         //   this.Invoke(hdl);
+
+            reporAppender += percentage.ToString() + "\n";
+         
+            if (percentage == 100)
+            {
+                msg = "Loading completed! ";
+          //      makeDefinedIcon(":)", Color.White);
+                title = "Ready...";
+
+                FillLog(reporAppender);
+            }
+
+            Msg(msg, title, percentage, false);
+
+        
+
+            //     messageMainFunction(msg + percentage, title);
+
+            //      Application.DoEvents();
+            //   Application.DoEvents();
+            //  };
+            //   this.Invoke(hdl);
+
+        }
+
+        private void makeDefinedIcon(string content, Color color)
+        {
+            this.iconic.Image?.Dispose();
             
+            Image okImg = Notifier.MakeBitMap(content, _FONT, color);
+            this.iconic.Image = okImg;
+        }
+
+        private void makeProgressIcon(int percentage)
+        {
+            string progreso = percentage.ToString() + "%";
+            Color color = Color.White;
+            makeDefinedIcon(progreso, color);
         }
 
         // protected SpeechLib.SpVoice lorito;
         public void Speak(string text)
         {
-            if (_LAST_MSG_SPEAK.CompareTo(text) == 0) return;
-            _LAST_MSG_SPEAK = text;
-            if (_LORITO == null)
-            {
-                this._LORITO = new System.Speech.Synthesis.SpeechSynthesizer();
+       
 
-                // this.lorito = new SpeechLib.SpVoice();
+            try
+            {
+                if (_LAST_MSG_SPEAK.CompareTo(text) == 0) return;
+                _LAST_MSG_SPEAK = text;
+                if (_LORITO == null)
+                {
+                    this._LORITO = new SpeechSynthesizer();
+                    // this.lorito = new SpeechLib.SpVoice();
+                }
+                System.ComponentModel.BackgroundWorker worker3 = new System.ComponentModel.BackgroundWorker();
+                worker3.DoWork += new System.ComponentModel.DoWorkEventHandler(speakDoWork);
+                worker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(speakCompleted);
+                worker3.RunWorkerAsync(text);
             }
-            System.ComponentModel.BackgroundWorker worker3 = new System.ComponentModel.BackgroundWorker();
-            worker3.DoWork += new System.ComponentModel.DoWorkEventHandler(speakDoWork);
-            worker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(speakCompleted);
-            worker3.RunWorkerAsync(text);
+            catch (Exception)
+            {
+
+               
+            }
+         
         }
 
         protected void timerTick(object sender, EventArgs e)
@@ -250,11 +300,11 @@ namespace VTools
         {
             InitializeComponent();
 
-            BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            Location = new System.Drawing.Point(3, 32);
+            BorderStyle = BorderStyle.Fixed3D;
+            Location = new Point(3, 32);
             Name = "msn";
-            Padding = new System.Windows.Forms.Padding(9);
-            Size = new System.Drawing.Size(512, 113);
+            Padding = new Padding(9);
+            Size = new Size(512, 113);
             TabIndex = 6;
 
             this.Text = string.Empty;
@@ -269,7 +319,8 @@ namespace VTools
 
             this.textBoxDescription.TextChanged += msgChanged;
 
-            this.textBoxDescription.MouseDoubleClick += TextBoxDescription_MouseDoubleClick; ;
+            this.pictureBox1.MouseDoubleClick += textBoxDescription_MouseDoubleClick; 
+        //    this.textBoxDescription.MouseDoubleClick += textBoxDescription_MouseDoubleClick; 
 
             if (withForm)
             {
@@ -277,11 +328,14 @@ namespace VTools
             }
         }
 
-        private void TextBoxDescription_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void textBoxDescription_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start("explorer.exe", logFilePath);
+                string newFile = LogFilePath + ".copy.doc";
+                System.IO.File.Copy(LogFilePath, newFile,true);
+                System.Diagnostics.Process.Start("explorer.exe", newFile);
+
             }
             catch (Exception)
             {

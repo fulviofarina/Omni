@@ -74,11 +74,21 @@ namespace DB.UI
             Binding mlabel = Rsx.Dumb.BS.ABinding(ref bs, column);
             this.contentNameBox.TextBox.DataBindings.Add(mlabel);
 
+            Interface.IBS.EnableControlsChanged += delegate
+              {
+                  this.matrixDGV.Invalidate(true);
+                  this.matrixDGV.Refresh();
+                  this.matrixDGV.ClearSelection();
+              };
+
+            /*
             if (bs.Count != 0)
             {
                 bs.Position = 1;
                 bs.Position = 0;
             }
+
+            */
         }
 
         public ucMatrixSimple()
@@ -109,11 +119,6 @@ namespace DB.UI
             ucComposition1.ChangeFocus(null, System.EventArgs.Empty);
         }
 
-        public void RefreshDGV()
-        {
-            this.matrixDGV.Invalidate(true);
-            this.matrixDGV.Refresh();
-            this.matrixDGV.ClearSelection();
-        }
+     
     }
 }

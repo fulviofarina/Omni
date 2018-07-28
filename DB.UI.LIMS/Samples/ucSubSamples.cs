@@ -226,7 +226,7 @@ namespace DB.UI
 
         private void setUI()
         {
-            Interface.IBS.PropertyChangedHandler += delegate
+            Interface.IBS.EnableControlsChanged += delegate
             {
                 string currentProject = projectbox.TextContent;
                 if (this.ParentForm != null)
