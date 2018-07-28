@@ -62,8 +62,8 @@ namespace DB.UI
                 this.compositionsDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
 
-                ChangeFocus(null, EventArgs.Empty);
-                ChangeFocus(null, EventArgs.Empty);
+           //     ChangeFocus(null, EventArgs.Empty);
+            //    ChangeFocus(null, EventArgs.Empty);
             }
             catch (System.Exception ex)
             {
@@ -118,6 +118,7 @@ namespace DB.UI
             bool recode = true;
             Interface.IPopulate.IGeometry.AddCompositions(ref m, ref compos, null, recode);
 
+            this.compositionsDGV.Refresh();
             //yes again
            current = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
 

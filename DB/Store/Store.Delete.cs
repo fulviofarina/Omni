@@ -31,7 +31,16 @@ namespace DB
             {
                 if (System.IO.File.Exists(item))
                 {
-                    System.IO.File.Delete(item);
+                    try
+                    {
+                        System.IO.File.Delete(item);
+                     
+                    }
+                    catch (Exception ex)
+                    {
+
+                      
+                    }
                     ok = ok && !System.IO.File.Exists(item);
 
                 }

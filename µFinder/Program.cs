@@ -52,7 +52,7 @@ namespace µFinder
                 Creator.PopulatePreferences();
 
                 LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
-                LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+        //        LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 //
                 bool noDGVControls = false;
                 UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, null, noDGVControls);

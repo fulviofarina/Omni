@@ -353,6 +353,7 @@ namespace DB.UI
                 GetPreferences<IXCOMPreferences>(true);
             };
 
+            /*
             options.HelpClick += delegate
             {
                 string helpFile = string.Empty;
@@ -361,7 +362,7 @@ namespace DB.UI
                 System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
             };
 
-
+            */
 
  
 

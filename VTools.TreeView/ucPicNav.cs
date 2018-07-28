@@ -28,6 +28,9 @@ namespace VTools
             listView1.ItemSelectionChanged += ListView1_ItemSelectionChanged;
 
             Application.EnableVisualStyles();
+
+            webBrowser1.ScriptErrorsSuppressed = true;
+            webBrowser1.AllowNavigation = true;
             // listView1.ItemActivate += ListView1_ItemActivate;
         }
 
@@ -59,13 +62,14 @@ namespace VTools
                 if (System.IO.File.Exists(file))
                 {
                     string newFile = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
-                    newFile += file.Replace(folderPath, Guid.NewGuid().ToString().Substring(0, 8));
+                    newFile += file.Replace(folderPath, null);
+                    newFile += Guid.NewGuid().ToString().Substring(0, 6);
                    // newFile +=".html";
                     File.Copy(file, newFile, true);
                     uri = new Uri(newFile);
                 }
-               
-                webBrowser1.Navigate(uri);
+
+                NavigateTo(uri);
             }
             catch (Exception)
             {
@@ -73,6 +77,11 @@ namespace VTools
                
             }
           
+        }
+
+        public void NavigateTo(Uri helpFile)
+        {
+            webBrowser1.Navigate(helpFile);
         }
 
         public void Set(string path,  string filter, string imageExt)
@@ -170,9 +179,17 @@ namespace VTools
              
 
 
+                if (itemText.CompareTo("csv")==0)
+                {
+                    itemText = "comma-separated";
+                }
+                else if (itemText.CompareTo("xls")==0)
+                {
+                    itemText = "excel";
+                }
 
-                ListViewItem i = new ListViewItem(itemText);
-             
+                ListViewItem i = new ListViewItem(itemText.ToUpper());
+            
                 i.Tag = file;
 
                 ls.Add(i);
@@ -216,7 +233,7 @@ namespace VTools
             //    listView1.PerformLayout();
             //   listView1.RedrawItems(0, listView1.Items.Count, false); 
             //      listView1.VirtualMode = true;
-            ListViewItem d = listView1.Items.Find("FULL",true).FirstOrDefault();
+            ListViewItem d = listView1.Items.Cast<ListViewItem>().FirstOrDefault(o=>o.Text.CompareTo("FULL")==0);
             if(d!=null) d.Selected = true;
 
        

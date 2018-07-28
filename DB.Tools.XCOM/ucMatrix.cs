@@ -49,7 +49,18 @@ namespace DB.UI
             showProg = options.ShowProgress;
             DBTLP.Controls.Add(options as UserControl);
 
-         
+
+
+            options.HelpClick += delegate
+            {
+                Uri helpFile;
+                helpFile = new Uri("https://www.researchgate.net/publication/317902783_-Finder_A_Windows_program_for_photon_mass_attenuation_coefficients_between_1_keV_to_100_GeV");
+                ucPicNav1.NavigateTo(helpFile);
+             //   helpFile = getHelpFileµFinder();
+               // System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
+            };
+
+
             // this.ResumeLayout(true);
         }
 
@@ -104,12 +115,15 @@ namespace DB.UI
             XCom.Reporter = Interface.IReport.Msg;
             XCom.ExceptionAdder = Interface.IStore.AddException;
 
+         
 
 
             // XCOM.PictureExtension
 
             EventHandler navigatorRefresh = delegate
             {
+                ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+
                 ucPicNav1.HideList(true);
                 // ucPicNav1.HideList(true);
                 ucPicNav1.HideList(false);
@@ -139,7 +153,9 @@ namespace DB.UI
             ucCalculate1.CalculateMethod += delegate
              {
 
-                 ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+
+            //     ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+
 
                  ucCalculate1.EnableCalculate = false;
                  Application.DoEvents();
@@ -154,7 +170,10 @@ namespace DB.UI
                  XCom.Rows = Interface.IDB.Matrix.Where(o => o.ToDo).ToList();
                  Application.DoEvents();
                  XCom.Calculate(null);
- 
+
+
+                
+
              };
             ucCalculate1.CalculateMethod += navigatorRefresh;
             ucCalculate1.CalculateMethod += enableCtrols;
@@ -168,21 +187,20 @@ namespace DB.UI
                 MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
                 if (m != null)
                 {
+
                     ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
                 }
             };
 
+            Interface.IBS.Matrix.CurrentChanged += navigatorRefresh;
             Interface.IBS.Matrix.CurrentChanged += changed;
 
-          //  callmeBack += changed;
+            //  callmeBack += changed;
 
             this.Disposed += delegate
             {
                 Interface.IDB.Matrix.CleanMUESHandler -= navigatorRefresh;
-            };
-
-            this.Disposed += delegate
-            {
+                Interface.IBS.Matrix.CurrentChanged -= navigatorRefresh;
                 Interface.IBS.Matrix.CurrentChanged -= changed;
             };
 
@@ -216,16 +234,20 @@ namespace DB.UI
 
             if (m == null) return;
 
-            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
-            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
-            ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
-
+          
             if (!XCom.IsCalculating)
             {
                 XCom.CheckCompletedOrCancelled();
           
                 saveMethod();
             }
+
+            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
+
+            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
+
+            ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
+
             //   ucMatrixSimple1.RefreshDGV();
             Interface.IBS.EnabledControls = !XCom.IsCalculating;
 

@@ -157,6 +157,8 @@ namespace Rsx.DGV
             DataObject o = dgv.GetClipboardContent();
 
             makeCSVFile(path, matrixID, ref  o);
+
+                dgv.ClearSelection();
             }
             catch (Exception)
             {
@@ -184,6 +186,8 @@ namespace Rsx.DGV
                 DataObject o = dgv.GetClipboardContent();
 
                 makeHtmlFile(path, matrixID, ref o);
+
+                dgv.ClearSelection();
             }
             catch (Exception)
             {
