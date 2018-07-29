@@ -137,7 +137,13 @@ namespace DB
                     compositionRenew = false;
                     string newcomposition = (string)propo;
                     string oldcomposition = (string)val;
-                    if (oldcomposition.Trim().CompareTo(newcomposition.Trim()) != 0)
+                   oldcomposition =  oldcomposition.Trim().Replace(" ", null);
+                    newcomposition = newcomposition.Trim().Replace(" ", null);
+                    oldcomposition = oldcomposition.Replace("\n", null);
+                    newcomposition = newcomposition.Replace("\n", null);
+                    oldcomposition = oldcomposition.Replace("\t", null);
+                    newcomposition = newcomposition.Replace("\t", null);
+                    if (oldcomposition.CompareTo(newcomposition) != 0)
                     {
                         compositionRenew = true;
                     }
