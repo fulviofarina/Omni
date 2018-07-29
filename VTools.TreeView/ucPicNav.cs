@@ -1,107 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace VTools
 {
-    public partial class ucPicNav : UserControl
+    public  partial class ucPicNav : UserControl
     {
+        protected string FOLDERPATH = string.Empty;
+        protected string IMAGE_EXTENSION = string.Empty;
+        protected string nameForItemToSelect = "FULL";
+        protected string PUNTO = ".";
 
         private FileSystemWatcher watcher;
-        private string folderPath = string.Empty;
-        private string imageExtension = string.Empty;
-        public ucPicNav()
-        {
-            InitializeComponent();
-
-            //  this.Load += UcPicNav_Load;
-            watcher = new FileSystemWatcher();
-            
-            watcher.Changed += Watcher_Changed;
-            listView1.ItemSelectionChanged += ListView1_ItemSelectionChanged;
-
-            Application.EnableVisualStyles();
-
-            webBrowser1.ScriptErrorsSuppressed = true;
-            webBrowser1.AllowNavigation = true;
-            // listView1.ItemActivate += ListView1_ItemActivate;
-        }
-
-        private void ListView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        public virtual void CreateListItems(string baseFilename, string enumerator, ref string[] files, ref List<ListViewItem> ls)
         {
 
-                     
-            showInBrowser(e.Item.Tag.ToString());
-
         }
-
-      
-
-        private void Watcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            if (e.ChangeType == WatcherChangeTypes.Changed)
-            {
-                showInBrowser(e.FullPath);
-            }
-        }
-
-        private void showInBrowser(string file)
-        {
-            //  string file = XCom.StartupPath + matrixID + XCOM.PictureExtension;
-
-            try
-            {
-                Uri uri = new Uri("about:blank");
-                if (System.IO.File.Exists(file))
-                {
-                    string newFile = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
-                    newFile += file.Replace(folderPath, null);
-                    newFile += Guid.NewGuid().ToString().Substring(0, 6);
-                   // newFile +=".html";
-                    File.Copy(file, newFile, true);
-                    uri = new Uri(newFile);
-                }
-
-                NavigateTo(uri);
-            }
-            catch (Exception)
-            {
-
-               
-            }
-          
-        }
-
-        public void NavigateTo(Uri helpFile)
-        {
-            webBrowser1.Navigate(helpFile);
-        }
-
-        public void Set(string path,  string filter, string imageExt)
-        {
-            folderPath = path;
-            imageExtension = imageExt;
-
-            watcher.EnableRaisingEvents = false;
-            watcher.Path = folderPath;
-            watcher.Filter = filter+ imageExt;//= new FileSystemWatcher(path, filter);
-            watcher.EnableRaisingEvents = true;
-       //     watcher.NotifyFilter = NotifyFilters.LastWrite;
-         
-      
-        }
-
-      
-
-
-        private string punto = ".";
+       
 
         public void HideList(bool hide)
         {
@@ -112,139 +31,136 @@ namespace VTools
                 cleanList();
             }
         }
+
+        public void NavigateTo(Uri helpFile)
+        {
+            webBrowser1.Navigate(helpFile);
+        }
+
+        /// <summary>
+        /// Makes a list from basefileName.Filter and removes the enumerator from their names
+        /// </summary>
+        /// <param name="baseFilename">i.e. 84.</param>
+        /// <param name="filter">84.*</param>
+        /// <param name="enumerator">84.N##.filename.extension</param>
         public void RefreshList(string baseFilename, string filter, string enumerator)
         {
-
-
             //get files
-            string[] files = Directory.GetFiles(folderPath, baseFilename + filter);
-            files = files.Select(o => o.Replace(folderPath, null).Replace(baseFilename + punto, null)).ToArray();
-
-      //      files = files.OrderBy(o => o.Substring(1, o.IndexOf(punto))).ToArray();
-            files = files.OrderBy(o => o.Length).ToArray();
-
+            string[] files = Directory.GetFiles(FOLDERPATH, baseFilename + filter);
+            files = SelectAndOrder(baseFilename, files);
 
             listView1.Visible = true;
-            listView1.ShowGroups = true;
-            listView1.View = View.SmallIcon;
 
             cleanList();
 
-     //       if (imageList1.Images.Count!=0)   imageList1.Images.Clear();
-
             List<ListViewItem> ls = new List<ListViewItem>();
 
+            CreateListItems(baseFilename, enumerator, ref files, ref ls);
 
-            foreach (var item in files)
-            {
-                string itemText = item;
-                string file = folderPath;
-                //si contiene punto aun está numerado
-                //   file+= baseFilename + punto;
+            addToGroups(ref ls);
 
 
-                if (itemText.Contains(imageExtension))
-                {
-                    //   file += baseFilename + punto;
+            selectDefaultItem(nameForItemToSelect);
+        }
 
-                    file += baseFilename + punto + itemText;
+        public virtual string[] SelectAndOrder(string baseFilename, string[] files)
+        {
+            return files;
+        }
+        public void Set(string path, string filter, string imageExt, string nameDefaultSelectedItem)
+        {
+            nameForItemToSelect = nameDefaultSelectedItem;
+            FOLDERPATH = path;
+            IMAGE_EXTENSION = imageExt;
 
-                    Image img = Image.FromFile(file);
-                    itemText = itemText.Replace(imageExtension, null);
+            watcher.EnableRaisingEvents = false;
+            watcher.Path = FOLDERPATH;
+            watcher.Filter = filter + imageExt;
+            watcher.EnableRaisingEvents = true;
+        }
 
-
-                }
-                else if (itemText.CompareTo(baseFilename) == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    file += baseFilename + punto + itemText;
-                }
-
-
-
-                if (itemText.Contains(punto) && itemText.Contains(enumerator))
-                {
-                    //   file += baseFilename + punto;
-
-                    int numberIndex = itemText.IndexOf(punto);
-                    string number = itemText.Substring(0, numberIndex);
-
-                    itemText = itemText.Substring(numberIndex + 1);
-
-
-                }
-             
-
-
-                if (itemText.CompareTo("csv")==0)
-                {
-                    itemText = "comma-separated";
-                }
-                else if (itemText.CompareTo("xls")==0)
-                {
-                    itemText = "excel";
-                }
-
-                ListViewItem i = new ListViewItem(itemText.ToUpper());
-            
-                i.Tag = file;
-
-                ls.Add(i);
-
-            }
-
+        private void addToGroups(ref List<ListViewItem> ls)
+        {
             foreach (var item in ls)
             {
                 string count = item.Text.Count().ToString();
-                 ListViewGroup g = listView1.Groups[count];
+                ListViewGroup g = listView1.Groups[count];
 
-                 if (g == null)
-                  {
-                
+                if (g == null)
+                {
                     g = new ListViewGroup(count, string.Empty);
                     g.HeaderAlignment = HorizontalAlignment.Left;
-                 
                     listView1.Groups.Add(g);
-                 
-             
-                  //  g.ListView.View = View.Tile;
                 }
-            
 
-           
-             
                 listView1.Items.Add(item);
-            
+
                 item.EnsureVisible();
                 item.Group = g;
-           //     g.Items.Add(item);
-
-                // item.Group = g;
-
             }
-
-
-
-            //   ls.Clear();
-            //      listView1.ShowGroups = true;
-            //    listView1.PerformLayout();
-            //   listView1.RedrawItems(0, listView1.Items.Count, false); 
-            //      listView1.VirtualMode = true;
-            ListViewItem d = listView1.Items.Cast<ListViewItem>().FirstOrDefault(o=>o.Text.CompareTo("FULL")==0);
-            if(d!=null) d.Selected = true;
-
-       
-
         }
 
         private void cleanList()
         {
-
             if (listView1.Items.Count != 0) listView1.Items.Clear();
             if (listView1.Groups.Count != 0) listView1.Groups.Clear();
+        }
+
+        private void listViewItemChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            showInBrowser(e.Item.Tag.ToString());
+        }
+
+        private void selectDefaultItem(string nameForItemToSelect)
+        {
+            ListViewItem d = listView1.Items.Cast<ListViewItem>().FirstOrDefault(o => o.Text.CompareTo(nameForItemToSelect) == 0);
+            if (d != null) d.Selected = true;
+        }
+        private void showInBrowser(string file)
+        {
+            try
+            {
+                Uri uri = new Uri("about:blank");
+                if (System.IO.File.Exists(file))
+                {
+                    string newFile = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
+                    newFile += file.Replace(FOLDERPATH, null);
+                    newFile += Guid.NewGuid().ToString().Substring(0, 6);
+                    File.Copy(file, newFile, true);
+                    uri = new Uri(newFile);
+                }
+
+                NavigateTo(uri);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void watcherFileChanged(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+                showInBrowser(e.FullPath);
+            }
+        }
+
+        public ucPicNav()
+        {
+            InitializeComponent();
+
+            watcher = new FileSystemWatcher();
+            watcher.Changed += watcherFileChanged;
+
+            listView1.ItemSelectionChanged += listViewItemChanged;
+            listView1.ShowGroups = true;
+            listView1.View = View.SmallIcon;
+
+            Application.EnableVisualStyles();
+
+            webBrowser1.ScriptErrorsSuppressed = true;
+            webBrowser1.AllowNavigation = true;
         }
     }
 }

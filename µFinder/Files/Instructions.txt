@@ -5,3 +5,10 @@ EXAMPLE:
 
     string fileResource = Properties.Resources.LIMS;
                 Creator.PopulateDeveloperFile(fileResource, "LIMS.xml");
+
+
+
+
+				--------------------------------------------
+
+				Output as CSV not employed in preferences

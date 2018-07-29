@@ -27,7 +27,7 @@ namespace DB.Tools
         {
             string newMatssfEXEFile = arrayOfUnitFiles[1]; // the second item
 
-            Process process = IO.Process(CMD, "/c " + newMatssfEXEFile, path, false, hide, null, exitHANDLER);
+            Process process = IO.Process(CMD, path, "/c " + newMatssfEXEFile, false, hide, null, exitHANDLER);
             //add to table
             _processTable.Add((object)process, (object)arrayOfUnitFiles);
             //start process

@@ -34,7 +34,7 @@
             this.ucCalculate1 = new VTools.ucCalculate();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.ucPicNav1 = new VTools.ucPicNav();
+            this.ucPicNav1 = new DB.Tools.ucXCOMPicNav();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ucMatrixSimple1 = new DB.UI.ucMatrixSimple();
             this.ucMUES1 = new DB.UI.ucMUES();
@@ -197,8 +197,7 @@
         #endregion
 		private System.Windows.Forms.TableLayoutPanel DBTLP;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn uncUnitDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn weightDataGridViewTextBoxColumn;
+		
         private ucMatrixSimple ucMatrixSimple1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabControl tabControl1;
@@ -206,6 +205,6 @@
         private ucMUES ucMUES1;
         private VTools.ucCalculate ucCalculate1;
         private System.Windows.Forms.TabPage tabPage4;
-        private VTools.ucPicNav ucPicNav1;
+        private DB.Tools.ucXCOMPicNav ucPicNav1;
     }
 }

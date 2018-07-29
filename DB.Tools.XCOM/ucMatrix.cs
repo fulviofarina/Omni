@@ -122,7 +122,7 @@ namespace DB.UI
 
             EventHandler navigatorRefresh = delegate
             {
-                ucPicNav1.Set(path, "*", XCOM.PictureExtension);
+                ucPicNav1.Set(path, "*", XCOM.PictureExtension, "FULL");
 
                 ucPicNav1.HideList(true);
                 // ucPicNav1.HideList(true);

@@ -1,6 +1,6 @@
 ﻿namespace VTools
 {
-    partial class ucPicNav
+    public partial class ucPicNav
     {
         /// <summary> 
         /// Required designer variable.

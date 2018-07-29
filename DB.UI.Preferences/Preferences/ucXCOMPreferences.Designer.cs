@@ -355,7 +355,7 @@
             this.loopCheckBox.Text = "None";
             this.loopCheckBox.UseVisualStyleBackColor = true;
             // 
-            // forceBox
+            // accumulateBox
             // 
             this.accumulateBox.Checked = true;
             this.accumulateBox.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -363,7 +363,7 @@
             this.accumulateBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.accumulateBox.ForeColor = System.Drawing.Color.Gold;
             this.accumulateBox.Location = new System.Drawing.Point(3, 55);
-            this.accumulateBox.Name = "forceBox";
+            this.accumulateBox.Name = "accumulateBox";
             this.accumulateBox.Size = new System.Drawing.Size(274, 26);
             this.accumulateBox.TabIndex = 8;
             this.accumulateBox.Text = "Accumulate Results";
@@ -391,8 +391,9 @@
             this.asciibox.Name = "asciibox";
             this.asciibox.Size = new System.Drawing.Size(274, 26);
             this.asciibox.TabIndex = 2;
-            this.asciibox.Text = "Output as CSV file";
+            this.asciibox.Text = "None";
             this.asciibox.UseVisualStyleBackColor = true;
+            this.asciibox.Visible = false;
             // 
             // overridesCheckBox
             // 

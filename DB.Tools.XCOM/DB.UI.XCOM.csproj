@@ -91,6 +91,9 @@
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ucXCOMPicNav.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="XCOM.cs" />
     <Compile Include="XCOM.Static.cs" />
   </ItemGroup>

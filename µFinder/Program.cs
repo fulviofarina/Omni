@@ -17,6 +17,7 @@ namespace µFinder
         private static void Main()
         {
 
+
             string crashFile = "crash.txt";
             bool offline = true;
 
@@ -102,14 +103,15 @@ namespace µFinder
                 string error = System.IO.File.ReadAllText(crashFile);
                 string crashtitle = "The program just recovered from a crash";
                 MessageBox.Show(error, crashtitle, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                System.IO.File.Delete(crashFile);
+             //   System.IO.File.Delete(crashFile);
           
         }
 
         private static void writeCrash(string crashFile, Exception ex)
         {
-            string error = "Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace;
-            System.IO.File.WriteAllText(crashFile, error);
+            string error = "Severe program error: " + ex?.Message + "\n\nat code:\n\n" + ex?.StackTrace;
+          //  if (System.IO.File.Exists(crashFile)) System.IO.File.Delete(crashFile);
+            System.IO.File.AppendAllText(crashFile, error);
         }
 
         public static void PainterTimer()
