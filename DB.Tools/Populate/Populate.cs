@@ -64,7 +64,7 @@ namespace DB.Tools
             else
             {
                 Interface.IPopulate.IIrradiations.AddNewIrradiation(ProjectOrOrder);
-                Interface.IStore.Save<LINAA.IrradiationRequestsDataTable>();
+                Interface.IStore.SaveTable<LINAA.IrradiationRequestsDataTable>();
                 // LIMS.Interface.IReport.Msg("And there was light...", "Creating... " + ProjectOrOrder);
                 text = "Project created.\n\nPlease add some samples to it... ";
                 string created = "Project " + ProjectOrOrder + " created";

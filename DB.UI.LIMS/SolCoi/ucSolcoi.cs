@@ -143,7 +143,7 @@ namespace DB.UI
             this.Validate();
 
             this.BS.EndEdit();
-            this.Linaa.Save<LINAA.DetectorsCurvesDataTable>();
+            this.Linaa.SaveTable<LINAA.DetectorsCurvesDataTable>();
         }
 
         #endregion Fills / Save

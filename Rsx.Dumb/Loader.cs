@@ -23,9 +23,8 @@ namespace Rsx.Dumb
 
         public void CancelLoader()
         {
-          
-            this.CancelAsync = true;
-          //  this.WorkerSupportsCancellation = true;
+             if (this.IsBusy)   this.CancelAsync = true;
+        
         }
         public Loader() : base()
         {

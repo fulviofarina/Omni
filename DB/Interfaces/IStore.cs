@@ -30,9 +30,9 @@ namespace DB
 
         bool DeletePeaks(int measID);
 
-        bool Save<T>(ref IEnumerable<T> rows);
+        bool SaveRows<T>(ref IEnumerable<T> rows);
 
-        bool Save<T>();
+        bool SaveTable<T>();
 
         /// <summary>
         /// General Method
@@ -47,14 +47,14 @@ namespace DB
         /// <summary>
         /// Saves to a File
         /// </summary>
-        bool SaveLocalCopy();
+        bool SaveLocalCopy(string LIMSPath = "");
 
         // void SavePreferences();
 
         /// <summary>
         /// Saves to Server
         /// </summary>
-        bool SaveRemote(ref IEnumerable<DataTable> tables);
+        bool SaveTables(ref IEnumerable<DataTable> tables);
 
         /// <summary>
         /// not used
@@ -69,7 +69,8 @@ namespace DB
         //void LoadMonitorsFile(string file);
     //    bool CleanMUESPics(ref MatrixRow u);
         void CleanPreferences();
-    //    bool cleanMUES(ref MatrixRow m, bool sql);
+      //  void SaveMatrices(bool offline);
+        //    bool cleanMUES(ref MatrixRow m, bool sql);
 
         // void SetLabels(ref IEnumerable<LINAA.SubSamplesRow> samples, string project);
     }

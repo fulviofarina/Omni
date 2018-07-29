@@ -125,7 +125,7 @@ namespace DB.UI
             cv.ShouldPrePaintRowMethod = shouldprepaintRow;
             cv.RowAddedMethod = addedRow;
             cv.RowDeletedMethod = deleteRow;
-            cv.SaveMethod = LIMSUI.Interface.IStore.Save;
+            cv.SaveMethod = LIMSUI.Interface.IStore.SaveRows;
 
             DataGridView[] dgvs = UIControl.GetChildControls<DataGridView>(control).ToArray();
 
@@ -158,7 +158,7 @@ namespace DB.UI
 
             ctr.SetContext("Explorer", ref dgv, LIMSUI.Form.CMS);
             ctr.CreateDGVEvents();
-            ctr.SaveMethod = Linaa.Save;
+            ctr.SaveMethod = Linaa.SaveRows;
             ctr.SetSaver(explorer.saveBtton);
 
             Creator.UserControls.Add(explorer);

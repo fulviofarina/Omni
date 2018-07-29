@@ -69,19 +69,19 @@ namespace DB.UI
             Type t = table.GetType();
             if (t.Equals(typeof(LINAA.DetectorsCurvesDataTable)))
             {
-                LIMSUI.Interface.IStore.Save<LINAA.DetectorsCurvesDataTable>();
+                LIMSUI.Interface.IStore.SaveTable<LINAA.DetectorsCurvesDataTable>();
             }
             else if (t.Equals(typeof(LINAA.DetectorsDimensionsDataTable)))
             {
-                LIMSUI.Interface.IStore.Save<LINAA.DetectorsDimensionsDataTable>();
+                LIMSUI.Interface.IStore.SaveTable<LINAA.DetectorsDimensionsDataTable>();
             }
             else if (t.Equals(typeof(LINAA.DetectorsAbsorbersDataTable)))
             {
-                LIMSUI.Interface.IStore.Save<LINAA.DetectorsAbsorbersDataTable>();
+                LIMSUI.Interface.IStore.SaveTable<LINAA.DetectorsAbsorbersDataTable>();
             }
             else if (t.Equals(typeof(LINAA.HoldersDataTable)))
             {
-                LIMSUI.Interface.IStore.Save<LINAA.HoldersDataTable>();
+                LIMSUI.Interface.IStore.SaveTable<LINAA.HoldersDataTable>();
             }
         }
 

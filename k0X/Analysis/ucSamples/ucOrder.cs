@@ -50,7 +50,7 @@ namespace k0X
           orderRow.LabOrderRef = LabOrderRef;
           orderRow.RegistrationDate = DateTime.Now;
           this.Linaa.Orders.AddOrdersRow(orderRow);
-          this.Linaa.Save<LINAA.OrdersDataTable>();
+          this.Linaa.SaveTable<LINAA.OrdersDataTable>();
           Application.OpenForms.OfType<MainForm>().First().Link();
         }
 
@@ -70,7 +70,7 @@ namespace k0X
 
         LINAA.ProjectsRow project = this.Linaa.FindBy(IrReqId, orderRow.OrdersID, true);
 
-        this.Linaa.Save<LINAA.ProjectsDataTable>();
+        this.Linaa.SaveTable<LINAA.ProjectsDataTable>();
 
         ucsamp.ProjectsRow = project;
         ucsamp.Orderbox.Visible = true;
@@ -91,8 +91,8 @@ namespace k0X
     {
       try
       {
-        this.Linaa.Save<LINAA.ProjectsDataTable>();
-        this.Linaa.Save<LINAA.OrdersDataTable>();
+        this.Linaa.SaveTable<LINAA.ProjectsDataTable>();
+        this.Linaa.SaveTable<LINAA.OrdersDataTable>();
       }
       catch (SystemException ex)
       {

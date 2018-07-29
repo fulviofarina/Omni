@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -44,7 +45,7 @@ namespace DB.Tools
 
         ///This is an event handler that fires the function the user GUI provides
         ///the execution is called above on NotyPropertyChanged
-        public PropertyChangedEventHandler EnableControlsChanged = null;
+        public EventHandler EnableControlsChanged = null;
 
         public BindingSource Rabbit;
         public BindingSource Samples;

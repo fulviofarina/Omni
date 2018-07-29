@@ -35,6 +35,8 @@ namespace VTools
         event EventHandler RestoreFoldersClick;
 
         event EventHandler DropDownClicked;// { get; set; }
+
+        void ClickSave();
     }
     public partial class ucOptions : UserControl, IOptions
     {
@@ -133,13 +135,18 @@ namespace VTools
             }
         }
    
+       public void ClickSave()
+        {
+            this.Save.PerformClick();
+        }
+
         public event EventHandler SaveClick
         {
             add
             {
            
                 this.Save.Click += value;
-
+               
             }
 
             remove

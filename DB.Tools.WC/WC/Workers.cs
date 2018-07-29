@@ -510,11 +510,11 @@ namespace DB.Tools
                         Interface.IReport.Msg(msg, title, !ssfError);
 
                         IEnumerable<DataRow> ssfs = s.UnitRow.GetMatSSFRows();  //get matssf rows
-                        Interface.IStore.Save(ref ssfs);
+                        Interface.IStore.SaveRows(ref ssfs);
                         IList<DataRow> ls = new List<DataRow>();
                         ls.Add(s);
                         ssfs = ls.AsEnumerable();  //now enumerable is the sample
-                        Interface.IStore.Save(ref ssfs);
+                        Interface.IStore.SaveRows(ref ssfs);
                     }
                     break;
 
@@ -546,11 +546,11 @@ namespace DB.Tools
                         if (save)
                         {
                             aux = oldpeaks;
-                            Interface.IStore.Save(ref aux);
+                            Interface.IStore.SaveRows(ref aux);
                             aux = oldipeaks;
-                            Interface.IStore.Save(ref aux);
+                            Interface.IStore.SaveRows(ref aux);
                             aux = oldirs;
-                            Interface.IStore.Save(ref aux);
+                            Interface.IStore.SaveRows(ref aux);
                         }
                         else
                         {
@@ -583,7 +583,7 @@ namespace DB.Tools
                 case (int)R.RowsSave:
                     {
                         System.Collections.Generic.IEnumerable<DataRow> oldpeaks = e.UserState as System.Collections.Generic.IEnumerable<DataRow>;
-                        Interface.IStore.Save(ref oldpeaks);
+                        Interface.IStore.SaveRows(ref oldpeaks);
                     }
                     break;
 

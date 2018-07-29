@@ -12,109 +12,7 @@ namespace DB.UI
 {
     public partial class ucMUES : UserControl
     {
-        /// <summary>
-        /// not used
-        /// </summary>
-        /// <param name="m"></param>
-        private void getDataToPlot(ref MatrixRow m)
-        {
-            int matrixID = m.MatrixID;
-            string name;
-            double density;
-            name = m.MatrixName;
-            density = m.MatrixDensity;
-
-            string title = string.Empty;
-
-            double eh;//// = pref.EndEnergy;
-            double el;// = pref.StartEnergy;
-                      // bool logScale;
-            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
-            eh = pref.EndEnergy;
-            el = pref.StartEnergy;
-            // logScale = pref.LogGraph;
-            bool sql = true;
-            MUESDataTable mues = null;
-            // if (specific) mues = Interface.IPopulate.IGeometry.GetMUES(el, eh, matrixID);
-            mues = Interface.IPopulate.IGeometry.GetMUES(ref m, sql);
-
-            DataColumn ene = mues.EnergyColumn;
-            DataColumn mu = mues.MATNCSColumn;
-
-            this.grapher.SetGraph(ref ene, 1, true, 10, ref mu, 1, true, 10, title);
-            this.grapher.Refresh();
-            DataTable dt = ene.Table;
-            Dumb.FD(ref dt);
-        }
-      
         protected internal Interface Interface = null;
-
-        public void Set( ref IXCOMPreferences pref)
-        {
-
-            IXCOMPreferences preference = pref;
-
-            try
-            {
-                bindDGVColumns();
-
-                bindPreference(preference);
-
-                refreshDGV();
-
-                focus(true);
-
-                grapher.Name = "graph";
-            }
-            catch (System.Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-        }
-
-        private void bindPreference(IXCOMPreferences preference)
-        {
-            EventHandler action = delegate
-            {
-                refreshDGV();
-            };
-
-            preference.RoundingChanged += action;
-
-            this.Disposed += delegate
-            {
-                preference.RoundingChanged -= action;
-            };
-        }
-
-        public void Set(ref Interface inter)
-        {
-            destroy();
-
-            Interface = inter;
-
-          
-        }
-
-
-        private void destroy()
-        {
-            this.DGV.DataSource = null;
-            Dumb.FD(ref this.bs);
-            Dumb.FD(ref this.Linaa);
-        }
-
-        private void refreshDGV()
-        {
-            DGV.Visible = false;
-            IEnumerable<MUESColumn> cols = DGV.Columns.OfType<MUESColumn>();
-            foreach (MUESColumn c in cols)
-            {
-                if (!c.Visible && c != this.mUDataGridViewTextBoxColumn) c.Visible = true;
-                c.SetRounding();
-            }
-            DGV.Visible = true;
-        }
 
         public void MakeFile(string matrixID, string path)
         {
@@ -123,13 +21,57 @@ namespace DB.UI
             Rsx.DGV.Control.MakeHTMLFile(path, matrixID, ref dgv);
             Rsx.DGV.Control.MakeCSVFile(path, matrixID, ref dgv);
 
-          
+
+        }
+
+        public void Set(ref IXCOMPreferences pref)
+        {
+
+            try
+            {
+
+
+                grapher.Name = "graph";
+
+
+                bindDGVColumns();
+           
+                bindPreference( pref);
+
+                EventHandler enabledHandler = delegate
+                {
+                    bool ctrlcanBeenable = Interface.IBS.EnabledControls;
+                    this.Enabled = ctrlcanBeenable;
+                };
+                Interface.IBS.EnableControlsChanged += enabledHandler;
+
+                this.Disposed += delegate
+                {
+                    Interface.IBS.EnableControlsChanged -= enabledHandler;
+                };
+                
+                refreshDGV();
+
+                focus(true);
+
+             
+            }
+            catch (System.Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
+        }
+
+        public void Set(ref Interface inter)
+        {
+            destroy();
+            Interface = inter;
         }
 
         private void bindDGVColumns()
         {
 
-            this.DGV.BackgroundColor = System.Drawing.Color.FromArgb(255,35,35,35);
+            this.DGV.BackgroundColor = System.Drawing.Color.FromArgb(255, 35, 35, 35);
             this.DGV.DataSource = Interface.IBS.MUES;
             this.DGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
@@ -166,20 +108,94 @@ namespace DB.UI
             }
 
 
-            Interface.IBS.EnableControlsChanged += delegate
+      
+        }
+
+        /// <summary>
+        /// ok
+        /// </summary>
+        /// <param name="preference"></param>
+        private void bindPreference(IXCOMPreferences preference)
+        {
+            EventHandler action = delegate
             {
-                bool ctrlcanBeenable = Interface.IBS.EnabledControls;
-                this.Enabled = ctrlcanBeenable;
+                refreshDGV();
+            };
+
+            preference.RoundingChanged += action;
+
+            this.Disposed += delegate
+            {
+                preference.RoundingChanged -= action;
             };
         }
 
+        /// <summary>
+        /// ok
+        /// </summary>
+        private void destroy()
+        {
+            this.DGV.DataSource = null;
+            Dumb.FD(ref this.bs);
+            Dumb.FD(ref this.Linaa);
+        }
+
+        /// <summary>
+        /// NO SE
+        /// </summary>
+        /// <param name="table"></param>
         private void focus(bool table)
         {
             SC.Panel2Collapsed = table;
             SC.Panel1Collapsed = !table;
         }
 
+        /// <summary>
+        /// not used
+        /// </summary>
+        /// <param name="m"></param>
+        private void getDataToPlot(ref MatrixRow m)
+        {
+            int matrixID = m.MatrixID;
+            string name;
+            double density;
+            name = m.MatrixName;
+            density = m.MatrixDensity;
 
+            string title = string.Empty;
+
+            double eh;//// = pref.EndEnergy;
+            double el;// = pref.StartEnergy;
+                      // bool logScale;
+            XCOMPrefRow pref = Interface.IPreferences.CurrentXCOMPref;
+            eh = pref.EndEnergy;
+            el = pref.StartEnergy;
+            // logScale = pref.LogGraph;
+            bool sql = true;
+            MUESDataTable mues = null;
+            // if (specific) mues = Interface.IPopulate.IGeometry.GetMUES(el, eh, matrixID);
+            mues = Interface.IPopulate.IGeometry.GetMUES(ref m, sql);
+
+            DataColumn ene = mues.EnergyColumn;
+            DataColumn mu = mues.MATNCSColumn;
+
+            this.grapher.SetGraph(ref ene, 1, true, 10, ref mu, 1, true, 10, title);
+            this.grapher.Refresh();
+            DataTable dt = ene.Table;
+            Dumb.FD(ref dt);
+        }
+
+        private void refreshDGV()
+        {
+            DGV.Visible = false;
+            IEnumerable<MUESColumn> cols = DGV.Columns.OfType<MUESColumn>();
+            foreach (MUESColumn c in cols)
+            {
+                if (!c.Visible && c != this.mUDataGridViewTextBoxColumn) c.Visible = true;
+                c.SetRounding();
+            }
+            DGV.Visible = true;
+        }
         public ucMUES()
         {
             InitializeComponent();

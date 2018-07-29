@@ -570,7 +570,7 @@ namespace k0X
 
             this.samples = Interface.IPopulate.ISamples.FindByProject(project);
 
-            Interface.IStore.Save(ref this.samples);
+            Interface.IStore.SaveRows(ref this.samples);
         }
     }
 }

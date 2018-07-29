@@ -12,16 +12,58 @@ namespace VTools
     {
         protected string FOLDERPATH = string.Empty;
         protected string IMAGE_EXTENSION = string.Empty;
-        protected string nameForItemToSelect = "FULL";
+        protected string nameForItemToSelect = string.Empty;
         protected string PUNTO = ".";
 
         private FileSystemWatcher watcher;
-        public virtual void CreateListItems(string baseFilename, string enumerator, ref string[] files, ref List<ListViewItem> ls)
+
+
+        /// <summary>
+        /// Main List Generator for my program in question
+        /// </summary>
+        /// <param name="baseFilename"></param>
+        /// <param name="enumerator"></param>
+        /// <param name="files"></param>
+        /// <param name="ls"></param>
+        public void CreateListItems(string baseFilename, string enumerator, ref string[] files, ref List<ListViewItem> ls)
+        {
+            foreach (var item in files)
+            {
+
+                string file = FOLDERPATH;
+
+                string itemText = CreateListItem(baseFilename, enumerator, ref file, item);
+
+                if (String.IsNullOrEmpty(itemText)) continue;
+
+                makeItem(ref ls, itemText, file);
+
+            }
+        }
+
+        /// <summary>
+        /// Function to override for list generation
+        /// </summary>
+        /// <param name="baseFilename"></param>
+        /// <param name="enumerator"></param>
+        /// <param name="file"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public virtual string CreateListItem(string baseFilename, string enumerator, ref string file, string item)
         {
 
+            return item;
         }
-       
-
+        protected void makeItem(ref List<ListViewItem> ls, string itemText, string file)
+        {
+            ListViewItem i = new ListViewItem(itemText.ToUpper());
+            i.Tag = file; //attach to tag to open file later
+            ls.Add(i);
+        }
+        /// <summary>
+        /// cleans the list and hides
+        /// </summary>
+        /// <param name="hide"></param>
         public void HideList(bool hide)
         {
             listView1.Visible = !hide;

@@ -471,7 +471,7 @@ namespace DB.Tools
         {
             IEnumerable<LINAA.ToDoResAvgRow> ravgs = this.Linaa.ToDoResAvg.AsEnumerable();
             IEnumerable<LINAA.PeaksRow> enume = PropagateSR(ref ravgs);
-            this.Linaa.Save(ref enume);
+            this.Linaa.SaveRows(ref enume);
         }
 
         public string Reset()

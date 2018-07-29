@@ -370,7 +370,7 @@ namespace DB.UI
       
             Application.DoEvents();
 
-            mat.Set(ref options);
+            mat.Set( options);
             mat.Set(ref prefes);
             mat.SetXCOM();
 

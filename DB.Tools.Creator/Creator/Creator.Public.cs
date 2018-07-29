@@ -297,7 +297,7 @@ namespace DB.Tools
                 bool savedremotely = true;
                 if (!off)
                 {
-                    savedremotely = Interface.IStore.SaveRemote(ref tables);
+                    savedremotely = Interface.IStore.SaveTables(ref tables);
                     Interface.IReport.Msg("Saved into SQL database", "Saved!");
                 }
 
@@ -315,6 +315,9 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
                 Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
+
+
+
 
             Cursor.Current = Cursors.Default;
 

@@ -26,28 +26,28 @@ namespace DB
 
                     if (isBusy)
                     {
-                       // SetGtChNull();
-                       // SetGtNull();
-                       // SetGtMCNull();
-                       // SetMCLNull();
-                       // SetPXSNull();
-                      //  SetEXSNull();
-                      //  SetSSFTableNull();
-                        // UNIT.SetColumnError(Interface.IDB.Unit.NameColumn, "Values invalidated
-                        // until the background computations upgrades them");
+                     
                     }
                     else
                     {
-                        //set DONE
+                      
                         ToDo = false;
-                        MatrixDate = DateTime.Now;
-                     //   LastCalc = DateTime.Now;
                         SetColumnError(this.tableMatrix.MatrixNameColumn, null);
                     }
+
+                    MatrixDate = DateTime.Now;
                 }
             }
 
-          
+            public void SetAsNotCalculated()
+            {
+                isBusy = false;
+                ToDo = true;
+                MatrixDate = DateTime.Now;
+                CleanMUES();
+                SetColumnError(this.tableMatrix.MatrixNameColumn, "Cancelled");
+             
+            }
         }
 
 

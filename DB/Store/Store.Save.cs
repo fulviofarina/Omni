@@ -13,6 +13,20 @@ namespace DB
     public partial class LINAA : IStore
     {
 
+        /*
+        public void SaveMatrices(bool offile)
+        {
+            if (offile)
+            {
+                SaveLocalCopy();
+            }
+            else
+            {
+                IEnumerable<DataTable> tables = new DataTable[] { Matrix, Compositions };
+                SaveTables(ref tables);
+            }
+        }
+        */
         public bool SaveMUES(ref MUESDataTable mu, ref MatrixRow m, bool sql = true)
         {
 
@@ -31,7 +45,7 @@ namespace DB
 
      
 
-        public bool Save<T>()
+        public bool SaveTable<T>()
         {
             T table = this.Tables.OfType<T>().FirstOrDefault();
 
@@ -40,7 +54,7 @@ namespace DB
 
             IEnumerable<DataRow> rows = dt.AsEnumerable();
 
-            bool saved = Save(ref rows);
+            bool saved = SaveRows(ref rows);
 
             return saved;
         }
@@ -65,9 +79,11 @@ namespace DB
             return saved;
         }
 
-        public bool Save<T>(ref IEnumerable<T> rows)
+        public bool SaveRows<T>(ref IEnumerable<T> rows)
         {
             if (rows == null) return false;
+
+          
             rows = rows.ToList(); //solidify any query
             if (rows.Count() == 0) return false;
 
@@ -108,7 +124,7 @@ namespace DB
             List<T> list = new List<T>();
             list.Add(row);
             IEnumerable<T> rows = list.ToArray();
-            Save(ref rows);
+            SaveRows(ref rows);
             // this.BeginEndLoadData(false);
         }
 
@@ -135,23 +151,27 @@ namespace DB
             return path;
         }
 
-        public bool SaveLocalCopy()
+
+        private string extension = ".xml";
+
+
+        public bool SaveLocalCopy(string LIMSPath = "")
         {
             bool ok = false;
+
             try
             {
-                string LIMSPath = folderPath + Resources.Backups + Resources.Linaa;
-                string aux = "." + DateTime.Now.DayOfYear.ToString();
-                string LIMSDayPath = LIMSPath.Replace(".xml", aux + ".xml");
 
+                //    string LIMSPath = string.Empty;
+                if (string.IsNullOrEmpty(LIMSPath))
+                {
+                    LIMSPath = folderPath + Resources.Backups + Resources.Linaa;
+                    makeBackup(LIMSPath);
+                }
                 //     CleanPreferences();
                 CleanOthers();
                 AcceptChanges();
-                if (System.IO.File.Exists(LIMSPath))
-                {
-                    System.IO.File.Copy(LIMSPath, LIMSDayPath, true);
-                    System.IO.File.Delete(LIMSPath);
-                }
+
                 WriteXml(LIMSPath, XmlWriteMode.WriteSchema);
 
                 ok = true;
@@ -162,30 +182,44 @@ namespace DB
             }
             return ok;
         }
-        /*
-        public bool ReadLocalCopy()
-        {
-            bool ok = false;
-          
-            try
-            {
-            
-                if (System.IO.File.Exists(LIMSPath))
-                {
-                    ReadXml(LIMSPath, XmlReadMode.ReadSchema);
-                }
-            
 
-                ok = true;
-            }
-            catch (SystemException ex)
+        private void makeBackup(string LIMSPath)
+        {
+            string aux = "." + DateTime.Now.DayOfYear.ToString();
+            string LIMSDayPath = LIMSPath.Replace(extension, aux + extension);
+
+            if (System.IO.File.Exists(LIMSPath))
             {
-                AddException(ex);
+                System.IO.File.Copy(LIMSPath, LIMSDayPath, true);
+                System.IO.File.Delete(LIMSPath);
             }
-            return ok;
+          
         }
-        */
-        public bool SaveRemote(ref IEnumerable<DataTable> tables)
+
+        /*
+public bool ReadLocalCopy()
+{
+   bool ok = false;
+
+   try
+   {
+
+       if (System.IO.File.Exists(LIMSPath))
+       {
+           ReadXml(LIMSPath, XmlReadMode.ReadSchema);
+       }
+
+
+       ok = true;
+   }
+   catch (SystemException ex)
+   {
+       AddException(ex);
+   }
+   return ok;
+}
+*/
+        public bool SaveTables(ref IEnumerable<DataTable> tables)
         {
             bool ok = false;
 
@@ -194,7 +228,7 @@ namespace DB
                 try
                 {
                     IEnumerable<DataRow> rows = t.AsEnumerable();
-                    Save(ref rows);
+                    SaveRows(ref rows);
 
                     ok = true;
                 }

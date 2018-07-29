@@ -3,30 +3,41 @@
   <Class Name="DB.UI.ucMatrix">
     <Position X="9.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAEAIiAgRgSAAQDAAgADAAAAAQAAIACBAAABBiE=</HashCode>
+      <HashCode>AAEAAAEAIiAARgSAAEDCAgACgAAAAQAKAAABAAAABCA=</HashCode>
       <FileName>ucMatrix.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.ucComposition">
     <Position X="1.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IBYAIBACACAAFAQAAQDAAAASwAABARBAAAoCAAAgAAA=</HashCode>
+      <HashCode>IBYAIBACACAAFAQAAQDAAAASwAABAxBAAAoCAAAgAAA=</HashCode>
       <FileName>ucComposition.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.ucMatrixSimple">
     <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAYAJAAgSCABAdQIADEIAASgAAABRBACAIDAABhIAA=</HashCode>
+      <HashCode>ABAYAJgAgSCABAdQIADEIEASwAAABRBACAIDAABhIAA=</HashCode>
       <FileName>ucMatrixSimple.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.XCOM">
     <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAACQAAAAAQQAAAAAAEBA=</HashCode>
+      <HashCode>ARCDAIAKEEQBBUBwGj1gAiAYoCUIAAiQGACAIkBANUA=</HashCode>
       <FileName>XCOM.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.ucXCOMPicNav">
+    <Position X="12" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAA=</HashCode>
+      <FileName>ucXCOMPicNav.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VTools.ucPicNav" Collapsed="true">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

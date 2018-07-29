@@ -69,7 +69,7 @@ namespace DB.Tools
         {
             if (propertyName.CompareTo(ENABLE_CONTROLS_FIELD) == 0)
             {
-                EnableControlsChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                EnableControlsChanged?.Invoke(this, EventArgs.Empty);
             }
             //put some other handlers to execute (invoke) when other properties are changed
         }

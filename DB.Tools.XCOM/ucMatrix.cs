@@ -12,158 +12,148 @@ namespace DB.UI
 {
     public partial class ucMatrix : UserControl
     {
-        protected internal Interface Interface;
-        protected internal bool minimiZe = false;
+        protected  Interface Interface;
+        protected  XCOM XCom;
+        Uri helpFile = new Uri("https://www.researchgate.net/publication/317902783_-Finder_A_Windows_program_for_photon_mass_attenuation_coefficients_between_1_keV_to_100_GeV");
 
-        protected internal XCOM XCom;
+        /*
+                private void test()
+                {
+                    foreach (var item in Interface.IDB.Matrix)
+
+                    {
+                        item.SetCompositionTableNull();
+                    //    item.MatrixComposition= item.MatrixComposition.Replace("(", " ");
+                     //   item.MatrixComposition= item.MatrixComposition.Replace(")", " ");
+                        //      IEnumerable<CompositionsRow> compos = item.GetCompositionsRows();
+                        //  foreach (var item2 in compos)
+                        //   {
+                        //    item2.Element= item2.Element.Replace("(", " ");
+                        //   item2.Element = item2.Element.Replace(")", " ");
+                        //  }
+                    }
+
+                }
+         */
 
 
-        private void test()
-        {
-            foreach (var item in Interface.IDB.Matrix)
-
-            {
-                item.SetCompositionTableNull();
-            //    item.MatrixComposition= item.MatrixComposition.Replace("(", " ");
-             //   item.MatrixComposition= item.MatrixComposition.Replace(")", " ");
-                //      IEnumerable<CompositionsRow> compos = item.GetCompositionsRows();
-                //  foreach (var item2 in compos)
-                //   {
-                //    item2.Element= item2.Element.Replace("(", " ");
-                //   item2.Element = item2.Element.Replace(")", " ");
-                //  }
-
-
-            }
-           
-        }
-       // private IOptions op = null;
         private string path = string.Empty;
         private Action<int> resetProgress = null;
         private EventHandler showProg = null;
-        public void Set(ref IOptions options)
+        public void Set( IOptions options)
         {
-            // this.SuspendLayout();
-       //     op = options;
-            resetProgress = options.ResetProgress;
-            showProg = options.ShowProgress;
-            DBTLP.Controls.Add(options as UserControl);
 
-
-
-            options.HelpClick += delegate
+            if (options == null) return;
+           
+                resetProgress = options.ResetProgress;
+                showProg = options.ShowProgress;
+                DBTLP.Controls.Add(options as UserControl);
+         
+            EventHandler help = delegate
             {
-                Uri helpFile;
-                helpFile = new Uri("https://www.researchgate.net/publication/317902783_-Finder_A_Windows_program_for_photon_mass_attenuation_coefficients_between_1_keV_to_100_GeV");
-                ucPicNav1.NavigateTo(helpFile);
-             //   helpFile = getHelpFileµFinder();
-               // System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
+                  ucPicNav1.NavigateTo(helpFile);
+                //   helpFile = getHelpFileµFinder();
+                // System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
             };
 
+            options.HelpClick += help;
 
-            // this.ResumeLayout(true);
+            saveHandler += delegate
+             {
+
+                 options.ClickSave();
+             };
+           
         }
-
+        private  EventHandler saveHandler;
         public void Set(ref UserControl ctrl)
         {
-            // this.SuspendLayout();
+
             ctrl.Dock = DockStyle.Fill;
             DBTLP.Controls.Add(ctrl as UserControl);
 
+                    
 
-
-            MatrixRow mlast =     Interface.IDB.Matrix.OrderBy(o => o.MatrixDate).FirstOrDefault();
-            Interface.IBS.Matrix.Position = 1;
-
-            Interface.IBS.Matrix.Position = Interface.IBS.Matrix.Find(Interface.IDB.Matrix.MatrixDateColumn.ColumnName, mlast.MatrixDate);
-        
-
-
-            // this.ResumeLayout(true);
+            pickLast();
         }
 
+        /// <summary>
+        /// debería estar en otro lado
+        /// </summary>
+        private void pickLast()
+        {
+            MatrixRow mlast = Interface.IDB.Matrix.OrderBy(o => o.MatrixDate).FirstOrDefault();
+            Interface.IBS.Matrix.Position = 1;
+            Interface.IBS.Matrix.Position = Interface.IBS.Matrix.Find(Interface.IDB.Matrix.MatrixDateColumn.ColumnName, mlast.MatrixDate);
+        }
+
+        /// <summary>
+        /// Sets the interface
+        /// </summary>
+        /// <param name="inter"></param>
         public void Set(ref Interface inter)
         {
             Interface = inter;
-
             ucMatrixSimple1.Set(ref Interface);
             ucMUES1.Set(ref Interface);
-
-
           
         }
 
+        /// <summary>
+        /// Sets the preferences
+        /// </summary>
+        /// <param name="preferences"></param>
         public void Set(ref IXCOMPreferences preferences)
         {
-            // this.SuspendLayout();
-
             ucMUES1.Set(ref preferences);
-
-          
-
-            // this.ResumeLayout(true);
         }
 
+        /// <summary>
+        /// Sets XCOM
+        /// </summary>
         public void SetXCOM()
         {
             path = Interface.IStore.FolderPath + Resources.XCOMFolder;
 
             XCom = new XCOM();
-         
             XCom.Set(path, callmeBack, resetProgress, showProg);
             XCom.Set(ref Interface);
             XCom.Reporter = Interface.IReport.Msg;
             XCom.ExceptionAdder = Interface.IStore.AddException;
 
-         
-
-
-            // XCOM.PictureExtension
-
             EventHandler navigatorRefresh = delegate
             {
                 ucPicNav1.Set(path, "*", XCOM.PictureExtension, "FULL");
-
                 ucPicNav1.HideList(true);
-                // ucPicNav1.HideList(true);
                 ucPicNav1.HideList(false);
             };
 
             EventHandler enableCtrols = delegate
             {
                 Interface.IBS.EnabledControls = !XCom.IsCalculating;
-         
                 ucCalculate1.EnableCalculate = !XCom.IsCalculating;
-              
             //    ucMatrixSimple1.RefreshDGV();
                 Application.DoEvents();
-
             };
 
-            ucCalculate1.CancelMethod += delegate
+            EventHandler cancelMethod  = delegate
             {
                 XCom.IsCalculating = false;
             };
-            ucCalculate1.CancelMethod += enableCtrols;
-            ucCalculate1.CancelMethod += navigatorRefresh;
 
 
-         //   ucCalculate1.CalculateMethod += enableCtrols;
+            //   ucCalculate1.CalculateMethod += enableCtrols;
 
-            ucCalculate1.CalculateMethod += delegate
+            EventHandler calculateMethod  = delegate
              {
-
-
-            //     ucPicNav1.Set(path, "*", XCOM.PictureExtension);
-
-
                  ucCalculate1.EnableCalculate = false;
                  Application.DoEvents();
                  this.Validate(true);
                  Interface.IBS.IsCalculating =true;
                  Application.DoEvents();
                  //salva primero, ok
-                 saveMethod();
+                 saveHandler?.Invoke(null, EventArgs.Empty);
+           
                  Application.DoEvents();
                  XCom.Preferences = Interface.IPreferences.CurrentXCOMPref;
                  XCom.Offline = Interface.IPreferences.CurrentPref.Offline;
@@ -171,23 +161,27 @@ namespace DB.UI
                  Application.DoEvents();
                  XCom.Calculate(null);
 
-
-                
-
              };
+
+
+
+            ucCalculate1.CancelMethod += cancelMethod;
+            ucCalculate1.CancelMethod += enableCtrols;
+            ucCalculate1.CancelMethod += navigatorRefresh;
+
+
+            ucCalculate1.CalculateMethod += calculateMethod;
             ucCalculate1.CalculateMethod += navigatorRefresh;
             ucCalculate1.CalculateMethod += enableCtrols;
 
-            Interface.IDB.Matrix.CleanMUESHandler += navigatorRefresh;
-         
 
+            Interface.IDB.Matrix.CleanMUESHandler += navigatorRefresh;
 
             EventHandler changed = delegate
             {
                 MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
                 if (m != null)
                 {
-
                     ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
                 }
             };
@@ -195,7 +189,7 @@ namespace DB.UI
             Interface.IBS.Matrix.CurrentChanged += navigatorRefresh;
             Interface.IBS.Matrix.CurrentChanged += changed;
 
-            //  callmeBack += changed;
+
 
             this.Disposed += delegate
             {
@@ -203,7 +197,6 @@ namespace DB.UI
                 Interface.IBS.Matrix.CurrentChanged -= navigatorRefresh;
                 Interface.IBS.Matrix.CurrentChanged -= changed;
             };
-
 
 
             //  test();
@@ -228,18 +221,21 @@ namespace DB.UI
 
       */
 
+            /// <summary>
+            /// Method to execute after a sample is calculated
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
         private void callmeBack(object sender, EventArgs e)
         {
             MatrixRow m = sender as MatrixRow;
 
             if (m == null) return;
 
-          
             if (!XCom.IsCalculating)
             {
                 XCom.CheckCompletedOrCancelled();
-          
-                saveMethod();
+                saveHandler.Invoke(sender,e);
             }
 
             Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
@@ -248,91 +244,40 @@ namespace DB.UI
 
             ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
 
-            //   ucMatrixSimple1.RefreshDGV();
             Interface.IBS.EnabledControls = !XCom.IsCalculating;
 
             if (XCom.IsCalculating) return;
 
-          //  Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
-          //  ucMUES1.MakeFile(m.MatrixID.ToString(), path);
-            // ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*");
-
             ucCalculate1.EnableCalculate = !XCom.IsCalculating;
-
-          //  ucMatrixSimple1.RefreshDGV();
+    
         }
 
-        private void saveMethod()
-        {
-            if (Interface.IPreferences.CurrentPref.Offline)
-            {
-                Interface.IStore.SaveLocalCopy();
-            }
-            else
-            {
-                IEnumerable<DataTable> tables = new DataTable[] { Interface.IDB.Matrix, Interface.IDB.Compositions };
-                Interface.IStore.SaveRemote(ref tables);
-            }
-        }
 
-        public ucMatrix()
+     
+
+        /// <summary>
+        /// Initializer, minimizes the second panel if necessary
+        /// </summary>
+        /// <param name="minimize"></param>
+        public ucMatrix(bool minimized = false)
         {
             InitializeComponent();
 
-            this.Load += delegate
-          {
-              if (minimiZe)
-              {
-                  splitContainer1.Panel2Collapsed = true;
-              }
-          };
+            minimize = minimized;
+            this.Load += load;
+      
         }
+        private bool minimize = false;
+        private void load(object sender, EventArgs e)
+        {
+          
+                splitContainer1.Panel2Collapsed = minimize;
 
-        // private ToolStripLabel label = new ToolStripLabel();
-
-        /*
-         private void CMS_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-         {
-             this.CMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-             this.WCalc,
-             this.toolStripSeparator3,
-             this.GraphB,
-             this.toolStripSeparator1,
-             this.XCOM,
-             this.XCOMOptions});
-
-             this.MatrixTS.Items.Add(label);
-             label.Text = "Please select what to do....";
-         }
-
-         private void CMS_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-         {
-             label.Text = string.Empty;
-             this.MatrixTS.Items.Remove(label);
-
-             this.MatrixTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-             this.WCalc,
-             this.XCOMOptions,
-             this.XCOM,
-             this.toolStripSeparator1,
-             this.GraphB,
-             this.toolStripSeparator3});
-         }
-        */
-
-        /*
-     public bool Minimize
-     {
-         get
-         {
-             return minimiZe;
-         }
-
-         set
-         {
-             minimiZe = value;
-         }
-     }
-     */
+                if (minimize)
+                {
+                    this.ParentForm.WindowState = FormWindowState.Normal;
+                }
+           
+        }
     }
 }

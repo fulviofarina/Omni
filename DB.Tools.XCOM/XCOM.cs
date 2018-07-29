@@ -142,10 +142,11 @@ namespace DB.Tools
 
 
             int contador = rows.Count;
+            int actionCount = 0;
 
             while (contador != 0)
             {
-                int actionCount = 0;
+              
 
                 MatrixRow m = rows[contador - 1];
 
@@ -163,32 +164,30 @@ namespace DB.Tools
 
                     Action<int> report = progress =>
                     {
+
+                        if (!IsCalculating) return;
+
                         _showProgress?.Invoke(null, EventArgs.Empty);
-                        bool finito = reportProgress(progress, m.MatrixName);
+
+
+                         bool finito = false;
+                         finito = reportProgress(progress, m.MatrixName);
                      
-                        if (finito)
-                        {
-                            m.IsBusy = false;
-                            m.ToDo = false;
-                            m.MatrixDate = DateTime.Now;
-
-                        //    _callBack?.Invoke(m, EventArgs.Empty);
-                        }
-
-                      
-
+                         m.IsBusy = !finito;
+                     
                     };
 
                     Action callBack =
                         delegate
                         {
+                           // if (!IsCalculating) return;
+
                             updateLoaders(runWorker, m.MatrixID);
                             _callBack?.Invoke(m, EventArgs.Empty);
                         };
-
-                    actionCount = addToLoaders(ref m, report, callBack, start, Totalend, step,accumulate, useList);
-
-                    _resetProgress?.Invoke(actionCount);
+             
+                    actionCount += addToLoaders(ref m, report, callBack, start, Totalend, step,accumulate, useList);
+                   
                 }
                 catch (SystemException ex)
                 {
@@ -198,16 +197,16 @@ namespace DB.Tools
                     title = "Failed!";
                 }
 
+
                 msg += "selected";
 
                 reporter(msg, title, ok, false);
 
-
                 contador--;
-             //   rows.Remove(m);
-
 
             }
+
+            _resetProgress?.Invoke(actionCount);
 
             reporter("A total of " + loaders.Count + " matrices were prepared", "Starting...", true, false);
 
@@ -232,21 +231,7 @@ namespace DB.Tools
             }
             else
             {
-                foreach (int i in loaders.Keys)
-                {
-                    ILoader item = (ILoader) loaders[i];
-                    item.CancelLoader();
-
-                    MatrixRow toCancel =  rows.Where(o=> o.IsBusy).FirstOrDefault(o => o.MatrixID == i);
-                    toCancel.IsBusy = false;
-                    toCancel.ToDo = true;
-                    toCancel.MatrixDate = DateTime.Now;
-                    toCancel.CleanMUES();
-                    toCancel.RowError = "Cancelled";
-
-              //   bool o =   toCancel.ToDo;
-
-                }
+                cancelLoaders();
                 ok = false;
                 loaders.Clear();
                 title = "Cancelled!";
@@ -255,6 +240,20 @@ namespace DB.Tools
             log += seconds + " seconds";
 
             reporter(log, title, ok, false);
+        }
+
+        private void cancelLoaders()
+        {
+            foreach (int i in loaders.Keys)
+            {
+                ILoader item = (ILoader)loaders[i];
+                item.CancelLoader();
+
+                MatrixRow toCancel = rows.Where(o => o.IsBusy).FirstOrDefault(o => o.MatrixID == i);
+                toCancel.SetAsNotCalculated();
+
+
+            }
         }
 
         public IList<Action> generateActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool offline, bool accumulate, bool useList = false)
@@ -270,14 +269,12 @@ namespace DB.Tools
 
             double delta, end;
 
-
             //maximum number of energies per query
             int NrEnergies = GetNumberOfLines(step, start, totalEnd);
 
             int nrOfQueries = 1;
 
-         //    NrEnergies++;
-
+    
             delta = 0;
             if (maxEnergies > NrEnergies)
             {
@@ -351,6 +348,8 @@ namespace DB.Tools
 
             Action action2 = delegate
             {
+                if (!IsCalculating) return;
+
                 MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, !offline);
                 while (numberOfFiles >= 0)
                 {
@@ -364,6 +363,8 @@ namespace DB.Tools
 
             Action action3 = delegate
             {
+
+                if (!IsCalculating) return;
 
                 int matrixID = m.MatrixID;
                 string mstrixName = m.MatrixName;
@@ -394,7 +395,7 @@ namespace DB.Tools
             ls.Add(action3);
           
 
-            m.IsBusy = true;
+      //      m.IsBusy = true;
 
             return ls;
         }
@@ -455,6 +456,9 @@ namespace DB.Tools
             {
                 try
                 {
+
+                    if (!IsCalculating) return;
+
                     string Response = string.Empty;
                     string tempFile = string.Empty;
 

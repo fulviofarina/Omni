@@ -432,7 +432,7 @@ namespace k0X
                 table.AddSchAcqsRow(row);
             }
 
-            Interface.IStore.Save<LINAA.SchAcqsDataTable>();
+            Interface.IStore.SaveTable<LINAA.SchAcqsDataTable>();
 
             foreach (string col in hs)
             {

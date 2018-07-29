@@ -597,7 +597,7 @@ namespace k0X
                         }
                     }
 
-                    this.Linaa.Save<LINAA.SchAcqsDataTable>();
+                    this.Linaa.SaveTable<LINAA.SchAcqsDataTable>();
                 }
                 //nothing was really found in the list of schedules...
                 //this is a sefe please to put things to do when not scheduling!!!
@@ -911,7 +911,7 @@ namespace k0X
             {
                 LSchAcq.NotCrashed = false;
                 LSchAcq.IsAwake = false;
-                this.Linaa.Save<LINAA.SchAcqsDataTable>();
+                this.Linaa.SaveTable<LINAA.SchAcqsDataTable>();
                 TimeSpan retryIn = GetRetryIn();
                 user = LSchAcq.User;
                 content = "I will retry to access it in " + retryIn.ToString() + "\nThis corresponds to a 3% progress of\nthe scheduled measurement:\n\n";
@@ -1360,7 +1360,7 @@ namespace k0X
                     }
                     LSchAcq.Interrupted = yes;
                     if (yes && !LSchAcq.Done) LSchAcq.Done = yes;
-                    this.Linaa.Save<LINAA.SchAcqsDataTable>();
+                    this.Linaa.SaveTable<LINAA.SchAcqsDataTable>();
                     LSchAcq = null;
                 }
                 if (ok)
@@ -1447,7 +1447,7 @@ namespace k0X
                         if (LSchAcq.Done) LSchAcq = null; //now is that you can kill the scheduled task.
                     }
 
-                    this.Linaa.Save<LINAA.SchAcqsDataTable>();
+                    this.Linaa.SaveTable<LINAA.SchAcqsDataTable>();
                 }
                 main.Speak(speak);
                 this.StatusLbl.Text = "Saved! Measurement " + measbox.Text;

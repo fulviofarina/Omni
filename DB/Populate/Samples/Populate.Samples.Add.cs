@@ -169,7 +169,7 @@ namespace DB
             }
             */
 
-            if (saveSamp) Save(ref samplesToImport);
+            if (saveSamp) SaveRows(ref samplesToImport);
 
             addUnits(ref samplesToImport);
         }
@@ -183,7 +183,7 @@ namespace DB
                 addUnit(ref sample);
             }
             IEnumerable<UnitRow> units = samplesToImport.Select(o => o.UnitRow);
-            if (saveUnit) Save(ref units);
+            if (saveUnit) SaveRows(ref units);
         }
 
         private void addUnit(ref SubSamplesRow s)

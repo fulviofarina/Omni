@@ -155,7 +155,7 @@ namespace k0X
                 this.Validate();
                 this.ListBS.EndEdit();
 
-                this.Linaa.Save<LINAA.ToDoDataTable>();
+                this.Linaa.SaveTable<LINAA.ToDoDataTable>();
 
                 UIControl.FillABox(this.ToDoLabelBox, this.Linaa.ToDoesList, true, false);
             }

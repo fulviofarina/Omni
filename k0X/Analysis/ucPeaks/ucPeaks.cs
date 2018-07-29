@@ -193,11 +193,11 @@ namespace k0X
             DeLink();
 
             IEnumerable<DataRow> rows = this.Linaa.Peaks;
-            this.Linaa.Save(ref rows);
+            this.Linaa.SaveRows(ref rows);
             rows = this.Linaa.IPeakAverages;
-            this.Linaa.Save(ref rows);
+            this.Linaa.SaveRows(ref rows);
             rows = this.Linaa.IRequestsAverages;
-            this.Linaa.Save(ref rows);
+            this.Linaa.SaveRows(ref rows);
             rows = null;
 
             Link();

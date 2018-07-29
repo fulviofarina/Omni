@@ -22,48 +22,32 @@ namespace DB.UI
         {
             try
             {
-                Dumb.FD(ref this.Linaa);
-                this.compositionsDGV.DataSource = null;
-                Dumb.FD(ref this.bs);
+                destroy();
 
                 Interface = LinaaInterface;
-                BindingSource bsCompositions = Interface.IBS.SelectedCompositions;
-                //take respective BS
 
-                BindingSource Bind =  Interface.IBS.SelectedMatrix;
+                setBindings(selectedMatrix);
 
-                // bsCompositions = Bind;
-                if (!selectedMatrix)
+                EventHandler enabled = delegate
                 {
-                    Bind = Interface.IBS.Matrix;
-                   
-                    bsCompositions = Interface.IBS.Compositions;
-                }
-                else
-                {
-                    //I think SelectedCompositions is not used
-                    this.compositionsDGV.BackgroundColor = System.Drawing.Color.Thistle;
-               //     Bind = Interface.IBS.SelectedMatrix;
-                   // bsCompositions = Interface.IBS.SelectedCompositions;
-                }
+                    bool ctrlcanBeenable = Interface.IBS.EnabledControls;
+                    this.Enabled = ctrlcanBeenable;
+                };
 
-                // this.compositionDGV.AutoGenerateColumns = true;
-                this.compositionsDGV.DataMember = string.Empty;
-                this.compositionsDGV.DataSource = bsCompositions;
+
+                Interface.IBS.EnableControlsChanged += enabled;
+
+                this.Disposed += delegate
+                  {
+                      Interface.IBS.EnableControlsChanged -= enabled;
+                  };
+
                 this.compositionsDGV.RowHeadersVisible = false;
-                // this.compositionsDGV.Refresh(); this.compositionDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-
-                setBindings(ref Bind);
-
                 this.matrixRTB.MouseDoubleClick += ChangeFocus;
                 this.compositionsDGV.MouseDoubleClick += ChangeFocus;
 
-
                 this.compositionsDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
-
-           //     ChangeFocus(null, EventArgs.Empty);
-            //    ChangeFocus(null, EventArgs.Empty);
             }
             catch (System.Exception ex)
             {
@@ -71,17 +55,40 @@ namespace DB.UI
             }
         }
 
-        protected internal void setBindings(ref BindingSource Bind)
+        private void destroy()
         {
+            this.compositionsDGV.DataSource = null;
+            Dumb.FD(ref this.bs);
+            Dumb.FD(ref this.Linaa);
+        }
+
+        private void setBindings(bool selectedMatrix)
+        {
+
+
+            BindingSource bsCompositions = Interface.IBS.SelectedCompositions;
+            //take respective BS
+            BindingSource Bind = Interface.IBS.SelectedMatrix;
+
+            // bsCompositions = Bind;
+            if (!selectedMatrix)
+            {
+                Bind = Interface.IBS.Matrix;
+                bsCompositions = Interface.IBS.Compositions;
+            }
+            else
+            {
+                //I think SelectedCompositions is not used
+                this.compositionsDGV.BackgroundColor = System.Drawing.Color.FromArgb(255, 35, 35, 35);
+            }
+
             string column = Interface.IDB.Matrix.MatrixCompositionColumn.ColumnName;
             Binding mcompoBin = Rsx.Dumb.BS.ABinding(ref Bind, column);
             this.matrixRTB.DataBindings.Add(mcompoBin);
 
-            Interface.IBS.EnableControlsChanged += delegate
-                  {
-                      bool ctrlcanBeenable = Interface.IBS.EnabledControls;
-                      this.Enabled = ctrlcanBeenable;
-                  };
+       
+
+            this.compositionsDGV.DataSource = bsCompositions;
 
         }
 
@@ -96,12 +103,9 @@ namespace DB.UI
 
             if (!SC.Panel2Collapsed)
             {
-                //     MatrixRow m =  Interface.ICurrent.Matrix as MatrixRow;
                 focusRTB();
             }
-            // else { Interface.ICurrent.Matrix.EndEdit(); }
-
-            // Interface.IDB.Matrix.EndLoadData();
+       
         }
 
         /// <summary>
@@ -113,6 +117,9 @@ namespace DB.UI
 
             CompositionsRow current = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
 
+            if (compos == null) return;
+            if (current == null) return;
+
             MatrixRow m = current.MatrixRow;
 
             bool recode = true;
@@ -120,17 +127,22 @@ namespace DB.UI
 
             this.compositionsDGV.Refresh();
             //yes again
-           current = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
+            current = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
 
-            this.matrixRTB.SelectionStart = this.matrixRTB.TextLength;
-            if (current != null)
-            {
-                int index = this.matrixRTB.Find(current.Element);
-                index += current.Element.Length;
-                this.matrixRTB.SelectionStart = index;
-            }
-            //  this.matrixRTB.ScrollToCaret();
+            findCompositionInRTB(ref current);
             this.matrixRTB.Focus();
+        }
+
+        private void findCompositionInRTB(ref CompositionsRow current)
+        {
+            this.matrixRTB.SelectionStart = this.matrixRTB.TextLength;
+            if (current == null) return;
+        
+                string text = current.Element + "\t" + current.Quantity;
+                int index = this.matrixRTB.Find(text);
+          
+                this.matrixRTB.SelectionStart = index;
+           
         }
 
         public ucComposition()

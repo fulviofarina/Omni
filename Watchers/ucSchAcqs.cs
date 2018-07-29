@@ -27,7 +27,7 @@ namespace k0X
     {
       this.Validate();
       this.BS.EndEdit();
-      this.Linaa.Save<DB.LINAA.SchAcqsDataTable>();
+      this.Linaa.SaveTable<DB.LINAA.SchAcqsDataTable>();
     }
 
     private void Refresh_Click(object sender, EventArgs e)

@@ -78,7 +78,7 @@ namespace DB
             else result = MessageBox.Show(MEASUREMENT_ADDED + Content, CONFIRM, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (result == DialogResult.Cancel) sch.Delete();
 
-            this.Save<SchAcqsDataTable>();
+            this.SaveTable<SchAcqsDataTable>();
         }
 
         public void PopulateScheduledAcqs()

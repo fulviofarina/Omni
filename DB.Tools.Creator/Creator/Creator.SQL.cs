@@ -136,7 +136,7 @@ namespace DB.Tools
                 // CleanOthers();
                 IEnumerable<DataTable> tables = Interface.Get().Tables.OfType<DataTable>();
                 //save
-                Interface.IStore.SaveRemote(ref tables);
+                Interface.IStore.SaveTables(ref tables);
                 Interface.IAdapter.DisposeAdapters();
 
                 ok = cloneDatabase(userDB, developerDB);
