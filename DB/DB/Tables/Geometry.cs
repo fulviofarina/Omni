@@ -98,12 +98,10 @@ namespace DB
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
            
-               // object propo //new value
-              //  object val  //old value
                 MatrixRow m = (MatrixRow)e.Row;
                 try
                 {
-                    m.Checking(e.Column, e.ProposedValue, e.Row[e.Column]);
+                    m.Checking(e);
                 }
                 catch (SystemException ex)
                 {

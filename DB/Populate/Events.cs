@@ -182,10 +182,13 @@ namespace DB
         {
             MatrixRow u = sender as MatrixRow;
             EventData b = e as EventData;
-          
-            cleanMUES(ref u,(bool)b.Args[0] );
+            XCOMPrefRow xcomPref = b.Args[1] as XCOMPrefRow;
+            if (xcomPref.AccumulateResults) return;
+            PreferencesRow pref = b.Args[0] as PreferencesRow;
+           
+            cleanMUES(ref u, !pref.Offline );
             cleanMUESPics(ref u);
-
+          //  b.Args = null;
         }
     }
 }

@@ -24,6 +24,27 @@ namespace DB.UI
       
         public static Interface Interface = null;
 
+        public static void Start(ref Form aboutbox, bool forceOffline = false, bool forceAdvEditor = false, string lIMSresource = "")
+        {
+
+            Creator.MainLIMSResource = lIMSresource;
+            //associate interface to LIMS UI
+            Interface = Creator.Initialize();
+            //create database manager UI
+            createLIMS(ref aboutbox);
+
+            //Take the default LIMS database to use from a file resource
+            //Check if directories exist
+            Creator.CheckDirectories();
+            //populate the preferences
+            Interface.IPreferences.PopulatePreferences(forceOffline, forceAdvEditor);
+
+            //overrides, otherwise use default value from user
+      
+           
+
+        }
+
         /// <summary>
         /// only kept for compatibility with k0-X, remove when possible
         /// make necessary changes
@@ -47,25 +68,24 @@ namespace DB.UI
             form.Populate(control);
             form.Text = title;
             form.Visible = show;
+            form.StartPosition = FormStartPosition.CenterScreen;
 
+            form.Load += delegate
+              {
+               //NADA
+              };
 
-         //   if (control.GetType().Equals(typeof(ucMatrix)))
-         //   {
-            //    ucMatrix ctrl = control as ucMatrix;
-            //    form.Load += ctrl.ParentForm_Load;
-          //  }
         }
 
 
-        public static void CreateLIMS(ref Form _aboutbox)
+        public static void createLIMS(ref Form _aboutbox)
         {
             aboutBox = _aboutbox;
             Interface.IReport.Msg("Starting LIMS", "Starting...");
             Linaa = Interface.Get();
             IFind = new ucSearch();
             Form = new LIMS(ref Interface); //make a new UI LIMS
-            Form.ShowInTaskbar = false;
-            Form.Opacity = 0;
+       
 
             //FIRST THIS IN CASE i NEED TO RESTART AGAIN IN SQL INSTALL
             Interface.IReport.Msg("LIMS Set up", "LIMS OK");
@@ -236,13 +256,13 @@ namespace DB.UI
                 return;
             }
 
-            int rel = 0;
-            if (controlHeader == ControlNames.Rabbits) rel = 1; //for rabitt capsules channel)
+            int relationIndex = 0;
+            if (controlHeader == ControlNames.Rabbits) relationIndex = 1; //for rabitt capsules channel)
 
             IPickerForm frm = new PickerForm();
             //pick from the following from dgvs, to this dgv,
             LINAA.ExceptionsDataTable exsDT = Interface.IDB.Exceptions;
-            frm.IPicker = new Picker(ref dgv, ref from, false, ref exsDT, rel);  //the picker algorithm class
+            frm.IPicker = new Picker(ref dgv, ref from, false, ref exsDT, relationIndex);  //the picker algorithm class
             frm.Module = control;    //this will show the module to pick from
         }
         protected internal static void createControl(string controlHeader, ref UserControl control, ref Rsx.DGV.Control.Refresher refresher, ref Rsx.DGV.Control.Loader stringOrFileLoader, ref EventHandler postRefresh, ref DataGridViewCellPaintingEventHandler cellpainter, ref Rsx.DGV.Control.CellPaintChecker shouldpaintCell, ref AdderEraser addedRow, ref EventHandler preRefresh, ref AdderEraser deletedRow)
@@ -292,14 +312,14 @@ namespace DB.UI
                     }
                 case ControlNames.Matrices:
                     {
-                        bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+                     //   bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
                         EventHandler handler;
-                        CreateMatrixApplication(out control, out handler, advEditor);
+                        CreateMatrixApplication(out control, out handler);
                         refresher = delegate
                         {
                             handler.Invoke(null, EventArgs.Empty);
                         };
-                        // preRefreshref = mat.PreRefresh; postRefresh = mat.PostRefresh;
+                     
                         break;
                     }
                 case ControlNames.Detectors:
@@ -427,7 +447,7 @@ namespace DB.UI
             }
         }
 
-        protected internal static void createPreference(string controlHeader, ref UserControl control)
+        private  static void createPreference(string controlHeader, ref UserControl control)
         {
             switch (controlHeader)
             {
@@ -464,7 +484,7 @@ namespace DB.UI
             }
         }
 
-        protected internal static void formClosing(object sender, FormClosingEventArgs e)
+        private static void formClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = Creator.Close();
             if (!e.Cancel)

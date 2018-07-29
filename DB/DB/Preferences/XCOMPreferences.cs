@@ -17,6 +17,14 @@ namespace DB
                     return null;
                 }
             }
+
+            public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
+            {
+
+                XCOMPrefRow p = e.Row as XCOMPrefRow;
+             //   p.Checking(e);
+
+            }
         }
 
         public partial class XCOMPrefRow : IRow
@@ -29,13 +37,48 @@ namespace DB
                 {
                     Check(item);
                 }
+
+
+
             }
+            public void Checking(DataColumnChangeEventArgs e)
+            {
+                object val = e.Row[e.Column];
+                object proposed = e.ProposedValue;
+
+                if (e.Column == this.tableXCOMPref.EndEnergyColumn)
+                {
+                    if (!IsEndEnergyNull())
+                    {
+                        if ((double)proposed > 1e8)
+                        {
+                            e.Row[e.Column] = 1e8;
+                          
+                            //    return;
+                        }
+                    }
+               
+                }
+                if (e.Column == this.tableXCOMPref.StartEnergyColumn)
+                {
+                    if (!IsStartEnergyNull())
+                    {
+                        if (StartEnergy < (double)proposed)
+                        {
+                            e.Row[e.Column] = 1;
+                            //   return;
+                        }
+
+                    }
+                }
+            }
+
 
             public void Check(DataColumn Column)
             {
                 // if (IsLoopNull()) Loop = false; if (IsUseListNull()) UseList = false;
                 if (IsStartEnergyNull()) StartEnergy = 1;
-                if (IsEndEnergyNull()) EndEnergy = 3500;
+                if (IsEndEnergyNull()) EndEnergy = 4000;
                 if (IsStepsNull()) Steps = 100;
                  if (IsAccumulateResultsNull()) AccumulateResults = true;
                 if (IsRoundingNull()) Rounding = "e3";
@@ -46,17 +89,20 @@ namespace DB
                 if (IsCSNull()) CS = true;
                 if (IsTCSNull()) TCS = true;
                 if (IsTNCSNull()) TNCS = true;
-
-
                 if (IsListOfEnergiesNull())
                 {
                     ListOfEnergies = Encoding.UTF8.GetBytes(DB.Properties.Resources.XCOM);
                 }
+              
+
+             
                     //  if (IsASCIIOutputNull()) ASCIIOutput = false;
                // if (IsLogGraphNull()) LogGraph = true;
 
                 // if ()
                 bool nulow = EC.CheckNull(Column, this);
+
+                this.EndEdit();
             }
 
             public new bool HasErrors()

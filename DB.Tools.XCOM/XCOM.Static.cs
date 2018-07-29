@@ -198,17 +198,18 @@ namespace DB.Tools
 
         private static void getPicture(ref string Response, string tempFile)
         {
-            File.Delete(tempFile);
+            if (File.Exists(tempFile))    File.Delete(tempFile);
             string aux = getPicTag(ref Response);
             if (aux.Contains("Error")) return;
 
             string uriString = "https://physics.nist.gov/PhysRefData/Xcom/tmp/graph" + "_" + aux + PictureExtension;
             Uri uri = new Uri(uriString);
-            WebClient client = new WebClient();
-
-
-            client.DownloadFile(uri, tempFile);
-            client.Dispose();
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFileAsync(uri, tempFile);
+            }
+        //    client.DownloadFile(uri, tempFile);
+          //  client.Dispose();
         }
         private static string getHTTPQuery(byte[] bytes, bool picture = false)
         {
@@ -233,6 +234,7 @@ namespace DB.Tools
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
+
 
             completo = reader.ReadToEnd();
             reader.Close();
@@ -294,7 +296,7 @@ namespace DB.Tools
             reader.Dispose();
             reader = null;
 
-            File.Delete(tempFile);
+            Rsx.Dumb.IO.DeleteIfExists(tempFile);
 
             return added;
             //photon cross sections in g/cm2 and energies in keV, photon * density = mu (linear attenuation)

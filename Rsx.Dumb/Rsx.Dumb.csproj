@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Strings.cs" />
     <Compile Include="Tables.cs" />
     <Compile Include="EC.cs" />
     <Compile Include="Changes.cs" />

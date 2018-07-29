@@ -7,6 +7,8 @@ namespace DB
 {
     public interface IRow
     {
+
+
         void Check();
 
         bool HasErrors();

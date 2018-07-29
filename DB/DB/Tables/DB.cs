@@ -115,6 +115,7 @@ namespace DB
             {
                 if (dt.Equals(Matrix)) Matrix.ColumnChanging += Matrix.DataColumnChanging;
                 else if (dt.Equals(Unit)) Unit.ColumnChanging += Unit.DataColumnChanging;
+                else if (dt.Equals(XCOMPref)) XCOMPref.ColumnChanging += XCOMPref.DataColumnChanging;
                 else if (dt.Equals(SubSamples)) SubSamples.ColumnChanging += SubSamples.DataColumnChanging;
                 dt.ColumnChanged += han;
             }
@@ -148,8 +149,14 @@ namespace DB
             }
         }
 
-        public void CheckMatrixToDoes(bool offline)
+        public void CheckMatrixToDoes()
         {
+            EventData ebento = new EventData();
+            this.Matrix.CalcParametersHandler?.Invoke(this, ebento);
+
+            PreferencesRow prefe = (PreferencesRow) ebento.Args[0];
+            bool offline = prefe.Offline;
+          
             foreach (MatrixRow item in this.tableMatrix)
             {
 
@@ -167,6 +174,7 @@ namespace DB
                     else item.ToDo = true;
 
                 }
+
             }
         }
     }

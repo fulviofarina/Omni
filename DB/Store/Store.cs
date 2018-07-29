@@ -35,6 +35,8 @@ namespace DB
 
                 dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
 
+                dt.CleanPreferences();
+
             //    this.AcceptChanges();
 
                 this.Merge(dt);

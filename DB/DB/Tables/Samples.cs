@@ -161,16 +161,7 @@ namespace DB
 
                 try
                 {
-                    // bool nullo = EC.CheckNull(c, row);
-                    string propos = e.ProposedValue.ToString();
-                    string current = e.Row[e.Column].ToString();
-                    bool change = propos.CompareTo(current) != 0;
-
-                    if (change)
-                    {
-                        r.UnitRow?.ValueChanged(change);
-                        InvokeCalculations?.Invoke(null, EventArgs.Empty);
-                    }
+                    r.Checking(e);
                 }
                 catch (SystemException ex)
                 {
@@ -321,15 +312,7 @@ namespace DB
 
                 try
                 {
-                    bool change = (e.ProposedValue.ToString().CompareTo(e.Row[e.Column].ToString()) != 0);
-
-                    if (change)
-                    {
-                        r.ValueChanged(change);
-
-                        ////     //not used!!!
-                        this.InvokeCalculations?.Invoke(null, EventArgs.Empty);
-                    }
+                    r.Checking(e);
                 }
                 catch (SystemException ex)
                 {

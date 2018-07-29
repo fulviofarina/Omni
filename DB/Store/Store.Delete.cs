@@ -67,10 +67,6 @@ namespace DB
             Delete<MUESRow>(ref mues);
             this.MUES.AcceptChanges();
 
-
-           // ok =  cleanMUESPics(ref m);
-
-
             ok =  GetMUES(ref m, sql).Count == 0;
             return ok;
 

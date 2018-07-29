@@ -155,7 +155,7 @@ namespace DB.Tools
 
             if (!EC.IsNuDelDetch(r as DataRow))
             {
-                LINAA.ChannelsRow u = r as LINAA.ChannelsRow;
+                ChannelsRow u = r as ChannelsRow;
                 int id = u.ChannelsID;
                 if (findItself)
                 {
@@ -231,7 +231,7 @@ namespace DB.Tools
 
             if (!EC.IsNuDelDetch(r as DataRow))
             {
-                LINAA.MatrixRow u = r as LINAA.MatrixRow;
+                MatrixRow u = r as MatrixRow;
                 int id = u.MatrixID; //default matrix id to filter with
                                      // column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
                 filter = column + " = '" + id + "'";
@@ -242,8 +242,7 @@ namespace DB.Tools
                     //last matrix id
                     id = u.SubSampleID;
                     filterMatrixSelected = column + " = '" + id + "'";
-                    column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
-                    id = u.MatrixID;
+                   
                     // filter += " AND " + column2 + " = '" + id + "'";
                 }
                // bool nulo = u.IsXCOMTableNull();
@@ -257,6 +256,8 @@ namespace DB.Tools
 
                 if (findItself)
                 {
+                    column = Interface.IDB.Matrix.MatrixIDColumn.ColumnName;
+                    id = u.MatrixID;
                     bs.Position = bs.Find(column, id);
                     // bs.ResetBindings(false);
                 }

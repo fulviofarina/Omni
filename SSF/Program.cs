@@ -29,13 +29,7 @@ namespace SSF
 
                 Form aboutbox = new AboutBox();
 
-                LIMSUI.Interface = Creator.Initialize();
-                //create database
-
-                LIMSUI.CreateLIMS(ref aboutbox);
-
-                Creator.CheckDirectories();
-                Creator.PopulatePreferences();
+                LIMSUI.Start(ref aboutbox, false, false, string.Empty);
 
                 bool ok = Creator.CheckConnections(true,true);
                 if (ok) Creator.LoadMethods(0);

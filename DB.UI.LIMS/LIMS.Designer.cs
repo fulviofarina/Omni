@@ -111,21 +111,20 @@
             this.toolStripSeparator5});
             this.CMS.Name = "CMS";
             this.CMS.Size = new System.Drawing.Size(333, 530);
-            this.CMS.Opening += new System.ComponentModel.CancelEventHandler(this.CMS_Opening);
             // 
             // refreshT
             // 
             this.refreshT.Name = "refreshT";
             this.refreshT.Size = new System.Drawing.Size(332, 26);
             this.refreshT.Text = "Refresh";
-            this.refreshT.Click += new System.EventHandler(this.refreshT_Click);
+       
             // 
             // undoT
             // 
             this.undoT.Name = "undoT";
             this.undoT.Size = new System.Drawing.Size(332, 26);
             this.undoT.Text = "Undo";
-            this.undoT.Click += new System.EventHandler(this.refreshT_Click);
+         
             // 
             // findToolStripMenuItem
             // 
@@ -133,7 +132,7 @@
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
             this.findToolStripMenuItem.Size = new System.Drawing.Size(332, 26);
             this.findToolStripMenuItem.Text = "Find...";
-            this.findToolStripMenuItem.Click += new System.EventHandler(this.refreshT_Click);
+        
             // 
             // toolStripSeparator3
             // 
@@ -222,7 +221,7 @@
             this.setTodaysDate.Name = "setTodaysDate";
             this.setTodaysDate.Size = new System.Drawing.Size(332, 26);
             this.setTodaysDate.Text = "Set Today\'s date!";
-            this.setTodaysDate.Click += new System.EventHandler(this.refreshT_Click);
+       
             // 
             // shareTirr
             // 
@@ -310,8 +309,7 @@
             this.Modules.TileSize = new System.Drawing.Size(200, 60);
             this.Modules.UseCompatibleStateImageBehavior = false;
             this.Modules.View = System.Windows.Forms.View.Tile;
-            this.Modules.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.modules_DoubleClick);
-            // 
+             // 
             // images
             // 
             this.images.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("images.ImageStream")));

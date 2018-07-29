@@ -8,7 +8,6 @@ namespace µFinder
     static class Program
     {
 
-       // public static string TITLE = "µ-Finder";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -18,102 +17,46 @@ namespace µFinder
         {
 
 
-            string crashFile = "crash.txt";
+         
             bool offline = true;
-
-
-         crashFile =    Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\" +crashFile;
+            bool adv = false;
             try
             {
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
+                string LIMSresource = Properties.Resources.LIMS;
+
                 //create aboutBox
                 Form aboutbox = new AboutBox();
-                //associate interface to LIMS UI
-                LIMSUI.Interface = Creator.Initialize();
-                //create database manager UI
-                LIMSUI.CreateLIMS(ref aboutbox);
 
+                LIMSUI.Start(ref aboutbox, offline, adv,LIMSresource);
 
-                Creator.MainLIMSResource = Properties.Resources.LIMS;
-
-                Creator.CheckDirectories();
-
-
-               /// Properties.Resources.LIMS = "s";
-            //    string fileResource = Properties.Resources.LIMS;
-
-
-            
-
-             
-
-                Creator.PopulatePreferences();
-
-                LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
-        //        LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
-//
+                //set the editor
                 bool noDGVControls = false;
                 UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, null, noDGVControls);
 
-       //         LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
+          
+                bool showAlready = false;
+                LIMSUI.CreateForm(Application.ProductName, ref control, showAlready);
 
-
-
-                bool show = false;
-                LIMSUI.CreateForm(Application.ProductName, ref control, show);
                 Form toShow = control.ParentForm;
-
-
-
-
-           
-                toShow.StartPosition = FormStartPosition.CenterScreen;
+    
                 toShow.WindowState = FormWindowState.Maximized;
-              //  toShow.ControlBox = false;
-             
-
-                //      LIMSUI.Interface.IPreferences.CurrentPref.Offline = offline;
-
-
-                //    readCrash(crashFile);
-
 
                 Application.Run(toShow);
-
-               
-
-             
 
             }
             catch (Exception ex)
             {
-                writeCrash(crashFile, ex);
+           //    Rsx. WriteException(crashFile, ex);
 
             }
 
         }
 
-        private static void readCrash(string crashFile)
-        {
-            if (!System.IO.File.Exists(crashFile)) return;
-        
-                string error = System.IO.File.ReadAllText(crashFile);
-                string crashtitle = "The program just recovered from a crash";
-                MessageBox.Show(error, crashtitle, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-             //   System.IO.File.Delete(crashFile);
-          
-        }
-
-        private static void writeCrash(string crashFile, Exception ex)
-        {
-            string error = "Severe program error: " + ex?.Message + "\n\nat code:\n\n" + ex?.StackTrace;
-          //  if (System.IO.File.Exists(crashFile)) System.IO.File.Delete(crashFile);
-            System.IO.File.AppendAllText(crashFile, error);
-        }
-
+    /*
         public static void PainterTimer()
         {
 
@@ -135,6 +78,6 @@ namespace µFinder
             painter.Interval = 30000;
             painter.Enabled = true;
         }
-      
+      */
     }
 }

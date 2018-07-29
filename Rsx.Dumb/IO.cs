@@ -26,6 +26,26 @@ namespace Rsx.Dumb
         private static string RESTART_PC_TITLE = "Restart the computer";
 
 
+        public static Uri GenerateURI(string file, int guidLenght, string folderpath, bool asHTML)
+        {
+            Uri uri = new Uri("about:blank");
+            if (System.IO.File.Exists(file))
+            {
+                string newFile = Rsx.Dumb.Strings.CachePath;
+                string fileName = file.Replace(folderpath, null);
+                int indexofPoint = fileName.LastIndexOf('.');
+                string extension = fileName.Substring(indexofPoint, fileName.Length - indexofPoint);
+                newFile += fileName.Substring(0,indexofPoint);
+                newFile += "." + Guid.NewGuid().ToString().Substring(0, guidLenght);
+                newFile += extension;
+                if (asHTML) newFile += ".html";
+                File.Copy(file, newFile, true);
+                uri = new Uri(newFile);
+            }
+
+            return uri;
+        }
+
         /// <summary>
         /// Installs MSMQ, The Microsoft Queuing Messaging System
         /// </summary>
@@ -84,8 +104,42 @@ namespace Rsx.Dumb
             from.BringToFront();
             return box;
          }
+        /// <summary>
+        ///  Reads a file and shows it in a message box
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="title"></param>
+        public static void ReadFileToMessageBox(string filePath, string title)
+        {
+            if (!System.IO.File.Exists(filePath)) return;
+            string error = System.IO.File.ReadAllText(filePath);
+        
+            MessageBox.Show(error, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        public static void WatchFolder(string path, string extension, ref Action<object, FileSystemEventArgs> callBack)
+        }
+
+        /// <summary>
+        /// Writes the exception content to a file
+        /// </summary>
+        /// <param name="justFileName"></param>
+        /// <param name="ex"></param>
+        public static void WriteException(string justFileName, Exception ex)
+        {
+            string error = "Severe program error: " + ex?.Message + "\n\nat code:\n\n" + ex?.StackTrace;
+            justFileName= Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\" + justFileName;
+            //  if (System.IO.File.Exists(crashFile)) System.IO.File.Delete(crashFile);
+            File.AppendAllText(justFileName, error);
+        }
+
+
+        /// <summary>
+        /// Watches a folder according to the filter and extensions
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="extension"></param>
+        /// <param name="callBack"></param>
+        /// <param name="filter"></param>
+        public static void WatchFolder(string path, string extension, ref Action<object, FileSystemEventArgs> callBack, string filter = "*")
         {
             FileSystemWatcher watcher = new FileSystemWatcher();
             watcher.Path = path;
@@ -96,10 +150,25 @@ namespace Rsx.Dumb
             watcher.NotifyFilter = NotifyFilters.FileName;
             // | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 
-            watcher.Filter = "*" + extension;
+            watcher.Filter = filter + extension;
             // watcher.Changed += new FileSystemEventHandler( callBack);
             watcher.Created += new FileSystemEventHandler(callBack);
             watcher.EnableRaisingEvents = true;
+        }
+
+        public static void WriteFileText(string tempFile, string Response, bool append = false)
+        {
+            if (File.Exists(tempFile))
+            {
+                File.Delete(tempFile);
+            }
+            if (append) File.AppendAllText(tempFile, Response);
+            else File.WriteAllText(tempFile, Response);
+        }
+
+        public static void DeleteIfExists(string tempFile)
+        {
+            if (File.Exists(tempFile)) File.Delete(tempFile);
         }
     }
 

@@ -105,7 +105,7 @@
             this.TLPMatrix.Name = "TLPMatrix";
             this.TLPMatrix.RowCount = 1;
             this.TLPMatrix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TLPMatrix.Size = new System.Drawing.Size(848, 493);
+            this.TLPMatrix.Size = new System.Drawing.Size(1257, 470);
             this.TLPMatrix.TabIndex = 6;
             // 
             // SC
@@ -122,8 +122,8 @@
             // SC.Panel2
             // 
             this.SC.Panel2.Controls.Add(this.grapher);
-            this.SC.Size = new System.Drawing.Size(842, 487);
-            this.SC.SplitterDistance = 237;
+            this.SC.Size = new System.Drawing.Size(1251, 464);
+            this.SC.SplitterDistance = 225;
             this.SC.TabIndex = 8;
             // 
             // DGV
@@ -133,9 +133,9 @@
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
             this.DGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV.AutoGenerateColumns = false;
             this.DGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
@@ -186,9 +186,10 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.DGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.DGV.RowTemplate.Height = 24;
             this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV.Size = new System.Drawing.Size(842, 237);
+            this.DGV.Size = new System.Drawing.Size(1251, 225);
             this.DGV.TabIndex = 8;
             // 
             // energyDataGridViewTextBoxColumn
@@ -209,11 +210,11 @@
             this.mACSDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mACSDataGridViewTextBoxColumn.DataPropertyName = "MACS";
             this.mACSDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.mACSDataGridViewTextBoxColumn.HeaderText = "CS";
+            this.mACSDataGridViewTextBoxColumn.HeaderText = "Coherent Scattering";
             this.mACSDataGridViewTextBoxColumn.Name = "mACSDataGridViewTextBoxColumn";
             this.mACSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mACSDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation for Coherent Scattering (g/cm2)";
-            this.mACSDataGridViewTextBoxColumn.Width = 52;
+            this.mACSDataGridViewTextBoxColumn.Width = 164;
             // 
             // mAISDataGridViewTextBoxColumn
             // 
@@ -222,11 +223,11 @@
             this.mAISDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mAISDataGridViewTextBoxColumn.DataPropertyName = "MAIS";
             this.mAISDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.mAISDataGridViewTextBoxColumn.HeaderText = "IS";
+            this.mAISDataGridViewTextBoxColumn.HeaderText = "Incoherent Scattering";
             this.mAISDataGridViewTextBoxColumn.Name = "mAISDataGridViewTextBoxColumn";
             this.mAISDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mAISDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation for Incoherent Scattering (g/cm2)";
-            this.mAISDataGridViewTextBoxColumn.Width = 47;
+            this.mAISDataGridViewTextBoxColumn.Width = 175;
             // 
             // pEDataGridViewTextBoxColumn
             // 
@@ -235,11 +236,11 @@
             this.pEDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.pEDataGridViewTextBoxColumn.DataPropertyName = "PE";
             this.pEDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.pEDataGridViewTextBoxColumn.HeaderText = "PE";
+            this.pEDataGridViewTextBoxColumn.HeaderText = "Photo Electric";
             this.pEDataGridViewTextBoxColumn.Name = "pEDataGridViewTextBoxColumn";
             this.pEDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.pEDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation for Photoelectric Absorption (g/cm2)";
-            this.pEDataGridViewTextBoxColumn.Width = 50;
+            this.pEDataGridViewTextBoxColumn.Width = 122;
             // 
             // pPNFDataGridViewTextBoxColumn
             // 
@@ -248,11 +249,11 @@
             this.pPNFDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.pPNFDataGridViewTextBoxColumn.DataPropertyName = "PPNF";
             this.pPNFDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.pPNFDataGridViewTextBoxColumn.HeaderText = "PP";
+            this.pPNFDataGridViewTextBoxColumn.HeaderText = "Pair Production (NF)";
             this.pPNFDataGridViewTextBoxColumn.Name = "pPNFDataGridViewTextBoxColumn";
             this.pPNFDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.pPNFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation by Pair Production under Neutron Field (g/cm2)";
-            this.pPNFDataGridViewTextBoxColumn.Width = 51;
+            this.pPNFDataGridViewTextBoxColumn.Width = 163;
             // 
             // pPEFDataGridViewTextBoxColumn
             // 
@@ -261,11 +262,11 @@
             this.pPEFDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.pPEFDataGridViewTextBoxColumn.DataPropertyName = "PPEF";
             this.pPEFDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.pPEFDataGridViewTextBoxColumn.HeaderText = "PP (EF)";
+            this.pPEFDataGridViewTextBoxColumn.HeaderText = "Pair Production (EF)";
             this.pPEFDataGridViewTextBoxColumn.Name = "pPEFDataGridViewTextBoxColumn";
             this.pPEFDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.pPEFDataGridViewTextBoxColumn.ToolTipText = "Mass attenuation by Pair Production under Electron Field (g/cm2)";
-            this.pPEFDataGridViewTextBoxColumn.Width = 81;
+            this.pPEFDataGridViewTextBoxColumn.Width = 159;
             // 
             // mATCSDataGridViewTextBoxColumn
             // 
@@ -274,11 +275,11 @@
             this.mATCSDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mATCSDataGridViewTextBoxColumn.DataPropertyName = "MATCS";
             this.mATCSDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.mATCSDataGridViewTextBoxColumn.HeaderText = "TOT (CS)";
+            this.mATCSDataGridViewTextBoxColumn.HeaderText = "TOTAL";
             this.mATCSDataGridViewTextBoxColumn.Name = "mATCSDataGridViewTextBoxColumn";
             this.mATCSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mATCSDataGridViewTextBoxColumn.ToolTipText = "Total Mass attenuation with Coherent Scattering (g/cm2)";
-            this.mATCSDataGridViewTextBoxColumn.Width = 94;
+            this.mATCSDataGridViewTextBoxColumn.Width = 79;
             // 
             // mATNCSDataGridViewTextBoxColumn
             // 
@@ -287,11 +288,11 @@
             this.mATNCSDataGridViewTextBoxColumn.BindingRoundingField = "";
             this.mATNCSDataGridViewTextBoxColumn.DataPropertyName = "MATNCS";
             this.mATNCSDataGridViewTextBoxColumn.DefaultAction = Rsx.DGV.DefaultAction.Visibility;
-            this.mATNCSDataGridViewTextBoxColumn.HeaderText = "TOT (w/o CS)";
+            this.mATNCSDataGridViewTextBoxColumn.HeaderText = "TOTAL - CS";
             this.mATNCSDataGridViewTextBoxColumn.Name = "mATNCSDataGridViewTextBoxColumn";
             this.mATNCSDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.mATNCSDataGridViewTextBoxColumn.ToolTipText = "Total Mass attenuation without Coherent Scattering (g/cm2)";
-            this.mATNCSDataGridViewTextBoxColumn.Width = 127;
+            this.mATNCSDataGridViewTextBoxColumn.Width = 85;
             // 
             // mUDataGridViewTextBoxColumn
             // 
@@ -300,7 +301,6 @@
             this.mUDataGridViewTextBoxColumn.Name = "mUDataGridViewTextBoxColumn";
             this.mUDataGridViewTextBoxColumn.ReadOnly = true;
             this.mUDataGridViewTextBoxColumn.Visible = false;
-            this.mUDataGridViewTextBoxColumn.Width = 59;
             // 
             // edgeDataGridViewTextBoxColumn
             // 
@@ -331,7 +331,7 @@
             this.grapher.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grapher.Location = new System.Drawing.Point(0, 0);
             this.grapher.Name = "grapher";
-            this.grapher.Size = new System.Drawing.Size(842, 246);
+            this.grapher.Size = new System.Drawing.Size(1251, 235);
             this.grapher.TabIndex = 1;
             // 
             // matrixIDDataGridViewTextBoxColumn
@@ -371,7 +371,7 @@
             this.Controls.Add(this.TLPMatrix);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucMUES";
-            this.Size = new System.Drawing.Size(848, 493);
+            this.Size = new System.Drawing.Size(1257, 470);
             this.TLPMatrix.ResumeLayout(false);
             this.SC.Panel1.ResumeLayout(false);
             this.SC.Panel2.ResumeLayout(false);

@@ -45,14 +45,14 @@ namespace DB.Tools
                 itemText = itemText.Substring(numberIndex + 1);
             }
             //si es un .csv
-            if (itemText.ToLower().CompareTo("csv") == 0)
+            if (itemText.ToLower().Contains(csv) )
             {
-                itemText = "comma-separated";
+                itemText =comma +" "+ separated;
             }
             //si es un .xls
-            else if (itemText.ToLower().CompareTo("xls") == 0)
+            else if (itemText.ToLower().Contains(xls))
             {
-                itemText = "excel";
+                itemText = spreadsheet;
             }
             return itemText;
         }

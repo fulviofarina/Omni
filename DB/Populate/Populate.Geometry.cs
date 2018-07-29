@@ -257,7 +257,7 @@ namespace DB
           
                 this.tableMatrix.Merge(m, false, System.Data.MissingSchemaAction.AddWithKey);
 
-                CheckMatrixToDoes(false);
+            
                 // this.tableMatrix.EndLoadData(); Save(ref this.tableMatrix); this.tableMatrix.AcceptChanges();
             }
             catch (SystemException ex)

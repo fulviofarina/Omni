@@ -20,29 +20,17 @@ namespace DB.Tools
                 return p => p.Field<string>(label).CompareTo(WindowsUser) == 0;
             }
         }
-        private void getSQLPreferenceEvent(object sender, EventData e)
+        private void getPreferenceEvent(object sender, EventData e)
         {
-            PreferencesRow pref = CurrentPref;
+         //   PreferencesRow pref = CurrentPref;
             object[] args = new object[]
             {
-             !pref.Offline
+            CurrentPref, CurrentXCOMPref, CurrentSSFPref
         };
 
             e.Args = args;
         }
-        private void getPreferencesEvent(object sender, EventData e)
-        {
-            SSFPrefRow pref = CurrentSSFPref;
-            object[] args = new object[]
-            {
-                pref?.CalcMass,
-            pref?.AARadius,
-             pref?.CalcDensity,
-            pref?.AAFillHeight
-        };
-
-            e.Args = args;
-        }
+     
 
         private void getPreferencesSpectrumEvent(object sender, EventData e)
         {

@@ -133,15 +133,11 @@ namespace DB.UI
 
 
             IOptions[] optionArr = Creator.UserControls?.OfType<ucOptions>().ToArray();
-
             IOptions options = null;
-
             options = optionArr?.FirstOrDefault(o => o.Type == type);
             if (options != null) return options;
 
             //created but not in list
-  
-
             options = DBOptions.GetOptions(type,advancedEdtior);
 
             //start BINDING
@@ -149,7 +145,6 @@ namespace DB.UI
             {
                 aboutBox?.Show();
             };
-
             //EXPLORER
                 options.ExplorerClick += delegate
                 {
@@ -166,6 +161,10 @@ namespace DB.UI
             return options;
         }
 
+
+        private static string ProgramPreferences = "Program Preferences";
+        private static string uFinderPreferences = "µFinder Preferences";
+        private static string SpecNavPreferences = "SpecNav Preferences";
         public static T GetPreferences<T>(bool show = false)
         {
             UserControl ucPref = null;
@@ -177,19 +176,19 @@ namespace DB.UI
                 if (t.Equals(typeof(IPreferences)))
                 {
                     ucPref = Creator.UserControls.OfType<ucPreferences>().FirstOrDefault();
-                    formName = "Program Preferences";
+                    formName = ProgramPreferences;
                     controlName = ControlNames.Preferences;
                 }
                 else if (t.Equals(typeof(IXCOMPreferences)))
                 {
                     ucPref = Creator.UserControls.OfType<ucXCOMPreferences>().FirstOrDefault();
-                    formName = "µ-Finder Preferences";
+                    formName = uFinderPreferences;
                     controlName = ControlNames.XCOMPreferences;
                 }
                 else if (t.Equals(typeof(ISpecPreferences)))
                 {
                     ucPref = Creator.UserControls.OfType<ucSpecPreferences>().FirstOrDefault();
-                    formName = "SpecNav Preferences";
+                    formName = SpecNavPreferences;
                     controlName = ControlNames.SpecPreferences;
                 }
                 Form f = null;
@@ -221,7 +220,7 @@ namespace DB.UI
             {
                 Interface.IStore.AddException(ex);
             }
-            return ucPref as dynamic;
+            return (T)(ucPref as object);
         }
         /*
         public static IXCOMPreferences GetXCOMPreferences(bool show = false)
@@ -270,80 +269,13 @@ namespace DB.UI
             return Application.StartupPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
         }
 
-        public static void CreateMatrixApplication(out UserControl control, out EventHandler refresher, bool advEditor = false)
+
+    
+
+        public static void CreateMatrixApplication(out UserControl control, out EventHandler refresher )
         {
-          
-        
-         
-
             //ESTE ORDEN ES FUNDAMENTAL!!!
-       
-
-            Application.DoEvents();
-
-
-            ucMatrix mat = new ucMatrix();
-            mat.Set(ref Interface);
-            control = (UserControl)mat;
-
-            Application.DoEvents();
-
-
-
-
-
-
-            refresher = delegate
-            {
-
-                Interface.IBS.ApplyFilters();
-                Interface.IBS.StartBinding();
-
-                Interface.IBS.ShowErrors = false;
-
-           
-
-                bool offline = Interface.IPreferences.CurrentPref.Offline;
-                if (offline)
-                {
-                
-                    Creator.LoadFromFile();
-
-                    Application.DoEvents();
-
-                    Interface.IDB.MUES.Clear();
-                    Interface.IDB.Preferences.Clear();
-
-                    Application.DoEvents();
-                    Creator.PopulatePreferences();
-                    Interface.IPreferences.CurrentPref.Offline = offline;
-
-                    Interface.IDB.AcceptChanges();
-
-                    Interface.IDB.CheckMatrixToDoes(offline);
-
-                }
-                else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
-
-                Interface.IBS.ShowErrors = true;
-
-                //y esto? quitar?
-                Interface.IBS.EnabledControls = true;
-
-                Application.DoEvents();
-
-            //    Creator.SaveInFull(true);
-
-                Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
-
-
-
-
-               
-            };
-
-            refresher.Invoke(null,EventArgs.Empty);
-
+            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
 
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
 
@@ -364,30 +296,69 @@ namespace DB.UI
 
             */
 
- 
 
-            options.RestoreFoldersClick += refresher;
-      
-            Application.DoEvents();
+            ucMatrix mat = new ucMatrix();
+            mat.Set(ref Interface);
+            control = (UserControl)mat;
 
-            mat.Set( options);
+            refresher = delegate
+            {
+
+                Interface.IBS.ApplyFilters();
+                Interface.IBS.StartBinding();
+
+                Interface.IBS.ShowErrors = false;
+
+                bool offline = Interface.IPreferences.CurrentPref.Offline;
+                if (offline)
+                {
+                
+
+                    Creator.LoadFromFile();
+
+                    Application.DoEvents();
+
+                    Interface.IDB.MUES.Clear();
+                  //  Interface.IDB.Preferences.Clear();
+
+                    Application.DoEvents();
+               //     Creator.PopulatePreferences();
+                //    Interface.IPreferences.CurrentPref.Offline = offline;
+
+                    Interface.IDB.AcceptChanges();
+
+
+                }
+                else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
+
+
+                Interface.IDB.CheckMatrixToDoes();
+
+                Interface.IBS.ShowErrors = true;
+
+                //y esto? quitar?
+                Interface.IBS.EnabledControls = true;
+
+                Application.DoEvents();
+
+
+                Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
+               
+            };
+
+            refresher.Invoke(null, EventArgs.Empty);
+
+
+            mat.Set(options);
             mat.Set(ref prefes);
             mat.SetXCOM();
-
-            Application.DoEvents();
-
-
+            options.RestoreFoldersClick += refresher;
 
 
             IPop msn = Interface.IReport.Msn;
+            Interface.IReport.Msn.ParentForm.Visible = false;
             UserControl ctrl = msn as UserControl;
             mat.Set(ref ctrl);
-
-            Application.DoEvents();
-            msn.ParentForm?.Dispose();
-
-
-       
 
         }
 

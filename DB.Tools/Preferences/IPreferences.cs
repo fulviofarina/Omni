@@ -2,6 +2,7 @@
 {
     public interface IPreferences
     {
+        void PopulatePreferences(bool? forceOffline = null, bool? forceAdvEditor = null);
         LINAA.PreferencesRow CurrentPref { get; }
 
         LINAA.SSFPrefRow CurrentSSFPref { get; }
@@ -20,7 +21,7 @@
 
         string GetXCOMPreferencesPath();
 
-        void PopulatePreferences();
+       
 
         void SavePreferences();
 

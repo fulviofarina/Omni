@@ -185,8 +185,20 @@ namespace DB.Tools
                             updateLoaders(runWorker, m.MatrixID);
                             _callBack?.Invoke(m, EventArgs.Empty);
                         };
-             
-                    actionCount += addToLoaders(ref m, report, callBack, start, Totalend, step,accumulate, useList);
+
+
+                    m.RowError = string.Empty;
+                    bool goIn = (!m.HasErrors() && m.ToDo);
+
+                    if (goIn)
+                    {
+                        actionCount += addToLoaders(ref m, report, callBack, start, Totalend, step, accumulate, useList);
+                    }
+                    else
+                    {
+                        rows.Remove(m);
+                        throw new SystemException("The matrix has errors");
+                    }
                    
                 }
                 catch (SystemException ex)
@@ -256,7 +268,7 @@ namespace DB.Tools
             }
         }
 
-        public IList<Action> generateActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool offline, bool accumulate, bool useList = false)
+        public IList<Action> generateEngineActions(ref MatrixRow matrix, double start, double totalEnd, double step, bool offline, bool accumulate, bool useList = false)
         {
             //finds the MUEs for each 1keV, given start and Totalend energies, by NrEnergies (keV) steps.
 
@@ -353,13 +365,11 @@ namespace DB.Tools
                 MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref m, !offline);
                 while (numberOfFiles >= 0)
                 {
-                    getMUESFromNIST(m.MatrixDensity, _startupPath, ref mu, m.MatrixID, numberOfFiles);
+                    getMUESFromNIST(m.MatrixDensity, Strings.CachePath, ref mu, m.MatrixID, numberOfFiles);
                     numberOfFiles--;
                 }
                 Interface.IStore.SaveMUES(ref mu, ref m, !offline);
             };
-
-
 
             Action action3 = delegate
             {
@@ -422,15 +432,13 @@ namespace DB.Tools
 
         private int addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool accumulate, bool useList = true)
         {
-            m.RowError = string.Empty;
-            bool goIn = (!m.HasErrors() && m.ToDo);
 
-            if (!goIn) throw new SystemException("The matrix has errors");
+            IList<Action> actions = generateEngineActions(ref m, start, Totalend, step, offline, accumulate, useList);
 
-            IList<Action> actions = generateActions(ref m, start, Totalend, step, offline, accumulate, useList);
-
-            if (actions.Count == 0) throw new SystemException("The Actions list for the Matrix is empty");
-
+            if (actions.Count == 0)
+            {
+                throw new SystemException("The Actions list for the Matrix is empty");
+            }
             ILoader ld = new Loader();
             ld.Set(actions, callBack, report);
             loaders.Add(m.MatrixID, ld);
@@ -466,13 +474,10 @@ namespace DB.Tools
 
                     string range = punto + "N" + numberOfFiles ;
 
-                    tempFile = _startupPath + matrixID +  range ;
+                    tempFile = Rsx.Dumb.Strings.CachePath + matrixID +  range ;
 
-                    if (File.Exists(tempFile))
-                    {
-                        File.Delete(tempFile);
-                    }
-                    File.WriteAllText(tempFile, Response);
+
+                    IO.WriteFileText(tempFile,Response, false);
 
 
                     range += punto + start.ToString() + " - " + end.ToString();

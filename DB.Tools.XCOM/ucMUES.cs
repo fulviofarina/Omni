@@ -14,34 +14,32 @@ namespace DB.UI
     {
         protected internal Interface Interface = null;
 
-        public void MakeFile(string matrixID, string path)
+        public void MakeFile(string name, string path)
         {
+
             DataGridView dgv = this.DGV;
 
-            Rsx.DGV.Control.MakeHTMLFile(path, matrixID, ref dgv);
-            Rsx.DGV.Control.MakeCSVFile(path, matrixID, ref dgv);
-
-
+            Rsx.DGV.Control.MakeHTMLFile(path, name, ref dgv);
+            Rsx.DGV.Control.MakeCSVFile(path, name, ref dgv);
         }
 
-        public void Set(ref IXCOMPreferences pref)
+        public void Set(ref IXCOMPreferences pref, bool table = true)
         {
 
             try
             {
 
-
-                grapher.Name = "graph";
-
-
-                bindDGVColumns();
-           
                 bindPreference( pref);
+            
 
                 EventHandler enabledHandler = delegate
                 {
                     bool ctrlcanBeenable = Interface.IBS.EnabledControls;
                     this.Enabled = ctrlcanBeenable;
+            
+
+
+
                 };
                 Interface.IBS.EnableControlsChanged += enabledHandler;
 
@@ -49,13 +47,14 @@ namespace DB.UI
                 {
                     Interface.IBS.EnableControlsChanged -= enabledHandler;
                 };
-                
-                refreshDGV();
 
-                focus(true);
+                refreshDGV(null, EventArgs.Empty);
 
-             
-            }
+      
+            SC.Panel2Collapsed = table;
+            SC.Panel1Collapsed = !table;
+
+    }
             catch (System.Exception ex)
             {
                 Interface.IStore.AddException(ex);
@@ -66,6 +65,8 @@ namespace DB.UI
         {
             destroy();
             Interface = inter;
+            grapher.Name = "graph";
+            bindDGVColumns();
         }
 
         private void bindDGVColumns()
@@ -117,16 +118,12 @@ namespace DB.UI
         /// <param name="preference"></param>
         private void bindPreference(IXCOMPreferences preference)
         {
-            EventHandler action = delegate
-            {
-                refreshDGV();
-            };
 
-            preference.RoundingChanged += action;
+            preference.RoundingChanged += refreshDGV;
 
             this.Disposed += delegate
             {
-                preference.RoundingChanged -= action;
+                preference.RoundingChanged -= refreshDGV;
             };
         }
 
@@ -140,15 +137,7 @@ namespace DB.UI
             Dumb.FD(ref this.Linaa);
         }
 
-        /// <summary>
-        /// NO SE
-        /// </summary>
-        /// <param name="table"></param>
-        private void focus(bool table)
-        {
-            SC.Panel2Collapsed = table;
-            SC.Panel1Collapsed = !table;
-        }
+           
 
         /// <summary>
         /// not used
@@ -185,7 +174,7 @@ namespace DB.UI
             Dumb.FD(ref dt);
         }
 
-        private void refreshDGV()
+        private void refreshDGV(object sender, EventArgs e)
         {
             DGV.Visible = false;
             IEnumerable<MUESColumn> cols = DGV.Columns.OfType<MUESColumn>();

@@ -156,7 +156,7 @@ namespace DB.Tools
                 //esto cambio en uFinder asi que arreglar en MSTFF, usar lims.xml como un resource y empotrarlo
                 filePath = Interface.IStore.FolderPath + Resources.DevFiles + Resources.Linaa;
             }
-            Interface.Get().Clear();
+        //    Interface.Get().Clear();
             Interface.IDB.AcceptChanges();
 
             Interface.IStore.Read(filePath);
@@ -244,14 +244,7 @@ namespace DB.Tools
             // else throw new SystemException("No Populate Method was assigned");
         }
 
-        public static void PopulatePreferences()
-        {
-            Interface.IReport.Msg("Populating database structure", "Initializing...");
-            // Interface.IPreferences.SavePreferences();
-            Interface.IStore.CleanPreferences();
-            Interface.IPreferences.PopulatePreferences();
-            Interface.IPreferences.SavePreferences();
-        }
+    
 
         /// <summary>
         /// The methods should be loaded already, just execute...
@@ -315,9 +308,6 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
                 Interface.IReport.Msg(ex.Message + "\n" + ex.StackTrace + "\n", "Error", false);
             }
-
-
-
 
             Cursor.Current = Cursors.Default;
 

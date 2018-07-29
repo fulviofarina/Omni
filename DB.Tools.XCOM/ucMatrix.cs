@@ -121,13 +121,16 @@ namespace DB.UI
             XCom.Reporter = Interface.IReport.Msg;
             XCom.ExceptionAdder = Interface.IStore.AddException;
 
-            EventHandler navigatorRefresh = delegate
+            ucPicNav1.Set(path, "*", XCOM.PictureExtension, "FULL");
+
+
+            EventHandler changed = delegate
             {
-                ucPicNav1.Set(path, "*", XCOM.PictureExtension, "FULL");
-                ucPicNav1.HideList(true);
-                ucPicNav1.HideList(false);
+                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
+                refreshList(m, EventArgs.Empty);
             };
 
+       
             EventHandler enableCtrols = delegate
             {
                 Interface.IBS.EnabledControls = !XCom.IsCalculating;
@@ -167,65 +170,65 @@ namespace DB.UI
 
             ucCalculate1.CancelMethod += cancelMethod;
             ucCalculate1.CancelMethod += enableCtrols;
-            ucCalculate1.CancelMethod += navigatorRefresh;
+            ucCalculate1.CancelMethod += changed;
 
 
             ucCalculate1.CalculateMethod += calculateMethod;
-            ucCalculate1.CalculateMethod += navigatorRefresh;
+            ucCalculate1.CalculateMethod += changed;
             ucCalculate1.CalculateMethod += enableCtrols;
+        
 
-
-            Interface.IDB.Matrix.CleanMUESHandler += navigatorRefresh;
-
-            EventHandler changed = delegate
-            {
-                MatrixRow m = Interface.ICurrent.Matrix as MatrixRow;
-                if (m != null)
-                {
-                    ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
-                }
-            };
-
-            Interface.IBS.Matrix.CurrentChanged += navigatorRefresh;
+            Interface.IDB.Matrix.CleanMUESHandler += changed;
+    
             Interface.IBS.Matrix.CurrentChanged += changed;
 
 
 
             this.Disposed += delegate
             {
-                Interface.IDB.Matrix.CleanMUESHandler -= navigatorRefresh;
-                Interface.IBS.Matrix.CurrentChanged -= navigatorRefresh;
+                Interface.IDB.Matrix.CleanMUESHandler -= changed;
                 Interface.IBS.Matrix.CurrentChanged -= changed;
+              
             };
 
 
             //  test();
         }
-        /*
-        protected internal void addCompositions(ref MatrixRow m, string responde)
+
+        private void refreshList(object sender, EventArgs empty)
         {
-            IEnumerable<CompositionsRow> ros = m.GetCompositionsRows();
-            Interface.IStore.Delete(ref ros);
-
-            Application.DoEvents();
-
-            ElementsDataTable ele = Interface.IDB.Elements;
-
-            IList<string[]> ls = XCOM.ExtractComposition(responde, ref ele);
-
-            Application.DoEvents();
-            Interface.IPopulate.IGeometry.AddCompositions(ref m, ls);
-
-            Application.DoEvents();
+            MatrixRow m = (MatrixRow)sender;
+            if (m != null)
+            {
+                ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
+            }
         }
 
-      */
+        /*
+protected internal void addCompositions(ref MatrixRow m, string responde)
+{
+   IEnumerable<CompositionsRow> ros = m.GetCompositionsRows();
+   Interface.IStore.Delete(ref ros);
 
-            /// <summary>
-            /// Method to execute after a sample is calculated
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
+   Application.DoEvents();
+
+   ElementsDataTable ele = Interface.IDB.Elements;
+
+   IList<string[]> ls = XCOM.ExtractComposition(responde, ref ele);
+
+   Application.DoEvents();
+   Interface.IPopulate.IGeometry.AddCompositions(ref m, ls);
+
+   Application.DoEvents();
+}
+
+*/
+
+        /// <summary>
+        /// Method to execute after a sample is calculated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void callmeBack(object sender, EventArgs e)
         {
             MatrixRow m = sender as MatrixRow;
@@ -235,16 +238,16 @@ namespace DB.UI
             if (!XCom.IsCalculating)
             {
                 XCom.CheckCompletedOrCancelled();
+                Interface.IDB.CheckMatrixToDoes();
                 saveHandler.Invoke(sender,e);
             }
 
-            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
-
-            ucMUES1.MakeFile(m.MatrixID.ToString(), path);
-
-            ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
-
             Interface.IBS.EnabledControls = !XCom.IsCalculating;
+          
+            Interface.IBS.CurrentChanged<MatrixRow>(m, true, true);
+            ucMUES1.MakeFile(m.MatrixID.ToString() + "." + m.MatrixName, path);
+
+            refreshList(m, EventArgs.Empty);
 
             if (XCom.IsCalculating) return;
 

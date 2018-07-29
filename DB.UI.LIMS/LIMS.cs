@@ -186,23 +186,41 @@ namespace DB.UI
         public LIMS(ref Interface inter)
         {
             InitializeComponent();
-
+            ShowInTaskbar = false;
+            Opacity = 0;
             Interface = inter;
+
+
+            setItems();
+
+            setTags();
+
+            setHandlers();
+
+        }
+
+        private void setHandlers()
+        {
             this.FormClosing += this.limsFormClosing;
             this.Load += this.limsLoad;
 
-         
+            this.updateIrradiationDateToolStripMenuItem.Click += delegate
+            {
+                Interface.IPopulate.ISamples.UpdateIrradiationDates();
+            };
+            this.unlockProtectedCellsToolStripMenuItem.Click += unLockProtectedCells;
 
-            this.halflife.Click += LIMSUI.SetItem;
-            this.setGeometry.Click += LIMSUI.SetItem;
-            this.setVials.Click += LIMSUI.SetItem;
-            this.setMonitor.Click += LIMSUI.SetItem;
-            this.setStandards.Click += LIMSUI.SetItem;
-            this.setSubSamples.Click += LIMSUI.SetItem;
-            this.setMatrix.Click += LIMSUI.SetItem;
-            this.setIrradCh.Click += LIMSUI.SetItem;
-            this.setRabbit.Click += LIMSUI.SetItem;
+            this.refreshT.Click += new System.EventHandler(this.refreshT_Click);
+            this.undoT.Click += new System.EventHandler(this.refreshT_Click);
+            this.findToolStripMenuItem.Click += new System.EventHandler(this.refreshT_Click);
+            this.setTodaysDate.Click += new System.EventHandler(this.refreshT_Click);
+            this.Modules.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.modules_DoubleClick);
 
+            this.CMS.Opening += new System.ComponentModel.CancelEventHandler(this.CMS_Opening);
+        }
+
+        private void setTags()
+        {
             this.setMatrix.Tag = ControlNames.Matrices;
             this.setGeometry.Tag = ControlNames.Geometries; //set geometries
             this.setVials.Tag = ControlNames.Vials; // set vials
@@ -212,13 +230,19 @@ namespace DB.UI
             this.setIrradCh.Tag = ControlNames.Channels;
             this.halflife.Tag = ControlNames.MonitorsFlags;
             this.setRabbit.Tag = ControlNames.Rabbits; //for rabitt capsules channel
-
-            this.updateIrradiationDateToolStripMenuItem.Click += delegate
-            {
-                Interface.IPopulate.ISamples.UpdateIrradiationDates();
-            };
-            this.unlockProtectedCellsToolStripMenuItem.Click += unLockProtectedCells;
         }
 
+        private void setItems()
+        {
+            this.halflife.Click += LIMSUI.SetItem;
+            this.setGeometry.Click += LIMSUI.SetItem;
+            this.setVials.Click += LIMSUI.SetItem;
+            this.setMonitor.Click += LIMSUI.SetItem;
+            this.setStandards.Click += LIMSUI.SetItem;
+            this.setSubSamples.Click += LIMSUI.SetItem;
+            this.setMatrix.Click += LIMSUI.SetItem;
+            this.setIrradCh.Click += LIMSUI.SetItem;
+            this.setRabbit.Click += LIMSUI.SetItem;
+        }
     }
 }

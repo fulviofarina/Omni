@@ -15,6 +15,18 @@ namespace DB.Tools
 
     public partial class Preference : IPreferences
     {
+
+        public void PopulatePreferences(bool? forceOffline = null, bool? forceAdvEditor =null)
+        {
+            Interface.IReport.Msg("Populating Preferences", "Preferences loading...");
+            // Interface.IPreferences.SavePreferences();
+            Interface.IStore.CleanPreferences();
+            populatePreferences();
+            if (forceOffline!=null) CurrentPref.Offline = (bool)forceOffline;
+            if (forceAdvEditor!=null) CurrentPref.AdvancedEditor = (bool)forceAdvEditor;
+            Interface.IPreferences.SavePreferences();
+        }
+
         protected internal Interface Interface;
         public Preference(ref Interface interfaces)
         {
@@ -22,8 +34,8 @@ namespace DB.Tools
 
             // Interface.IDB.SubSamples.AddMatrixHandler += this.addMatrixEvent;
             // Interface.IPopulate
-            Interface.IDB.Matrix.CalcParametersHandler = getSQLPreferenceEvent;
-            Interface.IDB.SubSamples.CalcParametersHandler = getPreferencesEvent;
+            Interface.IDB.Matrix.CalcParametersHandler = getPreferenceEvent;
+            Interface.IDB.SubSamples.CalcParametersHandler = getPreferenceEvent;
             Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferencesSpectrumEvent;
 
         }
@@ -110,7 +122,7 @@ namespace DB.Tools
         /// <summary>
         /// Populates the preferences
         /// </summary>
-        public void PopulatePreferences()
+        private void populatePreferences()
         {
             try
             {
