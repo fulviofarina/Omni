@@ -70,11 +70,11 @@
             this.projectbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.projectbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.projectbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectbox.Font = new System.Drawing.Font("Segoe UI", 16.25F, System.Drawing.FontStyle.Bold);
+            this.projectbox.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
             this.projectbox.ForeColor = System.Drawing.Color.LemonChiffon;
             this.projectbox.Location = new System.Drawing.Point(116, 3);
             this.projectbox.Name = "projectbox";
-            this.projectbox.Size = new System.Drawing.Size(206, 38);
+            this.projectbox.Size = new System.Drawing.Size(206, 31);
             this.projectbox.TabIndex = 1;
             // 
             // ucGenericCBox

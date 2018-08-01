@@ -15,14 +15,13 @@ namespace DB.UI
       //  private DB.LINAATableAdapters.PeaksHLTableAdapter HLTA;
         private Interface Interface;
 
-        private LINAA.PeaksHLRow peak;
+       private LINAA.PeaksHLRow peak;
         private LINAA.MeasurementsRow picked;
         private DB.Tools.SolCoin solcoin;
 
         public void CreateHLProjectBox()
         {
             VTools.IGenericBox IBoc = this.project;
-          
            
             IBoc.PopulateListMethod += delegate
             {
@@ -38,8 +37,9 @@ namespace DB.UI
              
             };
 
+            //interesting if this workk without binding
             IBoc.SetNoBindingSource();
-            IBoc.TextContent = string.Empty;
+            IBoc.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
         }
         public void Set (ref VTools.IOptions options)
         {
@@ -103,7 +103,7 @@ namespace DB.UI
              {
                  if (picked != null)
                  {
-                     //measBS.Filter = Interface.IDB.Measurements.ProjectColumn.ColumnName  + " = " + Ibox.TextContent;
+                     measBS.Filter = Interface.IDB.Measurements.ProjectColumn.ColumnName  + " = " + Ibox.TextContent;
                  }
              };
 
@@ -217,8 +217,8 @@ namespace DB.UI
 
         private void gammasBS_CurrentItemChanged(object sender, EventArgs e)
         {
-            //take this out
-            return;
+          //  //take this out
+         //   return;
             if (gammasBS.Count != 0)
             {
                 LINAA.GammasRow gamma = (LINAA.GammasRow)((DataRowView)gammasBS.Current).Row;

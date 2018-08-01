@@ -42,7 +42,7 @@ namespace SSF
 
             
 
-                PainterTimer();
+              //  PainterTimer();
 
                 Application.Run(toShow);
 

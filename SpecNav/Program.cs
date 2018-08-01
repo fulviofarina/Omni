@@ -43,7 +43,7 @@ namespace SpecNav
                 form.Controls.Add(hl);
                 form.Opacity = 100;
                 form.Text = "A data browser for HyperLab users, by F. Farina Arboccò";
-       
+                form.WindowState = FormWindowState.Maximized;
 
                // LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
 
