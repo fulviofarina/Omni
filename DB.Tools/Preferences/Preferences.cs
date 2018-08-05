@@ -22,32 +22,15 @@ namespace DB.Tools
         }
         private void getPreferenceEvent(object sender, EventData e)
         {
-         //   PreferencesRow pref = CurrentPref;
+       
             object[] args = new object[]
             {
-            CurrentPref, CurrentXCOMPref, CurrentSSFPref
-        };
+            CurrentPref, CurrentXCOMPref, CurrentSSFPref, CurrentSpecPref
+            };
 
             e.Args = args;
         }
      
-
-        private void getPreferencesSpectrumEvent(object sender, EventData e)
-        {
-            PreferencesRow pref = CurrentPref;
-            object[] args = new object[]
-            {
-                pref.minArea,
-            pref.maxUnc,
-             pref.windowA,
-            pref.windowB,
-            pref.DetectorIdx,
-            pref.PositionIdx,
-            pref.MeasIdx
-        };
-
-            e.Args = args;
-        }
 
         /// <summary>
         /// Reads the preferences files
@@ -110,16 +93,21 @@ namespace DB.Tools
                 path = GetSSFPreferencesPath();
                 dt = Interface.IDB.SSFPref;
             }
-            else// if (t.Equals(typeof(XCOMPrefDataTable)))
+            else if (t.Equals(typeof(XCOMPrefDataTable)))
             {
                 path = GetXCOMPreferencesPath();
                 dt = Interface.IDB.XCOMPref;
             }
-         //   else
-          //  {
-
-         //   }
+            else 
+            {
+                path = GetSpecPreferencesPath();
+                dt = Interface.IDB.SpecPref;
+            }
+          
+           
         }
+
+      
 
         /// <summary>
         /// Loads the Current Rows with data
@@ -133,26 +121,16 @@ namespace DB.Tools
             findTableAndPath<T>(out dt, out path);
 
             DataRow row = dt.AsEnumerable().FirstOrDefault(selector) ;
-             bool add = false;
+        //     bool add = false;
 
             if (row == null)
             {
                 Interface.IReport.GenerateUserInfoReport();
 
-                //row = dt.NewRow();
-               
-              //  row.SetField<string>("WindowsUser", WindowsUser);
-              //  add = true;
             }
-
-
-
           
 
             Type tipo = typeof(T);
-
-
-
 
             if (tipo.Equals(typeof(PreferencesDataTable)))
             {
@@ -201,19 +179,27 @@ namespace DB.Tools
 
                
             }
-           
+            else if (tipo.Equals(typeof(SpecPrefDataTable)))
+            {
+                SpecPrefDataTable data = dt as SpecPrefDataTable;
+                SpecPrefRow p = null;
+                if (row == null)
+                {
+                    p = data.NewSpecPrefRow();
+                    p.WindowsUser = WindowsUser;
+                    data.AddSpecPrefRow(p);
+
+                    row = p as DataRow;
+                }
+                //    else p = row as XCOMPrefRow;
+
+
+            }
 
                  (row as IRow).Check();
 
 
-
-              if (add)
-              {
-           //      dt.LoadDataRow(row.ItemArray, true);
-              }
-            //   IRow r = row as IRow;
-            //check
-            //     r.Check();
+     
         }
 
         /*

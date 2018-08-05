@@ -95,6 +95,7 @@
     <Compile Include="Adapter\Adapter.cs" />
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
+    <Compile Include="DB\Preferences\SpecPreferences.cs" />
     <Compile Include="DB\Tables\DB.cs" />
     <Compile Include="DB\Preferences\XCOMPreferences.cs" />
     <Compile Include="DB\Preferences\SSFPreferences.cs" />

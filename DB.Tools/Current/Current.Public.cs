@@ -113,6 +113,13 @@ namespace DB.Tools
                 return (bs.Units.Current as DataRowView)?.Row;
             }
         }
+        public DataRow Measurement
+        {
+            get
+            {
+                return (bs.Measurements.Current as DataRowView)?.Row;
+            }
+        }
 
         /// <summary>
         /// Current Row

@@ -118,10 +118,84 @@ namespace DB.Tools
             return ok;
         }
 
-        private void currentChanged(object sender, EventArgs e)
+        private void currentChangedHandler(object sender, EventArgs e)
         {
-            BindingSource bs = sender as BindingSource;
-            CurrentChanged(ref bs);
+
+            try
+            {
+                if (!EnabledControls) return;
+
+                BindingSource bs = sender as BindingSource;
+                bool selectedBs = false;
+
+                if (sender.Equals(Irradiations))
+                {
+                    IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
+                    currentChanged(r, true, false, selectedBs);
+                }
+                else if (sender.Equals(Channels))
+                {
+                    ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
+                    currentChanged(c, true, false, selectedBs);
+                }
+                else if (sender.Equals(Measurements))
+                {
+                    MeasurementsRow r = Interface.ICurrent.Measurement as MeasurementsRow;
+                    currentChanged(r, true, false, selectedBs);
+
+                }
+                else if (sender.Equals(SubSamples) || sender.Equals(Units))
+                {
+                    SubSamplesRow r = null; //which one to send
+                    if (sender.Equals(SubSamples))
+                    {
+                        r = Interface.ICurrent.SubSample as SubSamplesRow;
+                        currentChanged(r, true, false, selectedBs);
+                    }
+                    else
+                    {
+                        //take current
+                        UnitRow u = Interface.ICurrent.Unit as UnitRow;
+                        //if not null
+                        if (!EC.IsNuDelDetch(u.SubSamplesRow))
+                        {
+                            r = u.SubSamplesRow;
+                        }
+
+                        currentChanged(r, false, true, selectedBs);
+                    }
+                }
+                else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
+                {
+                    MatrixRow c = null;
+                    if (sender.Equals(Matrix)) c = Interface.ICurrent.Matrix as MatrixRow;
+                    else
+                    {
+                        selectedBs = true;
+                        c = Interface.ICurrent.SubSampleMatrix as MatrixRow;
+                    }
+                    currentChanged(c, true, false, selectedBs);
+                }
+                else if (sender.Equals(Rabbit) || sender.Equals(Vial))
+                {
+                    VialTypeRow c = null;
+                    if (sender.Equals(Rabbit))
+                    {
+                        c = Interface.ICurrent.Rabbit as VialTypeRow;
+                    }
+                    else if (sender.Equals(Vial))
+                    {
+                        c = Interface.ICurrent.Vial as VialTypeRow;
+                    }
+
+                    currentChanged(c, true, false, selectedBs);
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
         }
 
         private void listChanged_Preferences(object sender, ListChangedEventArgs e)

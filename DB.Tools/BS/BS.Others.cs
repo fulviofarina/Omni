@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace DB.Tools
 {
@@ -15,6 +16,7 @@ namespace DB.Tools
             Preferences.Filter = filter;
             SSFPreferences.Filter = filter;
             XCOMPref.Filter = filter;
+            SpecPref.Filter = filter;
         }
 
         private void resetIrradiationFilters()
@@ -41,6 +43,26 @@ namespace DB.Tools
             Rabbit.Sort = innerRadCol;
             Geometry.Filter = string.Empty;
             Geometry.Sort = "CreationDateTime desc";
+        }
+        private void resetMeasurementFilters()
+        {
+            string column = Interface.IDB.Measurements.MeasurementStartColumn.ColumnName;
+            Measurements.Filter = string.Empty;
+            Measurements.Sort = column + " desc";
+        }
+        private void resetPeaksFilters()
+        {
+            string column = Interface.IDB.PeaksHL.EnergyColumn.ColumnName;
+            PeaksHL.Filter = string.Empty;
+            PeaksHL.Sort = column + " asc";
+
+             column = Interface.IDB.Peaks.EnergyColumn.ColumnName;
+            Peaks.Filter = string.Empty;
+            Peaks.Sort = column + " asc";
+
+            column = Interface.IDB.Gammas.INTENSITYColumn.ColumnName;
+            Gammas.Filter = string.Empty;
+            Gammas.Sort = column + " desc";
         }
 
         private void resetMatrixFilters()
@@ -108,6 +130,11 @@ namespace DB.Tools
             name = Interface.IDB.SSFPref.TableName;
             SSFPreferences = new BindingSource(set, name);
             bindings.Add(name, SSFPreferences);
+
+            name = Interface.IDB.SpecPref.TableName;
+            SpecPref = new BindingSource(set, name);
+            bindings.Add(name, SpecPref);
+
         }
 
         private void initializeProjectBindingSources()
@@ -158,10 +185,34 @@ namespace DB.Tools
             Units = new BindingSource(set, name);
             bindings.Add(name, Units);
 
-            // Units.CurrentChanged += units_CurrentChanged;
+          
+
+
             name = Interface.IDB.MatSSF.TableName;
             SSF = new BindingSource(set, name);
             bindings.Add(name, SSF);
+        }
+
+        private void initializeMeasurementsBindingSources()
+        {
+            LINAA set = Interface.Get();
+            string name = string.Empty;
+
+            name = Interface.IDB.Measurements.TableName;
+            Measurements = new BindingSource(set, name);
+            bindings.Add(name, Measurements);
+
+            name = Interface.IDB.PeaksHL.TableName;
+            PeaksHL = new BindingSource(set, name);
+            bindings.Add(name, PeaksHL);
+
+            name = Interface.IDB.Peaks.TableName;
+            Peaks = new BindingSource(set, name);
+            bindings.Add(name, Peaks);
+
+            name = Interface.IDB.Gammas.TableName;
+            Gammas = new BindingSource(set, name);
+            bindings.Add(name, Gammas);
         }
 
         private void initializeSelectedBindingSources()

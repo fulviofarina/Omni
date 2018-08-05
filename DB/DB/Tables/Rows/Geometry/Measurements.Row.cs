@@ -106,37 +106,48 @@ namespace DB
                 }
             }
 
-            public void ExtractData(ref EventData d)
+            public void ExtractData(ref SpecPrefRow d)
             {
-                Int16 detIdx = (Int16)d.Args[4];
-                Int16 posIdx = (Int16)d.Args[5];
-                Int16 MeasIdx = (Int16)d.Args[6];
 
-                int i = Measurement.Length;
+             //   int fullLenght = 0; // d.DetectorLength + d.PositionLength + d.MeasLength + d.ProjectLength;
 
-                string aux = Measurement.Substring(i - detIdx, 1);
-                Detector = aux;
-             
-
-                aux = Measurement.Substring(i - posIdx, 1);
-              
-                Position = Convert.ToInt16(aux);
-
-                aux = Measurement.Substring(i - MeasIdx, 1);
-             
-                MeasurementNr = aux;
-
-                Int16[] arr = new Int16[] { detIdx, posIdx, MeasIdx };
-                arr = arr.OrderBy<short,short>( o => o).ToArray();
-                string sample = Measurement;
-                foreach (var item in arr)
+                if (d.DetectorIdx >= 0)
                 {
-                 //   i = sample.Length;
-                    sample = sample.Remove(i - item, 1);
+                 //   fullLenght += d.DetectorLength;
+                    Detector = Measurement.Substring(d.DetectorIdx, d.DetectorLength);
+                }
+                if (d.PositionIdx >= 0)
+                {
+                 //   fullLenght += d.PositionLength;
+                    string posString = Measurement.Substring(d.PositionIdx, d.PositionLength);
+                    if (char.IsDigit(posString[0]))
+                    {
+                        Position = Convert.ToInt16(posString);
+                    }
+                    else Position = Convert.ToInt16(Convert.ToInt16(posString) - 49);
+                }
+                if (d.MeasIdx >= 0)
+                {
+                  //  fullLenght += d.MeasLength;
+                    MeasurementNr = Measurement.Substring(d.MeasIdx, d.MeasLength);
+                }
+                if (d.ProjectIdx >= 0)
+                {
+               //     fullLenght += d.ProjectLength;
+                  //  Project = Measurement.Substring(d.ProjectIdx, d.ProjectLength);
                 }
 
-                Sample = sample;
 
+                if (d.SampleIdx >= 0 )
+                {
+
+                    Sample = Measurement.Substring(d.SampleIdx, d.SampleLength);
+                }
+               // else if (d.MonitorIdx >= 0 && fullLenght + d.MonitorLength == Measurement.Length)
+              //  {
+                  //  Sample = Measurement.Substring(d.MonitorIdx, d.MonitorLength);
+              //  }
+              
             }
         }
     }

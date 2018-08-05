@@ -10904,4 +10904,8 @@
   <data name="XCOMFolder" xml:space="preserve">
     <value>uFinder\</value>
   </data>
+  <data name="SpecPreferences" xml:space="preserve">
+    <value>SpecPreferences</value>
+    <comment>put extension.xml</comment>
+  </data>
 </root>

@@ -15,7 +15,7 @@ namespace DB
             private DataColumn[] mainCols = null;
             private DataColumn[] otherCols = null;
 
-            private DataColumn[] peakCols = null;
+         //   private DataColumn[] peakCols = null;
 
             public IEnumerable<DataColumn> FillCols
             {
@@ -76,23 +76,7 @@ namespace DB
                 }
             }
 
-            public IEnumerable<DataColumn> PeakCols
-            {
-                get
-                {
-                    if (peakCols == null)
-                    {
-                        peakCols = new DataColumn[] {
-                            this.windowAColumn,
-                            this.windowBColumn,
-                            this.minAreaColumn,
-                             maxUncColumn,
-                             MeasIdxColumn,PositionIdxColumn,DetectorIdxColumn
-                             };
-                    }
-                    return peakCols;
-                }
-            }
+         
         }
 
         partial class PreferencesRow : IRow
@@ -171,16 +155,7 @@ namespace DB
                     if (IsIsMSMQNull()) this.IsMSMQ = false;
                     if (IsAdvancedEditorNull()) this.AdvancedEditor = false;
                 }
-                else if (tablePreferences.PeakCols.Contains(Column))
-                {
-                    if (IswindowANull()) windowA = 1.5;
-                    if (IswindowBNull()) windowB = 0.001;
-                    if (IsminAreaNull()) minArea = 500;
-                    if (IsmaxUncNull()) maxUnc = 50;
-                    if (IsDetectorIdxNull()) DetectorIdx = 3;
-                    if (IsPositionIdxNull()) PositionIdx = 2;
-                    if (IsMeasIdxNull()) MeasIdx = 1;
-                }
+              
             }
 
             public new bool HasErrors()
@@ -227,6 +202,9 @@ namespace DB
 
             handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(XCOMPref));
+
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(SpecPref));
         }
     }
 }

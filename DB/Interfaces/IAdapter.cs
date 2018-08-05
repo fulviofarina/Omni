@@ -29,5 +29,6 @@ namespace DB
         string Exception { get; }
 
         void SetConnections(/*string localDB, string developerDB, */ string defaultConnection);
+        void InitializePeaksAdapters();
     }
 }

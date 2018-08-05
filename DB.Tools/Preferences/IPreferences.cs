@@ -12,6 +12,7 @@
         bool IsSpectraPathOk { get; }
 
         string WindowsUser { get; }
+        LINAA.SpecPrefRow CurrentSpecPref { get; }
 
         void AcceptChanges();
 
@@ -20,8 +21,9 @@
         string GetSSFPreferencesPath();
 
         string GetXCOMPreferencesPath();
+        string GetSpecPreferencesPath();
 
-       
+
 
         void SavePreferences();
 

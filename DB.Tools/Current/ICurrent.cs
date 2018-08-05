@@ -19,5 +19,6 @@ namespace DB.Tools
    //     string WindowsUser { get; }
         IEnumerable<string> SubSamplesNames { get; }
         IEnumerable<string> SubSamplesDescriptions { get; }
+        DataRow Measurement { get;}
     }
 }

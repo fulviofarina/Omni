@@ -10,66 +10,7 @@ namespace DB.Tools
 {
     public partial class BS
     {
-        private void updateVialOrRabbit(ref BindingSource sender, bool selectedBs)
-        {
-            VialTypeRow c = null;
-            if (sender.Equals(Rabbit))
-            {
-                c = Interface.ICurrent.Rabbit as VialTypeRow;
-            }
-            else if (sender.Equals(Vial))
-            {
-                c = Interface.ICurrent.Vial as VialTypeRow;
-            }
-
-            currentChanged(c, true, false, selectedBs);
-        }
-
-        private void updateMatrixOrSelected(ref BindingSource sender, bool selectedBs)
-        {
-            MatrixRow c = null;
-            if (sender.Equals(Matrix)) c = Interface.ICurrent.Matrix as MatrixRow;
-            else
-            {
-                selectedBs = true;
-                c = Interface.ICurrent.SubSampleMatrix as MatrixRow;
-            }
-            currentChanged(c, true, false, selectedBs);
-            // return selectedBs;
-        }
-
-        private void updateSubSampleOrUnit(ref BindingSource sender, bool selectedBs)
-        {
-            SubSamplesRow r = null; //which one to send
-                                    //the SubSample from the SubSample of the unit that called or
-                                    //the SubSample from the Unit that called
-                                    //by default doCascade = true
-
-            if (sender.Equals(SubSamples))
-            {
-                //take current
-                //    bool doCascade = true;
-                //   bool findItself = false; //should find itself = false
-                r = Interface.ICurrent.SubSample as SubSamplesRow;
-                currentChanged(r, true, false, selectedBs);
-            }
-            else
-            {
-                //take current
-                UnitRow u = Interface.ICurrent.Unit as UnitRow;
-                //if not null
-                if (!EC.IsNuDelDetch(u.SubSamplesRow))
-                {
-                    //   findItself = true; //when unit request yes,
-                    // doCascade = false;
-                    //find the subsample in the binding source list
-                    //update
-                    r = u.SubSamplesRow;
-                }
-
-                currentChanged(r, false, true, selectedBs);
-            }
-        }
+      
 
         private void currentChanged<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
         {
@@ -78,6 +19,10 @@ namespace DB.Tools
             bool isSubSample = tipo.Equals(typeof(SubSamplesRow));
             bool isUnit = tipo.Equals(typeof(UnitRow));
             bool isMatrix = tipo.Equals(typeof(MatrixRow));
+            bool isVial = tipo.Equals(typeof(VialTypeRow));
+            bool isChannel = tipo.Equals(typeof(ChannelsRow));
+            bool isIrrRequest = tipo.Equals(typeof(IrradiationRequestsRow));
+            bool isMeasurement = tipo.Equals(typeof(MeasurementsRow));
             //to check later the columns that should be ok
             hasErrorsMethod = null;
 
@@ -121,20 +66,24 @@ namespace DB.Tools
                     //
                     updateMatrix(r, doCascade, findItself, selectedBS);
                 }
-                else if (tipo.Equals(typeof(VialTypeRow)))
+                else if (isVial)
                 {
                     //
                     updateVialRabbit(r, doCascade, findItself);
                 }
-                else if (tipo.Equals(typeof(ChannelsRow)))
+                else if (isChannel)
                 {
                     //
                     updateChannel(r, doCascade, findItself);
                 }
-                else if (tipo.Equals(typeof(IrradiationRequestsRow)))
+                else if (isIrrRequest)
                 {
                     //
                     updateIrradiationRequest(r, doCascade, findItself);
+                }
+                else if (isMeasurement)
+                {
+                    updateMeasurement(r, doCascade, findItself);
                 }
                 //to avoid spending too much time when loading
                 if (showErrors && hasErrorsMethod != null)
@@ -143,6 +92,29 @@ namespace DB.Tools
                     hasCompulsoryErrors(r);
                 }
             }
+        }
+
+        private void updateMeasurement<T>(T r, bool doCascade, bool findItself)
+        {
+            string column = Interface.IDB.PeaksHL.MeasurementIDColumn.ColumnName;
+            string filter = column + " IS NULL";
+
+            if (!EC.IsNuDelDetch(r as DataRow))
+            {
+                MeasurementsRow picked = r as MeasurementsRow;
+                int? id = picked.MeasurementID;
+                if (findItself)
+                {
+                    Measurements.Position = Measurements.Find(column, id);
+                }
+                Interface.IPopulate.ISamples.PopulatePeaksHL(id);
+
+                filter = column + " = '" + picked.MeasurementID + "'";
+            }
+
+            PeaksHL.Filter = filter;
+            Peaks.Filter = filter;
+            //  throw new NotImplementedException();
         }
 
         private void updateChannel<T>(T r, bool doCascade, bool findItself)
@@ -263,6 +235,7 @@ namespace DB.Tools
                 }
             }
 
+            //MEJORAR ESTE FILTROOOOOOO, DEBERIA RESETEAR A LOS NULL COMO ARRIBA PERO CON LAS COLUMNAS QUE SON
          //   MUES.Filter = string.Empty;
               MUES.Filter = filter;
 

@@ -18,8 +18,8 @@ namespace SpecNav
         private static void Main()
         {
 
-            bool offline = false;
-            bool adv = true;
+            bool offline = true;
+            bool adv = false;
 
 
             try
@@ -32,8 +32,6 @@ namespace SpecNav
 
                 LIMSUI.Start(ref aboutbox, offline, adv,string.Empty);
          
-                bool ok = Creator.CheckConnections(true, true);
-         
           
                 UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator);
 
@@ -42,12 +40,10 @@ namespace SpecNav
                 form.Size = hl.Size;
                 form.Controls.Add(hl);
                 form.Opacity = 100;
-                form.Text = "A data browser for HyperLab users, by F. Farina Arboccò";
+                form.Text = "A spectrum browser for HyperLab users by F. Farina Arboccò";
                 form.WindowState = FormWindowState.Maximized;
 
-               // LIMSUI.Interface.IPreferences.CurrentPref.AdvancedEditor = true;
-
-               // PainterTimer();
+          
 
                 Application.Run(form);
 
@@ -60,29 +56,6 @@ namespace SpecNav
         }
 
 
-        /*
-        public static void PainterTimer()
-        {
-
-            //to repaint the form
-            System.Timers.Timer painter = new System.Timers.Timer();
-            painter.Elapsed += delegate
-            {
-                painter.Enabled = false;
-
-                Application.OpenForms[0]?.Invalidate();
-
-                painter.Interval = 60 * 10 * 1000; //10 minutes
-
-                GC.Collect();
-
-                painter.Enabled = true;
-
-            };
-            painter.Interval = 30000;
-            painter.Enabled = true;
-        }
-
-        */
+      
     }
 }

@@ -76,6 +76,11 @@ namespace DB
             }
         }
 
+
+        /// <summary>
+        /// Acomodar para que use un solo TAM
+        /// </summary>
+        /// <returns></returns>
         public IList<string> ListOfHLProjects()
         {
             LINAATableAdapters.MeasurementsTableAdapter mta = new LINAATableAdapters.MeasurementsTableAdapter();
@@ -85,7 +90,7 @@ namespace DB
             {
                 MeasurementsDataTable meas = new MeasurementsDataTable();
                  mta.FillDataByHL(meas);
-                arr = meas.Select(o => o.Project).Distinct().ToList();
+                arr = meas.Select(o => o.Project.ToUpper()).Distinct().ToList();
                 meas.Dispose();
             }
             catch (Exception ex)

@@ -108,6 +108,8 @@ namespace DB.Tools
             }
         }
 
+      
+
         public void ApplyFilters()
         {
             try
@@ -118,11 +120,14 @@ namespace DB.Tools
 
                 resetSampleFilters();
 
+                resetMeasurementFilters();
+                resetPeaksFilters();
+
                 resetIrradiationFilters();
 
                 resetMatrixFilters();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 // Interface.IReport.Msg(ex.StackTrace, ex.Message);
                 Interface.IStore.AddException(ex);
@@ -185,20 +190,38 @@ namespace DB.Tools
             IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
             currentChanged(ir, true, false, true);
         }
+        public void SelectProjectHL(string projectOrOrder)
+        {
+        
+     
+            string field = Interface.IDB.Measurements.ProjectColumn.ColumnName;
+            Interface.IBS.Measurements.Filter = field + " = '" + projectOrOrder + "'";
+
+            //   int position = Interface.IBS.Irradiations.Find(field, projectOrOrder);
+            //    Interface.IBS.Irradiations.Position = position;
+            //   IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
+            // currentChanged(ir, true, false, true);
+        }
 
         public void StartBinding()
         {
-            // SSFPreferences.ListChanged += listChanged_Preferences; Preferences.ListChanged += listChanged_Preferences;
+       
+            Channels.CurrentChanged += currentChangedHandler;
+            Irradiations.CurrentChanged += currentChangedHandler;
 
-            SubSamples.CurrentChanged += currentChanged;
-            Channels.CurrentChanged += currentChanged;
-            Irradiations.CurrentChanged += currentChanged;
-            Matrix.CurrentChanged += currentChanged;
-            Vial.CurrentChanged += currentChanged;
-            Rabbit.CurrentChanged += currentChanged;
-            Units.CurrentChanged += currentChanged;
+            SubSamples.CurrentChanged += currentChangedHandler;
+            Vial.CurrentChanged += currentChangedHandler;
+            Rabbit.CurrentChanged += currentChangedHandler;
+            Units.CurrentChanged += currentChangedHandler;
 
-            SelectedMatrix.CurrentChanged += currentChanged;
+            Matrix.CurrentChanged += currentChangedHandler;
+            SelectedMatrix.CurrentChanged += currentChangedHandler;
+
+            Measurements.CurrentChanged += currentChangedHandler;
+            PeaksHL.CurrentChanged += currentChangedHandler;
+            Peaks.CurrentChanged += currentChangedHandler;
+            Gammas.CurrentChanged += currentChangedHandler;
+
 
             Matrix.AddingNew += addingNew;
             Channels.AddingNew += addingNew;
@@ -245,42 +268,7 @@ namespace DB.Tools
             }
         }
 
-        public void CurrentChanged(ref BindingSource sender)
-        {
-            try
-            {
-                if (!EnabledControls) return;
-                bool selectedBs = false;
-                if (sender.Equals(Irradiations))
-                {
-                    IrradiationRequestsRow r = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
-                    currentChanged(r, true, false, selectedBs);
-                }
-                else if (sender.Equals(Channels))
-                {
-                    ChannelsRow c = Interface.ICurrent.Channel as ChannelsRow;
-                    currentChanged(c, true, false, selectedBs);
-                }
-                else if (sender.Equals(SubSamples) || sender.Equals(Units))
-                {
-                    updateSubSampleOrUnit(ref sender, selectedBs);
-                }
-                else if (sender.Equals(Matrix) || sender.Equals(SelectedMatrix))
-                {
-                    updateMatrixOrSelected(ref sender, selectedBs);
-                }
-                else
-                {
-                    updateVialOrRabbit(ref sender, selectedBs);
-                }
 
-                // bs.RaiseListChangedEvents = true;
-            }
-            catch (Exception ex)
-            {
-                Interface.IStore.AddException(ex);
-            }
-        }
 /*
      public void EndEditGeometries()
         {
@@ -314,8 +302,9 @@ namespace DB.Tools
 
             initializeSelectedBindingSources();
 
-            bindingList = new BindingList<BS>();
-            bindingList.Add(this);
+            initializeMeasurementsBindingSources();
+            //    bindingList = new BindingList<BS>();
+            //  bindingList.Add(this);
 
             // Units.ListChanged += units_ListChanged;
         }

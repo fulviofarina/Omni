@@ -70,10 +70,7 @@ namespace DB.UI
             form.Visible = show;
             form.StartPosition = FormStartPosition.CenterScreen;
 
-            form.Load += delegate
-              {
-               //NADA
-              };
+          
 
         }
 
@@ -279,27 +276,7 @@ namespace DB.UI
                     }
                     case ControlNames.SpecNavigator:
                     {
-                        ucHyperLab hl = new ucHyperLab();
-                        ISpecPreferences prefes = GetPreferences<ISpecPreferences>();
-                        bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
-
-                        IOptions options = DBOptions.GetOptions(0, advEditor);
-                        options.PreferencesClick += delegate
-                        {
-                            GetPreferences<ISpecPreferences>(true);
-                        };
-
-                        hl.Set(ref Interface);
-                        hl.Set(ref prefes);
-                        hl.Set(ref options);
-                        //   UserControl control = this;
-                        hl.Dock = DockStyle.Fill;
-                        // form.AutoSizeMode = AutoSizeMode.GrowOnly;
-                        // form.AutoSize = true;
-                        hl.AutoSizeMode = AutoSizeMode.GrowOnly;
-                        hl.AutoSize = true;
-
-                        control = (UserControl)hl;
+                        control = createSpecNavApplication();
                         break;
                     }
                 case ControlNames.Vials:
@@ -312,9 +289,8 @@ namespace DB.UI
                     }
                 case ControlNames.Matrices:
                     {
-                     //   bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
                         EventHandler handler;
-                        CreateMatrixApplication(out control, out handler);
+                        control =  createMatrixApplication( out handler);
                         refresher = delegate
                         {
                             handler.Invoke(null, EventArgs.Empty);
@@ -446,6 +422,8 @@ namespace DB.UI
                     break;
             }
         }
+
+      
 
         private  static void createPreference(string controlHeader, ref UserControl control)
         {

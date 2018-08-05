@@ -77,7 +77,15 @@ namespace DB
 
             tAM.COINTableAdapter = null;
         }
-
+        public void InitializePeaksAdapters()
+        {
+            tAM.MeasurementsTableAdapter = new LINAATableAdapters.MeasurementsTableAdapter();
+            adapters.Add(tAM.MeasurementsTableAdapter, tAM.MeasurementsTableAdapter);
+            tAM.PeaksTableAdapter = new LINAATableAdapters.PeaksTableAdapter();
+            adapters.Add(tAM.PeaksTableAdapter, tAM.PeaksTableAdapter);
+            // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
+            //this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
+        }
         public void InitializeSolCoinAdapters()
         {
             tAM.MatrixTableAdapter = new LINAATableAdapters.MatrixTableAdapter();

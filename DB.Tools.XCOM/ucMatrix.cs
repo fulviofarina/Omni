@@ -14,7 +14,7 @@ namespace DB.UI
     {
         protected  Interface Interface;
         protected  XCOM XCom;
-        Uri helpFile = new Uri("https://www.researchgate.net/publication/317902783_-Finder_A_Windows_program_for_photon_mass_attenuation_coefficients_between_1_keV_to_100_GeV");
+        private Uri helpFile = new Uri("https://www.researchgate.net/publication/317902783");
 
         /*
                 private void test()
@@ -43,7 +43,7 @@ namespace DB.UI
         public void Set( IOptions options)
         {
 
-            if (options == null) return;
+              if (options == null) return;
            
                 resetProgress = options.ResetProgress;
                 showProg = options.ShowProgress;
@@ -135,7 +135,7 @@ namespace DB.UI
             {
                 Interface.IBS.EnabledControls = !XCom.IsCalculating;
                 ucCalculate1.EnableCalculate = !XCom.IsCalculating;
-            //    ucMatrixSimple1.RefreshDGV();
+       
                 Application.DoEvents();
             };
 
@@ -144,8 +144,6 @@ namespace DB.UI
                 XCom.IsCalculating = false;
             };
 
-
-            //   ucCalculate1.CalculateMethod += enableCtrols;
 
             EventHandler calculateMethod  = delegate
              {

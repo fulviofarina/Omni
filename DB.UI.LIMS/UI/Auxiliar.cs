@@ -28,16 +28,12 @@ namespace DB.UI
         protected internal void formClosing(object sender, FormClosingEventArgs e)
         {
             Type tipo = this._displayedControl.GetType();
-            if (tipo.Equals(typeof(ucPreferences)))
+            if (tipo.Equals(typeof(ucPreferences)) || tipo.Equals(typeof(ucXCOMPreferences)) || tipo.Equals(typeof(ucSpecPreferences)))
             {
                 LIMSUI.Interface.IPreferences.SavePreferences();
                 e.Cancel = true;
             }
-            else if (tipo.Equals(typeof(ucXCOMPreferences)))
-            {
-                LIMSUI.Interface.IPreferences.SavePreferences();
-                e.Cancel = true;
-            }
+          
             if (!e.Cancel)
             {
                 if (this.TLP.Controls.Contains(this._displayedControl))

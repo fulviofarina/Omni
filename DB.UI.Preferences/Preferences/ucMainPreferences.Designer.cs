@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label minAreaLabel;
-            System.Windows.Forms.Label maxUncLabel;
-            System.Windows.Forms.Label windowALabel;
-            System.Windows.Forms.Label windowBLabel;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.runInBackgroundCheckBox = new System.Windows.Forms.CheckBox();
             this.advancedEditorCheckBox = new System.Windows.Forms.CheckBox();
@@ -39,60 +35,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.fillBySpectraCheckBox = new System.Windows.Forms.CheckBox();
             this.fillByHLCheckBox = new System.Windows.Forms.CheckBox();
-            this.windowBTextBox = new System.Windows.Forms.TextBox();
-            this.windowATextBox = new System.Windows.Forms.TextBox();
-            this.maxUncTextBox = new System.Windows.Forms.TextBox();
-            this.minAreaTextBox = new System.Windows.Forms.TextBox();
             this.offlineCheckBox = new System.Windows.Forms.CheckBox();
             this.autoLoadCheckBox = new System.Windows.Forms.CheckBox();
             this.doSolangCheckBox = new System.Windows.Forms.CheckBox();
             this.showSolangCheckBox = new System.Windows.Forms.CheckBox();
-            minAreaLabel = new System.Windows.Forms.Label();
-            maxUncLabel = new System.Windows.Forms.Label();
-            windowALabel = new System.Windows.Forms.Label();
-            windowBLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // minAreaLabel
-            // 
-            minAreaLabel.AutoSize = true;
-            minAreaLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            minAreaLabel.Location = new System.Drawing.Point(3, 21);
-            minAreaLabel.Name = "minAreaLabel";
-            minAreaLabel.Size = new System.Drawing.Size(76, 21);
-            minAreaLabel.TabIndex = 4;
-            minAreaLabel.Text = "Min Area";
-            // 
-            // maxUncLabel
-            // 
-            maxUncLabel.AutoSize = true;
-            maxUncLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            maxUncLabel.Location = new System.Drawing.Point(3, 77);
-            maxUncLabel.Name = "maxUncLabel";
-            maxUncLabel.Size = new System.Drawing.Size(73, 21);
-            maxUncLabel.TabIndex = 6;
-            maxUncLabel.Text = "Max Unc";
-            // 
-            // windowALabel
-            // 
-            windowALabel.AutoSize = true;
-            windowALabel.ForeColor = System.Drawing.Color.DarkOrange;
-            windowALabel.Location = new System.Drawing.Point(3, 133);
-            windowALabel.Name = "windowALabel";
-            windowALabel.Size = new System.Drawing.Size(85, 21);
-            windowALabel.TabIndex = 8;
-            windowALabel.Text = "Window A";
-            // 
-            // windowBLabel
-            // 
-            windowBLabel.AutoSize = true;
-            windowBLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            windowBLabel.Location = new System.Drawing.Point(3, 189);
-            windowBLabel.Name = "windowBLabel";
-            windowBLabel.Size = new System.Drawing.Size(84, 21);
-            windowBLabel.TabIndex = 10;
-            windowBLabel.Text = "Window B";
             // 
             // tableLayoutPanel1
             // 
@@ -107,14 +55,6 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.fillBySpectraCheckBox, 0, 14);
             this.tableLayoutPanel1.Controls.Add(this.fillByHLCheckBox, 0, 13);
-            this.tableLayoutPanel1.Controls.Add(windowBLabel, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.windowBTextBox, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(windowALabel, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.windowATextBox, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(maxUncLabel, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.maxUncTextBox, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(minAreaLabel, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.minAreaTextBox, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.offlineCheckBox, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.autoLoadCheckBox, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.doSolangCheckBox, 0, 10);
@@ -151,7 +91,7 @@
             // 
             this.runInBackgroundCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.runInBackgroundCheckBox.ForeColor = System.Drawing.Color.Red;
-            this.runInBackgroundCheckBox.Location = new System.Drawing.Point(3, 560);
+            this.runInBackgroundCheckBox.Location = new System.Drawing.Point(3, 336);
             this.runInBackgroundCheckBox.Name = "runInBackgroundCheckBox";
             this.runInBackgroundCheckBox.Size = new System.Drawing.Size(264, 24);
             this.runInBackgroundCheckBox.TabIndex = 19;
@@ -162,7 +102,7 @@
             // 
             this.advancedEditorCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.advancedEditorCheckBox.ForeColor = System.Drawing.Color.White;
-            this.advancedEditorCheckBox.Location = new System.Drawing.Point(3, 530);
+            this.advancedEditorCheckBox.Location = new System.Drawing.Point(3, 306);
             this.advancedEditorCheckBox.Name = "advancedEditorCheckBox";
             this.advancedEditorCheckBox.Size = new System.Drawing.Size(264, 24);
             this.advancedEditorCheckBox.TabIndex = 18;
@@ -173,7 +113,7 @@
             // 
             this.showSampleDescriptionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.showSampleDescriptionCheckBox.ForeColor = System.Drawing.Color.White;
-            this.showSampleDescriptionCheckBox.Location = new System.Drawing.Point(3, 500);
+            this.showSampleDescriptionCheckBox.Location = new System.Drawing.Point(3, 276);
             this.showSampleDescriptionCheckBox.Name = "showSampleDescriptionCheckBox";
             this.showSampleDescriptionCheckBox.Size = new System.Drawing.Size(264, 24);
             this.showSampleDescriptionCheckBox.TabIndex = 17;
@@ -195,7 +135,7 @@
             // 
             this.fillBySpectraCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fillBySpectraCheckBox.ForeColor = System.Drawing.Color.White;
-            this.fillBySpectraCheckBox.Location = new System.Drawing.Point(3, 449);
+            this.fillBySpectraCheckBox.Location = new System.Drawing.Point(3, 225);
             this.fillBySpectraCheckBox.Name = "fillBySpectraCheckBox";
             this.fillBySpectraCheckBox.Size = new System.Drawing.Size(264, 45);
             this.fillBySpectraCheckBox.TabIndex = 14;
@@ -206,47 +146,19 @@
             // 
             this.fillByHLCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fillByHLCheckBox.ForeColor = System.Drawing.Color.White;
-            this.fillByHLCheckBox.Location = new System.Drawing.Point(3, 419);
+            this.fillByHLCheckBox.Location = new System.Drawing.Point(3, 195);
             this.fillByHLCheckBox.Name = "fillByHLCheckBox";
             this.fillByHLCheckBox.Size = new System.Drawing.Size(264, 24);
             this.fillByHLCheckBox.TabIndex = 13;
             this.fillByHLCheckBox.Text = "Fill by HL";
             this.fillByHLCheckBox.UseVisualStyleBackColor = true;
             // 
-            // windowBTextBox
-            // 
-            this.windowBTextBox.Location = new System.Drawing.Point(3, 213);
-            this.windowBTextBox.Name = "windowBTextBox";
-            this.windowBTextBox.Size = new System.Drawing.Size(100, 29);
-            this.windowBTextBox.TabIndex = 11;
-            // 
-            // windowATextBox
-            // 
-            this.windowATextBox.Location = new System.Drawing.Point(3, 157);
-            this.windowATextBox.Name = "windowATextBox";
-            this.windowATextBox.Size = new System.Drawing.Size(100, 29);
-            this.windowATextBox.TabIndex = 9;
-            // 
-            // maxUncTextBox
-            // 
-            this.maxUncTextBox.Location = new System.Drawing.Point(3, 101);
-            this.maxUncTextBox.Name = "maxUncTextBox";
-            this.maxUncTextBox.Size = new System.Drawing.Size(100, 29);
-            this.maxUncTextBox.TabIndex = 7;
-            // 
-            // minAreaTextBox
-            // 
-            this.minAreaTextBox.Location = new System.Drawing.Point(3, 45);
-            this.minAreaTextBox.Name = "minAreaTextBox";
-            this.minAreaTextBox.Size = new System.Drawing.Size(100, 29);
-            this.minAreaTextBox.TabIndex = 5;
-            // 
             // offlineCheckBox
             // 
             this.offlineCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.offlineCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.offlineCheckBox.ForeColor = System.Drawing.Color.White;
-            this.offlineCheckBox.Location = new System.Drawing.Point(3, 296);
+            this.offlineCheckBox.Location = new System.Drawing.Point(3, 113);
             this.offlineCheckBox.Name = "offlineCheckBox";
             this.offlineCheckBox.Size = new System.Drawing.Size(264, 35);
             this.offlineCheckBox.TabIndex = 4;
@@ -258,7 +170,7 @@
             this.autoLoadCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.autoLoadCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoLoadCheckBox.ForeColor = System.Drawing.Color.White;
-            this.autoLoadCheckBox.Location = new System.Drawing.Point(3, 248);
+            this.autoLoadCheckBox.Location = new System.Drawing.Point(3, 24);
             this.autoLoadCheckBox.Name = "autoLoadCheckBox";
             this.autoLoadCheckBox.Size = new System.Drawing.Size(264, 42);
             this.autoLoadCheckBox.TabIndex = 3;
@@ -270,7 +182,7 @@
             this.doSolangCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doSolangCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doSolangCheckBox.ForeColor = System.Drawing.Color.White;
-            this.doSolangCheckBox.Location = new System.Drawing.Point(3, 337);
+            this.doSolangCheckBox.Location = new System.Drawing.Point(3, 72);
             this.doSolangCheckBox.Name = "doSolangCheckBox";
             this.doSolangCheckBox.Size = new System.Drawing.Size(264, 35);
             this.doSolangCheckBox.TabIndex = 1;
@@ -282,7 +194,7 @@
             this.showSolangCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.showSolangCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.showSolangCheckBox.ForeColor = System.Drawing.Color.White;
-            this.showSolangCheckBox.Location = new System.Drawing.Point(3, 378);
+            this.showSolangCheckBox.Location = new System.Drawing.Point(3, 154);
             this.showSolangCheckBox.Name = "showSolangCheckBox";
             this.showSolangCheckBox.Size = new System.Drawing.Size(264, 35);
             this.showSolangCheckBox.TabIndex = 2;
@@ -310,10 +222,6 @@
         private System.Windows.Forms.CheckBox doSolangCheckBox;
         private System.Windows.Forms.CheckBox showSolangCheckBox;
         private System.Windows.Forms.CheckBox offlineCheckBox;
-        private System.Windows.Forms.TextBox windowBTextBox;
-        private System.Windows.Forms.TextBox windowATextBox;
-        private System.Windows.Forms.TextBox maxUncTextBox;
-        private System.Windows.Forms.TextBox minAreaTextBox;
         private System.Windows.Forms.CheckBox fillByHLCheckBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox fillBySpectraCheckBox;

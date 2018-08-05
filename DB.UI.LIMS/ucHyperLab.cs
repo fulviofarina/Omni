@@ -12,12 +12,9 @@ namespace DB.UI
 {
     public partial class ucHyperLab : UserControl
     {
-      //  private DB.LINAATableAdapters.PeaksHLTableAdapter HLTA;
         private Interface Interface;
+        private Uri helpFile = new Uri("https://www.researchgate.net/publication/317904672");
 
-       private LINAA.PeaksHLRow peak;
-        private LINAA.MeasurementsRow picked;
-        private DB.Tools.SolCoin solcoin;
 
         public void CreateHLProjectBox()
         {
@@ -31,18 +28,30 @@ namespace DB.UI
             IBoc.RefreshMethod += delegate
             {
                 string projectTXT = IBoc.TextContent;
-                Interface.IBS.EnabledControls = false;
-                Interface.IPopulate.ISamples.PopulateMeasurementsGeneric(projectTXT, true);
-                Interface.IBS.EnabledControls = true;
-             
-            };
 
+                if (IBoc.InputProjects.Contains(projectTXT))
+                {
+                    Interface.IPopulate.LoadProjectHL(projectTXT);
+
+                    Interface.IPreferences.CurrentPref.LastIrradiationProject = projectTXT;
+                }
+            };
             //interesting if this workk without binding
             IBoc.SetNoBindingSource();
             IBoc.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
         }
         public void Set (ref VTools.IOptions options)
         {
+            if (options == null) return;
+
+            EventHandler help = delegate
+            {
+                IO.Process("explorer.exe ", string.Empty, helpFile.ToString(),true,false);
+            };
+
+            options.HelpClick += help;
+
+
             (options as Control).Dock = DockStyle.Fill;
             TLP2.Controls.Add(options as Control);
         }
@@ -59,68 +68,65 @@ namespace DB.UI
             pref.IndexChangedEvent += delegate
 
              {
-
+                // Interface.IPreferences.CurrentSpecPref.SetIdxLength();
 
              };
+        }
+
+        private void destroy()
+        {
+            measDGV.DataSource = null;
+            peaksDGV.DataSource = null;
+            gammasDGV.DataSource = null; 
+         //   this.mea.BindingSource = null;
+         //   Dumb.FD(ref this.measBS);
+            Dumb.FD(ref this.measBS);
+            Dumb.FD(ref this.peaksBS);
+            Dumb.FD(ref this.gammasBS);
+            Dumb.FD(ref Linaa);
         }
         // private CamFileReader reader; private DetectorX preader; public MainForm MainForm;
         public void Set(ref Interface inter)
         {
-            Dumb.FD(ref Linaa);
-            Linaa = inter.Get();
-            this.Interface = inter;
 
+
+            destroy();
+         
+            this.Interface = inter;
+         //   Linaa = inter.Get();
             // Interface.IDB.PopulateColumnExpresions(); Interface.IAdapter.InitializeAdapters();
 
-           // Interface.IPopulate.IDetSol.PopulateDetectorDimensions();
-          //  Interface.IPopulate.IGeometry.PopulateGeometry();
-          //  Interface.IPopulate.IIrradiations.PopulateIrradiationRequests();
-
+            // Interface.IPopulate.IDetSol.PopulateDetectorDimensions();
+            //  Interface.IPopulate.IGeometry.PopulateGeometry();
+            //  Interface.IPopulate.IIrradiations.PopulateIrradiationRequests();
             Interface.IDB.Measurements.ProjectColumn.Expression = string.Empty;
             Interface.IDB.Measurements.ProjectColumn.ReadOnly = false;
-//
-          //  this.geoBox.ComboBox.DisplayMember = "GeometryName";
 
-           // this.geoBox.ComboBox.DataSource = this.Linaa.Geometry;
+            this.measDGV.DataSource = Interface.IBS.Measurements;
+            this.peaksDGV.DataSource = Interface.IBS.PeaksHL;
+            this.gammasDGV.DataSource = Interface.IBS.Gammas;
 
-            this.GaTA.Fill(this.Linaa.Gammas);
+            this.measDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+            this.peaksDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+            this.gammasDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
+            //
+            //  this.geoBox.ComboBox.DisplayMember = "GeometryName";
 
-            Interface.IAdapter.TAM.Connection.ConnectionString = Settings.Default.HLSNMNAAConnectionString;
+            // this.geoBox.ComboBox.DataSource = this.Linaa.Geometry;
+
+            //     this.GaTA.Fill(this.Linaa.Gammas);
+       
         //    HLTA = new LINAATableAdapters.PeaksHLTableAdapter();
 
             CreateHLProjectBox();
 
-            Rsx.Dumb.BS.LinkBS(ref this.measBS, Interface.IDB.Measurements, string.Empty, "MeasurementStart desc");
-            Rsx.Dumb.BS.LinkBS(ref this.peaksBS, Interface.IDB.PeaksHL, string.Empty, "Energy desc");
-            Rsx.Dumb.BS.LinkBS(ref this.gammasBS, Interface.IDB.Gammas, string.Empty, "Intensity desc");
+        //    Rsx.Dumb.BS.LinkBS(ref this.measBS, Interface.IDB.Measurements, string.Empty, "MeasurementStart desc");
+      //      Rsx.Dumb.BS.LinkBS(ref this.peaksBS, Interface.IDB.PeaksHL, string.Empty, "Energy desc");
+     //       Rsx.Dumb.BS.LinkBS(ref this.gammasBS, Interface.IDB.Gammas, string.Empty, "Intensity desc");
 
            // this.CalGeo.Click += new System.EventHandler(this.CalGeo_Click);
 
 
-            VTools.IGenericBox Ibox = project;
-
-            Ibox.RefreshMethod += delegate
-             {
-                 if (picked != null)
-                 {
-                     measBS.Filter = Interface.IDB.Measurements.ProjectColumn.ColumnName  + " = " + Ibox.TextContent;
-                 }
-             };
-
-
-            this.measBS.CurrentChanged += delegate
-            {
-                if (!Interface.IBS.EnabledControls) return;
-                if (measBS.Count != 0)
-                {
-                    picked = (LINAA.MeasurementsRow)((DataRowView)measBS.Current).Row;
-                    int? id = picked?.MeasurementID;
-
-                    Interface.IPopulate.ISamples.PopulatePeaksHL(id);
-
-                    peaksBS.Filter = "MeasurementID = " + picked.MeasurementID;
-                }
-            };
 
             /*
             this.peaksBS.CurrentChanged += delegate
@@ -148,10 +154,13 @@ namespace DB.UI
         }
 
 
-        string geoText = "AU";// geoBox.Text;
+       private string geoText = "AU";// geoBox.Text;
 
         private void CalGeo_Click(object sender, EventArgs e)
         {
+             DB.Tools.SolCoin solcoin = null;
+              LINAA.MeasurementsRow picked = null;//AREGLAR
+
             if (solcoin == null) solcoin = new DB.Tools.SolCoin();
 
             bool success = solcoin.Gather("REF", Convert.ToInt16(picked.Position), picked.Detector, "REF", 5);
@@ -168,7 +177,7 @@ namespace DB.UI
                 solcoin.IntegrationMode = DB.Tools.SolCoin.IntegrationModes.AsPointSource;
                  solcoin.StoreSolidAngles = true;
                
-                solcoin.Energies = Hash.HashFrom<double>(this.Linaa.PeaksHL.EnergyColumn).ToArray();
+                solcoin.Energies = Hash.HashFrom<double>(Interface.IDB.PeaksHL.EnergyColumn).ToArray();
 
                 solcoin.DoAll(false);
                 solcoin.Merge();
@@ -197,30 +206,16 @@ namespace DB.UI
             else picked.RowError += "Geometry Data was NOT OK!";
         }
 
-        private void Fill_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // this.Linaa.TAM.MeasurementsTableAdapter.ConnectionString = DB.Properties.Settings.Default.HLSNMNAAConnectionString;
-
-               // this.Linaa.TAM.MeasurementsTableAdapter.FillByHLSample(this.Linaa.Measurements, samplebox.Text);
-
-                // if (sender.Equals(this.projectbox))
-                {
-                 //   UIControl.FillABox(samplebox, Hash.HashFrom<string>(this.Linaa.Measurements.SampleColumn), true, false);
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
+      
         private void gammasBS_CurrentItemChanged(object sender, EventArgs e)
         {
           //  //take this out
          //   return;
+
+
             if (gammasBS.Count != 0)
             {
+                 LINAA.PeaksHLRow peak =null; //AREGLAR
                 LINAA.GammasRow gamma = (LINAA.GammasRow)((DataRowView)gammasBS.Current).Row;
 
                 if (peak != null && peak.MeasurementsRow != null)
@@ -237,7 +232,7 @@ namespace DB.UI
 
                         double lamda = (0.693 / peak.GammasRow.HALFLIFE);
                         double C = 1.0 - Math.Exp(-1 * lamda * peak.MeasurementsRow.CountTime);
-                        DateTime? calibDate = this.Linaa.QTA.GetCertificateDate(peak.MeasurementsRow.MeasurementID);
+                        DateTime? calibDate = Interface.IAdapter.QTA.GetCertificateDate(peak.MeasurementsRow.MeasurementID);
                         double D = 1;
                         if (calibDate != null)
                         {
@@ -258,8 +253,8 @@ namespace DB.UI
                         double efficiency = 1.0;
                         decimal energy = 0;
                         energy = decimal.Round(Convert.ToDecimal(peak.Energy), 1);
-                        double? SolidAngle = (double?)Linaa.QTA.GetSolidAngle(geoText, Convert.ToInt32(peak.MeasurementsRow.Position), peak.MeasurementsRow.Detector, (double)energy);
-                        double? SolidAngleRef = (double?)Linaa.QTA.GetSolidAngle("REF", 5, peak.MeasurementsRow.Detector, (double)energy);
+                        double? SolidAngle = (double?)Interface.IAdapter.QTA.GetSolidAngle(geoText, Convert.ToInt32(peak.MeasurementsRow.Position), peak.MeasurementsRow.Detector, (double)energy);
+                        double? SolidAngleRef = (double?)Interface.IAdapter.QTA.GetSolidAngle("REF", 5, peak.MeasurementsRow.Detector, (double)energy);
 
                         double SolidFactor = 1;
 
@@ -268,7 +263,7 @@ namespace DB.UI
                             SolidFactor = (double)(SolidAngle / SolidAngleRef);
                         }
 
-                        double? Log10Effi = (double?)Linaa.QTA.GetLog10Effi(peak.Energy, peak.MeasurementsRow.Detector, "REF", 5);
+                        double? Log10Effi = (double?)Interface.IAdapter.QTA.GetLog10Effi(peak.Energy, peak.MeasurementsRow.Detector, "REF", 5);
                         if (Log10Effi != null)
                         {
                             efficiency = Math.Pow(10.0, (double)Log10Effi) * (SolidFactor);
@@ -276,7 +271,7 @@ namespace DB.UI
                         else if (Log10Effi == null) peak.RowError += "Log10Effi not found. Calculate Geometry first\n";
                         else if (SolidFactor == 1) peak.RowError += "SolidFactor not found. Calculate Geometry first\n";
                         double COI = 1.0;
-                        double? coi = this.Linaa.QTA.GetCOI(peak.MeasurementsRow.Detector, geoText, iso, Convert.ToInt16(peak.MeasurementsRow.Position), (double)energy);
+                        double? coi = Interface.IAdapter.QTA.GetCOI(peak.MeasurementsRow.Detector, geoText, iso, Convert.ToInt16(peak.MeasurementsRow.Position), (double)energy);
                         if (coi != null) COI = (double)coi;
 
                         peak.GAct = (peak.Area * lamda) / (peak.GammasRow.INTENSITY * 0.01 * COI * efficiency * C * D * gamma.DECAYBRANCHING);
@@ -296,7 +291,7 @@ namespace DB.UI
             {
                 filter = "Detector = '" + e.Node.Text + "'";
             }
-            Rsx.Dumb.BS.LinkBS(ref this.measBS, this.Linaa.Measurements, filter, "MeasurementStart desc");
+            Rsx.Dumb.BS.LinkBS(ref this.measBS, Interface.IDB.Measurements, filter, "MeasurementStart desc");
         }
 
         public ucHyperLab()

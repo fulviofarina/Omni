@@ -36,7 +36,7 @@ namespace DB.Tools
             // Interface.IPopulate
             Interface.IDB.Matrix.CalcParametersHandler = getPreferenceEvent;
             Interface.IDB.SubSamples.CalcParametersHandler = getPreferenceEvent;
-            Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferencesSpectrumEvent;
+            Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferenceEvent;
 
         }
 
@@ -64,6 +64,14 @@ namespace DB.Tools
             }
         }
 
+        public SpecPrefRow CurrentSpecPref
+        {
+            get
+            {
+                // currentSSFPref = Interface.IDB.SSFPref.FirstOrDefault(selector) as SSFPrefRow;
+                return Interface.IDB.SpecPref.FirstOrDefault(selector) as SpecPrefRow;
+            }
+        }
         /// <summary>
         /// The current preferences (Main)
         /// </summary>
@@ -98,6 +106,10 @@ namespace DB.Tools
         public string GetXCOMPreferencesPath()
         {
             return Interface.IStore.FolderPath + Resources.XCOMPreferences + XML_EXT;
+        }
+        public string GetSpecPreferencesPath()
+        {
+            return Interface.IStore.FolderPath + Resources.SpecPreferences + XML_EXT;
         }
 
         /*
@@ -166,6 +178,20 @@ namespace DB.Tools
             {
                 Interface.IStore.AddException(ex);
             }
+            try
+            {
+                bool ok = populatePreferences<SpecPrefDataTable>();
+                if (ok)
+                {
+                    //cleaning
+                    cleanNullPreferences<SpecPrefDataTable>();    //important
+                }
+                populateCurrentPreferences<SpecPrefDataTable>();
+            }
+            catch (SystemException ex)
+            {
+                Interface.IStore.AddException(ex);
+            }
         }
 
         /// <summary>
@@ -190,6 +216,8 @@ namespace DB.Tools
 
                 savePreferences<SSFPrefDataTable>();
                 savePreferences<XCOMPrefDataTable>();
+
+                savePreferences<SpecPrefDataTable>();
             }
             catch (SystemException ex)
             {
@@ -202,6 +230,7 @@ namespace DB.Tools
             Interface.IDB.Preferences.AcceptChanges();
             Interface.IDB.SSFPref.AcceptChanges();
             Interface.IDB.XCOMPref.AcceptChanges();
+            Interface.IDB.SpecPref.AcceptChanges();
         }
         
         public void ReportChanges()
@@ -209,6 +238,7 @@ namespace DB.Tools
             bool reportChnages = CurrentPref.HasVersion(DataRowVersion.Current);
             reportChnages = reportChnages || CurrentSSFPref.HasVersion(DataRowVersion.Current);
             reportChnages = reportChnages || CurrentXCOMPref.HasVersion(DataRowVersion.Current);
+            reportChnages = reportChnages || CurrentSpecPref.HasVersion(DataRowVersion.Current);
             if (reportChnages)
             {
                 Interface.IReport.Msg("A preference/setting was updated", "Preferences updated", true);

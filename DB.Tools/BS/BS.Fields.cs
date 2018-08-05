@@ -30,16 +30,20 @@ namespace DB.Tools
     public partial class BS
     {
         public BindingSource MUES;
-
+        public BindingSource Measurements;
         public BindingSource Channels;
         public BindingSource Compositions;
         public BindingSource Geometry;
         public BindingSource Irradiations;
         public BindingSource Matrix;
+        public BindingSource PeaksHL;
+        public BindingSource Peaks;
+        public BindingSource Gammas;
         public BindingSource Monitors;
         public BindingSource MonitorsFlags;
         public BindingSource Orders;
         public BindingSource Preferences;
+        public BindingSource SpecPref;
         public BindingSource Projects;
         public BindingSource XCOMPref;
 
@@ -85,7 +89,7 @@ namespace DB.Tools
         public BindingSource Units;
         public BindingSource Vial;
 
-        protected internal BindingList<BS> bindingList;
+     //   protected internal BindingList<BS> bindingList;
         protected internal Hashtable bindings;
         protected internal bool enabledControls = false;
         protected internal Interface Interface;
@@ -102,18 +106,7 @@ namespace DB.Tools
 
         protected internal delegate bool CheckerDelegate();
 
-        public BindingList<BS> BindingList
-        {
-            get
-            {
-                return bindingList;
-            }
-
-            set
-            {
-                bindingList = value;
-            }
-        }
+      
 
         protected internal bool showErrors = true;
 

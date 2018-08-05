@@ -243,15 +243,7 @@ namespace DB
             // adapters.Add(tAM.LINES_FISTableAdapter, tAM.LINES_FISTableAdapter);
         }
 
-        protected internal static void initializePeaksAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
-        {
-            tAM.MeasurementsTableAdapter = new LINAATableAdapters.MeasurementsTableAdapter();
-            adapters.Add(tAM.MeasurementsTableAdapter, tAM.MeasurementsTableAdapter);
-            tAM.PeaksTableAdapter = new LINAATableAdapters.PeaksTableAdapter();
-            adapters.Add(tAM.PeaksTableAdapter, tAM.PeaksTableAdapter);
-            // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
-            //this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
-        }
+      
 
         protected internal static void initializeSampleAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
         {

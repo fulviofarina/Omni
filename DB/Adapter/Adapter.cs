@@ -112,7 +112,7 @@ namespace DB
             InitializeSolCoinAdapters();
             initializeIrradiationAdapters(ref tAM, ref adapters);
             initializeSampleAdapters(ref tAM, ref adapters);
-            initializePeaksAdapters(ref tAM, ref adapters);
+            InitializePeaksAdapters();
             initializeToDoAdapters(ref tAM, ref adapters);
             InitializeOtherAdapters(ref tAM, ref adapters);
 

@@ -413,6 +413,15 @@ namespace DB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SpecPreferences.
+        /// </summary>
+        public static string SpecPreferences {
+            get {
+                return ResourceManager.GetString("SpecPreferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Springfield {

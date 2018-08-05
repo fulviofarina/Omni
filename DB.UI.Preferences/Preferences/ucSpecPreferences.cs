@@ -51,9 +51,10 @@ namespace DB.UI
             {
                 setPreferencesbindings();
 
-                this.measBox.KeyUp += indexKey_Up;
-                this.posBox.KeyUp += indexKey_Up;
-                this.detbox.KeyUp += indexKey_Up;
+
+                this.sampleModelBox.KeyUp += indexKey_Up;
+                this.monitorModelBox.KeyUp += indexKey_Up;
+
 
                 this.windowATextBox.KeyUp += filterKey_up;
                 this.windowBTextBox.KeyUp += filterKey_up;
@@ -61,8 +62,6 @@ namespace DB.UI
                 this.maxUncTextBox.KeyUp += filterKey_up;
 
 
-                //    this.measBox.KeyUp += RunInBackgroundCheckBox_CheckStateChanged;
-                //   this.measBox.KeyUp += RunInBackgroundCheckBox_CheckStateChanged;
             }
             catch (Exception ex)
             {
@@ -76,6 +75,11 @@ namespace DB.UI
         }
         protected internal void indexKey_Up(object sender, EventArgs e)
         {
+            if (sender.Equals(sampleModelBox))
+            {
+                Interface.IPreferences.CurrentSpecPref.SetIdxLength(false);
+            }
+            else Interface.IPreferences.CurrentSpecPref.SetIdxLength(true);
             indexChangedEvent?.Invoke(sender, e);
         }
 
@@ -83,50 +87,19 @@ namespace DB.UI
         {
             this.fillByHLCheckBox.DataBindings.Add(prefbindings["FillByHL"] as Binding);
             this.fillBySpectraCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
-
-          
-            //  this.runInBackgroundCheckBox.DataBindings.Add(prefbindings["RunInBackground"] as Binding);
-
-            //  this.doSolangCheckBox.DataBindings.Add(prefbindings["DoSolang"] as Binding);
-            //   this.autoLoadCheckBox.DataBindings.Add(prefbindings["AutoLoad"] as Binding);
-            //    this.offlineCheckBox.DataBindings.Add(prefbindings["Offline"] as Binding);
-            //     this.showSampleDescriptionCheckBox.DataBindings.Add(prefbindings["ShowSampleDescription"] as Binding);
-            //    this.advancedEditorCheckBox.DataBindings.Add(prefbindings["AdvancedEditor"] as Binding);
         }
 
         protected internal void setEnableBindings(ref BindingSource bs)
         {
             string col = Interface.IDB.Preferences.AdvancedEditorColumn.ColumnName;
-           Binding b00 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b01 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b02 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b03 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b04 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b05 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b06 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
+
+
             Binding b07 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b08 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-         //   Binding b09 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-            Binding b10 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-
-         //   Binding b15 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-
-         //  this.advancedEditorCheckBox.DataBindings.Add(b15);
-
+    
             this.fillByHLCheckBox.DataBindings.Add(b07);
             this.fillBySpectraCheckBox.DataBindings.Add(b08);
-
-            //
-            this.posBox.DataBindings.Add(b00);
-            this.measBox.DataBindings.Add(b01);
-            this.detbox.DataBindings.Add(b02);
-
-            this.maxUncTextBox.DataBindings.Add(b03);
-            this.minAreaTextBox.DataBindings.Add(b04);
-            this.windowBTextBox.DataBindings.Add(b05);
-            this.windowATextBox.DataBindings.Add(b06);
-
-     //       this.showSampleDescriptionCheckBox.DataBindings.Add(b09);
+          
         }
 
         protected internal void setPreferencesbindings()
@@ -137,9 +110,9 @@ namespace DB.UI
 
             //checkstate
             setCheckStateBindings(ref prefbindings);
-
             setEnableBindings(ref bs);
 
+            bs = Interface.IBS.SpecPref;
             //text binding
             Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
             setValueBindings(ref bindings2);
@@ -156,6 +129,21 @@ namespace DB.UI
             this.measBox.DataBindings.Add(bindings2["MeasIdx"] as Binding);
             this.posBox.DataBindings.Add(bindings2["PositionIdx"] as Binding);
             this.detbox.DataBindings.Add(bindings2["DetectorIdx"] as Binding);
+            this.sampleBox.DataBindings.Add(bindings2["SampleIdx"] as Binding);
+            this.projectBox.DataBindings.Add(bindings2["ProjectIdx"] as Binding);
+         //   this.monBox.DataBindings.Add(bindings2["MonitorIdx"] as Binding);
+
+
+            this.measNrLenBox.DataBindings.Add(bindings2["MeasLength"] as Binding);
+            this.posLenBox.DataBindings.Add(bindings2["PositionLength"] as Binding);
+            this.detLenBox.DataBindings.Add(bindings2["DetectorLength"] as Binding);
+            this.sampleLenBox.DataBindings.Add(bindings2["SampleLength"] as Binding);
+            this.projectLenBox.DataBindings.Add(bindings2["ProjectLength"] as Binding);
+        //    this.monLenBox.DataBindings.Add(bindings2["MonitorLength"] as Binding);
+            this.sampleModelBox.DataBindings.Add(bindings2["ModelSample"] as Binding);
+            this.monitorModelBox.DataBindings.Add(bindings2["ModelMonitor"] as Binding);
+
+
         }
 
         public ucSpecPreferences()

@@ -269,12 +269,48 @@ namespace DB.UI
             return Application.StartupPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
         }
 
+        private static UserControl createSpecNavApplication()
+        {
 
-    
+            Interface.IAdapter.InitializeComponent();
+            Interface.IAdapter.InitializePeaksAdapters();
+            Interface.IAdapter.TAM.Connection.ConnectionString = Settings.Default.HLSNMNAAConnectionString;
 
-        public static void CreateMatrixApplication(out UserControl control, out EventHandler refresher )
+
+            ucHyperLab hl = new ucHyperLab();
+            ISpecPreferences prefes = GetPreferences<ISpecPreferences>();
+            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+
+            IOptions options = GetOptions(0, advEditor);
+            options.PreferencesClick += delegate
+            {
+                GetPreferences<ISpecPreferences>(true);
+            };
+
+            Interface.IBS.ApplyFilters();
+            Interface.IBS.StartBinding();
+
+            Interface.IBS.ShowErrors = false;
+
+            hl.Set(ref Interface);
+            hl.Set(ref prefes);
+            hl.Set(ref options);
+            //   UserControl control = this;
+            hl.Dock = DockStyle.Fill;
+            // form.AutoSizeMode = AutoSizeMode.GrowOnly;
+            // form.AutoSize = true;
+            hl.AutoSizeMode = AutoSizeMode.GrowOnly;
+            hl.AutoSize = true;
+
+            return hl;
+        }
+
+
+        private static UserControl createMatrixApplication( out EventHandler refresher )
         {
             //ESTE ORDEN ES FUNDAMENTAL!!!
+
+
             bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
 
             IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
@@ -299,7 +335,7 @@ namespace DB.UI
 
             ucMatrix mat = new ucMatrix();
             mat.Set(ref Interface);
-            control = (UserControl)mat;
+         
 
             refresher = delegate
             {
@@ -312,18 +348,13 @@ namespace DB.UI
                 bool offline = Interface.IPreferences.CurrentPref.Offline;
                 if (offline)
                 {
-                
-
                     Creator.LoadFromFile();
 
                     Application.DoEvents();
 
                     Interface.IDB.MUES.Clear();
-                  //  Interface.IDB.Preferences.Clear();
 
                     Application.DoEvents();
-               //     Creator.PopulatePreferences();
-                //    Interface.IPreferences.CurrentPref.Offline = offline;
 
                     Interface.IDB.AcceptChanges();
 
@@ -352,6 +383,7 @@ namespace DB.UI
             mat.Set(options);
             mat.Set(ref prefes);
             mat.SetXCOM();
+
             options.RestoreFoldersClick += refresher;
 
 
@@ -360,6 +392,7 @@ namespace DB.UI
             UserControl ctrl = msn as UserControl;
             mat.Set(ref ctrl);
 
+            return mat;
         }
 
 

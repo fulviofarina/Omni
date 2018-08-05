@@ -210,13 +210,14 @@ namespace DB
             {
                 EventData d = new EventData();
                 spectrumCalcParametersHandler?.Invoke(null, d);
-                double minArea = (double)d.Args[0];
-                double maxUnc = (double)d.Args[1];
-                double winA = (double)d.Args[2];
-                double winB = (double)d.Args[3];
+                SpecPrefRow r = d.Args[3] as SpecPrefRow;
+          //      double minArea = r.minArea;
+            //    double maxUnc = (double)d.Args[1];
+               // double winA = (double)d.Args[2];
+               // double winB = (double)d.Args[3];
                
 
-                LINAA.PeaksHLDataTable peakshl = PopulatePeaksHL(id, minArea, maxUnc);
+                PeaksHLDataTable peakshl = PopulatePeaksHL(id, r.minArea, r.maxUnc);
              
                PeaksHL.Merge(peakshl);
 
@@ -240,6 +241,9 @@ public PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc)
         {
             LINAATableAdapters.MeasurementsTableAdapter mta = new LINAATableAdapters.MeasurementsTableAdapter();
             MeasurementsDataTable meas = new MeasurementsDataTable();
+     //       meas.ProjectColumn.Expression = string.Empty;
+       //     meas.ProjectColumn.ReadOnly = false;
+
             try
             {
                 int? id = mta.GetHLProjectID(project);
@@ -247,12 +251,25 @@ public PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc)
                 {
                     EventData d = new EventData();
                     spectrumCalcParametersHandler?.Invoke(null, d);
-                
+                    SpecPrefRow r = d.Args[3] as SpecPrefRow;
+
                     mta.FillByHLProjectGeneric(meas, (int)id);
+
+
 
                     foreach (MeasurementsRow item in meas)
                     {
-                        item.ExtractData(ref d);
+                        try
+                        {
+                            bool isMonitor =   !(item.Measurement.Length == r.ModelSample.Length);
+                            r.SetIdxLength(isMonitor);
+
+                            item.ExtractData(ref r);
+                        }
+                        catch (Exception)
+                        {
+                          //  AddException(ex);
+                        }
                     }
 
                     if (meas.Count() != 0) Measurements.Merge(meas);
