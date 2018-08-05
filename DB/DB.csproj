@@ -129,6 +129,8 @@
     <Compile Include="Interfaces\IExpressions.cs" />
     <Compile Include="Interfaces\IAdapter.cs" />
     <Compile Include="Interfaces\IDB.cs" />
+    <Compile Include="Interfaces\IMeasurements.cs" />
+    <Compile Include="Populate\Populate.Measurements.cs" />
     <Compile Include="Populate\Samples\Populate.Samples.Add.cs" />
     <Compile Include="Populate\Samples\Populate.Samples.Find.cs" />
     <Compile Include="Populate\Samples\Populate.Samples.Get.cs" />

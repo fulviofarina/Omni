@@ -61,13 +61,17 @@ namespace DB.Tools
             meas.ProjectColumn.ReadOnly = true;
             meas.BeginLoadData();
             ta.SetForHL();
-            int? proID = ta.GetHLProjectID(project);
+            int? proID = (int?)ta.GetHLProjectID(project);
             //maybe has sub folders...
             if (proID != null)
             {
-                ta.FillByHLProject(meas, (int)proID);
+                ta.FillByHLProjectLFC(meas, (int)proID);
+                if (meas.Count==0)
+                {
+                    ta.FillByHLProjectNoLFC(meas, (int)proID);
+                }
 
-                arr = Rsx.Dumb.Hash.HashFrom<string>(meas.SampleColumn).ToArray();
+                arr = Hash.HashFrom<string>(meas.SampleColumn).ToArray();
             }
 
             meas.EndLoadData();

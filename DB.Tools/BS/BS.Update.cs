@@ -107,7 +107,7 @@ namespace DB.Tools
                 {
                     Measurements.Position = Measurements.Find(column, id);
                 }
-                Interface.IPopulate.ISamples.PopulatePeaksHL(id);
+                Interface.IPopulate.IMeasurements.PopulatePeaksHL(id);
 
                 filter = column + " = '" + picked.MeasurementID + "'";
             }

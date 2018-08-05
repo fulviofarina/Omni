@@ -10,7 +10,8 @@ namespace Rsx.Dumb
    
         public static  class Caster
         {
-            public static IEnumerable<T> Cast<T>(DataView view)
+      
+        public static IEnumerable<T> Cast<T>(DataView view)
             {
                 if (view == null) throw new Exception("DataView is null, Cannot Cast<T>");
 

@@ -60,7 +60,7 @@ namespace DB.Tools
          //   if (string.IsNullOrEmpty(projectTXT)) return;
          //   if (string.IsNullOrWhiteSpace(projectTXT)) return;
             Interface.IBS.EnabledControls = false;
-            Interface.IPopulate.ISamples.PopulateMeasurementsGeneric(projectTXT, true);
+            Interface.IPopulate.IMeasurements.PopulateMeasurementsGeneric(projectTXT, true);
             Interface.IBS.SelectProjectHL(projectTXT);
             Interface.IBS.EnabledControls = true;
         }
@@ -108,6 +108,7 @@ namespace DB.Tools
             ISamples = (ISamples)aux;
             ISchedAcqs = (ISchedAcqs)aux;
             IToDoes = (IToDoes)aux;
+            IMeasurements = (IMeasurements)aux;
        
 
         }

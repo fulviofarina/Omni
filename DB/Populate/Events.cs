@@ -126,6 +126,9 @@ namespace DB
             handlers.Add(DataColumnChanged);
             dTWithHandlers.Add(Tables.IndexOf(Unit));
 
+            handlers.Add(DataColumnChanged);
+            dTWithHandlers.Add(Tables.IndexOf(Measurements));
+
 
             tableSubSamples.AddMatrixHandler = this.addMatrixEvent;
 

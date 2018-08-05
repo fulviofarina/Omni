@@ -12,37 +12,26 @@ namespace DB
         public partial class SpecPrefDataTable : IColumn
         {
 
-            private DataColumn[] peakCols = null;
+        
 
             public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
                     return null;
+                    /*
+                    return new DataColumn[] {
+                            this.windowAColumn,
+                            this.windowBColumn,
+                            this.minAreaColumn,
+                             maxUncColumn
+
+                             };
+                             */
                 }
             }
 
           
-
-            public IEnumerable<DataColumn> PeakCols
-            {
-                get
-                {
-                    if (peakCols == null)
-                    {
-                        peakCols = new DataColumn[] {
-                            this.windowAColumn,
-                            this.windowBColumn,
-                            this.minAreaColumn,
-                             maxUncColumn,
-                         //    MeasIdxColumn,PositionIdxColumn,DetectorIdxColumn, SampleIdxColumn,ProjectIdxColumn,
-                         //    this.ProjectLengthColumn,MeasLengthColumn,PositionLengthColumn,SampleLengthColumn,DetectorLengthColumn,
-                             this.ModelSampleColumn,this.ModelMonitorColumn
-                             };
-                    }
-                    return peakCols;
-                }
-            }
         }
 
         partial class SpecPrefRow : IRow
@@ -62,45 +51,51 @@ namespace DB
             {
                 bool nulo = EC.CheckNull(Column, this);
 
-                if (tableSpecPref.PeakCols.Contains(Column))
+                if (Column == tableSpecPref.windowAColumn)
                 {
-                    if (IswindowANull()) windowA = 1.5;
-                    if (IswindowBNull()) windowB = 0.001;
-                    if (IsminAreaNull()) minArea = 500;
-                    if (IsmaxUncNull()) maxUnc = 50;
-
-                    if (IsModelSampleNull()) ModelSample = "PPPPSSDp#";
-                    if (IsModelMonitorNull()) ModelMonitor = ModelSample.Replace('S','M');
-
-                //    SetIdxLength();
-                    /*
-                    if (IsDetectorIdxNull()) DetectorIdx = 3;
-                    if (IsPositionIdxNull()) PositionIdx = 2;
-                    if (IsMeasIdxNull()) MeasIdx = 1;
-                    if (IsProjectIdxNull()) ProjectIdx = 0;
-                    if (IsSampleIdxNull()) SampleIdx = 1;
-
-                    if (IsDetectorLengthNull()) DetectorLength = 1;
-                    if (IsPositionLengthNull()) PositionLength = 1;
-                    if (IsMeasLengthNull()) MeasLength = 1;
-                    if (IsProjectLengthNull()) ProjectLength = 4;
-                    if (IsSampleLengthNull()) SampleLength = 9;
-                    */
+                    if (nulo) windowA = 1.5;
+                }
+                else if (Column == tableSpecPref.windowBColumn)
+                {
+                    if (nulo) windowB = 0.001;
+                }
+                else if (Column == tableSpecPref.minAreaColumn)
+                {
+                    if (nulo) minArea = 200;
+                }
+                else if (Column == tableSpecPref.maxUncColumn)
+                {
+                    if (nulo) maxUnc = 50;
+                }
+                else if (Column == tableSpecPref.ModelMonitorColumn)
+                {
+                    if (nulo)
+                    {
+                        ModelMonitor = "PPPPMMMMMDp#";
+                    }
+                }
+                else if (Column == tableSpecPref.ModelSampleColumn)
+                {
+                    if (nulo)
+                    {
+                        ModelSample = "PPPPSSDp#";
+                        SetIdxLength(false);
+                    }
+                }
+                else if (Column == tableSpecPref.TimeDividerColumn)
+                {
+                    if (nulo) TimeDivider = "m";
                 }
             }
 
             public void SetIdxLength(bool monitor = false)
             {
-                try
-                {
+              
 
                     string model = ModelSample;
                     if (monitor) model = ModelMonitor;
 
-                    ProjectIdx = Convert.ToInt16(model.IndexOf('P'));
-                    ProjectLength = Convert.ToInt16(model.LastIndexOf('P') - ProjectIdx);
-                    ProjectLength++;
-
+                
                     char s = 'S';
                     if (monitor)
                     {
@@ -110,22 +105,23 @@ namespace DB
                     SampleLength = Convert.ToInt16(model.LastIndexOf(s) - SampleIdx);
                     SampleLength++;
 
+
+                ProjectIdx = Convert.ToInt16(model.IndexOf('P'));
+                ProjectLength = Convert.ToInt16(model.LastIndexOf('P') - ProjectIdx);
+                ProjectLength++;
+
+
                     PositionIdx = Convert.ToInt16(model.IndexOf('p'));
                     PositionLength = Convert.ToInt16(model.LastIndexOf('p') - PositionIdx);
                     PositionLength++;
+
                     MeasIdx = Convert.ToInt16(model.IndexOf('#'));
                     MeasLength = Convert.ToInt16(model.LastIndexOf('#') - MeasIdx);
                     MeasLength++;
+
                     DetectorIdx = Convert.ToInt16(model.IndexOf('D'));
                     DetectorLength = Convert.ToInt16(model.LastIndexOf('D') - DetectorIdx);
                     DetectorLength++;
-                }
-
-                catch (Exception ex)
-                {
-
-
-                }
 
 
             }

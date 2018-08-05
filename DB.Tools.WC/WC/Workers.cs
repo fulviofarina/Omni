@@ -357,8 +357,8 @@ namespace DB.Tools
                         peakshl = PopulatePeaksHL(ref aux, minArea, maxUnc);
                         if (peakshl != null)
                         {
-                            if (!m.HasErrors) TransferPeaksHL(ref aux, sample.SubSamplesID, sample.IrradiationRequestsID, ref peakshl);
-                            if (!m.HasErrors) FilterPeaks(ref aux, windowA, windowB, minArea, maxUnc, ref elementsIfAny);
+                            if (!m.HasErrors()) TransferPeaksHL(ref aux, sample.SubSamplesID, sample.IrradiationRequestsID, ref peakshl);
+                            if (!m.HasErrors()) FilterPeaks(ref aux, windowA, windowB, minArea, maxUnc, ref elementsIfAny);
                         }
                     }
                 }

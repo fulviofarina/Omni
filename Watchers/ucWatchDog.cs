@@ -451,7 +451,7 @@ namespace k0X
             if (m.IsAcquiring) r.DefaultCellStyle.BackColor = System.Drawing.Color.PapayaWhip;
             else
             {
-                if (m.HasErrors) r.DefaultCellStyle.BackColor = System.Drawing.Color.MistyRose;
+                if (m.HasErrors()) r.DefaultCellStyle.BackColor = System.Drawing.Color.MistyRose;
                 else r.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             }
         }

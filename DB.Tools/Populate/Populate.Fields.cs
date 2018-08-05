@@ -11,6 +11,7 @@
         public ISamples ISamples;
         public ISchedAcqs ISchedAcqs;
         public IToDoes IToDoes;
+        public IMeasurements IMeasurements;
         protected internal Interface Interface;
     }
 }

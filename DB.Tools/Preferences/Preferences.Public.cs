@@ -36,7 +36,8 @@ namespace DB.Tools
             // Interface.IPopulate
             Interface.IDB.Matrix.CalcParametersHandler = getPreferenceEvent;
             Interface.IDB.SubSamples.CalcParametersHandler = getPreferenceEvent;
-            Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferenceEvent;
+            Interface.IDB.Measurements.CalcParametersHandler = getPreferenceEvent;
+            //   Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferenceEvent;
 
         }
 

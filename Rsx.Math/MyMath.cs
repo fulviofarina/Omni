@@ -7,7 +7,30 @@ namespace Rsx.Math
 {
   public partial class MyMath
   {
-    public static double GetDensity(double mass, double Vol)
+        public static double GetTimeFactor(string timeDivider = "m")
+        {
+            double factor = 1;
+            if (timeDivider.CompareTo("m") == 0)
+            {
+                factor = 60;
+
+            }
+            else if (timeDivider.CompareTo("h") == 0)
+            {
+                factor = 60 * 60;
+            }
+            else if (timeDivider.CompareTo("d") == 0)
+            {
+                factor = 60 * 60 * 24.0000006;
+            }
+            else if (timeDivider.CompareTo("y") == 0)
+            {
+                factor = 60 * 60 * 24.0000006 * 365.2422;
+            }
+
+            return factor;
+        }
+        public static double GetDensity(double mass, double Vol)
     {
       double density = 0;
 

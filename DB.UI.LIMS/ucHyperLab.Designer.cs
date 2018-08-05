@@ -34,10 +34,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -50,25 +46,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Linaa = new DB.LINAA();
             this.FBD = new System.Windows.Forms.FolderBrowserDialog();
             this.TLP1 = new System.Windows.Forms.TableLayoutPanel();
             this.measDGV = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.decayTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.irradiationIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sampleIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hLDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.measBS = new System.Windows.Forms.BindingSource(this.components);
             this.TLP2 = new System.Windows.Forms.TableLayoutPanel();
             this.project = new VTools.ucGenericCBox();
@@ -91,6 +76,27 @@
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MeasurementEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.decayTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MCAChannels = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MinCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaxCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.irradiationIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sampleIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hLDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             this.TLP1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.measDGV)).BeginInit();
@@ -171,11 +177,17 @@
             this.dataGridViewTextBoxColumn32,
             this.dataGridViewTextBoxColumn24,
             this.dataGridViewTextBoxColumn27,
+            this.MeasurementEnd,
             this.dataGridViewTextBoxColumn28,
             this.dataGridViewTextBoxColumn31,
             this.dataGridViewTextBoxColumn22,
             this.decayTimeDataGridViewTextBoxColumn,
             this.dataGridViewTextBoxColumn19,
+            this.MCAChannels,
+            this.FileType,
+            this.MinCounts,
+            this.MaxCounts,
+            this.TotalCounts,
             this.dataGridViewTextBoxColumn25,
             this.irradiationIDDataGridViewTextBoxColumn,
             this.sampleIDDataGridViewTextBoxColumn,
@@ -205,127 +217,6 @@
             this.measDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.measDGV.Size = new System.Drawing.Size(1276, 261);
             this.measDGV.TabIndex = 0;
-            // 
-            // dataGridViewTextBoxColumn26
-            // 
-            this.dataGridViewTextBoxColumn26.DataPropertyName = "Measurement";
-            this.dataGridViewTextBoxColumn26.HeaderText = "Measurement";
-            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-            this.dataGridViewTextBoxColumn26.ToolTipText = "Measurement name";
-            // 
-            // dataGridViewTextBoxColumn29
-            // 
-            this.dataGridViewTextBoxColumn29.DataPropertyName = "Sample";
-            this.dataGridViewTextBoxColumn29.HeaderText = "Sample";
-            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
-            this.dataGridViewTextBoxColumn29.ToolTipText = "Sample name";
-            // 
-            // dataGridViewTextBoxColumn30
-            // 
-            this.dataGridViewTextBoxColumn30.DataPropertyName = "Detector";
-            this.dataGridViewTextBoxColumn30.HeaderText = "Detector";
-            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
-            this.dataGridViewTextBoxColumn30.ToolTipText = "Detector name";
-            // 
-            // dataGridViewTextBoxColumn32
-            // 
-            this.dataGridViewTextBoxColumn32.DataPropertyName = "Position";
-            this.dataGridViewTextBoxColumn32.HeaderText = "Position";
-            this.dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
-            this.dataGridViewTextBoxColumn32.ToolTipText = "Measurement Position";
-            // 
-            // dataGridViewTextBoxColumn24
-            // 
-            this.dataGridViewTextBoxColumn24.DataPropertyName = "MeasurementNr";
-            this.dataGridViewTextBoxColumn24.HeaderText = "Number";
-            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-            this.dataGridViewTextBoxColumn24.ToolTipText = "Measurement number";
-            // 
-            // dataGridViewTextBoxColumn27
-            // 
-            this.dataGridViewTextBoxColumn27.DataPropertyName = "MeasurementStart";
-            this.dataGridViewTextBoxColumn27.HeaderText = "Started";
-            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-            this.dataGridViewTextBoxColumn27.ToolTipText = "Date and time when the measurement started";
-            // 
-            // dataGridViewTextBoxColumn28
-            // 
-            this.dataGridViewTextBoxColumn28.DataPropertyName = "LiveTime";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N1";
-            this.dataGridViewTextBoxColumn28.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn28.HeaderText = "LT";
-            this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
-            this.dataGridViewTextBoxColumn28.ToolTipText = "Live Time in minutes";
-            // 
-            // dataGridViewTextBoxColumn31
-            // 
-            this.dataGridViewTextBoxColumn31.DataPropertyName = "CountTime";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N1";
-            this.dataGridViewTextBoxColumn31.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewTextBoxColumn31.HeaderText = "CT";
-            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
-            this.dataGridViewTextBoxColumn31.ToolTipText = "Count Time in minutes";
-            // 
-            // dataGridViewTextBoxColumn22
-            // 
-            this.dataGridViewTextBoxColumn22.DataPropertyName = "DT";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "N1";
-            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewTextBoxColumn22.HeaderText = "DT (%)";
-            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            this.dataGridViewTextBoxColumn22.ReadOnly = true;
-            this.dataGridViewTextBoxColumn22.ToolTipText = "Dead Time in %";
-            // 
-            // decayTimeDataGridViewTextBoxColumn
-            // 
-            this.decayTimeDataGridViewTextBoxColumn.DataPropertyName = "DecayTime";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N1";
-            this.decayTimeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.decayTimeDataGridViewTextBoxColumn.HeaderText = "Decay";
-            this.decayTimeDataGridViewTextBoxColumn.Name = "decayTimeDataGridViewTextBoxColumn";
-            this.decayTimeDataGridViewTextBoxColumn.ToolTipText = "Decay Time in minutes";
-            this.decayTimeDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.DataPropertyName = "Project";
-            this.dataGridViewTextBoxColumn19.HeaderText = "Project";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.ReadOnly = true;
-            this.dataGridViewTextBoxColumn19.ToolTipText = "HyperLab or GENIE Project folder";
-            // 
-            // dataGridViewTextBoxColumn25
-            // 
-            this.dataGridViewTextBoxColumn25.DataPropertyName = "MeasurementID";
-            this.dataGridViewTextBoxColumn25.HeaderText = "MeasurementID";
-            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
-            this.dataGridViewTextBoxColumn25.Visible = false;
-            // 
-            // irradiationIDDataGridViewTextBoxColumn
-            // 
-            this.irradiationIDDataGridViewTextBoxColumn.DataPropertyName = "IrradiationID";
-            this.irradiationIDDataGridViewTextBoxColumn.HeaderText = "IrradiationID";
-            this.irradiationIDDataGridViewTextBoxColumn.Name = "irradiationIDDataGridViewTextBoxColumn";
-            this.irradiationIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.irradiationIDDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // sampleIDDataGridViewTextBoxColumn
-            // 
-            this.sampleIDDataGridViewTextBoxColumn.DataPropertyName = "SampleID";
-            this.sampleIDDataGridViewTextBoxColumn.HeaderText = "SampleID";
-            this.sampleIDDataGridViewTextBoxColumn.Name = "sampleIDDataGridViewTextBoxColumn";
-            this.sampleIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.sampleIDDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // hLDataGridViewCheckBoxColumn
-            // 
-            this.hLDataGridViewCheckBoxColumn.DataPropertyName = "HL";
-            this.hLDataGridViewCheckBoxColumn.HeaderText = "Is HL";
-            this.hLDataGridViewCheckBoxColumn.Name = "hLDataGridViewCheckBoxColumn";
             // 
             // measBS
             // 
@@ -615,6 +506,170 @@
             this.splitContainer2.SplitterDistance = 489;
             this.splitContainer2.TabIndex = 3;
             // 
+            // dataGridViewTextBoxColumn26
+            // 
+            this.dataGridViewTextBoxColumn26.DataPropertyName = "Measurement";
+            this.dataGridViewTextBoxColumn26.HeaderText = "Measurement";
+            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+            this.dataGridViewTextBoxColumn26.ToolTipText = "Measurement name";
+            // 
+            // dataGridViewTextBoxColumn29
+            // 
+            this.dataGridViewTextBoxColumn29.DataPropertyName = "Sample";
+            this.dataGridViewTextBoxColumn29.HeaderText = "Sample";
+            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
+            this.dataGridViewTextBoxColumn29.ToolTipText = "Sample name";
+            // 
+            // dataGridViewTextBoxColumn30
+            // 
+            this.dataGridViewTextBoxColumn30.DataPropertyName = "Detector";
+            this.dataGridViewTextBoxColumn30.HeaderText = "Detector";
+            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
+            this.dataGridViewTextBoxColumn30.ToolTipText = "Detector name";
+            // 
+            // dataGridViewTextBoxColumn32
+            // 
+            this.dataGridViewTextBoxColumn32.DataPropertyName = "Position";
+            this.dataGridViewTextBoxColumn32.HeaderText = "Position";
+            this.dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
+            this.dataGridViewTextBoxColumn32.ToolTipText = "Measurement Position";
+            // 
+            // dataGridViewTextBoxColumn24
+            // 
+            this.dataGridViewTextBoxColumn24.DataPropertyName = "MeasurementNr";
+            this.dataGridViewTextBoxColumn24.HeaderText = "Number";
+            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+            this.dataGridViewTextBoxColumn24.ToolTipText = "Measurement number";
+            // 
+            // dataGridViewTextBoxColumn27
+            // 
+            this.dataGridViewTextBoxColumn27.DataPropertyName = "MeasurementStart";
+            this.dataGridViewTextBoxColumn27.HeaderText = "Started";
+            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+            this.dataGridViewTextBoxColumn27.ToolTipText = "Date and time when the measurement started";
+            // 
+            // MeasurementEnd
+            // 
+            this.MeasurementEnd.DataPropertyName = "MeasurementEnd";
+            this.MeasurementEnd.HeaderText = "Ended";
+            this.MeasurementEnd.Name = "MeasurementEnd";
+            // 
+            // dataGridViewTextBoxColumn28
+            // 
+            this.dataGridViewTextBoxColumn28.DataPropertyName = "LiveTime";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N1";
+            this.dataGridViewTextBoxColumn28.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTextBoxColumn28.HeaderText = "LT";
+            this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
+            this.dataGridViewTextBoxColumn28.ToolTipText = "Live Time in minutes";
+            // 
+            // dataGridViewTextBoxColumn31
+            // 
+            this.dataGridViewTextBoxColumn31.DataPropertyName = "CountTime";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N1";
+            this.dataGridViewTextBoxColumn31.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewTextBoxColumn31.HeaderText = "CT";
+            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
+            this.dataGridViewTextBoxColumn31.ToolTipText = "Count Time in minutes";
+            // 
+            // dataGridViewTextBoxColumn22
+            // 
+            this.dataGridViewTextBoxColumn22.DataPropertyName = "DT";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Format = "N1";
+            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewTextBoxColumn22.HeaderText = "DT (%)";
+            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            this.dataGridViewTextBoxColumn22.ReadOnly = true;
+            this.dataGridViewTextBoxColumn22.ToolTipText = "Dead Time in %";
+            // 
+            // decayTimeDataGridViewTextBoxColumn
+            // 
+            this.decayTimeDataGridViewTextBoxColumn.DataPropertyName = "DecayTime";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N1";
+            this.decayTimeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.decayTimeDataGridViewTextBoxColumn.HeaderText = "Decay";
+            this.decayTimeDataGridViewTextBoxColumn.Name = "decayTimeDataGridViewTextBoxColumn";
+            this.decayTimeDataGridViewTextBoxColumn.ToolTipText = "Decay Time in minutes";
+            this.decayTimeDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.DataPropertyName = "Project";
+            this.dataGridViewTextBoxColumn19.HeaderText = "Project";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.ReadOnly = true;
+            this.dataGridViewTextBoxColumn19.ToolTipText = "HyperLab or GENIE Project folder";
+            // 
+            // MCAChannels
+            // 
+            this.MCAChannels.DataPropertyName = "MCAChannels";
+            this.MCAChannels.HeaderText = "Channels";
+            this.MCAChannels.Name = "MCAChannels";
+            this.MCAChannels.ToolTipText = "Number of channels in the Multi-Channel Analyzer";
+            // 
+            // FileType
+            // 
+            this.FileType.DataPropertyName = "FileType";
+            this.FileType.HeaderText = "Type";
+            this.FileType.Name = "FileType";
+            this.FileType.ToolTipText = "The spectrum file type";
+            // 
+            // MinCounts
+            // 
+            this.MinCounts.DataPropertyName = "MinCounts";
+            this.MinCounts.HeaderText = "Min Counts";
+            this.MinCounts.Name = "MinCounts";
+            this.MinCounts.ToolTipText = "Minimum counts in a channel";
+            this.MinCounts.Visible = false;
+            // 
+            // MaxCounts
+            // 
+            this.MaxCounts.DataPropertyName = "MaxCounts";
+            this.MaxCounts.HeaderText = "Max Counts";
+            this.MaxCounts.Name = "MaxCounts";
+            this.MaxCounts.ToolTipText = "Maximum counts in a channel";
+            // 
+            // TotalCounts
+            // 
+            this.TotalCounts.DataPropertyName = "TotalCounts";
+            this.TotalCounts.HeaderText = "Total Counts";
+            this.TotalCounts.Name = "TotalCounts";
+            this.TotalCounts.ToolTipText = "Total counts in all channels";
+            // 
+            // dataGridViewTextBoxColumn25
+            // 
+            this.dataGridViewTextBoxColumn25.DataPropertyName = "MeasurementID";
+            this.dataGridViewTextBoxColumn25.HeaderText = "MeasurementID";
+            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
+            this.dataGridViewTextBoxColumn25.Visible = false;
+            // 
+            // irradiationIDDataGridViewTextBoxColumn
+            // 
+            this.irradiationIDDataGridViewTextBoxColumn.DataPropertyName = "IrradiationID";
+            this.irradiationIDDataGridViewTextBoxColumn.HeaderText = "IrradiationID";
+            this.irradiationIDDataGridViewTextBoxColumn.Name = "irradiationIDDataGridViewTextBoxColumn";
+            this.irradiationIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.irradiationIDDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // sampleIDDataGridViewTextBoxColumn
+            // 
+            this.sampleIDDataGridViewTextBoxColumn.DataPropertyName = "SampleID";
+            this.sampleIDDataGridViewTextBoxColumn.HeaderText = "SampleID";
+            this.sampleIDDataGridViewTextBoxColumn.Name = "sampleIDDataGridViewTextBoxColumn";
+            this.sampleIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.sampleIDDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // hLDataGridViewCheckBoxColumn
+            // 
+            this.hLDataGridViewCheckBoxColumn.DataPropertyName = "HL";
+            this.hLDataGridViewCheckBoxColumn.HeaderText = "Is HL";
+            this.hLDataGridViewCheckBoxColumn.Name = "hLDataGridViewCheckBoxColumn";
+            this.hLDataGridViewCheckBoxColumn.Visible = false;
+            // 
             // ucHyperLab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -714,11 +769,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn32;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MeasurementEnd;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
         private System.Windows.Forms.DataGridViewTextBoxColumn decayTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MCAChannels;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FileType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MinCounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaxCounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalCounts;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private System.Windows.Forms.DataGridViewTextBoxColumn irradiationIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn sampleIDDataGridViewTextBoxColumn;

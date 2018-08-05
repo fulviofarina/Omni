@@ -53,8 +53,8 @@ namespace DB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=HL14;Persist Security Info=True;User ID=sa" +
-            ";Password=naa;Connect Timeout=10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=HL14;User ID=sa;Password=naa;Connect Timeo" +
+            "ut=10")]
         public string HLSNMNAAConnectionString {
             get {
                 return ((string)(this["HLSNMNAAConnectionString"]));

@@ -9,37 +9,7 @@ namespace DB
 {
     public partial class LINAA : IDetSol
     {
-        public MeasurementsRow AddMeasurement(string measName)
-        {
-            MeasurementsRow meas = FindByMeas(measName);
-            if (EC.IsNuDelDetch(meas))
-            {
-                 meas = this.tableMeasurements.NewMeasurementsRow();
-                this.tableMeasurements.AddMeasurementsRow(meas);
-                try
-                {
-                    meas.SetName(measName);
-                }
-                catch (SystemException ex)
-                {
-                    EC.SetRowError(meas, ex);
-                }
-            
-                //  return meas;
-                //   meas = this.addMeasurement(measName);
-            }
-            return meas;
-        }
-
-        public MeasurementsRow FindByMeas(string measName)
-        {
-            MeasurementsRow meas = null;
-            Func<MeasurementsRow, bool> currSel = null;
-            string col = this.tableMeasurements.MeasurementColumn.ColumnName;
-            currSel = LINAA.SelectorByField<MeasurementsRow>(measName, col);
-            meas = this.tableMeasurements.FirstOrDefault(currSel);
-            return meas;
-        }
+       
 
         /// <summary>
         /// Gets a non-repeated list of Detectors in the database

@@ -414,7 +414,7 @@ namespace DB.Tools
                         //whathever values
                         if (s.IsIrradiationTotalTimeNull()) s.IrradiationTotalTime = 200;
 
-                        LINAA.MeasurementsRow mea = Interface.IDB.Measurements.AddMeasurementsRow(s.IrradiationCode, 0, "A", s.SubSampleName + "A", DateTime.Now, 0, s, "D", 0, 5, s.IrradiationRequestsID, s.SubSamplesID, 0, false, true, s.GeometryName, "DUNNO", TimeSpan.MinValue);
+                        LINAA.MeasurementsRow mea = Interface.IDB.Measurements.AddMeasurementsRow(s.IrradiationCode, 0, "A", s.SubSampleName + "A", DateTime.Now, 0, s, "D", 0, 5, s.IrradiationRequestsID, s.SubSamplesID, 0, false, true, s.GeometryName, "DUNNO",DateTime.Now,0,0,0,string.Empty, 1024, TimeSpan.MinValue);
 
                         IEnumerable<LINAA.MeasurementsRow> measurements = new LINAA.MeasurementsRow[] { mea };
 
@@ -465,7 +465,7 @@ namespace DB.Tools
                 {
                     mrow = null;
                     mrow = m.Tag as LINAA.MeasurementsRow;
-                    if (mrow.HasErrors) m.Checked = false;
+                    if (mrow.HasErrors()) m.Checked = false;
                     else if (all) m.Checked = true;
                     mrow.Selected = m.Checked;
                 }

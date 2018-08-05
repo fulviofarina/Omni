@@ -14,7 +14,7 @@ namespace DB
 
         void UpdateIrradiationDates();
 
-        Action<object, EventData> SpectrumCalcParametersHandler { set; }
+    //    Action<object, EventData> SpectrumCalcParametersHandler { set; }
 
         IRequestsAveragesRow AddIRequestsAverage(Int32 NAAID, ref SubSamplesRow s);
 
@@ -24,9 +24,9 @@ namespace DB
 
         SubSamplesRow AddSample(string project, string sampleName = "");
 
-        IEnumerable<LINAA.SubSamplesRow> AddSamples(string project, ref IEnumerable<LINAA.SubSamplesRow> hsamples, bool save = true);
+        IEnumerable<SubSamplesRow> AddSamples(string project, ref IEnumerable<SubSamplesRow> hsamples, bool save = true);
 
-        IEnumerable<LINAA.SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples, string project, bool save = true);
+        IEnumerable<SubSamplesRow> AddSamples(ref IEnumerable<string> hsamples, string project, bool save = true);
 
         DataTable CalculateBranchFactor(ref IPeakAveragesRow daugther, ref IEnumerable<IPeakAveragesRow> references);
 
@@ -53,8 +53,8 @@ namespace DB
         void PopulateSubSamples(Int32 IrReqID);
 
         UnitRow GetUnitBySampleID(int subSampleID);
-       MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge);
-        PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc);
-        void PopulatePeaksHL(int? id);
+    //   MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge);
+     //   PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc);
+     //   void PopulatePeaksHL(int? id);
     }
 }
