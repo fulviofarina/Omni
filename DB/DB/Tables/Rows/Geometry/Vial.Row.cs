@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -32,11 +32,6 @@ namespace DB
                 DataColumn[] colsInE = this.GetColumnsInError();
                 int count = colsInE.Intersect(this.tableVialType.ForbiddenNullCols).Count();
                 return count != 0;
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                //throw new NotImplementedException();
             }
         }
     }

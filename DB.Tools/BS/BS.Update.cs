@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
 {
     public partial class BS
     {
-      
-
         private void currentChanged<T>(T r, bool doCascade = true, bool findItself = true, bool selectedBS = false)
         {
             Type tipo = typeof(T);
@@ -110,11 +108,23 @@ namespace DB.Tools
                 Interface.IPopulate.IMeasurements.PopulatePeaksHL(id);
 
                 filter = column + " = '" + picked.MeasurementID + "'";
+
+               SpecPrefRow pref = Interface.IPreferences.CurrentSpecPref;
+
+                if (pref!=null)
+                {
+                    column = Interface.IDB.PeaksHL.AreaColumn.ColumnName;
+                    filter += " AND " + column + " >= '" + pref.minArea + "'";
+                    column = Interface.IDB.PeaksHL.AreaUncertaintyColumn.ColumnName;
+                    filter += " AND " + column + " <= '" + pref.maxUnc + "'";
+                }
+
+
             }
 
             PeaksHL.Filter = filter;
             Peaks.Filter = filter;
-            //  throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         private void updateChannel<T>(T r, bool doCascade, bool findItself)
@@ -199,7 +209,6 @@ namespace DB.Tools
             {
                 bs = SelectedMatrix;
             }
-          
 
             if (!EC.IsNuDelDetch(r as DataRow))
             {
@@ -214,17 +223,16 @@ namespace DB.Tools
                     //last matrix id
                     id = u.SubSampleID;
                     filterMatrixSelected = column + " = '" + id + "'";
-                   
+
                     // filter += " AND " + column2 + " = '" + id + "'";
                 }
-               // bool nulo = u.IsXCOMTableNull();
-                if (u.NeedsMUES )
+                // bool nulo = u.IsXCOMTableNull();
+                if (u.NeedsMUES)
                 {
                     bool sql = !Interface.IPreferences.CurrentPref.Offline;
-                    MUESDataTable mu =   Interface.IPopulate.IGeometry.GetMUES(ref u, sql);
+                    MUESDataTable mu = Interface.IPopulate.IGeometry.GetMUES(ref u, sql);
                     Interface.IDB.MUES.Merge(mu);
                 }
-
 
                 if (findItself)
                 {
@@ -236,8 +244,8 @@ namespace DB.Tools
             }
 
             //MEJORAR ESTE FILTROOOOOOO, DEBERIA RESETEAR A LOS NULL COMO ARRIBA PERO CON LAS COLUMNAS QUE SON
-         //   MUES.Filter = string.Empty;
-              MUES.Filter = filter;
+            //   MUES.Filter = string.Empty;
+            MUES.Filter = filter;
 
             bs2.Filter = filter; //sea cual sea este es el filtrro
             if (selectedBS) bs.Filter = filterMatrixSelected;

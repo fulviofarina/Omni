@@ -78,7 +78,7 @@ namespace DB
             double Ld = 0.693 / daugther.k0NAARow.NAARowParent.T3;
             double Sd = MyMath.S(Ld, daugther.SubSamplesRow.IrradiationTotalTime);
 
-            LINAA.PeaksRow[] dpeaks = daugther.GetPeaksRows();
+            PeaksRow[] dpeaks = daugther.GetPeaksRows();
 
             table.Columns.Add("Vs", typeof(string));
 
@@ -100,14 +100,14 @@ namespace DB
                 double Sref = MyMath.S(Lref, reference.SubSamplesRow.IrradiationTotalTime);
                 double DLrefd = Ld - Lref; //delta lamdaes
 
-                LINAA.PeaksRow[] Rpeaks = reference.GetPeaksRows();
+                PeaksRow[] Rpeaks = reference.GetPeaksRows();
 
                 foreach (PeaksRow Rp in Rpeaks)
                 {
                     //find same measurement
                     Func<PeaksRow, bool> finder = o => o.Measurement.Equals(Rp.Measurement);
 
-                    LINAA.PeaksRow dp = dpeaks.FirstOrDefault(finder);
+                    PeaksRow dp = dpeaks.FirstOrDefault(finder);
 
                     if (dp == null) continue;
 
@@ -233,13 +233,13 @@ namespace DB
 
         public void PopulatedMonitors(string file)
         {
-            LINAA.MonitorsDataTable importing = new LINAA.MonitorsDataTable(false);
+            MonitorsDataTable importing = new MonitorsDataTable(false);
 
             importing.ReadXml(file);
 
-            foreach (LINAA.MonitorsRow i in importing)
+            foreach (MonitorsRow i in importing)
             {
-                LINAA.MonitorsRow l = this.FindMonitorByName(i.MonName); //local monitor
+                MonitorsRow l = this.FindMonitorByName(i.MonName); //local monitor
                 if (l == null)
                 {
                     l = this.tableMonitors.NewMonitorsRow();
@@ -338,7 +338,7 @@ namespace DB
 
                 //2
                 TAM.SubSamplesTableAdapter.DeleteNulls();
-                LINAA.SubSamplesDataTable newsamples = new SubSamplesDataTable();
+                SubSamplesDataTable newsamples = new SubSamplesDataTable();
                 TAM.SubSamplesTableAdapter.FillByID(newsamples, IrReqID);
 
                 /*
@@ -374,7 +374,7 @@ namespace DB
             {
                 this.tableUnit.BeginLoadData();
 
-                LINAA.UnitDataTable dt = new UnitDataTable();
+                UnitDataTable dt = new UnitDataTable();
 
                 /// this.tableUnit.Clear();
                 this.TAM.UnitTableAdapter.FillByIrrReqID(dt, irrReqId);

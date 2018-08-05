@@ -42,7 +42,7 @@ namespace DB.Tools
         {
             LINAA LINAA = new LINAA();
             Interface = new Interface(ref LINAA);
-            Interface.IDB.PopulateColumnExpresions();
+            Interface.IExpressions.PopulateColumnExpresions();
             return Interface;
         }
 

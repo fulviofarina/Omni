@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DB.Properties;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using DB.Properties;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -14,8 +14,6 @@ namespace DB
             private DataColumn[] fillCols = null;
             private DataColumn[] mainCols = null;
             private DataColumn[] otherCols = null;
-
-         //   private DataColumn[] peakCols = null;
 
             public IEnumerable<DataColumn> FillCols
             {
@@ -75,8 +73,6 @@ namespace DB
                     return otherCols;
                 }
             }
-
-         
         }
 
         partial class PreferencesRow : IRow
@@ -155,7 +151,6 @@ namespace DB
                     if (IsIsMSMQNull()) this.IsMSMQ = false;
                     if (IsAdvancedEditorNull()) this.AdvancedEditor = false;
                 }
-              
             }
 
             public new bool HasErrors()
@@ -171,11 +166,6 @@ namespace DB
                 string spectra = spectraPath;
                 if (!spectra[spectra.Length - 1].ToString().Equals("\\")) spectra += "\\";
                 Spectra = spectra;
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                // throw new NotImplementedException();
             }
 
             private void checkConnections()

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -24,14 +24,6 @@ namespace DB
                 DataColumn[] colsInE = this.GetColumnsInError();
                 return colsInE.Intersect(this.tableIrradiationRequests.ForbiddenNullCols)
                     .Count() != 0;
-            }
-
-            protected internal LINAA db
-            {
-                get
-                {
-                    return this.Table.DataSet as LINAA;
-                }
             }
 
             protected string _projectNr
@@ -57,7 +49,7 @@ namespace DB
                 if (!_projectNr.Equals(string.Empty))
                 {
                     string code = IrradiationCode.Replace(_projectNr, null);
-                    ch = db.Channels.FirstOrDefault(o => o.IrReqCode.ToUpper().CompareTo(code) == 0);
+                    ch = (this.tableIrradiationRequests.DataSet as LINAA).Channels.FirstOrDefault(o => o.IrReqCode.ToUpper().CompareTo(code) == 0);
                 }
 
                 return ch;
@@ -76,11 +68,6 @@ namespace DB
                 {
                     ChannelsRow = GetChannel();
                 }
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                //throw new NotImplementedException();
             }
         }
     }

@@ -11,7 +11,7 @@ namespace DB
         ICollection<string> OrdersList { get; }
 
         // Int32? FindOrderID(String LabOrderRef)
-        Int32? FindOrderID(string LabOrdRef);
+        int? FindOrderID(string LabOrdRef);
 
         void PopulateOrders();
     }

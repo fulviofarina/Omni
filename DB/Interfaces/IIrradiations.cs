@@ -10,7 +10,7 @@ namespace DB
     {
         ChannelsRow AddNewChannel();
 
-        Int32? FindIrradiationID(string project);
+        int? FindIrradiationID(string project);
 
         // int? FindIrrReqID(String project);
         IrradiationRequestsRow AddNewIrradiation(string project);

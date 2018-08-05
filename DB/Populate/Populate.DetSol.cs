@@ -1,16 +1,11 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-
-//using DB.Interfaces;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IDetSol
     {
-       
-
         /// <summary>
         /// Gets a non-repeated list of Detectors in the database
         /// </summary>
@@ -27,7 +22,6 @@ namespace DB
             set { detectorsList = value; }
         }
 
-        // #region Populate Detectors/Solang
         public Action[] PMDetect()
         {
             Action[] populatorArray = null;
@@ -38,6 +32,22 @@ namespace DB
             PopulateDetectorDimensions,
             PopulateDetectorHolders
      };
+
+            return populatorArray;
+        }
+
+        public IEnumerable<Action> PMThree()
+        {
+            Action[] populatorOther = null;
+
+            populatorOther = new Action[]   {
+                    PopulateCOIList,
+                      PopulateToDoes,
+                   PopulateScheduledAcqs};
+
+            IEnumerable<Action> populatorArray = null;
+            populatorArray = populatorOther;
+            // populatorArray.Union(PMNAA());
 
             return populatorArray;
         }
@@ -99,24 +109,6 @@ namespace DB
             }
         }
 
-        public IEnumerable<Action> PMThree()
-        {
-            Action[] populatorOther = null;
-
-            populatorOther = new Action[]   {
-                    PopulateCOIList,
-                      PopulateToDoes,
-                   PopulateScheduledAcqs};
-
-            IEnumerable<Action> populatorArray = null;
-            populatorArray = populatorOther;
-            // populatorArray.Union(PMNAA());
-
-            return populatorArray;
-        }
-
-        
-
         public void PopulateDetectorHolders()
         {
             try
@@ -132,7 +124,5 @@ namespace DB
                 this.AddException(ex);
             }
         }
-
-        // #endregion Populate Detectors/Solang
     }
 }

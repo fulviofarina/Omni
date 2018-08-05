@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -12,7 +12,7 @@ namespace DB
         /// <summary>
         /// CLEANED
         /// </summary>
-        public partial class SubSamplesRow : IRow
+        public partial class SubSamplesRow : IRow, ISetteable
         {
             public void Check()
             {
@@ -100,7 +100,7 @@ namespace DB
                 }
             }
 
-         //   protected internal EventData ebento = new EventData();
+            // protected internal EventData ebento = new EventData();
 
             private void checkUnitsColumns(DataColumn column)
             {
@@ -109,12 +109,8 @@ namespace DB
                 EventData ebento = new EventData();
                 // ebento = null;
                 this.tableSubSamples.CalcParametersHandler?.Invoke(this, ebento);
-                SSFPrefRow pref  = ebento.Args[2] as SSFPrefRow;
-      //          pref?.CalcMass,
-        //    pref?.AARadius,
-        //     pref?.CalcDensity,
-         //   pref?.AAFillHeight
-
+                SSFPrefRow pref = ebento.Args[2] as SSFPrefRow;
+                // pref?.CalcMass, pref?.AARadius, pref?.CalcDensity, pref?.AAFillHeight
 
                 // SSFPrefRow pref = db.SSFPref.FirstOrDefault();
                 calMass = (bool)pref?.CalcMass;// pref.CalcMass;
@@ -581,7 +577,7 @@ namespace DB
                 return GetSurface() * this.FillHeight * 0.1;
             }
 
-            internal bool SetAlpha()
+            public bool SetAlpha()
             {
                 if (EC.IsNuDelDetch(IrradiationRequestsRow)) return false;
                 if (EC.IsNuDelDetch(IrradiationRequestsRow.ChannelsRow)) return false;
@@ -609,7 +605,7 @@ namespace DB
                 return !string.IsNullOrEmpty(SubSampleDescription);
             }
 
-            internal bool SetDescriptionFromStandard()
+            public bool SetDescriptionFromStandard()
             {
                 bool ok = false;
                 if (EC.IsNuDelDetch(StandardsRow)) return ok;
@@ -618,7 +614,7 @@ namespace DB
                 return !string.IsNullOrEmpty(SubSampleDescription);
             }
 
-            internal void SetENAA()
+            public void SetENAA()
             {
                 if (IsENAANull()) ENAA = false;
                 if (!EC.IsNuDelDetch(IrradiationRequestsRow))
@@ -635,7 +631,7 @@ namespace DB
                 }
             }
 
-            internal bool Setf()
+            public bool Setf()
             {
                 if (EC.IsNuDelDetch(IrradiationRequestsRow)) return false;
                 if (EC.IsNuDelDetch(IrradiationRequestsRow.ChannelsRow)) return false;
@@ -647,7 +643,7 @@ namespace DB
                 return false;
             }
 
-            internal bool SetGeometryFromMonitor()
+            public bool SetGeometryFromMonitor()
             {
                 bool ok = false;
                 if (EC.IsNuDelDetch(MonitorsRow)) return ok;
@@ -660,27 +656,27 @@ namespace DB
                 return ok;
             }
 
-            internal void SetGeometryValues(bool calMass, bool calDensity)
+            public void SetGeometryValues(bool calMass, bool calDensity)
             {
                 Vol = GetVolume();
                 if (calDensity) GetDensity(true);
                 else if (calMass) GetGrossMass();
             }
 
-            internal void SetGrossAndNet()
+            public void SetGrossAndNet()
             {
                 GrossAvg = (Gross1 + Gross2) * 0.5;
                 Net = GrossAvg - Tare;
             }
 
-            internal bool SetIrradiationCode()
+            public bool SetIrradiationCode()
             {
                 // if (EC.IsNuDelDetch(IrradiationRequestsRow)) return false;
                 IrradiationCode = GetIrradiationCode();
                 return !string.IsNullOrEmpty(IrradiationCode);
             }
 
-            internal void SetIrradiationDateErrors()
+            public void SetIrradiationDateErrors()
             {
                 bool innull = IsInReactorNull();
 
@@ -697,7 +693,7 @@ namespace DB
                 else SetColumnError(outCol, null);
             }
 
-            internal void SetIrradiationDates()
+            public void SetIrradiationDates()
             {
                 bool innull = IsInReactorNull();
                 bool outnull = IsOutReactorNull();

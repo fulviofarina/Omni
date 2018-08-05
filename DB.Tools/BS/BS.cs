@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -120,7 +120,6 @@ namespace DB.Tools
 
         private void currentChangedHandler(object sender, EventArgs e)
         {
-
             try
             {
                 if (!EnabledControls) return;
@@ -142,7 +141,6 @@ namespace DB.Tools
                 {
                     MeasurementsRow r = Interface.ICurrent.Measurement as MeasurementsRow;
                     currentChanged(r, true, false, selectedBs);
-
                 }
                 else if (sender.Equals(SubSamples) || sender.Equals(Units))
                 {
@@ -190,7 +188,6 @@ namespace DB.Tools
 
                     currentChanged(c, true, false, selectedBs);
                 }
-               
             }
             catch (Exception ex)
             {

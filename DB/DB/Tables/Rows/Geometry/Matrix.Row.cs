@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA
     {
-
-        public partial class MatrixRow : Rsx.Dumb.ICalculableRow
+        public partial class MatrixRow : ICalculableRow
         {
             protected internal bool isBusy = false; // { get; set; }
+
             public bool IsBusy
             {
                 get
@@ -21,16 +21,13 @@ namespace DB
 
                 set
                 {
-
                     isBusy = value;
 
                     if (isBusy)
                     {
-                     
                     }
                     else
                     {
-                      
                         ToDo = false;
                         SetColumnError(this.tableMatrix.MatrixNameColumn, null);
                     }
@@ -45,17 +42,13 @@ namespace DB
                 ToDo = true;
                 MatrixDate = DateTime.Now;
                 CleanMUES();
-            //    SetColumnError(this.tableMatrix.MatrixNameColumn, "Cancelled");
-             
+                // SetColumnError(this.tableMatrix.MatrixNameColumn, "Cancelled");
             }
         }
 
-
-
-        public partial class MatrixRow : IRow
+        public partial class MatrixRow : IRow, ISetteable
         {
-
-            bool needsMUES = false;
+            private bool needsMUES = false;
 
             public bool NeedsMUES
             {
@@ -71,7 +64,6 @@ namespace DB
                 {
                     needsMUES = value;
                 }
-                
             }
 
             public void Check()
@@ -86,19 +78,17 @@ namespace DB
             {
                 bool nulo = EC.CheckNull(col, this);
 
-                //     object[] obj = new object[] { this, ToDo };
+                // object[] obj = new object[] { this, ToDo };
                 if (col == this.tableMatrix.ToDoColumn)
                 {
                     if (nulo) ToDo = true;
 
-                   
-                 //   if (this.GetMUESRows().Count() == 0) ToDo = true;
+                    // if (this.GetMUESRows().Count() == 0) ToDo = true;
                 }
                 else if (col == this.tableMatrix.MatrixDensityColumn)
                 {
                     checkMatrixDensity();
                 }
-              
                 else if (col == this.tableMatrix.MatrixDateColumn)
                 {
                     if (nulo) MatrixDate = DateTime.Now;
@@ -116,18 +106,15 @@ namespace DB
                 }
             }
 
-          
-
             private bool compositionRenew = false; // { get; set; }
             private bool densityRenew = false; // { get; set; }
-
 
             public void Checking(DataColumnChangeEventArgs e)
             {
                 object propo = e.ProposedValue;
                 object val = e.Row[e.Column];
                 DataColumn col = e.Column;
-              //  e.Column, e.ProposedValue, e.Row[e.Column]
+                // e.Column, e.ProposedValue, e.Row[e.Column]
                 if (DBNull.Value == propo) return; //if null go away
                 if (val == DBNull.Value) return; //idem
 
@@ -149,7 +136,7 @@ namespace DB
                     compositionRenew = false;
                     string newcomposition = (string)propo;
                     string oldcomposition = (string)val;
-                   oldcomposition =  oldcomposition.Trim().Replace(" ", null);
+                    oldcomposition = oldcomposition.Trim().Replace(" ", null);
                     newcomposition = newcomposition.Trim().Replace(" ", null);
                     oldcomposition = oldcomposition.Replace("\n", null);
                     newcomposition = newcomposition.Replace("\n", null);
@@ -178,6 +165,7 @@ namespace DB
                 int count = colsInE.Intersect(this.tableMatrix.ForbiddenNullCols).Count();// != 0;
                 return count != 0;
             }
+
             public CompositionsRow FindComposition(string element)
             {
                 CompositionsRow c = null;
@@ -202,9 +190,8 @@ namespace DB
             }
         }
 
-        partial class MatrixRow : IRow
+        partial class MatrixRow
         {
-
             private void setMatrixToClone(ref MatrixRow toClone)
             {
                 if (EC.IsNuDelDetch(toClone)) return;
@@ -239,18 +226,16 @@ namespace DB
                 }
             }
 
-            //  protected internal bool ToDo = false;
-
+            // protected internal bool ToDo = false;
 
             protected internal void setBasic(int? subSamplesID, int? templateID)
             {
-                if (subSamplesID!=null) SubSampleID = (int)subSamplesID; //the ID to identify
-               if (templateID!=null) TemplateID = (int)templateID;
+                if (subSamplesID != null) SubSampleID = (int)subSamplesID; //the ID to identify
+                if (templateID != null) TemplateID = (int)templateID;
                 MatrixDate = DateTime.Now;
                 MatrixComposition = string.Empty;
                 MatrixName = string.Empty;
                 //important, to rellocate the Parent MATRIX
-              
             }
 
             private bool checkMatrixComposition()
@@ -268,7 +253,6 @@ namespace DB
                         compositionRenew = false;
                     }
                     this.tableMatrix.AddCompositionsHandler?.Invoke(this, EventArgs.Empty);
-
                 }
                 nulo = nulo || HasCompositionsErrors();
                 if (nulo)
@@ -285,7 +269,6 @@ namespace DB
 
                 this.tableMatrix.CleanCompositionsHandler?.Invoke(compos, EventArgs.Empty);
 
-
                 ToDo = true;
                 MatrixDate = DateTime.Now;
                 if (!EC.IsNuDelDetch(this.SubSamplesRow))
@@ -294,8 +277,7 @@ namespace DB
                 }
                 this.SetCompositionTableNull();
 
-                //      this.tableMatrix.CleanMUESPicturesHandler?.Invoke(this, EventArgs.Empty);
-
+                // this.tableMatrix.CleanMUESPicturesHandler?.Invoke(this, EventArgs.Empty);
             }
 
             public void CleanMUES()
@@ -309,15 +291,12 @@ namespace DB
 
             private void checkMatrixDensity()
             {
-               if (densityRenew)
+                if (densityRenew)
                 {
-                    //  this.tableMatrix.MUESRequiredHandler?
-                    //      .Invoke(this, EventArgs.Empty);
+                    // this.tableMatrix.MUESRequiredHandler? .Invoke(this, EventArgs.Empty);
                     densityRenew = false;
                 }
             }
-
-          
         }
     }
 }

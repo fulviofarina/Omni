@@ -1,12 +1,48 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using Rsx.Dumb;
+
 namespace DB
 {
     public partial class LINAA
     {
+        protected internal void addCompositionsEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                MatrixRow m = sender as MatrixRow;
+               
+                if (m.IsCompositionTableNull())
+                {
+                    //averiguar argumentos...
+                    IEnumerable<CompositionsRow> compos = null;
+                    AddCompositions(ref m, ref compos, null, false);
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
+
+                    CompositionsDataTable dt =  new CompositionsDataTable(false);
+                    foreach (CompositionsRow item in compos)
+                    {
+                        dt.ImportRow(item);
+                    }
+                    byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref dt, path);
+                    m.CompositionTable = arr;
+
+                }
+                else
+                {
+                    byte[] arr = m.CompositionTable;
+                    CompositionsDataTable dt = null;
+                    dt = Compositions;
+                    Rsx.Dumb.Tables.ReadDTBytes(ref arr, ref dt);
+                }
+            }
+            catch (SystemException ex)
+            {
+                AddException(ex);
+            }
+        }
+
         protected internal void addMatrixEvent(object sender, EventData e)
         {
             object[] args = e.Args as object[];
@@ -28,55 +64,7 @@ namespace DB
             e.Args[0] = m;
             // s = m.SubSamplesRow; Save(ref s);
         }
-        /*
-        protected internal void mUESRequiredEvent(object sender, EventArgs e)
-        {
-            MatrixRow m = sender as MatrixRow;
-    //        int i = TAM.MUESTableAdapter.DeleteByMatrixID(m.MatrixID);
-            MUESDataTable mues = GetMUES(ref m, false);
-            MUES.Merge(mues);
-            //return i != 0;
-        }
-        */
 
-        protected internal void addCompositionsEvent(object sender, EventArgs e)
-        {
-            try
-            {
-                MatrixRow m = sender as MatrixRow;
-                CompositionsDataTable dt = null;
-                if (m.IsCompositionTableNull())
-                {
-                    //averiguar argumentos...
-                    IEnumerable<CompositionsRow> compos = null;
-                    AddCompositions(ref m, ref compos, null, false);
-                    string path = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
-
-                    dt = new CompositionsDataTable(false);
-                    foreach (CompositionsRow item in compos)
-                    {
-                        dt.ImportRow(item);
-                    }
-
-                    byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref dt, path);
-
-                    m.CompositionTable = arr;
-
-                    // Save(ref m);
-                }
-                else
-                {
-                    byte[] arr = m.CompositionTable;
-                    dt = Compositions;
-                    Rsx.Dumb.Tables.ReadDTBytes(ref arr, ref dt);
-                }
-            }
-            catch (SystemException ex)
-            {
-                AddException(ex);
-                //throw;
-            }
-        }
 
         protected internal void cleanCompositionsEvent(object sender, EventArgs e)
         {
@@ -84,24 +72,16 @@ namespace DB
             IEnumerable<CompositionsRow> compos = sender as IEnumerable<CompositionsRow>;
             CleanCompositions(ref compos);
         }
-
-
-      
     }
 
     public partial class LINAA
     {
-        protected internal void populateSelectedExpression(bool setexpression)
+        public void AddSSFs(ref UnitRow u)
         {
-            string expression = string.Empty;
-            if (setexpression)
-            {
-                expression = "Parent(Measurements_Peaks).Selected";
-            }
-            // PopulatePreferences();
-            Peaks.SelectedColumn.Expression = expression;
+            //string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
+            MatSSFDataTable dt = u.GetMatSSFTableNoFile();
+            this.tableMatSSF.Merge(dt, false, MissingSchemaAction.AddWithKey);
         }
-     
 
         protected internal void addSSFEvent(object sender, EventArgs e)
         {
@@ -115,71 +95,6 @@ namespace DB
             CleanSSFs(ref ssfs);
         }
 
-        protected internal void handlersSamples()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Standards));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Monitors));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Unit));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Measurements));
-
-
-            tableSubSamples.AddMatrixHandler = this.addMatrixEvent;
-
-            this.tableUnit.AddSSFsHandler = addSSFEvent;
-            this.tableUnit.CleanSSFsHandler = cleanSSFEvent;
-
-            // tableIRequestsAverages.ChThColumn.Expression = " ISNULL(1000 *
-            // Parent(SigmasSal_IRequestsAverages).sigmaSal / Parent(SigmasSal_IRequestsAverages).Mat
-            // ,'0')"; tableIRequestsAverages.ChEpiColumn.Expression = " ISNULL(1000 *
-            // Parent(Sigmas_IRequestsAverages).sigmaEp / Parent(Sigmas_IRequestsAverages).Mat,'0')
-            // "; tableIRequestsAverages.SDensityColumn.Expression = " 6.0221415 * 10 *
-            // Parent(SubSamples_IRequestsAverages).DryNet / (
-            // Parent(SubSamples_IRequestsAverages).Radius * (
-            // Parent(SubSamples_IRequestsAverages).Radius + Parent(SubSamples_IRequestsAverages).FillHeight))";
-        }
-
-        public void AddSSFs(ref UnitRow u)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
-            MatSSFDataTable dt = u.GetMatSSFTableNoFile();
-            this.tableMatSSF.Merge(dt, false, MissingSchemaAction.AddWithKey);
-        }
-        protected internal void handlersDetSol()
-        {
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(DetectorsAbsorbers));
-        }
-
-        protected internal void handlersGeometries()
-        {
-          
-            this.tableMatrix.AddCompositionsHandler += addCompositionsEvent;
-    //        this.tableMatrix.MUESRequiredHandler += mUESRequiredEvent;
-            this.tableMatrix.CleanCompositionsHandler += cleanCompositionsEvent;
-            this.tableMatrix.CleanMUESHandler += cleanMUESEvent;
-          //  this.tableMatrix.CleanMUESPicturesHandler += cleanMUESPics;
-
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Matrix));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(VialType));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(Geometry));
-
-            handlers.Add(DataColumnChanged);
-            dTWithHandlers.Add(Tables.IndexOf(SubSamples));
-        }
-      
 
         private void cleanMUESEvent(object sender, EventArgs e)
         {
@@ -188,10 +103,10 @@ namespace DB
             XCOMPrefRow xcomPref = b.Args[1] as XCOMPrefRow;
             if (xcomPref.AccumulateResults) return;
             PreferencesRow pref = b.Args[0] as PreferencesRow;
-           
-            cleanMUES(ref u, !pref.Offline );
+
+            cleanMUES(ref u, !pref.Offline);
             cleanMUESPics(ref u);
-          //  b.Args = null;
+            // b.Args = null;
         }
     }
 }

@@ -55,15 +55,7 @@ namespace DB.Tools
             return new bool[] { rejected, isAProjectOrOrder };
         }
 
-        public void LoadProjectHL(string projectTXT)
-        {
-         //   if (string.IsNullOrEmpty(projectTXT)) return;
-         //   if (string.IsNullOrWhiteSpace(projectTXT)) return;
-            Interface.IBS.EnabledControls = false;
-            Interface.IPopulate.IMeasurements.PopulateMeasurementsGeneric(projectTXT, true);
-            Interface.IBS.SelectProjectHL(projectTXT);
-            Interface.IBS.EnabledControls = true;
-        }
+       
 
         public bool AddProject(ref string ProjectOrOrder)
         {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Data;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -66,11 +66,6 @@ namespace DB
           else linaa.TAM.COINTableAdapter.FillByDetectorGeometryPosition(linaa.COIN, this.Detector, this.GeometryName,this.Position);
                       */
                 }
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                //throw new NotImplementedException();
             }
         }
     }

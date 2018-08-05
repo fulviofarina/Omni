@@ -10,15 +10,15 @@ namespace DB
     {
         ICollection<string> ActiveProjectsList { get; }
 
-        ProjectsRow FindBy(int? IrReqId, int? orderID, bool addIfNull);
-
         IList<string> ProjectsList { get; }
 
+        ProjectsRow FindBy(int? IrReqId, int? orderID, bool addIfNull);
         // IList<SubSamplesRow> FindByProject(string project);
+
+        IList<string> ListOfHLProjects();
 
         void PopulateProjects();
 
         void PopulateToDoes();
-        IList<string> ListOfHLProjects();
     }
 }

@@ -275,7 +275,7 @@ namespace DB.Tools
             try
             {
                 peaksHlta = new LINAATableAdapters.PeaksHLTableAdapter();
-                peakshl = peaksHlta.GetDataByMeasurementID(m.MeasurementID, minArea, maxUnc);
+                peakshl = peaksHlta.GetDataByMeasurementIDFilter(m.MeasurementID, minArea, maxUnc);
                 if (peakshl.Rows.Count == 0)
                 {
                     m.RowError = "PopulatePeaksHL Module Error: No peaks were found in HyperLab for this measurement.\n";

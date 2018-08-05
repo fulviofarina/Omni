@@ -1,26 +1,12 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-//using DB.Interfaces;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IOrders
     {
-        public Int32? FindOrderID(String LabOrderRef)
-        {
-            Int32? OrderID = null;
-
-            string Orders = this.tableOrders.LabOrderRefColumn.ColumnName;
-            Func<OrdersRow, bool> finder = LINAA.SelectorByField<OrdersRow>(LabOrderRef, Orders);
-            LINAA.OrdersRow r = this.tableOrders.FirstOrDefault(finder);
-            if (r != null) OrderID = r.OrdersID;
-
-            return OrderID;
-        }
-
         protected ICollection<string> ordersList;
 
         /// <summary>
@@ -35,6 +21,18 @@ namespace DB
 
                 return ordersList;
             }
+        }
+
+        public int? FindOrderID(string LabOrderRef)
+        {
+            int? OrderID = null;
+
+            string Orders = this.tableOrders.LabOrderRefColumn.ColumnName;
+            Func<OrdersRow, bool> finder = LINAA.SelectorByField<OrdersRow>(LabOrderRef, Orders);
+            OrdersRow r = this.tableOrders.FirstOrDefault(finder);
+            if (r != null) OrderID = r.OrdersID;
+
+            return OrderID;
         }
 
         public void PopulateOrders()

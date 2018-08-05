@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using static DB.LINAA;
 
@@ -81,13 +81,12 @@ namespace DB.Tools
             }
             set
             {
-
                 enabledControls = value;
-              
+
                 notifyPropertyChanged(ENABLE_CONTROLS_FIELD);
             }
         }
-     
+
         public bool IsCalculating
         {
             get
@@ -107,8 +106,6 @@ namespace DB.Tools
                 //    EnabledControls = !value;// else { EnabledControls = true; }
             }
         }
-
-      
 
         public void ApplyFilters()
         {
@@ -190,22 +187,20 @@ namespace DB.Tools
             IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
             currentChanged(ir, true, false, true);
         }
+
         public void SelectProjectHL(string projectOrOrder)
         {
-        
-     
             string field = Interface.IDB.Measurements.ProjectColumn.ColumnName;
             Interface.IBS.Measurements.Filter = field + " = '" + projectOrOrder + "'";
 
-            //   int position = Interface.IBS.Irradiations.Find(field, projectOrOrder);
-            //    Interface.IBS.Irradiations.Position = position;
-            //   IrradiationRequestsRow ir = Interface.ICurrent.Irradiation as IrradiationRequestsRow;
-            // currentChanged(ir, true, false, true);
+            // int position = Interface.IBS.Irradiations.Find(field, projectOrOrder);
+            // Interface.IBS.Irradiations.Position = position; IrradiationRequestsRow ir =
+            // Interface.ICurrent.Irradiation as IrradiationRequestsRow; currentChanged(ir, true,
+            // false, true);
         }
 
         public void StartBinding()
         {
-       
             Channels.CurrentChanged += currentChangedHandler;
             Irradiations.CurrentChanged += currentChangedHandler;
 
@@ -221,7 +216,6 @@ namespace DB.Tools
             PeaksHL.CurrentChanged += currentChangedHandler;
             Peaks.CurrentChanged += currentChangedHandler;
             Gammas.CurrentChanged += currentChangedHandler;
-
 
             Matrix.AddingNew += addingNew;
             Channels.AddingNew += addingNew;
@@ -268,18 +262,18 @@ namespace DB.Tools
             }
         }
 
+        /*
+             public void EndEditGeometries()
+                {
+                    Matrix.EndEdit();
+                    Geometry.EndEdit();
+                    Compositions.EndEdit();
+                    SelectedMatrix.EndEdit();
+                    SelectedCompositions.EndEdit();
+                    MUES.EndEdit();
+                }
+                */
 
-/*
-     public void EndEditGeometries()
-        {
-            Matrix.EndEdit();
-            Geometry.EndEdit();
-            Compositions.EndEdit();
-            SelectedMatrix.EndEdit();
-            SelectedCompositions.EndEdit();
-            MUES.EndEdit();
-        }
-        */
         public BS()
         {
         }
@@ -303,8 +297,7 @@ namespace DB.Tools
             initializeSelectedBindingSources();
 
             initializeMeasurementsBindingSources();
-            //    bindingList = new BindingList<BS>();
-            //  bindingList.Add(this);
+            // bindingList = new BindingList<BS>(); bindingList.Add(this);
 
             // Units.ListChanged += units_ListChanged;
         }

@@ -1,67 +1,59 @@
-﻿//using DB.Interfaces;
+﻿using DB.LINAATableAdapters;
 
 namespace DB
 {
     public partial class LINAA : IAdapter
     {
+        public void DisposePeaksAdapters()
+        {
+            TAM.MeasurementsTableAdapter?.Connection.Close();
+            TAM.MeasurementsTableAdapter?.Dispose();
+
+            TAM.PeaksTableAdapter?.Connection.Close();
+            TAM.PeaksTableAdapter?.Dispose();
+
+            TAM.ToDoTableAdapter?.Connection.Close();
+            TAM.ToDoTableAdapter?.Dispose();
+
+            TAM.MeasurementsTableAdapter = null;
+            TAM.PeaksTableAdapter = null;
+            TAM.ToDoTableAdapter = null;
+        }
+
         public void DisposeSolCoinAdapters()
         {
-            // if (tAM?.CompositionsTableAdapter != null)
-            {
-                tAM?.CompositionsTableAdapter.Connection.Close();
-                tAM?.CompositionsTableAdapter.Dispose();
-            }
-            // if (tAM?.MatrixTableAdapter != null)
-            {
-                tAM?.MatrixTableAdapter.Connection.Close();
-                tAM?.MatrixTableAdapter.Dispose();
-            }
-            // if (tAM?.VialTypeTableAdapter != null)
-            {
-                tAM?.VialTypeTableAdapter.Connection.Close();
-                tAM?.VialTypeTableAdapter.Dispose();
-            }
-            // if (tAM?.GeometryTableAdapter != null)
-            {
-                tAM?.GeometryTableAdapter.Connection.Close();
-                tAM?.GeometryTableAdapter.Dispose();
-            }
-            // if (tAM?.MUESTableAdapter != null)
-            {
-                tAM?.MUESTableAdapter.Connection.Close();
-                tAM?.MUESTableAdapter.Dispose();
-            }
-            // if (tAM?.DetectorsAbsorbersTableAdapter != null)
-            {
-                tAM?.DetectorsAbsorbersTableAdapter.Connection.Close();
-                tAM?.DetectorsAbsorbersTableAdapter.Dispose();
-            }
-            // if (tAM?.DetectorsDimensionsTableAdapter != null)
-            {
-                tAM?.DetectorsDimensionsTableAdapter.Connection.Close();
-                tAM?.DetectorsDimensionsTableAdapter.Dispose();
-            }
-            // if (tAM?.HoldersTableAdapter != null)
-            {
-                tAM?.HoldersTableAdapter.Connection.Close();
-                tAM?.HoldersTableAdapter.Dispose();
-            }
-            // if (tAM?.DetectorsCurvesTableAdapter != null)
-            {
-                tAM?.DetectorsCurvesTableAdapter.Connection.Close();
-                tAM?.DetectorsCurvesTableAdapter.Dispose();
-            }
-            // if (tAM?.SolangTableAdapter != null)
-            {
-                tAM?.SolangTableAdapter.Connection.Close();
-                tAM?.SolangTableAdapter.Dispose();
-            }
+            tAM?.CompositionsTableAdapter.Connection.Close();
+            tAM?.CompositionsTableAdapter.Dispose();
 
-            // if (tAM?.COINTableAdapter != null)
-            {
-                tAM?.COINTableAdapter.Connection.Close();
-                tAM?.COINTableAdapter.Dispose();
-            }
+            tAM?.MatrixTableAdapter.Connection.Close();
+            tAM?.MatrixTableAdapter.Dispose();
+
+            tAM?.VialTypeTableAdapter.Connection.Close();
+            tAM?.VialTypeTableAdapter.Dispose();
+
+            tAM?.GeometryTableAdapter.Connection.Close();
+            tAM?.GeometryTableAdapter.Dispose();
+
+            tAM?.MUESTableAdapter.Connection.Close();
+            tAM?.MUESTableAdapter.Dispose();
+
+            tAM?.DetectorsAbsorbersTableAdapter.Connection.Close();
+            tAM?.DetectorsAbsorbersTableAdapter.Dispose();
+
+            tAM?.DetectorsDimensionsTableAdapter.Connection.Close();
+            tAM?.DetectorsDimensionsTableAdapter.Dispose();
+
+            tAM?.HoldersTableAdapter.Connection.Close();
+            tAM?.HoldersTableAdapter.Dispose();
+
+            tAM?.DetectorsCurvesTableAdapter.Connection.Close();
+            tAM?.DetectorsCurvesTableAdapter.Dispose();
+
+            tAM?.SolangTableAdapter.Connection.Close();
+            tAM?.SolangTableAdapter.Dispose();
+
+            tAM?.COINTableAdapter.Connection.Close();
+            tAM?.COINTableAdapter.Dispose();
 
             tAM.CompositionsTableAdapter = null;
 
@@ -77,40 +69,43 @@ namespace DB
 
             tAM.COINTableAdapter = null;
         }
+
         public void InitializePeaksAdapters()
         {
-            tAM.MeasurementsTableAdapter = new LINAATableAdapters.MeasurementsTableAdapter();
+            tAM.MeasurementsTableAdapter = new MeasurementsTableAdapter();
             adapters.Add(tAM.MeasurementsTableAdapter, tAM.MeasurementsTableAdapter);
-            tAM.PeaksTableAdapter = new LINAATableAdapters.PeaksTableAdapter();
+            tAM.PeaksTableAdapter = new PeaksTableAdapter();
             adapters.Add(tAM.PeaksTableAdapter, tAM.PeaksTableAdapter);
             // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
             //this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
         }
+
         public void InitializeSolCoinAdapters()
         {
-            tAM.MatrixTableAdapter = new LINAATableAdapters.MatrixTableAdapter();
+            tAM.MatrixTableAdapter = new MatrixTableAdapter();
 
             adapters.Add(tAM.MatrixTableAdapter, tAM.MatrixTableAdapter);
-            tAM.CompositionsTableAdapter = new LINAATableAdapters.CompositionsTableAdapter();
+            tAM.CompositionsTableAdapter = new CompositionsTableAdapter();
             adapters.Add(tAM.CompositionsTableAdapter, tAM.CompositionsTableAdapter);
-            tAM.VialTypeTableAdapter = new LINAATableAdapters.VialTypeTableAdapter();
+            tAM.VialTypeTableAdapter = new VialTypeTableAdapter();
             adapters.Add(tAM.VialTypeTableAdapter, tAM.VialTypeTableAdapter);
-            tAM.GeometryTableAdapter = new LINAATableAdapters.GeometryTableAdapter();
+            tAM.GeometryTableAdapter = new GeometryTableAdapter();
             adapters.Add(tAM.GeometryTableAdapter, tAM.GeometryTableAdapter);
-            tAM.MUESTableAdapter = new LINAATableAdapters.MUESTableAdapter();
+            tAM.MUESTableAdapter = new MUESTableAdapter();
             adapters.Add(tAM.MUESTableAdapter, tAM.MUESTableAdapter);
-            tAM.DetectorsAbsorbersTableAdapter = new LINAATableAdapters.DetectorsAbsorbersTableAdapter();
+
+            tAM.DetectorsAbsorbersTableAdapter = new DetectorsAbsorbersTableAdapter();
             adapters.Add(tAM.DetectorsAbsorbersTableAdapter, tAM.DetectorsAbsorbersTableAdapter);
-            tAM.DetectorsDimensionsTableAdapter = new LINAATableAdapters.DetectorsDimensionsTableAdapter();
+            tAM.DetectorsDimensionsTableAdapter = new DetectorsDimensionsTableAdapter();
             adapters.Add(tAM.DetectorsDimensionsTableAdapter, tAM.DetectorsDimensionsTableAdapter);
-            tAM.HoldersTableAdapter = new LINAATableAdapters.HoldersTableAdapter();
+            tAM.HoldersTableAdapter = new HoldersTableAdapter();
             adapters.Add(tAM.HoldersTableAdapter, tAM.HoldersTableAdapter);
 
-            tAM.DetectorsCurvesTableAdapter = new LINAATableAdapters.DetectorsCurvesTableAdapter();
+            tAM.DetectorsCurvesTableAdapter = new DetectorsCurvesTableAdapter();
             adapters.Add(tAM.DetectorsCurvesTableAdapter, tAM.DetectorsCurvesTableAdapter);
-            tAM.SolangTableAdapter = new LINAATableAdapters.SolangTableAdapter();
+            tAM.SolangTableAdapter = new SolangTableAdapter();
             adapters.Add(tAM.SolangTableAdapter, tAM.SolangTableAdapter);
-            tAM.COINTableAdapter = new LINAATableAdapters.COINTableAdapter();
+            tAM.COINTableAdapter = new COINTableAdapter();
             adapters.Add(tAM.COINTableAdapter, tAM.COINTableAdapter);
         }
     }

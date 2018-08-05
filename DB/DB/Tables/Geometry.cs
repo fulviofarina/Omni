@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -52,8 +52,10 @@ namespace DB
             public EventHandler<EventData> CalcParametersHandler;
             public EventHandler CleanMUESHandler;
             public EventHandler CleanCompositionsHandler;
-          //  public EventHandler MUESRequiredHandler;
+
+            // public EventHandler MUESRequiredHandler;
             public EventHandler AddCompositionsHandler;
+
             /*
                public  new DataColumn MatrixNameColumn
                    {
@@ -89,7 +91,7 @@ namespace DB
                 }
             }
 
-          //  public EventHandler CleanMUESPicturesHandler;
+            // public EventHandler CleanMUESPicturesHandler;
 
             /// <summary>
             /// Gets a non-repeated list of matrices IDs from wich their mass attenuation
@@ -97,7 +99,6 @@ namespace DB
             /// </summary>
             public void DataColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
-           
                 MatrixRow m = (MatrixRow)e.Row;
                 try
                 {
@@ -109,8 +110,6 @@ namespace DB
                     (this.DataSet as LINAA).AddException(ex);
                 }
             }
-
-          
 
             /// <summary>
             /// Retabifies the Matrix Composition

@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA
     {
-
-        public partial class UnitRow: Rsx.Dumb.ICalculableRow
+        public partial class UnitRow : ICalculableRow
         {
             protected internal bool isBusy = false; // { get; set; }
 
@@ -18,7 +17,6 @@ namespace DB
                 get { return isBusy; }
                 set
                 {
-
                     isBusy = value;
 
                     if (isBusy)
@@ -56,13 +54,12 @@ namespace DB
                 }
             }
         }
+
         /// <summary>
         /// Cleaned
         /// </summary>
-        public partial class UnitRow : IRow
+        public partial class UnitRow : IRow, ISetteable
         {
-       
-
             public void Check()
             {
                 foreach (DataColumn column in this.tableUnit.Columns)
@@ -166,7 +163,7 @@ namespace DB
 
             public MatSSFDataTable GetMatSSFTableWithFile(string path)
             {
-                LINAA.MatSSFDataTable dt = new MatSSFDataTable();
+                MatSSFDataTable dt = new MatSSFDataTable();
 
                 if (!IsSSFTableNull())
                 {
@@ -179,7 +176,7 @@ namespace DB
 
             public MatSSFDataTable GetMatSSFTableNoFile()
             {
-                LINAA.MatSSFDataTable dt = new MatSSFDataTable();
+                MatSSFDataTable dt = new MatSSFDataTable();
 
                 if (!IsSSFTableNull())
                 {
@@ -305,7 +302,7 @@ namespace DB
             /// can override all data sample.IrradiationRequest.ChannelRow
             /// </summary>
             /// <param name="c"></param>
-            internal void setChannel(ref LINAA.ChannelsRow c)
+            internal void setChannel(ref ChannelsRow c)
             {
                 //associate the channel
                 this.ChannelsRow = c;

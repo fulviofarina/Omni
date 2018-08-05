@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace DB.Tools
 {
     public partial class BS
     {
-
         protected const string ENABLE_CONTROLS_FIELD = "EnabledControls";
-
 
         protected static string CHECKED = "CHECKED";
         protected static string ERROR = "ERROR";
@@ -89,11 +86,12 @@ namespace DB.Tools
         public BindingSource Units;
         public BindingSource Vial;
 
-     //   protected internal BindingList<BS> bindingList;
+        // protected internal BindingList<BS> bindingList;
         protected internal Hashtable bindings;
+
         protected internal bool enabledControls = false;
         protected internal Interface Interface;
-  
+
         /// <summary>
         /// Notifies the controls the BS is busy calculating
         /// </summary>
@@ -105,8 +103,6 @@ namespace DB.Tools
         protected internal CheckerDelegate hasErrorsMethod = null;
 
         protected internal delegate bool CheckerDelegate();
-
-      
 
         protected internal bool showErrors = true;
 

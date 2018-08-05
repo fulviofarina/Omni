@@ -1,16 +1,15 @@
-﻿//using DB.Interfaces;
-
-using System.Collections;
+﻿using DB.LINAATableAdapters;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        protected internal static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref TAMDeleteMethod remover)
+        protected internal static bool removeDuplicates(DataTable table, string UniqueField, string IndexField, ref Action<int> remover)
         {
             bool duplicates = false;
 
@@ -43,51 +42,52 @@ namespace DB
             return duplicates;
         }
 
-        protected internal static void disposeIrradiationAdapters(ref LINAATableAdapters.TableAdapterManager tAM)
+        protected internal void disposeComponent()
         {
-            // tAM.CapsulesTableAdapter.Connection.Close();
+            QTA?.Dispose();
+            QTA = null;
+            tAM?.Connection?.Close();
+            tAM?.Dispose();
 
-            // if (tAM.CapsulesTableAdapter != null) tAM.CapsulesTableAdapter.Dispose(); if
-            // (tAM.ChannelsTableAdapter != null) {
+            tAM = null;
+        }
+
+        protected internal void disposeIrradiationAdapters()
+        {
             tAM.ChannelsTableAdapter?.Connection.Close();
             tAM.ChannelsTableAdapter?.Dispose();
-            // } if (tAM.IrradiationRequestsTableAdapter != null) {
+
             tAM.IrradiationRequestsTableAdapter?.Connection.Close();
             tAM.IrradiationRequestsTableAdapter?.Dispose();
-            // } if (tAM.OrdersTableAdapter != null) {
+
             tAM.OrdersTableAdapter?.Connection.Close();
             tAM.OrdersTableAdapter?.Dispose();
-            // } if (tAM.ProjectsTableAdapter != null) {
+
             tAM.ProjectsTableAdapter?.Connection.Close();
             tAM.ProjectsTableAdapter?.Dispose();
-            // }
 
-            // tAM.CapsulesTableAdapter = null;
             tAM.ChannelsTableAdapter = null;
             tAM.IrradiationRequestsTableAdapter = null;
             tAM.OrdersTableAdapter = null;
             tAM.ProjectsTableAdapter = null;
         }
 
-        protected internal static void disposeOtherAdapters(ref LINAATableAdapters.TableAdapterManager tAM)
+        protected internal void disposeOtherAdapters()
         {
-            // if (tAM.ElementsTableAdapter != null) {
             tAM.ElementsTableAdapter?.Connection.Close();
 
             tAM.ElementsTableAdapter?.Dispose();
-            // }
 
-            // if (tAM.SigmasTableAdapter != null) {
             tAM.SigmasTableAdapter?.Connection.Close();
 
             tAM.SigmasTableAdapter?.Dispose();
-            // } if (tAM.SigmasSalTableAdapter != null) {
+
             tAM.SigmasSalTableAdapter?.Connection.Close();
             tAM.SigmasSalTableAdapter?.Dispose();
-            // } if (tAM.ReactionsTableAdapter != null) {
+
             tAM.ReactionsTableAdapter?.Connection.Close();
             tAM.ReactionsTableAdapter?.Dispose();
-            // } if (tAM.NAATableAdapter != null) {
+
             tAM.NAATableAdapter?.Connection.Close();
 
             tAM.NAATableAdapter?.Dispose();
@@ -95,30 +95,18 @@ namespace DB
             tAM.tStudentTableAdapter?.Connection.Close();
             tAM.tStudentTableAdapter?.Dispose();
 
-            // tAM.LINES_FISTableAdapter?.Connection.Close(); tAM.LINES_FISTableAdapter?.Dispose();
-
-            // tAM.LINESTableAdapter?.Connection.Close(); tAM.LINESTableAdapter?.Dispose();
-
-            //  }
-            //if (tAM.pValuesTableAdapter != null)
-            //  {
             tAM.pValuesTableAdapter?.Connection.Close();
             tAM.pValuesTableAdapter?.Dispose();
-            // } if (tAM.k0NAATableAdapter != null) {
+
             tAM.k0NAATableAdapter?.Connection.Close();
             tAM.k0NAATableAdapter?.Dispose();
-            // } if (tAM.YieldsTableAdapter != null) {
+
             tAM.YieldsTableAdapter?.Connection.Close();
             tAM.YieldsTableAdapter?.Dispose();
-            // }
 
-            //  if (tAM.SchAcqsTableAdapter != null)
-            // {
-            //{
             tAM.SchAcqsTableAdapter?.Connection.Close();
             tAM.SchAcqsTableAdapter?.Dispose();
-            //}
-            // }
+
             tAM.YieldsTableAdapter = null;
             tAM.ElementsTableAdapter = null;
             tAM.SigmasTableAdapter = null;
@@ -131,67 +119,27 @@ namespace DB
             tAM.tStudentTableAdapter = null;
         }
 
-        protected internal static void disposePeaksAdapters(ref LINAATableAdapters.TableAdapterManager TAM)
+        protected internal void disposeSampleAdapters()
         {
-            // this.tAM.IRequestsAveragesTableAdapter.Connection.Close(); this.tAM.IPeakAveragesTableAdapter.Connection.Close();
+            tAM.UnitTableAdapter?.Connection.Close();
 
-            //      if (TAM.MeasurementsTableAdapter != null)
-            //{
-            TAM.MeasurementsTableAdapter?.Connection.Close();
-            TAM.MeasurementsTableAdapter?.Dispose();
-            // } if (TAM.PeaksTableAdapter != null) {
-            TAM.PeaksTableAdapter?.Connection.Close();
-            TAM.PeaksTableAdapter?.Dispose();
-            // } if (TAM.ToDoTableAdapter != null) {
-            TAM.ToDoTableAdapter?.Connection.Close();
-            TAM.ToDoTableAdapter?.Dispose();
-            // } if (TAM.IRequestsAveragesTableAdapter != null)
-            // TAM.IRequestsAveragesTableAdapter.Dispose(); if (TAM.IPeakAveragesTableAdapter !=
-            // null) TAM.IPeakAveragesTableAdapter.Dispose();
+            tAM.UnitTableAdapter?.Dispose();
 
-            TAM.MeasurementsTableAdapter = null;
-            TAM.PeaksTableAdapter = null;
-            TAM.ToDoTableAdapter = null;
-            // this.tAM.IRequestsAveragesTableAdapter = null; this.tAM.IPeakAveragesTableAdapter = null;
-        }
+            tAM.MonitorsFlagsTableAdapter?.Connection.Close();
+            tAM.MonitorsFlagsTableAdapter?.Dispose();
 
-        protected internal static void disposeSampleAdapters(ref LINAATableAdapters.TableAdapterManager tAM)
-        {
-            // if (tAM.UnitTableAdapter != null)
-            {
-                tAM.UnitTableAdapter?.Connection.Close();
+            tAM.MonitorsTableAdapter?.Connection.Close();
 
-                tAM.UnitTableAdapter?.Dispose();
-            }
+            tAM.MonitorsTableAdapter?.Dispose();
 
-            // if (tAM.MatSSFTableAdapter != null) { tAM.MatSSFTableAdapter?.Connection.Close();
+            tAM.SamplesTableAdapter?.Connection.Close();
+            tAM.SamplesTableAdapter?.Dispose();
 
-            // tAM.MatSSFTableAdapter?.Dispose(); } if (tAM.MonitorsFlagsTableAdapter != null)
-            {
-                tAM.MonitorsFlagsTableAdapter?.Connection.Close();
-                tAM.MonitorsFlagsTableAdapter?.Dispose();
-            }
-            // if (tAM.MonitorsTableAdapter != null)
-            {
-                tAM.MonitorsTableAdapter?.Connection.Close();
+            tAM.StandardsTableAdapter?.Connection.Close();
+            tAM.StandardsTableAdapter?.Dispose();
 
-                tAM.MonitorsTableAdapter?.Dispose();
-            }
-            // if (tAM.SamplesTableAdapter != null)
-            {
-                tAM.SamplesTableAdapter?.Connection.Close();
-                tAM.SamplesTableAdapter?.Dispose();
-            }
-            // if (tAM.StandardsTableAdapter != null)
-            {
-                tAM.StandardsTableAdapter?.Connection.Close();
-                tAM.StandardsTableAdapter?.Dispose();
-            }
-            // if (tAM.SubSamplesTableAdapter != null)
-            {
-                tAM.SubSamplesTableAdapter?.Connection.Close();
-                tAM.SubSamplesTableAdapter?.Dispose();
-            }
+            tAM.SubSamplesTableAdapter?.Connection.Close();
+            tAM.SubSamplesTableAdapter?.Dispose();
 
             // tAM.MatSSFTableAdapter = null;
             tAM.UnitTableAdapter = null;
@@ -202,40 +150,40 @@ namespace DB
             tAM.SubSamplesTableAdapter = null;
         }
 
-        protected internal static void initializeIrradiationAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
+        protected internal void initializeIrradiationAdapters()
         {
             // tAM.CapsulesTableAdapter = new LINAATableAdapters.CapsulesTableAdapter();
-            tAM.ChannelsTableAdapter = new LINAATableAdapters.ChannelsTableAdapter();
+            tAM.ChannelsTableAdapter = new ChannelsTableAdapter();
             adapters.Add(tAM.ChannelsTableAdapter, tAM.ChannelsTableAdapter);
-            tAM.IrradiationRequestsTableAdapter = new LINAATableAdapters.IrradiationRequestsTableAdapter();
+            tAM.IrradiationRequestsTableAdapter = new IrradiationRequestsTableAdapter();
             adapters.Add(tAM.IrradiationRequestsTableAdapter, tAM.IrradiationRequestsTableAdapter);
-            tAM.OrdersTableAdapter = new LINAATableAdapters.OrdersTableAdapter();
+            tAM.OrdersTableAdapter = new OrdersTableAdapter();
             adapters.Add(tAM.OrdersTableAdapter, tAM.OrdersTableAdapter);
-            tAM.ProjectsTableAdapter = new LINAATableAdapters.ProjectsTableAdapter();
+            tAM.ProjectsTableAdapter = new ProjectsTableAdapter();
             adapters.Add(tAM.ProjectsTableAdapter, tAM.ProjectsTableAdapter);
         }
 
-        protected internal static void InitializeOtherAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
+        protected internal void InitializeOtherAdapters()
         {
-            tAM.ElementsTableAdapter = new LINAATableAdapters.ElementsTableAdapter();
+            tAM.ElementsTableAdapter = new ElementsTableAdapter();
             adapters.Add(tAM.ElementsTableAdapter, tAM.ElementsTableAdapter);
-            tAM.SigmasTableAdapter = new LINAATableAdapters.SigmasTableAdapter();
+            tAM.SigmasTableAdapter = new SigmasTableAdapter();
             adapters.Add(tAM.SigmasTableAdapter, tAM.SigmasTableAdapter);
-            tAM.SigmasSalTableAdapter = new LINAATableAdapters.SigmasSalTableAdapter();
+            tAM.SigmasSalTableAdapter = new SigmasSalTableAdapter();
             adapters.Add(tAM.SigmasSalTableAdapter, tAM.SigmasSalTableAdapter);
-            tAM.ReactionsTableAdapter = new LINAATableAdapters.ReactionsTableAdapter();
+            tAM.ReactionsTableAdapter = new ReactionsTableAdapter();
             adapters.Add(tAM.ReactionsTableAdapter, tAM.ReactionsTableAdapter);
-            tAM.NAATableAdapter = new LINAATableAdapters.NAATableAdapter();
+            tAM.NAATableAdapter = new NAATableAdapter();
             adapters.Add(tAM.NAATableAdapter, tAM.NAATableAdapter);
-            tAM.pValuesTableAdapter = new LINAATableAdapters.pValuesTableAdapter();
+            tAM.pValuesTableAdapter = new pValuesTableAdapter();
             adapters.Add(tAM.pValuesTableAdapter, tAM.pValuesTableAdapter);
-            tAM.k0NAATableAdapter = new LINAATableAdapters.k0NAATableAdapter();
+            tAM.k0NAATableAdapter = new k0NAATableAdapter();
             adapters.Add(tAM.k0NAATableAdapter, tAM.k0NAATableAdapter);
-            tAM.SchAcqsTableAdapter = new LINAATableAdapters.SchAcqsTableAdapter();
+            tAM.SchAcqsTableAdapter = new SchAcqsTableAdapter();
             adapters.Add(tAM.SchAcqsTableAdapter, tAM.SchAcqsTableAdapter);
-            tAM.YieldsTableAdapter = new LINAATableAdapters.YieldsTableAdapter();
+            tAM.YieldsTableAdapter = new YieldsTableAdapter();
             adapters.Add(tAM.YieldsTableAdapter, tAM.YieldsTableAdapter);
-            tAM.tStudentTableAdapter = new LINAATableAdapters.tStudentTableAdapter();
+            tAM.tStudentTableAdapter = new tStudentTableAdapter();
             adapters.Add(tAM.tStudentTableAdapter, tAM.tStudentTableAdapter);
             // tAM.LINESTableAdapter = new LINAATableAdapters.LINESTableAdapter();
             // adapters.Add(tAM.LINESTableAdapter, tAM.LINESTableAdapter); tAM.LINES_FISTableAdapter
@@ -243,23 +191,19 @@ namespace DB
             // adapters.Add(tAM.LINES_FISTableAdapter, tAM.LINES_FISTableAdapter);
         }
 
-      
-
-        protected internal static void initializeSampleAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
+        protected internal void initializeSampleAdapters()
         {
-            // tAM.MatSSFTableAdapter = new LINAATableAdapters.MatSSFTableAdapter();
-            // adapters.Add(tAM.MatSSFTableAdapter, tAM.MatSSFTableAdapter);
-            tAM.UnitTableAdapter = new LINAATableAdapters.UnitTableAdapter();
+            tAM.UnitTableAdapter = new UnitTableAdapter();
             adapters.Add(tAM.UnitTableAdapter, tAM.UnitTableAdapter);
-            tAM.MonitorsFlagsTableAdapter = new LINAATableAdapters.MonitorsFlagsTableAdapter();
+            tAM.MonitorsFlagsTableAdapter = new MonitorsFlagsTableAdapter();
             adapters.Add(tAM.MonitorsFlagsTableAdapter, tAM.MonitorsFlagsTableAdapter);
-            tAM.MonitorsTableAdapter = new LINAATableAdapters.MonitorsTableAdapter();
+            tAM.MonitorsTableAdapter = new MonitorsTableAdapter();
             adapters.Add(tAM.MonitorsTableAdapter, tAM.MonitorsTableAdapter);
-            tAM.SamplesTableAdapter = new LINAATableAdapters.SamplesTableAdapter();
+            tAM.SamplesTableAdapter = new SamplesTableAdapter();
             adapters.Add(tAM.SamplesTableAdapter, tAM.SamplesTableAdapter);
-            tAM.StandardsTableAdapter = new LINAATableAdapters.StandardsTableAdapter();
+            tAM.StandardsTableAdapter = new StandardsTableAdapter();
             adapters.Add(tAM.StandardsTableAdapter, tAM.StandardsTableAdapter);
-            tAM.SubSamplesTableAdapter = new LINAATableAdapters.SubSamplesTableAdapter();
+            tAM.SubSamplesTableAdapter = new SubSamplesTableAdapter();
             adapters.Add(tAM.SubSamplesTableAdapter, tAM.SubSamplesTableAdapter);
 
             tAM.SubSamplesTableAdapter.Adapter.AcceptChangesDuringUpdate = true;
@@ -269,23 +213,10 @@ namespace DB
             // tAM.SubSamplesTableAdapter.Adapter.RowUpdating += new System.Data.SqlClient.SqlRowUpdatingEventHandler(Adapter_RowUpdating);
         }
 
-        protected internal static void initializeToDoAdapters(ref LINAATableAdapters.TableAdapterManager tAM, ref Hashtable adapters)
+        protected internal void initializeToDoAdapters()
         {
-            tAM.ToDoTableAdapter = new LINAATableAdapters.ToDoTableAdapter();
+            tAM.ToDoTableAdapter = new ToDoTableAdapter();
             adapters.Add(tAM.ToDoTableAdapter, tAM.ToDoTableAdapter);
-        }
-
-        protected internal void disposeComponent()
-        {
-            QTA?.Dispose();
-            QTA = null;
-
-            //if (tAM != null)
-            //{
-            tAM?.Connection?.Close();
-            tAM?.Dispose();
-            //}
-            tAM = null;
         }
     }
 }

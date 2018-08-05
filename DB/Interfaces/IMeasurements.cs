@@ -1,17 +1,21 @@
-﻿using static DB.LINAA;
+﻿using System.Collections.Generic;
+using static DB.LINAA;
 
 namespace DB
 {
     public interface IMeasurements
     {
+        void PopulatePeaksHL(int? id);
 
-         void PopulatePeaksHL(int? id);
+        PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc);
 
-         PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc);
-         MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge);
-         MeasurementsRow AddMeasurement(string measName);
+        MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge);
 
-         MeasurementsRow FindByMeas(string measName);
+        MeasurementsRow AddMeasurement(string measName);
 
+        MeasurementsRow FindByMeas(string measName);
+
+        void CheckMeasurements(ref IEnumerable<MeasurementsRow> measurements);
+      //  void CheckMeasurements();
     }
 }

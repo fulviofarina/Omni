@@ -88,15 +88,15 @@ namespace DB
             public bool ShouldSelectIt(bool CheckForSSF)
             {
                 if (this.NeedsMeasurements) return false;
-                IEnumerable<LINAA.MeasurementsRow> measurements = GetMeasurementsRows();
+                IEnumerable<MeasurementsRow> measurements = GetMeasurementsRows();
                 if (base.HasErrors)
                 {
-                    foreach (LINAA.MeasurementsRow m in measurements) m.Selected = false;
+                    foreach (MeasurementsRow m in measurements) m.Selected = false;
                     return false;
                 }
                 else
                 {
-                    foreach (LINAA.MeasurementsRow m in measurements) m.Selected = m.ShouldSelectIt();
+                    foreach (MeasurementsRow m in measurements) m.Selected = m.ShouldSelectIt();
                     measurements = LINAA.FindSelected(measurements).ToList();
                     if (measurements.Count() != 0) return true;
                     else

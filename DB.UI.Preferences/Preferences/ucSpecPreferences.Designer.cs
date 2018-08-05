@@ -50,7 +50,7 @@
             System.Windows.Forms.Label label17;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.monLenBox = new System.Windows.Forms.TextBox();
-            this.monBox = new System.Windows.Forms.TextBox();
+            this.timeDivBox = new System.Windows.Forms.TextBox();
             this.sampleModelBox = new System.Windows.Forms.TextBox();
             this.monitorModelBox = new System.Windows.Forms.TextBox();
             this.posLenBox = new System.Windows.Forms.TextBox();
@@ -281,6 +281,43 @@
             label14.TabIndex = 43;
             label14.Text = "Time Divider";
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            label15.ForeColor = System.Drawing.Color.SeaShell;
+            label15.Location = new System.Drawing.Point(212, 531);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(204, 21);
+            label15.TabIndex = 46;
+            label15.Text = "use lowercase s, m, d or y";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(label16, 2);
+            label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            label16.ForeColor = System.Drawing.Color.Lime;
+            label16.Location = new System.Drawing.Point(3, 244);
+            label16.Name = "label16";
+            label16.Size = new System.Drawing.Size(413, 21);
+            label16.TabIndex = 47;
+            label16.Text = "Labelling Model";
+            label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(label17, 2);
+            label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            label17.ForeColor = System.Drawing.Color.SeaShell;
+            label17.Location = new System.Drawing.Point(3, 153);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(413, 21);
+            label17.TabIndex = 48;
+            label17.Text = "Search Window (keV) = A + (B * Energy)";
+            label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoScroll = true;
@@ -294,7 +331,7 @@
             this.tableLayoutPanel1.Controls.Add(label15, 1, 23);
             this.tableLayoutPanel1.Controls.Add(this.monLenBox, 1, 24);
             this.tableLayoutPanel1.Controls.Add(label14, 0, 23);
-            this.tableLayoutPanel1.Controls.Add(this.monBox, 0, 24);
+            this.tableLayoutPanel1.Controls.Add(this.timeDivBox, 0, 24);
             this.tableLayoutPanel1.Controls.Add(label12, 1, 11);
             this.tableLayoutPanel1.Controls.Add(this.sampleModelBox, 0, 12);
             this.tableLayoutPanel1.Controls.Add(label13, 0, 11);
@@ -375,15 +412,14 @@
             this.monLenBox.TabIndex = 45;
             this.monLenBox.Visible = false;
             // 
-            // monBox
+            // timeDivBox
             // 
-            this.monBox.BackColor = System.Drawing.Color.White;
-            this.monBox.ForeColor = System.Drawing.Color.Black;
-            this.monBox.Location = new System.Drawing.Point(3, 555);
-            this.monBox.Name = "monBox";
-            this.monBox.ReadOnly = true;
-            this.monBox.Size = new System.Drawing.Size(50, 29);
-            this.monBox.TabIndex = 44;
+            this.timeDivBox.BackColor = System.Drawing.Color.White;
+            this.timeDivBox.ForeColor = System.Drawing.Color.Black;
+            this.timeDivBox.Location = new System.Drawing.Point(3, 555);
+            this.timeDivBox.Name = "timeDivBox";
+            this.timeDivBox.Size = new System.Drawing.Size(50, 29);
+            this.timeDivBox.TabIndex = 44;
             // 
             // sampleModelBox
             // 
@@ -604,43 +640,6 @@
             this.projectBox.TabIndex = 28;
             this.projectBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            label15.ForeColor = System.Drawing.Color.SeaShell;
-            label15.Location = new System.Drawing.Point(212, 531);
-            label15.Name = "label15";
-            label15.Size = new System.Drawing.Size(204, 21);
-            label15.TabIndex = 46;
-            label15.Text = "use lowercase s, m, d or y";
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(label16, 2);
-            label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            label16.ForeColor = System.Drawing.Color.Lime;
-            label16.Location = new System.Drawing.Point(3, 244);
-            label16.Name = "label16";
-            label16.Size = new System.Drawing.Size(413, 21);
-            label16.TabIndex = 47;
-            label16.Text = "Labelling Model";
-            label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(label17, 2);
-            label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            label17.ForeColor = System.Drawing.Color.SeaShell;
-            label17.Location = new System.Drawing.Point(3, 153);
-            label17.Name = "label17";
-            label17.Size = new System.Drawing.Size(413, 21);
-            label17.TabIndex = 48;
-            label17.Text = "Search Window (keV) = A + (B * Energy)";
-            label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ucSpecPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,6 +677,6 @@
         private System.Windows.Forms.TextBox sampleModelBox;
         private System.Windows.Forms.TextBox monitorModelBox;
         private System.Windows.Forms.TextBox monLenBox;
-        private System.Windows.Forms.TextBox monBox;
+        private System.Windows.Forms.TextBox timeDivBox;
     }
 }

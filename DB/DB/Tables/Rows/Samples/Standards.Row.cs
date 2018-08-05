@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Rsx.Dumb;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -21,11 +20,6 @@ namespace DB
                     Check(column);
                 }
                 // return this.GetColumnsInError().Count() != 0;
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                throw new NotImplementedException();
             }
 
             public void Check(DataColumn column)

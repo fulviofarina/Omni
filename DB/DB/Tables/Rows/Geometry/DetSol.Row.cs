@@ -1,5 +1,5 @@
-﻿using System.Data;
-using Rsx.Dumb;
+﻿using Rsx.Dumb;
+using System.Data;
 
 namespace DB
 {
@@ -25,11 +25,6 @@ namespace DB
             {
                 EC.CheckNull(Column, this);
                 // throw new NotImplementedException();
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                //throw new NotImplementedException();
             }
         }
     }

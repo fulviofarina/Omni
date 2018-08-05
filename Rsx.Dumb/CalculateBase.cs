@@ -7,14 +7,33 @@ using System.Text.RegularExpressions;
 ///FULVIO
 namespace Rsx.Dumb
 {
-
+    public interface ISetteable
+    {
+        void SetParent<T>(ref T rowParent, object[] args = null);
+    }
     public interface ICalculableRow
     {
         bool IsBusy { set; get; }
         bool ToDo { set; get; }
 
     }
+    public interface IRow
+    {
+        void Check();
 
+        bool HasErrors();
+
+        void Check(DataColumn Column);
+    }
+    public interface IColumn
+    {
+        // void DataColumnChanged(object sender, DataColumnChangeEventArgs e);
+
+        IEnumerable<DataColumn> ForbiddenNullCols
+        {
+            get;
+        }
+    }
     public static partial class RegEx
     {
         public static void DecomposeFormula(string formula, ref List<string> elements, ref List<string> moles)

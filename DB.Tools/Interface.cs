@@ -39,6 +39,7 @@ namespace DB.Tools
         /// </summary>
         public IPreferences IPreferences;
 
+        public IExpressions IExpressions;
         /// <summary>
         /// The reporter interface
         /// </summary>
@@ -72,6 +73,7 @@ namespace DB.Tools
             IAdapter = (IAdapter)aux;
             IStore = (IStore)aux;
             IDB = (IDB)aux;
+            IExpressions = (IExpressions)aux;
 
             //attach interface classes
             Interface inter = this;

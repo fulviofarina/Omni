@@ -2,7 +2,7 @@
 {
 
 
-    partial class LINAA
+    public partial class LINAA
     {
 
     }

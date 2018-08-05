@@ -1,99 +1,98 @@
 ﻿using System.Data;
+using static DB.LINAA;
 
 namespace DB
 {
     public interface IDB
     {
-        void PopulateColumnExpresions();
+        //void PopulateColumnExpresions();
 
         // LINAA.AcquisitionsDataTable Acquisitions { get; }
-        LINAA.BlanksDataTable Blanks { get; }
+        BlanksDataTable Blanks { get; }
 
-        LINAA.ChannelsDataTable Channels { get; }
-        LINAA.COINDataTable COIN { get; }
-        LINAA.CompositionsDataTable Compositions { get; }
-        LINAA.ContactPersonsDataTable ContactPersons { get; }
-        LINAA.CustomerDataTable Customer { get; }
-        LINAA.DetectorsAbsorbersDataTable DetectorsAbsorbers { get; }
-        LINAA.DetectorsCurvesDataTable DetectorsCurves { get; }
-        LINAA.DetectorsDimensionsDataTable DetectorsDimensions { get; }
-        LINAA.ElementsDataTable Elements { get; }
-        LINAA.ExceptionsDataTable Exceptions { get; }
-        LINAA.GammasDataTable Gammas { get; }
-        LINAA.GeometryDataTable Geometry { get; }
-
-        LINAA.HoldersDataTable Holders { get; }
-        LINAA.IRequestsAveragesDataTable IRequestsAverages { get; }
+        ChannelsDataTable Channels { get; }
+        COINDataTable COIN { get; }
+        CompositionsDataTable Compositions { get; }
+        ContactPersonsDataTable ContactPersons { get; }
+        CustomerDataTable Customer { get; }
         string DataSetName { get; }
+        DetectorsAbsorbersDataTable DetectorsAbsorbers { get; }
+        DetectorsCurvesDataTable DetectorsCurves { get; }
+        DetectorsDimensionsDataTable DetectorsDimensions { get; }
+        ElementsDataTable Elements { get; }
+        ExceptionsDataTable Exceptions { get; }
+        GammasDataTable Gammas { get; }
+        GeometryDataTable Geometry { get; }
 
-        LINAA.IrradiationRequestsDataTable IrradiationRequests { get; }
+        HoldersDataTable Holders { get; }
+        IRequestsAveragesDataTable IRequestsAverages { get; }
+        IrradiationRequestsDataTable IrradiationRequests { get; }
 
-        LINAA.k0NAADataTable k0NAA { get; }
+        k0NAADataTable k0NAA { get; }
+        MatrixDataTable Matrix { get; }
+        MatSSFDataTable MatSSF { get; }
         string[] MatSSFTYPES { get; }
-        LINAA.MatrixDataTable Matrix { get; }
+        MeasurementsDataTable Measurements { get; }
 
-        LINAA.MatSSFDataTable MatSSF { get; }
+        MonitorsDataTable Monitors { get; }
 
-        LINAA.MeasurementsDataTable Measurements { get; }
+        MonitorsFlagsDataTable MonitorsFlags { get; }
 
-        LINAA.MonitorsDataTable Monitors { get; }
+        MUESDataTable MUES { get; }
 
-        LINAA.MonitorsFlagsDataTable MonitorsFlags { get; }
+        NAADataTable NAA { get; }
 
-        LINAA.MUESDataTable MUES { get; }
+        OrdersDataTable Orders { get; }
 
-        LINAA.NAADataTable NAA { get; }
+        PeaksDataTable Peaks { get; }
 
-        LINAA.OrdersDataTable Orders { get; }
+        PeaksHLDataTable PeaksHL { get; }
 
-        LINAA.PeaksDataTable Peaks { get; }
+        PreferencesDataTable Preferences { get; }
 
-        LINAA.PeaksHLDataTable PeaksHL { get; }
+        ProjectsDataTable Projects { get; }
 
-        LINAA.PreferencesDataTable Preferences { get; }
+        pValuesDataTable pValues { get; }
 
-        LINAA.ProjectsDataTable Projects { get; }
+        ReactionsDataTable Reactions { get; }
 
-        LINAA.pValuesDataTable pValues { get; }
-
-        LINAA.ReactionsDataTable Reactions { get; }
-
-        LINAA.RefMaterialsDataTable RefMaterials { get; }
+        RefMaterialsDataTable RefMaterials { get; }
 
         DataRelationCollection Relations { get; }
 
-        LINAA.SamplesDataTable Samples { get; }
+        SamplesDataTable Samples { get; }
 
-        LINAA.SchAcqsDataTable SchAcqs { get; }
+        SchAcqsDataTable SchAcqs { get; }
 
         SchemaSerializationMode SchemaSerializationMode { get; set; }
 
-        LINAA.SigmasDataTable Sigmas { get; }
+        SigmasDataTable Sigmas { get; }
 
-        LINAA.SigmasSalDataTable SigmasSal { get; }
+        SigmasSalDataTable SigmasSal { get; }
 
-        LINAA.SolangDataTable Solang { get; }
+        SolangDataTable Solang { get; }
+
+        SpecPrefDataTable SpecPref { get; }
 
         // string FolderPath { get; set; }
-        LINAA.SSFPrefDataTable SSFPref { get; }
+        SSFPrefDataTable SSFPref { get; }
 
-        LINAA.StandardsDataTable Standards { get; }
-        LINAA.SubSamplesDataTable SubSamples { get; }
+        StandardsDataTable Standards { get; }
+        SubSamplesDataTable SubSamples { get; }
         DataTableCollection Tables { get; }
-        LINAA.ToDoDataTable ToDo { get; }
-        LINAA.ToDoAvgDataTable ToDoAvg { get; }
-        LINAA.ToDoAvgUncDataTable ToDoAvgUnc { get; }
-        LINAA.ToDoDataDataTable ToDoData { get; }
+        ToDoDataTable ToDo { get; }
+        ToDoAvgDataTable ToDoAvg { get; }
+        ToDoAvgUncDataTable ToDoAvgUnc { get; }
+        ToDoDataDataTable ToDoData { get; }
 
-        LINAA.ToDoResDataTable ToDoRes { get; }
-        LINAA.ToDoResAvgDataTable ToDoResAvg { get; }
-        LINAA.UnitDataTable Unit { get; }
-        LINAA.VialTypeDataTable VialType { get; }
-        LINAA.YieldsDataTable Yields { get; }
-        LINAA.XCOMPrefDataTable XCOMPref { get; }
-        LINAA.SpecPrefDataTable SpecPref { get; }
-
+        ToDoResDataTable ToDoRes { get; }
+        ToDoResAvgDataTable ToDoResAvg { get; }
+        UnitDataTable Unit { get; }
+        VialTypeDataTable VialType { get; }
+        XCOMPrefDataTable XCOMPref { get; }
+        YieldsDataTable Yields { get; }
         void AcceptChanges();
+
         void CheckMatrixToDoes();
     }
 }

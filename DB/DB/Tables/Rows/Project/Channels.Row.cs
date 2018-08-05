@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -23,11 +23,6 @@ namespace DB
                 DataColumn[] colsInE = this.GetColumnsInError();
                 return colsInE.Intersect(this.tableChannels.ForbiddenNullCols)
                     .Count() != 0;
-            }
-
-            public void SetParent<T>(ref T row, object[] args = null)
-            {
-                // throw new NotImplementedException();
             }
 
             public void Check(DataColumn Column)

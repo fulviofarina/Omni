@@ -25,11 +25,11 @@ namespace DB
             public void RemoveDuplicates()
             {
                 HashSet<string> hs = new HashSet<string>();
-                IEnumerable<LINAA.ExceptionsRow> ordered = this.OrderByDescending(o => o.Date);
+                IEnumerable<ExceptionsRow> ordered = this.OrderByDescending(o => o.Date);
                 ordered = ordered.TakeWhile(o => !hs.Add(o.StackTrace));
                 for (int i = ordered.Count() - 1; i >= 0; i--)
                 {
-                    LINAA.ExceptionsRow e = ordered.ElementAt(i);
+                    ExceptionsRow e = ordered.ElementAt(i);
                     e.Delete();
                 }
 

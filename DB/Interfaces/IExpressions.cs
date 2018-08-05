@@ -7,7 +7,7 @@ namespace DB
     {
         void PopulateColumnExpresions();
 
-        void PopulateSelectedExpression(bool setexpression);
+        // void populateSelectedExpression(bool setexpression);
 
         // bool RemoveDuplicates(DataTable table, string UniqueField, string IndexField, ref
         // DB.LINAA.TAMDeleteMethod remover);

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using DB.Properties;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -11,36 +10,33 @@ namespace DB
     {
         public partial class SpecPrefDataTable : IColumn
         {
-
-        
+            private IEnumerable<DataColumn> forbiddenNullCols;
 
             public IEnumerable<DataColumn> ForbiddenNullCols
             {
                 get
                 {
-                    return null;
-                    /*
-                    return new DataColumn[] {
-                            this.windowAColumn,
-                            this.windowBColumn,
-                            this.minAreaColumn,
-                             maxUncColumn
-
-                             };
-                             */
+                    if
+                        (forbiddenNullCols == null)
+                    {
+                        forbiddenNullCols = new DataColumn[] {
+                            windowAColumn,
+                            windowBColumn,
+                            minAreaColumn,
+                             maxUncColumn,
+                        ModelMonitorColumn,
+                        TimeDividerColumn,
+                        ModelSampleColumn };
+                    }
+                    return forbiddenNullCols;
                 }
             }
-
-          
         }
 
         partial class SpecPrefRow : IRow
         {
-           
-
             public void Check()
             {
-
                 foreach (DataColumn item in this.tableSpecPref.Columns)
                 {
                     Check(item);
@@ -49,6 +45,8 @@ namespace DB
 
             public void Check(DataColumn Column)
             {
+        //        if (!this.tableSpecPref.ForbiddenNullCols.Contains(Column)) return;
+
                 bool nulo = EC.CheckNull(Column, this);
 
                 if (Column == tableSpecPref.windowAColumn)
@@ -73,57 +71,26 @@ namespace DB
                     {
                         ModelMonitor = "PPPPMMMMMDp#";
                     }
+                     SetLabellingParameters(true);
                 }
                 else if (Column == tableSpecPref.ModelSampleColumn)
                 {
                     if (nulo)
                     {
                         ModelSample = "PPPPSSDp#";
-                        SetIdxLength(false);
+                        // SetLabellingParameters(false);
                     }
+                     SetLabellingParameters(false);
                 }
                 else if (Column == tableSpecPref.TimeDividerColumn)
                 {
                     if (nulo) TimeDivider = "m";
+                    
+                    //the user selected a good time divider (s, m, y,d,h)                  
+                    bool ok =  Rsx.Math.MyMath.IsTimeDividerOk(TimeDivider);
+                    if (!ok) TimeDivider = "m";
+
                 }
-            }
-
-            public void SetIdxLength(bool monitor = false)
-            {
-              
-
-                    string model = ModelSample;
-                    if (monitor) model = ModelMonitor;
-
-                
-                    char s = 'S';
-                    if (monitor)
-                    {
-                        s = 'M';
-                    }
-                    SampleIdx = Convert.ToInt16(model.IndexOf(s));
-                    SampleLength = Convert.ToInt16(model.LastIndexOf(s) - SampleIdx);
-                    SampleLength++;
-
-
-                ProjectIdx = Convert.ToInt16(model.IndexOf('P'));
-                ProjectLength = Convert.ToInt16(model.LastIndexOf('P') - ProjectIdx);
-                ProjectLength++;
-
-
-                    PositionIdx = Convert.ToInt16(model.IndexOf('p'));
-                    PositionLength = Convert.ToInt16(model.LastIndexOf('p') - PositionIdx);
-                    PositionLength++;
-
-                    MeasIdx = Convert.ToInt16(model.IndexOf('#'));
-                    MeasLength = Convert.ToInt16(model.LastIndexOf('#') - MeasIdx);
-                    MeasLength++;
-
-                    DetectorIdx = Convert.ToInt16(model.IndexOf('D'));
-                    DetectorLength = Convert.ToInt16(model.LastIndexOf('D') - DetectorIdx);
-                    DetectorLength++;
-
-
             }
 
             public new bool HasErrors()
@@ -131,15 +98,36 @@ namespace DB
                 return base.HasErrors;
             }
 
-           
-            public void SetParent<T>(ref T rowParent, object[] args = null)
+            public void SetLabellingParameters(bool monitor = false)
             {
-                // throw new NotImplementedException();
+                string model = ModelSample;
+                if (monitor) model = ModelMonitor;
+
+                char s = 'S';
+                if (monitor)
+                {
+                    s = 'M';
+                }
+                SampleIdx = Convert.ToInt16(model.IndexOf(s));
+                SampleLength = Convert.ToInt16(model.LastIndexOf(s) - SampleIdx);
+                SampleLength++;
+
+                ProjectIdx = Convert.ToInt16(model.IndexOf('P'));
+                ProjectLength = Convert.ToInt16(model.LastIndexOf('P') - ProjectIdx);
+                ProjectLength++;
+
+                PositionIdx = Convert.ToInt16(model.IndexOf('p'));
+                PositionLength = Convert.ToInt16(model.LastIndexOf('p') - PositionIdx);
+                PositionLength++;
+
+                MeasIdx = Convert.ToInt16(model.IndexOf('#'));
+                MeasLength = Convert.ToInt16(model.LastIndexOf('#') - MeasIdx);
+                MeasLength++;
+
+                DetectorIdx = Convert.ToInt16(model.IndexOf('D'));
+                DetectorLength = Convert.ToInt16(model.LastIndexOf('D') - DetectorIdx);
+                DetectorLength++;
             }
-
-            
         }
-
-      
     }
 }

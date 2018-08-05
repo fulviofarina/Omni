@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Rsx.Dumb;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -9,8 +9,6 @@ namespace DB
     {
         public partial class SSFPrefDataTable : IColumn
         {
-            // private EventHandler checkChanged2;
-
             private DataColumn[] autoCal = null;
 
             private DataColumn[] doCols = null;
@@ -140,12 +138,6 @@ namespace DB
                 return base.HasErrors;
             }
 
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                //throw new NotImplementedException();
-            }
-
-            // bool isBusy = false;
             /*
             private void checkAutoCalculation(DataColumn column)
             {

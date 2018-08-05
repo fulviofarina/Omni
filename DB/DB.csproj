@@ -96,9 +96,12 @@
     <Compile Include="Adapter\Adapter.Others.cs" />
     <Compile Include="Adapter\Adapter.SOLCOIN.cs" />
     <Compile Include="DB\Preferences\SpecPreferences.cs" />
+    <Compile Include="DB\Tables\Expressions.cs" />
     <Compile Include="DB\Tables\DB.cs" />
     <Compile Include="DB\Preferences\XCOMPreferences.cs" />
     <Compile Include="DB\Preferences\SSFPreferences.cs" />
+    <Compile Include="DB\Tables\Measurements.cs" />
+    <Compile Include="Interfaces\RowCols\ISetteable.cs" />
     <Compile Include="LINAA.cs">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
@@ -111,13 +114,13 @@
     <Compile Include="DB\Tables\Rows\Geometry\Geometry.Row.cs" />
     <Compile Include="DB\Tables\Rows\Geometry\Matrix.Row.cs" />
     <Compile Include="DB\Tables\Exceptions.cs" />
-    <Compile Include="DB\Tables\Rows\Geometry\Measurements.Row.cs" />
+    <Compile Include="DB\Tables\Rows\Measurements\Measurements.Row.cs" />
     <Compile Include="DB\Tables\Rows\Samples\MonitorsRow..cs" />
     <Compile Include="DB\Tables\Rows\Samples\Samples.Row.Internal.cs" />
     <Compile Include="DB\Tables\Rows\Samples\Samples.Row.cs" />
     <Compile Include="DB\Tables\Rows\Samples\Units.Row.cs" />
-    <Compile Include="Interfaces\IColumn.cs" />
-    <Compile Include="Interfaces\IRow.cs" />
+    <Compile Include="Interfaces\RowCols\IColumn.cs" />
+    <Compile Include="Interfaces\RowCols\IRow.cs" />
     <Compile Include="Interfaces\IIrradiations.cs" />
     <Compile Include="Interfaces\IProjects.cs" />
     <Compile Include="Interfaces\IOrders.cs" />
@@ -158,10 +161,9 @@
     <Compile Include="Populate\Populate.Geometry.cs" />
     <Compile Include="Interfaces\IToDoes.cs" />
     <Compile Include="Populate\Populate.Components.cs" />
-    <Compile Include="Basura\Main.cs" />
     <Compile Include="DB\Tables\Rows\Project\Channels.Row.cs" />
     <Compile Include="DB\Tables\Projects.cs" />
-    <Compile Include="DB\Tables\Rows\Samples\Element.Row.cs" />
+    <Compile Include="DB\Tables\Rows\Geometry\Element.Row.cs" />
     <Compile Include="Populate\Populate.Nuclear.cs" />
     <Compile Include="DB\Preferences\Preferences.cs" />
     <Compile Include="DB\Tables\Rows\Project\Irradiations.Row.cs" />
@@ -173,13 +175,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QM.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB\Tables\Rows\Samples\IPeaksAvg.Row.cs" />
-    <Compile Include="DB\Tables\Rows\Samples\IReqAvg.Row.cs" />
+    <Compile Include="DB\Tables\Rows\Measurements\IPeaksAvg.Row.cs" />
+    <Compile Include="DB\Tables\Rows\Measurements\IReqAvg.Row.cs" />
     <Compile Include="DB\Tables\Rows\Samples\Standards.Row.cs" />
-    <Compile Include="DB\Tables\Rows\Samples\Peak.Row.cs" />
+    <Compile Include="DB\Tables\Rows\Measurements\Peak.Row.cs" />
     <Compile Include="DB\Tables\Samples.cs" />
     <Compile Include="Populate\Samples\Populate.Samples.cs" />
-    <Compile Include="DB\Tables\Rows\Geometry\SchedAcqs.Row.cs" />
+    <Compile Include="DB\Tables\Rows\Measurements\SchedAcqs.Row.cs" />
     <Compile Include="Populate\Populate.SchedAcqs.cs" />
     <Compile Include="Static\Comparers.cs" />
     <Compile Include="Static\Main.cs" />

@@ -2,32 +2,17 @@
 using System.Collections.Generic;
 using System.Data;
 
-//using DB.Interfaces;
-
 namespace DB
 {
     public partial class LINAA : INuclear
     {
-
-
-        public void DeleteSigmaColumns()
-        {
-            DataColumn col = Sigmas.Columns["Element1"];
-            Sigmas.Columns.Remove(col);
-            col = Sigmas.Columns["Target1"];
-            Sigmas.Columns.Remove(col);
-            // col = Interface.IDB.Sigmas.Columns["Radioisotope1"]; Interface.IDB.Sigmas.Columns.Remove(col);
-            col = Sigmas.Columns["ID1"];
-            Sigmas.Columns.Remove(col);
-        }
-
-        //
+       
         public void CleanSigmas()
         {
-            IEnumerable<SigmasRow> rows = Sigmas;//.Where(o => o.Field<int>("ID1") == 1).ToList();
+            IEnumerable<SigmasRow> rows = Sigmas;
 
             HashSet<string> hs = new HashSet<string>();
-            SigmasDataTable table = new LINAA.SigmasDataTable();
+            SigmasDataTable table = new SigmasDataTable();
             foreach (SigmasRow item in rows)
             {
                 if (!hs.Add(item.Element + item.Target + item.Radioisotope)) continue;
@@ -38,6 +23,17 @@ namespace DB
             // deleteSigmaColumns();
 
             Sigmas.Merge(table);
+        }
+
+        public void DeleteSigmaColumns()
+        {
+            DataColumn col = Sigmas.Columns["Element1"];
+            Sigmas.Columns.Remove(col);
+            col = Sigmas.Columns["Target1"];
+            Sigmas.Columns.Remove(col);
+            // col = Interface.IDB.Sigmas.Columns["Radioisotope1"]; Interface.IDB.Sigmas.Columns.Remove(col);
+            col = Sigmas.Columns["ID1"];
+            Sigmas.Columns.Remove(col);
         }
 
         public void PopulateElements()
@@ -57,31 +53,15 @@ namespace DB
             }
         }
 
-        public void PopulatepValues()
+        public void Populatek0NAA()
         {
             try
             {
-                this.tablepValues.BeginLoadData();
-                this.tablepValues.Clear();
-                this.TAM.pValuesTableAdapter.Fill(this.tablepValues);
-                this.tablepValues.AcceptChanges();
-                this.tablepValues.EndLoadData();
-            }
-            catch (SystemException ex)
-            {
-                this.AddException(ex);
-            }
-        }
-
-        public void PopulatetStudent()
-        {
-            try
-            {
-                this.tabletStudent.BeginLoadData();
-                this.tabletStudent.Clear();
-                this.TAM.tStudentTableAdapter.Fill(this.tabletStudent);
-                this.tabletStudent.AcceptChanges();
-                this.tabletStudent.EndLoadData();
+                this.tablek0NAA.BeginLoadData();
+                this.tablek0NAA.Clear();
+                this.TAM.k0NAATableAdapter.Fill(this.tablek0NAA);
+                this.tablek0NAA.AcceptChanges();
+                this.tablek0NAA.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -105,15 +85,15 @@ namespace DB
             }
         }
 
-        public void Populatek0NAA()
+        public void PopulatepValues()
         {
             try
             {
-                this.tablek0NAA.BeginLoadData();
-                this.tablek0NAA.Clear();
-                this.TAM.k0NAATableAdapter.Fill(this.tablek0NAA);
-                this.tablek0NAA.AcceptChanges();
-                this.tablek0NAA.EndLoadData();
+                this.tablepValues.BeginLoadData();
+                this.tablepValues.Clear();
+                this.TAM.pValuesTableAdapter.Fill(this.tablepValues);
+                this.tablepValues.AcceptChanges();
+                this.tablepValues.EndLoadData();
             }
             catch (SystemException ex)
             {
@@ -164,6 +144,22 @@ namespace DB
                 this.TAM.SigmasSalTableAdapter.Fill(this.tableSigmasSal);
                 this.tableSigmasSal.AcceptChanges();
                 this.tableSigmasSal.EndLoadData();
+            }
+            catch (SystemException ex)
+            {
+                this.AddException(ex);
+            }
+        }
+
+        public void PopulatetStudent()
+        {
+            try
+            {
+                this.tabletStudent.BeginLoadData();
+                this.tabletStudent.Clear();
+                this.TAM.tStudentTableAdapter.Fill(this.tabletStudent);
+                this.tabletStudent.AcceptChanges();
+                this.tabletStudent.EndLoadData();
             }
             catch (SystemException ex)
             {

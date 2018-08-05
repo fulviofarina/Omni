@@ -1,22 +1,11 @@
-﻿//using DB.Interfaces;
+﻿using DB.LINAATableAdapters;
 using System.Data;
 using System.Data.SqlClient;
-using DB.LINAATableAdapters;
 
 namespace DB
 {
     public partial class LINAA : IAdapter
     {
-        public void SetConnections(/*string localDB, string developerDB,*/ string defaultConnection)
-        {
-            //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
-            //  Properties.Settings.Default["developerDB"] = developerDB;
-            //     Properties.Settings.Default["localDB"] = localDB;
-            Properties.Settings.Default["NAAConnectionString"] = defaultConnection;
-
-            Properties.Settings.Default.Save();
-        }
-
         public string ChangeConnection
         {
             set
@@ -53,13 +42,13 @@ namespace DB
                 tAMException = null;
                 try
                 {
-                    System.Data.ConnectionState st = tAM.Connection.State;
+                    ConnectionState st = tAM.Connection.State;
 
-                    if (st == System.Data.ConnectionState.Open)
+                    if (st == ConnectionState.Open)
                     {
                         this.tAM.Connection.Close();
                     }
-                    if (st == System.Data.ConnectionState.Closed)
+                    if (st == ConnectionState.Closed)
                     {
                         this.tAM.Connection.Open();
                     }
@@ -95,10 +84,10 @@ namespace DB
         public void DisposeAdapters()
         {
             if (tAM == null) return;
-            disposePeaksAdapters(ref tAM);
-            disposeSampleAdapters(ref tAM);
-            disposeOtherAdapters(ref tAM);
-            disposeIrradiationAdapters(ref tAM);
+            DisposePeaksAdapters();
+            disposeSampleAdapters();
+            disposeOtherAdapters();
+            disposeIrradiationAdapters();
             DisposeSolCoinAdapters();
             disposeComponent();
         }
@@ -108,37 +97,32 @@ namespace DB
         /// </summary>
         public void InitializeAdapters()
         {
-            //probando esta linea
             InitializeSolCoinAdapters();
-            initializeIrradiationAdapters(ref tAM, ref adapters);
-            initializeSampleAdapters(ref tAM, ref adapters);
+            initializeIrradiationAdapters();
+            initializeSampleAdapters();
             InitializePeaksAdapters();
-            initializeToDoAdapters(ref tAM, ref adapters);
-            InitializeOtherAdapters(ref tAM, ref adapters);
-
-            // ChangeConnection = Properties.Settings.Default.LIMSConnectionString; this.TAM.Connection.Close();
-
-            // this.TAM.Connection.Open();
-
-            // this.TAM.Connection.Database. = "LIMS"; this.TAM.Connection.Close();
-            // this.TAM.Connection.ConnectionString =
-            // DB.Properties.Settings.Default.NAAConnectionString; this.TAM.Connection.Open();
+            initializeToDoAdapters();
+            InitializeOtherAdapters();
         }
 
         public void InitializeComponent()
         {
-            // ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            this.tAM = new TableAdapterManager();
+            this.qTA = new QTA();
 
-            this.tAM = new DB.LINAATableAdapters.TableAdapterManager();
-            this.qTA = new DB.LINAATableAdapters.QTA();
-
-            this.tAM.UpdateOrder = DB.LINAATableAdapters.TableAdapterManager.UpdateOrderOption.UpdateInsertDelete;
-            //  this.EnforceConstraints = false;
-            //this.Locale = new System.Globalization.CultureInfo("");
+            this.tAM.UpdateOrder = TableAdapterManager.UpdateOrderOption.UpdateInsertDelete;
 
             adapters = new System.Collections.Hashtable();
+        }
 
-            // ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+        public void SetConnections(/*string localDB, string developerDB,*/ string defaultConnection)
+        {
+            //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
+            //  Properties.Settings.Default["developerDB"] = developerDB;
+            //     Properties.Settings.Default["localDB"] = localDB;
+            Properties.Settings.Default["NAAConnectionString"] = defaultConnection;
+
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using static DB.LINAA;
 
 /// <summary>
@@ -9,7 +8,7 @@ namespace DB
 {
     public interface IGeometry
     {
-       MatrixRow AddMatrix(int? SubSamplesID = null, int? templateID = null);
+        MatrixRow AddMatrix(int? SubSamplesID = null, int? templateID = null);
 
         VialTypeRow AddVial(bool aRabbit);
 
@@ -21,7 +20,7 @@ namespace DB
 
         void PopulateGeometry();
 
-   //     void PopulateMatrix();
+        // void PopulateMatrix();
         void PopulateMatrixSQL();
 
         void PopulateUnits();
@@ -30,12 +29,11 @@ namespace DB
 
         void PopulateMUESList();
 
-       
-   
-
         void AddCompositions(ref MatrixRow m, ref IEnumerable<CompositionsRow> compos, IList<string[]> ls = null, bool code = true);
-      //  void AddMUES(ref MUESDataTable mu, ref MatrixRow m);
+
+        // void AddMUES(ref MUESDataTable mu, ref MatrixRow m);
         MUESDataTable GetMUES(ref MatrixRow m, bool sql = true);
+
         MUESDataTable GetMUES(double el, double eh, int matrixID);
     }
 }

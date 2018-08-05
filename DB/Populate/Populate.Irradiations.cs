@@ -1,21 +1,16 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Linq;
-using Rsx.Dumb;
-
-//using DB.Interfaces;
 
 namespace DB
 {
     public partial class LINAA : IIrradiations
     {
-
-
-
-        public int? FindIrradiationID(String project)
+        public int? FindIrradiationID(string project)
         {
             int? IrrReqID = null;
 
-            LINAA.IrradiationRequestsRow irr = this.FindIrradiationByCode(project.Trim().ToUpper());
+            IrradiationRequestsRow irr = this.FindIrradiationByCode(project.Trim().ToUpper());
             if (!EC.IsNuDelDetch(irr)) IrrReqID = irr.IrradiationRequestsID;
             return IrrReqID;
         }
@@ -37,7 +32,7 @@ namespace DB
 
             if (projetNoCd.Length > 2)
             {
-                if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(DB.Properties.Misc.Cd) == 0)
+                if (projetNoCd.Substring(projetNoCd.Length - 2).CompareTo(Properties.Misc.Cd) == 0)
                 {
                     projetNoCd = projetNoCd.Replace(DB.Properties.Misc.Cd, null);
                 }
@@ -47,7 +42,7 @@ namespace DB
 
             i.IrradiationStartDateTime = DateTime.Now;
             i.IrradiationCode = projetNoCd;
-          //  return i;
+            // return i;
 
             return i;
         }

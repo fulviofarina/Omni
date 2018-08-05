@@ -1,20 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="DB.LINAA" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>3ev9H//1P129nX///P/f++//v///+b93/7///X/f//8=</HashCode>
-      <FileName>Adapter\Adapter.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="DB.LINAATableAdapters.MeasurementsTableAdapter">
-    <Position X="9.75" Y="1" Width="3.25" />
-    <TypeIdentifier>
-      <HashCode>EESAEGAABAAQAAcgIIAIAAAAACGICEAAoAAAAAAABBE=</HashCode>
-      <FileName>Populate\Populate.Components.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DB.LINAATableAdapters.QTA" Collapsed="true">
     <Position X="2.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
@@ -42,7 +27,7 @@
   <Class Name="DB.Properties.Resources" Collapsed="true">
     <Position X="7.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABRAYAiEACASpQABACFGQQAAcAUANAIABAAIFkG0NA=</HashCode>
+      <HashCode>AABRAYAiEQCASpQABACFGQQAAcAUANAIABAAIFkG0NA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Properties.Samples" Collapsed="true">
@@ -60,7 +45,7 @@
   <Interface Name="DB.IAdapter">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAAgIASAAACAQAAAAAAAABAIAAAgAA=</HashCode>
+      <HashCode>AAAACAAAAAAAAAAAgIAWAAACAQAAAAAAAABAIAAAgAA=</HashCode>
       <FileName>Interfaces\IAdapter.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -137,7 +122,7 @@
   <Interface Name="DB.ISamples" Collapsed="true">
     <Position X="5.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAA0QAAAEUAAAAoAAAAAIEAAUAAAACSBAQAAI=</HashCode>
+      <HashCode>AAAAAAAAAUQAAAEUAAAAoAAAAAIEAAUAAAAASBAAAAI=</HashCode>
       <FileName>Interfaces\ISamples.cs</FileName>
     </TypeIdentifier>
   </Interface>

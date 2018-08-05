@@ -13,7 +13,7 @@ namespace DB
 
         public int GetLastSampleNr(ref IEnumerable<SubSamplesRow> samplesToImport, string project)
         {
-            string _projectNr = System.Text.RegularExpressions.Regex.Replace(project, "[a-z]", String.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            string _projectNr = System.Text.RegularExpressions.Regex.Replace(project, "[a-z]", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             string[] samplesNames = GetSampleNames(ref samplesToImport, _projectNr);
             int[] _samplesNrs = GetSampleNames(samplesNames);
             if (_samplesNrs == null) return 0;

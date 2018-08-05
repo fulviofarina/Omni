@@ -6,6 +6,8 @@ namespace DB
     {
         void InitializeComponent();
 
+        void DisposePeaksAdapters();
+
         // void disposeComponent();
         void DisposeAdapters();
 
@@ -29,6 +31,7 @@ namespace DB
         string Exception { get; }
 
         void SetConnections(/*string localDB, string developerDB, */ string defaultConnection);
+
         void InitializePeaksAdapters();
     }
 }

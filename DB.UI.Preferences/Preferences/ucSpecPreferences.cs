@@ -2,13 +2,16 @@
 using System.Collections;
 using System.Windows.Forms;
 using DB.Tools;
+using static DB.LINAA;
+using System.Collections.Generic;
+using System.Data;
 
 namespace DB.UI
 {
     public interface ISpecPreferences
     {
-        event EventHandler FilterChangedEvent;
-        event EventHandler IndexChangedEvent;
+        event EventHandler CallBackEventHandler;
+       // event EventHandler PreferencesValidated;
         void Set(ref Interface inter);
     }
 
@@ -16,32 +19,20 @@ namespace DB.UI
     {
         protected internal Interface Interface;
    
-        protected internal EventHandler filterChangedEvent = null;
+        protected internal EventHandler callBackHandler = null;
 
-        public event EventHandler FilterChangedEvent
+        public event EventHandler CallBackEventHandler
         {
             add
             {
-                filterChangedEvent += value;
+                callBackHandler += value;
             }
             remove
             {
-                filterChangedEvent -= value;
+                callBackHandler -= value;
             }
         }
-        protected internal EventHandler indexChangedEvent = null;
 
-        public event EventHandler IndexChangedEvent
-        {
-            add
-            {
-                indexChangedEvent += value;
-            }
-            remove
-            {
-                indexChangedEvent -= value;
-            }
-        }
 
         public void Set(ref Interface inter)
         {
@@ -52,14 +43,15 @@ namespace DB.UI
                 setPreferencesbindings();
 
 
-                this.sampleModelBox.KeyUp += indexKey_Up;
-                this.monitorModelBox.KeyUp += indexKey_Up;
-
+               this.sampleModelBox.KeyUp += acceptChanges;
+               this.monitorModelBox.KeyUp += acceptChanges;
 
                 this.windowATextBox.KeyUp += filterKey_up;
                 this.windowBTextBox.KeyUp += filterKey_up;
                 this.minAreaTextBox.KeyUp += filterKey_up;
                 this.maxUncTextBox.KeyUp += filterKey_up;
+
+                this.Validated += validated;
 
 
             }
@@ -68,25 +60,37 @@ namespace DB.UI
                 Interface.IStore.AddException(ex);
             }
         }
-        
+
+        private void validated(object sender, EventArgs e)
+        {
+            if (Visible)
+            {
+                acceptChanges(sender, e);
+                IEnumerable<MeasurementsRow> meas = Interface.IDB.Measurements;
+                Interface.IPopulate.IMeasurements.CheckMeasurements(ref meas);
+            }
+        }
+
         protected internal void filterKey_up(object sender, EventArgs e)
         {
-            filterChangedEvent?.Invoke(sender, e);
+            acceptChanges(sender, e);
+
+            callBackHandler?.Invoke(sender, e);
         }
-        protected internal void indexKey_Up(object sender, EventArgs e)
+        
+        protected internal void acceptChanges(object sender, EventArgs e)
         {
-            if (sender.Equals(sampleModelBox))
-            {
-                Interface.IPreferences.CurrentSpecPref.SetIdxLength(false);
-            }
-            else Interface.IPreferences.CurrentSpecPref.SetIdxLength(true);
-            indexChangedEvent?.Invoke(sender, e);
+            Interface.IPreferences.CurrentSpecPref.AcceptChanges();
         }
+        
 
         protected internal void setCheckStateBindings(ref Hashtable prefbindings)
         {
-            this.fillByHLCheckBox.DataBindings.Add(prefbindings["FillByHL"] as Binding);
-            this.fillBySpectraCheckBox.DataBindings.Add(prefbindings["FillBySpectra"] as Binding);
+            string name = Interface.IDB.Preferences.FillByHLColumn.ColumnName;
+
+            this.fillByHLCheckBox.DataBindings.Add(prefbindings[name] as Binding);
+            name = Interface.IDB.Preferences.FillBySpectraColumn.ColumnName;
+            this.fillBySpectraCheckBox.DataBindings.Add(prefbindings[name] as Binding);
         }
 
         protected internal void setEnableBindings(ref BindingSource bs)
@@ -105,7 +109,6 @@ namespace DB.UI
         protected internal void setPreferencesbindings()
         {
             BindingSource bs = Interface.IBS.Preferences;
-
             Hashtable prefbindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
 
             //checkstate
@@ -121,28 +124,44 @@ namespace DB.UI
 
         private void setValueBindings(ref Hashtable bindings2)
         {
-            this.maxUncTextBox.DataBindings.Add(bindings2["maxUnc"] as Binding);
-            this.minAreaTextBox.DataBindings.Add(bindings2["minArea"] as Binding);
-            this.windowBTextBox.DataBindings.Add(bindings2["windowB"] as Binding);
-            this.windowATextBox.DataBindings.Add(bindings2["windowA"] as Binding);
+            string name = Interface.IDB.SpecPref.maxUncColumn.ColumnName;
+            this.maxUncTextBox.DataBindings.Add(bindings2[name] as Binding);
+             name = Interface.IDB.SpecPref.minAreaColumn.ColumnName;
+            this.minAreaTextBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.windowBColumn.ColumnName;
+            this.windowBTextBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.windowAColumn.ColumnName;
+            this.windowATextBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.MeasIdxColumn.ColumnName;
+            this.measBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.PositionIdxColumn.ColumnName;
+            this.posBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.DetectorIdxColumn.ColumnName;
+            this.detbox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.SampleIdxColumn.ColumnName;
+            this.sampleBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.ProjectIdxColumn.ColumnName;
+            this.projectBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.TimeDividerColumn.ColumnName;
+            this.timeDivBox.DataBindings.Add(bindings2[name] as Binding);
 
-            this.measBox.DataBindings.Add(bindings2["MeasIdx"] as Binding);
-            this.posBox.DataBindings.Add(bindings2["PositionIdx"] as Binding);
-            this.detbox.DataBindings.Add(bindings2["DetectorIdx"] as Binding);
-            this.sampleBox.DataBindings.Add(bindings2["SampleIdx"] as Binding);
-            this.projectBox.DataBindings.Add(bindings2["ProjectIdx"] as Binding);
-         //   this.monBox.DataBindings.Add(bindings2["MonitorIdx"] as Binding);
+            name = Interface.IDB.SpecPref.MeasLengthColumn.ColumnName;
+            this.measNrLenBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.PositionLengthColumn.ColumnName;
+            this.posLenBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.DetectorLengthColumn.ColumnName;
+            this.detLenBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.SampleLengthColumn.ColumnName;
+            this.sampleLenBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.ProjectLengthColumn.ColumnName;
+            this.projectLenBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.ModelSampleColumn.ColumnName;
+            this.sampleModelBox.DataBindings.Add(bindings2[name] as Binding);
+            name = Interface.IDB.SpecPref.ModelMonitorColumn.ColumnName;
+            this.monitorModelBox.DataBindings.Add(bindings2[name] as Binding);
 
 
-            this.measNrLenBox.DataBindings.Add(bindings2["MeasLength"] as Binding);
-            this.posLenBox.DataBindings.Add(bindings2["PositionLength"] as Binding);
-            this.detLenBox.DataBindings.Add(bindings2["DetectorLength"] as Binding);
-            this.sampleLenBox.DataBindings.Add(bindings2["SampleLength"] as Binding);
-            this.projectLenBox.DataBindings.Add(bindings2["ProjectLength"] as Binding);
-        //    this.monLenBox.DataBindings.Add(bindings2["MonitorLength"] as Binding);
-            this.sampleModelBox.DataBindings.Add(bindings2["ModelSample"] as Binding);
-            this.monitorModelBox.DataBindings.Add(bindings2["ModelMonitor"] as Binding);
-
+          
 
         }
 

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using DB.Tools;
+using Rsx.Dumb;
+using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Properties;
-using DB.Tools;
-using Rsx.Dumb;
+using static DB.LINAA;
 
 //using Rsx.CAM;
 
@@ -12,14 +12,13 @@ namespace DB.UI
 {
     public partial class ucHyperLab : UserControl
     {
-        private Interface Interface;
+        private string geoText = "AU";
         private Uri helpFile = new Uri("https://www.researchgate.net/publication/317904672");
-
-
+        private Interface Interface;
         public void CreateHLProjectBox()
         {
             VTools.IGenericBox IBoc = this.project;
-           
+
             IBoc.PopulateListMethod += delegate
             {
                 IBoc.InputProjects = Interface.IPopulate.IProjects.ListOfHLProjects().ToArray();
@@ -31,26 +30,29 @@ namespace DB.UI
 
                 if (IBoc.InputProjects.Contains(projectTXT))
                 {
-                    Interface.IPopulate.LoadProjectHL(projectTXT);
-
+                    Interface.IBS.EnabledControls = false;
+                    Interface.IPopulate.IMeasurements.PopulateMeasurementsGeneric(projectTXT, true);
+                    Interface.IBS.SelectProjectHL(projectTXT);
                     Interface.IPreferences.CurrentPref.LastIrradiationProject = projectTXT;
+
+                    Interface.IBS.EnabledControls = true;
                 }
             };
             //interesting if this workk without binding
             IBoc.SetNoBindingSource();
             IBoc.TextContent = Interface.IPreferences.CurrentPref.LastIrradiationProject;
         }
-        public void Set (ref VTools.IOptions options)
+
+        public void Set(ref VTools.IOptions options)
         {
             if (options == null) return;
 
             EventHandler help = delegate
             {
-                IO.Process("explorer.exe ", string.Empty, helpFile.ToString(),true,false);
+                IO.Process("explorer.exe ", string.Empty, helpFile.ToString(), true, false);
             };
 
             options.HelpClick += help;
-
 
             (options as Control).Dock = DockStyle.Fill;
             TLP2.Controls.Add(options as Control);
@@ -58,47 +60,30 @@ namespace DB.UI
 
         public void Set(ref ISpecPreferences pref)
         {
-            pref.FilterChangedEvent += delegate
+            pref.CallBackEventHandler += delegate
              {
-
+                 MeasurementsRow r = Interface.ICurrent.Measurement as MeasurementsRow;
+                 if (!EC.IsNuDelDetch(r))
+                 {
+                     Interface.IBS.CurrentChanged( r, true, true, false);
+                 }
 
 
              };
 
-            pref.IndexChangedEvent += delegate
-
-             {
-                // Interface.IPreferences.CurrentSpecPref.SetIdxLength();
-
-             };
+          
         }
 
-        private void destroy()
-        {
-            measDGV.DataSource = null;
-            peaksDGV.DataSource = null;
-            gammasDGV.DataSource = null; 
-         //   this.mea.BindingSource = null;
-         //   Dumb.FD(ref this.measBS);
-            Dumb.FD(ref this.measBS);
-            Dumb.FD(ref this.peaksBS);
-            Dumb.FD(ref this.gammasBS);
-            Dumb.FD(ref Linaa);
-        }
         // private CamFileReader reader; private DetectorX preader; public MainForm MainForm;
         public void Set(ref Interface inter)
         {
-
-
             destroy();
-         
+
             this.Interface = inter;
-         //   Linaa = inter.Get();
-            // Interface.IDB.PopulateColumnExpresions(); Interface.IAdapter.InitializeAdapters();
+            // Linaa = inter.Get(); Interface.IDB.PopulateColumnExpresions(); Interface.IAdapter.InitializeAdapters();
 
             // Interface.IPopulate.IDetSol.PopulateDetectorDimensions();
-            //  Interface.IPopulate.IGeometry.PopulateGeometry();
-            //  Interface.IPopulate.IIrradiations.PopulateIrradiationRequests();
+            // Interface.IPopulate.IGeometry.PopulateGeometry(); Interface.IPopulate.IIrradiations.PopulateIrradiationRequests();
             Interface.IDB.Measurements.ProjectColumn.Expression = string.Empty;
             Interface.IDB.Measurements.ProjectColumn.ReadOnly = false;
 
@@ -109,24 +94,22 @@ namespace DB.UI
             this.measDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.peaksDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.gammasDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-            //
-            //  this.geoBox.ComboBox.DisplayMember = "GeometryName";
+            // this.geoBox.ComboBox.DisplayMember = "GeometryName";
 
             // this.geoBox.ComboBox.DataSource = this.Linaa.Geometry;
 
-            //     this.GaTA.Fill(this.Linaa.Gammas);
-       
-        //    HLTA = new LINAATableAdapters.PeaksHLTableAdapter();
+            // this.GaTA.Fill(this.Linaa.Gammas);
+
+            // HLTA = new LINAATableAdapters.PeaksHLTableAdapter();
 
             CreateHLProjectBox();
 
-        //    Rsx.Dumb.BS.LinkBS(ref this.measBS, Interface.IDB.Measurements, string.Empty, "MeasurementStart desc");
-      //      Rsx.Dumb.BS.LinkBS(ref this.peaksBS, Interface.IDB.PeaksHL, string.Empty, "Energy desc");
-     //       Rsx.Dumb.BS.LinkBS(ref this.gammasBS, Interface.IDB.Gammas, string.Empty, "Intensity desc");
+            // Rsx.Dumb.BS.LinkBS(ref this.measBS, Interface.IDB.Measurements, string.Empty,
+            // "MeasurementStart desc"); Rsx.Dumb.BS.LinkBS(ref this.peaksBS, Interface.IDB.PeaksHL,
+            // string.Empty, "Energy desc"); Rsx.Dumb.BS.LinkBS(ref this.gammasBS,
+            // Interface.IDB.Gammas, string.Empty, "Intensity desc");
 
-           // this.CalGeo.Click += new System.EventHandler(this.CalGeo_Click);
-
-
+            // this.CalGeo.Click += new System.EventHandler(this.CalGeo_Click);
 
             /*
             this.peaksBS.CurrentChanged += delegate
@@ -147,19 +130,15 @@ namespace DB.UI
                 }
             };
             this.gammasBS.CurrentChanged += (this.gammasBS_CurrentItemChanged);
-            
-        //    this.samplebox.TextChanged += (this.Fill_Click);
+
+        // this.samplebox.TextChanged += (this.Fill_Click);
             */
-
         }
-
-
-       private string geoText = "AU";// geoBox.Text;
 
         private void CalGeo_Click(object sender, EventArgs e)
         {
-             DB.Tools.SolCoin solcoin = null;
-              LINAA.MeasurementsRow picked = null;//AREGLAR
+            DB.Tools.SolCoin solcoin = null;
+            LINAA.MeasurementsRow picked = null;//AREGLAR
 
             if (solcoin == null) solcoin = new DB.Tools.SolCoin();
 
@@ -175,8 +154,8 @@ namespace DB.UI
                 solcoin.CleanSolidAngles = false;
 
                 solcoin.IntegrationMode = DB.Tools.SolCoin.IntegrationModes.AsPointSource;
-                 solcoin.StoreSolidAngles = true;
-               
+                solcoin.StoreSolidAngles = true;
+
                 solcoin.Energies = Hash.HashFrom<double>(Interface.IDB.PeaksHL.EnergyColumn).ToArray();
 
                 solcoin.DoAll(false);
@@ -184,8 +163,6 @@ namespace DB.UI
             }
             else picked.RowError += "Reference Geometry Data was NOT OK!";
 
-         
-       
             success = solcoin.Gather(geoText, Convert.ToInt16(picked.Position), picked.Detector, "REF", 5);
 
             if (success && solcoin.Exception == null)
@@ -199,23 +176,32 @@ namespace DB.UI
 
                 solcoin.IntegrationMode = DB.Tools.SolCoin.IntegrationModes.AsNonDisk;
                 solcoin.StoreSolidAngles = true;
-             
+
                 solcoin.DoAll(false);
                 solcoin.Merge();
             }
             else picked.RowError += "Geometry Data was NOT OK!";
         }
 
-      
+        private void destroy()
+        {
+            measDGV.DataSource = null;
+            peaksDGV.DataSource = null;
+            gammasDGV.DataSource = null;
+            // this.mea.BindingSource = null; Dumb.FD(ref this.measBS);
+            Dumb.FD(ref this.measBS);
+            Dumb.FD(ref this.peaksBS);
+            Dumb.FD(ref this.gammasBS);
+            Dumb.FD(ref Linaa);
+        }
+        // geoBox.Text;
         private void gammasBS_CurrentItemChanged(object sender, EventArgs e)
         {
-          //  //take this out
-         //   return;
-
+            // //take this out return;
 
             if (gammasBS.Count != 0)
             {
-                 LINAA.PeaksHLRow peak =null; //AREGLAR
+                LINAA.PeaksHLRow peak = null; //AREGLAR
                 LINAA.GammasRow gamma = (LINAA.GammasRow)((DataRowView)gammasBS.Current).Row;
 
                 if (peak != null && peak.MeasurementsRow != null)

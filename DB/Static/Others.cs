@@ -2,6 +2,7 @@
 using Rsx.CAM;
 using Rsx.Dumb;
 
+
 namespace DB
 {
     public partial class LINAA

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Data;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -38,11 +38,6 @@ namespace DB
                 {
                     SetLastMassDate();
                 }
-            }
-
-            public void SetParent<T>(ref T rowParent, object[] args = null)
-            {
-                throw new NotImplementedException();
             }
 
             public new bool HasErrors()
