@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -20,9 +20,9 @@ namespace DB.Tools
                 return p => p.Field<string>(label).CompareTo(WindowsUser) == 0;
             }
         }
+
         private void getPreferenceEvent(object sender, EventData e)
         {
-       
             object[] args = new object[]
             {
             CurrentPref, CurrentXCOMPref, CurrentSSFPref, CurrentSpecPref
@@ -30,7 +30,6 @@ namespace DB.Tools
 
             e.Args = args;
         }
-     
 
         /// <summary>
         /// Reads the preferences files
@@ -98,16 +97,12 @@ namespace DB.Tools
                 path = GetXCOMPreferencesPath();
                 dt = Interface.IDB.XCOMPref;
             }
-            else 
+            else
             {
                 path = GetSpecPreferencesPath();
                 dt = Interface.IDB.SpecPref;
             }
-          
-           
         }
-
-      
 
         /// <summary>
         /// Loads the Current Rows with data
@@ -120,15 +115,13 @@ namespace DB.Tools
 
             findTableAndPath<T>(out dt, out path);
 
-            DataRow row = dt.AsEnumerable().FirstOrDefault(selector) ;
-        //     bool add = false;
+            DataRow row = dt.AsEnumerable().FirstOrDefault(selector);
+            // bool add = false;
 
             if (row == null)
             {
                 Interface.IReport.GenerateUserInfoReport();
-
             }
-          
 
             Type tipo = typeof(T);
 
@@ -143,11 +136,10 @@ namespace DB.Tools
                     p = data.NewPreferencesRow();
                     data.AddPreferencesRow(p);
                     p.WindowsUser = WindowsUser;
-                 
+
                     row = p as DataRow;
                 }
-             //   else p = row as PreferencesRow;
-                
+                // else p = row as PreferencesRow;
             }
             else if (tipo.Equals(typeof(SSFPrefDataTable)))
             {
@@ -160,8 +152,7 @@ namespace DB.Tools
                     data.AddSSFPrefRow(p);
                     row = p as DataRow;
                 }
-             //   else p = row as SSFPrefRow;
-              
+                // else p = row as SSFPrefRow;
             }
             else if (tipo.Equals(typeof(XCOMPrefDataTable)))
             {
@@ -172,12 +163,10 @@ namespace DB.Tools
                     p = data.NewXCOMPrefRow();
                     p.WindowsUser = WindowsUser;
                     data.AddXCOMPrefRow(p);
-          
+
                     row = p as DataRow;
                 }
-            //    else p = row as XCOMPrefRow;
-
-               
+                // else p = row as XCOMPrefRow;
             }
             else if (tipo.Equals(typeof(SpecPrefDataTable)))
             {
@@ -191,15 +180,10 @@ namespace DB.Tools
 
                     row = p as DataRow;
                 }
-                //    else p = row as XCOMPrefRow;
-
-
+                // else p = row as XCOMPrefRow;
             }
 
                  (row as IRow).Check();
-
-
-     
         }
 
         /*

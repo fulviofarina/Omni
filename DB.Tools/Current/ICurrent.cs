@@ -7,7 +7,7 @@ namespace DB.Tools
     {
         DataRow Channel { get; }
         DataRow Irradiation { get; }
-     
+
         DataRow Matrix { get; }
         DataRow Rabbit { get; }
         DataRow Vial { get; }
@@ -16,9 +16,11 @@ namespace DB.Tools
         IEnumerable<DataRow> SubSamples { get; }
         DataRow Unit { get; }
         IEnumerable<DataRow> Units { get; }
-   //     string WindowsUser { get; }
+
+        // string WindowsUser { get; }
         IEnumerable<string> SubSamplesNames { get; }
+
         IEnumerable<string> SubSamplesDescriptions { get; }
-        DataRow Measurement { get;}
+        DataRow Measurement { get; }
     }
 }

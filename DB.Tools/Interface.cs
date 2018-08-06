@@ -40,6 +40,7 @@ namespace DB.Tools
         public IPreferences IPreferences;
 
         public IExpressions IExpressions;
+
         /// <summary>
         /// The reporter interface
         /// </summary>
@@ -84,7 +85,7 @@ namespace DB.Tools
             Current current = new Current(ref IBS, ref inter);
             ICurrent = current;
             Preference pref = new Preference(ref inter);
-            IPreferences = pref ;
+            IPreferences = pref;
 
             //attach interfaces of LINAA (DB)
         }

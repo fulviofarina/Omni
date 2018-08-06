@@ -1,19 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-using DB.Properties;
-using static DB.LINAA;
-using Rsx.Dumb;
+﻿using System.Windows.Forms;
 
 namespace DB.Tools
 {
     public partial class Populate
     {
-    
-
         /// <summary>
         /// No me gusta mucho como quedo
         /// </summary>
-        /// <param name="enterPressed"></param>
+        /// <param name="enterPressed">  </param>
         /// <param name="ProjectOrOrder"></param>
         /// <returns></returns>
         public bool[] LoadProject(bool enterPressed, string ProjectOrOrder)
@@ -54,8 +48,6 @@ namespace DB.Tools
 
             return new bool[] { rejected, isAProjectOrOrder };
         }
-
-       
 
         public bool AddProject(ref string ProjectOrOrder)
         {
@@ -101,10 +93,6 @@ namespace DB.Tools
             ISchedAcqs = (ISchedAcqs)aux;
             IToDoes = (IToDoes)aux;
             IMeasurements = (IMeasurements)aux;
-       
-
         }
-
-
     }
 }

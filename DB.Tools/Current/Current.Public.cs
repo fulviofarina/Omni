@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Rsx.Dumb;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -113,6 +113,7 @@ namespace DB.Tools
                 return (bs.Units.Current as DataRowView)?.Row;
             }
         }
+
         public DataRow Measurement
         {
             get
@@ -157,8 +158,6 @@ namespace DB.Tools
         {
             bs = bss;
             Interface = interfaces;
-
-
         }
     }
 }

@@ -109,17 +109,15 @@ namespace DB.Tools
 
                 filter = column + " = '" + picked.MeasurementID + "'";
 
-               SpecPrefRow pref = Interface.IPreferences.CurrentSpecPref;
+                SpecPrefRow pref = Interface.IPreferences.CurrentSpecPref;
 
-                if (pref!=null)
+                if (pref != null)
                 {
                     column = Interface.IDB.PeaksHL.AreaColumn.ColumnName;
                     filter += " AND " + column + " >= '" + pref.minArea + "'";
                     column = Interface.IDB.PeaksHL.AreaUncertaintyColumn.ColumnName;
                     filter += " AND " + column + " <= '" + pref.maxUnc + "'";
                 }
-
-
             }
 
             PeaksHL.Filter = filter;

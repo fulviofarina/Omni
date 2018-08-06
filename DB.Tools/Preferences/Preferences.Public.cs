@@ -1,10 +1,9 @@
-﻿using System;
+﻿using DB.Properties;
+using System;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
-using DB.Properties;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.Tools
@@ -15,36 +14,31 @@ namespace DB.Tools
 
     public partial class Preference : IPreferences
     {
-
-        public void PopulatePreferences(bool? forceOffline = null, bool? forceAdvEditor =null)
+        public void PopulatePreferences(bool? forceOffline = null, bool? forceAdvEditor = null)
         {
             Interface.IReport.Msg("Populating Preferences", "Preferences loading...");
             // Interface.IPreferences.SavePreferences();
             Interface.IStore.CleanPreferences();
             populatePreferences();
-         //   if (CurrentPref != null)
-         //   {
-                if (forceOffline != null) CurrentPref.Offline = (bool)forceOffline;
-                if (forceAdvEditor != null) CurrentPref.AdvancedEditor = (bool)forceAdvEditor;
-          //  }
+            // if (CurrentPref != null) {
+            if (forceOffline != null) CurrentPref.Offline = (bool)forceOffline;
+            if (forceAdvEditor != null) CurrentPref.AdvancedEditor = (bool)forceAdvEditor;
+            // }
             Interface.IPreferences.SavePreferences();
         }
 
         protected internal Interface Interface;
+
         public Preference(ref Interface interfaces)
         {
             Interface = interfaces;
 
-            // Interface.IDB.SubSamples.AddMatrixHandler += this.addMatrixEvent;
-            // Interface.IPopulate
+            // Interface.IDB.SubSamples.AddMatrixHandler += this.addMatrixEvent; Interface.IPopulate
             Interface.IDB.Matrix.CalcParametersHandler = getPreferenceEvent;
             Interface.IDB.SubSamples.CalcParametersHandler = getPreferenceEvent;
             Interface.IDB.Measurements.CalcParametersHandler = getPreferenceEvent;
-            //   Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferenceEvent;
-
+            // Interface.IPopulate.ISamples.SpectrumCalcParametersHandler = getPreferenceEvent;
         }
-
-     
 
         public bool IsSpectraPathOk
         {
@@ -76,6 +70,7 @@ namespace DB.Tools
                 return Interface.IDB.SpecPref.FirstOrDefault(selector) as SpecPrefRow;
             }
         }
+
         /// <summary>
         /// The current preferences (Main)
         /// </summary>
@@ -111,6 +106,7 @@ namespace DB.Tools
         {
             return Interface.IStore.FolderPath + Resources.XCOMPreferences + XML_EXT;
         }
+
         public string GetSpecPreferencesPath()
         {
             return Interface.IStore.FolderPath + Resources.SpecPreferences + XML_EXT;
@@ -228,7 +224,7 @@ namespace DB.Tools
                 Interface.IStore.AddException(ex);
             }
         }
-        
+
         public void AcceptChanges()
         {
             Interface.IDB.Preferences.AcceptChanges();
@@ -236,7 +232,7 @@ namespace DB.Tools
             Interface.IDB.XCOMPref.AcceptChanges();
             Interface.IDB.SpecPref.AcceptChanges();
         }
-        
+
         public void ReportChanges()
         {
             bool reportChnages = CurrentPref.HasVersion(DataRowVersion.Current);
@@ -249,8 +245,6 @@ namespace DB.Tools
             }
             else Interface.IReport.Msg("No changes to the preferences/settings", "No changes", true);
         }
-
-     
 
         /*
         public void MergePreferences()
