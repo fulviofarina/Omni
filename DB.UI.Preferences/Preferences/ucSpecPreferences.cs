@@ -5,6 +5,7 @@ using DB.Tools;
 using static DB.LINAA;
 using System.Collections.Generic;
 using System.Data;
+using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -45,6 +46,7 @@ namespace DB.UI
 
                this.sampleModelBox.KeyUp += acceptChanges;
                this.monitorModelBox.KeyUp += acceptChanges;
+                this.timeDivBox.KeyUp += acceptChanges;
 
                 this.windowATextBox.KeyUp += filterKey_up;
                 this.windowBTextBox.KeyUp += filterKey_up;
@@ -65,7 +67,7 @@ namespace DB.UI
         {
             if (Visible)
             {
-                acceptChanges(sender, e);
+              //  Interface.IPreferences.CurrentSpecPref.AcceptChanges();
                 IEnumerable<MeasurementsRow> meas = Interface.IDB.Measurements;
                 Interface.IPopulate.IMeasurements.CheckMeasurements(ref meas);
             }
@@ -73,14 +75,22 @@ namespace DB.UI
 
         protected internal void filterKey_up(object sender, EventArgs e)
         {
-            acceptChanges(sender, e);
-
+          //  Interface.IPreferences.CurrentSpecPref.AcceptChanges();
+            MeasurementsRow r = Interface.ICurrent.Measurement as MeasurementsRow;
+            if (!EC.IsNuDelDetch(r))
+            {
+                Interface.IBS.CurrentChanged(r, true, true, false);
+            }
             callBackHandler?.Invoke(sender, e);
         }
         
         protected internal void acceptChanges(object sender, EventArgs e)
         {
-            Interface.IPreferences.CurrentSpecPref.AcceptChanges();
+            TextBox box = sender as TextBox;
+            if (string.IsNullOrEmpty(box.Text)) return;
+            IEnumerable<MeasurementsRow> meas = Caster.Cast<MeasurementsRow>( Interface.IBS.Measurements.List as DataView);
+            Interface.IPopulate.IMeasurements.CheckMeasurements(ref meas);
+            callBackHandler?.Invoke(sender, e);
         }
         
 

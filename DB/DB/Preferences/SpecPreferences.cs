@@ -87,7 +87,7 @@ namespace DB
                     if (nulo) TimeDivider = "m";
                     
                     //the user selected a good time divider (s, m, y,d,h)                  
-                    bool ok =  Rsx.Math.MyMath.IsTimeDividerOk(TimeDivider);
+                    bool ok =  Rsx.Dumb.Caster.IsTimeDividerOk(TimeDivider);
                     if (!ok) TimeDivider = "m";
 
                 }

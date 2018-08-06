@@ -166,7 +166,7 @@ namespace DB
                 SpecPrefRow r = this.tableMeasurements.SpecPrefRow;
                 if (r == null) return;
              
-                double factor = MyMath.GetTimeFactor(r.TimeDivider);
+                double factor = Caster.GetTimeFactor(r.TimeDivider);
           
                     double ct = (double)this.countTimeRaw / factor;
                     if (ct != CountTime) CountTime = ct;

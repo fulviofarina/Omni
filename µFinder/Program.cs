@@ -35,7 +35,7 @@ namespace µFinder
 
                 //set the editor
                 bool noDGVControls = false;
-                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, null, noDGVControls);
+                UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, noDGVControls);
 
           
                 bool showAlready = false;

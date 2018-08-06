@@ -60,18 +60,31 @@ namespace DB.UI
 
         public void Set(ref ISpecPreferences pref)
         {
-            pref.CallBackEventHandler += delegate
+            EventHandler handler = delegate
              {
-                 MeasurementsRow r = Interface.ICurrent.Measurement as MeasurementsRow;
-                 if (!EC.IsNuDelDetch(r))
-                 {
-                     Interface.IBS.CurrentChanged( r, true, true, false);
-                 }
+                 string addAux = Interface.IPreferences.CurrentSpecPref.TimeDivider;
+                 string suffix = Caster.GetTimeDividerSuffix(addAux);
+
+                 liveTimeDGVCol.HeaderText = "LT (" + addAux + ")";
+                 liveTimeDGVCol.ToolTipText = "Live Time in "+ suffix;
+
+                 countTimeDGVCol.HeaderText = "CT (" + addAux + ")";
+                 countTimeDGVCol.ToolTipText = "Count Time in " + suffix;
+
+
+                 rateDGVCol.HeaderText = "Rate (cp" + addAux + ")";
+                 rateDGVCol.ToolTipText = "Count rate in counts per " + suffix;
 
 
              };
 
-          
+            pref.CallBackEventHandler += handler;
+
+            handler.Invoke(null, EventArgs.Empty);
+
+
+
+
         }
 
         // private CamFileReader reader; private DetectorX preader; public MainForm MainForm;

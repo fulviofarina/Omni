@@ -115,6 +115,7 @@ namespace DB
                 try
                 {
                     item.Check();
+                    //item.AcceptChanges();
                 }
                 catch (Exception ex)
                 {

@@ -33,19 +33,28 @@ namespace SpecNav
                 LIMSUI.Start(ref aboutbox, offline, adv,string.Empty);
          
           
-                UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator);
+                UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, true);
 
-                Bitmap bt = DB.Properties.Resources.Matrices;
+
+                bool showAlready = false;
+                LIMSUI.CreateForm(Application.ProductName, ref hl, showAlready);
+
+                Form toShow = hl.ParentForm;
+
+                toShow.WindowState = FormWindowState.Maximized;
+                
+                /*
+            //    Bitmap bt = DB.Properties.Resources.Matrices;
                 Form form = DBForm.CreateForm(ref bt);
                 form.Size = hl.Size;
                 form.Controls.Add(hl);
                 form.Opacity = 100;
                 form.Text = "A spectrum browser for HyperLab users by F. Farina Arboccò";
                 form.WindowState = FormWindowState.Maximized;
-
+                */
           
 
-                Application.Run(form);
+                Application.Run(toShow);
 
             }
             catch (Exception ex)

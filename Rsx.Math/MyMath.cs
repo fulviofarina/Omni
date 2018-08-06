@@ -8,44 +8,7 @@ namespace Rsx.Math
   public partial class MyMath
   {
 
-        public static bool IsTimeDividerOk(string aux)
-        {
-            bool ok = aux.Contains("m");
-            ok = ok || aux.Contains("d");
-            ok = ok || aux.Contains("y");
-            ok = ok || aux.Contains("h");
-            ok = ok || aux.Contains("s");
-            return ok;
-        }
-
-        public static double GetTimeFactor(string timeDivider = "m")
-        {
-            double factor = 1;
-            if (timeDivider.CompareTo("s") == 0)
-            {
-                factor = 1;
-
-            }
-            else if (timeDivider.CompareTo("m") == 0)
-            {
-                factor = 60;
-
-            }
-            else if (timeDivider.CompareTo("h") == 0)
-            {
-                factor = 60 * 60;
-            }
-            else if (timeDivider.CompareTo("d") == 0)
-            {
-                factor = 60 * 60 * 24.0000006;
-            }
-            else if (timeDivider.CompareTo("y") == 0)
-            {
-                factor = 60 * 60 * 24.0000006 * 365.2422;
-            }
-
-            return factor;
-        }
+     
         public static double GetDensity(double mass, double Vol)
     {
       double density = 0;

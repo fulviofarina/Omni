@@ -293,8 +293,9 @@ namespace DB.UI
             Interface.IBS.ShowErrors = false;
 
             hl.Set(ref Interface);
-            hl.Set(ref prefes);
+       
             hl.Set(ref options);
+            hl.Set(ref prefes);
             //   UserControl control = this;
             hl.Dock = DockStyle.Fill;
             // form.AutoSizeMode = AutoSizeMode.GrowOnly;

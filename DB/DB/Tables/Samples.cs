@@ -170,22 +170,7 @@ namespace DB
             }
         }
 
-        partial class IPeakAveragesDataTable
-        {
-            public IPeakAveragesRow NewIPeakAveragesRow(Int32 k0Id, ref SubSamplesRow s)
-            {
-                IPeakAveragesRow ip = this.NewIPeakAveragesRow();
-                this.AddIPeakAveragesRow(ip);
-                ip.k0ID = k0Id;
-                // ip.Radioisotope = iso; ip.Element = sym; ip.Energy = energy;
-                if (!EC.IsNuDelDetch(s))
-                {
-                    ip.Sample = s.SubSampleName;
-                    // if ( !s.IsIrradiationCodeNull()) ip.Project = s.IrradiationCode;
-                }
-                return ip;
-            }
-        }
+       
 
         partial class MonitorsDataTable : IColumn
         {

@@ -91,7 +91,7 @@ namespace DB.UI
 
 
 
-        public static UserControl CreateUI(string controlHeader, object[] args = null, bool noDGVControl = false)
+        public static UserControl CreateUI(string controlHeader, bool noDGVControl = false)
         {
             UserControl control = null;
             Rsx.DGV.Control.Refresher refresher = null;
