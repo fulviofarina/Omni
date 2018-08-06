@@ -1,18 +1,15 @@
-﻿using System;
+﻿using DB.Properties;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using DB.Properties;
 
 //using DB.Interfaces;
-using Rsx.Dumb;
-using System.IO;
 
 namespace DB
 {
     public partial class LINAA : IStore
     {
-
         /*
         public void SaveMatrices(bool offile)
         {
@@ -27,11 +24,9 @@ namespace DB
             }
         }
         */
+
         public bool SaveMUES(ref MUESDataTable mu, ref MatrixRow m, bool sql = true)
         {
-
-
-
             if (sql)
             {
                 IEnumerable<MUESRow> mues = m?.GetMUESRows();
@@ -42,8 +37,6 @@ namespace DB
             bool filesOk = saveMUES_File(ref mu, m);
             return filesOk;
         }
-
-     
 
         public bool SaveTable<T>()
         {
@@ -83,7 +76,6 @@ namespace DB
         {
             if (rows == null) return false;
 
-          
             rows = rows.ToList(); //solidify any query
             if (rows.Count() == 0) return false;
 
@@ -116,7 +108,6 @@ namespace DB
 
             return true;
         }
-
 
         public void Save<T>(ref T row)
         {
@@ -151,9 +142,7 @@ namespace DB
             return path;
         }
 
-
         private string extension = ".xml";
-
 
         public bool SaveLocalCopy(string LIMSPath = "")
         {
@@ -161,14 +150,13 @@ namespace DB
 
             try
             {
-
-                //    string LIMSPath = string.Empty;
+                // string LIMSPath = string.Empty;
                 if (string.IsNullOrEmpty(LIMSPath))
                 {
                     LIMSPath = folderPath + Resources.Backups + Resources.Linaa;
                     makeBackup(LIMSPath);
                 }
-                //     CleanPreferences();
+                // CleanPreferences();
                 CleanOthers();
                 AcceptChanges();
 
@@ -193,7 +181,6 @@ namespace DB
                 System.IO.File.Copy(LIMSPath, LIMSDayPath, true);
                 System.IO.File.Delete(LIMSPath);
             }
-          
         }
 
         /*
@@ -203,12 +190,10 @@ public bool ReadLocalCopy()
 
    try
    {
-
        if (System.IO.File.Exists(LIMSPath))
        {
            ReadXml(LIMSPath, XmlReadMode.ReadSchema);
        }
-
 
        ok = true;
    }
@@ -219,6 +204,7 @@ public bool ReadLocalCopy()
    return ok;
 }
 */
+
         public bool SaveTables(ref IEnumerable<DataTable> tables)
         {
             bool ok = false;
@@ -240,9 +226,5 @@ public bool ReadLocalCopy()
 
             return ok;
         }
-
-
     }
-
- 
 }
