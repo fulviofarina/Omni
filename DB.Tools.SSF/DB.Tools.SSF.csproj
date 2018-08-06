@@ -89,7 +89,7 @@
       <Project>{e8086c4f-0dd5-4058-9f8f-abe43c43b161}</Project>
       <Name>DB.UI.Preferences</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx\Rsx.SQL.csproj">
+    <ProjectReference Include="..\Rsx.SQL\Rsx.SQL.csproj">
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
       <Name>Rsx.SQL</Name>
     </ProjectReference>

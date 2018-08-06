@@ -107,7 +107,7 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Rsx\Rsx.SQL.csproj">
+    <ProjectReference Include="..\Rsx.SQL\Rsx.SQL.csproj">
       <Project>{9f9e4341-5ff3-47f6-876f-a7b9c4e4faed}</Project>
       <Name>Rsx.SQL</Name>
     </ProjectReference>
