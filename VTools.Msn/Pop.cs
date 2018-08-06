@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Speech.Synthesis;
+using System.Windows.Forms;
+
 namespace VTools
 {
     public partial class Pop : UserControl, IPop
@@ -31,21 +32,20 @@ namespace VTools
             }
         }
 
-       public string LastSpokenMessage
+        public string LastSpokenMessage
         {
             get
             {
                 return _LAST_MSG_SPEAK;
             }
-
         }
+
         public string LastMessage
         {
             get
             {
                 return _LAST_MSG;
             }
-
         }
 
         public string CurrentMessage
@@ -54,8 +54,6 @@ namespace VTools
             {
                 return this.textBoxDescription.Text;
             }
-         
-
         }
 
         public string LogFilePath
@@ -70,11 +68,8 @@ namespace VTools
                 logFilePath = value;
 
                 FillLog("**************************STARTED**************************");
-
             }
         }
-
-      
 
         public void MakeForm()
         {
@@ -108,7 +103,7 @@ namespace VTools
             // f.StartPosition = FormStartPosition.CenterScreen; f.Opacity = 0;
         }
 
-        public void Msg(string msg, string title, object ok=null, bool accumulate = false)
+        public void Msg(string msg, string title, object ok = null, bool accumulate = false)
         {
             EventHandler hdl = delegate
             {
@@ -134,16 +129,13 @@ namespace VTools
                 else if (ok.GetType().Equals(typeof(int)))
                 {
                     makeProgressIcon((int)ok);
-
                 }
             }
         }
 
-        private void messageMainFunction( string msg, string title, bool accumulate = false)
+        private void messageMainFunction(string msg, string title, bool accumulate = false)
         {
-           
-               
-                    try
+            try
             {
                 _LAST_MSG = this.textBoxDescription.Text;
                 if (accumulate) this.textBoxDescription.Text = _LAST_MSG + "\n" + msg;
@@ -152,19 +144,11 @@ namespace VTools
 
                 FillLog(msg);
 
-             
-                //    Show();
-                //  Application.DoEvents();
-
-
+                // Show(); Application.DoEvents();
             }
             catch (Exception ex)
-                    {
-                         
-                      
-                    }
-                 
-              
+            {
+            }
         }
 
         public void FillLog(string msg)
@@ -172,28 +156,27 @@ namespace VTools
             System.IO.File.AppendAllText(logFilePath, DateTime.Now.ToLocalTime() + "\t" + msg + "\n");
         }
 
-        string reporAppender = string.Empty;
+        private string reporAppender = string.Empty;
 
         public void ReportProgress(int percentage)
         {
             //    EventHandler hdl = delegate
             //{
-        //    makeProgressIcon(percentage);
+            //    makeProgressIcon(percentage);
             //this.notify.Icon = Rsx.Notifier.MakeIcon(percentage.ToString(), seg, System.Drawing.Color.White);
 
-            //    Application.DoEvents();
+            // Application.DoEvents();
 
             string msg = "Loading... ";
             string title = "Please wait...";
             if (percentage == 0) reporAppender = string.Empty;
 
-
             reporAppender += percentage.ToString() + "\n";
-         
+
             if (percentage == 100)
             {
                 msg = "Loading completed! ";
-          //      makeDefinedIcon(":)", Color.White);
+                // makeDefinedIcon(":)", Color.White);
                 title = "Ready...";
 
                 FillLog(reporAppender);
@@ -201,21 +184,15 @@ namespace VTools
 
             Msg(msg, title, percentage, false);
 
-        
+            // messageMainFunction(msg + percentage, title);
 
-            //     messageMainFunction(msg + percentage, title);
-
-            //      Application.DoEvents();
-            //   Application.DoEvents();
-            //  };
-            //   this.Invoke(hdl);
-
+            // Application.DoEvents(); Application.DoEvents(); }; this.Invoke(hdl);
         }
 
         private void makeDefinedIcon(string content, Color color)
         {
             this.iconic.Image?.Dispose();
-            
+
             Image okImg = Notifier.MakeBitMap(content, _FONT, color);
             this.iconic.Image = okImg;
         }
@@ -230,8 +207,6 @@ namespace VTools
         // protected SpeechLib.SpVoice lorito;
         public void Speak(string text)
         {
-       
-
             try
             {
                 if (_LAST_MSG_SPEAK.CompareTo(text) == 0) return;
@@ -248,10 +223,7 @@ namespace VTools
             }
             catch (Exception)
             {
-
-               
             }
-         
         }
 
         protected void timerTick(object sender, EventArgs e)
@@ -259,23 +231,19 @@ namespace VTools
             _TIMER.Stop();
             if (this.Visible)
             {
-            
                 this.Visible = false;
-                if (this.ParentForm!=null)
+                if (this.ParentForm != null)
                 {
-                    if (this.ParentForm.Tag!=null)                        
+                    if (this.ParentForm.Tag != null)
                     {
                         if (this.ParentForm.Tag.Equals(this))
                         {
                             this.ParentForm.Visible = false;
-
                         }
                     }
                 }
                 FillLog("************************** Went Idle (Hidden) **************************");
-
             }
-           
         }
 
         protected void speakDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -302,28 +270,19 @@ namespace VTools
             _TIMER.Stop();
             _TIMER.Start();
 
-
-
             if (this.Visible)
             {
-              
-
             }
             else
             {
-          
-                    this.Visible = true;
+                this.Visible = true;
 
                 if (this.ParentForm != null)
                 {
                     this.ParentForm.Visible = true;
                 }
-
             }
             this.Focus();
-
-
-
         }
 
         public Pop()
@@ -353,8 +312,8 @@ namespace VTools
 
             this.textBoxDescription.TextChanged += msgChanged;
 
-            this.pictureBox1.MouseDoubleClick += textBoxDescription_MouseDoubleClick; 
-        //    this.textBoxDescription.MouseDoubleClick += textBoxDescription_MouseDoubleClick; 
+            this.pictureBox1.MouseDoubleClick += textBoxDescription_MouseDoubleClick;
+            // this.textBoxDescription.MouseDoubleClick += textBoxDescription_MouseDoubleClick;
 
             if (withForm)
             {
@@ -367,16 +326,12 @@ namespace VTools
             try
             {
                 string newFile = LogFilePath + ".copy.doc";
-                System.IO.File.Copy(LogFilePath, newFile,true);
+                System.IO.File.Copy(LogFilePath, newFile, true);
                 System.Diagnostics.Process.Start("explorer.exe", newFile);
-
             }
             catch (Exception)
             {
-
-               
             }
-           
         }
     }
 }

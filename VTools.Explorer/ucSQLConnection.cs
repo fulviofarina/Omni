@@ -7,7 +7,6 @@ namespace VTools
 {
     public partial class ucSQLConnection : UserControl, IucSQLConnection
     {
-
         protected static string CONNECTION_CHANGE = "Would you like to manually modify the current database connection parameters?\n\n"
                  + "This is not necessary unless a redirection to a (known) remote server is desired";
 
@@ -20,7 +19,7 @@ namespace VTools
         /// <param name="connectionControl"></param>
         /// <param name="localDB">          </param>
         /// <returns></returns>
-        public  string ChangeConnectionString( ref string localDB, bool skipMsg = false, bool showDialog = true)
+        public string ChangeConnectionString(ref string localDB, bool skipMsg = false, bool showDialog = true)
         {
             //make dynamic to access the 2 elements, whic foloows...
             //  dynamic connectionControl = connectionUsrControl;
@@ -46,28 +45,22 @@ namespace VTools
                 form.TopMost = true;
 
                 form.AutoSizeMode = AutoSizeMode.GrowOnly;
-             //   form.AutoSize = true;
+                // form.AutoSize = true;
 
-                //    form.Size = new System.Drawing.Size(this.Width*3/2, this.Height*3/2);
-                form.Size = new System.Drawing.Size(this.Width , this.Height );
+                // form.Size = new System.Drawing.Size(this.Width*3/2, this.Height*3/2);
+                form.Size = new System.Drawing.Size(this.Width, this.Height);
 
                 form.Controls.Add(this);
-
-        
 
                 form.ShowDialog();
                 localDB = ConnectionString;
             }
 
-         
-
-             return localDB;
+            return localDB;
         }
 
-    
         public string Database
         {
-
             get
             {
                 return this.hdb.Text;
@@ -78,8 +71,6 @@ namespace VTools
             }
         }
 
-
-
         public string ConnectionString
         {
             get
@@ -89,7 +80,6 @@ namespace VTools
             set
             {
                 HyperLabRTB.Text = value;
-
 
                 if (string.IsNullOrEmpty(HyperLabRTB.Text)) return;
                 setConnectionStrings();
@@ -113,13 +103,11 @@ namespace VTools
                 boxes.Add(this.enlistBox);
                 boxes.Add(this.poolingBox);
 
-
                 List<string> ls = null;
                 ls = SQL.GetLocalSqlServerInstancesByCallingSqlWmi32();
                 ls.AddRange(SQL.GetLocalSqlServerInstancesByCallingSqlWmi64());
                 ls.Add("(localDB)\\MSSQLLocalDB");
                 Rsx.Dumb.UIControl.FillABox(hsrv, ls, true, false);// this.hsrv.Items.AddRange(value);
-
 
                 SQL.ConnectionString sq = new SQL.ConnectionString(HyperLabRTB.Text);
                 //set what to do when user updates boxes
@@ -145,8 +133,6 @@ namespace VTools
                         c.TextChanged += handler;
                     }
                 }
-
-
             }
             catch (SystemException ex)
             {
@@ -200,19 +186,16 @@ namespace VTools
             this.hpass.Items.Add("labo");
             this.hpass.Items.Add("sa");
 
-
             this.Dock = DockStyle.Fill;
         }
 
         private void testButton_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-          bool ok=   SQL.IsServerConnected(ConnectionString);
+            bool ok = SQL.IsServerConnected(ConnectionString);
             Cursor.Current = Cursors.Default;
             if (ok) MessageBox.Show("Connection OK");
             else MessageBox.Show("Connection FAILED");
-
-          
         }
     }
 }
