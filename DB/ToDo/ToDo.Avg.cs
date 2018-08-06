@@ -1,5 +1,5 @@
-﻿using System;
-using Rsx.Dumb;
+﻿using Rsx.Dumb;
+using System;
 
 namespace DB
 {

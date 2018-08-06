@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using DB.Properties;
+﻿using DB.Properties;
 
 //using DB.Interfaces;
 using Rsx.Dumb;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq;
 
 namespace DB
 {
- 
     public partial class LINAA
     {
         private void save<T>(ref IEnumerable<T> rows)
@@ -164,7 +163,7 @@ namespace DB
 
             return wasPeaks;
         }
-  
+
         private bool saveMUES_File(ref MUESDataTable mu, MatrixRow m)
         {
             byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref mu);
@@ -353,7 +352,5 @@ namespace DB
 
             // ta.Dispose(); ta = null;
         }
-
-      
     }
 }
