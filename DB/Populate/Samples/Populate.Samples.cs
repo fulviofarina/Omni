@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using Rsx.Math;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
-using Rsx.Math;
 
 //using DB.Interfaces;
 
@@ -168,7 +168,6 @@ namespace DB
         }
     }
 
-  
     public partial class LINAA : ISamples
     {
         //
@@ -192,6 +191,7 @@ namespace DB
                 }
             }
         }
+
         public void BeginEndLoadData(bool load)
         {
             if (load)
@@ -356,7 +356,7 @@ namespace DB
                         return;
                     }
               */
-               
+
                 this.tableSubSamples.BeginLoadData();
                 this.tableSubSamples.Merge(newsamples, false, MissingSchemaAction.AddWithKey);
                 this.tableSubSamples.AcceptChanges();

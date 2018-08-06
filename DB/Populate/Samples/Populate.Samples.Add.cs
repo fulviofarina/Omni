@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
@@ -19,14 +19,13 @@ namespace DB
             }
             return true;
         }
+
         public IRequestsAveragesRow AddIRequestsAverage(Int32 NAAID, ref SubSamplesRow s)
         {
-          
-
             IRequestsAveragesRow irs = this.tableIRequestsAverages.NewIRequestsAveragesRow();
             this.tableIRequestsAverages.AddIRequestsAveragesRow(irs);
             irs.NAAID = NAAID;
-         
+
             //irs.Radioisotope = iso;
             //	irs.Element = sym;
             if (!EC.IsNuDelDetch(s))
@@ -50,7 +49,7 @@ namespace DB
                 //return sample;
                 //   sample = addSamples(IrrReqID);
             }
-                sample.SetName(sampleName);
+            sample.SetName(sampleName);
             return sample;
         }
 
@@ -110,6 +109,7 @@ namespace DB
             this.SubSamples.AddSubSamplesRow(s);
             return s;
         }
+
         /// <summary>
         /// The actual function
         /// </summary>
@@ -174,7 +174,6 @@ namespace DB
             addUnits(ref samplesToImport);
         }
 
-
         private void addUnits(ref IEnumerable<SubSamplesRow> samplesToImport, bool saveUnit = true)
         {
             foreach (SubSamplesRow s in samplesToImport)
@@ -198,6 +197,5 @@ namespace DB
                 u.SetParent(ref s);
             }
         }
-
     }
 }
