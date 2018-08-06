@@ -1,15 +1,70 @@
-﻿using System;
+﻿using Rsx.SQL;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using Rsx.SQL;
 
 namespace VTools
 {
     public partial class ucSQLConnection : UserControl, IucSQLConnection
     {
-    
 
+        protected static string CONNECTION_CHANGE = "Would you like to manually modify the current database connection parameters?\n\n"
+                 + "This is not necessary unless a redirection to a (known) remote server is desired";
+
+        protected static string CONNECTION_CHANGE_TITLE = "Change connection string?";
+
+        /// <summary>
+        /// Shows the UI to change the connection String localDB and returns a copy to an equivalent
+        /// DB qith Dev name
+        /// </summary>
+        /// <param name="connectionControl"></param>
+        /// <param name="localDB">          </param>
+        /// <returns></returns>
+        public  string ChangeConnectionString( ref string localDB, bool skipMsg = false)
+        {
+            //make dynamic to access the 2 elements, whic foloows...
+            //  dynamic connectionControl = connectionUsrControl;
+            //check if database creation is needed
+            //ask the USER NOW if he agrees wih the following Connection String
+
+            ConnectionString = localDB;
+
+            DialogResult result = DialogResult.Yes;
+            if (!skipMsg)
+            {
+                result = MessageBox.Show(CONNECTION_CHANGE, CONNECTION_CHANGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            }
+
+            if (result == DialogResult.Yes)
+            {
+                this.Dock = DockStyle.Fill;
+
+                Form form = new Form();
+
+                form.StartPosition = FormStartPosition.CenterScreen;
+                form.Text = "Check the database connection parameters";
+                form.TopMost = true;
+
+                form.AutoSizeMode = AutoSizeMode.GrowOnly;
+             //   form.AutoSize = true;
+
+                //    form.Size = new System.Drawing.Size(this.Width*3/2, this.Height*3/2);
+                form.Size = new System.Drawing.Size(this.Width , this.Height );
+
+                form.Controls.Add(this);
+
+        
+
+                form.ShowDialog();
+                localDB = ConnectionString;
+            }
+
+         
+
+             return localDB;
+        }
+
+    
         public string Database
         {
 
@@ -23,7 +78,7 @@ namespace VTools
             }
         }
 
-       
+
 
         public string ConnectionString
         {
@@ -136,6 +191,14 @@ namespace VTools
             InitializeComponent();
 
             this.Dock = DockStyle.Fill;
+        }
+
+        private void testButton_Click(object sender, EventArgs e)
+        {
+          bool ok=   SQL.IsServerConnected(ConnectionString);
+
+            if (ok) MessageBox.Show("Connection OK");
+            else MessageBox.Show("Connection FAILED");
         }
     }
 }

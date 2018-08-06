@@ -43,7 +43,7 @@ namespace DB.UI
 
 
 
-          //  Creator.CheckConnections(false, true);
+//Creator.CheckConnections(false, true);
 
         }
 

@@ -160,13 +160,20 @@ namespace DB.Tools
             if (sql)
             {
                 //FIRST SQL
-                UserControl IConn = new ucSQLConnection();
+                IucSQLConnection IConn = new ucSQLConnection();
                 //this is the OK that matters..
                 //the connection
                 Interface.IReport.Msg("Set up", "Checking SQL Connection...");
                 Application.DoEvents();
 
-                ok = PrepareSQL(ref IConn);
+                if (!hyperLab)
+                {
+                    ok = PrepareSQL(ref IConn);
+                }
+                else
+                {
+                    ok = PrepareSQLForHyperLab(ref IConn);
+                }
             }
 
             Interface.IPreferences.SavePreferences();
@@ -175,5 +182,7 @@ namespace DB.Tools
 
             return ok;
         }
+
+       
     }
 }

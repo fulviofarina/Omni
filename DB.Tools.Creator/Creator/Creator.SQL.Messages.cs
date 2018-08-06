@@ -16,18 +16,20 @@
         // Connection string?\n\n";
         protected static string CHECKING_SQL = "Checking the database connections";
 
-        protected static string NO_CONNECTION = "The current database connection is not ok.\n\n" +
+        protected static string NO_CONNECTION = "The default database connection is not properly configured.\n\n" +
             "The reasons might be:\n\n" +
-               "1) The program database does not exist (first time users)\n" +
-            "2) The SQL Server is down/stopped\n" +
-            "3) The SQL Server is not installed on this computer\n" +
-            "4) The Connection string to the database is wrong.\n\n\n" +
+               "- You are a first-time user\n\n" +
+            "- The database does not exist\n\n" +
+            "- The SQL Server is down/stopped or not installed\n\n" +
+          //  "3) The SQL Server is not installed\n\n" +
+            "- The connection parameters are wrong.\n\n\n" +
             "This program will attempt to:\n\n" +
-            "1) Restart the server\n" +
-            "2) Detect other SQL Server instances when present or,\n" +
-            "3) Reinstall the SQL Server and the program database.\n\n" +
-            "You will have the option to change the connection string (if desired)";
+            //"Perform basic connection routines,\n"+
+            "Restart the server,\n\n" +
+            "Detect other SQL Server instances (when present),\n\n" +
+            "Reinstall the SQL Server and database (when applicable and after confirmation),\n\n" +
+            "Offer you to change the connection parameters\n\n\n";
 
-        protected static string NO_CONNECTION_TITLE = "Connection to the database failed";
+        protected static string NO_CONNECTION_TITLE = "SQL Server Connection Wizard by F. Farina Arboccò";
     }
 }

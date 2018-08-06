@@ -41,7 +41,7 @@ namespace DB.UI
 
                 Interface.IBS.EnabledControls = false;
 
-                Interface.IPopulate.IMeasurements.PopulateMeasurementsGeneric(projectTXT, true);
+                Interface.IPopulate.IMeasurements.PopulateMeasurementsHyperLab(projectTXT, true);
 
                 Interface.IBS.SelectProjectHL(projectTXT);
 

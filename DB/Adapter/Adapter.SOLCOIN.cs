@@ -1,4 +1,6 @@
 ﻿using DB.LINAATableAdapters;
+using DB.Properties;
+using System.Data.SqlClient;
 
 namespace DB
 {
@@ -70,14 +72,30 @@ namespace DB
             tAM.COINTableAdapter = null;
         }
 
-        public void InitializePeaksAdapters()
+        public void InitializePeaksAdapters(bool forHyperLab )
         {
+
             tAM.MeasurementsTableAdapter = new MeasurementsTableAdapter();
+            dynamic ta = tAM.MeasurementsTableAdapter;
+            ChangeConnection(ref ta, forHyperLab);
+
             adapters.Add(tAM.MeasurementsTableAdapter, tAM.MeasurementsTableAdapter);
+
             tAM.PeaksTableAdapter = new PeaksTableAdapter();
+
             adapters.Add(tAM.PeaksTableAdapter, tAM.PeaksTableAdapter);
             // this.tAM.IRequestsAveragesTableAdapter = new LINAATableAdapters.IRequestsAveragesTableAdapter();
             //this.tAM.IPeakAveragesTableAdapter = new LINAATableAdapters.IPeakAveragesTableAdapter();
+        }
+
+        public void ChangeConnection(ref dynamic ta, bool forHyperLab)
+        {
+            
+            if (forHyperLab)
+            {
+                ta.Connection = new SqlConnection(Settings.Default.HLSNMNAAConnectionString);
+            }
+            else ta.Connection = new SqlConnection(Settings.Default.NAAConnectionString);
         }
 
         public void InitializeSolCoinAdapters()

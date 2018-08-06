@@ -9,7 +9,7 @@ namespace DB
 
         PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc);
 
-        MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge);
+        MeasurementsDataTable PopulateMeasurementsHyperLab(string project, bool merge);
 
         MeasurementsRow AddMeasurement(string measName);
 

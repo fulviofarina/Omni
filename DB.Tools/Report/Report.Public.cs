@@ -207,7 +207,7 @@ namespace DB.Tools
         {
             try
             {
-                Rsx.EDB en = new EDB();
+                EDB en = new EDB();
 
                 EDB.EnvironmentRow e = en.Environment.NewEnvironmentRow();
 

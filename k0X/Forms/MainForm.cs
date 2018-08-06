@@ -358,7 +358,7 @@ namespace k0X
                 //Build
                 Creator.Initialize();
 
-                UserControl IConn = new VTools.ucSQLConnection();
+                IucSQLConnection IConn = new VTools.ucSQLConnection();
                 // dynamic connectionControl = IConn;
                 bool ok = Creator.PrepareSQL(ref IConn);
                 // bool ok = Creator.PrepareSQL();

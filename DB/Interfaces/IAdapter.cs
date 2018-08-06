@@ -4,6 +4,7 @@ namespace DB
 {
     public interface IAdapter
     {
+        void SetHyperLabConnection(string defaultConnection);
         void InitializeComponent();
 
         void DisposePeaksAdapters();
@@ -29,9 +30,10 @@ namespace DB
 
         bool IsMainConnectionOk { get; }
         string Exception { get; }
+        bool IsHyperLabConnectionOk { get; }
 
-        void SetConnections(/*string localDB, string developerDB, */ string defaultConnection);
+        void SetMainConnection(/*string localDB, string developerDB, */ string defaultConnection);
 
-        void InitializePeaksAdapters();
+        void InitializePeaksAdapters(bool forHyperlab);
     }
 }

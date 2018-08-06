@@ -272,9 +272,9 @@ namespace DB.UI
         private static UserControl createSpecNavApplication()
         {
 
-            Interface.IAdapter.InitializeComponent();
-            Interface.IAdapter.InitializePeaksAdapters();
-            Interface.IAdapter.TAM.Connection.ConnectionString = Settings.Default.HLSNMNAAConnectionString;
+            //   Interface.IAdapter.InitializeComponent();
+            //  Interface.IAdapter.InitializePeaksAdapters();
+        //    Interface.IAdapter.TAM.Connection.ConnectionString = Settings.Default.HLSNMNAAConnectionString;
 
 
             ucHyperLab hl = new ucHyperLab();

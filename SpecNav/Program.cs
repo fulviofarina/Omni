@@ -31,8 +31,11 @@ namespace SpecNav
                 Form aboutbox = new AboutBox();
 
                 LIMSUI.Start(ref aboutbox, offline, adv,string.Empty);
-         
-          
+
+
+                Creator.CheckConnections(false, true, true);
+
+
                 UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, true);
 
 

@@ -245,7 +245,7 @@ namespace DB.Tools
             dt.AcceptChanges();
 
             System.IO.File.Delete(path);
-            dt.WriteXml(path, System.Data.XmlWriteMode.WriteSchema, true);
+            dt.WriteXml(path, XmlWriteMode.WriteSchema, true);
         }
     }
 }

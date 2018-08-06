@@ -12,7 +12,7 @@ namespace Rsx.SQL
             public string Enlist = "False";
             public string EnlistTag = "Enlist";
             public string Login;
-            public string LoginTag = "UserID";
+            public string LoginTag = "User ID";
             public string Password;
             public string PasswordTag = "Password";
             public string Pooling = "False";

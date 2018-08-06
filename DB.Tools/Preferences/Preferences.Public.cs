@@ -22,8 +22,11 @@ namespace DB.Tools
             // Interface.IPreferences.SavePreferences();
             Interface.IStore.CleanPreferences();
             populatePreferences();
-            if (forceOffline!=null) CurrentPref.Offline = (bool)forceOffline;
-            if (forceAdvEditor!=null) CurrentPref.AdvancedEditor = (bool)forceAdvEditor;
+         //   if (CurrentPref != null)
+         //   {
+                if (forceOffline != null) CurrentPref.Offline = (bool)forceOffline;
+                if (forceAdvEditor != null) CurrentPref.AdvancedEditor = (bool)forceAdvEditor;
+          //  }
             Interface.IPreferences.SavePreferences();
         }
 

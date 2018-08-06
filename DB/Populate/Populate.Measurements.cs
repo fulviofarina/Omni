@@ -41,9 +41,11 @@ namespace DB
             return meas;
         }
 
-        public MeasurementsDataTable PopulateMeasurementsGeneric(string project, bool merge)
+        public MeasurementsDataTable PopulateMeasurementsHyperLab(string project, bool merge)
         {
             MeasurementsTableAdapter mta = new MeasurementsTableAdapter();
+            dynamic ta = mta;
+            ChangeConnection(ref ta, true);
             MeasurementsDataTable meas = new MeasurementsDataTable();
             meas.ProjectColumn.Expression = string.Empty;
             meas.ProjectColumn.ReadOnly = false;
@@ -98,6 +100,8 @@ namespace DB
         public PeaksHLDataTable PopulatePeaksHL(int? id, double minArea, double maxUnc)
         {
             PeaksHLTableAdapter pta = new PeaksHLTableAdapter();
+            dynamic ta = pta;
+            ChangeConnection(ref ta, true);
             PeaksHLDataTable phl = new PeaksHLDataTable();
             pta.FillByMeasurementID(phl, (int)id);
             pta.Dispose();
