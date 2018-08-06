@@ -1,22 +1,17 @@
-﻿using System;
+﻿//using DB.Interfaces;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-
-//using DB.Interfaces;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : IStore
     {
-
-
         private bool cleanMUESPics(ref MatrixRow u)
         {
-
             bool ok = false;
-
 
             string path = this.folderPath + Properties.Resources.XCOMFolder;
 
@@ -24,8 +19,7 @@ namespace DB
 
             if (files.Count() == 0) return ok;
 
-             ok = true;
-
+            ok = true;
 
             foreach (var item in files)
             {
@@ -34,15 +28,11 @@ namespace DB
                     try
                     {
                         System.IO.File.Delete(item);
-                     
                     }
                     catch (Exception ex)
                     {
-
-                      
                     }
                     ok = ok && !System.IO.File.Exists(item);
-
                 }
             }
 
@@ -51,8 +41,7 @@ namespace DB
 
         private bool cleanMUES(ref MatrixRow m, bool sql = true)
         {
-
-            //    MUESDataTable mu = new MUESDataTable();
+            // MUESDataTable mu = new MUESDataTable();
             bool ok = false;
             if (sql)
             {
@@ -67,9 +56,8 @@ namespace DB
             Delete<MUESRow>(ref mues);
             this.MUES.AcceptChanges();
 
-            ok =  GetMUES(ref m, sql).Count == 0;
+            ok = GetMUES(ref m, sql).Count == 0;
             return ok;
-
         }
 
         public void CleanOthers()
