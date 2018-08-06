@@ -1,7 +1,6 @@
-﻿using System;
-using Rsx.CAM;
+﻿using Rsx.CAM;
 using Rsx.Dumb;
-
+using System;
 
 namespace DB
 {
