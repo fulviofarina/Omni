@@ -1,22 +1,19 @@
-﻿using System;
+﻿//using DB.Interfaces;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 
-//using DB.Interfaces;
-using Rsx.Dumb;
-
 namespace DB
 {
     public partial class LINAA : IStore
     {
-
         public void Read(string filepath)
         {
             LINAA dt = null;
-
 
             // file.EnforceConstraints = false;
             XmlReader reader = null;
@@ -37,13 +34,11 @@ namespace DB
 
                 dt.CleanPreferences();
 
-            //    this.AcceptChanges();
+                // this.AcceptChanges();
 
                 this.Merge(dt);
 
-              
-
-          //      this.AcceptChanges();
+                //      this.AcceptChanges();
                 //    DataSet set = Interface.Get();
                 //clear and repopulate
 
