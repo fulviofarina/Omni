@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using System;
 using System.Windows.Forms;
-using CrystalDecisions.CrystalReports.Engine;
 
 namespace DB.Reports
 {
