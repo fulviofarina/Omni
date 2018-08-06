@@ -44,7 +44,7 @@ namespace DB.Tools
 
                 //offer user to change database string anyway!!!
                 conn.Title = "HyperLab Server";
-                defaultConnection = conn.ChangeConnectionString( ref defaultConnection, true);
+                defaultConnection = conn.ChangeConnectionString( ref defaultConnection, true,true);
 
 
                 Interface.IAdapter.SetHyperLabConnection(defaultConnection);
@@ -69,7 +69,7 @@ namespace DB.Tools
         /// </summary>
         /// <param name="populNr"></param>
         /// <returns></returns>
-        public static bool PrepareSQL(ref VTools.IucSQLConnection connectionUsrControl)
+        public static bool PrepareSQL(ref VTools.IucSQLConnection connectionUsrControl, bool skipMSg = false)
         {
 
             Action adapterInitializer = delegate
@@ -110,9 +110,9 @@ namespace DB.Tools
                 string defaultConnection = string.Empty;
                 //show no connection Intro
                 //could not connect
-                MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               if (!skipMSg)  MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                populateDeveloperSQLDatabase(ref connectionUsrControl, out fillDatabase, ref userDB, out developerDB, out defaultConnection);
+                populateDeveloperSQLDatabase(ref connectionUsrControl, out fillDatabase, ref userDB, out developerDB, out defaultConnection, skipMSg);
 
 
 
@@ -129,17 +129,17 @@ namespace DB.Tools
 
             //SAVE SETTINGS!!!
             finalizeSQLPopulator(ref adapterInitializer, ok);
-
+          
             return ok;
         }
 
         private static void finalizeSQLPopulator(ref Action adapterInitializer, bool ok)
         {
             Interface.IPreferences.CurrentPref.Check();
-            Interface.IPreferences.SavePreferences();
+            //     Interface.IPreferences.SavePreferences();
             //again restart Adapters...
-         //   adapterInitializer.Invoke();
-
+            //  
+            adapterInitializer.Invoke();
             // Cursor.Current = Cursors.Default;
             Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
 
@@ -178,13 +178,13 @@ namespace DB.Tools
             return ok;
         }
 
-        private static void populateDeveloperSQLDatabase(ref VTools.IucSQLConnection connectionUsrControl, out bool makeDatabase, ref string userDB, out string developerDB, out string defaultConnection)
+        private static void populateDeveloperSQLDatabase(ref VTools.IucSQLConnection connectionUsrControl, out bool makeDatabase, ref string userDB, out string developerDB, out string defaultConnection, bool skipMsg )
         {
         
 
             //provide path to SQL files for deploy (installation)
-            string path = Application.StartupPath + DB.Properties.Resources.DevFiles;
-            string sqlServerFound = SQLUI.FindSQLOrInstall(path);
+            string path = Application.StartupPath + Resources.DevFiles;
+            string sqlServerFound = SQLUI.FindSQLOrInstall(path, skipMsg);
             //IMPORTANTE, cambia el string el usuario o el default!
             bool sqlFound = !string.IsNullOrEmpty(sqlServerFound);
             if (sqlFound)
@@ -195,7 +195,7 @@ namespace DB.Tools
             //2
             //offer user to change database string anyway!!!
             connectionUsrControl.Title = "LIMS Server";
-            developerDB = connectionUsrControl.ChangeConnectionString(ref userDB,false);
+            developerDB = connectionUsrControl.ChangeConnectionString(ref userDB,skipMsg, !skipMsg);
 
             developerDB= SQL.ReplaceStringForDeveloper(developerDB);
             //return a copy of the name for for Developer purposes
@@ -208,9 +208,12 @@ namespace DB.Tools
             //ask to populate or Not
             //   Cursor.Current = Cursors.Default;
 
-            DialogResult result = MessageBox
-                .Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            //populate new database...
+            DialogResult result = DialogResult.Yes;
+            if (!skipMsg)
+            {
+                result = MessageBox.Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            }
+                //populate new database...
             if (result == DialogResult.Yes)
             {
                 makeDatabase = true;

@@ -18,9 +18,12 @@ namespace SpecNav
         private static void Main()
         {
 
-            bool offline = true;
+            bool offline = false;
             bool adv = false;
-
+            bool lims = false;
+            bool hyperLab = true;
+            bool mmqs = false;
+            bool noDGVCtrl = true;
 
             try
             {
@@ -33,10 +36,10 @@ namespace SpecNav
                 LIMSUI.Start(ref aboutbox, offline, adv,string.Empty);
 
 
-                Creator.CheckConnections(false, true, true);
+                Creator.CheckConnections(mmqs, lims, hyperLab);
 
 
-                UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, true);
+                UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, noDGVCtrl);
 
 
                 bool showAlready = false;

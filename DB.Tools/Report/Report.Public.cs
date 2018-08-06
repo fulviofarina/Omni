@@ -65,7 +65,7 @@ namespace DB.Tools
         {
             get
             {
-                return Application.StartupPath + Resources.DevFiles + Resources.Restarting;
+                return Interface.IStore.FolderPath + Resources.DevFiles + Resources.Restarting;
             }
         }
 

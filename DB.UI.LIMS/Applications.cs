@@ -262,11 +262,11 @@ namespace DB.UI
 
         protected internal static string getHelpFileSSF()
         {
-            return Application.StartupPath + Resources.DevFiles + HELP_FILE_SSF_PDF;
+            return Interface.IStore.FolderPath + Resources.DevFiles + HELP_FILE_SSF_PDF;
         }
         protected internal static string getHelpFileµFinder()
         {
-            return Application.StartupPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
+            return Interface.IStore.FolderPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
         }
 
         private static UserControl createSpecNavApplication()
@@ -296,6 +296,14 @@ namespace DB.UI
        
             hl.Set(ref options);
             hl.Set(ref prefes);
+
+            options.RestoreFoldersClick += delegate
+            {
+                Application.Restart();
+    
+            };
+
+
             //   UserControl control = this;
             hl.Dock = DockStyle.Fill;
             // form.AutoSizeMode = AutoSizeMode.GrowOnly;

@@ -138,7 +138,7 @@ namespace DB.Tools
             if (nossf || overriderFound)
             {
                 Directory.CreateDirectory(matssf);
-                string resourcePath = Application.StartupPath + Resources.DevFiles
+                string resourcePath = Interface.IStore.FolderPath + Resources.DevFiles
                     + Resources.SSFResource + ".bak";
                 string startexecutePath = Interface.IStore.FolderPath + Resources.SSFFolder;
                 string destFile = startexecutePath + Resources.SSFResource + ".CAB";
@@ -155,11 +155,11 @@ namespace DB.Tools
             string path;
             //override preferences
             path = Interface.IStore.FolderPath + Resources.Preferences + ".xml";
-            string developerPath = Application.StartupPath + Resources.DevFiles + Resources.Preferences + ".xml";
+            string developerPath = Interface.IStore.FolderPath + Resources.DevFiles + Resources.Preferences + ".xml";
             populateReplaceFile(path, developerPath);
 
             path = Interface.IStore.FolderPath + Resources.SSFPreferences + ".xml";
-            developerPath = Application.StartupPath + Resources.DevFiles + Resources.SSFPreferences + ".xml";
+            developerPath = Interface.IStore.FolderPath + Resources.DevFiles + Resources.SSFPreferences + ".xml";
             populateReplaceFile(path, developerPath);
 
             // path = folderPath + Resources.SolCoiFolder;
@@ -168,7 +168,7 @@ namespace DB.Tools
             try
             {
                 //does nothing
-                path = Application.StartupPath + Resources.DevFiles + Resources.ResourcesOverrider;
+                path = Interface.IStore.FolderPath + Resources.DevFiles + Resources.ResourcesOverrider;
                 overriderFound = File.Exists(path);
                 //TODO:
                 if (overriderFound) File.Delete(path);
@@ -213,12 +213,12 @@ namespace DB.Tools
                 Directory.CreateDirectory(solcoi);
                 string startexecutePath = Interface.IStore.FolderPath + Resources.SolCoiFolder;
 
-                string resourcePath = Application.StartupPath + Resources.DevFiles
+                string resourcePath = Interface.IStore.FolderPath + Resources.DevFiles
                     + Resources.CurvesResource + ".bak";
                 string destFile = startexecutePath + Resources.CurvesResource + ".bak";
                 IO.UnpackCABFile(resourcePath, destFile, startexecutePath, false);
 
-                resourcePath = Application.StartupPath + Resources.DevFiles
+                resourcePath = Interface.IStore.FolderPath + Resources.DevFiles
                     + Resources.SolCoiResource + ".bak";
                 destFile = startexecutePath + Resources.SolCoiResource + ".bak";
                 IO.UnpackCABFile(resourcePath, destFile, startexecutePath, false);

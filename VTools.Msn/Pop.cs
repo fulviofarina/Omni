@@ -6,7 +6,7 @@ namespace VTools
 {
     public partial class Pop : UserControl, IPop
     {
-        protected internal int _DISPLAY_INTERVAL = 16000;
+        protected internal int _DISPLAY_INTERVAL = 4000;
 
         protected internal string _LAST_MSG_SPEAK = string.Empty;
         protected internal string _LAST_MSG = string.Empty;
@@ -103,6 +103,7 @@ namespace VTools
             f.Controls.Add(this);
             f.Opacity = 100;
             f.Visible = true;
+            f.Tag = this;
 
             // f.StartPosition = FormStartPosition.CenterScreen; f.Opacity = 0;
         }
@@ -151,7 +152,7 @@ namespace VTools
 
                 FillLog(msg);
 
-
+             
                 //    Show();
                 //  Application.DoEvents();
 
@@ -256,11 +257,21 @@ namespace VTools
         protected void timerTick(object sender, EventArgs e)
         {
             _TIMER.Stop();
-            if (this.Visible) this.Visible = false;
+            if (this.Visible)
             {
-                FillLog("**************************IDLE**************************");
+            
+                this.Visible = false;
+                if (this.ParentForm!=null)
+                {
+                    if (this.ParentForm.Tag.Equals(this))
+                    {
+                        this.ParentForm.Visible = false;
+                    }
+                }
+                FillLog("************************** Went Idle (Hidden) **************************");
 
             }
+           
         }
 
         protected void speakDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -284,12 +295,31 @@ namespace VTools
 
         protected void msgChanged(object sender, EventArgs e)
         {
+            _TIMER.Stop();
+            _TIMER.Start();
+
+
+
             if (this.Visible)
             {
-                _TIMER.Stop();
-                _TIMER.Start();
+              
+
             }
-            else this.Visible = true;
+            else
+            {
+          
+                    this.Visible = true;
+
+                if (this.ParentForm != null)
+                {
+                    this.ParentForm.Visible = true;
+                }
+
+            }
+            this.Focus();
+
+
+
         }
 
         public Pop()

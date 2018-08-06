@@ -9,7 +9,7 @@ namespace Rsx.SQL
         /// Finds a SQL Server instances and installs if necessary with UI Otherwise gives back the
         /// default LocalDB path
         /// </summary>
-        public static string FindSQLOrInstall(string developerFolder)
+        public static string FindSQLOrInstall(string developerFolder, bool skipInstall)
         {
             string sqlFound = LOCALDB_DEFAULT_PATH; //set default path...
 
@@ -32,7 +32,8 @@ namespace Rsx.SQL
             }
 
             MessageBoxIcon i = MessageBoxIcon.Question;
-            DialogResult result = MessageBox.Show(msg, title, btn, i);
+            DialogResult result = DialogResult.No;
+            if (!skipInstall) result = MessageBox.Show(msg, title, btn, i);
             //Install SQL
             if (result == DialogResult.OK || result == DialogResult.Yes)
             {

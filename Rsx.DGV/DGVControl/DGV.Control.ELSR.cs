@@ -149,14 +149,15 @@ namespace Rsx.DGV
       }
     }
 
-        public static void MakeCSVFile(string path, string matrixID, ref DataGridView dgv)
+        public static string MakeCSVFile(string path, string matrixID, ref DataGridView dgv)
         {
+            string file = string.Empty;
             try
             {
                 dgv.SelectAll();
             DataObject o = dgv.GetClipboardContent();
 
-            makeCSVFile(path, matrixID, ref  o);
+           file= makeCSVFile(path, matrixID, ref  o);
 
                 dgv.ClearSelection();
             }
@@ -165,27 +166,29 @@ namespace Rsx.DGV
 
 
             }
+            return file;
         }
 
-        private static void makeCSVFile(string path, string matrixID, ref DataObject o)
+        private static string makeCSVFile(string path, string matrixID, ref DataObject o)
         {
-            if (o == null) return;
+            if (o == null) return string.Empty;
             string csv = (string)o.GetData("Csv");
 
             string file = path + matrixID + ".csv";
             if (File.Exists(file)) File.Delete(file);
             File.WriteAllText(file, csv);
-       
+            return file;
         }
 
-        public static void MakeHTMLFile(string path, string matrixID, ref DataGridView dgv)
+        public static string MakeHTMLFile(string path, string matrixID, ref DataGridView dgv, string extension)
         {
+            string file = string.Empty;
             try
             {
                 dgv.SelectAll();
                 DataObject o = dgv.GetClipboardContent();
 
-                makeHtmlFile(path, matrixID, ref o);
+                file = makeHtmlFile(path, matrixID, ref o, extension);
 
                 dgv.ClearSelection();
             }
@@ -194,17 +197,19 @@ namespace Rsx.DGV
 
                
             }
-         
+
+            return file;
         }
 
-        private static void makeHtmlFile(string path, string matrixID, ref DataObject  o)
+        private static string makeHtmlFile(string path, string matrixID, ref DataObject  o, string extension)
         {
-            if (o == null) return;
+            if (o == null) return string.Empty;
             MemoryStream doc = (MemoryStream)o.GetData("HTML Format");
             byte[] arr = doc.ToArray();
-            string file = path + matrixID + ".xls";
+            string file = path + matrixID + extension;
             if (File.Exists(file))         File.Delete(file);
-           File.WriteAllBytes(file, arr);
+             File.WriteAllBytes(file, arr);
+            return file;
         }
 
         protected void SetSaveButtonState(bool changed)

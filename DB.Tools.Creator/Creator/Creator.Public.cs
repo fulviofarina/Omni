@@ -135,13 +135,13 @@ namespace DB.Tools
         /// </summary>
         public static void Help()
         {
-            string path = Application.StartupPath + Resources.DevFiles + Resources.Features;
+            string path = Interface.IStore.FolderPath + Resources.DevFiles + Resources.Features;
             string currentpath = Interface.IStore.FolderPath + Resources.Features;
             bool features = populateReplaceFile(currentpath, path);
             if (!features) return;
             // if (!System.IO.File.Exists(path)) return;
             Process proceso = new Process();
-            IO.Process(proceso, Application.StartupPath, notepadApp, path, false, false, 0);
+            IO.Process(proceso, Interface.IStore.FolderPath, notepadApp, path, false, false, 0);
         }
 
         /// <summary>

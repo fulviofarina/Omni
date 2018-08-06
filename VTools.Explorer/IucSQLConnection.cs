@@ -6,6 +6,6 @@
         string Title { get; set; }
         string Database { get; set; }
 
-        string ChangeConnectionString(ref string defaultConnection, bool skipMsg);
+        string ChangeConnectionString(ref string defaultConnection, bool skipMsg = false, bool showDialog = true);
     }
 }

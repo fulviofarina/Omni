@@ -41,13 +41,13 @@
             this.HyperLab = new System.Windows.Forms.Label();
             this.hdb = new System.Windows.Forms.ComboBox();
             this.hlogin = new System.Windows.Forms.TextBox();
-            this.hpass = new System.Windows.Forms.TextBox();
+            this.hpass = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.testButton = new System.Windows.Forms.Button();
             this.HyperLabRTB = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.testButton = new System.Windows.Forms.Button();
             this.htlp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -247,6 +247,17 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "Password";
             // 
+            // testButton
+            // 
+            this.testButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.testButton.Location = new System.Drawing.Point(3, 307);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(250, 29);
+            this.testButton.TabIndex = 20;
+            this.testButton.Text = "TEST Connection";
+            this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
+            // 
             // HyperLabRTB
             // 
             this.HyperLabRTB.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -273,17 +284,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(825, 339);
             this.splitContainer1.SplitterDistance = 513;
             this.splitContainer1.TabIndex = 11;
-            // 
-            // testButton
-            // 
-            this.testButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.testButton.Location = new System.Drawing.Point(3, 307);
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(250, 29);
-            this.testButton.TabIndex = 20;
-            this.testButton.Text = "TEST Connection";
-            this.testButton.UseVisualStyleBackColor = true;
-            this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
             // ucSQLConnection
             // 
@@ -314,7 +314,7 @@
         private System.Windows.Forms.Label HyperLab;
         private System.Windows.Forms.ComboBox hdb;
         private System.Windows.Forms.TextBox hlogin;
-        private System.Windows.Forms.TextBox hpass;
+        private System.Windows.Forms.ComboBox hpass;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;

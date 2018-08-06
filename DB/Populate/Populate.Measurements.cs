@@ -65,7 +65,7 @@ namespace DB
                 if (meas.Count() != 0)
                 {
                     Measurements.Merge(meas);
-                 //   Measurements.AcceptChanges();
+                   Measurements.AcceptChanges();
                 }
             }
             catch (Exception ex)

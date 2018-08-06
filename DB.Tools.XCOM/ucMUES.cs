@@ -19,7 +19,8 @@ namespace DB.UI
 
             DataGridView dgv = this.DGV;
 
-            Rsx.DGV.Control.MakeHTMLFile(path, name, ref dgv);
+            Rsx.DGV.Control.MakeHTMLFile(path, name, ref dgv, ".xls");
+
             Rsx.DGV.Control.MakeCSVFile(path, name, ref dgv);
         }
 

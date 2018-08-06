@@ -144,7 +144,7 @@ namespace DB.Tools
             };
         }
 
-        public static bool CheckConnections(bool msmq = true, bool sql =true, bool hyperLab = false)
+        public static bool CheckConnections(bool msmq = true, bool lims =true, bool hyperLab = false)
         {
             bool ok = false;
             if (msmq)
@@ -157,7 +157,7 @@ namespace DB.Tools
                     Interface.IReport.InstallMSMQ();
                 }
             }
-            if (sql)
+            if (lims || hyperLab)
             {
                 //FIRST SQL
                 IucSQLConnection IConn = new ucSQLConnection();
@@ -173,6 +173,10 @@ namespace DB.Tools
                 else
                 {
                     ok = PrepareSQLForHyperLab(ref IConn);
+                    if (lims)
+                    {
+                        ok = ok && PrepareSQL(ref IConn, true);
+                    }
                 }
             }
 

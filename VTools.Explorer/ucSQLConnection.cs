@@ -20,7 +20,7 @@ namespace VTools
         /// <param name="connectionControl"></param>
         /// <param name="localDB">          </param>
         /// <returns></returns>
-        public  string ChangeConnectionString( ref string localDB, bool skipMsg = false)
+        public  string ChangeConnectionString( ref string localDB, bool skipMsg = false, bool showDialog = true)
         {
             //make dynamic to access the 2 elements, whic foloows...
             //  dynamic connectionControl = connectionUsrControl;
@@ -29,13 +29,13 @@ namespace VTools
 
             ConnectionString = localDB;
 
-            DialogResult result = DialogResult.Yes;
+            DialogResult result = DialogResult.No;
             if (!skipMsg)
             {
                 result = MessageBox.Show(CONNECTION_CHANGE, CONNECTION_CHANGE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             }
 
-            if (result == DialogResult.Yes)
+            if (result == DialogResult.Yes || showDialog)
             {
                 this.Dock = DockStyle.Fill;
 
@@ -190,15 +190,29 @@ namespace VTools
         {
             InitializeComponent();
 
+            this.hpass.Items.Add("hlpwd2002");
+            this.hpass.Items.Add("hlpwd2005");
+            this.hpass.Items.Add("hlpwd2008");
+            this.hpass.Items.Add("hlpwd2009");
+            this.hpass.Items.Add("Hlpwd2013");
+            this.hpass.Items.Add("Hlpwd2014");
+            this.hpass.Items.Add("naa");
+            this.hpass.Items.Add("labo");
+            this.hpass.Items.Add("sa");
+
+
             this.Dock = DockStyle.Fill;
         }
 
         private void testButton_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
           bool ok=   SQL.IsServerConnected(ConnectionString);
-
+            Cursor.Current = Cursors.Default;
             if (ok) MessageBox.Show("Connection OK");
             else MessageBox.Show("Connection FAILED");
+
+          
         }
     }
 }

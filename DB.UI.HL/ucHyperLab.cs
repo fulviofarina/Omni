@@ -32,8 +32,41 @@ namespace DB.UI
 
             options.HelpClick += help;
 
+
+            options.SaveClick += delegate
+            {
+                saveMethod();
+            };
+
             (options as Control).Dock = DockStyle.Fill;
             TLP2.Controls.Add(options as Control);
+        }
+
+        private void saveMethod()
+        {
+            string file = Rsx.DGV.Control.MakeHTMLFile(Strings.CachePath, this.project.TextContent, ref measDGV, ".xls");
+
+            DialogResult r = MessageBox.Show("Would you like to open the respective files?", "Open Files?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            bool ok = r == DialogResult.Yes;
+            if (ok && System.IO.File.Exists(file))
+            {
+             
+                IO.Process("explorer.exe ", string.Empty, file, true, false);
+            }
+
+            MeasurementsRow m = (MeasurementsRow)Interface.ICurrent.Measurement;
+            if (!EC.IsNuDelDetch(m))
+            {
+                file = Rsx.DGV.Control.MakeHTMLFile(Strings.CachePath, m.Measurement, ref peaksDGV, ".xls");
+
+                if (ok && System.IO.File.Exists(file))
+                {
+                    IO.Process("explorer.exe ", string.Empty, file, true, false);
+                }
+            }
+
+         
         }
 
         public void Set(ref ISpecPreferences pref)
