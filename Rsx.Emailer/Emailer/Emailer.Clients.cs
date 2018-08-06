@@ -13,7 +13,7 @@ namespace Rsx
       {
         get
         {
-          return new System.Net.NetworkCredential("k0x.help@gmail.com", "Helpme123");
+          return new System.Net.NetworkCredential("k0x.help@gmail.com", "Pr0t0z04r10*");
         }
       }
 

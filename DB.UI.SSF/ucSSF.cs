@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DB.Properties;
+using DB.Tools;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using DB.Properties;
-using DB.Tools;
 using VTools;
 
 namespace DB.UI
@@ -71,7 +71,6 @@ namespace DB.UI
             if (!background) Creator.SaveInFull(true);
 
             MatSSF.RunAll(background);
-
         }
 
         public string getAvailableRAM()
@@ -115,7 +114,6 @@ namespace DB.UI
         {
             try
             {
-       
                 ucGenericCBox projBox = pro as ucGenericCBox;
                 projBox.HideChildControl = Hide;
                 this.splitContainer1.Panel1.Controls.Add(pro as Control);
@@ -147,14 +145,12 @@ namespace DB.UI
 
                 ucUnit.Set(ref Interface, ref pref);
 
-
                 Interface.IBS.EnableControlsChanged += delegate
                 {
                     bool ThereIsData = Interface.IBS.SubSamples.Count != 0;
                     ucCalculate1.Enabled = ThereIsData;
                     ucUnit.DGVRefresher.Invoke(null, EventArgs.Empty);
                 };
-
 
                 IPanel.Set(ref Interface, ref pref);
 
@@ -178,10 +174,6 @@ namespace DB.UI
                     IPanel.ViewChanged(matrix, EventArgs.Empty);
                 };
 
-
-             
-
-
                 Interface.IReport.Msg("SSF Control OK", "Controls were set!");
             }
             catch (System.Exception ex)
@@ -200,7 +192,7 @@ namespace DB.UI
             {
             };
             EventHandler showProg = showProgress;
-      
+
             showProg += ucUnit.DGVRefresher;
 
             string path = Interface.IStore.FolderPath + Resources.SSFFolder;
@@ -276,7 +268,6 @@ namespace DB.UI
         }
 
         // Consume like this:
-     
 
         public ucSSF()
         {

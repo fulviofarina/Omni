@@ -16,7 +16,6 @@ namespace DB.UI
 
         public void MakeFile(string name, string path)
         {
-
             DataGridView dgv = this.DGV;
 
             Rsx.DGV.Control.MakeHTMLFile(path, name, ref dgv, ".xls");
@@ -26,21 +25,14 @@ namespace DB.UI
 
         public void Set(ref IXCOMPreferences pref, bool table = true)
         {
-
             try
             {
-
-                bindPreference( pref);
-            
+                bindPreference(pref);
 
                 EventHandler enabledHandler = delegate
                 {
                     bool ctrlcanBeenable = Interface.IBS.EnabledControls;
                     this.Enabled = ctrlcanBeenable;
-            
-
-
-
                 };
                 Interface.IBS.EnableControlsChanged += enabledHandler;
 
@@ -51,11 +43,9 @@ namespace DB.UI
 
                 refreshDGV(null, EventArgs.Empty);
 
-      
-            SC.Panel2Collapsed = table;
-            SC.Panel1Collapsed = !table;
-
-    }
+                SC.Panel2Collapsed = table;
+                SC.Panel1Collapsed = !table;
+            }
             catch (System.Exception ex)
             {
                 Interface.IStore.AddException(ex);
@@ -72,7 +62,6 @@ namespace DB.UI
 
         private void bindDGVColumns()
         {
-
             this.DGV.BackgroundColor = System.Drawing.Color.FromArgb(255, 35, 35, 35);
             this.DGV.DataSource = Interface.IBS.MUES;
             this.DGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
@@ -108,9 +97,6 @@ namespace DB.UI
                 c.BindingRoundingField = Interface.IDB.XCOMPref.RoundingColumn.ColumnName;
                 c.BindingPreferenceRow = pref;
             }
-
-
-      
         }
 
         /// <summary>
@@ -119,7 +105,6 @@ namespace DB.UI
         /// <param name="preference"></param>
         private void bindPreference(IXCOMPreferences preference)
         {
-
             preference.RoundingChanged += refreshDGV;
 
             this.Disposed += delegate
@@ -137,8 +122,6 @@ namespace DB.UI
             Dumb.FD(ref this.bs);
             Dumb.FD(ref this.Linaa);
         }
-
-           
 
         /// <summary>
         /// not used
@@ -186,6 +169,7 @@ namespace DB.UI
             }
             DGV.Visible = true;
         }
+
         public ucMUES()
         {
             InitializeComponent();

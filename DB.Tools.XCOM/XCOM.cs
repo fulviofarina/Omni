@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using static DB.LINAA;
 
@@ -21,6 +20,7 @@ namespace DB.Tools
         private IList<MatrixRow> rows;
         private decimal seconds = 0;
         private Stopwatch stopwatch;
+
         public Action<Exception> ExceptionAdder
         {
             get
@@ -99,7 +99,6 @@ namespace DB.Tools
             }
         }
 
-     
         public void Calculate(bool? BKG)
         {
             double start = pref.StartEnergy;
@@ -140,14 +139,11 @@ namespace DB.Tools
                 l?.RunWorkerAsync();
             };
 
-
             int contador = rows.Count;
             int actionCount = 0;
 
             while (contador != 0)
             {
-              
-
                 MatrixRow m = rows[contador - 1];
 
                 string msg = m.MatrixName + " was ";
@@ -156,7 +152,6 @@ namespace DB.Tools
 
                 try
                 {
-
                     if (!accumulate)
                     {
                         m.CleanMUES();
@@ -164,28 +159,24 @@ namespace DB.Tools
 
                     Action<int> report = progress =>
                     {
-
                         if (!IsCalculating) return;
 
                         _showProgress?.Invoke(null, EventArgs.Empty);
 
+                        bool finito = false;
+                        finito = reportProgress(progress, m.MatrixName);
 
-                         bool finito = false;
-                         finito = reportProgress(progress, m.MatrixName);
-                     
-                         m.IsBusy = !finito;
-                     
+                        m.IsBusy = !finito;
                     };
 
                     Action callBack =
                         delegate
                         {
-                           // if (!IsCalculating) return;
+                            // if (!IsCalculating) return;
 
                             updateLoaders(runWorker, m.MatrixID);
                             _callBack?.Invoke(m, EventArgs.Empty);
                         };
-
 
                     m.RowError = string.Empty;
                     bool goIn = (!m.HasErrors() && m.ToDo);
@@ -199,7 +190,6 @@ namespace DB.Tools
                         rows.Remove(m);
                         throw new SystemException("The matrix has errors");
                     }
-                   
                 }
                 catch (SystemException ex)
                 {
@@ -209,13 +199,11 @@ namespace DB.Tools
                     title = "Failed!";
                 }
 
-
                 msg += "selected";
 
                 reporter(msg, title, ok, false);
 
                 contador--;
-
             }
 
             _resetProgress?.Invoke(actionCount);
@@ -263,8 +251,6 @@ namespace DB.Tools
 
                 MatrixRow toCancel = rows.Where(o => o.IsBusy).FirstOrDefault(o => o.MatrixID == i);
                 toCancel.SetAsNotCalculated();
-
-
             }
         }
 
@@ -286,7 +272,6 @@ namespace DB.Tools
 
             int nrOfQueries = 1;
 
-    
             delta = 0;
             if (maxEnergies > NrEnergies)
             {
@@ -300,9 +285,6 @@ namespace DB.Tools
             }
             end = start + delta;
 
-
-
-
             string listOfenergies, compositions;
             listOfenergies = string.Empty;
 
@@ -313,13 +295,9 @@ namespace DB.Tools
 
             compositions = GetCompositionString(m.MatrixComposition);
 
-
-            while (nrOfQueries>0)
+            while (nrOfQueries > 0)
             {
-
                 //finishing next round
-            
-
 
                 if (!useList)
                 {
@@ -328,13 +306,11 @@ namespace DB.Tools
                     int lines = GetNumberOfLines(step, start, end);
                     listOfenergies = MakeEnergiesList(step, start, lines);
 
-                    if (nrOfQueries - 1 == 0) end = totalEnd ;
-
+                    if (nrOfQueries - 1 == 0) end = totalEnd;
                 }
 
                 string labelName = m.MatrixName + ": " + start + " to " + end + " keV";
                 Action action = setMainAction(m.MatrixID, numberOfFiles, listOfenergies, compositions, labelName, start, end);
-
 
                 if (!useList)
                 {
@@ -373,7 +349,6 @@ namespace DB.Tools
 
             Action action3 = delegate
             {
-
                 if (!IsCalculating) return;
 
                 int matrixID = m.MatrixID;
@@ -385,27 +360,19 @@ namespace DB.Tools
                 string labelName = string.Empty;
                 string range = string.Empty;
 
-
                 labelName = mstrixName + ": " + initialStart.ToString() + " to " + totalEnd.ToString() + " keV";
                 range = ".LAST";
                 makefullPic(compositions, totalEnd, initialStart, matrixID, labelName, range);
 
-
-
                 labelName = mstrixName + ": " + min.ToString() + " keV to " + maxDisplay.ToString() + " GeV";
-                 range = ".FULL";
-                 makefullPic( compositions, max, min, matrixID, labelName, range);
-
-            
-
+                range = ".FULL";
+                makefullPic(compositions, max, min, matrixID, labelName, range);
             };
-
 
             ls.Add(action2);
             ls.Add(action3);
-          
 
-      //      m.IsBusy = true;
+            // m.IsBusy = true;
 
             return ls;
         }
@@ -418,11 +385,10 @@ namespace DB.Tools
             string Response = QueryXCOM(compositions, listOfenergies, labelName, true);
             if (string.IsNullOrEmpty(Response)) return;
 
-            string tempFile = _startupPath + matrixID + range+ PictureExtension;
+            string tempFile = _startupPath + matrixID + range + PictureExtension;
             getPicture(ref Response, tempFile);
 
-       //     File.WriteAllText(tempFile+HTMLExtension, Response);
-
+            // File.WriteAllText(tempFile+HTMLExtension, Response);
         }
 
         public void Set(ref Interface inter)
@@ -432,7 +398,6 @@ namespace DB.Tools
 
         private int addToLoaders(ref MatrixRow m, Action<int> report, Action callBack, double start, double Totalend, double step, bool accumulate, bool useList = true)
         {
-
             IList<Action> actions = generateEngineActions(ref m, start, Totalend, step, offline, accumulate, useList);
 
             if (actions.Count == 0)
@@ -458,13 +423,13 @@ namespace DB.Tools
             reporter(msg, title, x, false);
             return finito;
         }
+
         private Action setMainAction(int matrixID, int numberOfFiles, string listOfenergies, string compositions, string labelName, double start, double end)
         {
             Action action = delegate
             {
                 try
                 {
-
                     if (!IsCalculating) return;
 
                     string Response = string.Empty;
@@ -472,18 +437,14 @@ namespace DB.Tools
 
                     Response = QueryXCOM(compositions, listOfenergies, labelName, false);
 
-                    string range = punto + "N" + numberOfFiles ;
+                    string range = punto + "N" + numberOfFiles;
 
-                    tempFile = Rsx.Dumb.Strings.CachePath + matrixID +  range ;
+                    tempFile = Rsx.Dumb.Strings.CachePath + matrixID + range;
 
-
-                    IO.WriteFileText(tempFile,Response, false);
-
+                    IO.WriteFileText(tempFile, Response, false);
 
                     range += punto + start.ToString() + " - " + end.ToString();
-                    makefullPic(compositions, end,start , matrixID, labelName, range);
-
-
+                    makefullPic(compositions, end, start, matrixID, labelName, range);
                 }
                 catch (SystemException ex)
                 {
@@ -512,10 +473,12 @@ namespace DB.Tools
                 runWorker.Invoke(null, EventArgs.Empty);
             }
         }
+
         public XCOM() : base()
         {
             stopwatch = new Stopwatch();
         }
+
         // private string png = ".png";
     }
 }

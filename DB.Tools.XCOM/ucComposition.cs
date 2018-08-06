@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-
-using DB.Tools;
+﻿using DB.Tools;
 using Rsx.Dumb;
-using static DB.LINAA;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Forms;
+using static DB.LINAA;
 
 namespace DB.UI
 {
@@ -34,7 +32,6 @@ namespace DB.UI
                     this.Enabled = ctrlcanBeenable;
                 };
 
-
                 Interface.IBS.EnableControlsChanged += enabled;
 
                 this.Disposed += delegate
@@ -47,7 +44,6 @@ namespace DB.UI
                 this.compositionsDGV.MouseDoubleClick += ChangeFocus;
 
                 this.compositionsDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-
             }
             catch (System.Exception ex)
             {
@@ -64,8 +60,6 @@ namespace DB.UI
 
         private void setBindings(bool selectedMatrix)
         {
-
-
             BindingSource bsCompositions = Interface.IBS.SelectedCompositions;
             //take respective BS
             BindingSource Bind = Interface.IBS.SelectedMatrix;
@@ -86,10 +80,7 @@ namespace DB.UI
             Binding mcompoBin = Rsx.Dumb.BS.ABinding(ref Bind, column);
             this.matrixRTB.DataBindings.Add(mcompoBin);
 
-       
-
             this.compositionsDGV.DataSource = bsCompositions;
-
         }
 
         public void ChangeFocus(object sender, EventArgs e)
@@ -105,7 +96,6 @@ namespace DB.UI
             {
                 focusRTB();
             }
-       
         }
 
         /// <summary>
@@ -137,12 +127,11 @@ namespace DB.UI
         {
             this.matrixRTB.SelectionStart = this.matrixRTB.TextLength;
             if (current == null) return;
-        
-                string text = current.Element + "\t" + current.Quantity;
-                int index = this.matrixRTB.Find(text);
-          
-                this.matrixRTB.SelectionStart = index;
-           
+
+            string text = current.Element + "\t" + current.Quantity;
+            int index = this.matrixRTB.Find(text);
+
+            this.matrixRTB.SelectionStart = index;
         }
 
         public ucComposition()

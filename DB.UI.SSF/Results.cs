@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DB.Tools;
+using Rsx.Dumb;
+using System;
 using System.Data;
 using System.Windows.Forms;
-using DB.Tools;
-using Rsx.Dumb;
 
 namespace DB.UI
 {
@@ -66,7 +66,7 @@ namespace DB.UI
 
             unitDGV.DataSource = Interface.IBS.Units;
             unitDGV.RowHeadersVisible = false;
-          
+
             // this.ToDoCol.BindingColumn = Interface.IDB.Unit.ToDoColumn.ColumnName;
             SSFDGV.DataSource = Interface.IBS.SSF;
 

@@ -1,7 +1,6 @@
 ﻿using DB.Tools;
 using Rsx.Dumb;
 using System.Windows.Forms;
-using System;
 
 namespace DB.UI
 {
@@ -39,8 +38,6 @@ namespace DB.UI
 
             this.matrixDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.matrixDGV.Refresh();
-
-
         }
 
         private void destroy()
@@ -79,13 +76,10 @@ namespace DB.UI
                   bool ctrlcanBeenable = Interface.IBS.EnabledControls;
                   this.Enabled = ctrlcanBeenable;
 
-
                   this.matrixDGV.Invalidate(true);
                   this.matrixDGV.Refresh();
                   this.matrixDGV.ClearSelection();
               };
-
-
 
             /*
             if (bs.Count != 0)
@@ -124,7 +118,5 @@ namespace DB.UI
             }
             ucComposition1.ChangeFocus(null, System.EventArgs.Empty);
         }
-
-     
     }
 }

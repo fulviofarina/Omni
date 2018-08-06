@@ -1,15 +1,11 @@
-﻿using System;
+﻿using Rsx.DGV;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using Rsx.Dumb;
-using Rsx.DGV;
 using static DB.LINAA;
 
 namespace DB.UI
 {
-   
     /*
     public partial class SampleColumn : DataGridViewTextBoxColumn, ISampleColumn
     {
@@ -55,21 +51,20 @@ namespace DB.UI
     }
     */
 
-    public  class SampleColumn : BindableDGVColumn
+    public class SampleColumn : BindableDGVColumn
     {
         public SampleColumn()
             : base()
         {
             CellTemplate = new BindableDGVCell();
-             this.DefaultAction = DefaultAction.ReadOnly;
-       //  this.arrayOfBackColors = new Color[] { Color.FromArgb(64, 64, 64), Color.White, Color.White };
-     //   this.arrayOfForeColors = new Color[] { Color.Yellow, Color.Black, Color.Black };
-
+            this.DefaultAction = DefaultAction.ReadOnly;
+            // this.arrayOfBackColors = new Color[] { Color.FromArgb(64, 64, 64), Color.White,
+            // Color.White }; this.arrayOfForeColors = new Color[] { Color.Yellow, Color.Black,
+            // Color.Black };
+        }
     }
-}
-   
 
-    public  class UnitSSFCell : DataGridViewTextBoxCell
+    public class UnitSSFCell : DataGridViewTextBoxCell
     {
         protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
         {
@@ -117,9 +112,7 @@ namespace DB.UI
         }
     }
 
-
-  
-    public  class UnitSSFColumn : BindableDGVColumn, IUnitSSFColumn
+    public class UnitSSFColumn : BindableDGVColumn, IUnitSSFColumn
     {
         public UnitSSFColumn() : base()
         {
@@ -128,7 +121,6 @@ namespace DB.UI
         }
 
         protected internal string bindableAsteriskField = string.Empty;
-
 
         public void PaintHeader()
         {
@@ -167,7 +159,6 @@ namespace DB.UI
             HeaderText = originalHeaderText + add;
         }
 
-    
         public string BindableAsteriskField
         {
             get
@@ -227,12 +218,7 @@ namespace DB.UI
                 originalHeaderText = value;
             }
         }
-
-    
     }
-
-
-
 
     /*
 
@@ -246,7 +232,7 @@ namespace DB.UI
     }
     public  class UnitBoolCell : DataGridViewTextBoxCell
     {
-      //  protected internal Color defaultColor = Color.DarkRed;
+      // protected internal Color defaultColor = Color.DarkRed;
 
         protected override void OnMouseClick(DataGridViewCellMouseEventArgs e)
         {
@@ -267,7 +253,6 @@ namespace DB.UI
             base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, this.Style, advancedBorderStyle, paintParts);
         }
 
-
         protected internal void setCellColor()
         {
             UnitRow u = ((this.OwningRow?.DataBoundItem as DataRowView)?.Row) as UnitRow;
@@ -286,7 +271,6 @@ namespace DB.UI
                     Style.BackColor = colr;
                     Style.ForeColor = colr;
                 }
-            
         }
 
         public UnitBoolCell() : base()
@@ -299,7 +283,6 @@ namespace DB.UI
             Style.ForeColor = defaultColor;
         }
     }
-
 
     */
 }

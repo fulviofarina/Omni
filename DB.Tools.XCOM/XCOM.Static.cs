@@ -1,8 +1,6 @@
 ﻿using Rsx.Dumb;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,10 +24,6 @@ namespace DB.Tools
 
         protected static string NOINTERNET_ERROR = "Check your Internet connection";
         protected static string NOINTERNET_TITLE = "Server not available!";
-
-       
-
-
     }
 
     public partial class XCOM
@@ -39,7 +33,7 @@ namespace DB.Tools
         public static string HTMLExtension = ".html";
 
         public static string PictureExtension = ".png";
-    
+
         public static Uri XCOMTestUri = new Uri("https://physics.nist.gov/");
         public static Uri XCOMUri = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3-t");
         public static Uri XCOMUriPic = new Uri("https://physics.nist.gov/cgi-bin/Xcom/xcom3_3");
@@ -96,8 +90,6 @@ namespace DB.Tools
             }
             return ls;
         }
-
-
 
         /*
         public static string MakeCompositionsList(string MatrixComposition)
@@ -198,7 +190,7 @@ namespace DB.Tools
 
         private static void getPicture(ref string Response, string tempFile)
         {
-            if (File.Exists(tempFile))    File.Delete(tempFile);
+            if (File.Exists(tempFile)) File.Delete(tempFile);
             string aux = getPicTag(ref Response);
             if (aux.Contains("Error")) return;
 
@@ -208,9 +200,9 @@ namespace DB.Tools
             {
                 client.DownloadFileAsync(uri, tempFile);
             }
-        //    client.DownloadFile(uri, tempFile);
-          //  client.Dispose();
+            // client.DownloadFile(uri, tempFile); client.Dispose();
         }
+
         private static string getHTTPQuery(byte[] bytes, bool picture = false)
         {
             string completo;
@@ -235,7 +227,6 @@ namespace DB.Tools
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
 
-
             completo = reader.ReadToEnd();
             reader.Close();
             reader.Dispose();
@@ -254,7 +245,7 @@ namespace DB.Tools
         {
             int added = 0;
 
-            string tempFile = path + matrixID + punto + "N" + numberofFiles ;
+            string tempFile = path + matrixID + punto + "N" + numberofFiles;
             if (!File.Exists(tempFile)) return added;
 
             StreamReader reader = new StreamReader(tempFile);
@@ -386,5 +377,4 @@ namespace DB.Tools
             }
         }
     }
-
 }

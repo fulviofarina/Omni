@@ -1,35 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Linq;
 
 namespace DB.Tools
 {
-    public class ucXCOMPicNav: VTools.ucPicNav
+    public class ucXCOMPicNav : VTools.ucPicNav
     {
         public ucXCOMPicNav() : base()
         {
-
-
         }
 
-        public override string CreateListItem(string baseFilename, string enumerator, ref string file,  string item)
+        public override string CreateListItem(string baseFilename, string enumerator, ref string file, string item)
         {
             string itemText = item;
             //si es una imagen
             if (itemText.Contains(IMAGE_EXTENSION))
             {
                 file += baseFilename + PUNTO + itemText;
-                //     Image img = Image.FromFile(file);
+                // Image img = Image.FromFile(file);
                 itemText = itemText.Replace(IMAGE_EXTENSION, null);
             }
             //si es un archivo base sin extension, saltalo
             else if (itemText.CompareTo(baseFilename) == 0)
             {
-                return string.Empty ;
+                return string.Empty;
             }
             //otros
             else
@@ -45,9 +37,9 @@ namespace DB.Tools
                 itemText = itemText.Substring(numberIndex + 1);
             }
             //si es un .csv
-            if (itemText.ToLower().Contains(csv) )
+            if (itemText.ToLower().Contains(csv))
             {
-                itemText =comma +" "+ separated;
+                itemText = comma + " " + separated;
             }
             //si es un .xls
             else if (itemText.ToLower().Contains(xls))
@@ -63,6 +55,5 @@ namespace DB.Tools
             files = files.OrderBy(o => o.Length).ToArray();
             return files;
         }
-
     }
 }

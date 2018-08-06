@@ -2,8 +2,6 @@
 
 namespace DB.UI
 {
-   
-
     public interface IUnitSSFColumn
     {
         string BindableAsteriskField { get; set; }
