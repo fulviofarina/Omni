@@ -1,12 +1,12 @@
-﻿using System;
+﻿using DB.Properties;
+using Rsx;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Messaging;
 using System.Windows.Forms;
-using DB.Properties;
-using Rsx;
-using Rsx.Dumb;
 using VTools;
 using static DB.LINAA;
 
@@ -247,7 +247,7 @@ namespace DB.Tools
         /// </summary>
         /// <param name="msg">  Message to display</param>
         /// <param name="title">title of the message</param>
-        public void Msg(string msg, string title, object ok=null, bool accumulate = false)
+        public void Msg(string msg, string title, object ok = null, bool accumulate = false)
         {
             this.msn.Msg(msg, title, ok, accumulate);
         }
@@ -276,7 +276,7 @@ namespace DB.Tools
                 toolTip = toolTip.Split(parentesis)[0];
             }
             if (string.IsNullOrEmpty(toolTip)) return;
-        //    Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
+            // Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
             Speak(toolTip);
         }
 
@@ -485,7 +485,6 @@ namespace DB.Tools
                 msn = new Pop(true);
                 msn.LogFilePath = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache)
                     + "\\" + "Log." + DateTime.Today.DayOfYear + ".doc";
-              
             }
         }
     }

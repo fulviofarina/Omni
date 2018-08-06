@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DB.Properties;
+using System;
 using System.Collections;
 using System.Messaging;
-using DB.Properties;
 using VTools;
 
 namespace DB.Tools
