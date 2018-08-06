@@ -1,5 +1,4 @@
 ﻿//using DB.Interfaces;
-using DB.LINAATableAdapters;
 using Rsx.Dumb;
 using System;
 using System.Collections.Generic;
@@ -55,6 +54,7 @@ namespace DB
 
             return pro;
         }
+
         //
 
         /// <summary>
@@ -63,18 +63,15 @@ namespace DB
         /// <returns></returns>
         public IEnumerable<string> ListOfHLProjects()
         {
-
             IEnumerable<string> arr = null;
             MeasurementsDataTable meas = new MeasurementsDataTable();
             try
             {
-
                 this.tAM.MeasurementsTableAdapter.FillDataByHL(meas);
             }
             catch (Exception ex)
             {
                 AddException(ex);
-              
             }
             arr = meas.Select(o => o.Project.ToUpper()).Distinct();
             Dumb.FD(ref meas);
@@ -86,11 +83,10 @@ namespace DB
         {
             try
             {
-            
                 this.tableProjects.Clear();
 
                 this.tAM.ProjectsTableAdapter.Fill(this.tableProjects);
-         
+
                 this.tableProjects.AcceptChanges();
             }
             catch (SystemException ex)

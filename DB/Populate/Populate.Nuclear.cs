@@ -6,7 +6,6 @@ namespace DB
 {
     public partial class LINAA : INuclear
     {
-       
         public void CleanSigmas()
         {
             IEnumerable<SigmasRow> rows = Sigmas;

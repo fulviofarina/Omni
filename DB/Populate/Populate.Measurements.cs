@@ -1,6 +1,5 @@
 ﻿using DB.LINAATableAdapters;
 using Rsx.Dumb;
-using Rsx.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +64,7 @@ namespace DB
                 if (meas.Count() != 0)
                 {
                     Measurements.Merge(meas);
-                   Measurements.AcceptChanges();
+                    Measurements.AcceptChanges();
                 }
             }
             catch (Exception ex)
@@ -81,7 +80,6 @@ namespace DB
         {
             try
             {
-            
                 SpecPrefRow r = this.tableMeasurements.SpecPrefRow as SpecPrefRow;
                 PeaksHLDataTable peakshl = PopulatePeaksHL(id, r.minArea, r.maxUnc);
 
@@ -110,7 +108,6 @@ namespace DB
             return phl;
         }
 
-        
         public void CheckMeasurements(ref IEnumerable<MeasurementsRow> measurements)
         {
             if (measurements.Count() == 0) return;
@@ -128,7 +125,6 @@ namespace DB
             }
         }
 
-       
         /*
 public void CheckMeasurements()
 {
