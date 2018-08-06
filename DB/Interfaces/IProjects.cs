@@ -15,7 +15,7 @@ namespace DB
         ProjectsRow FindBy(int? IrReqId, int? orderID, bool addIfNull);
         // IList<SubSamplesRow> FindByProject(string project);
 
-        IList<string> ListOfHLProjects();
+        IEnumerable<string> ListOfHLProjects();
 
         void PopulateProjects();
 

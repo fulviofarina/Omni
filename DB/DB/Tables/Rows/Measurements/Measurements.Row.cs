@@ -160,20 +160,24 @@ namespace DB
                 }
             }
 
-            private void checkTimes()
+            private void checkTimes(bool counttime )
             {
                 if (countTimeRaw == null) return;
                 SpecPrefRow r = this.tableMeasurements.SpecPrefRow;
                 if (r == null) return;
              
                 double factor = Caster.GetTimeFactor(r.TimeDivider);
-          
+
+                if (counttime)
+                {
                     double ct = (double)this.countTimeRaw / factor;
                     if (ct != CountTime) CountTime = ct;
-                   
+                }
+                else
+                {
                     double lt = (double)this.liveTimeRaw / factor;
                     if (lt != LiveTime) LiveTime = lt;
-
+                }
               
             }
 
@@ -197,26 +201,30 @@ namespace DB
 
             public void Check(DataColumn Column)
             {
-                //   if (!this.tableMeasurements.ForbiddenNullCols.Contains(Column)) return;
-
              
                 if (Column == this.tableMeasurements.MeasurementColumn)
                 {
-                  
                         setLabels();
-                   
                 }
-                else if (Column == this.tableMeasurements.CountTimeColumn || (Column == this.tableMeasurements.LiveTimeColumn))
+                else if (Column == this.tableMeasurements.CountTimeColumn )
                 {
                     if (countTimeRaw == null)
                     {
                         countTimeRaw = CountTime;
-                        liveTimeRaw = LiveTime;
                     }
-                    else checkTimes();
+                    else checkTimes(true);
                   
                 }
-           
+                else if (Column == this.tableMeasurements.LiveTimeColumn)
+                {
+                    if (liveTimeRaw == null)
+                    {
+                        liveTimeRaw = LiveTime;
+                    }
+                    else checkTimes(false);
+
+                }
+
             }
         }
     }

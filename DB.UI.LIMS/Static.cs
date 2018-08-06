@@ -40,8 +40,10 @@ namespace DB.UI
             Interface.IPreferences.PopulatePreferences(forceOffline, forceAdvEditor);
 
             //overrides, otherwise use default value from user
-      
-           
+
+
+
+          //  Creator.CheckConnections(false, true);
 
         }
 

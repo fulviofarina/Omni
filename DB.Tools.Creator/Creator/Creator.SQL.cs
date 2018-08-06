@@ -20,10 +20,6 @@ namespace DB.Tools
         /// <returns></returns>
         public static bool PrepareSQL(ref UserControl connectionUsrControl)
         {
-            // Cursor.Current = Cursors.WaitCursor;
-
-            Interface.IReport.Msg("Set up", "Checking SQL...");
-            Application.DoEvents();
 
             Action adapterInitializer = delegate
            {
@@ -54,56 +50,7 @@ namespace DB.Tools
                 //restarting the server didn't work, plan B
                 if (ok) continue;
 
-                //show no connection Intro
-                //could not connect
-                //  Cursor.Current = Cursors.Default;
-                MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                // Cursor.Current = Cursors.WaitCursor;
-
-                //provide path to SQL files for deploy (installation)
-                string path = Application.StartupPath + DB.Properties.Resources.DevFiles;
-                string sqlServerFound = SQLUI.FindSQLOrInstall(path);
-                //IMPORTANTE, cambia el string el usuario o el default!
-                bool sqlFound = !string.IsNullOrEmpty(sqlServerFound);
-                if (sqlFound)
-                {
-                    SQLUI.ReplaceLocalDBDefaultPath(ref userDB, sqlServerFound);
-                    //store later
-                }
-                //2
-                //offer user to change database string anyway!!!
-                developerDB = SQLUI.ChangeConnectionString(ref connectionUsrControl, ref userDB);
-                //3
-                //set local database as default
-                defaultConnection = userDB;
-                //chequea si ya tiene servidores SQL
-
-                //ask to populate or Not
-                //   Cursor.Current = Cursors.Default;
-
-                DialogResult result = MessageBox
-                    .Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                //populate new database...
-                if (result == DialogResult.Yes)
-                {
-                    makeDatabase = true;
-                    //set developer database string
-                    defaultConnection = developerDB;
-                }
-                else
-                {
-                    //just in case...
-                    makeDatabase = false;
-                    //TODO: populate?
-                }
-                //Cursor.Current = Cursors.WaitCursor;
-
-                Interface.IPreferences.CurrentPref.LIMS = defaultConnection;
-                // Interface.IPreferences.SavePreferences();
-                if (makeDatabase)
-                {
-                    makeDatabase = LinqDataContext.PopulateSQL(developerDB, true);
-                }
+                fixMainSQLConnection(ref connectionUsrControl, out makeDatabase, ref userDB, out developerDB, out defaultConnection);
 
                 Interface.IAdapter.DisposeAdapters();
 
@@ -111,37 +58,11 @@ namespace DB.Tools
 
                 adapterInitializer.Invoke();
 
-                // Cursor.Current = Cursors.WaitCursor;
             }
 
             if (makeDatabase)
             {
-                //now populate developer Database first and send data there
-                //afterwards, you copy what you need to copy to USER Database...
-                //    bool makeDatabase = false;
-
-                //MAE A COPY INTO THE DEVELOPER DB SQL
-                //read the backup file
-                LoadFromFile();
-                Interface.IStore.CleanOthers();
-                Interface.IDB.Compositions.Clear();
-                Interface.IPopulate.INuclear.CleanSigmas();
-                Interface.IPreferences.PopulatePreferences();
-
-                foreach (var item in Interface.IDB.Matrix)
-                {
-                    item.SetCompositionTableNull();
-                    // item.SetXCOMTableNull();
-                }
-                // CleanOthers();
-                IEnumerable<DataTable> tables = Interface.Get().Tables.OfType<DataTable>();
-                //save
-                Interface.IStore.SaveTables(ref tables);
-                Interface.IAdapter.DisposeAdapters();
-
-                ok = cloneDatabase(userDB, developerDB);
-                //always delete the developer database if it got stucked next restart...
-                SQL.DeleteDatabase(developerDB);
+                ok = makeMainSQLDatabase(userDB, developerDB);
             }
 
             //SAVE SETTINGS!!!
@@ -156,6 +77,92 @@ namespace DB.Tools
             Interface.IPreferences.CurrentPref.IsSQL = ok;
 
             return ok;
+        }
+
+        private static bool makeMainSQLDatabase(string userDB, string developerDB)
+        {
+            bool ok = false;
+            //now populate developer Database first and send data there
+            //afterwards, you copy what you need to copy to USER Database...
+            //    bool makeDatabase = false;
+
+            //MAE A COPY INTO THE DEVELOPER DB SQL
+            //read the backup file
+            LoadFromFile();
+            Interface.IStore.CleanOthers();
+            Interface.IDB.Compositions.Clear();
+            Interface.IPopulate.INuclear.CleanSigmas();
+            Interface.IPreferences.PopulatePreferences();
+
+            foreach (var item in Interface.IDB.Matrix)
+            {
+                item.SetCompositionTableNull();
+                // item.SetXCOMTableNull();
+            }
+            // CleanOthers();
+            IEnumerable<DataTable> tables = Interface.Get().Tables.OfType<DataTable>();
+            //save
+            Interface.IStore.SaveTables(ref tables);
+            Interface.IAdapter.DisposeAdapters();
+
+            ok = cloneDatabase(userDB, developerDB);
+            //always delete the developer database if it got stucked next restart...
+            SQL.DeleteDatabase(developerDB);
+            return ok;
+        }
+
+        private static void fixMainSQLConnection(ref UserControl connectionUsrControl, out bool makeDatabase, ref string userDB, out string developerDB, out string defaultConnection)
+        {
+            //show no connection Intro
+            //could not connect
+            //  Cursor.Current = Cursors.Default;
+            MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            // Cursor.Current = Cursors.WaitCursor;
+
+            //provide path to SQL files for deploy (installation)
+            string path = Application.StartupPath + DB.Properties.Resources.DevFiles;
+            string sqlServerFound = SQLUI.FindSQLOrInstall(path);
+            //IMPORTANTE, cambia el string el usuario o el default!
+            bool sqlFound = !string.IsNullOrEmpty(sqlServerFound);
+            if (sqlFound)
+            {
+                SQLUI.ReplaceLocalDBDefaultPath(ref userDB, sqlServerFound);
+                //store later
+            }
+            //2
+            //offer user to change database string anyway!!!
+            developerDB = SQLUI.ChangeConnectionString(ref connectionUsrControl, ref userDB);
+            //3
+            //set local database as default
+            defaultConnection = userDB;
+            //chequea si ya tiene servidores SQL
+
+            //ask to populate or Not
+            //   Cursor.Current = Cursors.Default;
+
+            DialogResult result = MessageBox
+                .Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //populate new database...
+            if (result == DialogResult.Yes)
+            {
+                makeDatabase = true;
+                //set developer database string
+                defaultConnection = developerDB;
+            }
+            else
+            {
+                //just in case...
+                makeDatabase = false;
+                //TODO: populate?
+            }
+            //Cursor.Current = Cursors.WaitCursor;
+
+            Interface.IPreferences.CurrentPref.LIMS = defaultConnection;
+            // Interface.IPreferences.SavePreferences();
+            if (makeDatabase)
+            {
+                makeDatabase = LinqDataContext.PopulateSQL(developerDB, true);
+            }
         }
 
         public static void ConnectionsUI()

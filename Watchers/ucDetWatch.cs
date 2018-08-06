@@ -82,8 +82,8 @@ namespace k0X
 
             if (Interface.IPreferences.CurrentPref != null)
             {
-                abox.Text = Interface.IPreferences.CurrentPref.windowA.ToString();
-                bbox.Text = Interface.IPreferences.CurrentPref.windowB.ToString();
+                abox.Text = Interface.IPreferences.CurrentSpecPref.windowA.ToString();
+                bbox.Text = Interface.IPreferences.CurrentSpecPref.windowB.ToString();
                 srvBox.Text = Interface.IPreferences.CurrentPref.SpectraSvr;
                 this.specPathbox.Text = Interface.IPreferences.CurrentPref.Spectra;
             }

@@ -1,4 +1,5 @@
 ﻿//using DB.Interfaces;
+using DB.LINAATableAdapters;
 using Rsx.Dumb;
 using System;
 using System.Collections.Generic;
@@ -60,24 +61,23 @@ namespace DB
         /// Acomodar para que use un solo TAM
         /// </summary>
         /// <returns></returns>
-        public IList<string> ListOfHLProjects()
+        public IEnumerable<string> ListOfHLProjects()
         {
-            LINAATableAdapters.MeasurementsTableAdapter mta = new LINAATableAdapters.MeasurementsTableAdapter();
 
-            IList<string> arr = new List<string>();
+            IEnumerable<string> arr = null;
+            MeasurementsDataTable meas = new MeasurementsDataTable();
             try
             {
-                MeasurementsDataTable meas = new MeasurementsDataTable();
-                mta.FillDataByHL(meas);
-                arr = meas.Select(o => o.Project.ToUpper()).Distinct().ToList();
-                meas.Dispose();
+
+                this.tAM.MeasurementsTableAdapter.FillDataByHL(meas);
             }
             catch (Exception ex)
             {
                 AddException(ex);
+              
             }
-
-            mta.Dispose();
+            arr = meas.Select(o => o.Project.ToUpper()).Distinct();
+            Dumb.FD(ref meas);
 
             return arr;
         }
@@ -86,13 +86,11 @@ namespace DB
         {
             try
             {
-                //Handlers(this.tableSubSamples, false);
-
-                // Dumb.CleanColumnExpressions(Measurements);
+            
                 this.tableProjects.Clear();
 
-                this.TAM.ProjectsTableAdapter.Fill(this.tableProjects);
-                //Handlers(this.tableSubSamples, true);
+                this.tAM.ProjectsTableAdapter.Fill(this.tableProjects);
+         
                 this.tableProjects.AcceptChanges();
             }
             catch (SystemException ex)

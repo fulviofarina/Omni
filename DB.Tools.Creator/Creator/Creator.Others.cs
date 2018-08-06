@@ -144,7 +144,7 @@ namespace DB.Tools
             };
         }
 
-        public static bool CheckConnections(bool msmq, bool sql)
+        public static bool CheckConnections(bool msmq = true, bool sql =true, bool hyperLab = false)
         {
             bool ok = false;
             if (msmq)
@@ -163,6 +163,9 @@ namespace DB.Tools
                 UserControl IConn = new ucSQLConnection();
                 //this is the OK that matters..
                 //the connection
+                Interface.IReport.Msg("Set up", "Checking SQL Connection...");
+                Application.DoEvents();
+
                 ok = PrepareSQL(ref IConn);
             }
 

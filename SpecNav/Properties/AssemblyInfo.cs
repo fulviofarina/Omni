@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("A spectrum browser for HyperLab users")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("F. Farina Arboccò")]
-[assembly: AssemblyProduct("SpecNav")]
+[assembly: AssemblyProduct("SpecNav by F. Farina Arboccò")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("F. Farina Arboccò")]
 [assembly: AssemblyCulture("")]

@@ -63,7 +63,7 @@ namespace DB
                 if (meas.Count() != 0)
                 {
                     Measurements.Merge(meas);
-                    Measurements.AcceptChanges();
+                 //   Measurements.AcceptChanges();
                 }
             }
             catch (Exception ex)
@@ -123,12 +123,14 @@ namespace DB
                 }
             }
         }
+
+       
         /*
-        public void CheckMeasurements()
-        {
-            IEnumerable<MeasurementsRow> meas = this.tableMeasurements;
-            CheckMeasurements(ref meas);
-        }
-        */
+public void CheckMeasurements()
+{
+   IEnumerable<MeasurementsRow> meas = this.tableMeasurements;
+   CheckMeasurements(ref meas);
+}
+*/
     }
 }

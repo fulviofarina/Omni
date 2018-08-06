@@ -305,17 +305,18 @@ namespace k0X
             try
             {
                 LINAA.PreferencesRow preferences = Interface.IPreferences.CurrentPref;
+                LINAA.SpecPrefRow specpreferences = Interface.IPreferences.CurrentSpecPref;
                 LINAA.SSFPrefRow ssfpref = Interface.IPreferences.CurrentSSFPref;
 
                 if (load)
                 {
-                    minAreabox.Text = preferences.minArea.ToString();
-                    maxUncbox.Text = preferences.maxUnc.ToString();
+                    minAreabox.Text = specpreferences.minArea.ToString();
+                    maxUncbox.Text = specpreferences.maxUnc.ToString();
                     showMATSSF.Checked = ssfpref.ShowMatSSF;
 
                     showSolang.Checked = preferences.ShowSolang;
-                    Awindowbox.Text = preferences.windowA.ToString();
-                    Bwindowbox.Text = preferences.windowB.ToString();
+                    Awindowbox.Text = specpreferences.windowA.ToString();
+                    Bwindowbox.Text = specpreferences.windowB.ToString();
                     sampleDescription.Checked = preferences.ShowSampleDescription;
 
                     if (!EC.IsNuDelDetch(irr))
@@ -328,10 +329,10 @@ namespace k0X
                 }
                 else
                 {
-                    preferences.minArea = Convert.ToDouble(minAreabox.Text);
-                    preferences.maxUnc = Convert.ToDouble(maxUncbox.Text);
-                    preferences.windowA = Convert.ToDouble(Awindowbox.Text);
-                    preferences.windowB = Convert.ToDouble(Bwindowbox.Text);
+                    specpreferences.minArea = Convert.ToDouble(minAreabox.Text);
+                    specpreferences.maxUnc = Convert.ToDouble(maxUncbox.Text);
+                    specpreferences.windowA = Convert.ToDouble(Awindowbox.Text);
+                    specpreferences.windowB = Convert.ToDouble(Bwindowbox.Text);
                     ssfpref.ShowMatSSF = showMATSSF.Checked;
                     preferences.ShowSolang = showSolang.Checked;
                     preferences.ShowSampleDescription = sampleDescription.Checked;

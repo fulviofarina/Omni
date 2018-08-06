@@ -73,12 +73,6 @@
     <Compile Include="Samples\ucSubSamples.Content.Designer.cs">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucHyperLab.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ucHyperLab.Designer.cs">
-      <DependentUpon>ucHyperLab.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Auxiliar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,9 +173,6 @@
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucHyperLab.resx">
-      <DependentUpon>ucHyperLab.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Auxiliar.resx">
       <DependentUpon>Auxiliar.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +260,10 @@
     <ProjectReference Include="..\DB.UI.Geometry\DB.UI.Geometry.csproj">
       <Project>{18c85541-1271-455e-85a6-6c14774c2d63}</Project>
       <Name>DB.UI.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.HL\DB.UI.HL.csproj">
+      <Project>{5e971df9-772a-49fa-9619-ce6e61609c47}</Project>
+      <Name>DB.UI.HL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB.UI.Preferences\DB.UI.Preferences.csproj">
       <Project>{e8086c4f-0dd5-4058-9f8f-abe43c43b161}</Project>

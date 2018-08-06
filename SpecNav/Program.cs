@@ -43,15 +43,6 @@ namespace SpecNav
 
                 toShow.WindowState = FormWindowState.Maximized;
                 
-                /*
-            //    Bitmap bt = DB.Properties.Resources.Matrices;
-                Form form = DBForm.CreateForm(ref bt);
-                form.Size = hl.Size;
-                form.Controls.Add(hl);
-                form.Opacity = 100;
-                form.Text = "A spectrum browser for HyperLab users by F. Farina Arboccò";
-                form.WindowState = FormWindowState.Maximized;
-                */
           
 
                 Application.Run(toShow);
