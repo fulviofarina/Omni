@@ -1,7 +1,6 @@
 ﻿using DB.LINAATableAdapters;
-using System.Data;
-using System.Data.SqlClient;
 using System;
+using System.Data;
 
 namespace DB
 {
@@ -29,6 +28,7 @@ namespace DB
             }
         }
         */
+
         public string Exception
         {
             get
@@ -54,6 +54,7 @@ namespace DB
                 return tAMException == null;
             }
         }
+
         public bool IsHyperLabConnectionOk
         {
             get
@@ -76,7 +77,6 @@ namespace DB
 
         private void checkHyperLabConnection()
         {
-
             ConnectionState st = tAM.MeasurementsTableAdapter.Connection.State;
 
             if (st == ConnectionState.Open)
@@ -87,7 +87,6 @@ namespace DB
             {
                 this.tAM.MeasurementsTableAdapter.Connection.Open();
             }
-         
         }
 
         private void checkMainConnection()
@@ -157,9 +156,8 @@ namespace DB
             adapters = new System.Collections.Hashtable();
         }
 
-        public void SetMainConnection( string defaultConnection)
+        public void SetMainConnection(string defaultConnection)
         {
-
             DisposeAdapters();
             //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
             //  Properties.Settings.Default["developerDB"] = developerDB;
@@ -170,11 +168,10 @@ namespace DB
 
             InitializeComponent();
             InitializeAdapters(); //why was this after the next code? //check
-
         }
-        public void SetHyperLabConnection( string defaultConnection)
-        {
 
+        public void SetHyperLabConnection(string defaultConnection)
+        {
             DisposePeaksAdapters();
             //VEEEERY IMPORTANT, SAVES PREFERNCES AND SETTINGS!!!!
             //  Properties.Settings.Default["developerDB"] = developerDB;
@@ -185,7 +182,6 @@ namespace DB
 
             InitializeComponent();
             InitializePeaksAdapters(true); //why was this after the next code? //check
-
         }
     }
 }

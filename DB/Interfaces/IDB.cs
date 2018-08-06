@@ -91,6 +91,7 @@ namespace DB
         VialTypeDataTable VialType { get; }
         XCOMPrefDataTable XCOMPref { get; }
         YieldsDataTable Yields { get; }
+
         void AcceptChanges();
 
         void CheckMatrixToDoes();

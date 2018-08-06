@@ -1,9 +1,8 @@
 ﻿using Rsx.CAM;
+using Rsx.Dumb;
 using System;
 using System.Data;
 using System.Linq;
-using Rsx.Dumb;
-using Rsx.Math;
 
 namespace DB
 {
@@ -127,13 +126,12 @@ namespace DB
 
                 bool isMonitor = !(Measurement.Length == d.ModelSample.Length);
                 d.SetLabellingParameters(isMonitor);
-           
 
                 if (d.DetectorIdx >= 0)
                 {
                     Detector = Measurement.Substring(d.DetectorIdx, d.DetectorLength);
                 }
-            
+
                 if (d.PositionIdx >= 0)
                 {
                     string posString = Measurement.Substring(d.PositionIdx, d.PositionLength);
@@ -143,7 +141,7 @@ namespace DB
                     }
                     else Position = Convert.ToInt16(Convert.ToInt16(posString) - 49);
                 }
-              
+
                 if (d.MeasIdx >= 0)
                 {
                     MeasurementNr = Measurement.Substring(d.MeasIdx, d.MeasLength);
@@ -153,19 +151,19 @@ namespace DB
                 {
                     // Project = Measurement.Substring(d.ProjectIdx, d.ProjectLength);
                 }
-               
+
                 if (d.SampleIdx >= 0)
                 {
                     Sample = Measurement.Substring(d.SampleIdx, d.SampleLength);
                 }
             }
 
-            private void checkTimes(bool counttime )
+            private void checkTimes(bool counttime)
             {
                 if (countTimeRaw == null) return;
                 SpecPrefRow r = this.tableMeasurements.SpecPrefRow;
                 if (r == null) return;
-             
+
                 double factor = Caster.GetTimeFactor(r.TimeDivider);
 
                 if (counttime)
@@ -178,7 +176,6 @@ namespace DB
                     double lt = (double)this.liveTimeRaw / factor;
                     if (lt != LiveTime) LiveTime = lt;
                 }
-              
             }
 
             public void Check()
@@ -191,7 +188,7 @@ namespace DB
                 }
             }
 
-           private double? countTimeRaw = null;
+            private double? countTimeRaw = null;
             private double? liveTimeRaw = null;
 
             public new bool HasErrors()
@@ -201,19 +198,17 @@ namespace DB
 
             public void Check(DataColumn Column)
             {
-             
                 if (Column == this.tableMeasurements.MeasurementColumn)
                 {
-                        setLabels();
+                    setLabels();
                 }
-                else if (Column == this.tableMeasurements.CountTimeColumn )
+                else if (Column == this.tableMeasurements.CountTimeColumn)
                 {
                     if (countTimeRaw == null)
                     {
                         countTimeRaw = CountTime;
                     }
                     else checkTimes(true);
-                  
                 }
                 else if (Column == this.tableMeasurements.LiveTimeColumn)
                 {
@@ -222,9 +217,7 @@ namespace DB
                         liveTimeRaw = LiveTime;
                     }
                     else checkTimes(false);
-
                 }
-
             }
         }
     }

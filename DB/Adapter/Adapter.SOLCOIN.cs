@@ -72,9 +72,8 @@ namespace DB
             tAM.COINTableAdapter = null;
         }
 
-        public void InitializePeaksAdapters(bool forHyperLab )
+        public void InitializePeaksAdapters(bool forHyperLab)
         {
-
             tAM.MeasurementsTableAdapter = new MeasurementsTableAdapter();
             dynamic ta = tAM.MeasurementsTableAdapter;
             ChangeConnection(ref ta, forHyperLab);
@@ -90,7 +89,6 @@ namespace DB
 
         public void ChangeConnection(ref dynamic ta, bool forHyperLab)
         {
-            
             if (forHyperLab)
             {
                 ta.Connection = new SqlConnection(Settings.Default.HLSNMNAAConnectionString);

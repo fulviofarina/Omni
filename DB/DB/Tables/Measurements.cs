@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace DB
 {
     public partial class LINAA
     {
-       public partial class IPeakAveragesDataTable
+        public partial class IPeakAveragesDataTable
         {
             public IPeakAveragesRow NewIPeakAveragesRow(int k0Id, ref SubSamplesRow s)
             {
@@ -24,8 +23,6 @@ namespace DB
                 return ip;
             }
         }
-
-
 
         public partial class MeasurementsDataTable : IColumn
         {
@@ -58,7 +55,5 @@ namespace DB
                 set { }
             }
         }
-
-     
     }
 }

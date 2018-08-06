@@ -1,5 +1,4 @@
-﻿using System;
-using static DB.LINAA;
+﻿using static DB.LINAA;
 
 /// <summary>
 /// DB (LINAA) interfaces

@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Data;
-
-/// <summary>
+﻿/// <summary>
 /// DB (LINAA) interfaces
 /// </summary>
 namespace DB
 {
-   
 }

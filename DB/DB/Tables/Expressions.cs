@@ -8,8 +8,6 @@ namespace DB
 {
     public partial class LINAA : IExpressions
     {
-
-
         protected internal void handlersDetSol()
         {
             handlers.Add(DataColumnChanged);

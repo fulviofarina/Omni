@@ -8,8 +8,6 @@ namespace DB
 {
     public partial class LINAA
     {
-      
-
         /// <summary>
         /// Cleaned
         /// </summary>
@@ -169,8 +167,6 @@ namespace DB
                 }
             }
         }
-
-       
 
         partial class MonitorsDataTable : IColumn
         {

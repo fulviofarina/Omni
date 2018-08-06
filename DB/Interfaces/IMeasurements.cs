@@ -16,7 +16,7 @@ namespace DB
         MeasurementsRow FindByMeas(string measName);
 
         void CheckMeasurements(ref IEnumerable<MeasurementsRow> measurements);
-     
-        //  void CheckMeasurements();
+
+        // void CheckMeasurements();
     }
 }

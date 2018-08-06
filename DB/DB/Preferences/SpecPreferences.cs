@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace DB
 {
@@ -45,7 +44,7 @@ namespace DB
 
             public void Check(DataColumn Column)
             {
-        //        if (!this.tableSpecPref.ForbiddenNullCols.Contains(Column)) return;
+                // if (!this.tableSpecPref.ForbiddenNullCols.Contains(Column)) return;
 
                 bool nulo = EC.CheckNull(Column, this);
 
@@ -71,7 +70,7 @@ namespace DB
                     {
                         ModelMonitor = "PPPPMMMMMDp#";
                     }
-                     SetLabellingParameters(true);
+                    SetLabellingParameters(true);
                 }
                 else if (Column == tableSpecPref.ModelSampleColumn)
                 {
@@ -80,16 +79,15 @@ namespace DB
                         ModelSample = "PPPPSSDp#";
                         // SetLabellingParameters(false);
                     }
-                     SetLabellingParameters(false);
+                    SetLabellingParameters(false);
                 }
                 else if (Column == tableSpecPref.TimeDividerColumn)
                 {
                     if (nulo) TimeDivider = "m";
-                    
-                    //the user selected a good time divider (s, m, y,d,h)                  
-                    bool ok =  Rsx.Dumb.Caster.IsTimeDividerOk(TimeDivider);
-                    if (!ok) TimeDivider = "m";
 
+                    //the user selected a good time divider (s, m, y,d,h)
+                    bool ok = Rsx.Dumb.Caster.IsTimeDividerOk(TimeDivider);
+                    if (!ok) TimeDivider = "m";
                 }
             }
 

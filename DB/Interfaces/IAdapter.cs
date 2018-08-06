@@ -5,6 +5,7 @@ namespace DB
     public interface IAdapter
     {
         void SetHyperLabConnection(string defaultConnection);
+
         void InitializeComponent();
 
         void DisposePeaksAdapters();

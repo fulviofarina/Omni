@@ -12,7 +12,7 @@ namespace DB
             try
             {
                 MatrixRow m = sender as MatrixRow;
-               
+
                 if (m.IsCompositionTableNull())
                 {
                     //averiguar argumentos...
@@ -20,14 +20,13 @@ namespace DB
                     AddCompositions(ref m, ref compos, null, false);
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
 
-                    CompositionsDataTable dt =  new CompositionsDataTable(false);
+                    CompositionsDataTable dt = new CompositionsDataTable(false);
                     foreach (CompositionsRow item in compos)
                     {
                         dt.ImportRow(item);
                     }
                     byte[] arr = Rsx.Dumb.Tables.MakeDTBytes(ref dt, path);
                     m.CompositionTable = arr;
-
                 }
                 else
                 {
@@ -65,7 +64,6 @@ namespace DB
             // s = m.SubSamplesRow; Save(ref s);
         }
 
-
         protected internal void cleanCompositionsEvent(object sender, EventArgs e)
         {
             // MatrixRow m = sender as MatrixRow;
@@ -94,7 +92,6 @@ namespace DB
             IEnumerable<MatSSFRow> ssfs = sender as IEnumerable<MatSSFRow>;
             CleanSSFs(ref ssfs);
         }
-
 
         private void cleanMUESEvent(object sender, EventArgs e)
         {

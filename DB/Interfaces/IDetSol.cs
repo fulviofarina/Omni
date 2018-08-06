@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using static DB.LINAA;
+
 /// <summary>
 /// DB (LINAA) interfaces
 /// </summary>

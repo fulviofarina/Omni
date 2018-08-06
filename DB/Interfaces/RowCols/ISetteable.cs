@@ -3,5 +3,4 @@
 /// </summary>
 namespace DB
 {
-  
 }
