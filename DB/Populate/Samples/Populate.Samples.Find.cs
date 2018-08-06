@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Rsx.Dumb;
 
 namespace DB
 {
     public partial class LINAA : ISamples
     {
-       
-       
-
         public IEnumerable<SubSamplesRow> FindByProject(string project)
         {
             string cd = DB.Properties.Misc.Cd;
@@ -55,7 +50,5 @@ namespace DB
                 .Where(LINAA.SelectorByField<SubSamplesRow>(IrReqID, IrReqField));
             return old.ToList();
         }
-
-     
     }
 }
