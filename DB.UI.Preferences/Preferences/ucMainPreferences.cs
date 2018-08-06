@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DB.Tools;
+using System;
 using System.Collections;
 using System.Windows.Forms;
-using DB.Tools;
 
 namespace DB.UI
 {
@@ -73,10 +73,10 @@ namespace DB.UI
             Binding b00 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b01 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b02 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-        //    Binding b03 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-       //     Binding b04 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-        //    Binding b05 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-        //    Binding b06 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
+            // Binding b03 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled"); Binding b04
+            // = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled"); Binding b05 =
+            // Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled"); Binding b06 =
+            // Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b07 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b08 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b09 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
@@ -94,10 +94,8 @@ namespace DB.UI
             this.doSolangCheckBox.DataBindings.Add(b01);
             this.offlineCheckBox.DataBindings.Add(b02);
 
-       //     this.maxUncTextBox.DataBindings.Add(b03);
-       //     this.minAreaTextBox.DataBindings.Add(b04);
-       //     this.windowBTextBox.DataBindings.Add(b05);
-       //     this.windowATextBox.DataBindings.Add(b06);
+            // this.maxUncTextBox.DataBindings.Add(b03); this.minAreaTextBox.DataBindings.Add(b04);
+            // this.windowBTextBox.DataBindings.Add(b05); this.windowATextBox.DataBindings.Add(b06);
 
             this.showSampleDescriptionCheckBox.DataBindings.Add(b09);
         }
@@ -114,12 +112,12 @@ namespace DB.UI
             setEnablePreferencesBindings(ref bs);
 
             //text binding
-         //   Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
+            //   Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
 
-        //    this.maxUncTextBox.DataBindings.Add(bindings2["maxUnc"] as Binding);
-         //   this.minAreaTextBox.DataBindings.Add(bindings2["minArea"] as Binding);
-         //   this.windowBTextBox.DataBindings.Add(bindings2["windowB"] as Binding);
-          //  this.windowATextBox.DataBindings.Add(bindings2["windowA"] as Binding);
+            // this.maxUncTextBox.DataBindings.Add(bindings2["maxUnc"] as Binding);
+            // this.minAreaTextBox.DataBindings.Add(bindings2["minArea"] as Binding);
+            // this.windowBTextBox.DataBindings.Add(bindings2["windowB"] as Binding);
+            // this.windowATextBox.DataBindings.Add(bindings2["windowA"] as Binding);
         }
 
         public ucMainPreferences()

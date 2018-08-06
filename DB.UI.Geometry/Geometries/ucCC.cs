@@ -1,6 +1,6 @@
-﻿using System.Windows.Forms;
-using DB.Tools;
+﻿using DB.Tools;
 using Rsx.Dumb;
+using System.Windows.Forms;
 
 namespace DB.UI
 {

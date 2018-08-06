@@ -156,7 +156,7 @@ namespace DB.Tools
                 //esto cambio en uFinder asi que arreglar en MSTFF, usar lims.xml como un resource y empotrarlo
                 filePath = Interface.IStore.FolderPath + Resources.DevFiles + Resources.Linaa;
             }
-        //    Interface.Get().Clear();
+            // Interface.Get().Clear();
             Interface.IDB.AcceptChanges();
 
             Interface.IStore.Read(filePath);
@@ -243,8 +243,6 @@ namespace DB.Tools
 
             // else throw new SystemException("No Populate Method was assigned");
         }
-
-    
 
         /// <summary>
         /// The methods should be loaded already, just execute...

@@ -16,13 +16,13 @@ namespace DB.UI
         private string geoText = "AU";
         private Uri helpFile = new Uri("https://www.researchgate.net/publication/317904672");
         private Interface Interface;
-   
+
         public void Set(ref IOptions options)
         {
             if (options == null) return;
 
-          //  this.project;
-            this.project.ShowProgress= options.ShowProgress;
+            // this.project;
+            this.project.ShowProgress = options.ShowProgress;
             this.project.ResetProgress = options.ResetProgress;
 
             EventHandler help = delegate
@@ -31,7 +31,6 @@ namespace DB.UI
             };
 
             options.HelpClick += help;
-
 
             options.SaveClick += delegate
             {
@@ -51,7 +50,6 @@ namespace DB.UI
             bool ok = r == DialogResult.Yes;
             if (ok && System.IO.File.Exists(file))
             {
-             
                 IO.Process("explorer.exe ", string.Empty, file, true, false);
             }
 
@@ -65,8 +63,6 @@ namespace DB.UI
                     IO.Process("explorer.exe ", string.Empty, file, true, false);
                 }
             }
-
-         
         }
 
         public void Set(ref ISpecPreferences pref)
@@ -77,25 +73,18 @@ namespace DB.UI
                  string suffix = Caster.GetTimeDividerSuffix(addAux);
 
                  liveTimeDGVCol.HeaderText = "LT (" + addAux + ")";
-                 liveTimeDGVCol.ToolTipText = "Live Time in "+ suffix;
+                 liveTimeDGVCol.ToolTipText = "Live Time in " + suffix;
 
                  countTimeDGVCol.HeaderText = "CT (" + addAux + ")";
                  countTimeDGVCol.ToolTipText = "Count Time in " + suffix;
 
-
                  rateDGVCol.HeaderText = "Rate (cp" + addAux + ")";
                  rateDGVCol.ToolTipText = "Count rate in counts per " + suffix;
-
-
              };
 
             pref.CallBackEventHandler += handler;
 
             handler.Invoke(null, EventArgs.Empty);
-
-
-
-
         }
 
         // private CamFileReader reader; private DetectorX preader; public MainForm MainForm;
@@ -104,7 +93,7 @@ namespace DB.UI
             destroy();
 
             this.Interface = inter;
-    
+
             Interface.IDB.Measurements.ProjectColumn.Expression = string.Empty;
             Interface.IDB.Measurements.ProjectColumn.ReadOnly = false;
 
@@ -115,12 +104,10 @@ namespace DB.UI
             this.measDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.peaksDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
             this.gammasDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
-       
 
             this.project.Set(ref Interface);
-
-       
         }
+
         /*
         private void CalGeo_Click(object sender, EventArgs e)
         {
@@ -170,6 +157,7 @@ namespace DB.UI
             else picked.RowError += "Geometry Data was NOT OK!";
         }
         */
+
         private void destroy()
         {
             measDGV.DataSource = null;
@@ -181,6 +169,7 @@ namespace DB.UI
             Dumb.FD(ref this.gammasBS);
             Dumb.FD(ref Linaa);
         }
+
         // geoBox.Text;
         private void gammasBS_CurrentItemChanged(object sender, EventArgs e)
         {

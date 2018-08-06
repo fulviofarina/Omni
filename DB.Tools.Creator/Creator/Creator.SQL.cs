@@ -13,10 +13,8 @@ namespace DB.Tools
     {
         public static string MainLIMSResource { get; set; }
 
-
         public static bool PrepareSQLForHyperLab(ref VTools.IucSQLConnection conn)
         {
-          
             string defaultConnection = Settings.Default.HLSNMNAAConnectionString;
 
             Action adapterInitializer = delegate
@@ -32,34 +30,29 @@ namespace DB.Tools
 
             int counter = 1;
 
-
             //No connections
             while (!ok)
             {
                 Interface.IReport.Msg(CHECKING_SQL + " " + counter.ToString(), CHECKING_SQL_TITLE);
                 counter++;
 
-                //    conn.Show();
+                // conn.Show();
                 MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 //offer user to change database string anyway!!!
                 conn.Title = "HyperLab Server";
-                defaultConnection = conn.ChangeConnectionString( ref defaultConnection, true,true);
-
+                defaultConnection = conn.ChangeConnectionString(ref defaultConnection, true, true);
 
                 Interface.IAdapter.SetHyperLabConnection(defaultConnection);
 
                 Interface.IPreferences.CurrentPref.HL = defaultConnection;
 
                 ok = Interface.IAdapter.IsHyperLabConnectionOk;
-           
+
                 if (ok) continue;
-
-
             }
 
             finalizeSQLPopulator(ref adapterInitializer, ok);
-
 
             return ok;
         }
@@ -71,7 +64,6 @@ namespace DB.Tools
         /// <returns></returns>
         public static bool PrepareSQL(ref VTools.IucSQLConnection connectionUsrControl, bool skipMSg = false)
         {
-
             Action adapterInitializer = delegate
             {
                 Interface.IAdapter.InitializeComponent();
@@ -80,16 +72,10 @@ namespace DB.Tools
 
             adapterInitializer.Invoke();
 
-
-
-
-
             bool ok = Interface.IAdapter.IsMainConnectionOk;
-
 
             string userDB = Settings.Default.localDB;
             string developerDB = Settings.Default.developerDB;
-
 
             bool fillDatabase = false;
             int counter = 1;
@@ -110,16 +96,13 @@ namespace DB.Tools
                 string defaultConnection = string.Empty;
                 //show no connection Intro
                 //could not connect
-               if (!skipMSg)  MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!skipMSg) MessageBox.Show(NO_CONNECTION, NO_CONNECTION_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 populateDeveloperSQLDatabase(ref connectionUsrControl, out fillDatabase, ref userDB, out developerDB, out defaultConnection, skipMSg);
-
-
 
                 Interface.IAdapter.SetMainConnection(defaultConnection);
 
                 //adapterInitializer.Invoke();
-
             }
 
             if (fillDatabase)
@@ -129,7 +112,7 @@ namespace DB.Tools
 
             //SAVE SETTINGS!!!
             finalizeSQLPopulator(ref adapterInitializer, ok);
-          
+
             return ok;
         }
 
@@ -138,7 +121,7 @@ namespace DB.Tools
             Interface.IPreferences.CurrentPref.Check();
             //     Interface.IPreferences.SavePreferences();
             //again restart Adapters...
-            //  
+            //
             adapterInitializer.Invoke();
             // Cursor.Current = Cursors.Default;
             Interface.IReport.SendToRestartRoutine(Interface.IAdapter.Exception);
@@ -178,10 +161,8 @@ namespace DB.Tools
             return ok;
         }
 
-        private static void populateDeveloperSQLDatabase(ref VTools.IucSQLConnection connectionUsrControl, out bool makeDatabase, ref string userDB, out string developerDB, out string defaultConnection, bool skipMsg )
+        private static void populateDeveloperSQLDatabase(ref VTools.IucSQLConnection connectionUsrControl, out bool makeDatabase, ref string userDB, out string developerDB, out string defaultConnection, bool skipMsg)
         {
-        
-
             //provide path to SQL files for deploy (installation)
             string path = Application.StartupPath + Resources.DevFiles;
             string sqlServerFound = SQLUI.FindSQLOrInstall(path, skipMsg);
@@ -195,11 +176,11 @@ namespace DB.Tools
             //2
             //offer user to change database string anyway!!!
             connectionUsrControl.Title = "LIMS Server";
-            developerDB = connectionUsrControl.ChangeConnectionString(ref userDB,skipMsg, !skipMsg);
+            developerDB = connectionUsrControl.ChangeConnectionString(ref userDB, skipMsg, !skipMsg);
 
-            developerDB= SQL.ReplaceStringForDeveloper(developerDB);
+            developerDB = SQL.ReplaceStringForDeveloper(developerDB);
             //return a copy of the name for for Developer purposes
-        
+
             //3
             //set local database as default
             defaultConnection = userDB;
@@ -213,7 +194,7 @@ namespace DB.Tools
             {
                 result = MessageBox.Show(ABOUT_TO_POPULATE, ABOUT_TO_POPULATE_TITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }
-                //populate new database...
+            //populate new database...
             if (result == DialogResult.Yes)
             {
                 makeDatabase = true;

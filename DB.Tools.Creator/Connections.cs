@@ -1,21 +1,16 @@
-﻿using DB.Tools;
-using System;
+﻿using System;
 using System.Data;
 using System.Windows.Forms;
 
 namespace DB.Tools
 {
-
-
     public partial class Connections : Form
     {
         protected internal Action<SystemException> exceptions = null;
         protected internal DB.LINAA.PreferencesRow pref;
 
-
-        public static void ConnectionsUI(ref LINAA.PreferencesRow prefe,ref  Action<SystemException> addException, ref Action saveMethod,ref  Action undoMethod)
+        public static void ConnectionsUI(ref LINAA.PreferencesRow prefe, ref Action<SystemException> addException, ref Action saveMethod, ref Action undoMethod)
         {
-       
             Connections cform = new Connections(ref prefe, ref addException);
             cform.ShowDialog();
 

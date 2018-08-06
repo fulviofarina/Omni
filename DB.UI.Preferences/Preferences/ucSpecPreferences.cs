@@ -1,25 +1,26 @@
-﻿using System;
+﻿using DB.Tools;
+using Rsx.Dumb;
+using System;
 using System.Collections;
-using System.Windows.Forms;
-using DB.Tools;
-using static DB.LINAA;
 using System.Collections.Generic;
 using System.Data;
-using Rsx.Dumb;
+using System.Windows.Forms;
+using static DB.LINAA;
 
 namespace DB.UI
 {
     public interface ISpecPreferences
     {
         event EventHandler CallBackEventHandler;
-       // event EventHandler PreferencesValidated;
+
+        // event EventHandler PreferencesValidated;
         void Set(ref Interface inter);
     }
 
     public partial class ucSpecPreferences : UserControl, ISpecPreferences
     {
         protected internal Interface Interface;
-   
+
         protected internal EventHandler callBackHandler = null;
 
         public event EventHandler CallBackEventHandler
@@ -34,7 +35,6 @@ namespace DB.UI
             }
         }
 
-
         public void Set(ref Interface inter)
         {
             Interface = inter;
@@ -43,9 +43,8 @@ namespace DB.UI
             {
                 setPreferencesbindings();
 
-
-               this.sampleModelBox.KeyUp += acceptChanges;
-               this.monitorModelBox.KeyUp += acceptChanges;
+                this.sampleModelBox.KeyUp += acceptChanges;
+                this.monitorModelBox.KeyUp += acceptChanges;
                 this.timeDivBox.KeyUp += acceptChanges;
 
                 this.windowATextBox.KeyUp += filterKey_up;
@@ -54,8 +53,6 @@ namespace DB.UI
                 this.maxUncTextBox.KeyUp += filterKey_up;
 
                 this.Validated += validated;
-
-
             }
             catch (Exception ex)
             {
@@ -67,7 +64,7 @@ namespace DB.UI
         {
             if (Visible)
             {
-              //  Interface.IPreferences.CurrentSpecPref.AcceptChanges();
+                // Interface.IPreferences.CurrentSpecPref.AcceptChanges();
                 IEnumerable<MeasurementsRow> meas = Interface.IDB.Measurements;
                 Interface.IPopulate.IMeasurements.CheckMeasurements(ref meas);
             }
@@ -75,7 +72,7 @@ namespace DB.UI
 
         protected internal void filterKey_up(object sender, EventArgs e)
         {
-          //  Interface.IPreferences.CurrentSpecPref.AcceptChanges();
+            // Interface.IPreferences.CurrentSpecPref.AcceptChanges();
             MeasurementsRow r = Interface.ICurrent.Measurement as MeasurementsRow;
             if (!EC.IsNuDelDetch(r))
             {
@@ -83,16 +80,15 @@ namespace DB.UI
             }
             callBackHandler?.Invoke(sender, e);
         }
-        
+
         protected internal void acceptChanges(object sender, EventArgs e)
         {
             TextBox box = sender as TextBox;
             if (string.IsNullOrEmpty(box.Text)) return;
-            IEnumerable<MeasurementsRow> meas = Caster.Cast<MeasurementsRow>( Interface.IBS.Measurements.List as DataView);
+            IEnumerable<MeasurementsRow> meas = Caster.Cast<MeasurementsRow>(Interface.IBS.Measurements.List as DataView);
             Interface.IPopulate.IMeasurements.CheckMeasurements(ref meas);
             callBackHandler?.Invoke(sender, e);
         }
-        
 
         protected internal void setCheckStateBindings(ref Hashtable prefbindings)
         {
@@ -107,13 +103,11 @@ namespace DB.UI
         {
             string col = Interface.IDB.Preferences.AdvancedEditorColumn.ColumnName;
 
-
             Binding b07 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
             Binding b08 = Rsx.Dumb.BS.ABinding(ref bs, col, string.Empty, "Enabled");
-    
+
             this.fillByHLCheckBox.DataBindings.Add(b07);
             this.fillBySpectraCheckBox.DataBindings.Add(b08);
-          
         }
 
         protected internal void setPreferencesbindings()
@@ -129,14 +123,13 @@ namespace DB.UI
             //text binding
             Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
             setValueBindings(ref bindings2);
-
         }
 
         private void setValueBindings(ref Hashtable bindings2)
         {
             string name = Interface.IDB.SpecPref.maxUncColumn.ColumnName;
             this.maxUncTextBox.DataBindings.Add(bindings2[name] as Binding);
-             name = Interface.IDB.SpecPref.minAreaColumn.ColumnName;
+            name = Interface.IDB.SpecPref.minAreaColumn.ColumnName;
             this.minAreaTextBox.DataBindings.Add(bindings2[name] as Binding);
             name = Interface.IDB.SpecPref.windowBColumn.ColumnName;
             this.windowBTextBox.DataBindings.Add(bindings2[name] as Binding);
@@ -169,10 +162,6 @@ namespace DB.UI
             this.sampleModelBox.DataBindings.Add(bindings2[name] as Binding);
             name = Interface.IDB.SpecPref.ModelMonitorColumn.ColumnName;
             this.monitorModelBox.DataBindings.Add(bindings2[name] as Binding);
-
-
-          
-
         }
 
         public ucSpecPreferences()

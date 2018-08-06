@@ -144,7 +144,7 @@ namespace DB.Tools
             };
         }
 
-        public static bool CheckConnections(bool msmq = true, bool lims =true, bool hyperLab = false)
+        public static bool CheckConnections(bool msmq = true, bool lims = true, bool hyperLab = false)
         {
             bool ok = false;
             if (msmq)
@@ -186,7 +186,5 @@ namespace DB.Tools
 
             return ok;
         }
-
-       
     }
 }

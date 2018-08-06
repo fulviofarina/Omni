@@ -21,7 +21,7 @@
                "- You are a first-time user\n\n" +
             "- The database does not exist\n\n" +
             "- The SQL Server is down/stopped or not installed\n\n" +
-          //  "3) The SQL Server is not installed\n\n" +
+            // "3) The SQL Server is not installed\n\n" +
             "- The connection parameters are wrong.\n\n\n" +
             "This program will attempt to:\n\n" +
             //"Perform basic connection routines,\n"+

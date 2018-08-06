@@ -1,9 +1,8 @@
-﻿using System;
+﻿using DB.Tools;
+using System;
 using System.Collections;
 using System.Text;
 using System.Windows.Forms;
-using DB.Tools;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.UI
@@ -11,7 +10,9 @@ namespace DB.UI
     public interface IXCOMPreferences
     {
         event EventHandler RoundingChanged;
+
         Form Parent { get; }
+
         void Set(ref Interface inter);
     }
 
@@ -19,10 +20,11 @@ namespace DB.UI
     {
         protected internal Interface Interface;
 
-        public new Form Parent 
+        public new Form Parent
         {
             get { return this.ParentForm; }
         }
+
         protected internal event EventHandler roundingChanged = null;
 
         public event EventHandler RoundingChanged
@@ -44,7 +46,7 @@ namespace DB.UI
             try
             {
                 BindingSource bs = Interface.IBS.XCOMPref;
-                //   XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
+                // XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
 
                 //text binding
                 Hashtable bindings2 = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty);
@@ -53,7 +55,7 @@ namespace DB.UI
                 Hashtable bindings = Rsx.Dumb.BS.ArrayOfBindings(ref bs, string.Empty, "CheckState");
                 setCheckStatebindings(ref bindings);
 
-            //    stepsBox.TextChanged += energyStep_TextChanged;
+                // stepsBox.TextChanged += energyStep_TextChanged;
                 useListbox.CheckedChanged += ASCIIInput_Click;
                 this.roundingTextBox.KeyUp += roundingTextBox_TextChanged;
             }
@@ -67,6 +69,7 @@ namespace DB.UI
         {
             roundingChanged?.Invoke(sender, e);
         }
+
         /*
         protected internal void energyStep_TextChanged(object sender, EventArgs e)
         {
@@ -76,30 +79,24 @@ namespace DB.UI
             }
         }
         */
+
         protected internal void ASCIIInput_Click(object sender, EventArgs e)
         {
-
             if (useListbox.Checked)
             {
                 string filepath = Encoding.UTF8.GetString(Interface.IPreferences.CurrentXCOMPref.ListOfEnergies);
-                RichTextBox box= Rsx.Dumb.IO.RichTextBox(filepath , "Energies List", 14.25f);
+                RichTextBox box = Rsx.Dumb.IO.RichTextBox(filepath, "Energies List", 14.25f);
                 Form fm = (box.Parent as Form);
                 fm.FormClosed += delegate
                 {
                     Interface.IPreferences.CurrentXCOMPref.ListOfEnergies = Encoding.UTF8.GetBytes(box.Text);
                     Interface.IPreferences.SavePreferences();
-
                 };
                 fm.Show();
-
-
             }
         }
 
-   
-
-
-        private void setValueBindings( ref Hashtable bindings2)
+        private void setValueBindings(ref Hashtable bindings2)
         {
             XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
             string colname = dt.StartEnergyColumn.ColumnName;
@@ -116,26 +113,26 @@ namespace DB.UI
             this.roundingTextBox.DataBindings.Add(bindings2[colname] as Binding);
         }
 
-        protected internal void setCheckStatebindings( ref Hashtable bindings)
+        protected internal void setCheckStatebindings(ref Hashtable bindings)
         {
             XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
             string column;// = dt.LoopColumn.ColumnName;
-         //   this.loopCheckBox.DataBindings.Add(bindings[column] as Binding);
+                          // this.loopCheckBox.DataBindings.Add(bindings[column] as Binding);
 
             column = dt.UseListColumn.ColumnName;
             this.useListbox.DataBindings.Add(bindings[column] as Binding);
 
-          //  column = dt.LogGraphColumn.ColumnName;
-         //   this.logscaleBox.DataBindings.Add(bindings[column] as Binding);
+            // column = dt.LogGraphColumn.ColumnName;
+            // this.logscaleBox.DataBindings.Add(bindings[column] as Binding);
 
             column = dt.ASCIIOutputColumn.ColumnName;
             this.asciibox.DataBindings.Add(bindings[column] as Binding);
 
-                column = dt.AccumulateResultsColumn.ColumnName;
-             this.accumulateBox.DataBindings.Add(bindings[column] as Binding);
+            column = dt.AccumulateResultsColumn.ColumnName;
+            this.accumulateBox.DataBindings.Add(bindings[column] as Binding);
 
             this.logscaleBox.Visible = false;
-         //   this.forceBox.Visible = false;
+            // this.forceBox.Visible = false;
             this.loopCheckBox.Visible = false;
 
             column = dt.ISColumn.ColumnName;
@@ -159,10 +156,7 @@ namespace DB.UI
             column = dt.PEColumn.ColumnName;
             this.pebox.DataBindings.Add(bindings[column] as Binding);
             this.pebox.CheckedChanged += roundingTextBox_TextChanged;
-
         }
-
-     
 
         public ucXCOMPreferences()
         {

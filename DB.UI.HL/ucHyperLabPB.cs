@@ -55,7 +55,6 @@ namespace DB.UI
 
                 showProgress?.Invoke(null, EventArgs.Empty);
 
-
                 MeasurementsRow m = Interface.ICurrent.Measurement as MeasurementsRow;
                 if (!EC.IsNuDelDetch(m))
                 {
@@ -79,8 +78,6 @@ namespace DB.UI
 
         public EventHandler ShowProgress
         {
-          
-
             set
             {
                 showProgress = value;
@@ -89,8 +86,6 @@ namespace DB.UI
 
         public Action<int> ResetProgress
         {
-         
-
             set
             {
                 resetProgress = value;
