@@ -263,9 +263,13 @@ namespace VTools
                 this.Visible = false;
                 if (this.ParentForm!=null)
                 {
-                    if (this.ParentForm.Tag.Equals(this))
+                    if (this.ParentForm.Tag!=null)                        
                     {
-                        this.ParentForm.Visible = false;
+                        if (this.ParentForm.Tag.Equals(this))
+                        {
+                            this.ParentForm.Visible = false;
+
+                        }
                     }
                 }
                 FillLog("************************** Went Idle (Hidden) **************************");

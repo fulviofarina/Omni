@@ -523,12 +523,18 @@
                 <xs:element name="Energy" type="xs:double" />
                 <xs:element name="Area" type="xs:double" />
                 <xs:element name="BKG" type="xs:double" minOccurs="0" />
-                <xs:element name="GAct" type="xs:double" minOccurs="0" />
+                <xs:element name="GAct" msdata:ReadOnly="true" msdata:Expression="Area / Parent(MeasurementsHL_PeaksHL).CountTime" type="xs:double" minOccurs="0" />
                 <xs:element name="AreaUncertainty" msdata:ReadOnly="true" type="xs:double" minOccurs="0" />
                 <xs:element name="PeaksID" type="xs:int" />
                 <xs:element name="MeasurementID" type="xs:int" />
                 <xs:element name="RadiationID" type="xs:string" minOccurs="0" />
                 <xs:element name="Isotope" type="xs:string" minOccurs="0" />
+                <xs:element name="EnergyUnc" msdata:ReadOnly="true" type="xs:double" minOccurs="0" />
+                <xs:element name="FWHM" type="xs:float" minOccurs="0" />
+                <xs:element name="Gauss" type="xs:double" minOccurs="0" />
+                <xs:element name="LastDeconvolution" type="xs:dateTime" />
+                <xs:element name="FWHMUnc" msdata:ReadOnly="true" type="xs:float" minOccurs="0" />
+                <xs:element name="GaussUnc" msdata:ReadOnly="true" type="xs:double" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -577,6 +583,12 @@
                 <xs:element name="Selected" type="xs:boolean" minOccurs="0" />
                 <xs:element name="Geometry" msdata:ReadOnly="true" msdata:Expression="Parent(SubSamples_MeasurementsHL).GeometryName+Parent(SubSamples_MeasurementsHL).SubSampleName" type="xs:string" minOccurs="0" />
                 <xs:element name="KW" type="xs:string" minOccurs="0" />
+                <xs:element name="MeasurementEnd" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="MinCounts" type="xs:int" minOccurs="0" />
+                <xs:element name="TotalCounts" type="xs:int" minOccurs="0" />
+                <xs:element name="MaxCounts" type="xs:int" minOccurs="0" />
+                <xs:element name="FileType" type="xs:string" minOccurs="0" />
+                <xs:element name="MCAChannels" type="xs:int" minOccurs="0" />
                 <xs:element name="CTSpan" type="xs:duration" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
@@ -1000,7 +1012,7 @@
             <xs:complexType>
               <xs:sequence>
                 <xs:element name="MUID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" type="xs:int" />
-                <xs:element name="MatrixID" type="xs:int" minOccurs="0" />
+                <xs:element name="MatrixID" type="xs:int" />
                 <xs:element name="Energy" type="xs:double" minOccurs="0" />
                 <xs:element name="MU" msdata:ReadOnly="true" type="xs:double" minOccurs="0" />
                 <xs:element name="MAIS" type="xs:double" minOccurs="0" />
@@ -1930,10 +1942,6 @@
                 </xs:element>
                 <xs:element name="LastAccessDate" type="xs:dateTime" minOccurs="0" />
                 <xs:element name="DoSolang" type="xs:boolean" minOccurs="0" />
-                <xs:element name="minArea" type="xs:double" minOccurs="0" />
-                <xs:element name="maxUnc" type="xs:double" minOccurs="0" />
-                <xs:element name="windowA" type="xs:double" minOccurs="0" />
-                <xs:element name="windowB" type="xs:double" minOccurs="0" />
                 <xs:element name="ShowSolang" type="xs:boolean" minOccurs="0" />
                 <xs:element name="ShowSampleDescription" type="xs:boolean" minOccurs="0" />
                 <xs:element name="RunInBackground" type="xs:boolean" minOccurs="0" />
@@ -1993,6 +2001,37 @@
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="SpecPref">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" type="xs:int" />
+                <xs:element name="WindowsUser" minOccurs="0">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:maxLength value="25" />
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="minArea" type="xs:double" minOccurs="0" />
+                <xs:element name="maxUnc" type="xs:double" minOccurs="0" />
+                <xs:element name="windowA" type="xs:double" minOccurs="0" />
+                <xs:element name="windowB" type="xs:double" minOccurs="0" />
+                <xs:element name="DetectorLength" msdata:Caption="DetectorIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="MeasLength" msdata:Caption="MeasIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="SampleLength" msdata:Caption="SampleIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="ProjectLength" msdata:Caption="ProjectIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="PositionLength" msdata:Caption="PositionIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="DetectorIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="PositionIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="MeasIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="SampleIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="ProjectIdx" type="xs:short" minOccurs="0" />
+                <xs:element name="ModelMonitor" type="xs:string" minOccurs="0" />
+                <xs:element name="TimeDivider" type="xs:string" minOccurs="0" />
+                <xs:element name="ModelSample" type="xs:string" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -2137,6 +2176,7 @@
       <xs:unique name="MUES_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
         <xs:selector xpath=".//MUES" />
         <xs:field xpath="MUID" />
+        <xs:field xpath="MatrixID" />
       </xs:unique>
       <xs:unique name="DetectorsCurves_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
         <xs:selector xpath=".//DetectorsCurves" />
@@ -2243,6 +2283,14 @@
       </xs:unique>
       <xs:unique name="XCOMPref_Constraint2" msdata:ConstraintName="Constraint2">
         <xs:selector xpath=".//XCOMPref" />
+        <xs:field xpath="WindowsUser" />
+      </xs:unique>
+      <xs:unique name="SpecPref_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//SpecPref" />
+        <xs:field xpath="ID" />
+      </xs:unique>
+      <xs:unique name="SpecPref_Constraint2" msdata:ConstraintName="Constraint2">
+        <xs:selector xpath=".//SpecPref" />
         <xs:field xpath="WindowsUser" />
       </xs:unique>
       <xs:keyref name="Unit_MatSSF" refer="Unit_Constraint1" msdata:AcceptRejectRule="Cascade">
@@ -2471,7 +2519,7 @@
     <MatrixDensity>2</MatrixDensity>
     <MatrixDate>2018-07-28T01:00:27.9149716-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yMzA8L0lEPg0KICAgIDxNYXRyaXhJRD4xMDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+QWw8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5BbFpuVkluPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCiAgPENvbXBvc2l0aW9ucz4NCiAgICA8SUQ+LTIzMTwvSUQ+DQogICAgPE1hdHJpeElEPjEwPC9NYXRyaXhJRD4NCiAgICA8RWxlbWVudD5WPC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT4xMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+QWxablZJbjwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yMzI8L0lEPg0KICAgIDxNYXRyaXhJRD4xMDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TW48L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5BbFpuVkluPC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
-    <ToDo>false</ToDo>
+    <ToDo>true</ToDo>
   </Matrix>
   <Matrix>
     <MatrixID>11</MatrixID>
@@ -2499,7 +2547,7 @@
     <MatrixDensity>0</MatrixDensity>
     <MatrixDate>2018-07-28T01:00:18.9380088-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNDI8L0lEPg0KICAgIDxNYXRyaXhJRD4yMDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+QzlIMTZPNDwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTAwPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5QbGV4aTwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQo8L05ld0RhdGFTZXQ+</CompositionTable>
-    <ToDo>false</ToDo>
+    <ToDo>true</ToDo>
   </Matrix>
   <Matrix>
     <MatrixID>39</MatrixID>
@@ -2510,7 +2558,7 @@
     <MatrixDensity>0</MatrixDensity>
     <MatrixDate>2018-07-28T01:00:44.1061682-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNDM8L0lEPg0KICAgIDxNYXRyaXhJRD4zOTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+ODUuNTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+VTNPODwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNDQ8L0lEPg0KICAgIDxNYXRyaXhJRD4zOTwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+TzwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTQuNTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+VTNPODwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQo8L05ld0RhdGFTZXQ+</CompositionTable>
-    <ToDo>false</ToDo>
+    <ToDo>true</ToDo>
   </Matrix>
   <Matrix>
     <MatrixID>40</MatrixID>
@@ -2522,7 +2570,7 @@
     <MatrixDensity>0</MatrixDensity>
     <MatrixDate>2018-07-28T01:00:43.0880625-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNDU8L0lEPg0KICAgIDxNYXRyaXhJRD40MDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+VTwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+NzY8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPlVGNDwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNDY8L0lEPg0KICAgIDxNYXRyaXhJRD40MDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+RjwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MjQ8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPlVGNDwvTmFtZT4NCiAgPC9Db21wb3NpdGlvbnM+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNDc8L0lEPg0KICAgIDxNYXRyaXhJRD40MDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+QXM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjIzPC9RdWFudGl0eT4NCiAgICA8VW5jPjA8L1VuYz4NCiAgICA8UXVhbnRpdHlVbml0PiU8L1F1YW50aXR5VW5pdD4NCiAgICA8TmFtZT5VRjQ8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KPC9OZXdEYXRhU2V0Pg==</CompositionTable>
-    <ToDo>false</ToDo>
+    <ToDo>true</ToDo>
   </Matrix>
   <Matrix>
     <MatrixID>41</MatrixID>
@@ -2596,7 +2644,7 @@
     <MatrixDensity>7.4</MatrixDensity>
     <MatrixDate>2018-07-28T01:00:35.9151084-04:00</MatrixDate>
     <CompositionTable>PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJ5ZXMiPz4NCjxOZXdEYXRhU2V0Pg0KICA8eHM6c2NoZW1hIGlkPSJOZXdEYXRhU2V0IiB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgICA8eHM6ZWxlbWVudCBuYW1lPSJOZXdEYXRhU2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iQ29tcG9zaXRpb25zIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCI+DQogICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ29tcG9zaXRpb25zIj4NCiAgICAgICAgICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IklEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3JlbWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czppbnQiIC8+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTWF0cml4SUQiIHR5cGU9InhzOmludCIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IkVsZW1lbnQiIG1pbk9jY3Vycz0iMCI+DQogICAgICAgICAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICAgICAgPHhzOnJlc3RyaWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iMTAiIC8+DQogICAgICAgICAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgICAgICAgICA8L3hzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICAgICAgPC94czplbGVtZW50Pg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5IiB0eXBlPSJ4czpkb3VibGUiIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJVbmMiIHR5cGU9InhzOmRvdWJsZSIgbWluT2NjdXJzPSIwIiAvPg0KICAgICAgICAgICAgICAgIDx4czplbGVtZW50IG5hbWU9IlF1YW50aXR5VW5pdCIgbWluT2NjdXJzPSIwIj4NCiAgICAgICAgICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3RyaW5nIj4NCiAgICAgICAgICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVlPSIxMCIgLz4NCiAgICAgICAgICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iTmFtZSIgbXNkYXRhOlJlYWRPbmx5PSJ0cnVlIiB0eXBlPSJ4czpzdHJpbmciIG1pbk9jY3Vycz0iMCIgLz4NCiAgICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBuYW1lPSJTdWJTYW1wbGVJRCIgdHlwZT0ieHM6aW50IiBtaW5PY2N1cnM9IjAiIC8+DQogICAgICAgICAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgICAgPC94czpjaG9pY2U+DQogICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRhOlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgICA8eHM6c2VsZWN0b3IgeHBhdGg9Ii4vL0NvbXBvc2l0aW9ucyIgLz4NCiAgICAgICAgPHhzOmZpZWxkIHhwYXRoPSJJRCIgLz4NCiAgICAgIDwveHM6dW5pcXVlPg0KICAgIDwveHM6ZWxlbWVudD4NCiAgPC94czpzY2hlbWE+DQogIDxDb21wb3NpdGlvbnM+DQogICAgPElEPi0yNjU8L0lEPg0KICAgIDxNYXRyaXhJRD44NDwvTWF0cml4SUQ+DQogICAgPEVsZW1lbnQ+RXUyTzM8L0VsZW1lbnQ+DQogICAgPFF1YW50aXR5PjEwMDwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+T3hpZGUgRXU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjY2PC9JRD4NCiAgICA8TWF0cml4SUQ+ODQ8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PkFsMk8zPC9FbGVtZW50Pg0KICAgIDxRdWFudGl0eT4yNTwvUXVhbnRpdHk+DQogICAgPFVuYz4wPC9VbmM+DQogICAgPFF1YW50aXR5VW5pdD4lPC9RdWFudGl0eVVuaXQ+DQogICAgPE5hbWU+T3hpZGUgRXU8L05hbWU+DQogIDwvQ29tcG9zaXRpb25zPg0KICA8Q29tcG9zaXRpb25zPg0KICAgIDxJRD4tMjY3PC9JRD4NCiAgICA8TWF0cml4SUQ+ODQ8L01hdHJpeElEPg0KICAgIDxFbGVtZW50PkFsMlRhMjwvRWxlbWVudD4NCiAgICA8UXVhbnRpdHk+MTA8L1F1YW50aXR5Pg0KICAgIDxVbmM+MDwvVW5jPg0KICAgIDxRdWFudGl0eVVuaXQ+JTwvUXVhbnRpdHlVbml0Pg0KICAgIDxOYW1lPk94aWRlIEV1PC9OYW1lPg0KICA8L0NvbXBvc2l0aW9ucz4NCjwvTmV3RGF0YVNldD4=</CompositionTable>
-    <ToDo>false</ToDo>
+    <ToDo>true</ToDo>
   </Matrix>
   <Matrix>
     <MatrixID>85</MatrixID>
@@ -24726,90 +24774,6 @@
     <Name>AlZnVIn</Name>
   </Compositions>
   <Compositions>
-    <ID>-242</ID>
-    <MatrixID>20</MatrixID>
-    <Element>C9H16O4</Element>
-    <Quantity>100</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Plexi</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-243</ID>
-    <MatrixID>39</MatrixID>
-    <Element>U</Element>
-    <Quantity>85.5</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>U3O8</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-244</ID>
-    <MatrixID>39</MatrixID>
-    <Element>O</Element>
-    <Quantity>14.5</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>U3O8</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-245</ID>
-    <MatrixID>40</MatrixID>
-    <Element>U</Element>
-    <Quantity>76</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>UF4</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-246</ID>
-    <MatrixID>40</MatrixID>
-    <Element>F</Element>
-    <Quantity>24</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>UF4</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-247</ID>
-    <MatrixID>40</MatrixID>
-    <Element>As</Element>
-    <Quantity>23</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>UF4</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-265</ID>
-    <MatrixID>84</MatrixID>
-    <Element>Eu2O3</Element>
-    <Quantity>100</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Oxide Eu</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-266</ID>
-    <MatrixID>84</MatrixID>
-    <Element>Al2O3</Element>
-    <Quantity>25</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Oxide Eu</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-267</ID>
-    <MatrixID>84</MatrixID>
-    <Element>Al2Ta2</Element>
-    <Quantity>10</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Oxide Eu</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-272</ID>
-  </Compositions>
-  <Compositions>
     <ID>-273</ID>
     <MatrixID>11</MatrixID>
     <Element>Ce2O3</Element>
@@ -24891,13 +24855,58 @@
     <Name>Monazite</Name>
   </Compositions>
   <Compositions>
-    <ID>-282</ID>
-    <MatrixID>85</MatrixID>
-    <Element>Yb2O3</Element>
+    <ID>-242</ID>
+    <MatrixID>20</MatrixID>
+    <Element>C9H16O4</Element>
     <Quantity>100</Quantity>
     <Unc>0</Unc>
     <QuantityUnit>%</QuantityUnit>
-    <Name>Oxide Yb</Name>
+    <Name>Plexi</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-243</ID>
+    <MatrixID>39</MatrixID>
+    <Element>U</Element>
+    <Quantity>85.5</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>U3O8</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-244</ID>
+    <MatrixID>39</MatrixID>
+    <Element>O</Element>
+    <Quantity>14.5</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>U3O8</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-245</ID>
+    <MatrixID>40</MatrixID>
+    <Element>U</Element>
+    <Quantity>76</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>UF4</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-246</ID>
+    <MatrixID>40</MatrixID>
+    <Element>F</Element>
+    <Quantity>24</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>UF4</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-247</ID>
+    <MatrixID>40</MatrixID>
+    <Element>As</Element>
+    <Quantity>23</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>UF4</Name>
   </Compositions>
   <Compositions>
     <ID>-283</ID>
@@ -24972,60 +24981,6 @@
     <Name>Wiron</Name>
   </Compositions>
   <Compositions>
-    <ID>-291</ID>
-    <MatrixID>67</MatrixID>
-    <Element>U</Element>
-    <Quantity>1</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>U type</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-292</ID>
-    <MatrixID>67</MatrixID>
-    <Element>C6H10O5</Element>
-    <Quantity>98.99</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>U type</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-293</ID>
-    <MatrixID>67</MatrixID>
-    <Element>Na</Element>
-    <Quantity>0.01</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>U type</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-294</ID>
-    <MatrixID>80</MatrixID>
-    <Element>Ba1O1</Element>
-    <Quantity>100</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Ba Oxide</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-295</ID>
-    <MatrixID>88</MatrixID>
-    <Element>Er2O3</Element>
-    <Quantity>100</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Oxide Erbium</Name>
-  </Compositions>
-  <Compositions>
-    <ID>-296</ID>
-    <MatrixID>89</MatrixID>
-    <Element>Tm2O3</Element>
-    <Quantity>100</Quantity>
-    <Unc>0</Unc>
-    <QuantityUnit>%</QuantityUnit>
-    <Name>Oxide Tm</Name>
-  </Compositions>
-  <Compositions>
     <ID>-297</ID>
     <MatrixID>43</MatrixID>
     <Element>Na</Element>
@@ -25069,6 +25024,99 @@
     <Unc>0</Unc>
     <QuantityUnit>%</QuantityUnit>
     <Name>ZOUT_Bitum</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-291</ID>
+    <MatrixID>67</MatrixID>
+    <Element>U</Element>
+    <Quantity>1</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>U type</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-292</ID>
+    <MatrixID>67</MatrixID>
+    <Element>C6H10O5</Element>
+    <Quantity>98.99</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>U type</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-293</ID>
+    <MatrixID>67</MatrixID>
+    <Element>Na</Element>
+    <Quantity>0.01</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>U type</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-294</ID>
+    <MatrixID>80</MatrixID>
+    <Element>Ba1O1</Element>
+    <Quantity>100</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Ba Oxide</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-265</ID>
+    <MatrixID>84</MatrixID>
+    <Element>Eu2O3</Element>
+    <Quantity>100</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Oxide Eu</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-266</ID>
+    <MatrixID>84</MatrixID>
+    <Element>Al2O3</Element>
+    <Quantity>25</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Oxide Eu</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-267</ID>
+    <MatrixID>84</MatrixID>
+    <Element>Al2Ta2</Element>
+    <Quantity>10</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Oxide Eu</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-282</ID>
+    <MatrixID>85</MatrixID>
+    <Element>Yb2O3</Element>
+    <Quantity>100</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Oxide Yb</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-295</ID>
+    <MatrixID>88</MatrixID>
+    <Element>Er2O3</Element>
+    <Quantity>100</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Oxide Erbium</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-296</ID>
+    <MatrixID>89</MatrixID>
+    <Element>Tm2O3</Element>
+    <Quantity>100</Quantity>
+    <Unc>0</Unc>
+    <QuantityUnit>%</QuantityUnit>
+    <Name>Oxide Tm</Name>
+  </Compositions>
+  <Compositions>
+    <ID>-272</ID>
   </Compositions>
   <Yields>
     <ID>1</ID>
@@ -27060,23 +27108,6 @@
     <t>1.96</t>
     <index>37</index>
   </tStudent>
-  <Exceptions>
-    <Class>WinIOError</Class>
-    <Message>The process cannot access the file 'D:\Skydrive\Documents\k0-X\uFinder\20.FULL.png' because it is being used by another process.</Message>
-    <StackTrace>   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-   at System.IO.File.InternalDelete(String path, Boolean checkHost)
-   at System.IO.File.Delete(String path)
-   at DB.LINAA.cleanMUESPics(MatrixRow&amp; u) in D:\Dropbox\My Software\Omni\DB\Store\Store.Delete.cs:line 34
-   at DB.LINAA.cleanMUESEvent(Object sender, EventArgs e) in D:\Dropbox\My Software\Omni\DB\Populate\Events.cs:line 186
-   at System.EventHandler.Invoke(Object sender, EventArgs e)
-   at DB.LINAA.MatrixRow.CleanMUES() in D:\Dropbox\My Software\Omni\DB\DB\Tables\Geometry\Matrix.Row.cs:line 287
-   at DB.LINAA.MatrixRow.cleanCompositions(IEnumerable`1&amp; compos) in D:\Dropbox\My Software\Omni\DB\DB\Tables\Geometry\Matrix.Row.cs:line 266
-   at DB.LINAA.MatrixRow.checkMatrixComposition() in D:\Dropbox\My Software\Omni\DB\DB\Tables\Geometry\Matrix.Row.cs:line 249
-   at DB.LINAA.MatrixRow.Check(DataColumn col) in D:\Dropbox\My Software\Omni\DB\DB\Tables\Geometry\Matrix.Row.cs:line 100
-   at DB.LINAA.DataColumnChanged(Object sender, DataColumnChangeEventArgs e) in D:\Dropbox\My Software\Omni\DB\DB\Tables\DB.cs:line 81</StackTrace>
-    <WindowsUser>mscorlib</WindowsUser>
-    <Date>2018-07-28T01:16:56.2305115-04:00</Date>
-  </Exceptions>
   <SSFPref>
     <ID>-1</ID>
     <WindowsUser>FLUX\FULVIO</WindowsUser>
@@ -27097,18 +27128,14 @@
     <ID>-1</ID>
     <WindowsUser>FLUX\FULVIO</WindowsUser>
     <LastIrradiationProject />
-    <LastAccessDate>2018-07-28T01:14:38.0087428-04:00</LastAccessDate>
+    <LastAccessDate>2018-08-06T08:15:58.1918866-04:00</LastAccessDate>
     <DoSolang>false</DoSolang>
-    <minArea>500</minArea>
-    <maxUnc>50</maxUnc>
-    <windowA>1.5</windowA>
-    <windowB>0.001</windowB>
     <ShowSolang>false</ShowSolang>
     <ShowSampleDescription>false</ShowSampleDescription>
     <RunInBackground>false</RunInBackground>
     <AutoLoad>false</AutoLoad>
     <LIMS>Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=k0NAA;Integrated Security=True;Persist Security Info=True;Enlist=False;Pooling=False;Connect Timeout=5</LIMS>
-    <HL>Data Source=flux\sql14;Initial Catalog=HL14;Persist Security Info=True;User ID=sa;Password=naa;Connect Timeout=10</HL>
+    <HL>Data Source=Choose;Initial Catalog=HyperLab1;User ID=sa;Password=hlpwd2009;Connect Timeout=6</HL>
     <Spectra>c:\</Spectra>
     <SpectraSvr>PC1533</SpectraSvr>
     <FillByHL>false</FillByHL>
@@ -27117,9 +27144,6 @@
     <AdvancedEditor>false</AdvancedEditor>
     <IsMSMQ>false</IsMSMQ>
     <IsSQL>false</IsSQL>
-    <DetectorIdx>3</DetectorIdx>
-    <MeasIdx>1</MeasIdx>
-    <PositionIdx>2</PositionIdx>
   </Preferences>
   <XCOMPref>
     <ID>-1</ID>
@@ -27128,7 +27152,7 @@
     <UseList>false</UseList>
     <Rounding>e3</Rounding>
     <Steps>100</Steps>
-    <EndEnergy>3500</EndEnergy>
+    <EndEnergy>4000</EndEnergy>
     <StartEnergy>1</StartEnergy>
     <PPEF>true</PPEF>
     <PPNF>true</PPNF>
@@ -27140,4 +27164,25 @@
     <AccumulateResults>true</AccumulateResults>
     <WindowsUser>FLUX\FULVIO</WindowsUser>
   </XCOMPref>
+  <SpecPref>
+    <ID>-1</ID>
+    <WindowsUser>FLUX\FULVIO</WindowsUser>
+    <minArea>200</minArea>
+    <maxUnc>50</maxUnc>
+    <windowA>1.5</windowA>
+    <windowB>0.001</windowB>
+    <DetectorLength>1</DetectorLength>
+    <MeasLength>1</MeasLength>
+    <SampleLength>2</SampleLength>
+    <ProjectLength>4</ProjectLength>
+    <PositionLength>1</PositionLength>
+    <DetectorIdx>6</DetectorIdx>
+    <PositionIdx>7</PositionIdx>
+    <MeasIdx>8</MeasIdx>
+    <SampleIdx>4</SampleIdx>
+    <ProjectIdx>0</ProjectIdx>
+    <ModelMonitor>PPPPMMMMMDp#</ModelMonitor>
+    <TimeDivider>m</TimeDivider>
+    <ModelSample>PPPPSSDp#</ModelSample>
+  </SpecPref>
 </LINAA>

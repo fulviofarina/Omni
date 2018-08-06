@@ -1,8 +1,10 @@
 ﻿using DB.Tools;
+using Rsx.Dumb;
 using System;
 using System.Linq;
 using System.Windows.Forms;
 using VTools;
+using static DB.LINAA;
 
 namespace DB.UI
 {
@@ -33,7 +35,9 @@ namespace DB.UI
 
             if (InputProjects.Contains(projectTXT))
             {
-                resetProgress?.Invoke(2);
+                int times = 3;
+
+                resetProgress?.Invoke(times);
 
                 showProgress?.Invoke(null, EventArgs.Empty);
 
@@ -48,6 +52,15 @@ namespace DB.UI
                 Interface.IPreferences.CurrentPref.LastIrradiationProject = projectTXT;
 
                 Interface.IBS.EnabledControls = true;
+
+                showProgress?.Invoke(null, EventArgs.Empty);
+
+
+                MeasurementsRow m = Interface.ICurrent.Measurement as MeasurementsRow;
+                if (!EC.IsNuDelDetch(m))
+                {
+                    Interface.IBS.CurrentChanged(m, true, true, false);
+                }
 
                 showProgress?.Invoke(null, EventArgs.Empty);
 

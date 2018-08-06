@@ -1,5 +1,6 @@
 ﻿using DB.Properties;
 using DB.Tools;
+using Rsx.Dumb;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -72,20 +73,14 @@ namespace DB.UI
             ctrl.Dock = DockStyle.Fill;
             DBTLP.Controls.Add(ctrl as UserControl);
 
-                    
-
-            pickLast();
-        }
-
-        /// <summary>
-        /// debería estar en otro lado
-        /// </summary>
-        private void pickLast()
-        {
             MatrixRow mlast = Interface.IDB.Matrix.OrderBy(o => o.MatrixDate).FirstOrDefault();
-            Interface.IBS.Matrix.Position = 1;
-            Interface.IBS.Matrix.Position = Interface.IBS.Matrix.Find(Interface.IDB.Matrix.MatrixDateColumn.ColumnName, mlast.MatrixDate);
+            if (!EC.IsNuDelDetch(mlast))
+            {
+                Interface.IBS.CurrentChanged(mlast, true, true, false);
+            }
         }
+
+       
 
         /// <summary>
         /// Sets the interface

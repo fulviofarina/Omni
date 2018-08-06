@@ -163,12 +163,11 @@ namespace VTools
                 {
                     projectbox.Text = value.Trim().ToUpper();
 
-               //     if (PopulateListMethod != null)
-                 //   {
+            
                         PopulateListMethod?.Invoke(null, EventArgs.Empty);
 
                         this.keyUpPressed(this.projectbox, new KeyEventArgs(Keys.Enter));
-                   // }
+                  
                 };
                 hdl.Invoke(null, EventArgs.Empty);
                 //this.Invoke(hdl);
@@ -264,8 +263,11 @@ namespace VTools
                 binding.ControlUpdateMode = ControlUpdateMode.OnPropertyChanged;
 
                 projectbox.DataBindings.Add(binding);
-          
-            SetNoBindingSource();
+
+            PopulateListMethod?.Invoke(null, EventArgs.Empty);
+            this.projectlabel.Click += openDropDown;
+            this.projectbox.DropDownClosed += dropDownClosed;
+            this.projectbox.DropDown += setReceiveUpdates;
         }
         public void SetNoBindingSource()
         {
@@ -280,15 +282,17 @@ namespace VTools
             // ComboBox box = sender as ComboBox; if (!box.IsOnDropDown) return;
             if (projectbox.SelectedItem != null)
             {
-                string name = projectbox.SelectedItem.ToString();
+                string selectedName = projectbox.SelectedItem.ToString();
                 //string col = Interface.IDB.SubSamples.SubSampleNameColumn.ColumnName;
                 BindingSource bs = binding?.DataSource as BindingSource;
                 if (bs != null)
                 {
-                    int pos = bs.Find(bindingField, name);
+                    int pos = bs.Find(bindingField, selectedName);
                     bs.Position = pos;
+                  //  setReceiveUpdates();
                 }
-               if (shouldUpdate)   setReceiveUpdates();
+                else TextContent = selectedName;
+              
             }
         }
 
@@ -371,7 +375,7 @@ namespace VTools
                 .DataBindings
                 .DefaultDataSourceUpdateMode = DataSourceUpdateMode.Never;
         }
-        protected internal void setReceiveUpdates()
+        protected internal void setReceiveUpdates(object sender, EventArgs e)
         {
             projectbox
                .DataBindings
