@@ -9,6 +9,7 @@ namespace VTools
         {
             InitializeComponent();
         }
+
         public bool EnableCalculate
         {
             set
@@ -17,6 +18,7 @@ namespace VTools
                 this.cancelBtn.Enabled = !value;
             }
         }
+
         public bool EnableCancel
         {
             set
@@ -25,6 +27,7 @@ namespace VTools
                 this.CalcBtn.Enabled = !value;
             }
         }
+
         public new bool Enabled
         {
             set
@@ -32,8 +35,8 @@ namespace VTools
                 this.CalcBtn.Enabled = value;
                 this.cancelBtn.Enabled = value;
             }
-               
         }
+
         public event EventHandler CalculateMethod
         {
             add
@@ -45,11 +48,11 @@ namespace VTools
             {
                 CalcBtn.Click -= value;
             }
-
         }
+
         public event EventHandler CancelMethod
         {
-           add
+            add
             {
                 cancelBtn.Click += value;
             }
@@ -58,7 +61,5 @@ namespace VTools
                 cancelBtn.Click -= value;
             }
         }
-
-
     }
 }

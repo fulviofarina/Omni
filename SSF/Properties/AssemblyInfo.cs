@@ -31,8 +31,8 @@ The open-source MatSSF code (FORTRAN) was developed by
 ")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("F. Farina Arboccò")]
-[assembly: AssemblyProduct("nSSF: neutron self-shielding correction factors")]
-[assembly: AssemblyCopyright("F. Farina Arboccò (June 1st, 2017)")]
+[assembly: AssemblyProduct("nSSF by F. Farina Arboccò")]
+[assembly: AssemblyCopyright("Copyright (c) 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

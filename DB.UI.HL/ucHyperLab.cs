@@ -259,6 +259,10 @@ namespace DB.UI
         public ucHyperLab()
         {
             InitializeComponent();
+
+            Dock = DockStyle.Fill;
+            AutoSizeMode = AutoSizeMode.GrowOnly;
+            AutoSize = true;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace SSF
                 else throw new Exception("Could not start loading the database");
             
                 //EventHandler firstCallBack;
-                Form toShow =   LIMSUI.CreateSSFApplication();
+                Form toShow =   LIMSUI.createSSFApplication();
 
                 Creator.Run();
 

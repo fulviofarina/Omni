@@ -13,7 +13,19 @@ namespace DB.UI
     {
 
 
-        public static Form CreateSSFApplication()
+        public static string HELP_FILE_µFINDER_PDF = "µFinderUserGuide.pdf";
+
+        protected static string HELP_FILE_SSF_PDF = "UserGuide.pdf";
+
+        protected static string WINDOWS_EXPLORER = "explorer.exe";
+
+        private static string ProgramPreferences = "Program Preferences";
+
+        private static string SpecNavPreferences = "SpecNav Preferences";
+
+        private static string uFinderPreferences = "µFinder Preferences";
+
+        public static Form createSSFApplication()
         {
             Bitmap icon = Resources.Logo;
 
@@ -21,11 +33,9 @@ namespace DB.UI
 
             IPreferences preferences = GetPreferences<IPreferences>();
             bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
-            IOptions options = GetOptions( 0, advEditor);
-            options.PreferencesClick += delegate
-            {
-              GetPreferences<IPreferences>(true);
-            };
+            bool connections = Interface.IPreferences.CurrentPref.Offline;
+            IOptions options = GetOptions( 0, advEditor,true,true, connections);
+        
             options.HelpClick += delegate
             {
                 string helpFile = string.Empty;
@@ -126,19 +136,124 @@ namespace DB.UI
 
             return form;
         }
+        private static UserControl createMatrixApplication(out EventHandler refresher)
+        {
+          
+            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+
+            IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
+            bool save = true;
+            bool restore = true;
+            bool connections = true;
+
+            IOptions options = GetOptions(1, advEditor, save, restore, connections);
+
+            /*
+            options.HelpClick += delegate
+            {
+                string helpFile = string.Empty;
+
+                helpFile = getHelpFileµFinder();
+                System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
+            };
+            */
+
+            ucMatrix mat = new ucMatrix();
+            mat.Set(ref Interface);
+
+            refresher = delegate
+            {
+                Interface.IBS.ApplyFilters();
+                Interface.IBS.StartBinding();
+                Interface.IBS.ShowErrors = false;
+
+                bool offline = Interface.IPreferences.CurrentPref.Offline;
+                if (offline)
+                {
+                    Creator.LoadFromFile();
+                    Application.DoEvents();
+                    Interface.IDB.MUES.Clear();
+                    Application.DoEvents();
+                    Interface.IDB.AcceptChanges();
+                }
+                else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
+
+                Interface.IDB.CheckMatrixToDoes();
+                Interface.IBS.ShowErrors = true;
+                //y esto? quitar?
+                Interface.IBS.EnabledControls = true;
+                Application.DoEvents();
+                Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
+
+            };
+
+            refresher.Invoke(null, EventArgs.Empty);
 
 
-        public static IOptions GetOptions( int type, bool advancedEdtior = false )
+            mat.Set(options);
+            mat.Set(ref prefes);
+            mat.SetXCOM();
+
+            options.RestoreFoldersClick += refresher;
+
+
+            IPop msn = Interface.IReport.Msn;
+            Interface.IReport.Msn.ParentForm.Visible = false;
+            UserControl ctrl = msn as UserControl;
+            mat.Set(ref ctrl);
+
+            return mat;
+        }
+
+        private static UserControl createSpecNavApplication()
         {
 
+            ucHyperLab hl = new ucHyperLab();
+            ISpecPreferences prefes = GetPreferences<ISpecPreferences>();
+            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
+            bool connections = true;
+            bool canSave = false;
+            bool restore = false;
+            IOptions options = GetOptions(2, advEditor, canSave, restore, connections);
 
+
+            Interface.IBS.ApplyFilters();
+            Interface.IBS.StartBinding();
+            Interface.IBS.ShowErrors = false;
+
+            hl.Set(ref Interface);
+            hl.Set(ref options);
+            hl.Set(ref prefes);
+
+            return hl;
+        }
+
+        public static IOptions GetOptions(int type, bool advancedEdtior = false, bool save = true, bool restore = true, bool connections = true)
+        {
             IOptions[] optionArr = Creator.UserControls?.OfType<ucOptions>().ToArray();
             IOptions options = null;
             options = optionArr?.FirstOrDefault(o => o.Type == type);
             if (options != null) return options;
 
             //created but not in list
-            options = DBOptions.GetOptions(type,advancedEdtior);
+            options = new DBOptions(type, advancedEdtior, save, restore, connections);
+            Creator.UserControls.Add(options);
+
+            options.PreferencesClick += delegate
+            {
+                if (type == 1)
+                {
+                    GetPreferences<IXCOMPreferences>(true);
+                }
+                else if (type == 2)
+                {
+                    GetPreferences<ISpecPreferences>(true);
+                }
+                else if (type == 0)
+                {
+                    GetPreferences<IPreferences>(true);
+                }
+            };
 
             //start BINDING
             options.AboutBoxClick += delegate
@@ -148,23 +263,19 @@ namespace DB.UI
             //EXPLORER
                 options.ExplorerClick += delegate
                 {
-                // if (!Interface.IPreferences.CurrentPref.AdvancedEditor) return;
                 Explore();
                 };
             //LIMS
-            options.DatabaseClick += delegate
+            options.DatabaseInterfaceClick += delegate
             {
                 Form.Visible = true;
                 Form.Opacity = 100;
                 Form.BringToFront();
             };
+
+
             return options;
         }
-
-
-        private static string ProgramPreferences = "Program Preferences";
-        private static string uFinderPreferences = "µFinder Preferences";
-        private static string SpecNavPreferences = "SpecNav Preferences";
         public static T GetPreferences<T>(bool show = false)
         {
             UserControl ucPref = null;
@@ -255,155 +366,15 @@ namespace DB.UI
             return c;
         }
 */
-        protected static string WINDOWS_EXPLORER = "explorer.exe";
-        protected static string HELP_FILE_SSF_PDF = "UserGuide.pdf";
-
-        public static string HELP_FILE_µFINDER_PDF = "µFinderUserGuide.pdf";
-
-        protected internal static string getHelpFileSSF()
-        {
-            return Interface.IStore.FolderPath + Resources.DevFiles + HELP_FILE_SSF_PDF;
-        }
         protected internal static string getHelpFileµFinder()
         {
             return Interface.IStore.FolderPath + Resources.DevFiles + HELP_FILE_µFINDER_PDF;
         }
 
-        private static UserControl createSpecNavApplication()
+        protected internal static string getHelpFileSSF()
         {
-
-            //   Interface.IAdapter.InitializeComponent();
-            //  Interface.IAdapter.InitializePeaksAdapters();
-        //    Interface.IAdapter.TAM.Connection.ConnectionString = Settings.Default.HLSNMNAAConnectionString;
-
-
-            ucHyperLab hl = new ucHyperLab();
-            ISpecPreferences prefes = GetPreferences<ISpecPreferences>();
-            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
-
-            IOptions options = GetOptions(0, advEditor);
-            options.PreferencesClick += delegate
-            {
-                GetPreferences<ISpecPreferences>(true);
-            };
-
-            Interface.IBS.ApplyFilters();
-            Interface.IBS.StartBinding();
-
-            Interface.IBS.ShowErrors = false;
-
-            hl.Set(ref Interface);
-       
-            hl.Set(ref options);
-            hl.Set(ref prefes);
-
-            options.RestoreFoldersClick += delegate
-            {
-                Application.Restart();
-    
-            };
-
-
-            //   UserControl control = this;
-            hl.Dock = DockStyle.Fill;
-            // form.AutoSizeMode = AutoSizeMode.GrowOnly;
-            // form.AutoSize = true;
-            hl.AutoSizeMode = AutoSizeMode.GrowOnly;
-            hl.AutoSize = true;
-
-            return hl;
+            return Interface.IStore.FolderPath + Resources.DevFiles + HELP_FILE_SSF_PDF;
         }
-
-
-        private static UserControl createMatrixApplication( out EventHandler refresher )
-        {
-            //ESTE ORDEN ES FUNDAMENTAL!!!
-
-
-            bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
-
-            IXCOMPreferences prefes = GetPreferences<IXCOMPreferences>();
-
-            IOptions options = GetOptions(1, advEditor);
-            options.PreferencesClick += delegate
-            {
-                GetPreferences<IXCOMPreferences>(true);
-            };
-
-            /*
-            options.HelpClick += delegate
-            {
-                string helpFile = string.Empty;
-
-                helpFile = getHelpFileµFinder();
-                System.Diagnostics.Process.Start(WINDOWS_EXPLORER, helpFile);
-            };
-
-            */
-
-
-            ucMatrix mat = new ucMatrix();
-            mat.Set(ref Interface);
-         
-
-            refresher = delegate
-            {
-
-                Interface.IBS.ApplyFilters();
-                Interface.IBS.StartBinding();
-
-                Interface.IBS.ShowErrors = false;
-
-                bool offline = Interface.IPreferences.CurrentPref.Offline;
-                if (offline)
-                {
-                    Creator.LoadFromFile();
-
-                    Application.DoEvents();
-
-                    Interface.IDB.MUES.Clear();
-
-                    Application.DoEvents();
-
-                    Interface.IDB.AcceptChanges();
-
-
-                }
-                else Interface.IPopulate.IGeometry.PopulateMatrixSQL();
-
-
-                Interface.IDB.CheckMatrixToDoes();
-
-                Interface.IBS.ShowErrors = true;
-
-                //y esto? quitar?
-                Interface.IBS.EnabledControls = true;
-
-                Application.DoEvents();
-
-
-                Interface.IReport.Msg("Database matrices and compositions were loaded", "Loaded", true);
-               
-            };
-
-            refresher.Invoke(null, EventArgs.Empty);
-
-
-            mat.Set(options);
-            mat.Set(ref prefes);
-            mat.SetXCOM();
-
-            options.RestoreFoldersClick += refresher;
-
-
-            IPop msn = Interface.IReport.Msn;
-            Interface.IReport.Msn.ParentForm.Visible = false;
-            UserControl ctrl = msn as UserControl;
-            mat.Set(ref ctrl);
-
-            return mat;
-        }
-
-
+     
     }
 }

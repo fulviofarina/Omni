@@ -17,16 +17,15 @@ namespace VTools
         public void SetMenues(string label, ref EventHandler handler)
         {
             System.Windows.Forms.ToolStripMenuItem TSMI = new System.Windows.Forms.ToolStripMenuItem();
-            //   this.genListTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            // this.genListTSMI = new System.Windows.Forms.ToolStripMenuItem();
 
-            ///   this.TSMI.Name = "genExaTSMI";
+            /// this.TSMI.Name = "genExaTSMI";
             TSMI.Size = new System.Drawing.Size(170, 22);
             TSMI.Text = label;
             TSMI.Click += handler;
 
             this.toolStripMenuItem1.DropDownItems.Add(
            TSMI);
-            //
             // genListTSMI
         }
 
@@ -54,7 +53,7 @@ namespace VTools
 
         public BindingSource BS
         {
-            //  get { return prefBN; }
+            // get { return prefBN; }
             set { prefBN.BindingSource = value; }
         }
 
@@ -85,7 +84,7 @@ namespace VTools
             this.prefBN.TabIndex = 4;
             this.prefBN.Text = "bindingNavigator1";
 
-            //   this.Controls.Add(this.prefBN);
+            // this.Controls.Add(this.prefBN);
             ((System.ComponentModel.ISupportInitialize)(this.prefBN)).EndInit();
             this.ResumeLayout();
         }
@@ -97,8 +96,9 @@ namespace VTools
         /// </summary>
         public dynamic[] TableAM
         {
-            get {
-                if (tableAM==null)
+            get
+            {
+                if (tableAM == null)
                 {
                     tableAM = new dynamic[2];
                 }
@@ -114,7 +114,7 @@ namespace VTools
             dynamic db = this.prefBN.BindingSource.DataSource;
             DataSet data = db;
 
-            //  DataTable dt = db.Tables[this.prefBN.BindingSource.DataMember];
+            // DataTable dt = db.Tables[this.prefBN.BindingSource.DataMember];
 
             foreach (DataTable dt in data.Tables)
             {
