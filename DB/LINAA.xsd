@@ -1623,11 +1623,12 @@ SELECT VialTypeID, VialTypeRef, InnerRadius, SideThickness, BottomThickness, Dis
               <DbSource ConnectionRef="HLSNMNAAConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByMeasurementID" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetDataByMeasurementID" GeneratorSourceName="FillByMeasurementID" GetMethodModifier="Public" GetMethodName="GetDataByMeasurementID" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetDataByMeasurementID" UserSourceName="FillByMeasurementID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT        PEAK.E AS Energy, PEAK.AREA AS Area, PEAK.AREAUNC * 100 / PEAK.AREA AS AreaUncertainty, PEAK.BKGAVG AS BKG, PEAK.PEAK_ID AS PeaksID, PEAKEVAL.MEASUREMENT_ID AS MeasurementID,
-                         PEAK.EUNC * 100 / PEAK.E AS EnergyUnc, PEAK.GAUSSFWHM AS FWHM, PEAK.GAUSSAMPL AS Gauss, PEAK.CREATIONDATE AS LastDeconvolution, PEAK.GAUSSFWHMUNC * 100 / PEAK.GAUSSFWHM AS FWHMUnc,
-                         PEAK.GAUSSAMPLUNC * 100 / PEAK.GAUSSAMPL AS GaussUnc
+                    <CommandText>SELECT        PEAK.E AS Energy, PEAK.AREA AS Area, PEAK.AREAUNC * 100 / PEAK.AREA AS AreaUncertainty, PEAK.PEAK_ID AS PeaksID, PEAKEVAL.MEASUREMENT_ID AS MeasurementID, PEAK.EUNC * 100 / PEAK.E AS EnergyUnc, 
+                         PEAK.GAUSSFWHM AS FWHM, PEAK.GAUSSAMPL AS Gauss, PEAK.CREATIONDATE AS LastDeconvolution, PEAK.GAUSSFWHMUNC * 100 / PEAK.GAUSSFWHM AS FWHMUnc, 
+                         PEAK.GAUSSAMPLUNC * 100 / PEAK.GAUSSAMPL AS GaussUnc, PEAK.PEAKEVAL_ID AS PeakEvalID, PEAKEVAL.TENTATIVE AS Tentative, PEAKEVALPEAK.AVGBKG AS BKG
 FROM            PEAKEVAL INNER JOIN
-                         PEAK ON PEAKEVAL.PEAKEVAL_ID = PEAK.PEAKEVAL_ID
+                         PEAK ON PEAKEVAL.PEAKEVAL_ID = PEAK.PEAKEVAL_ID INNER JOIN
+                         PEAKEVALPEAK ON PEAK.PEAKEVALPEAK_ID = PEAKEVALPEAK.PEAKEVALPEAK_ID
 WHERE        (PEAKEVAL.MEASUREMENT_ID = @measID)
 ORDER BY Energy</CommandText>
                     <Parameters>
@@ -1650,6 +1651,8 @@ ORDER BY Energy</CommandText>
               <Mapping SourceColumn="LastDeconvolution" DataSetColumn="LastDeconvolution" />
               <Mapping SourceColumn="FWHMUnc" DataSetColumn="FWHMUnc" />
               <Mapping SourceColumn="GaussUnc" DataSetColumn="GaussUnc" />
+              <Mapping SourceColumn="PeakEvalID" DataSetColumn="PeakEvalID" />
+              <Mapping SourceColumn="Tentative" DataSetColumn="Tentative" />
             </Mappings>
             <Sources>
               <DbSource ConnectionRef="HLSNMNAAConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByMeasurementIDFilter" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByMeasurementIDFilter" GeneratorSourceName="FillByMeasurementIDFilter" GetMethodModifier="Public" GetMethodName="GetDataByMeasurementIDFilter" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByMeasurementIDFilter" UserSourceName="FillByMeasurementIDFilter">
@@ -5836,7 +5839,7 @@ WHERE        (MatrixID = @matrixID)</CommandText>
             <xs:sequence>
               <xs:element name="Energy" msprop:Generator_ColumnVarNameInTable="columnEnergy" msprop:Generator_ColumnPropNameInRow="Energy" msprop:Generator_ColumnPropNameInTable="EnergyColumn" msprop:Generator_UserColumnName="Energy" type="xs:double" />
               <xs:element name="Area" msprop:Generator_ColumnVarNameInTable="columnArea" msprop:Generator_ColumnPropNameInRow="Area" msprop:Generator_ColumnPropNameInTable="AreaColumn" msprop:Generator_UserColumnName="Area" type="xs:double" />
-              <xs:element name="BKG" msprop:Generator_ColumnVarNameInTable="columnBKG" msprop:Generator_ColumnPropNameInRow="BKG" msprop:Generator_ColumnPropNameInTable="BKGColumn" msprop:Generator_UserColumnName="BKG" type="xs:double" minOccurs="0" />
+              <xs:element name="BKG" msprop:Generator_ColumnVarNameInTable="columnBKG" msprop:Generator_ColumnPropNameInRow="BKG" msprop:Generator_ColumnPropNameInTable="BKGColumn" msprop:Generator_UserColumnName="BKG" type="xs:double" />
               <xs:element name="GAct" msdata:ReadOnly="true" msdata:Expression="Area / Parent(MeasurementsHL_PeaksHL).CountTime" msprop:Generator_ColumnVarNameInTable="columnGAct" msprop:Generator_ColumnPropNameInRow="GAct" msprop:Generator_ColumnPropNameInTable="GActColumn" msprop:Generator_UserColumnName="GAct" type="xs:double" minOccurs="0" />
               <xs:element name="AreaUncertainty" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAreaUncertainty" msprop:Generator_ColumnPropNameInRow="AreaUncertainty" msprop:Generator_ColumnPropNameInTable="AreaUncertaintyColumn" msprop:Generator_UserColumnName="AreaUncertainty" type="xs:double" minOccurs="0" />
               <xs:element name="PeaksID" msprop:Generator_ColumnVarNameInTable="columnPeaksID" msprop:Generator_ColumnPropNameInRow="PeaksID" msprop:Generator_ColumnPropNameInTable="PeaksIDColumn" msprop:Generator_UserColumnName="PeaksID" type="xs:int" />
@@ -5849,6 +5852,14 @@ WHERE        (MatrixID = @matrixID)</CommandText>
               <xs:element name="LastDeconvolution" msprop:Generator_ColumnVarNameInTable="columnLastDeconvolution" msprop:Generator_ColumnPropNameInRow="LastDeconvolution" msprop:Generator_ColumnPropNameInTable="LastDeconvolutionColumn" msprop:Generator_UserColumnName="LastDeconvolution" type="xs:dateTime" />
               <xs:element name="FWHMUnc" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFWHMUnc" msprop:Generator_ColumnPropNameInRow="FWHMUnc" msprop:Generator_ColumnPropNameInTable="FWHMUncColumn" msprop:Generator_UserColumnName="FWHMUnc" type="xs:float" minOccurs="0" />
               <xs:element name="GaussUnc" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGaussUnc" msprop:Generator_ColumnPropNameInRow="GaussUnc" msprop:Generator_ColumnPropNameInTable="GaussUncColumn" msprop:Generator_UserColumnName="GaussUnc" type="xs:double" minOccurs="0" />
+              <xs:element name="PeakEvalID" msprop:Generator_ColumnVarNameInTable="columnPeakEvalID" msprop:Generator_ColumnPropNameInRow="PeakEvalID" msprop:Generator_ColumnPropNameInTable="PeakEvalIDColumn" msprop:Generator_UserColumnName="PeakEvalID" type="xs:int" />
+              <xs:element name="Tentative" msprop:Generator_ColumnVarNameInTable="columnTentative" msprop:Generator_ColumnPropNameInRow="Tentative" msprop:Generator_ColumnPropNameInTable="TentativeColumn" msprop:Generator_UserColumnName="Tentative">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -7205,6 +7216,7 @@ WHERE        (MatrixID = @matrixID)</CommandText>
               <xs:element name="ProjectIdx" msprop:Generator_ColumnVarNameInTable="columnProjectIdx" msprop:Generator_ColumnPropNameInRow="ProjectIdx" msprop:Generator_ColumnPropNameInTable="ProjectIdxColumn" msprop:Generator_UserColumnName="ProjectIdx" type="xs:short" minOccurs="0" />
               <xs:element name="ModelMonitor" msprop:Generator_ColumnVarNameInTable="columnModelMonitor" msprop:Generator_ColumnPropNameInRow="ModelMonitor" msprop:Generator_ColumnPropNameInTable="ModelMonitorColumn" msprop:Generator_UserColumnName="ModelMonitor" type="xs:string" minOccurs="0" />
               <xs:element name="TimeDivider" msprop:Generator_ColumnVarNameInTable="columnTimeDivider" msprop:Generator_ColumnPropNameInRow="TimeDivider" msprop:Generator_ColumnPropNameInTable="TimeDividerColumn" msprop:Generator_UserColumnName="TimeDivider" type="xs:string" minOccurs="0" />
+              <xs:element name="Rounding" msprop:Generator_ColumnVarNameInTable="columnRounding" msprop:Generator_ColumnPropNameInRow="Rounding" msprop:Generator_ColumnPropNameInTable="RoundingColumn" msprop:Generator_UserColumnName="Rounding" type="xs:string" minOccurs="0" />
               <xs:element name="ModelSample" msprop:Generator_ColumnVarNameInTable="columnModelSample" msprop:Generator_ColumnPropNameInRow="ModelSample" msprop:Generator_ColumnPropNameInTable="ModelSampleColumn" msprop:Generator_UserColumnName="ModelSample" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>

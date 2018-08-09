@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.htlp = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.enlistBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.poolingBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -48,6 +46,8 @@
             this.testButton = new System.Windows.Forms.Button();
             this.HyperLabRTB = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.enlistBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.htlp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -57,9 +57,10 @@
             // 
             // htlp
             // 
+            this.htlp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.htlp.ColumnCount = 2;
-            this.htlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.htlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.htlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 235F));
+            this.htlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63F));
             this.htlp.Controls.Add(this.label4, 0, 7);
             this.htlp.Controls.Add(this.enlistBox, 1, 7);
             this.htlp.Controls.Add(this.label3, 0, 6);
@@ -78,70 +79,57 @@
             this.htlp.Controls.Add(this.label5, 0, 3);
             this.htlp.Controls.Add(this.testButton, 0, 8);
             this.htlp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.htlp.ForeColor = System.Drawing.Color.White;
+            this.htlp.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.htlp.Location = new System.Drawing.Point(0, 0);
             this.htlp.Name = "htlp";
-            this.htlp.RowCount = 9;
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.htlp.Size = new System.Drawing.Size(513, 339);
+            this.htlp.RowCount = 10;
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.htlp.Size = new System.Drawing.Size(513, 355);
             this.htlp.TabIndex = 10;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 266);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(250, 38);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Enlist";
-            // 
-            // enlistBox
-            // 
-            this.enlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.enlistBox.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.enlistBox.Location = new System.Drawing.Point(259, 269);
-            this.enlistBox.Name = "enlistBox";
-            this.enlistBox.Size = new System.Drawing.Size(251, 29);
-            this.enlistBox.TabIndex = 18;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(3, 228);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.label3.Location = new System.Drawing.Point(3, 210);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(250, 38);
+            this.label3.Size = new System.Drawing.Size(229, 35);
             this.label3.TabIndex = 17;
             this.label3.Text = "Pooling";
             // 
             // poolingBox
             // 
+            this.poolingBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.poolingBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poolingBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.poolingBox.ForeColor = System.Drawing.Color.White;
             this.poolingBox.Items.AddRange(new object[] {
             "True",
             "False"});
-            this.poolingBox.Location = new System.Drawing.Point(259, 231);
+            this.poolingBox.Location = new System.Drawing.Point(238, 213);
             this.poolingBox.Name = "poolingBox";
-            this.poolingBox.Size = new System.Drawing.Size(251, 29);
+            this.poolingBox.Size = new System.Drawing.Size(272, 29);
             this.poolingBox.TabIndex = 16;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(3, 152);
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.label8.Location = new System.Drawing.Point(3, 140);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(250, 38);
+            this.label8.Size = new System.Drawing.Size(229, 35);
             this.label8.TabIndex = 15;
             this.label8.Text = "Connection Timeout (s)";
             // 
@@ -149,81 +137,99 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(3, 190);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.label7.Location = new System.Drawing.Point(3, 175);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(250, 38);
+            this.label7.Size = new System.Drawing.Size(229, 35);
             this.label7.TabIndex = 14;
             this.label7.Text = "Persist Security Info";
             // 
             // timeoutboxHL
             // 
+            this.timeoutboxHL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.timeoutboxHL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timeoutboxHL.Location = new System.Drawing.Point(259, 155);
+            this.timeoutboxHL.ForeColor = System.Drawing.Color.White;
+            this.timeoutboxHL.Location = new System.Drawing.Point(238, 143);
             this.timeoutboxHL.Name = "timeoutboxHL";
-            this.timeoutboxHL.Size = new System.Drawing.Size(251, 29);
+            this.timeoutboxHL.Size = new System.Drawing.Size(272, 29);
             this.timeoutboxHL.TabIndex = 13;
             // 
             // securityInfoHL
             // 
+            this.securityInfoHL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.securityInfoHL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.securityInfoHL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.securityInfoHL.ForeColor = System.Drawing.Color.White;
             this.securityInfoHL.Items.AddRange(new object[] {
             "True",
             "False"});
-            this.securityInfoHL.Location = new System.Drawing.Point(259, 193);
+            this.securityInfoHL.Location = new System.Drawing.Point(238, 178);
             this.securityInfoHL.Name = "securityInfoHL";
-            this.securityInfoHL.Size = new System.Drawing.Size(251, 29);
+            this.securityInfoHL.Size = new System.Drawing.Size(272, 29);
             this.securityInfoHL.TabIndex = 12;
             // 
             // hsrv
             // 
+            this.hsrv.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.hsrv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hsrv.Location = new System.Drawing.Point(259, 3);
+            this.hsrv.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hsrv.ForeColor = System.Drawing.Color.White;
+            this.hsrv.Location = new System.Drawing.Point(238, 3);
             this.hsrv.Name = "hsrv";
-            this.hsrv.Size = new System.Drawing.Size(251, 29);
+            this.hsrv.Size = new System.Drawing.Size(272, 29);
             this.hsrv.TabIndex = 11;
             // 
             // HyperLab
             // 
             this.HyperLab.AutoSize = true;
             this.HyperLab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HyperLab.ForeColor = System.Drawing.Color.Firebrick;
+            this.HyperLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.HyperLab.Location = new System.Drawing.Point(3, 0);
             this.HyperLab.Name = "HyperLab";
-            this.HyperLab.Size = new System.Drawing.Size(250, 38);
+            this.HyperLab.Size = new System.Drawing.Size(229, 35);
             this.HyperLab.TabIndex = 4;
             this.HyperLab.Text = "Data Source";
             // 
             // hdb
             // 
+            this.hdb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.hdb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hdb.Location = new System.Drawing.Point(259, 41);
+            this.hdb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hdb.ForeColor = System.Drawing.Color.White;
+            this.hdb.Location = new System.Drawing.Point(238, 38);
             this.hdb.Name = "hdb";
-            this.hdb.Size = new System.Drawing.Size(251, 29);
+            this.hdb.Size = new System.Drawing.Size(272, 29);
             this.hdb.TabIndex = 5;
             // 
             // hlogin
             // 
+            this.hlogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.hlogin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hlogin.Location = new System.Drawing.Point(259, 79);
+            this.hlogin.ForeColor = System.Drawing.Color.White;
+            this.hlogin.Location = new System.Drawing.Point(238, 73);
             this.hlogin.Name = "hlogin";
-            this.hlogin.Size = new System.Drawing.Size(251, 29);
+            this.hlogin.Size = new System.Drawing.Size(272, 29);
             this.hlogin.TabIndex = 6;
             // 
             // hpass
             // 
+            this.hpass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.hpass.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hpass.Location = new System.Drawing.Point(259, 117);
+            this.hpass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hpass.ForeColor = System.Drawing.Color.White;
+            this.hpass.Location = new System.Drawing.Point(238, 108);
             this.hpass.Name = "hpass";
-            this.hpass.Size = new System.Drawing.Size(251, 29);
+            this.hpass.Size = new System.Drawing.Size(272, 29);
             this.hpass.TabIndex = 7;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 38);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.label1.Location = new System.Drawing.Point(3, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 38);
+            this.label1.Size = new System.Drawing.Size(229, 35);
             this.label1.TabIndex = 8;
             this.label1.Text = "Database (or Initial Catalog)";
             // 
@@ -231,9 +237,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 76);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label2.Location = new System.Drawing.Point(3, 70);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(250, 38);
+            this.label2.Size = new System.Drawing.Size(229, 35);
             this.label2.TabIndex = 9;
             this.label2.Text = "User ID";
             // 
@@ -241,18 +248,24 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 114);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label5.Location = new System.Drawing.Point(3, 105);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(250, 38);
+            this.label5.Size = new System.Drawing.Size(229, 35);
             this.label5.TabIndex = 10;
             this.label5.Text = "Password";
             // 
             // testButton
             // 
-            this.testButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.testButton.Location = new System.Drawing.Point(3, 307);
+            this.testButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.testButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.testButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.testButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.testButton.Location = new System.Drawing.Point(3, 283);
             this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(250, 29);
+            this.testButton.Size = new System.Drawing.Size(229, 29);
             this.testButton.TabIndex = 20;
             this.testButton.Text = "TEST Connection";
             this.testButton.UseVisualStyleBackColor = true;
@@ -260,10 +273,12 @@
             // 
             // HyperLabRTB
             // 
+            this.HyperLabRTB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.HyperLabRTB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HyperLabRTB.ForeColor = System.Drawing.Color.White;
             this.HyperLabRTB.Location = new System.Drawing.Point(0, 0);
             this.HyperLabRTB.Name = "HyperLabRTB";
-            this.HyperLabRTB.Size = new System.Drawing.Size(308, 339);
+            this.HyperLabRTB.Size = new System.Drawing.Size(367, 355);
             this.HyperLabRTB.TabIndex = 1;
             this.HyperLabRTB.Text = "";
             // 
@@ -281,9 +296,34 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.HyperLabRTB);
-            this.splitContainer1.Size = new System.Drawing.Size(825, 339);
+            this.splitContainer1.Size = new System.Drawing.Size(884, 355);
             this.splitContainer1.SplitterDistance = 513;
             this.splitContainer1.TabIndex = 11;
+            // 
+            // enlistBox
+            // 
+            this.enlistBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.enlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enlistBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.enlistBox.ForeColor = System.Drawing.Color.White;
+            this.enlistBox.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.enlistBox.Location = new System.Drawing.Point(238, 248);
+            this.enlistBox.Name = "enlistBox";
+            this.enlistBox.Size = new System.Drawing.Size(272, 29);
+            this.enlistBox.TabIndex = 18;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.label4.Location = new System.Drawing.Point(3, 245);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(229, 35);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Enlist";
             // 
             // ucSQLConnection
             // 
@@ -292,7 +332,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucSQLConnection";
-            this.Size = new System.Drawing.Size(825, 339);
+            this.Size = new System.Drawing.Size(884, 355);
             this.htlp.ResumeLayout(false);
             this.htlp.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -320,10 +360,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox HyperLabRTB;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox enlistBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox poolingBox;
         private System.Windows.Forms.Button testButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox enlistBox;
     }
 }

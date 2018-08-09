@@ -25,7 +25,7 @@ namespace DB
                              maxUncColumn,
                         ModelMonitorColumn,
                         TimeDividerColumn,
-                        ModelSampleColumn };
+                        ModelSampleColumn, RoundingColumn };
                     }
                     return forbiddenNullCols;
                 }
@@ -86,8 +86,14 @@ namespace DB
                     if (nulo) TimeDivider = "m";
 
                     //the user selected a good time divider (s, m, y,d,h)
-                    bool ok = Rsx.Dumb.Caster.IsTimeDividerOk(TimeDivider);
+                    bool ok = Caster.IsTimeDividerOk(TimeDivider);
                     if (!ok) TimeDivider = "m";
+                }
+                else if (Column == tableSpecPref.RoundingColumn)
+                {
+                    if (nulo) Rounding = "N3";
+
+                 
                 }
             }
 

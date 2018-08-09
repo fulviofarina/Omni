@@ -51,6 +51,7 @@ namespace DB.UI
                 this.windowBTextBox.KeyUp += filterKey_up;
                 this.minAreaTextBox.KeyUp += filterKey_up;
                 this.maxUncTextBox.KeyUp += filterKey_up;
+                this.roundingBox.KeyUp += filterKey_up;
 
                 this.Validated += validated;
             }
@@ -162,6 +163,10 @@ namespace DB.UI
             this.sampleModelBox.DataBindings.Add(bindings2[name] as Binding);
             name = Interface.IDB.SpecPref.ModelMonitorColumn.ColumnName;
             this.monitorModelBox.DataBindings.Add(bindings2[name] as Binding);
+
+            name = Interface.IDB.SpecPref.RoundingColumn.ColumnName;
+            this.roundingBox.DataBindings.Add(bindings2[name] as Binding);
+
         }
 
         public ucSpecPreferences()

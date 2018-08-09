@@ -80,6 +80,22 @@ namespace DB.UI
 
                  rateDGVCol.HeaderText = "Rate (cp" + addAux + ")";
                  rateDGVCol.ToolTipText = "Count rate in counts per " + suffix;
+
+                 try
+                 {
+                     string format = Interface.IPreferences.CurrentSpecPref.Rounding;
+
+                     liveTimeDGVCol.DefaultCellStyle.Format = format;
+                     rateDGVCol.DefaultCellStyle.Format = format;
+                     countTimeDGVCol.DefaultCellStyle.Format = format;
+                     //   areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle.Format = format;
+                  //   areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle.Format = format;
+                 }
+                 catch (Exception)
+                 {
+                   
+                 }
+
              };
 
             pref.CallBackEventHandler += handler;

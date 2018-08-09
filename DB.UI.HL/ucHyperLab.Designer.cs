@@ -29,33 +29,39 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucHyperLab));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucHyperLab));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.Linaa = new DB.LINAA();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             this.FBD = new System.Windows.Forms.FolderBrowserDialog();
             this.TLP1 = new System.Windows.Forms.TableLayoutPanel();
             this.measDGV = new System.Windows.Forms.DataGridView();
@@ -81,12 +87,13 @@
             this.sampleIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hLDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.measBS = new System.Windows.Forms.BindingSource(this.components);
+            this.Linaa = new DB.LINAA();
             this.TLP2 = new System.Windows.Forms.TableLayoutPanel();
             this.project = new DB.UI.ucHyperLabPB();
-            this.peaksBS = new System.Windows.Forms.BindingSource(this.components);
             this.gammasDGV = new System.Windows.Forms.DataGridView();
             this.gammasBS = new System.Windows.Forms.BindingSource(this.components);
             this.peaksDGV = new System.Windows.Forms.DataGridView();
+            this.peaksBS = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,20 +109,22 @@
             this.Gauss = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bKGDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastDeconvolution = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PeakEvalID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.peaksIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.radiationIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EnergyUnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FWHMUnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GaussUnc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
+            this.Tentative = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TLP1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.measDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.measBS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Linaa)).BeginInit();
             this.TLP2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.peaksBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gammasDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gammasBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.peaksDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.peaksBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -125,17 +134,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Linaa
-            // 
-            this.Linaa.DataSetName = "LINAA";
-            this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
-            this.Linaa.EnforceConstraints = false;
-            this.Linaa.FolderPath = null;
-            this.Linaa.Locale = new System.Globalization.CultureInfo("");
-            this.Linaa.QTA = null;
-            this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            this.Linaa.TAM = null;
             // 
             // FBD
             // 
@@ -161,7 +159,7 @@
             // 
             this.measDGV.AllowUserToAddRows = false;
             this.measDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(234)))), ((int)(((byte)(234)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -203,26 +201,26 @@
             this.sampleIDDataGridViewTextBoxColumn,
             this.hLDataGridViewCheckBoxColumn});
             this.measDGV.DataSource = this.measBS;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.measDGV.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.measDGV.DefaultCellStyle = dataGridViewCellStyle13;
             this.measDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.measDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.measDGV.EnableHeadersVisualStyles = false;
             this.measDGV.Location = new System.Drawing.Point(2, 45);
             this.measDGV.Margin = new System.Windows.Forms.Padding(2);
             this.measDGV.Name = "measDGV";
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            this.measDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
+            this.measDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.measDGV.RowTemplate.Height = 24;
             this.measDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.measDGV.Size = new System.Drawing.Size(1276, 261);
@@ -231,6 +229,8 @@
             // dataGridViewTextBoxColumn26
             // 
             this.dataGridViewTextBoxColumn26.DataPropertyName = "Measurement";
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.MintCream;
+            this.dataGridViewTextBoxColumn26.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTextBoxColumn26.HeaderText = "Measurement";
             this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
             this.dataGridViewTextBoxColumn26.ToolTipText = "Measurement name";
@@ -238,6 +238,8 @@
             // dataGridViewTextBoxColumn29
             // 
             this.dataGridViewTextBoxColumn29.DataPropertyName = "Sample";
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.LavenderBlush;
+            this.dataGridViewTextBoxColumn29.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTextBoxColumn29.HeaderText = "Sample";
             this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
             this.dataGridViewTextBoxColumn29.ToolTipText = "Sample name";
@@ -245,6 +247,8 @@
             // dataGridViewTextBoxColumn30
             // 
             this.dataGridViewTextBoxColumn30.DataPropertyName = "Detector";
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Snow;
+            this.dataGridViewTextBoxColumn30.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn30.HeaderText = "Detector";
             this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
             this.dataGridViewTextBoxColumn30.ToolTipText = "Detector name";
@@ -259,6 +263,8 @@
             // dataGridViewTextBoxColumn24
             // 
             this.dataGridViewTextBoxColumn24.DataPropertyName = "MeasurementNr";
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.LightYellow;
+            this.dataGridViewTextBoxColumn24.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn24.HeaderText = "Number";
             this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
             this.dataGridViewTextBoxColumn24.ToolTipText = "Measurement number";
@@ -266,6 +272,8 @@
             // dataGridViewTextBoxColumn27
             // 
             this.dataGridViewTextBoxColumn27.DataPropertyName = "MeasurementStart";
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.GhostWhite;
+            this.dataGridViewTextBoxColumn27.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn27.HeaderText = "Started";
             this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
             this.dataGridViewTextBoxColumn27.ToolTipText = "Date and time when the measurement started";
@@ -280,9 +288,9 @@
             // liveTimeDGVCol
             // 
             this.liveTimeDGVCol.DataPropertyName = "LiveTime";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N1";
-            this.liveTimeDGVCol.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N3";
+            this.liveTimeDGVCol.DefaultCellStyle = dataGridViewCellStyle8;
             this.liveTimeDGVCol.HeaderText = "LT";
             this.liveTimeDGVCol.Name = "liveTimeDGVCol";
             this.liveTimeDGVCol.ToolTipText = "Live Time in minutes";
@@ -290,9 +298,9 @@
             // countTimeDGVCol
             // 
             this.countTimeDGVCol.DataPropertyName = "CountTime";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N1";
-            this.countTimeDGVCol.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N3";
+            this.countTimeDGVCol.DefaultCellStyle = dataGridViewCellStyle9;
             this.countTimeDGVCol.HeaderText = "CT";
             this.countTimeDGVCol.Name = "countTimeDGVCol";
             this.countTimeDGVCol.ToolTipText = "Count Time in minutes";
@@ -300,9 +308,10 @@
             // dataGridViewTextBoxColumn22
             // 
             this.dataGridViewTextBoxColumn22.DataPropertyName = "DT";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "N1";
-            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.MintCream;
+            dataGridViewCellStyle10.Format = "N2";
+            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn22.HeaderText = "DT (%)";
             this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
             this.dataGridViewTextBoxColumn22.ReadOnly = true;
@@ -311,9 +320,9 @@
             // decayTimeDataGridViewTextBoxColumn
             // 
             this.decayTimeDataGridViewTextBoxColumn.DataPropertyName = "DecayTime";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N1";
-            this.decayTimeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "N1";
+            this.decayTimeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.decayTimeDataGridViewTextBoxColumn.HeaderText = "Decay";
             this.decayTimeDataGridViewTextBoxColumn.Name = "decayTimeDataGridViewTextBoxColumn";
             this.decayTimeDataGridViewTextBoxColumn.ToolTipText = "Decay Time in minutes";
@@ -322,6 +331,8 @@
             // dataGridViewTextBoxColumn19
             // 
             this.dataGridViewTextBoxColumn19.DataPropertyName = "Project";
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.OldLace;
+            this.dataGridViewTextBoxColumn19.DefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridViewTextBoxColumn19.HeaderText = "Project";
             this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             this.dataGridViewTextBoxColumn19.ReadOnly = true;
@@ -400,6 +411,17 @@
             this.measBS.DataMember = "Measurements";
             this.measBS.DataSource = this.Linaa;
             // 
+            // Linaa
+            // 
+            this.Linaa.DataSetName = "LINAA";
+            this.Linaa.DetectorsList = ((System.Collections.Generic.ICollection<string>)(resources.GetObject("Linaa.DetectorsList")));
+            this.Linaa.EnforceConstraints = false;
+            this.Linaa.FolderPath = null;
+            this.Linaa.Locale = new System.Globalization.CultureInfo("");
+            this.Linaa.QTA = null;
+            this.Linaa.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.Linaa.TAM = null;
+            // 
             // TLP2
             // 
             this.TLP2.ColumnCount = 2;
@@ -438,31 +460,26 @@
             this.project.TextForeColor = System.Drawing.Color.LemonChiffon;
             this.project.WasRefreshed = false;
             // 
-            // peaksBS
-            // 
-            this.peaksBS.DataMember = "PeaksHL";
-            this.peaksBS.DataSource = this.Linaa;
-            // 
             // gammasDGV
             // 
             this.gammasDGV.AllowUserToAddRows = false;
             this.gammasDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Lavender;
-            this.gammasDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.Lavender;
+            this.gammasDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle15;
             this.gammasDGV.AutoGenerateColumns = false;
             this.gammasDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.gammasDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.gammasDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gammasDGV.DataSource = this.gammasBS;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gammasDGV.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gammasDGV.DefaultCellStyle = dataGridViewCellStyle16;
             this.gammasDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gammasDGV.Location = new System.Drawing.Point(0, 0);
             this.gammasDGV.Name = "gammasDGV";
@@ -478,27 +495,27 @@
             // 
             this.peaksDGV.AllowUserToAddRows = false;
             this.peaksDGV.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.peaksDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(234)))), ((int)(((byte)(234)))));
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.peaksDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
             this.peaksDGV.AutoGenerateColumns = false;
             this.peaksDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.peaksDGV.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.peaksDGV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.LightGreen;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.peaksDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.peaksDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.LightGreen;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.peaksDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.peaksDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.peaksDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.energyDataGridViewTextBoxColumn,
             this.areaDataGridViewTextBoxColumn,
@@ -508,45 +525,52 @@
             this.Gauss,
             this.bKGDataGridViewTextBoxColumn,
             this.LastDeconvolution,
+            this.PeakEvalID,
             this.peaksIDDataGridViewTextBoxColumn,
             this.radiationIDDataGridViewTextBoxColumn,
             this.EnergyUnc,
             this.FWHMUnc,
-            this.GaussUnc});
+            this.GaussUnc,
+            this.Tentative});
             this.peaksDGV.DataSource = this.peaksBS;
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.peaksDGV.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle30.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle30.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.peaksDGV.DefaultCellStyle = dataGridViewCellStyle30;
             this.peaksDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.peaksDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.peaksDGV.EnableHeadersVisualStyles = false;
             this.peaksDGV.Location = new System.Drawing.Point(0, 0);
             this.peaksDGV.Margin = new System.Windows.Forms.Padding(2);
             this.peaksDGV.Name = "peaksDGV";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.peaksDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle31.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.peaksDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle31;
             this.peaksDGV.RowTemplate.Height = 24;
             this.peaksDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.peaksDGV.Size = new System.Drawing.Size(765, 258);
             this.peaksDGV.TabIndex = 2;
             // 
+            // peaksBS
+            // 
+            this.peaksBS.DataMember = "PeaksHL";
+            this.peaksBS.DataSource = this.Linaa;
+            // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.DataPropertyName = "NAME";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle25.Format = "N1";
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle32.Format = "N1";
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle32;
             this.dataGridViewTextBoxColumn2.HeaderText = "NAME";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
@@ -618,9 +642,10 @@
             // energyDataGridViewTextBoxColumn
             // 
             this.energyDataGridViewTextBoxColumn.DataPropertyName = "Energy";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N1";
-            this.energyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.LavenderBlush;
+            dataGridViewCellStyle19.Format = "N1";
+            this.energyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
             this.energyDataGridViewTextBoxColumn.HeaderText = "Energy (keV)";
             this.energyDataGridViewTextBoxColumn.Name = "energyDataGridViewTextBoxColumn";
             this.energyDataGridViewTextBoxColumn.ToolTipText = "Peak Energy in keV";
@@ -629,9 +654,10 @@
             // areaDataGridViewTextBoxColumn
             // 
             this.areaDataGridViewTextBoxColumn.DataPropertyName = "Area";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle14.Format = "N0";
-            this.areaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle20.Format = "N0";
+            this.areaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle20;
             this.areaDataGridViewTextBoxColumn.HeaderText = "Area";
             this.areaDataGridViewTextBoxColumn.Name = "areaDataGridViewTextBoxColumn";
             this.areaDataGridViewTextBoxColumn.ToolTipText = "Peak Area (or counts)";
@@ -640,9 +666,9 @@
             // areaUncertaintyDataGridViewTextBoxColumn
             // 
             this.areaUncertaintyDataGridViewTextBoxColumn.DataPropertyName = "AreaUncertainty";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N1";
-            this.areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle21.Format = "N2";
+            this.areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle21;
             this.areaUncertaintyDataGridViewTextBoxColumn.HeaderText = "Unc (%)";
             this.areaUncertaintyDataGridViewTextBoxColumn.Name = "areaUncertaintyDataGridViewTextBoxColumn";
             this.areaUncertaintyDataGridViewTextBoxColumn.ReadOnly = true;
@@ -652,9 +678,10 @@
             // rateDGVCol
             // 
             this.rateDGVCol.DataPropertyName = "GAct";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle16.Format = "N1";
-            this.rateDGVCol.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.Honeydew;
+            dataGridViewCellStyle22.Format = "N1";
+            this.rateDGVCol.DefaultCellStyle = dataGridViewCellStyle22;
             this.rateDGVCol.HeaderText = "Rate";
             this.rateDGVCol.Name = "rateDGVCol";
             this.rateDGVCol.ReadOnly = true;
@@ -663,8 +690,8 @@
             // FWHM
             // 
             this.FWHM.DataPropertyName = "FWHM";
-            dataGridViewCellStyle17.Format = "N1";
-            this.FWHM.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle23.Format = "N1";
+            this.FWHM.DefaultCellStyle = dataGridViewCellStyle23;
             this.FWHM.HeaderText = "FWHM";
             this.FWHM.Name = "FWHM";
             this.FWHM.ToolTipText = "Gaussian Full-width-at-half-maximum";
@@ -673,8 +700,8 @@
             // Gauss
             // 
             this.Gauss.DataPropertyName = "Gauss";
-            dataGridViewCellStyle18.Format = "N0";
-            this.Gauss.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle24.Format = "N0";
+            this.Gauss.DefaultCellStyle = dataGridViewCellStyle24;
             this.Gauss.HeaderText = "Amplitude";
             this.Gauss.Name = "Gauss";
             this.Gauss.ToolTipText = "Gaussian Amplitude";
@@ -683,9 +710,9 @@
             // bKGDataGridViewTextBoxColumn
             // 
             this.bKGDataGridViewTextBoxColumn.DataPropertyName = "BKG";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle19.Format = "N1";
-            this.bKGDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle25.Format = "N1";
+            this.bKGDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle25;
             this.bKGDataGridViewTextBoxColumn.HeaderText = "BKG";
             this.bKGDataGridViewTextBoxColumn.Name = "bKGDataGridViewTextBoxColumn";
             this.bKGDataGridViewTextBoxColumn.ToolTipText = "Average Background";
@@ -694,18 +721,28 @@
             // LastDeconvolution
             // 
             this.LastDeconvolution.DataPropertyName = "LastDeconvolution";
-            this.LastDeconvolution.HeaderText = "Evaluated";
+            dataGridViewCellStyle26.BackColor = System.Drawing.Color.GhostWhite;
+            this.LastDeconvolution.DefaultCellStyle = dataGridViewCellStyle26;
+            this.LastDeconvolution.HeaderText = "Timestamp";
             this.LastDeconvolution.Name = "LastDeconvolution";
             this.LastDeconvolution.ToolTipText = "Evaluation date and time";
-            this.LastDeconvolution.Width = 105;
+            this.LastDeconvolution.Width = 116;
+            // 
+            // PeakEvalID
+            // 
+            this.PeakEvalID.DataPropertyName = "PeakEvalID";
+            this.PeakEvalID.HeaderText = "Evaluation";
+            this.PeakEvalID.Name = "PeakEvalID";
+            this.PeakEvalID.ToolTipText = "Peak Evaluation ID";
+            this.PeakEvalID.Width = 109;
             // 
             // peaksIDDataGridViewTextBoxColumn
             // 
             this.peaksIDDataGridViewTextBoxColumn.DataPropertyName = "PeaksID";
-            this.peaksIDDataGridViewTextBoxColumn.HeaderText = "PeaksID";
+            this.peaksIDDataGridViewTextBoxColumn.HeaderText = "ID";
             this.peaksIDDataGridViewTextBoxColumn.Name = "peaksIDDataGridViewTextBoxColumn";
-            this.peaksIDDataGridViewTextBoxColumn.Visible = false;
-            this.peaksIDDataGridViewTextBoxColumn.Width = 91;
+            this.peaksIDDataGridViewTextBoxColumn.ToolTipText = "Peak ID";
+            this.peaksIDDataGridViewTextBoxColumn.Width = 51;
             // 
             // radiationIDDataGridViewTextBoxColumn
             // 
@@ -718,8 +755,8 @@
             // EnergyUnc
             // 
             this.EnergyUnc.DataPropertyName = "EnergyUnc";
-            dataGridViewCellStyle20.Format = "N1";
-            this.EnergyUnc.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle27.Format = "N1";
+            this.EnergyUnc.DefaultCellStyle = dataGridViewCellStyle27;
             this.EnergyUnc.HeaderText = "Energy Unc (%)";
             this.EnergyUnc.Name = "EnergyUnc";
             this.EnergyUnc.ReadOnly = true;
@@ -729,8 +766,8 @@
             // FWHMUnc
             // 
             this.FWHMUnc.DataPropertyName = "FWHMUnc";
-            dataGridViewCellStyle21.Format = "N0";
-            this.FWHMUnc.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle28.Format = "N0";
+            this.FWHMUnc.DefaultCellStyle = dataGridViewCellStyle28;
             this.FWHMUnc.HeaderText = "FWHM Unc (%)";
             this.FWHMUnc.Name = "FWHMUnc";
             this.FWHMUnc.ReadOnly = true;
@@ -740,13 +777,21 @@
             // GaussUnc
             // 
             this.GaussUnc.DataPropertyName = "GaussUnc";
-            dataGridViewCellStyle22.Format = "N0";
-            this.GaussUnc.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle29.Format = "N0";
+            this.GaussUnc.DefaultCellStyle = dataGridViewCellStyle29;
             this.GaussUnc.HeaderText = "Gauss Unc (%)";
             this.GaussUnc.Name = "GaussUnc";
             this.GaussUnc.ReadOnly = true;
             this.GaussUnc.Visible = false;
             this.GaussUnc.Width = 136;
+            // 
+            // Tentative
+            // 
+            this.Tentative.DataPropertyName = "Tentative";
+            this.Tentative.HeaderText = "MT";
+            this.Tentative.Name = "Tentative";
+            this.Tentative.ToolTipText = "Marked as Tentative";
+            this.Tentative.Width = 59;
             // 
             // ucHyperLab
             // 
@@ -756,15 +801,15 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ucHyperLab";
             this.Size = new System.Drawing.Size(1280, 570);
-            ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             this.TLP1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.measDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.measBS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Linaa)).EndInit();
             this.TLP2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.peaksBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gammasDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gammasBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.peaksDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.peaksBS)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -829,10 +874,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Gauss;
         private System.Windows.Forms.DataGridViewTextBoxColumn bKGDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastDeconvolution;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PeakEvalID;
         private System.Windows.Forms.DataGridViewTextBoxColumn peaksIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn radiationIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn EnergyUnc;
         private System.Windows.Forms.DataGridViewTextBoxColumn FWHMUnc;
         private System.Windows.Forms.DataGridViewTextBoxColumn GaussUnc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tentative;
     }
 }

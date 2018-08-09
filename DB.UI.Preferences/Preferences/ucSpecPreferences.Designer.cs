@@ -51,8 +51,9 @@
             System.Windows.Forms.Label label18;
             System.Windows.Forms.Label label19;
             System.Windows.Forms.Label label20;
+            System.Windows.Forms.Label label21;
+            System.Windows.Forms.Label label22;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.monLenBox = new System.Windows.Forms.TextBox();
             this.timeDivBox = new System.Windows.Forms.TextBox();
             this.sampleModelBox = new System.Windows.Forms.TextBox();
             this.monitorModelBox = new System.Windows.Forms.TextBox();
@@ -73,6 +74,7 @@
             this.maxUncTextBox = new System.Windows.Forms.TextBox();
             this.minAreaTextBox = new System.Windows.Forms.TextBox();
             this.projectBox = new System.Windows.Forms.TextBox();
+            this.roundingBox = new System.Windows.Forms.TextBox();
             minAreaLabel = new System.Windows.Forms.Label();
             maxUncLabel = new System.Windows.Forms.Label();
             windowALabel = new System.Windows.Forms.Label();
@@ -96,6 +98,8 @@
             label18 = new System.Windows.Forms.Label();
             label19 = new System.Windows.Forms.Label();
             label20 = new System.Windows.Forms.Label();
+            label21 = new System.Windows.Forms.Label();
+            label22 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -324,6 +328,42 @@
             label17.Text = "Search Window (keV) = A + (B * Energy)";
             label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(label18, 2);
+            label18.Dock = System.Windows.Forms.DockStyle.Fill;
+            label18.ForeColor = System.Drawing.Color.SeaShell;
+            label18.Location = new System.Drawing.Point(3, 158);
+            label18.Name = "label18";
+            label18.Size = new System.Drawing.Size(413, 21);
+            label18.TabIndex = 49;
+            label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(label19, 2);
+            label19.Dock = System.Windows.Forms.DockStyle.Fill;
+            label19.ForeColor = System.Drawing.Color.SeaShell;
+            label19.Location = new System.Drawing.Point(3, 310);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(413, 21);
+            label19.TabIndex = 50;
+            label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(label20, 2);
+            label20.Dock = System.Windows.Forms.DockStyle.Fill;
+            label20.ForeColor = System.Drawing.Color.SeaShell;
+            label20.Location = new System.Drawing.Point(3, 637);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(413, 21);
+            label20.TabIndex = 51;
+            label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoScroll = true;
@@ -332,13 +372,15 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.roundingBox, 0, 29);
+            this.tableLayoutPanel1.Controls.Add(label22, 1, 28);
+            this.tableLayoutPanel1.Controls.Add(label21, 0, 28);
             this.tableLayoutPanel1.Controls.Add(label20, 0, 25);
             this.tableLayoutPanel1.Controls.Add(label19, 0, 11);
             this.tableLayoutPanel1.Controls.Add(label18, 0, 5);
             this.tableLayoutPanel1.Controls.Add(label17, 0, 6);
             this.tableLayoutPanel1.Controls.Add(label16, 0, 12);
             this.tableLayoutPanel1.Controls.Add(label15, 1, 26);
-            this.tableLayoutPanel1.Controls.Add(this.monLenBox, 1, 27);
             this.tableLayoutPanel1.Controls.Add(label14, 0, 26);
             this.tableLayoutPanel1.Controls.Add(this.timeDivBox, 0, 27);
             this.tableLayoutPanel1.Controls.Add(label12, 1, 13);
@@ -380,7 +422,7 @@
             this.tableLayoutPanel1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 28;
+            this.tableLayoutPanel1.RowCount = 29;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -411,20 +453,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(419, 750);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(419, 776);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // monLenBox
-            // 
-            this.monLenBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.monLenBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.monLenBox.ForeColor = System.Drawing.SystemColors.Info;
-            this.monLenBox.Location = new System.Drawing.Point(212, 682);
-            this.monLenBox.Name = "monLenBox";
-            this.monLenBox.ReadOnly = true;
-            this.monLenBox.Size = new System.Drawing.Size(50, 22);
-            this.monLenBox.TabIndex = 45;
-            this.monLenBox.Visible = false;
             // 
             // timeDivBox
             // 
@@ -654,41 +684,36 @@
             this.projectBox.TabIndex = 28;
             this.projectBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label18
+            // label21
             // 
-            label18.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(label18, 2);
-            label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            label18.ForeColor = System.Drawing.Color.SeaShell;
-            label18.Location = new System.Drawing.Point(3, 158);
-            label18.Name = "label18";
-            label18.Size = new System.Drawing.Size(413, 21);
-            label18.TabIndex = 49;
-            label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label21.AutoSize = true;
+            label21.Dock = System.Windows.Forms.DockStyle.Fill;
+            label21.ForeColor = System.Drawing.Color.Lime;
+            label21.Location = new System.Drawing.Point(3, 714);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(203, 20);
+            label21.TabIndex = 52;
+            label21.Text = "Rounding";
             // 
-            // label19
+            // label22
             // 
-            label19.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(label19, 2);
-            label19.Dock = System.Windows.Forms.DockStyle.Fill;
-            label19.ForeColor = System.Drawing.Color.SeaShell;
-            label19.Location = new System.Drawing.Point(3, 310);
-            label19.Name = "label19";
-            label19.Size = new System.Drawing.Size(413, 21);
-            label19.TabIndex = 50;
-            label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label22.AutoSize = true;
+            label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            label22.ForeColor = System.Drawing.Color.SeaShell;
+            label22.Location = new System.Drawing.Point(212, 714);
+            label22.Name = "label22";
+            label22.Size = new System.Drawing.Size(204, 20);
+            label22.TabIndex = 53;
+            label22.Text = "use N#, E# or F#  (Nr = #)";
             // 
-            // label20
+            // roundingBox
             // 
-            label20.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(label20, 2);
-            label20.Dock = System.Windows.Forms.DockStyle.Fill;
-            label20.ForeColor = System.Drawing.Color.SeaShell;
-            label20.Location = new System.Drawing.Point(3, 637);
-            label20.Name = "label20";
-            label20.Size = new System.Drawing.Size(413, 21);
-            label20.TabIndex = 51;
-            label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.roundingBox.BackColor = System.Drawing.Color.White;
+            this.roundingBox.ForeColor = System.Drawing.Color.Black;
+            this.roundingBox.Location = new System.Drawing.Point(3, 737);
+            this.roundingBox.Name = "roundingBox";
+            this.roundingBox.Size = new System.Drawing.Size(50, 29);
+            this.roundingBox.TabIndex = 54;
             // 
             // ucSpecPreferences
             // 
@@ -697,7 +722,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ucSpecPreferences";
-            this.Size = new System.Drawing.Size(419, 750);
+            this.Size = new System.Drawing.Size(419, 776);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -726,7 +751,7 @@
         private System.Windows.Forms.TextBox projectBox;
         private System.Windows.Forms.TextBox sampleModelBox;
         private System.Windows.Forms.TextBox monitorModelBox;
-        private System.Windows.Forms.TextBox monLenBox;
         private System.Windows.Forms.TextBox timeDivBox;
+        private System.Windows.Forms.TextBox roundingBox;
     }
 }

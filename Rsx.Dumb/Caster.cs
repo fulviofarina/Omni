@@ -22,12 +22,12 @@ namespace Rsx.Dumb
         }
         public static string GetTimeDividerSuffix(string timeDivider)
         {
-            string suffix = "seconds";
-            if (timeDivider.Contains("s")) suffix = "seconds";
-            else if (timeDivider.Contains("y")) suffix = "years";
-            else if (timeDivider.Contains("d")) suffix = "days";
-            else if (timeDivider.Contains("h")) suffix = "hours";
-            else if (timeDivider.Contains("m")) suffix = "minutes";
+            string suffix = "second";
+            if (timeDivider.Contains("s")) suffix = "second";
+            else if (timeDivider.Contains("y")) suffix = "year";
+            else if (timeDivider.Contains("d")) suffix = "day";
+            else if (timeDivider.Contains("h")) suffix = "hour";
+            else if (timeDivider.Contains("m")) suffix = "minute";
             return suffix;
         }
         public static double GetTimeFactor(string timeDivider = "m")

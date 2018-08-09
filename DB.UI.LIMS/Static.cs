@@ -24,7 +24,7 @@ namespace DB.UI
       
         public static Interface Interface = null;
 
-        public static void Start(ref Form aboutbox, bool forceOffline = false, bool forceAdvEditor = false, string lIMSresource = "")
+        public static void Start(ref IAboutBox aboutbox, bool forceOffline = false, bool forceAdvEditor = false, string lIMSresource = "")
         {
 
             Creator.MainLIMSResource = lIMSresource;
@@ -53,7 +53,7 @@ namespace DB.UI
         /// </summary>
         public static LINAA Linaa = null;
 
-        protected internal static Form aboutBox;
+        protected internal static IAboutBox aboutBox;
 
         public static IList<object> UserControls
         {
@@ -77,7 +77,7 @@ namespace DB.UI
         }
 
 
-        public static void createLIMS(ref Form _aboutbox)
+        public static void createLIMS(ref IAboutBox _aboutbox)
         {
             aboutBox = _aboutbox;
             Interface.IReport.Msg("Starting LIMS", "Starting...");

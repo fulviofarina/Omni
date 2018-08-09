@@ -1,6 +1,8 @@
 ﻿using DB.UI;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
+using VTools;
 
 namespace µFinder
 {
@@ -13,6 +15,7 @@ namespace µFinder
         private static void Main()
         {
             bool offline = true;
+
             bool adv = false;
             try
             {
@@ -22,9 +25,10 @@ namespace µFinder
                 string LIMSresource = Properties.Resources.LIMS;
 
                 //create aboutBox
-                Form aboutbox = new AboutBox();
+                IAboutBox about = new AboutBox();
+                about.AssemblyToProvide = Assembly.GetExecutingAssembly();
 
-                LIMSUI.Start(ref aboutbox, offline, adv, LIMSresource);
+                LIMSUI.Start(ref about, offline, adv, LIMSresource);
 
                 //set the editor
                 bool noDGVControls = false;
@@ -41,30 +45,10 @@ namespace µFinder
             }
             catch (Exception ex)
             {
-                // Rsx. WriteException(crashFile, ex);
+                
             }
         }
 
-        /*
-            public static void PainterTimer()
-            {
-                //to repaint the form
-                System.Timers.Timer painter = new System.Timers.Timer();
-                painter.Elapsed += delegate
-                {
-                    painter.Enabled = false;
-
-                    Application.OpenForms[0]?.Invalidate();
-
-                    painter.Interval = 60 * 10 * 1000; //10 minutes
-
-                    GC.Collect();
-
-                    painter.Enabled = true;
-                };
-                painter.Interval = 30000;
-                painter.Enabled = true;
-            }
-          */
+      
     }
 }

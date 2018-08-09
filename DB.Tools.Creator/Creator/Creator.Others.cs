@@ -160,7 +160,7 @@ namespace DB.Tools
             if (lims || hyperLab)
             {
                 //FIRST SQL
-                IucSQLConnection IConn = new ucSQLConnection();
+              
                 //this is the OK that matters..
                 //the connection
                 Interface.IReport.Msg("Set up", "Checking SQL Connection...");
@@ -168,14 +168,14 @@ namespace DB.Tools
 
                 if (!hyperLab)
                 {
-                    ok = PrepareSQL(ref IConn);
+                    ok = PrepareSQL(false);
                 }
                 else
                 {
-                    ok = PrepareSQLForHyperLab(ref IConn);
+                    ok = PrepareSQLForHyperLab();
                     if (lims)
                     {
-                        ok = ok && PrepareSQL(ref IConn, true);
+                        ok = ok && PrepareSQL(true);
                     }
                 }
             }

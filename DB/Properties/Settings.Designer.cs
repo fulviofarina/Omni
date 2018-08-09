@@ -53,17 +53,6 @@ namespace DB.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Choose;Initial Catalog=HyperLab1;User ID=sa;Password=hlpwd2009;Connec" +
-            "t Timeout=6")]
-        public string HLSNMNAAConnectionString {
-            get {
-                return ((string)(this["HLSNMNAAConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=k014;Persist Security Info=True;User ID=sa" +
             ";Password=naa;Connect Timeout=10")]
         public string NAAConnectionString {
@@ -104,6 +93,30 @@ namespace DB.Properties {
             }
             set {
                 this["developerHL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Choose;Initial Catalog=HyperLab1;User ID=sa;Password=hlpwd2009;Connec" +
+            "t Timeout=6")]
+        public string UserModelHL {
+            get {
+                return ((string)(this["UserModelHL"]));
+            }
+            set {
+                this["UserModelHL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=flux\\sql14;Initial Catalog=HL14;User ID=sa;Password=naa;Connect Timeo" +
+            "ut=10")]
+        public string HLSNMNAAConnectionString {
+            get {
+                return ((string)(this["HLSNMNAAConnectionString"]));
             }
         }
     }

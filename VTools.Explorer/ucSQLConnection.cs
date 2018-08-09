@@ -44,11 +44,11 @@ namespace VTools
                 form.Text = "Check the database connection parameters";
                 form.TopMost = true;
 
-                form.AutoSizeMode = AutoSizeMode.GrowOnly;
-                // form.AutoSize = true;
+              //  form.AutoSizeMode = AutoSizeMode.GrowOnly;
+              //  form.AutoSize = true;
 
                 // form.Size = new System.Drawing.Size(this.Width*3/2, this.Height*3/2);
-                form.Size = new System.Drawing.Size(this.Width, this.Height);
+                form.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
 
                 form.Controls.Add(this);
 
@@ -187,6 +187,9 @@ namespace VTools
             this.hpass.Items.Add("sa");
 
             this.Dock = DockStyle.Fill;
+
+
+          
         }
 
         private void testButton_Click(object sender, EventArgs e)

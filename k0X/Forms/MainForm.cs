@@ -360,7 +360,7 @@ namespace k0X
 
                 IucSQLConnection IConn = new VTools.ucSQLConnection();
                 // dynamic connectionControl = IConn;
-                bool ok = Creator.PrepareSQL(ref IConn);
+                bool ok = Creator.PrepareSQL(false);
                 // bool ok = Creator.PrepareSQL();
                 LIMSUI.Interface.IPreferences
                  .CurrentPref.IsSQL = ok;

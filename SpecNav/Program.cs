@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DB.Tools;
+﻿using DB.Tools;
 using DB.UI;
+using System;
+using System.Reflection;
+using System.Windows.Forms;
+using VTools;
 
 namespace SpecNav
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -17,7 +15,6 @@ namespace SpecNav
         [STAThread]
         private static void Main()
         {
-
             bool offline = false;
             bool adv = false;
             bool lims = false;
@@ -27,20 +24,17 @@ namespace SpecNav
 
             try
             {
-
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                Form aboutbox = new AboutBox();
+                IAboutBox about = new AboutBox();
+                about.AssemblyToProvide = Assembly.GetExecutingAssembly();
 
-                LIMSUI.Start(ref aboutbox, offline, adv,string.Empty);
-
+                LIMSUI.Start(ref about, offline, adv, string.Empty);
 
                 Creator.CheckConnections(mmqs, lims, hyperLab);
 
-
                 UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, noDGVCtrl);
-
 
                 bool showAlready = false;
                 LIMSUI.CreateForm(Application.ProductName, ref hl, showAlready);
@@ -48,20 +42,13 @@ namespace SpecNav
                 Form toShow = hl.ParentForm;
 
                 toShow.WindowState = FormWindowState.Maximized;
-                
-          
 
                 Application.Run(toShow);
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Severe program error: " + ex.Message + "\n\nat code:\n\n" + ex.StackTrace);
             }
-
         }
-
-
-      
     }
 }
