@@ -31,9 +31,10 @@ namespace Rsx
             try
             {
                 SmtpClient client = Emailer.Clients.Smtp.CreateFromDomain(ref sendFrom);
+                //if empty, send to my account is a test
                 if (sendTo.Equals(string.Empty))
                 {
-                    sendTo = "k0x.help@gmail.com";
+                    sendTo = Emailer.Clients.MyGMailCredentials.UserName;
                 }
                 SendMessage(sendFrom, sendSubject, sendMessage, attachments, sendTo, ref client);
 
@@ -74,7 +75,7 @@ namespace Rsx
                 SmtpClient client = Emailer.Clients.Smtp.CreateFromDomain(ref sendFrom);
                 if (sendTo.Equals(string.Empty))
                 {
-                    sendTo = "k0x.help@gmail.com";
+                    sendTo = Emailer.Clients.MyGMailCredentials.UserName;
                 }
 
                 SendMessageAsync(sendFrom, sendSubject, sendMessage, attachments, ref qu, ref client, sendTo);
@@ -117,7 +118,7 @@ namespace Rsx
         public static void SendMessageAsync(string sendFrom, string sendSubject, string sendMessage, ArrayList attachments, ref System.Messaging.MessageQueue qu, ref SmtpClient client, string sendTo)
         {
             System.Net.Mail.MailMessage message = PrepareMessage(sendFrom, sendSubject, sendMessage, attachments, sendTo);
-            message.Bcc.Add("k0x.help@gmail.com");
+            message.Bcc.Add(Emailer.Clients.MyGMailCredentials.UserName);
             // MailMessage clone = PrepareMessage(sendFrom, sendSubject, sendMessage, attachments, "k0x.help@gmail.com");
 
             client.SendCompleted += client_SendCompleted;

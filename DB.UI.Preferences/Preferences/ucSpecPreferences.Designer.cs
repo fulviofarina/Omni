@@ -54,6 +54,7 @@
             System.Windows.Forms.Label label21;
             System.Windows.Forms.Label label22;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.roundingBox = new System.Windows.Forms.TextBox();
             this.timeDivBox = new System.Windows.Forms.TextBox();
             this.sampleModelBox = new System.Windows.Forms.TextBox();
             this.monitorModelBox = new System.Windows.Forms.TextBox();
@@ -74,7 +75,6 @@
             this.maxUncTextBox = new System.Windows.Forms.TextBox();
             this.minAreaTextBox = new System.Windows.Forms.TextBox();
             this.projectBox = new System.Windows.Forms.TextBox();
-            this.roundingBox = new System.Windows.Forms.TextBox();
             minAreaLabel = new System.Windows.Forms.Label();
             maxUncLabel = new System.Windows.Forms.Label();
             windowALabel = new System.Windows.Forms.Label();
@@ -121,7 +121,7 @@
             maxUncLabel.ForeColor = System.Drawing.Color.DarkOrange;
             maxUncLabel.Location = new System.Drawing.Point(3, 87);
             maxUncLabel.Name = "maxUncLabel";
-            maxUncLabel.Size = new System.Drawing.Size(203, 31);
+            maxUncLabel.Size = new System.Drawing.Size(203, 50);
             maxUncLabel.TabIndex = 6;
             maxUncLabel.Text = "Top Area Uncertainty (%)";
             // 
@@ -130,7 +130,7 @@
             windowALabel.AutoSize = true;
             windowALabel.Dock = System.Windows.Forms.DockStyle.Fill;
             windowALabel.ForeColor = System.Drawing.Color.DarkOrange;
-            windowALabel.Location = new System.Drawing.Point(212, 200);
+            windowALabel.Location = new System.Drawing.Point(212, 219);
             windowALabel.Name = "windowALabel";
             windowALabel.Size = new System.Drawing.Size(204, 35);
             windowALabel.TabIndex = 8;
@@ -141,7 +141,7 @@
             windowBLabel.AutoSize = true;
             windowBLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             windowBLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            windowBLabel.Location = new System.Drawing.Point(212, 235);
+            windowBLabel.Location = new System.Drawing.Point(212, 254);
             windowBLabel.Name = "windowBLabel";
             windowBLabel.Size = new System.Drawing.Size(204, 35);
             windowBLabel.TabIndex = 10;
@@ -152,7 +152,7 @@
             label3.AutoSize = true;
             label3.Dock = System.Windows.Forms.DockStyle.Fill;
             label3.ForeColor = System.Drawing.Color.DarkOrange;
-            label3.Location = new System.Drawing.Point(3, 408);
+            label3.Location = new System.Drawing.Point(3, 427);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(203, 21);
             label3.TabIndex = 19;
@@ -163,7 +163,7 @@
             label1.AutoSize = true;
             label1.Dock = System.Windows.Forms.DockStyle.Fill;
             label1.ForeColor = System.Drawing.Color.DarkOrange;
-            label1.Location = new System.Drawing.Point(3, 450);
+            label1.Location = new System.Drawing.Point(3, 469);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(203, 21);
             label1.TabIndex = 21;
@@ -174,7 +174,7 @@
             label4.AutoSize = true;
             label4.Dock = System.Windows.Forms.DockStyle.Fill;
             label4.ForeColor = System.Drawing.Color.DarkOrange;
-            label4.Location = new System.Drawing.Point(3, 492);
+            label4.Location = new System.Drawing.Point(3, 511);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(203, 21);
             label4.TabIndex = 23;
@@ -185,7 +185,7 @@
             label5.AutoSize = true;
             label5.Dock = System.Windows.Forms.DockStyle.Fill;
             label5.ForeColor = System.Drawing.Color.DarkOrange;
-            label5.Location = new System.Drawing.Point(3, 534);
+            label5.Location = new System.Drawing.Point(3, 553);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(203, 21);
             label5.TabIndex = 25;
@@ -196,7 +196,7 @@
             label6.AutoSize = true;
             label6.Dock = System.Windows.Forms.DockStyle.Fill;
             label6.ForeColor = System.Drawing.Color.DarkOrange;
-            label6.Location = new System.Drawing.Point(3, 576);
+            label6.Location = new System.Drawing.Point(3, 595);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(203, 21);
             label6.TabIndex = 27;
@@ -207,7 +207,7 @@
             label7.AutoSize = true;
             label7.Dock = System.Windows.Forms.DockStyle.Fill;
             label7.ForeColor = System.Drawing.Color.SeaShell;
-            label7.Location = new System.Drawing.Point(212, 576);
+            label7.Location = new System.Drawing.Point(212, 595);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(204, 21);
             label7.TabIndex = 37;
@@ -218,7 +218,7 @@
             label8.AutoSize = true;
             label8.Dock = System.Windows.Forms.DockStyle.Fill;
             label8.ForeColor = System.Drawing.Color.SeaShell;
-            label8.Location = new System.Drawing.Point(212, 534);
+            label8.Location = new System.Drawing.Point(212, 553);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(204, 21);
             label8.TabIndex = 35;
@@ -229,7 +229,7 @@
             label9.AutoSize = true;
             label9.Dock = System.Windows.Forms.DockStyle.Fill;
             label9.ForeColor = System.Drawing.Color.SeaShell;
-            label9.Location = new System.Drawing.Point(212, 492);
+            label9.Location = new System.Drawing.Point(212, 511);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(204, 21);
             label9.TabIndex = 33;
@@ -240,7 +240,7 @@
             label10.AutoSize = true;
             label10.Dock = System.Windows.Forms.DockStyle.Fill;
             label10.ForeColor = System.Drawing.Color.SeaShell;
-            label10.Location = new System.Drawing.Point(212, 450);
+            label10.Location = new System.Drawing.Point(212, 469);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(204, 21);
             label10.TabIndex = 31;
@@ -251,7 +251,7 @@
             label11.AutoSize = true;
             label11.Dock = System.Windows.Forms.DockStyle.Fill;
             label11.ForeColor = System.Drawing.Color.SeaShell;
-            label11.Location = new System.Drawing.Point(212, 408);
+            label11.Location = new System.Drawing.Point(212, 427);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(204, 21);
             label11.TabIndex = 29;
@@ -262,7 +262,7 @@
             label12.AutoSize = true;
             label12.Dock = System.Windows.Forms.DockStyle.Fill;
             label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            label12.Location = new System.Drawing.Point(212, 352);
+            label12.Location = new System.Drawing.Point(212, 371);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(204, 21);
             label12.TabIndex = 42;
@@ -274,7 +274,7 @@
             label13.AutoSize = true;
             label13.Dock = System.Windows.Forms.DockStyle.Fill;
             label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            label13.Location = new System.Drawing.Point(3, 352);
+            label13.Location = new System.Drawing.Point(3, 371);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(203, 21);
             label13.TabIndex = 39;
@@ -285,7 +285,7 @@
             label14.AutoSize = true;
             label14.Dock = System.Windows.Forms.DockStyle.Fill;
             label14.ForeColor = System.Drawing.Color.Lime;
-            label14.Location = new System.Drawing.Point(3, 658);
+            label14.Location = new System.Drawing.Point(3, 677);
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(203, 21);
             label14.TabIndex = 43;
@@ -296,7 +296,7 @@
             label15.AutoSize = true;
             label15.Dock = System.Windows.Forms.DockStyle.Fill;
             label15.ForeColor = System.Drawing.Color.SeaShell;
-            label15.Location = new System.Drawing.Point(212, 658);
+            label15.Location = new System.Drawing.Point(212, 677);
             label15.Name = "label15";
             label15.Size = new System.Drawing.Size(204, 21);
             label15.TabIndex = 46;
@@ -308,7 +308,7 @@
             this.tableLayoutPanel1.SetColumnSpan(label16, 2);
             label16.Dock = System.Windows.Forms.DockStyle.Fill;
             label16.ForeColor = System.Drawing.Color.Lime;
-            label16.Location = new System.Drawing.Point(3, 331);
+            label16.Location = new System.Drawing.Point(3, 350);
             label16.Name = "label16";
             label16.Size = new System.Drawing.Size(413, 21);
             label16.TabIndex = 47;
@@ -321,7 +321,7 @@
             this.tableLayoutPanel1.SetColumnSpan(label17, 2);
             label17.Dock = System.Windows.Forms.DockStyle.Fill;
             label17.ForeColor = System.Drawing.Color.SeaShell;
-            label17.Location = new System.Drawing.Point(3, 179);
+            label17.Location = new System.Drawing.Point(3, 198);
             label17.Name = "label17";
             label17.Size = new System.Drawing.Size(413, 21);
             label17.TabIndex = 48;
@@ -334,7 +334,7 @@
             this.tableLayoutPanel1.SetColumnSpan(label18, 2);
             label18.Dock = System.Windows.Forms.DockStyle.Fill;
             label18.ForeColor = System.Drawing.Color.SeaShell;
-            label18.Location = new System.Drawing.Point(3, 158);
+            label18.Location = new System.Drawing.Point(3, 177);
             label18.Name = "label18";
             label18.Size = new System.Drawing.Size(413, 21);
             label18.TabIndex = 49;
@@ -346,7 +346,7 @@
             this.tableLayoutPanel1.SetColumnSpan(label19, 2);
             label19.Dock = System.Windows.Forms.DockStyle.Fill;
             label19.ForeColor = System.Drawing.Color.SeaShell;
-            label19.Location = new System.Drawing.Point(3, 310);
+            label19.Location = new System.Drawing.Point(3, 329);
             label19.Name = "label19";
             label19.Size = new System.Drawing.Size(413, 21);
             label19.TabIndex = 50;
@@ -358,11 +358,33 @@
             this.tableLayoutPanel1.SetColumnSpan(label20, 2);
             label20.Dock = System.Windows.Forms.DockStyle.Fill;
             label20.ForeColor = System.Drawing.Color.SeaShell;
-            label20.Location = new System.Drawing.Point(3, 637);
+            label20.Location = new System.Drawing.Point(3, 656);
             label20.Name = "label20";
             label20.Size = new System.Drawing.Size(413, 21);
             label20.TabIndex = 51;
             label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Dock = System.Windows.Forms.DockStyle.Fill;
+            label21.ForeColor = System.Drawing.Color.Lime;
+            label21.Location = new System.Drawing.Point(3, 733);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(203, 20);
+            label21.TabIndex = 52;
+            label21.Text = "Rounding";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            label22.ForeColor = System.Drawing.Color.SeaShell;
+            label22.Location = new System.Drawing.Point(212, 733);
+            label22.Name = "label22";
+            label22.Size = new System.Drawing.Size(204, 20);
+            label22.TabIndex = 53;
+            label22.Text = "use N#, E# or F#  (Nr = #)";
             // 
             // tableLayoutPanel1
             // 
@@ -456,11 +478,20 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(419, 776);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // roundingBox
+            // 
+            this.roundingBox.BackColor = System.Drawing.Color.White;
+            this.roundingBox.ForeColor = System.Drawing.Color.Black;
+            this.roundingBox.Location = new System.Drawing.Point(3, 756);
+            this.roundingBox.Name = "roundingBox";
+            this.roundingBox.Size = new System.Drawing.Size(50, 29);
+            this.roundingBox.TabIndex = 54;
+            // 
             // timeDivBox
             // 
             this.timeDivBox.BackColor = System.Drawing.Color.White;
             this.timeDivBox.ForeColor = System.Drawing.Color.Black;
-            this.timeDivBox.Location = new System.Drawing.Point(3, 682);
+            this.timeDivBox.Location = new System.Drawing.Point(3, 701);
             this.timeDivBox.Name = "timeDivBox";
             this.timeDivBox.Size = new System.Drawing.Size(50, 29);
             this.timeDivBox.TabIndex = 44;
@@ -468,7 +499,7 @@
             // sampleModelBox
             // 
             this.sampleModelBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sampleModelBox.Location = new System.Drawing.Point(3, 376);
+            this.sampleModelBox.Location = new System.Drawing.Point(3, 395);
             this.sampleModelBox.Name = "sampleModelBox";
             this.sampleModelBox.Size = new System.Drawing.Size(203, 29);
             this.sampleModelBox.TabIndex = 41;
@@ -476,7 +507,7 @@
             // monitorModelBox
             // 
             this.monitorModelBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.monitorModelBox.Location = new System.Drawing.Point(212, 376);
+            this.monitorModelBox.Location = new System.Drawing.Point(212, 395);
             this.monitorModelBox.Name = "monitorModelBox";
             this.monitorModelBox.Size = new System.Drawing.Size(204, 29);
             this.monitorModelBox.TabIndex = 40;
@@ -488,7 +519,7 @@
             this.posLenBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.posLenBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.posLenBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.posLenBox.Location = new System.Drawing.Point(366, 474);
+            this.posLenBox.Location = new System.Drawing.Point(366, 493);
             this.posLenBox.Name = "posLenBox";
             this.posLenBox.ReadOnly = true;
             this.posLenBox.Size = new System.Drawing.Size(50, 15);
@@ -502,7 +533,7 @@
             this.detLenBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.detLenBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detLenBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.detLenBox.Location = new System.Drawing.Point(366, 432);
+            this.detLenBox.Location = new System.Drawing.Point(366, 451);
             this.detLenBox.Name = "detLenBox";
             this.detLenBox.ReadOnly = true;
             this.detLenBox.Size = new System.Drawing.Size(50, 15);
@@ -516,7 +547,7 @@
             this.measNrLenBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.measNrLenBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.measNrLenBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.measNrLenBox.Location = new System.Drawing.Point(366, 516);
+            this.measNrLenBox.Location = new System.Drawing.Point(366, 535);
             this.measNrLenBox.Name = "measNrLenBox";
             this.measNrLenBox.ReadOnly = true;
             this.measNrLenBox.Size = new System.Drawing.Size(50, 15);
@@ -530,7 +561,7 @@
             this.sampleLenBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.sampleLenBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sampleLenBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.sampleLenBox.Location = new System.Drawing.Point(366, 558);
+            this.sampleLenBox.Location = new System.Drawing.Point(366, 577);
             this.sampleLenBox.Name = "sampleLenBox";
             this.sampleLenBox.ReadOnly = true;
             this.sampleLenBox.Size = new System.Drawing.Size(50, 15);
@@ -544,7 +575,7 @@
             this.projectLenBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.projectLenBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectLenBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.projectLenBox.Location = new System.Drawing.Point(366, 600);
+            this.projectLenBox.Location = new System.Drawing.Point(366, 619);
             this.projectLenBox.Name = "projectLenBox";
             this.projectLenBox.ReadOnly = true;
             this.projectLenBox.Size = new System.Drawing.Size(50, 15);
@@ -558,7 +589,7 @@
             this.sampleBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.sampleBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sampleBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.sampleBox.Location = new System.Drawing.Point(156, 558);
+            this.sampleBox.Location = new System.Drawing.Point(156, 577);
             this.sampleBox.Name = "sampleBox";
             this.sampleBox.ReadOnly = true;
             this.sampleBox.Size = new System.Drawing.Size(50, 15);
@@ -572,7 +603,7 @@
             this.measBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.measBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.measBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.measBox.Location = new System.Drawing.Point(156, 516);
+            this.measBox.Location = new System.Drawing.Point(156, 535);
             this.measBox.Name = "measBox";
             this.measBox.ReadOnly = true;
             this.measBox.Size = new System.Drawing.Size(50, 15);
@@ -586,7 +617,7 @@
             this.posBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.posBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.posBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.posBox.Location = new System.Drawing.Point(156, 474);
+            this.posBox.Location = new System.Drawing.Point(156, 493);
             this.posBox.Name = "posBox";
             this.posBox.ReadOnly = true;
             this.posBox.Size = new System.Drawing.Size(50, 15);
@@ -600,7 +631,7 @@
             this.detbox.Dock = System.Windows.Forms.DockStyle.Right;
             this.detbox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.detbox.Location = new System.Drawing.Point(156, 432);
+            this.detbox.Location = new System.Drawing.Point(156, 451);
             this.detbox.Name = "detbox";
             this.detbox.ReadOnly = true;
             this.detbox.Size = new System.Drawing.Size(50, 15);
@@ -637,28 +668,28 @@
             this.fillByHLCheckBox.ForeColor = System.Drawing.Color.White;
             this.fillByHLCheckBox.Location = new System.Drawing.Point(212, 90);
             this.fillByHLCheckBox.Name = "fillByHLCheckBox";
-            this.fillByHLCheckBox.Size = new System.Drawing.Size(204, 25);
+            this.fillByHLCheckBox.Size = new System.Drawing.Size(204, 44);
             this.fillByHLCheckBox.TabIndex = 13;
             this.fillByHLCheckBox.Text = "Fill by HL";
             this.fillByHLCheckBox.UseVisualStyleBackColor = true;
             // 
             // windowBTextBox
             // 
-            this.windowBTextBox.Location = new System.Drawing.Point(3, 238);
+            this.windowBTextBox.Location = new System.Drawing.Point(3, 257);
             this.windowBTextBox.Name = "windowBTextBox";
             this.windowBTextBox.Size = new System.Drawing.Size(100, 29);
             this.windowBTextBox.TabIndex = 11;
             // 
             // windowATextBox
             // 
-            this.windowATextBox.Location = new System.Drawing.Point(3, 203);
+            this.windowATextBox.Location = new System.Drawing.Point(3, 222);
             this.windowATextBox.Name = "windowATextBox";
             this.windowATextBox.Size = new System.Drawing.Size(100, 29);
             this.windowATextBox.TabIndex = 9;
             // 
             // maxUncTextBox
             // 
-            this.maxUncTextBox.Location = new System.Drawing.Point(3, 121);
+            this.maxUncTextBox.Location = new System.Drawing.Point(3, 140);
             this.maxUncTextBox.Name = "maxUncTextBox";
             this.maxUncTextBox.Size = new System.Drawing.Size(100, 29);
             this.maxUncTextBox.TabIndex = 7;
@@ -677,43 +708,12 @@
             this.projectBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.projectBox.Font = new System.Drawing.Font("Segoe UI Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.projectBox.Location = new System.Drawing.Point(156, 600);
+            this.projectBox.Location = new System.Drawing.Point(156, 619);
             this.projectBox.Name = "projectBox";
             this.projectBox.ReadOnly = true;
             this.projectBox.Size = new System.Drawing.Size(50, 15);
             this.projectBox.TabIndex = 28;
             this.projectBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Dock = System.Windows.Forms.DockStyle.Fill;
-            label21.ForeColor = System.Drawing.Color.Lime;
-            label21.Location = new System.Drawing.Point(3, 714);
-            label21.Name = "label21";
-            label21.Size = new System.Drawing.Size(203, 20);
-            label21.TabIndex = 52;
-            label21.Text = "Rounding";
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Dock = System.Windows.Forms.DockStyle.Fill;
-            label22.ForeColor = System.Drawing.Color.SeaShell;
-            label22.Location = new System.Drawing.Point(212, 714);
-            label22.Name = "label22";
-            label22.Size = new System.Drawing.Size(204, 20);
-            label22.TabIndex = 53;
-            label22.Text = "use N#, E# or F#  (Nr = #)";
-            // 
-            // roundingBox
-            // 
-            this.roundingBox.BackColor = System.Drawing.Color.White;
-            this.roundingBox.ForeColor = System.Drawing.Color.Black;
-            this.roundingBox.Location = new System.Drawing.Point(3, 737);
-            this.roundingBox.Name = "roundingBox";
-            this.roundingBox.Size = new System.Drawing.Size(50, 29);
-            this.roundingBox.TabIndex = 54;
             // 
             // ucSpecPreferences
             // 

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.UI.LIMS">
+  <Class Name="DB.UI.LIMS" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>C0AEEn2KAHACFEAgeMHAAAgaHgAUAAAgEAQiBCEEAAk=</HashCode>
+      <HashCode>AkQAAj2IAGAAAAAAGMDgAAAeHgAEAABAAAAiBCAAAAk=</HashCode>
       <FileName>LIMS.cs</FileName>
     </TypeIdentifier>
   </Class>

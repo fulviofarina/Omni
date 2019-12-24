@@ -41,7 +41,31 @@ namespace Rsx.Dumb
                 // table and
             }
 
-            public static IEnumerable<DataRow> GetRowsWithChanges(IEnumerable<DataRow> array)
+        public static void UpdateDateTimes(ref DataSet data)
+        {
+            foreach (DataTable dt in data.Tables)
+            {
+                UpdateDateTimes(dt);
+            }
+
+        }
+
+        public static void UpdateDateTimes(DataTable dt)
+        {
+            IEnumerable<DataRow> changes = dt.Rows.OfType<DataRow>();
+            changes = changes.Where(o => o.RowState == DataRowState.Modified);
+            foreach (DataRow r in changes)
+            {
+                IEnumerable<DataColumn> dtes = dt.Columns.OfType<DataColumn>().Where(o => o.DataType == typeof(DateTime) && !o.ReadOnly);
+                foreach (DataColumn d in dtes)
+                {
+                    r.SetField(d, DateTime.Now); //update the dates
+                }
+            }
+        }
+
+
+        public static IEnumerable<DataRow> GetRowsWithChanges(IEnumerable<DataRow> array)
             {
                 if (array.Count() == 0) return array;
                 DataTable dt = array.FirstOrDefault().Table;

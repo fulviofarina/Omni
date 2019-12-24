@@ -33,6 +33,7 @@
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.OptionsBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.preferencesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.resourcesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.folderRestoreTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.sQLDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +51,9 @@
             this.Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.setup = new System.Windows.Forms.ToolStripMenuItem();
+            this.save2 = new System.Windows.Forms.ToolStripMenuItem();
             this.TS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,16 +63,22 @@
             this.TS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TS.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TS.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.TS.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.TS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressBar,
             this.OptionsBtn,
             this.toolStripSeparator13,
             this.Save,
             this.toolStripSeparator1,
-            this.helpToolStripMenuItem2});
+            this.helpToolStripMenuItem2,
+            this.toolStripSeparator5,
+            this.setup});
+            this.TS.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.TS.Location = new System.Drawing.Point(0, 0);
             this.TS.Name = "TS";
-            this.TS.Size = new System.Drawing.Size(670, 46);
+            this.TS.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.TS.Size = new System.Drawing.Size(670, 35);
             this.TS.TabIndex = 6;
             this.TS.Text = "toolStrip4";
             // 
@@ -78,7 +87,7 @@
             this.progressBar.ForeColor = System.Drawing.Color.Black;
             this.progressBar.Maximum = 0;
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(100, 43);
+            this.progressBar.Size = new System.Drawing.Size(100, 32);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // OptionsBtn
@@ -90,6 +99,7 @@
             this.resourcesTSMI,
             this.toolStripSeparator2,
             this.databaseToolStripMenuItem,
+            this.save2,
             this.connectionsTSMI,
             this.limsTSMI,
             this.explorerToolStripMenuItem,
@@ -102,8 +112,9 @@
             this.OptionsBtn.Image = ((System.Drawing.Image)(resources.GetObject("OptionsBtn.Image")));
             this.OptionsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OptionsBtn.Name = "OptionsBtn";
+            this.OptionsBtn.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.OptionsBtn.ShowDropDownArrow = false;
-            this.OptionsBtn.Size = new System.Drawing.Size(73, 43);
+            this.OptionsBtn.Size = new System.Drawing.Size(81, 32);
             this.OptionsBtn.Text = "MENU";
             // 
             // preferencesTSMI
@@ -113,6 +124,11 @@
             this.preferencesTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.preferencesTSMI.Size = new System.Drawing.Size(265, 30);
             this.preferencesTSMI.Text = "Preferences";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(262, 6);
             // 
             // resourcesTSMI
             // 
@@ -227,7 +243,7 @@
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 46);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 35);
             // 
             // Save
             // 
@@ -235,13 +251,13 @@
             this.Save.ForeColor = System.Drawing.Color.Aquamarine;
             this.Save.Name = "Save";
             this.Save.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.Save.Size = new System.Drawing.Size(70, 46);
+            this.Save.Size = new System.Drawing.Size(70, 35);
             this.Save.Text = "SAVE";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 46);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 35);
             // 
             // helpToolStripMenuItem2
             // 
@@ -249,13 +265,31 @@
             this.helpToolStripMenuItem2.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem2.Name = "helpToolStripMenuItem2";
             this.helpToolStripMenuItem2.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpToolStripMenuItem2.Size = new System.Drawing.Size(71, 46);
+            this.helpToolStripMenuItem2.Size = new System.Drawing.Size(71, 35);
             this.helpToolStripMenuItem2.Text = "HELP";
             // 
-            // toolStripSeparator3
+            // toolStripSeparator5
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(262, 6);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 35);
+            // 
+            // setup
+            // 
+            this.setup.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.setup.ForeColor = System.Drawing.Color.MistyRose;
+            this.setup.Name = "setup";
+            this.setup.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.setup.Size = new System.Drawing.Size(82, 35);
+            this.setup.Text = "SETUP";
+            // 
+            // save2
+            // 
+            this.save2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.save2.ForeColor = System.Drawing.Color.Orange;
+            this.save2.Name = "save2";
+            this.save2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.save2.Size = new System.Drawing.Size(265, 30);
+            this.save2.Text = "Save";
             // 
             // ucOptions
             // 
@@ -263,7 +297,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TS);
             this.Name = "ucOptions";
-            this.Size = new System.Drawing.Size(670, 46);
+            this.Size = new System.Drawing.Size(670, 35);
             this.TS.ResumeLayout(false);
             this.TS.PerformLayout();
             this.ResumeLayout(false);
@@ -295,5 +329,8 @@
         private System.Windows.Forms.ToolStripMenuItem sQLDatabaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mSMQPurgeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem setup;
+        private System.Windows.Forms.ToolStripMenuItem save2;
     }
 }

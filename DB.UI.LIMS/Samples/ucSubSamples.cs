@@ -211,7 +211,7 @@ namespace DB.UI
 
             // Interface.IBS.SubSamples.CurrentChanged += BS_CurrentChanged; projectbox.Set(ref Interface);
 
-            Creator.SetProjectBox(ref this.projectbox);
+            Util.SetProjectBox(ref this.projectbox);
 
             setUI();
             /*

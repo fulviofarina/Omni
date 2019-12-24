@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Rsx.EDB" Collapsed="true">
-    <Position X="6.5" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAACAwAAAAJABAAAQAAAAAgCQBgAAAAAQAECBBA=</HashCode>
-      <FileName>EDB.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Rsx.Emailer">
     <Position X="2.75" Y="0.5" Width="3" />
     <NestedTypes>
@@ -22,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Rsx.Gmail">
-    <Position X="0.5" Y="0.5" Width="1.75" />
+    <Position X="0.5" Y="2" Width="1.75" />
     <NestedTypes>
       <Class Name="Rsx.Gmail.AtomFeed" Collapsed="true">
         <TypeIdentifier>

@@ -22,11 +22,13 @@ namespace µFinder
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
+                //file with resources
                 string LIMSresource = Properties.Resources.LIMS;
 
                 //create aboutBox
                 IAboutBox about = new AboutBox();
                 about.AssemblyToProvide = Assembly.GetExecutingAssembly();
+
 
                 LIMSUI.Start(ref about, offline, adv, LIMSresource);
 
@@ -35,7 +37,7 @@ namespace µFinder
                 UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, noDGVControls);
 
                 bool showAlready = false;
-                LIMSUI.CreateForm(Application.ProductName, ref control, showAlready);
+                LIMSUI.CreateAppForm(Application.ProductName, ref control, showAlready);
 
                 Form toShow = control.ParentForm;
 

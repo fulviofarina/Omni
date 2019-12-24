@@ -26,7 +26,7 @@ namespace DB.UI
             e.Box.Text = this.Linaa.IRequestsAverages.TableName;
 
             //populate form
-            Auxiliar f = new Auxiliar();
+            DB.Tools.Auxiliar f = new DB.Tools.Auxiliar();
             f.Populate(e);
             f.Show();
         }

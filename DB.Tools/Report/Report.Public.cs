@@ -263,22 +263,79 @@ namespace DB.Tools
         public void ReportToolTip(object sender, EventArgs ev)
         {
             // bool isSameCol = (lastColInder == e.ColumnIndex);
-            DataGridView dgv = sender as DataGridView;
-            DataGridViewCellMouseEventArgs e = ev as DataGridViewCellMouseEventArgs;
-            int index = e.ColumnIndex;
-            DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
-            string toolTip = cell.ToolTipText;
+            string toolTip = string.Empty;
+            string msg = string.Empty;
+            Control ctrl = sender as Control;
+
+
+            try { 
+
+          
+
+            bool isDGV = ctrl.GetType().Equals(typeof(DataGridView));
+
+            if (isDGV)
+            {
+                DataGridView dgv = ctrl as DataGridView;
+                DataGridViewCellMouseEventArgs e = ev as DataGridViewCellMouseEventArgs;
+                int index = e.ColumnIndex;
+                DataGridViewHeaderCell cell = dgv.Columns[index].HeaderCell;
+                toolTip = cell.ToolTipText;
+                msg = "The column " + cell.OwningColumn.HeaderText + " represents:";
+
+
+
+            }
+
+            }
+            catch (Exception )
+            {
+                //Interface.IStore.AddException(ex);
+            }
+
+            try
+            { 
+
+
+            if ( ctrl.Tag!=null)
+           {
+                toolTip = (string)ctrl.Tag;
+                msg = "Hints:";
+            }
+
+            }
+            catch (Exception )
+            {
+               // Interface.IStore.AddException(ex);
+            }
+
             if (string.IsNullOrEmpty(toolTip)) return;
-            Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
+
+            try
+            { 
+
+            Msg(toolTip, msg);
+
+
             char parentesis = '(';
             if (toolTip.Contains(parentesis))
             {
                 toolTip = toolTip.Split(parentesis)[0];
             }
+
             if (string.IsNullOrEmpty(toolTip)) return;
             // Msg(toolTip, "The column " + cell.OwningColumn.HeaderText + " represents:");
+
+
             Speak(toolTip);
+
         }
+            catch (Exception )
+            {
+                //Interface.IStore.AddException(ex);
+            }
+
+}
 
         public void SendToRestartRoutine(string texto)
         {

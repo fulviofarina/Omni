@@ -66,27 +66,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connections.cs">
+    <Compile Include="UI\Auxiliar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Connections.Designer.cs">
+    <Compile Include="UI\Auxiliar.designer.cs">
+      <DependentUpon>Auxiliar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Connections.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Connections.Designer.cs">
       <DependentUpon>Connections.cs</DependentUpon>
     </Compile>
-    <Compile Include="Creator\Creator.Others.cs" />
+    <Compile Include="Creator\Creator.PopulateResources.cs" />
+    <Compile Include="Creator\Util.cs" />
     <Compile Include="Creator\Creator.cs" />
     <Compile Include="Creator\Creator.Public.cs" />
-    <Compile Include="Creator\Creator.SQL.Messages.cs" />
-    <Compile Include="Creator\Creator.SQL.cs" />
-    <Compile Include="DBOptions.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DBForm.cs">
+    <Compile Include="Creator\UtilSQL.cs" />
+    <Compile Include="UI\DBForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Connections.resx">
+    <EmbeddedResource Include="UI\Auxiliar.resx">
+      <DependentUpon>Auxiliar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Connections.resx">
       <DependentUpon>Connections.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -98,6 +104,10 @@
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.Preferences\DB.UI.Preferences.csproj">
+      <Project>{e8086c4f-0dd5-4058-9f8f-abe43c43b161}</Project>
+      <Name>DB.UI.Preferences</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
@@ -121,7 +131,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="Creator\Diagram.cd" />
+    <None Include="UI\Diagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

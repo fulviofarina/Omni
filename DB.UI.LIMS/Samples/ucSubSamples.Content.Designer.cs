@@ -1051,7 +1051,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn capscol;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn enaacol;
 		private System.Windows.Forms.DataGridViewTextBoxColumn irradiationCodeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn concentrationDataGridViewTextBoxColumn;
+     //   private System.Windows.Forms.DataGridViewTextBoxColumn concentrationDataGridViewTextBoxColumn;
         private System.Windows.Forms.TabPage tabPage5;
         private LINAA Linaa;
         private System.Windows.Forms.BindingSource BS;

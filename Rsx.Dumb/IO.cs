@@ -172,113 +172,36 @@ namespace Rsx.Dumb
         }
     }
 
+
     public static partial class IO
     {
 
+        public static string EXPLORER_EXE = "explorer.exe";
         /// <summary>
         /// File to use to expand compressed files
         /// </summary>
         public static string EXPAND_EXE = "expand.exe";
 
-
-
-        /// <summary>
-        /// Gets directories and subdirectories
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static IList<string> GetDirectories(string path)
+        public static void ProcessWebsite(Uri helpFile)
         {
-            if (!System.IO.Directory.Exists(path)) return new List<string>();
-            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
-            IEnumerable<string> list = info.GetDirectories().Select(o => o.Name.ToUpper());
-            HashSet<string> hs = new HashSet<string>(list);
-            foreach (string l in list)
+            try
             {
-                System.IO.DirectoryInfo info3 = new System.IO.DirectoryInfo(path + "\\" + l);
-                IEnumerable<string> list3 = info3.GetDirectories().Select(o => o.Parent + "\\" + o.Name.ToUpper());
-                hs.UnionWith(list3);
+                System.Diagnostics.Process.Start(helpFile.ToString());
             }
-
-            return hs.ToList();
-        }
-
-
-
-        /// <summary>
-        /// Gets the file names without the extension
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="Ext"></param>
-        /// <returns></returns>
-        public static IList<string> GetFileNames(string path, string Ext)
-        {
-            if (!System.IO.Directory.Exists(path)) return new List<string>();
-            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
-            IEnumerable<string> list = info.GetFiles().Where(o => o.Extension.ToUpper().CompareTo(Ext) == 0).Select(o => o.Name.ToUpper().Replace(Ext, null));
-            return new HashSet<string>(list).ToList();
-        }
-
-
-
-        /// <summary>
-        /// Gets a file list from a folder
-        /// </summary>
-        /// <param name="rootpath"></param>
-        /// <param name="subFolders"></param>
-        /// <returns></returns>
-        public static IList<System.IO.FileInfo> GetFiles(string rootpath, bool subFolders = true)
-        {
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(rootpath);
-            IEnumerable<System.IO.FileInfo> files = dir.GetFiles();
-
-            if (subFolders)
+            catch
+                (
+                 System.ComponentModel.Win32Exception noBrowser)
             {
-                IEnumerable<System.IO.DirectoryInfo> dirs = dir.GetDirectories();
-                foreach (System.IO.DirectoryInfo d in dirs)
-                {
-                    IEnumerable<System.IO.FileInfo> fs = d.GetFiles();
-                    files = files.Union(fs);
-                }
+                if (noBrowser.ErrorCode == -2147467259)
+                    MessageBox.Show(noBrowser.Message);
             }
-            return files.ToList();
-        }
-
-
-        /// <summary>
-        /// Loads a file content into a RTB box and reports
-        /// </summary>
-        /// <param name="showProgress"></param>
-        /// <param name="input"></param>
-        /// <param name="file"></param>
-        public static void LoadFilesIntoBoxes(Action showProgress, ref RichTextBox input, string file)
-        {
-            //load files
-            //Clear InputFile RTF Control
-            input.Clear();
-            //load file if exists
-            bool exist = System.IO.File.Exists(file);
-            if (exist) input.LoadFile(file, RichTextBoxStreamType.PlainText);
-
-            showProgress?.Invoke();
-        }
-
-        /// <summary>
-        /// Makes a directory
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="overrider"></param>
-        public static void MakeADirectory(string path, bool overrider = false)
-        {
-            // DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.Owner);
-
-            if (!Directory.Exists(path) || overrider)
+            catch (System.Exception other)
             {
-                Directory.CreateDirectory(path);
+                MessageBox.Show(other.Message);
             }
         }
 
-        public static Process Process(string path, string workDir, string argument="", bool start=false, bool hide = true, DataReceivedEventHandler receivedHandler = null, EventHandler exited = null)
+        public static Process Process(string path, string workDir, string argument = "", bool start = false, bool hide = true, DataReceivedEventHandler receivedHandler = null, EventHandler exited = null)
         {
             // int id = 0;
             Process pro = Process(path, workDir, argument, hide, ref receivedHandler, ref exited);
@@ -352,7 +275,7 @@ namespace Rsx.Dumb
         /// <param name="wait"></param>
         /// <param name="wait_time"></param>
         /// <returns></returns>
-        public static double Process(Process process, string WorkingDir, string EXE, string Arguments="", bool hide=true, bool wait= true, int wait_time = 100000)
+        public static double Process(Process process, string WorkingDir, string EXE, string Arguments = "", bool hide = true, bool wait = true, int wait_time = 100000)
         {
             double span = 0;
             ProcessStartInfo info = new ProcessStartInfo(EXE);
@@ -406,6 +329,151 @@ namespace Rsx.Dumb
         }
 
 
+        /// <summary>
+        /// a handler to the default output mode in a process. Does nothing so far
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void defaultOutputMode(object sender, DataReceivedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unpacks a file resource from a folder to another folder
+        /// </summary>
+        /// <param name="resourcePath">filepath to the resource</param>
+        /// <param name="destFile">destiny filepath</param>
+        /// <param name="startExecutePath">execution folder</param>
+        /// <param name="unpack">true to unpack, false to just copy the resource</param>
+        public static void UnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack, int wait = 100000)
+        {
+            if (File.Exists(resourcePath))
+            {
+                if (resourcePath.CompareTo(destFile) != 0) File.Copy(resourcePath, destFile);
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //conservar esto para unzippear
+                if (unpack)
+                {
+                    //    int wait = 100000;
+                    IO.Process(process, startExecutePath, EXPAND_EXE, destFile + " -F:* " + startExecutePath, false, true, wait);
+                    File.Delete(destFile);
+                }
+            }
+        }
+    }
+    public static partial class IO
+    {
+
+      
+
+        /// <summary>
+        /// Gets directories and subdirectories
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static IList<string> GetDirectories(string path)
+        {
+            if (!System.IO.Directory.Exists(path)) return new List<string>();
+            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
+            IEnumerable<string> list = info.GetDirectories().Select(o => o.Name.ToUpper());
+            HashSet<string> hs = new HashSet<string>(list);
+            foreach (string l in list)
+            {
+                System.IO.DirectoryInfo info3 = new System.IO.DirectoryInfo(path + "\\" + l);
+                IEnumerable<string> list3 = info3.GetDirectories().Select(o => o.Parent + "\\" + o.Name.ToUpper());
+                hs.UnionWith(list3);
+            }
+
+            return hs.ToList();
+        }
+
+
+
+        /// <summary>
+        /// Gets the file names without the extension
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="Ext"></param>
+        /// <returns></returns>
+        public static IList<string> GetFileNames(string path, string Ext)
+        {
+            if (!System.IO.Directory.Exists(path)) return new List<string>();
+            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
+            IEnumerable<string> list = info.GetFiles().Where(o => o.Extension.ToUpper().CompareTo(Ext) == 0).Select(o => o.Name.ToUpper().Replace(Ext, null));
+            return new HashSet<string>(list).ToList();
+        }
+
+
+
+        /// <summary>
+        /// Gets a file list from a folder
+        /// </summary>
+        /// <param name="rootpath"></param>
+        /// <param name="subFolders"></param>
+        /// <returns></returns>
+        public static IList<System.IO.FileInfo> GetFiles(string rootpath, bool subFolders = true)
+        {
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(rootpath);
+            IEnumerable<System.IO.FileInfo> files = dir.GetFiles();
+
+            if (subFolders)
+            {
+                IEnumerable<System.IO.DirectoryInfo> dirs = dir.GetDirectories();
+                foreach (System.IO.DirectoryInfo d in dirs)
+                {
+                    IEnumerable<System.IO.FileInfo> fs = d.GetFiles();
+                    files = files.Union(fs);
+                }
+            }
+            return files.ToList();
+        }
+
+        public static void OpenBytesFile(ref byte[] arr, string destFile, string path)
+        {
+
+            IO.WriteFileBytes(ref arr, destFile);
+           
+            IO.Process(new Process(), path, EXPLORER_EXE, path + destFile, true, false, 10000);
+
+        }
+
+        /// <summary>
+        /// Loads a file content into a RTB box and reports
+        /// </summary>
+        /// <param name="showProgress"></param>
+        /// <param name="input"></param>
+        /// <param name="file"></param>
+        public static void LoadFilesIntoBoxes(Action showProgress, ref RichTextBox input, string file)
+        {
+            //load files
+            //Clear InputFile RTF Control
+            input.Clear();
+            //load file if exists
+            bool exist = System.IO.File.Exists(file);
+            if (exist) input.LoadFile(file, RichTextBoxStreamType.PlainText);
+
+            showProgress?.Invoke();
+        }
+
+        /// <summary>
+        /// Makes a directory
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="overrider"></param>
+        public static void MakeADirectory(string path, bool overrider = false)
+        {
+            // DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.Owner);
+
+            if (!Directory.Exists(path) || overrider)
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+
+
+     
 
         /// <summary>
         /// ESTO ES UN ASCO, ARREGLAR, ESTO NO PUEDE SER ASI
@@ -494,28 +562,7 @@ namespace Rsx.Dumb
             System.Diagnostics.Process.Start(cmd, argument);
         }
 
-       /// <summary>
-       /// Unpacks a file resource from a folder to another folder
-       /// </summary>
-       /// <param name="resourcePath">filepath to the resource</param>
-       /// <param name="destFile">destiny filepath</param>
-       /// <param name="startExecutePath">execution folder</param>
-       /// <param name="unpack">true to unpack, false to just copy the resource</param>
-        public static void UnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack, int wait = 100000)
-        {
-            if (File.Exists(resourcePath))
-            {
-                if (resourcePath.CompareTo(destFile) != 0) File.Copy(resourcePath, destFile);
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //conservar esto para unzippear
-                if (unpack)
-                {
-                //    int wait = 100000;
-                    IO.Process(process, startExecutePath, EXPAND_EXE, destFile + " -F:* " + startExecutePath, false, true, wait);
-                    File.Delete(destFile);
-                }
-            }
-        }
+     
 
      /// <summary>
      /// Writes bytes to a file
@@ -527,17 +574,11 @@ namespace Rsx.Dumb
             FileStream f = new FileStream(destFile, FileMode.Create, FileAccess.Write);
             f.Write(content, 0, Convert.ToInt32(content.Length));
             f.Close();
+
+        
         }
 
 
-        /// <summary>
-        /// a handler to the default output mode in a process. Does nothing so far
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void defaultOutputMode(object sender, DataReceivedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
+      
     }
 }

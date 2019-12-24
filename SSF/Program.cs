@@ -49,7 +49,7 @@ namespace SSF
 
                 LIMSUI.Start(ref aboutbox, false, false, string.Empty);
 
-                bool ok = Creator.CheckConnections(true, true, false);
+                bool ok = UtilSQL.CheckConnectionsRoutine(true, true, false);
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
 

@@ -135,7 +135,7 @@ namespace DB.UI
 
             UserControl control = LIMSUI.CreateUI(mod.Text);
 
-            LIMSUI.CreateForm(title, ref control);
+            Creator.CreateAppForm(title, ref control);
         }
 
         protected internal void refreshT_Click(object sender, EventArgs e)

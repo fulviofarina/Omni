@@ -356,11 +356,11 @@ namespace k0X
                 msn = new Pop(false);
 
                 //Build
-                Creator.Initialize();
+                Creator.Set();
 
                 IucSQLConnection IConn = new VTools.ucSQLConnection();
                 // dynamic connectionControl = IConn;
-                bool ok = Creator.PrepareSQL(false);
+                bool ok = Creator.SQLPrepare(false);
                 // bool ok = Creator.PrepareSQL();
                 LIMSUI.Interface.IPreferences
                  .CurrentPref.IsSQL = ok;

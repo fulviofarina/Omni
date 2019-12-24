@@ -167,7 +167,7 @@ namespace Rsx.Dumb
             {
                 string file = startupPath + Guid.NewGuid().ToString() + ".xml";
 
-               IO.WriteFileBytes(ref auxiliar, file);
+                IO.WriteFileBytes(ref auxiliar, file);
                 DataTable toLoad = DestinyDataTable as DataTable;
 
                 // toLoad.BeginLoadData();

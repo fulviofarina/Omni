@@ -11,38 +11,41 @@ namespace DB.Tools
 {
     public partial class Creator
     {
+        public static string MainLIMSResource { get; set; }
+
         /// <summary>
         /// Method to call back
         /// </summary>
         public static EventHandler CallBack
         {
-            get { return Creator.mainCallBack; }
-            set { Creator.mainCallBack = value; }
+            get { return callBackMain; }
+            set { callBackMain = value; }
         }
-
-        protected static string notepadApp = "notepad.exe";
 
         /// <summary>
         /// Another Call back method (last one)
         /// </summary>
         public static EventHandler LastCallBack
         {
-            get { return Creator.lastCallBack; }
-            set { Creator.lastCallBack = value; }
+            get { return callBackLast; }
+            set { callBackLast = value; }
         }
 
         /// <summary>
         /// Builds a reference Linaa database, creating it if it does not exist, giving feedback
         /// through a notifyIcon and a handler to a method that will run after completition
-        /// </summary>
-        /// <param name="Linaa">  referenced database to build (can be a null reference)</param>
-        /// <param name="notify"> referenced notifyIcon to give feedback of the process</param>
-        /// <param name="handler">referenced handler to a method to run after completition</param>
-        public static Interface Initialize()
+        public static Interface Set()
         {
             LINAA LINAA = new LINAA();
             Interface = new Interface(ref LINAA);
+
+           
             Interface.IExpressions.PopulateColumnExpresions();
+
+            Util.Set(ref Interface);
+            UtilSQL.Set(ref Interface);
+
+
             return Interface;
         }
 
@@ -108,7 +111,7 @@ namespace DB.Tools
             {
                 string tablesToSave = string.Empty;
                 foreach (string s in tablesLs) tablesToSave += s + "\n";
-                string ask = ASK_TO_SAVE + tablesToSave;
+                string ask = UtilSQL.Strings.ASK_TO_SAVE + tablesToSave;
                 MessageBoxButtons mb = MessageBoxButtons.YesNoCancel;
                 MessageBoxIcon icon = MessageBoxIcon.Warning;
 
@@ -141,7 +144,7 @@ namespace DB.Tools
             if (!features) return;
             // if (!System.IO.File.Exists(path)) return;
             Process proceso = new Process();
-            IO.Process(proceso, Interface.IStore.FolderPath, notepadApp, path, false, false, 0);
+            IO.Process(proceso, Interface.IStore.FolderPath, NOTEPAD_APP, path, false, false, 0);
         }
 
         /// <summary>
@@ -218,8 +221,8 @@ namespace DB.Tools
             callback = delegate
         {
             // mainCallBack?.Invoke(null,EventArgs.Empty); lastCallBack?.Invoke(null, EventArgs.Empty);
-            Application.OpenForms[0].Invoke(mainCallBack);
-            Application.OpenForms[0].Invoke(lastCallBack);
+            Application.OpenForms[0].Invoke(callBackMain);
+            Application.OpenForms[0].Invoke(callBackLast);
 
             // Creator.mainCallBack?.Invoke(null, EventArgs.Empty); //the ? symbol is to check first if its not null!!!
             //wow...
@@ -317,6 +320,17 @@ namespace DB.Tools
             string path = Interface.IStore.FolderPath + Resources.DevFiles + fileName;
             if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
             System.IO.File.WriteAllText(path, fileResourceContent);
+        }
+
+        public static void CreateAppForm(string title, ref UserControl control, bool show = true)
+        {
+            if (control == null) return;
+            Auxiliar form = new Auxiliar();
+            form.MaximizeBox = true;
+            form.Populate(control);
+            form.Text = title;
+            form.Visible = show;
+            form.StartPosition = FormStartPosition.CenterScreen;
         }
     }
 }

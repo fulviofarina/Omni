@@ -16,8 +16,34 @@ namespace DB.UI
         void Set(ref Interface inter);
     }
 
-    public partial class ucXCOMPreferences : UserControl, IXCOMPreferences
-    {
+    
+
+
+        public partial class ucXCOMPreferences : UserControl, IXCOMPreferences
+        {
+
+        protected internal static class Strings
+        {
+
+            public const string ROUNDING_TXT = "Provide a format acronym for displaying the value and precision of the mass attenuation coefficients\n\n" +
+              "Available formats are: e (scientific), n (decimal), g (rounded), c (currency)\n\n" +
+              "Examples: e3, n4, g3 or c4";
+
+            public const string ACCUM_TXT = "If checked, the program appends the results from new queries into the current table\n\nUncheck the box to obtain a clean table on the next query";
+            public const string USE_ENERGY_LST = "Use a custom energy list from an input text list\n\n" +
+                  "";
+
+            public const string MAX_ENERGY_TXT = "Maximum energy to query (in keV)\n\n" +
+                 "";
+            public const string MIN_ENERGY_TXT = "Minimum energy to query (in keV)\n\n" +
+                "";
+
+            public const string STEP_ENERGY_TXT = "Step energy to use in the query.\n\nThis is the desired step size to employ from the Min to the Max Energy range provided\n\n" +
+               "";
+
+        }
+
+
         protected internal Interface Interface;
 
         public new Form Parent
@@ -39,6 +65,9 @@ namespace DB.UI
             }
         }
 
+
+      
+
         public void Set(ref Interface inter)
         {
             Interface = inter;
@@ -58,11 +87,28 @@ namespace DB.UI
                 // stepsBox.TextChanged += energyStep_TextChanged;
                 useListbox.CheckedChanged += ASCIIInput_Click;
                 this.roundingTextBox.KeyUp += roundingTextBox_TextChanged;
+
+                setToolTips();
+
             }
             catch (Exception ex)
             {
                 Interface.IStore.AddException(ex);
             }
+        }
+
+        protected internal void setToolTips()
+        {
+            toolTip1.SetToolTip(this.roundingLbl, Strings.ROUNDING_TXT);
+            //  toolTip1.SetToolTip(, ROUNDING_TXT);
+            toolTip1.SetToolTip(this.accumulateBox, Strings.ACCUM_TXT);
+
+            toolTip1.SetToolTip(this.useListbox, Strings.USE_ENERGY_LST);
+            toolTip1.SetToolTip(this.maxEneLbl, Strings.MAX_ENERGY_TXT);
+
+            toolTip1.SetToolTip(this.minEneLbl, Strings.MIN_ENERGY_TXT);
+
+            toolTip1.SetToolTip(this.stepLbl, Strings.STEP_ENERGY_TXT);
         }
 
         protected internal void roundingTextBox_TextChanged(object sender, EventArgs e)
@@ -96,7 +142,7 @@ namespace DB.UI
             }
         }
 
-        private void setValueBindings(ref Hashtable bindings2)
+        protected internal void setValueBindings(ref Hashtable bindings2)
         {
             XCOMPrefDataTable dt = Interface.IDB.XCOMPref;
             string colname = dt.StartEnergyColumn.ColumnName;

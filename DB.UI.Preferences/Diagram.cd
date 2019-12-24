@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="DB.UI.ucMainPreferences" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAhAACAQRDAAEADAAAgSAAAAAAAIAEBAAIAAACA=</HashCode>
+      <FileName>Preferences\ucMainPreferences.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucPreferences" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACEAAAAAAACAAAACAAAAAQAQAAAAAAAAAAQ=</HashCode>
+      <FileName>Preferences\ucPreferences.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucSpecPreferences" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAEIAAACChRDiAAELEAAACAAAgAkQIACAAZIAAESQ=</HashCode>
+      <FileName>Preferences\ucSpecPreferences.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucSSFPreferences" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBGEEAQACwIBhBAEADCASECBAJARAAqAAAAQQAAABA=</HashCode>
+      <FileName>Preferences\ucSSFPreferences.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.UI.ucXCOMPreferences">
+    <Position X="7" Y="1.75" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="DB.UI.ucXCOMPreferences.Strings">
+        <TypeIdentifier>
+          <NewMemberFileName>Preferences\ucXCOMPreferences.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABAMAEARAiQABlAAAAHASQACAYJiAQYCAAAgAAQAhCQ=</HashCode>
+      <FileName>Preferences\ucXCOMPreferences.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DB.UI.IMainPreferences" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Preferences\ucMainPreferences.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.IPreferences" Collapsed="true">
+    <Position X="2.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Preferences\ucPreferences.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.ISpecPreferences" Collapsed="true">
+    <Position X="4" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Preferences\ucSpecPreferences.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.ISSFPreferences" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBAEAAAAAgABAAAAAACAQAAAAAABAACAAAAAAAAAAA=</HashCode>
+      <FileName>Preferences\ucSSFPreferences.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.UI.IXCOMPreferences" Collapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAQAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Preferences\ucXCOMPreferences.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

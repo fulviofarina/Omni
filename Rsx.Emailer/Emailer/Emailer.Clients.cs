@@ -13,7 +13,7 @@ namespace Rsx
             {
                 get
                 {
-                    return new System.Net.NetworkCredential("k0x.help@gmail.com", "Pr0t0z04r10*");
+                    return new System.Net.NetworkCredential("fulviofarina@gmail.com", "M3rcur10*");
                 }
             }
 
@@ -41,12 +41,12 @@ namespace Rsx
                     string host = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName.ToUpper();
                     if (host.Contains("SCK"))
                     {
-                        sendFrom = "k0naa@sckcen.be";
+                        sendFrom = Emailer.Clients.Myk0NACredentials.UserName;
                         client = CreateSCK(Myk0NACredentials);
                     }
                     else
                     {
-                        sendFrom = "k0x.help@gmail.com";
+                        sendFrom = Emailer.Clients.MyGMailCredentials.UserName;
                         client = CreateGmail(MyGMailCredentials);
                     }
                     return client;

@@ -11,6 +11,16 @@ namespace Rsx.Dumb
         public static  class Caster
         {
 
+        public static string GetSpecificListFilterString<T>(string field, ref IEnumerable<DataRow> rows, string logicFilter = " OR ")
+        {
+            string seed = string.Empty;
+            //Console.WriteLine(res);
+            string list = rows.Aggregate(seed, (o, n) => o + field + " = " + n.Field<T>(field).ToString() + logicFilter);
+            int lastIndex = list.LastIndexOf(logicFilter);
+            list = list.Remove(lastIndex, logicFilter.Count());
+            return list;
+        }
+
         public static bool IsTimeDividerOk(string timeDivider)
         {
             bool ok = timeDivider.Contains("m");

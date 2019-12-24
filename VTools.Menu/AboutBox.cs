@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace VTools
 {
-  public partial class AboutBox : Form, IAboutBox
+    public partial class AboutBox : Form, IAboutBox
     {
-        private Assembly assemblyToProvide;
+      
 
     public AboutBox()
     {
@@ -14,8 +14,6 @@ namespace VTools
 
             this.Load += AboutBox_Load;
             this.ControlBox = false;
-
-
 
         }
 
@@ -107,7 +105,7 @@ namespace VTools
         return ((AssemblyCompanyAttribute)attributes[0]).Company;
       }
     }
-
+        private Assembly assemblyToProvide;
         public Assembly AssemblyToProvide
         {
             get

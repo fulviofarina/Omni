@@ -25,7 +25,7 @@ namespace Rsx
             #region Private Variables
 
             private static string _gmailServer = "smtp.gmail.com";
-            private static long _gmailPort = 465;
+            private static long _gmailPort = 587;// 465;
             private string _gmailUserName = string.Empty;
             private string _gmailPassword = string.Empty;
 

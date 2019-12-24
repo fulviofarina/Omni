@@ -1,4 +1,4 @@
-﻿using DB.UI.Properties;
+﻿
 
 namespace DB.UI
 {

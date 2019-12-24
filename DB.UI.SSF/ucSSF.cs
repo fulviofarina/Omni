@@ -155,9 +155,9 @@ namespace DB.UI
                 IPanel.Set(ref Interface, ref pref);
 
                 IGenericBox box = IPanel.ISample;
-                Creator.SetSampleBox(ref box);
+                Util.SetSampleBox(ref box);
                 box = IPanel.ISampleDescription;
-                Creator.SetSampleDescriptionBox(ref box);
+                Util.SetSampleDescriptionBox(ref box);
 
                 //EN ESTE ORDEN!!!!
                 IPanel.On = this.CalcTab;

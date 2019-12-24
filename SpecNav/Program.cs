@@ -32,12 +32,12 @@ namespace SpecNav
 
                 LIMSUI.Start(ref about, offline, adv, string.Empty);
 
-                Creator.CheckConnections(mmqs, lims, hyperLab);
+                UtilSQL.CheckConnectionsRoutine(mmqs, lims, hyperLab);
 
                 UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, noDGVCtrl);
 
                 bool showAlready = false;
-                LIMSUI.CreateForm(Application.ProductName, ref hl, showAlready);
+                Creator.CreateAppForm(Application.ProductName, ref hl, showAlready);
 
                 Form toShow = hl.ParentForm;
 

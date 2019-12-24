@@ -66,29 +66,25 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applications.cs" />
+    <Compile Include="Control\Applications.cs" />
+    <Compile Include="Control\Strings.cs" />
+    <Compile Include="Control\Members.cs" />
     <Compile Include="Samples\ucSubSamples.Content.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Samples\ucSubSamples.Content.Designer.cs">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Auxiliar.cs">
+    <Compile Include="Picker\Picker.Fields.cs" />
+    <Compile Include="Picker\Picker.cs" />
+    <Compile Include="Picker\IPicker.cs" />
+    <Compile Include="Picker\PickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Auxiliar.designer.cs">
-      <DependentUpon>Auxiliar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Picker\Picker.Fields.cs" />
-    <Compile Include="UI\Picker\Picker.cs" />
-    <Compile Include="UI\Picker\IPicker.cs" />
-    <Compile Include="UI\Picker\PickerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Picker\PickerForm.designer.cs">
+    <Compile Include="Picker\PickerForm.designer.cs">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Static.cs" />
+    <Compile Include="Control\Static.cs" />
     <Compile Include="LIMS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,12 +146,7 @@
       <DependentUpon>ucDetectors.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ControlNames.cs" />
-    <Compile Include="Properties\Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Control\ControlNames.cs" />
     <Compile Include="SolCoi\ucPredict.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,10 +164,7 @@
     <EmbeddedResource Include="Samples\ucSubSamples.Content.resx">
       <DependentUpon>ucSubSamples.Content.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Auxiliar.resx">
-      <DependentUpon>Auxiliar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Picker\PickerForm.resx">
+    <EmbeddedResource Include="Picker\PickerForm.resx">
       <DependentUpon>PickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIMS.resx">
@@ -208,10 +196,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SolCoi\ucDetectors.resx">
       <DependentUpon>ucDetectors.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SolCoi\ucPredict.resx">
       <DependentUpon>ucPredict.cs</DependentUpon>
@@ -249,10 +233,6 @@
       <Project>{3e0e1bf6-6dea-4df2-bc42-b00f3150bb82}</Project>
       <Name>DB.Tools.WC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DB.Tools.XCOM\DB.UI.XCOM.csproj">
-      <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
-      <Name>DB.UI.XCOM</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
       <Project>{02e06753-ecd3-402a-84b0-d3d146c835ef}</Project>
       <Name>DB.Tools</Name>
@@ -272,6 +252,10 @@
     <ProjectReference Include="..\DB.UI.SSF\DB.UI.SSF.csproj">
       <Project>{b38c54ac-d6a3-4f36-b240-928ce415f702}</Project>
       <Name>DB.UI.SSF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB.UI.XCOM\DB.UI.XCOM.csproj">
+      <Project>{671d6214-783e-487f-972a-10059246f350}</Project>
+      <Name>DB.UI.XCOM</Name>
     </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{6ac9265b-3286-4c63-a924-5fa14ff1cbea}</Project>
@@ -303,10 +287,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Control\Control.cd" />
     <None Include="LIMS.cd" />
-    <None Include="Properties\DataSources\DB.LINAA+PreferencesDataTable.datasource" />
-    <None Include="Properties\DataSources\DB.LINAA+SSFPrefDataTable.datasource" />
-    <None Include="Properties\DataSources\DB.LINAA.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

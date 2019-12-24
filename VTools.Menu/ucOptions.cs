@@ -3,53 +3,21 @@ using System.Windows.Forms;
 
 namespace VTools
 {
-    public interface IOptions
-    {
-        bool DisableBasic { set; }
-        bool DisableImportant { set; }
-        EventHandler ShowProgress { get; }
-        int Type { set; get; }
-
-        event EventHandler AboutBoxClick;
-
-        event EventHandler ConnectionBox;
-
-        event EventHandler DatabaseInterfaceClick;
-
-        event EventHandler DropDownClicked;
-
-        event EventHandler ExplorerClick;
-
-        event EventHandler HelpClick;
-
-        event EventHandler PreferencesClick;
-
-        event EventHandler RestoreFoldersClick;
-
-        event EventHandler SaveClick;
-
-        void ClickSave();
-
-        void ResetProgress(int max);
-
-        void Set();
-    }
-
+  
     public partial class ucOptions : UserControl, IOptions
     {
         private int type = 0;
 
-        public bool DisableBasic
+        public bool EnableConnections
         {
             set
             {
-                if (databaseToolStripMenuItem != null) databaseToolStripMenuItem.Enabled = value;
-                // this.connectionsTSMI.Visible = enable; this.Save.Enabled = Visible;
-                // folderRestoreTSMI.Visible = enable;
+                if (connectionsTSMI != null) connectionsTSMI.Enabled = value;
+              
             }
         }
 
-        public bool DisableImportant
+        public bool EnableAdv
         {
             set
             {
@@ -84,7 +52,7 @@ namespace VTools
             }
         }
 
-        public event EventHandler AboutBoxClick
+        public event EventHandler AboutClick
         {
             add
             {
@@ -97,7 +65,7 @@ namespace VTools
             }
         }
 
-        public event EventHandler ConnectionBox
+        public event EventHandler ConnectionsClick
         {
             add
             {
@@ -120,7 +88,7 @@ namespace VTools
                 if (limsTSMI != null) limsTSMI.Click -= value;
             }
         }
-
+        /*
         public event EventHandler DropDownClicked
         {
             add
@@ -133,7 +101,7 @@ namespace VTools
                 if (OptionsBtn != null) this.OptionsBtn.DropDownOpened -= value;
             }
         }
-
+        */
         public event EventHandler ExplorerClick
         {
             add
@@ -165,11 +133,13 @@ namespace VTools
             add
             {
                 if (preferencesTSMI != null) this.preferencesTSMI.Click += value;
+                if (setup != null) this.setup.Click += value;
             }
 
             remove
             {
                 if (preferencesTSMI != null) this.preferencesTSMI.Click -= value;
+                if (setup != null) this.setup.Click -= value;
             }
         }
 
@@ -190,17 +160,20 @@ namespace VTools
             add
             {
                 if (Save != null) this.Save.Click += value;
+                if (save2 != null) this.save2.Click += value;
             }
 
             remove
             {
                 if (Save != null) this.Save.Click -= value;
+                if (save2 != null) this.save2.Click -= value;
             }
         }
 
         public void ClickSave()
         {
-            this.Save?.PerformClick();
+            if (this.Save!=null) this.Save.PerformClick();
+            else this.save2.PerformClick();
         }
 
         public void ResetProgress(int max)
