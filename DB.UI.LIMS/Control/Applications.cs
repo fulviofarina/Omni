@@ -201,7 +201,12 @@ namespace DB.UI
             Interface.IBS.ShowErrors = false;
 
             hl.Set(ref Interface);
+
             hl.Set(ref options);
+
+      
+
+
             hl.Set(ref prefes);
 
             return hl;

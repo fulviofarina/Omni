@@ -66,32 +66,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DGVs.cs" />
-    <Compile Include="ucMUES.cs">
+    <Compile Include="CTRLS\ucMUES.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucMUES.Designer.cs">
+    <Compile Include="CTRLS\ucMUES.Designer.cs">
       <DependentUpon>ucMUES.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucMatrix.cs">
+    <Compile Include="CTRLS\ucMatrix.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucMatrix.Designer.cs">
+    <Compile Include="CTRLS\ucMatrix.Designer.cs">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucComposition.cs">
+    <Compile Include="CTRLS\ucComposition.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucComposition.Designer.cs">
+    <Compile Include="CTRLS\ucComposition.Designer.cs">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucMatrixSimple.cs">
+    <Compile Include="CTRLS\ucMatrixSimple.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucMatrixSimple.Designer.cs">
+    <Compile Include="CTRLS\ucMatrixSimple.Designer.cs">
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ucXCOMPicNav.cs">
+    <Compile Include="CTRLS\ucXCOMPicNav.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
@@ -134,21 +134,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ucMUES.resx">
+    <EmbeddedResource Include="CTRLS\ucMUES.resx">
       <DependentUpon>ucMUES.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucMatrix.resx">
+    <EmbeddedResource Include="CTRLS\ucMatrix.resx">
       <DependentUpon>ucMatrix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucComposition.resx">
+    <EmbeddedResource Include="CTRLS\ucComposition.resx">
       <DependentUpon>ucComposition.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucMatrixSimple.resx">
+    <EmbeddedResource Include="CTRLS\ucMatrixSimple.resx">
       <DependentUpon>ucMatrixSimple.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Diagram.cd" />
+    <None Include="DIAGRAM.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

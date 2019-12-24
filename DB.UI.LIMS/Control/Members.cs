@@ -13,19 +13,9 @@ namespace DB.UI
 
         public static Interface Interface = null;
 
-        public static IList<object> UserControls
-        {
-            get
-            {
-                return Creator.UserControls;
-            }
-        }
+      
 
-        public static void CreateAppForm(string productName, ref UserControl control, bool showAlready)
-        {
-            Creator.CreateAppForm(productName, ref control, showAlready);
-
-        }
+        
     }
 
 

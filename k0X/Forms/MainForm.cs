@@ -34,13 +34,13 @@ namespace k0X
 
             ucSamples ucSamples = null;
             //find last control with that project name
-            ucSamples = Creator.FindLastControl<ucSamples>(project);
+            ucSamples = Util.FindLastControl<ucSamples>(project);
 
             if (ucSamples == null || ucSamples.IsDisposed || todopanel)
             {
                 DB.UI.ucSubSamples ISS = null;
                 //find subsample control
-                ISS = Creator.FindLastControl<ucSubSamples>(project);
+                ISS = Util.FindLastControl<ucSubSamples>(project);
                 if (ISS == null)
                 {
                     UserControl control = DB.UI.LIMSUI.CreateUI(ControlNames.SubSamples);
@@ -68,7 +68,7 @@ namespace k0X
                 ucSamples = new ucSamples(ref LIMSUI.Interface);
                 ucSamples.ISubS = ISS;
                 ucSamples.Name = project;
-                LIMSUI.UserControls.Add(ucSamples);
+                Creator.UserControls.Add(ucSamples);
                 newForm = true;
 
                 ucSamples.IsClone = clone;
@@ -99,12 +99,12 @@ namespace k0X
         public static ucOrder CreateOrder(string ProjectOrOrder)
         {
             ucOrder ucOrder = null;
-            ucOrder = LIMSUI.UserControls.OfType<ucOrder>().FirstOrDefault(o => o.Box.Text.CompareTo(ProjectOrOrder) == 0);
+            ucOrder = Creator.UserControls.OfType<ucOrder>().FirstOrDefault(o => o.Box.Text.CompareTo(ProjectOrOrder) == 0);
             if (ucOrder == null || ucOrder.IsDisposed)
             {
                 ucOrder = null;
                 ucOrder = new ucOrder(ref LIMSUI.Linaa, ProjectOrOrder);
-                LIMSUI.UserControls.Add(ucOrder);
+                Creator.UserControls.Add(ucOrder);
             }
 
             return ucOrder;
@@ -173,7 +173,7 @@ namespace k0X
 
                     // if (control == null) return;
 
-                    LIMSUI.UserControls.Add(control);
+                    Creator.UserControls.Add(control);
 
                     ucIrradiationsRequests ucIrrReq = control as ucIrradiationsRequests;
                     ucIrrReq.Name = ProjectOrOrder + " - New Irradiation";
@@ -223,8 +223,8 @@ namespace k0X
             if (sender == this.ToDoPanel || sender.GetType().Equals(typeof(ucPeaks)))
             {
                 ucToDoPanel todo = new ucToDoPanel(ref LIMSUI.Interface);
-                LIMSUI.UserControls.Add(todo);
-                LIMSUI.UserControls.Add(todo.ucToDoData);
+                Creator.UserControls.Add(todo);
+                Creator.UserControls.Add(todo.ucToDoData);
                 todo.panel1box.Text = LIMSUI.Interface.IPreferences.CurrentPref.LastIrradiationProject;
                 todo.panel2box.Text = LIMSUI.Interface.IPreferences.CurrentPref.LastIrradiationProject;
             }
@@ -235,11 +235,11 @@ namespace k0X
                     object dataset = LIMSUI.Linaa;
 
                     IPeaks ucP = new ucPeaks(ref dataset);
-                    LIMSUI.UserControls.Add(ucP);
+                    Creator.UserControls.Add(ucP);
                     IEnumerable<LINAA.ElementsRow> elements = LIMSUI.Linaa.Elements.AsEnumerable();
                     ucPeriodic = new ucPeriodicTable(ref elements);  //creates the interface
                     ucP.IPeriodicTable = ucPeriodic;  //docks the ucPeriodic interface
-                    LIMSUI.UserControls.Add(ucPeriodic);
+                    Creator.UserControls.Add(ucPeriodic);
                 }
 
                 ucPeriodic.Projects = Hash.HashFrom<string>(LIMSUI.Linaa.SubSamples.IrradiationCodeColumn);
@@ -247,8 +247,8 @@ namespace k0X
             else if (sender.Equals(this.SolCoiPanel))
             {
                 ucSolcoi sol = new ucSolcoi(ref LIMSUI.Interface);
-                LIMSUI.UserControls.Add(sol);
-                LIMSUI.UserControls.Add(sol.ucDetectors);
+                Creator.UserControls.Add(sol);
+                Creator.UserControls.Add(sol.ucDetectors);
             }
             else if (sender.Equals(this.HyperLabData))
             {
@@ -360,7 +360,7 @@ namespace k0X
 
                 IucSQLConnection IConn = new VTools.ucSQLConnection();
                 // dynamic connectionControl = IConn;
-                bool ok = Creator.SQLPrepare(false);
+                bool ok = UtilSQL.SQLPrepare(false);
                 // bool ok = Creator.PrepareSQL();
                 LIMSUI.Interface.IPreferences
                  .CurrentPref.IsSQL = ok;

@@ -72,7 +72,7 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-            Creator.ConnectionsUI();
+            UtilSQL.ConnectionsUI();
 
            // if (!restart) return;
 
@@ -151,7 +151,7 @@ namespace k0X
 
             int disposedNr = 0;
 
-            IList<object> arr = LIMSUI.UserControls.ToList();
+            IList<object> arr = Creator.UserControls.ToList();
 
             for (int i = arr.Count - 1; i >= 0; i--)
             {

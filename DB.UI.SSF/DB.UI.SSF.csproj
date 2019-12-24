@@ -68,64 +68,64 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DGV\DGVs.cs" />
     <Compile Include="DGV\IDGVs.cs" />
-    <Compile Include="ucSSF.cs">
+    <Compile Include="CTRLS\ucSSF.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucSSF.Designer.cs">
+    <Compile Include="CTRLS\ucSSF.Designer.cs">
       <DependentUpon>ucSSF.cs</DependentUpon>
     </Compile>
-    <Compile Include="Panel.cs">
+    <Compile Include="CTRLS\Panel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Panel.Designer.cs">
+    <Compile Include="CTRLS\Panel.Designer.cs">
       <DependentUpon>Panel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Results.cs">
+    <Compile Include="CTRLS\Results.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Results.Designer.cs">
+    <Compile Include="CTRLS\Results.Designer.cs">
       <DependentUpon>Results.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data.cs">
+    <Compile Include="CTRLS\Data.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Data.Designer.cs">
+    <Compile Include="CTRLS\Data.Designer.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data.NS.cs">
+    <Compile Include="CTRLS\Data.NS.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Data.NS.Designer.cs">
+    <Compile Include="CTRLS\Data.NS.Designer.cs">
       <DependentUpon>Data.NS.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data.Sample.cs">
+    <Compile Include="CTRLS\Data.Sample.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Data.Sample.Designer.cs">
+    <Compile Include="CTRLS\Data.Sample.Designer.cs">
       <DependentUpon>Data.Sample.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="DGV\DGV.cd" />
-    <None Include="ucSSF.cd" />
+    <None Include="DIAGRAM.cd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Panel.resx">
+    <EmbeddedResource Include="CTRLS\Panel.resx">
       <DependentUpon>Panel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Results.resx">
+    <EmbeddedResource Include="CTRLS\Results.resx">
       <DependentUpon>Results.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucSSF.resx">
+    <EmbeddedResource Include="CTRLS\ucSSF.resx">
       <DependentUpon>ucSSF.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Data.NS.resx">
+    <EmbeddedResource Include="CTRLS\Data.NS.resx">
       <DependentUpon>Data.NS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Data.resx">
+    <EmbeddedResource Include="CTRLS\Data.resx">
       <DependentUpon>Data.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Data.Sample.resx">
+    <EmbeddedResource Include="CTRLS\Data.Sample.resx">
       <DependentUpon>Data.Sample.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

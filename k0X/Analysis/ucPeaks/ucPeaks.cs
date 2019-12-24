@@ -7,6 +7,7 @@ using DB;
 using DB.UI;
 using Rsx.Dumb; using Rsx;
 using Rsx.DGV;
+using DB.Tools;
 
 namespace k0X
 {
@@ -32,7 +33,7 @@ namespace k0X
 
             Link();
 
-            openControls = LIMSUI.UserControls.OfType<ucSamples>();
+            openControls = Creator.UserControls.OfType<ucSamples>();
 
             this.ResumeLayout(false);
 
@@ -372,11 +373,11 @@ namespace k0X
             ucToDoPanel panel = null;
 
             MainForm main = Application.OpenForms.OfType<MainForm>().First();
-            panel = LIMSUI.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
+            panel = Creator.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
             if (panel == null)
             {
                 main.Panel_Click(this, EventArgs.Empty);
-                panel = LIMSUI.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
+                panel = Creator.UserControls.OfType<ucToDoPanel>().FirstOrDefault();
                 ArenaSC.Panel2.Controls.Add(panel);
                 panel.Dock = DockStyle.Fill;
                 this.ArenaInternalSC.Panel2.Controls.Add(panel.ucToDoData);

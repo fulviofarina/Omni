@@ -1,4 +1,5 @@
 ﻿using DB.UI;
+using DB.Tools;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -37,7 +38,7 @@ namespace µFinder
                 UserControl control = LIMSUI.CreateUI(ControlNames.Matrices, noDGVControls);
 
                 bool showAlready = false;
-                LIMSUI.CreateAppForm(Application.ProductName, ref control, showAlready);
+                Creator.CreateAppForm(Application.ProductName, ref control, showAlready);
 
                 Form toShow = control.ParentForm;
 

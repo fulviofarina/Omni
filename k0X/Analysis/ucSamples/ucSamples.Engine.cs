@@ -33,7 +33,7 @@ namespace k0X
             //  LINAA linaa = set.Get() as LINAA;
             Interface = set;
 
-            this.pTable = LIMSUI.UserControls.OfType<ucPeriodicTable>()
+            this.pTable = Creator.UserControls.OfType<ucPeriodicTable>()
                       .FirstOrDefault();
         }
 
@@ -265,7 +265,7 @@ namespace k0X
         protected void CRun(ref object tag, ref string calculus)
         {
             IEnumerable<ucSamples> controls = null;
-            controls = LIMSUI.UserControls.OfType<ucSamples>().Where(o => !o.IsDisposed);
+            controls = Creator.UserControls.OfType<ucSamples>().Where(o => !o.IsDisposed);
             controls = controls.Where(o => o.Waiting);    //get controls waiting
             controls = controls.Where(o => !o.Equals(this));   //controls except this one
             int working = controls.Count();

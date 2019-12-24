@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.Tools.XCOM">
-    <Position X="1.5" Y="0.5" Width="4.25" />
+  <Class Name="DB.Tools.XCOM" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ARCDAIAKMEQABUBwGj1gAiAYoCUIAAiQGACAIkBANUA=</HashCode>
       <FileName>XCOM\XCOM.cs</FileName>

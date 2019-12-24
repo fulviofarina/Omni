@@ -13,9 +13,9 @@ namespace DB.UI
 {
     public partial class ucHyperLab : UserControl
     {
-        private string geoText = "AU";
-        private Uri helpFile = new Uri("https://www.researchgate.net/publication/317904672");
-        private Interface Interface;
+        protected string geoText = "AU";
+      
+        protected Interface Interface;
 
         public void Set(ref IOptions options)
         {
@@ -25,12 +25,15 @@ namespace DB.UI
             this.project.ShowProgress = options.ShowProgress;
             this.project.ResetProgress = options.ResetProgress;
 
-            EventHandler help = delegate
-            {
-                IO.Process("explorer.exe ", string.Empty, helpFile.ToString(), true, false);
-            };
 
-            options.HelpClick += help;
+            options.HelpClick += delegate
+            {
+                Uri helpFile = null;
+                helpFile = new Uri("https://sites.google.com/view/specnav/home");
+
+                IO.ProcessWebsite(helpFile);
+
+            };
 
             options.SaveClick += delegate
             {
@@ -41,7 +44,7 @@ namespace DB.UI
             TLP2.Controls.Add(options as Control);
         }
 
-        private void saveMethod()
+        protected void saveMethod()
         {
             string file = Rsx.DGV.Control.MakeHTMLFile(Strings.CachePath, this.project.TextContent, ref measDGV, ".xls");
 
@@ -67,40 +70,42 @@ namespace DB.UI
 
         public void Set(ref ISpecPreferences pref)
         {
-            EventHandler handler = delegate
-             {
-                 string addAux = Interface.IPreferences.CurrentSpecPref.TimeDivider;
-                 string suffix = Caster.GetTimeDividerSuffix(addAux);
 
-                 liveTimeDGVCol.HeaderText = "LT (" + addAux + ")";
-                 liveTimeDGVCol.ToolTipText = "Live Time in " + suffix;
+            pref.CallBackEventHandler += updatePrecisionDisplay;
 
-                 countTimeDGVCol.HeaderText = "CT (" + addAux + ")";
-                 countTimeDGVCol.ToolTipText = "Count Time in " + suffix;
+            updatePrecisionDisplay(null, EventArgs.Empty);
 
-                 rateDGVCol.HeaderText = "Rate (cp" + addAux + ")";
-                 rateDGVCol.ToolTipText = "Count rate in counts per " + suffix;
 
-                 try
-                 {
-                     string format = Interface.IPreferences.CurrentSpecPref.Rounding;
+        }
 
-                     liveTimeDGVCol.DefaultCellStyle.Format = format;
-                     rateDGVCol.DefaultCellStyle.Format = format;
-                     countTimeDGVCol.DefaultCellStyle.Format = format;
-                     //   areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle.Format = format;
-                  //   areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle.Format = format;
-                 }
-                 catch (Exception)
-                 {
-                   
-                 }
+        protected void updatePrecisionDisplay(object sender, EventArgs e)
+        {
+            string addAux = Interface.IPreferences.CurrentSpecPref.TimeDivider;
+            string suffix = Caster.GetTimeDividerSuffix(addAux);
 
-             };
+            liveTimeDGVCol.HeaderText = "LT (" + addAux + ")";
+            liveTimeDGVCol.ToolTipText = "Live Time in " + suffix;
 
-            pref.CallBackEventHandler += handler;
+            countTimeDGVCol.HeaderText = "CT (" + addAux + ")";
+            countTimeDGVCol.ToolTipText = "Count Time in " + suffix;
 
-            handler.Invoke(null, EventArgs.Empty);
+            rateDGVCol.HeaderText = "Rate (cp" + addAux + ")";
+            rateDGVCol.ToolTipText = "Count rate in counts per " + suffix;
+
+            try
+            {
+                string format = Interface.IPreferences.CurrentSpecPref.Rounding;
+
+                liveTimeDGVCol.DefaultCellStyle.Format = format;
+                rateDGVCol.DefaultCellStyle.Format = format;
+                countTimeDGVCol.DefaultCellStyle.Format = format;
+                //   areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle.Format = format;
+                //   areaUncertaintyDataGridViewTextBoxColumn.DefaultCellStyle.Format = format;
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         // private CamFileReader reader; private DetectorX preader; public MainForm MainForm;
@@ -174,7 +179,7 @@ namespace DB.UI
         }
         */
 
-        private void destroy()
+        protected void destroy()
         {
             measDGV.DataSource = null;
             peaksDGV.DataSource = null;

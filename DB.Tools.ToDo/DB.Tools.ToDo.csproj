@@ -64,17 +64,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ToDo.fAlpha.cs" />
-    <Compile Include="ToDo.Fields.cs" />
-    <Compile Include="ToDoArgs.cs" />
-    <Compile Include="FitParameters.cs" />
+    <Compile Include="ToDo\ToDo.fAlpha.cs" />
+    <Compile Include="ToDo\ToDo.Fields.cs" />
+    <Compile Include="ToDo\ToDoArgs.cs" />
+    <Compile Include="ToDo\FitParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToDo.cs" />
-    <Compile Include="ToDo.Interface.cs" />
-    <Compile Include="ToDo.Static.cs" />
+    <Compile Include="ToDo\ToDo.cs" />
+    <Compile Include="ToDo\ToDo.Interface.cs" />
+    <Compile Include="ToDo\ToDo.Static.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ToDoDiag.cd" />
+    <None Include="DIAGRAM.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DB.Tools.WC\DB.Tools.WC.csproj">

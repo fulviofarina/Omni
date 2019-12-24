@@ -9,6 +9,8 @@ using DB.Reports;
 using DB.UI;
 using VTools;
 using Rsx.Dumb;
+using DB.Tools;
+
 namespace k0X
 {
     public partial class ucSamples
@@ -81,7 +83,7 @@ namespace k0X
                 {
                     wD = new ucWatchDog();
 
-                    LIMSUI.UserControls.Add(wD);
+                    Creator.UserControls.Add(wD);
 
                     wD.Link(ref Interface, this.Name);
                     if (!Interface.IPreferences.IsSpectraPathOk)

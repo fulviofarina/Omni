@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="DB.UI.ucHyperLab" Collapsed="true">
+    <Position X="1" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUEAsgFTADEADEOAAgHGCUACGIhJCQIAIAMBAAASGRw=</HashCode>
+      <FileName>HL\ucHyperLab.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DB.UI.ucHyperLabPB" Collapsed="true">
+    <Position X="2.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAEABgABAgBAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>HL\ucHyperLabPB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

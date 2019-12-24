@@ -7,7 +7,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAACAAEAIKAARgSAAEDCBgACgAAAAQACAAABAAAABCA=</HashCode>
-      <FileName>ucMatrix.cs</FileName>
+      <FileName>CTRLS\ucMatrix.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.ucComposition">
@@ -17,7 +17,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>IAZAgAQCACAAFAAUAADAAEASwAABAgAEAAgCAAACIAA=</HashCode>
-      <FileName>ucComposition.cs</FileName>
+      <FileName>CTRLS\ucComposition.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.UI.ucMatrixSimple">
@@ -27,14 +27,14 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>ABAYAJABgSCABAdQIADEIEASwAAABRBACAIDAABhAAA=</HashCode>
-      <FileName>ucMatrixSimple.cs</FileName>
+      <FileName>CTRLS\ucMatrixSimple.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DB.Tools.ucXCOMPicNav">
     <Position X="11" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAA=</HashCode>
-      <FileName>ucXCOMPicNav.cs</FileName>
+      <FileName>CTRLS\ucXCOMPicNav.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VTools.ucPicNav">
@@ -55,7 +55,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>AHwAAAACACEgFAAAAQDBAEAjAAAQAQIAAAoCAIAgACA=</HashCode>
-      <FileName>ucMUES.cs</FileName>
+      <FileName>CTRLS\ucMUES.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="10" />

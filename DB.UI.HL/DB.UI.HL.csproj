@@ -62,18 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ucHyperLab.cs">
+    <Compile Include="HL\ucHyperLab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucHyperLab.Designer.cs">
+    <Compile Include="HL\ucHyperLab.Designer.cs">
       <DependentUpon>ucHyperLab.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucHyperLabPB.cs">
+    <Compile Include="HL\ucHyperLabPB.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ucHyperLab.resx">
+    <EmbeddedResource Include="HL\ucHyperLab.resx">
       <DependentUpon>ucHyperLab.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -102,6 +102,9 @@
       <Project>{9b61290a-4ca9-49b1-a71d-725bd8558949}</Project>
       <Name>VTools.Menu</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DIAGRAM.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
