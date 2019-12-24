@@ -211,7 +211,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="DIAGRAM.cd" />
     <None Include="LINAA.xsc">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </None>

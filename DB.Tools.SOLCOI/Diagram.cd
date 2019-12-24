@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="DB.Tools.SolCoin">
+    <Position X="1.25" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="DB.Tools.SolCoin.IOFiles" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SolCoi.IOFiles.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Enum Name="DB.Tools.SolCoin.IntegrationModes" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SolCoi.Properties.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>A0DAADGHETA0h1AAQAQUBDAGAESAC0ITxgRAkBVOwIQ=</HashCode>
+      <FileName>SolCoi.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

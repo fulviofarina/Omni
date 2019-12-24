@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="DB.Tools.WC">
+    <Position X="1.75" Y="1.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="DB.Tools.WC.R" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>WC\Fields.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Delegate Name="DB.Tools.WC.AsyncCallBack" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>WC\Properties.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="DB.Tools.WC.SampleChecker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>WC\Properties.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>YgBSjWoyCBGIBQiASQFAyC4CHnoBwCm0xoISIQiQ4So=</HashCode>
+      <FileName>WC\Fields.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DB.Tools.IWC">
+    <Position X="5.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAAEoAAAAAAAgAAAEAwAAABAAAACCAAgAAAAgAoAo=</HashCode>
+      <FileName>WC\Interface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

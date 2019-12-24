@@ -6,22 +6,6 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Class Name="DB.Tools.ToDo.ToDoArgs">
-        <Compartments>
-          <Compartment Name="Fields" Collapsed="true" />
-          <Compartment Name="Properties" Collapsed="true" />
-          <Compartment Name="Methods" Collapsed="true" />
-        </Compartments>
-        <TypeIdentifier>
-          <NewMemberFileName>ToDo\ToDo.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="DB.Tools.ToDo.FitParameters" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ToDo\ToDo.cs</NewMemberFileName>
-        </TypeIdentifier>
-        <Lollipop Position="0.2" />
-      </Class>
       <Delegate Name="DB.Tools.ToDo.ToDoCalculator&lt;T&gt;" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ToDo\ToDo.cs</NewMemberFileName>
@@ -29,10 +13,39 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>BiRDYgLGANABZgCCxAEAmAAYQ+oTAwFAEIEwEIgAaBA=</HashCode>
-      <FileName>ToDo\ToDo.cs</FileName>
+      <HashCode>BiRDYgLGANABZgCCxAFAmAAYQ+oTAwFAEIEwEIgAaBA=</HashCode>
+      <FileName>ToDo.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="DB.Tools.FitParameters" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAgCAiAAAiEgEAARRAAQCCQBAAHCQRAAwgQAAYAM=</HashCode>
+      <FileName>FitParameters.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DB.Tools.ToDoArgs" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAAEAAAAAAAQAIIgEECCoABQAIAAEACIIAEAyAQ=</HashCode>
+      <FileName>ToDoArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="DB.Tools.IToDo" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAQACAAAAAZACAgAAAAAAAAQIDAAAAAAAgAAAACAA=</HashCode>
+      <FileName>ToDo.Interface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DB.Tools.IFitted" Collapsed="true">
+    <Position X="8.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAgAAAiEAAAABRAAQAAABAABAQAAAAgAAAYAE=</HashCode>
+      <FileName>ToDo.Interface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

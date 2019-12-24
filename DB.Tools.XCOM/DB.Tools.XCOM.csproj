@@ -64,8 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XCOM.cs" />
-    <Compile Include="XCOM.Static.cs" />
+    <Compile Include="XCOM\XCOM.cs" />
+    <Compile Include="XCOM\XCOM.Static.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DB.Tools\DB.Tools.csproj">
@@ -80,6 +80,9 @@
       <Project>{247c352f-9d2b-45f8-b0be-c0e1740283c5}</Project>
       <Name>Rsx.Dumb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DIAGRAM.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
