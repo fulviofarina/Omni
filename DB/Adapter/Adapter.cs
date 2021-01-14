@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 
+
 namespace DB
 {
     public partial class LINAA : IAdapter
@@ -144,6 +145,9 @@ namespace DB
             InitializePeaksAdapters(true);
             initializeToDoAdapters();
             InitializeOtherAdapters();
+
+
+          
         }
 
         public void InitializeComponent()
@@ -165,6 +169,8 @@ namespace DB
             Properties.Settings.Default["NAAConnectionString"] = defaultConnection;
 
             Properties.Settings.Default.Save();
+
+        //    Properties.Settings.Default.Upgrade();
 
             InitializeComponent();
             InitializeAdapters(); //why was this after the next code? //check

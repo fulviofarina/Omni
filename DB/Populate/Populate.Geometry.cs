@@ -27,18 +27,24 @@ namespace DB
             }
         }
 
-        public void AddCompositions(IEnumerable<MatrixRow> matrices = null)
+        /*
+        /// <summary>
+        /// Not Used
+        /// </summary>
+        /// <param name="matrices"></param>
+        /// <param name="recode"></param>
+        public void AddCompositions(IEnumerable<MatrixRow> matrices = null, bool recode = true)
         {
             try
             {
                 if (matrices == null) matrices = this.Matrix.AsEnumerable();
-
+               
                 foreach (MatrixRow item in matrices)
                 {
                     IList<string[]> stripped = RegEx.StripComposition(item.MatrixComposition);
                     MatrixRow m = item;
-                    IEnumerable<CompositionsRow> compos = null;
-                    AddCompositions(ref m, ref compos, stripped, true);
+                    IList<CompositionsRow> compos = null;
+                    AddCompositions(ref m, ref compos, stripped, recode);
                 }
             }
             catch (SystemException ex)
@@ -46,6 +52,8 @@ namespace DB
                 AddException(ex);
             }
         }
+
+        */
 
         /// <summary>
         /// Add compositions
@@ -58,14 +66,17 @@ namespace DB
         /// <param name="reCode">                       
         /// If true and compositions are provided, this will update the matrix composition instead
         /// </param>
-        public void AddCompositions(ref MatrixRow m, ref IEnumerable<CompositionsRow> compos, IList<string[]> listOfFormulasAndCompositions, bool reCode)
+        public void AddCompositions(ref MatrixRow m, ref IList<CompositionsRow> compos, IList<string[]> listOfFormulasAndCompositions, bool reCode)
         {
             bool nulo = EC.CheckNull(this.tableMatrix.MatrixCompositionColumn, m);
             if (nulo || compos == null)
             {
                 compos = new List<CompositionsRow>();
-                if (nulo) return;
+              
             }
+
+            if (nulo) return;
+
             if (!reCode && listOfFormulasAndCompositions == null)
             {
                 listOfFormulasAndCompositions = RegEx.StripComposition(m.MatrixComposition);
@@ -86,7 +97,7 @@ namespace DB
                         //CODE COMPOSITION
 
                         CompositionsRow c = addComposition(element, quantity, ref m);
-                        (compos as IList<CompositionsRow>).Add(c);
+                        compos.Add(c);
                     }
                     catch (SystemException ex)
                     {
@@ -147,12 +158,7 @@ namespace DB
             return v;
         }
 
-        public void CleanCompositions(ref IEnumerable<CompositionsRow> compos)
-        {
-            Delete(ref compos);
-            this.Compositions.AcceptChanges();
-            // return Save(ref compos);
-        }
+       
 
         public GeometryRow FindReferenceGeometry(string refName)
         {

@@ -205,10 +205,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB.Reports\DB.Reports.csproj">
-      <Project>{82d00b1d-4286-4d10-aa14-00c4e573fd7a}</Project>
-      <Name>DB.Reports</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DB.Tools.Creator\DB.Tools.Creator.csproj">
       <Project>{1043e3e2-21a7-494d-bbbb-99327d379422}</Project>
       <Name>DB.Tools.Creator</Name>

@@ -1,4 +1,5 @@
 ﻿//using DB.Interfaces;
+using DB.Properties;
 using Rsx.Dumb;
 using System;
 using System.Collections.Generic;
@@ -11,46 +12,62 @@ namespace DB
 {
     public partial class LINAA : IStore
     {
-        public void Read(string filepath)
+        public void ReadLIMS(string filepath)
         {
             LINAA dt = null;
+            dt = new LINAA();
 
             // file.EnforceConstraints = false;
             XmlReader reader = null;
+
             try
             {
-                XmlReaderSettings set = new XmlReaderSettings();
-                set.CheckCharacters = false;
-                set.ConformanceLevel = ConformanceLevel.Auto;
-                set.DtdProcessing = DtdProcessing.Ignore;
-                set.IgnoreWhitespace = true;
-                set.ValidationFlags = XmlSchemaValidationFlags.None;
-                set.ValidationType = ValidationType.None;
-                reader = XmlReader.Create(filepath, set);
-
-                dt = new LINAA();
-
-                dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
+                reader = IO.ReadDataSet(filepath, dt);
 
                 dt.CleanPreferences();
 
-                // this.AcceptChanges();
-
                 this.Merge(dt);
 
-                //      this.AcceptChanges();
-                //    DataSet set = Interface.Get();
-                //clear and repopulate
-
-                //MergePreferences();
-                // this.PopulateSSFPreferences();
             }
             catch (Exception ex)
             {
                 this.AddException(ex);
             }
 
+            reader?.Dispose();
+         
+            dt.Dispose();
+          
+
             //return dt;
+        }
+
+     
+
+        /// <summary>
+        /// reads from the backup LIMS.xml file or the Developers version
+        /// </summary>
+        public  void ReadDefaultLIMS()
+        {
+            string filePath = folderPath + Resources.Backups + Resources.Linaa;
+            //if it does not exist, then read the developer file
+            if (!System.IO.File.Exists(filePath))
+            {
+                //esto cambio en uFinder asi que arreglar en MSTFF, usar lims.xml como un resource y empotrarlo
+                filePath = DevPath + Resources.Linaa;
+            }
+            // Interface.Get().Clear();
+            this.AcceptChanges();
+
+            ReadLIMS(filePath);
+        }
+
+        public string DevPath
+        {
+            get
+            {
+                return folderPath + Resources.DevFiles;
+            }
         }
 
         protected string folderPath = string.Empty;
@@ -89,18 +106,11 @@ namespace DB
         {
             IEnumerable<DataTable> tables = null;
             tables = this.Tables.OfType<DataTable>();
-            Func<DataTable, bool> haschangesFunc = t =>
-            {
-                bool hasChanges = false;
-                IEnumerable<DataRow> rows = t.AsEnumerable();
-                IEnumerable<DataRow> rowsWithChanges = Changes.GetRowsWithChanges(rows);
-                hasChanges = rowsWithChanges.Count() != 0;
-                return hasChanges;
-            };
 
-            return tables.Where(haschangesFunc);
+            return Changes.GetTablesWithChanges(ref tables);
         }
 
+      
         public void CleanPreferences()
         {
             Preferences.Clear();

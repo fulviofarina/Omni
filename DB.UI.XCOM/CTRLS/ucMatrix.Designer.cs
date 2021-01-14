@@ -78,9 +78,9 @@
             this.DBTLP.Name = "DBTLP";
             this.DBTLP.RowCount = 4;
             this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 747F));
-            this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 591F));
+            this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.DBTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.DBTLP.Size = new System.Drawing.Size(627, 876);
             this.DBTLP.TabIndex = 4;
             // 
@@ -95,7 +95,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(621, 741);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(621, 585);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
             // ucMatrixSimple1
@@ -106,7 +106,7 @@
             this.ucMatrixSimple1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ucMatrixSimple1.Location = new System.Drawing.Point(3, 3);
             this.ucMatrixSimple1.Name = "ucMatrixSimple1";
-            this.ucMatrixSimple1.Size = new System.Drawing.Size(615, 735);
+            this.ucMatrixSimple1.Size = new System.Drawing.Size(615, 579);
             this.ucMatrixSimple1.TabIndex = 0;
             // 
             // ucCalculate1
@@ -133,9 +133,9 @@
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.tabPage4.Controls.Add(this.ucPicNav1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 39);
+            this.tabPage4.Location = new System.Drawing.Point(4, 34);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(844, 833);
+            this.tabPage4.Size = new System.Drawing.Size(844, 838);
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "PLOTS";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -149,7 +149,7 @@
             this.ucPicNav1.Location = new System.Drawing.Point(0, 0);
             this.ucPicNav1.Margin = new System.Windows.Forms.Padding(6);
             this.ucPicNav1.Name = "ucPicNav1";
-            this.ucPicNav1.Size = new System.Drawing.Size(844, 833);
+            this.ucPicNav1.Size = new System.Drawing.Size(844, 838);
             this.ucPicNav1.TabIndex = 0;
             // 
             // tabPage3
@@ -157,9 +157,9 @@
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.tabPage3.Controls.Add(this.ucMUES1);
             this.tabPage3.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.tabPage3.Location = new System.Drawing.Point(4, 39);
+            this.tabPage3.Location = new System.Drawing.Point(4, 34);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(844, 833);
+            this.tabPage3.Size = new System.Drawing.Size(844, 838);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "COEFFICIENTS";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -170,12 +170,12 @@
             this.ucMUES1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ucMUES1.Location = new System.Drawing.Point(0, 0);
             this.ucMUES1.Name = "ucMUES1";
-            this.ucMUES1.Size = new System.Drawing.Size(844, 833);
+            this.ucMUES1.Size = new System.Drawing.Size(844, 838);
             this.ucMUES1.TabIndex = 0;
             // 
             // ucMatrix
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

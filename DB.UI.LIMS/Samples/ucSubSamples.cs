@@ -1,11 +1,11 @@
-﻿using System;
+﻿//using DB.Reports;
+using DB.Tools;
+using Rsx.Dumb;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Reports;
-using DB.Tools;
-using Rsx.Dumb;
 using static DB.LINAA;
 
 namespace DB.UI
@@ -15,7 +15,7 @@ namespace DB.UI
         private object daddy;
         private string filter;
 
-        private CReport Icrepo = null;
+     //   private CReport Icrepo = null;
         private Interface Interface;
         private string sort;
         // private LINAA.SubSamplesRow currentSample = null;
@@ -284,8 +284,8 @@ namespace DB.UI
         /// <param name="e">     </param>
         private void reportBtton_Click(object sender, EventArgs e)
         {
-            if (Icrepo == null) Icrepo = new CReport(Interface.Get() as DataSet);
-            Icrepo.LoadACrystalReport(this.projectbox.TextContent, CReport.ReporTypes.ProjectReport);
+           // if (Icrepo == null) Icrepo = new CReport(Interface.Get() as DataSet);
+           // Icrepo.LoadACrystalReport(this.projectbox.TextContent, CReport.ReporTypes.ProjectReport);
         }
 
         public ucSubSamples()

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 using static DB.LINAA;
-
+using static Rsx.Dumb.CalculateBase.TXT;
 namespace DB.Tools
 {
     public partial class MatSSF

@@ -1,0 +1,14 @@
+D:\Dropbox\My Software\Omni\SSF\Files\curves.bak
+D:\Dropbox\My Software\Omni\SSF\Files\Features.txt
+D:\Dropbox\My Software\Omni\SSF\Files\files.txt
+D:\Dropbox\My Software\Omni\SSF\Files\LIMS.xml
+D:\Dropbox\My Software\Omni\SSF\Files\LIMSCopy.xml
+D:\Dropbox\My Software\Omni\SSF\Files\MatSSF.BAK
+D:\Dropbox\My Software\Omni\SSF\Files\Overrider
+D:\Dropbox\My Software\Omni\SSF\Files\Restarting
+D:\Dropbox\My Software\Omni\SSF\Files\solcoi.bak
+D:\Dropbox\My Software\Omni\SSF\Files\User Guide.doc
+D:\Dropbox\My Software\Omni\SSF\Files\UserGuide.pdf
+D:\Dropbox\My Software\Omni\SSF\Files\WCalc.htm
+D:\Dropbox\My Software\Omni\SSF\Files\cab\localdbx64.msi
+D:\Dropbox\My Software\Omni\SSF\Files\cab\localdbx86.msi

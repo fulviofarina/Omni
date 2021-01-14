@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Rsx.DGV.Control" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="Rsx.DGV.Control.RowPostPaintChecker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.DGV.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.AdderEraser" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.ELSR.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.DeLinker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.ELSR.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.Loader" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.ELSR.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.RowPrePaintChecker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.DGV.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.Refresher" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.ELSR.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.Linker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.ELSR.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.CellPaintChecker" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.DGV.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.Informer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.Basic.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Rsx.DGV.Control.Saver&lt;T&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DGVControl\DGV.Control.ELSR.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAOVjeAJwgLETQIAJkggiiIIQrItAkBUBOwEo1WpAVA=</HashCode>
+      <FileName>DGVControl\DGV.Control.Basic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Rsx.DGV.IDGVControl" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAgAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>DGVControl\Interfaces\IDGVControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Rsx.DGV.IDGVControlCreate" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAIAAAAABAAAgAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DGVControl\Interfaces\IDGVControlCreate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Rsx.DGV.IDGVControlInvoke" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAABAAAAABAgAAAAAACAAAkAABAAAAAQAAAA=</HashCode>
+      <FileName>DGVControl\Interfaces\IDGVControlInvoke.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Rsx.DGV.IDGVControlMethods" Collapsed="true">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAgAAAAAAAJAAAAAIAAAAFAAAEACAAARCBAUA=</HashCode>
+      <FileName>DGVControl\Interfaces\IDGVControlMethodsl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

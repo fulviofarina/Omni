@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using VTools;
 using static DB.LINAA;
+using DB.Properties;
 
 namespace DB.UI
 {
@@ -191,7 +192,7 @@ namespace DB.UI
         {
             // TabPage page = on;
             _sampleCompoLbl.Visible = false;
-            Image img = Properties.Resources.Geometries;
+            Image img = Resources.Geometries;
             Color clr = Color.GhostWhite;
             if (_TwoSectionSC.Panel2Collapsed)
             {
@@ -200,7 +201,7 @@ namespace DB.UI
             else
             {
                 _sampleCompoLbl.Text = VIEW_COMPOSITION;
-                img = Properties.Resources.Matrices;
+                img = Resources.Matrices;
                 clr = Color.Lavender;
                 // page = off;
             }

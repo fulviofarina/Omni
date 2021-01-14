@@ -2,6 +2,7 @@
 using Rsx.Dumb;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using static DB.LINAA;
 
@@ -14,17 +15,14 @@ namespace DB.UI
 
         public string ViewString { get; internal set; }
 
-
         protected static string EDIT_STR = "EDIT";
         protected static string VIEW_STR = "VIEW";
 
-
-
         protected internal EventHandler changeFocusCallBack;
 
-        public  EventHandler ChangeFocusCallBack
-        { 
-          get
+        public EventHandler ChangeFocusCallBack
+        {
+            get
             {
                 return changeFocusCallBack;
             }
@@ -64,23 +62,16 @@ namespace DB.UI
 
                 this.compositionsDGV.ColumnHeaderMouseClick += Interface.IReport.ReportToolTip;
 
-
                 this.matrixRTB.Tag = "Double-click to switch between the Edit and View mode\n\n";
 
                 this.matrixRTB.MouseHover += Interface.IReport.ReportToolTip;
-            
-             //   this.compositionsDGV.CellMouseClick+= Interface.IReport.ReportToolTip;
 
+                //   this.compositionsDGV.CellMouseClick+= Interface.IReport.ReportToolTip;
 
                 //    this.compositionsDGV.MouseHover += Interface.IReport.ReportToolTip;
 
-
-
                 //  this.toolTip1.SetToolTip(this.compositionsDGV, "Double-click to edit the composition");
                 //   this.toolTip1.SetToolTip(this.matrixRTB, "Double-click to edit the composition");
-
-
-
             }
             catch (System.Exception ex)
             {
@@ -123,7 +114,6 @@ namespace DB.UI
         protected internal void changeFocus(object sender, EventArgs e)
         {
             ChangeFocus();
-          
         }
 
         public void ChangeFocus()
@@ -151,7 +141,7 @@ namespace DB.UI
         /// </summary>
         protected internal void focusRTB()
         {
-            IEnumerable<CompositionsRow> compos = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV);
+            IList<CompositionsRow> compos = Caster.Cast<CompositionsRow>(this.compositionsDGV).ToList();
 
             CompositionsRow current = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
 
@@ -165,7 +155,7 @@ namespace DB.UI
 
             this.compositionsDGV.Refresh();
             //yes again
-            current = Rsx.Dumb.Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
+            current = Caster.Cast<CompositionsRow>(this.compositionsDGV.CurrentRow);
 
             findCompositionInRTB(ref current);
             this.matrixRTB.Focus();
@@ -178,8 +168,10 @@ namespace DB.UI
 
             string text = current.Element + "\t" + current.Quantity;
             int index = this.matrixRTB.Find(text);
-
-            this.matrixRTB.SelectionStart = index;
+            if (index >= 0)
+            {
+                this.matrixRTB.SelectionStart = index;
+            }
         }
 
         public ucComposition()

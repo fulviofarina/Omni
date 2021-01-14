@@ -16,7 +16,7 @@ namespace DB
 
         protected internal void handlersGeometries()
         {
-            this.tableMatrix.AddCompositionsHandler += addCompositionsEvent;
+            this.tableMatrix.AddCompositionsHandler += loadCompositionsEvent;
             // this.tableMatrix.MUESRequiredHandler += mUESRequiredEvent;
             this.tableMatrix.CleanCompositionsHandler += cleanCompositionsEvent;
             this.tableMatrix.CleanMUESHandler += cleanMUESEvent;

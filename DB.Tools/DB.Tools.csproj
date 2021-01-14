@@ -79,11 +79,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BS\BS.Others.cs" />
-    <Compile Include="BS\BS.Fields.cs" />
-    <Compile Include="BS\BS.Update.cs" />
+    <Compile Include="BS\BS.Private.Filters.cs" />
+    <Compile Include="BS\BS.Public.Methods.cs" />
+    <Compile Include="BS\BS.RSX.cs" />
+    <Compile Include="BS\BS.Private.Update.cs" />
     <Compile Include="BS\BS.Public.cs" />
-    <Compile Include="BS\BS.cs" />
+    <Compile Include="BS\BS.Private.Fields.cs" />
     <Compile Include="Current\Current.Fields.cs" />
     <Compile Include="Current\Current.Public.cs" />
     <Compile Include="Current\ICurrent.cs" />

@@ -14,7 +14,7 @@ namespace DB.UI
     public partial class ucHyperLab : UserControl
     {
         protected string geoText = "AU";
-      
+
         protected Interface Interface;
 
         public void Set(ref IOptions options)
@@ -25,14 +25,12 @@ namespace DB.UI
             this.project.ShowProgress = options.ShowProgress;
             this.project.ResetProgress = options.ResetProgress;
 
-
             options.HelpClick += delegate
             {
                 Uri helpFile = null;
                 helpFile = new Uri("https://sites.google.com/view/specnav/home");
 
                 IO.ProcessWebsite(helpFile);
-
             };
 
             options.SaveClick += delegate
@@ -46,7 +44,9 @@ namespace DB.UI
 
         protected void saveMethod()
         {
-            string file = Rsx.DGV.Control.MakeHTMLFile(Strings.CachePath, this.project.TextContent, ref measDGV, ".xls");
+            string _cachePath = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
+
+            string file = Rsx.DGV.Control.MakeHTMLFile(_cachePath, this.project.TextContent, ref measDGV, ".xls");
 
             DialogResult r = MessageBox.Show("Would you like to open the respective files?", "Open Files?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -59,7 +59,7 @@ namespace DB.UI
             MeasurementsRow m = (MeasurementsRow)Interface.ICurrent.Measurement;
             if (!EC.IsNuDelDetch(m))
             {
-                file = Rsx.DGV.Control.MakeHTMLFile(Strings.CachePath, m.Measurement, ref peaksDGV, ".xls");
+                file = Rsx.DGV.Control.MakeHTMLFile(_cachePath, m.Measurement, ref peaksDGV, ".xls");
 
                 if (ok && System.IO.File.Exists(file))
                 {
@@ -70,12 +70,9 @@ namespace DB.UI
 
         public void Set(ref ISpecPreferences pref)
         {
-
             pref.CallBackEventHandler += updatePrecisionDisplay;
 
             updatePrecisionDisplay(null, EventArgs.Empty);
-
-
         }
 
         protected void updatePrecisionDisplay(object sender, EventArgs e)
@@ -104,7 +101,6 @@ namespace DB.UI
             }
             catch (Exception)
             {
-
             }
         }
 

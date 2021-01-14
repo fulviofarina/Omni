@@ -166,7 +166,6 @@ namespace DB.UI
 
             name = Interface.IDB.SpecPref.RoundingColumn.ColumnName;
             this.roundingBox.DataBindings.Add(bindings2[name] as Binding);
-
         }
 
         public ucSpecPreferences()

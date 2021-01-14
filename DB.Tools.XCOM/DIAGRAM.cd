@@ -1,11 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.Tools.XCOM" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+  <Class Name="DB.Tools.XCOM">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="DB.Tools.XCOM.Engine" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>XCOM\XCOM.Engine.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="DB.Tools.XCOM.RSX">
+        <TypeIdentifier>
+          <NewMemberFileName>XCOM\XCOM.Strings.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="DB.Tools.XCOM.XCOMTXT">
+        <TypeIdentifier>
+          <NewMemberFileName>XCOM\XCOM.Strings.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="DB.Tools.XCOM.URIS">
+        <TypeIdentifier>
+          <NewMemberFileName>XCOM\XCOM.Static.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ARCDAIAKMEQABUBwGj1gAiAYoCUIAAiQGACAIkBANUA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAEAAAgAgAAAAAAAAAACQAAAAAAAAAAA=</HashCode>
       <FileName>XCOM\XCOM.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="DB.Tools.XCOMBase">
+    <Position X="4.5" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAKIAAABEAAABhAAAAIIAQIAAAACAAAAEAAEUA=</HashCode>
+      <FileName>XCOMBase\XCOMBase.cs</FileName>
+      <NewMemberFileName>XCOM\XCOM.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rsx.Dumb.CalculateBase">
+    <Position X="10.75" Y="5.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Rsx.Dumb.CalculateBase.TXT" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="14.5" Y="4" Width="1.5" />
+    <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

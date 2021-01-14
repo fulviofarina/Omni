@@ -1,8 +1,6 @@
 ﻿using DB.Tools;
 using Rsx.DGV;
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using VTools;
 
 namespace DB.UI
@@ -12,12 +10,7 @@ namespace DB.UI
         private static IAboutBox aboutBox;
 
         public static Interface Interface = null;
-
-      
-
-        
     }
-
 
     public partial class LIMSUI
     {

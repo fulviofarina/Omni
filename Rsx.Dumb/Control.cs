@@ -42,7 +42,7 @@ namespace Rsx.Dumb
                 return mass;
             }
 
-            public static void FillABox(ComboBox combo, ICollection<string> hs, bool clear, bool AddAsterisk)
+            public static void FillABox(ComboBox combo, ICollection<string> hs, bool clear = true, bool AddAsterisk = false)
             {
                 combo.AutoCompleteMode = AutoCompleteMode.Suggest;
                 combo.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -63,7 +63,7 @@ namespace Rsx.Dumb
                 }
             }
 
-            public static void FillABox(ToolStripComboBox combo, ICollection<string> hs, bool clear, bool AddAsterisk)
+            public static void FillABox(ToolStripComboBox combo, ICollection<string> hs, bool clear=true, bool AddAsterisk=false)
             {
                 FillABox(combo.ComboBox, hs, clear, AddAsterisk);
             }

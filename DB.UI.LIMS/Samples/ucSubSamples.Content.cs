@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DB.Tools;
+using Rsx.Dumb;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using DB.Tools;
-using Rsx.Dumb;
 
 namespace DB.UI
 {

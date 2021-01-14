@@ -91,7 +91,7 @@ namespace DB
 
             dt.BeginLoadData();
 
-            save(ref rows);
+            saverows(ref rows);
 
             if (useHandlers)
             {

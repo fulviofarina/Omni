@@ -101,7 +101,6 @@
     <Compile Include="DB\Preferences\XCOMPreferences.cs" />
     <Compile Include="DB\Preferences\SSFPreferences.cs" />
     <Compile Include="DB\Tables\Measurements.cs" />
-    <Compile Include="Interfaces\RowCols\ISetteable.cs" />
     <Compile Include="LINAA.cs">
       <DependentUpon>LINAA.xsd</DependentUpon>
     </Compile>
@@ -119,8 +118,6 @@
     <Compile Include="DB\Tables\Rows\Samples\Samples.Row.Internal.cs" />
     <Compile Include="DB\Tables\Rows\Samples\Samples.Row.cs" />
     <Compile Include="DB\Tables\Rows\Samples\Units.Row.cs" />
-    <Compile Include="Interfaces\RowCols\IColumn.cs" />
-    <Compile Include="Interfaces\RowCols\IRow.cs" />
     <Compile Include="Interfaces\IIrradiations.cs" />
     <Compile Include="Interfaces\IProjects.cs" />
     <Compile Include="Interfaces\IOrders.cs" />

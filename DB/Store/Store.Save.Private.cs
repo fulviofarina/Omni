@@ -12,7 +12,7 @@ namespace DB
 {
     public partial class LINAA
     {
-        private void save<T>(ref IEnumerable<T> rows)
+        private void saverows<T>(ref IEnumerable<T> rows)
         {
             try
             {
@@ -37,6 +37,12 @@ namespace DB
             ///deleted now (2 may 2012)
             DataRow[] schs = rows.OfType<DataRow>().Where(r => Changes.HasChanges(r)).ToArray();
 
+            //    this.tAM.Connection.Close();
+            //  this.tAM.Connection.Open();
+
+           // this.tAM.UpdateAll(this);
+          //  return;
+
             // LINAATableAdapters.UnitTableAdapter uta = new LINAATableAdapters.UnitTableAdapter();
             if (t.Equals(typeof(SubSamplesRow)))
             {
@@ -45,6 +51,8 @@ namespace DB
                 // IEnumerable<UnitRow> units = samps.SelectMany(o =>
                 // o.GetUnitRows()).ToArray();//.UnitRow).ToArray(); saveOthers(ref units);
             }
+
+
             else if (t.Equals(typeof(SchAcqsRow))) this.tAM.SchAcqsTableAdapter.Update(schs);
             else if (t.Equals(typeof(OrdersRow))) this.tAM.OrdersTableAdapter.Update(schs);
             else if (t.Equals(typeof(ProjectsRow))) this.tAM.ProjectsTableAdapter.Update(schs);

@@ -6,9 +6,11 @@ using VTools;
 
 namespace DB.Tools
 {
-    public class Util
+
+    public static partial class Util
     {
-        public class Strings
+
+        public static class RSX
         {
             public const string PROJECT_LABEL = "PROJECT";
 
@@ -23,53 +25,11 @@ namespace DB.Tools
             public const string uFinderPreferences = "µFinder Preferences";
         }
 
-        private static Interface Interface = null;
-
-        /// <summary>
-        /// Initializer / Link
-        /// </summary>
         public static void Set(ref Interface inter)
         {
             Interface = inter;
-        }
 
-        /// <summary>
-        /// PreferenceBox Setter
-        /// </summary>
-        private static void preferenceSet(string controlHeader, ref UserControl control)
-        {
-            switch (controlHeader)
-            {
-                case Strings.Preferences:
-                    {
-                        UI.IPreferences ucPreferences = new ucPreferences();
-                        ucPreferences.IMain.Set(ref Interface);
-                        ucPreferences.ISSF.Set(ref Interface);
 
-                        control = (UserControl)ucPreferences;
-
-                        break;
-                    }
-                case Strings.XCOMPreferences:
-                    {
-                        IXCOMPreferences ucPreferences = new ucXCOMPreferences();
-                        ucPreferences.Set(ref Interface);
-                        control = (UserControl)ucPreferences;
-
-                        break;
-                    }
-                case Strings.SpecPreferences:
-                    {
-                        ISpecPreferences ucPreferences = new ucSpecPreferences();
-                        ucPreferences.Set(ref Interface);
-                        control = (UserControl)ucPreferences;
-
-                        break;
-                    }
-
-                default:
-                    break;
-            }
         }
 
         /// <summary>
@@ -105,72 +65,12 @@ namespace DB.Tools
             }
             return (T)(ucPref as object);
         }
-
-        /// <summary>
-        /// Sets the PreferenceBox Form
-        /// </summary>
-        private static void preferenceSetForm(bool show, ref UserControl ucPref, bool postcript)
-        {
-            Form f = null;
-
-            if (postcript)
-            {
-                f = ucPref.ParentForm;
-                f.VisibleChanged += delegate
-                {
-                    Interface.IPreferences.ReportChanges();
-                };
-                f.MaximizeBox = false;
-                f.ShowInTaskbar = false;
-            }
-
-            f = ucPref?.ParentForm;
-
-            if (f != null)
-            {
-                f.Visible = show;
-                f.TopMost = show;
-                f.BringToFront();
-            }
-        }
-
-        /// <summary>
-        /// PreferenceBox Maker
-        /// </summary>
-        private static UserControl preferenceGet(ref string controlName, ref string formName, Type t)
-        {
-            UserControl ucPref = null;
-
-            if (!t.Equals(typeof(IPreferences)))
-            {
-                if (t.Equals(typeof(IXCOMPreferences)))
-                {
-                    ucPref = Creator.UserControls.OfType<ucXCOMPreferences>().FirstOrDefault();
-                    formName = Strings.uFinderPreferences;
-                    controlName = Strings.XCOMPreferences;
-                }
-                else if (t.Equals(typeof(ISpecPreferences)))
-                {
-                    ucPref = Creator.UserControls.OfType<ucSpecPreferences>().FirstOrDefault();
-                    formName = Strings.SpecNavPreferences;
-                    controlName = Strings.SpecPreferences;
-                }
-            }
-            else
-            {
-                ucPref = Creator.UserControls.OfType<ucPreferences>().FirstOrDefault();
-                formName = Strings.ProgramPreferences;
-                controlName = Strings.Preferences;
-            }
-            return ucPref;
-        }
-
         /// <summary>
         /// Gets the Project Box
         /// </summary>
         public static IGenericBox GetProjectBox()
         {
-            return Creator.UserControls.OfType<ucGenericCBox>().FirstOrDefault(o => o.Label.CompareTo(Strings.PROJECT_LABEL) == 0);
+            return Creator.UserControls.OfType<ucGenericCBox>().FirstOrDefault(o => o.Label.CompareTo(RSX.PROJECT_LABEL) == 0);
         }
 
         /// <summary>
@@ -216,7 +116,7 @@ namespace DB.Tools
             control.BindingField = column;
             control.SetBindingSource(ref Interface.IBS.Irradiations, false);
 
-            control.Label = Strings.PROJECT_LABEL;
+            control.Label = RSX.PROJECT_LABEL;
             control.LabelForeColor = System.Drawing.Color.Thistle;
 
             //ad to users controls...
@@ -327,12 +227,9 @@ namespace DB.Tools
             //returns the options
             if (options != null) return options;
 
-
             //sets a NEW ONE!!
             try
             {
-
-
                 //created but not in list
                 options = new ucOptions(type);
 
@@ -351,7 +248,6 @@ namespace DB.Tools
                 //  bool ssf = type == 0;
                 options.EnableConnections = connections;
 
-
                 options.PreferencesClick += delegate
                 {
                     if (type == 1)
@@ -367,7 +263,6 @@ namespace DB.Tools
                         Util.GetPreferences<IPreferences>(true);
                     }
                 };
-
 
                 /*
 
@@ -385,7 +280,7 @@ namespace DB.Tools
                 {
                     options.RestoreFoldersClick += delegate
                     {
-                        Creator.CheckDirectories(true);
+                        Creator.RSX.CheckDirectories(true);
                     };
                 }
                 if (connections)
@@ -397,8 +292,6 @@ namespace DB.Tools
                 }
 
                 Creator.UserControls.Add(options);
-
-
             }
             catch (Exception ex)
             {
@@ -408,6 +301,117 @@ namespace DB.Tools
         }
 
 
-
     }
+    public static partial   class Util
+        {
+
+        private static Interface Interface = null;
+
+
+
+  
+
+
+        /// <summary>
+        /// PreferenceBox Setter
+        /// </summary>
+        private static void preferenceSet(string controlHeader, ref UserControl control)
+            {
+                switch (controlHeader)
+                {
+                    case RSX.Preferences:
+                        {
+                            UI.IPreferences ucPreferences = new ucPreferences();
+                            ucPreferences.IMain.Set(ref Interface);
+                            ucPreferences.ISSF.Set(ref Interface);
+
+                            control = (UserControl)ucPreferences;
+
+                            break;
+                        }
+                    case RSX.XCOMPreferences:
+                        {
+                            IXCOMPreferences ucPreferences = new ucXCOMPreferences();
+                            ucPreferences.Set(ref Interface);
+                            control = (UserControl)ucPreferences;
+
+                            break;
+                        }
+                    case RSX.SpecPreferences:
+                        {
+                            ISpecPreferences ucPreferences = new ucSpecPreferences();
+                            ucPreferences.Set(ref Interface);
+                            control = (UserControl)ucPreferences;
+
+                            break;
+                        }
+
+                    default:
+                        break;
+                }
+            }
+
+         
+            /// <summary>
+            /// Sets the PreferenceBox Form
+            /// </summary>
+            private static void preferenceSetForm(bool show, ref UserControl ucPref, bool postcript)
+            {
+                Form f = null;
+
+                if (postcript)
+                {
+                    f = ucPref.ParentForm;
+                    f.VisibleChanged += delegate
+                    {
+                        Interface.IPreferences.ReportChanges();
+                    };
+                    f.MaximizeBox = false;
+                    f.ShowInTaskbar = false;
+                }
+
+                f = ucPref?.ParentForm;
+
+                if (f != null)
+                {
+                    f.Visible = show;
+                    f.TopMost = show;
+                    f.BringToFront();
+                }
+            }
+
+            /// <summary>
+            /// PreferenceBox Maker
+            /// </summary>
+            private static UserControl preferenceGet(ref string controlName, ref string formName, Type t)
+            {
+                UserControl ucPref = null;
+
+                if (!t.Equals(typeof(IPreferences)))
+                {
+                    if (t.Equals(typeof(IXCOMPreferences)))
+                    {
+                        ucPref = Creator.UserControls.OfType<ucXCOMPreferences>().FirstOrDefault();
+                        formName = RSX.uFinderPreferences;
+                        controlName = RSX.XCOMPreferences;
+                    }
+                    else if (t.Equals(typeof(ISpecPreferences)))
+                    {
+                        ucPref = Creator.UserControls.OfType<ucSpecPreferences>().FirstOrDefault();
+                        formName = RSX.SpecNavPreferences;
+                        controlName = RSX.SpecPreferences;
+                    }
+                }
+                else
+                {
+                    ucPref = Creator.UserControls.OfType<ucPreferences>().FirstOrDefault();
+                    formName = RSX.ProgramPreferences;
+                    controlName = RSX.Preferences;
+                }
+                return ucPref;
+            }
+
+          }
+   
+   
 }

@@ -47,14 +47,40 @@ namespace SSF
                 IAboutBox aboutbox = new AboutBox();
                 aboutbox.AssemblyToProvide = Assembly.GetExecutingAssembly();
 
-                LIMSUI.Start(ref aboutbox, false, false, string.Empty);
+                //file with resources
+              
+                Creator.RSX.MainMatSSFResource = Properties.Resources.MatSSF;
+                Creator.RSX.MainSolCoiResource = Properties.Resources.solcoi;
 
-                bool ok = UtilSQL.CheckConnectionsRoutine(true, true, false);
+                Creator.RSX.MainLIMSResource = Properties.Resources.LIMS;
+                Creator.RSX.SQLResource = Properties.Resources.localDb;
+
+
+                LIMSUI.Start(ref aboutbox, false, false);
+
+
+             
+
+                bool ok = Util.UtilSQL.CheckConnectionsRoutine(true, true, false);
                 if (ok) Creator.LoadMethods(0);
                 else throw new Exception("Could not start loading the database");
 
                 //EventHandler firstCallBack;
-                Form toShow = LIMSUI.createSSFApplication();
+            //    Form toShow = LIMSUI.createSSFApplication();
+
+
+                //set the editor
+                bool noDGVControls = true;
+                UserControl control = LIMSUI.CreateUI(ControlNames.SSF, noDGVControls);
+
+                bool showAlready = false;
+                Creator.CreateAppForm(Application.ProductName, ref control, showAlready);
+
+                Form toShow = control.ParentForm;
+
+                toShow.WindowState = FormWindowState.Maximized;
+
+
 
                 Creator.Run();
 

@@ -12,6 +12,11 @@ namespace DB
             get;
             set;
         }
+        string DevPath
+        {
+            get;
+          
+        }
 
         void AddException(Exception ex);
 
@@ -27,7 +32,9 @@ namespace DB
 
         IEnumerable<DataTable> GetTablesWithChanges();
 
-        void Read(string filepath);
+        void ReadLIMS(string filepath);
+        void ReadDefaultLIMS();
+
 
         void Save<T>(ref T row);
 

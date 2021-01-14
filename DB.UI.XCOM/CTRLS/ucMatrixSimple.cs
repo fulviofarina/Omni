@@ -1,5 +1,6 @@
-﻿using DB.Tools;
+﻿
 using Rsx.Dumb;
+
 using System.Windows.Forms;
 
 namespace DB.UI
@@ -7,7 +8,6 @@ namespace DB.UI
     public partial class ucMatrixSimple : UserControl
     {
         protected internal Interface Interface = null;
-      
 
         /// <summary>
         /// DGV ITEM SELECTED
@@ -32,7 +32,6 @@ namespace DB.UI
             setBindings(selected);
 
             ucComposition1.Set(ref Interface, selected);
-
 
             ucComposition1.ChangeFocus();
 
@@ -65,6 +64,18 @@ namespace DB.UI
 
             this.MatrixBN.BindingSource = bs;
 
+        
+
+        this.noneAll.Click+= delegate
+        {
+            string columnname = Interface.IDB.Matrix.ToDoColumn.ColumnName;
+            string tablname = Interface.IDB.Matrix.TableName;
+
+            Interface.IBS.SelectNoneAllToDo(tablname, columnname);
+
+        };
+
+
             this.matrixDGV.DataSource = bs;
 
             string column = Interface.IDB.Matrix.MatrixNameColumn.ColumnName;
@@ -81,15 +92,11 @@ namespace DB.UI
                   this.matrixDGV.ClearSelection();
               };
 
-            /*
-            if (bs.Count != 0)
-            {
-                bs.Position = 1;
-                bs.Position = 0;
-            }
-
-            */
+           
         }
+
+     
+                    
 
         public ucMatrixSimple()
         {
@@ -97,8 +104,7 @@ namespace DB.UI
 
             // this.ToDo.Visible = false;
             this.matrixDensityDataGridViewTextBoxColumn1.Visible = false;
-         
-            
+
             ucComposition1.ChangeFocusCallBack += delegate
             {
                 editContentLBL.Text = ucComposition1.ViewString;
@@ -107,26 +113,9 @@ namespace DB.UI
             editContentLBL.Click += delegate
             {
                 ucComposition1.ChangeFocus();
-
             };
+        }
 
        
-            
-             }
-
-        /*
-        private void changeCompositionView()
-        {
-            if (editContentLBL.Text.Contains(EDIT_STR))
-            {
-                editContentLBL.Text = VIEW_STR;
-            }
-            else
-            {
-                editContentLBL.Text = EDIT_STR;
-            }
-           
-        }
-        */
     }
 }

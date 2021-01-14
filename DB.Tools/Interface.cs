@@ -1,6 +1,7 @@
 ﻿using System.Linq;
+using DB.Tools;
 
-namespace DB.Tools
+namespace DB
 {
     public partial class Interface
     {

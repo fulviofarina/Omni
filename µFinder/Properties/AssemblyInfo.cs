@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
-[assembly: AssemblyTitle("µFinder")]
+[assembly: AssemblyTitle("uFinder")]
 [assembly: AssemblyDescription("Finds the Mass Attenuation Coefficients for photons between 1 keV to 10 GeV")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fulvio Farina Arboccò")]
-[assembly: AssemblyProduct("µFinder by F. Farina Arboccò")]
+[assembly: AssemblyProduct("uFinder by F. Farina Arboccò")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

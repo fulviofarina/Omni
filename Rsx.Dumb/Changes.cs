@@ -18,7 +18,22 @@ namespace Rsx.Dumb
                 rows2 = null;
             }
 
-            public static bool HasChanges(IEnumerable<DataRow> array)
+        public static IEnumerable<DataTable> GetTablesWithChanges(ref IEnumerable<DataTable> tables)
+        {
+            Func<DataTable, bool> haschangesFunc = t =>
+            {
+                bool hasChanges = false;
+                IEnumerable<DataRow> rows = t.AsEnumerable();
+                IEnumerable<DataRow> rowsWithChanges = Changes.GetRowsWithChanges(rows);
+                hasChanges = rowsWithChanges.Count() != 0;
+                return hasChanges;
+            };
+
+            return tables.Where(haschangesFunc);
+        }
+
+
+        public static bool HasChanges(IEnumerable<DataRow> array)
             {
                 if (array == null) return false;
                 if (array.Count() == 0) return false;

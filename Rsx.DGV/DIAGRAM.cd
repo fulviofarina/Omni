@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rsx.DGV.ucSearch" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACACAAMCBAAACAAgACgDAAAAAQAIgFQAAggSA=</HashCode>
+      <FileName>ucSearch.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Rsx.DGV.xTable">
+    <Position X="3.25" Y="0.75" Width="2.25" />
+    <NestedTypes>
+      <Class Name="Rsx.DGV.xTable.Paint" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>xTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Rsx.DGV.xTable.Tip" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>xTable.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AABgAAAAAAQIACAACAgAgAAAAAAABAIAAAEAEAAAQAI=</HashCode>
+      <FileName>xTable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Rsx.DGV.IFind" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAQAAggAA=</HashCode>
+      <FileName>ucSearch.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

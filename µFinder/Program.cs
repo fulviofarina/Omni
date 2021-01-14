@@ -1,11 +1,12 @@
 ﻿using DB.UI;
 using DB.Tools;
+
 using System;
 using System.Reflection;
 using System.Windows.Forms;
 using VTools;
 
-namespace µFinder
+namespace uFinder
 {
     internal static class Program
     {
@@ -15,23 +16,29 @@ namespace µFinder
         [STAThread]
         private static void Main()
         {
+            //work offline
             bool offline = true;
+            // advanced mode
+            bool adv = true;
 
-            bool adv = false;
             try
             {
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                //file with resources
-                string LIMSresource = Properties.Resources.LIMS;
-
+             
+             
                 //create aboutBox
                 IAboutBox about = new AboutBox();
                 about.AssemblyToProvide = Assembly.GetExecutingAssembly();
 
+                //file with resources from developer
+                Creator.RSX.MainLIMSResource = Properties.Resources.LIMS;
 
-                LIMSUI.Start(ref about, offline, adv, LIMSresource);
+              
+
+                LIMSUI.Start(ref about, offline, adv);
 
                 //set the editor
                 bool noDGVControls = false;

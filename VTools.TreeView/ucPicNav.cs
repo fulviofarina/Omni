@@ -101,7 +101,7 @@ namespace VTools
             List<ListViewItem> ls = new List<ListViewItem>();
 
             CreateListItems(baseFilename, enumerator, ref files, ref ls);
-            ls = ls.OrderBy(o => o.Text).ToList();
+            ls = ls.OrderBy(o => o.Text.Length).ToList();
             addToGroups(ref ls);
 
             selectDefaultItem(nameForItemToSelect);

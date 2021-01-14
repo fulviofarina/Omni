@@ -12,17 +12,19 @@ namespace DB.UI
 {
     public partial class LIMSUI
     {
-        public static void Start(ref IAboutBox aboutbox, bool forceOffline = false, bool forceAdvEditor = false, string lIMSresource = "")
+        public static void Start(ref IAboutBox aboutbox, bool forceOffline = false, bool forceAdvEditor = false)
         {
-            Creator.MainLIMSResource = lIMSresource;
+          
             //associate interface to LIMS UI
             Interface = Creator.Set();
+
+            Util.Set(ref Interface);
             //create database manager UI
             createLIMS(ref aboutbox);
 
             //Take the default LIMS database to use from a file resource
             //Check if directories exist
-            Creator.CheckDirectories();
+            Creator.RSX.CheckDirectories(false);
             //populate the preferences
             Interface.IPreferences.PopulatePreferences(forceOffline, forceAdvEditor);
 
@@ -30,8 +32,6 @@ namespace DB.UI
 
             //Creator.CheckConnections(false, true);
         }
-
-      
 
         private static void createLIMS(ref IAboutBox _aboutbox)
         {
@@ -216,6 +216,19 @@ namespace DB.UI
 
                         break;
                     }
+
+                case ControlNames.SSF:
+                    {
+                      //  EventHandler handler;
+                        control = createSSFApplication();
+                        /*
+                        refresher = delegate
+                        {
+                            handler.Invoke(null, EventArgs.Empty);
+                        };
+                        */
+                        break;
+                    }
                 case ControlNames.Detectors:
                     {
                         ucDetectors ucDetectors = new ucDetectors();
@@ -341,7 +354,6 @@ namespace DB.UI
             }
         }
 
-  
         public static void Explore()
         {
             DataSet set = Interface.Get();

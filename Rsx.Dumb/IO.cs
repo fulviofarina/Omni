@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace Rsx.Dumb
 {
@@ -31,7 +33,9 @@ namespace Rsx.Dumb
             Uri uri = new Uri("about:blank");
             if (System.IO.File.Exists(file))
             {
-                string newFile = Rsx.Dumb.Strings.CachePath;
+                         string _cachePath = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
+
+                string newFile = _cachePath;
                 string fileName = file.Replace(folderpath, null);
                 int indexofPoint = fileName.LastIndexOf('.');
                 string extension = fileName.Substring(indexofPoint, fileName.Length - indexofPoint);
@@ -45,6 +49,24 @@ namespace Rsx.Dumb
 
             return uri;
         }
+
+
+        public static XmlReader ReadDataSet(string filepath, DataSet dt)
+        {
+            XmlReader reader;
+            XmlReaderSettings set = new XmlReaderSettings();
+            set.CheckCharacters = false;
+            set.ConformanceLevel = ConformanceLevel.Auto;
+            set.DtdProcessing = DtdProcessing.Ignore;
+            set.IgnoreWhitespace = true;
+            set.ValidationFlags = XmlSchemaValidationFlags.None;
+            set.ValidationType = ValidationType.None;
+            reader = XmlReader.Create(filepath, set);
+
+            dt.ReadXml(reader, XmlReadMode.IgnoreSchema);
+            return reader;
+        }
+
 
         /// <summary>
         /// Installs MSMQ, The Microsoft Queuing Messaging System
@@ -343,10 +365,10 @@ namespace Rsx.Dumb
         /// Unpacks a file resource from a folder to another folder
         /// </summary>
         /// <param name="resourcePath">filepath to the resource</param>
-        /// <param name="destFile">destiny filepath</param>
+        /// <param name="destFile">destiny filepath. If it is the same as resourcePath, the file won't be copied</param>
         /// <param name="startExecutePath">execution folder</param>
         /// <param name="unpack">true to unpack, false to just copy the resource</param>
-        public static void UnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack, int wait = 100000)
+        public static void CopyAndUnpackCABFile(string resourcePath, string destFile, string startExecutePath, bool unpack,bool deleteResource=true, int wait = 100000)
         {
             if (File.Exists(resourcePath))
             {
@@ -357,7 +379,7 @@ namespace Rsx.Dumb
                 {
                     //    int wait = 100000;
                     IO.Process(process, startExecutePath, EXPAND_EXE, destFile + " -F:* " + startExecutePath, false, true, wait);
-                    File.Delete(destFile);
+                    if (deleteResource) File.Delete(destFile);
                 }
             }
         }
@@ -464,9 +486,11 @@ namespace Rsx.Dumb
         public static void MakeADirectory(string path, bool overrider = false)
         {
             // DirectorySecurity secutiry = new DirectorySecurity(path, AccessControlSections.Owner);
-
-            if (!Directory.Exists(path) || overrider)
+            bool exist = Directory.Exists(path);
+            if (!exist || overrider)
             {
+                if (overrider) Directory.Delete(path, true);
+
                 Directory.CreateDirectory(path);
             }
         }

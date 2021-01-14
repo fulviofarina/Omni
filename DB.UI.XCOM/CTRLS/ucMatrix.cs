@@ -15,7 +15,6 @@ namespace DB.UI
         protected Interface Interface;
         protected XCOM XCom;
 
-
         protected internal string path = string.Empty;
         protected internal Action<int> resetProgress = null;
         protected internal EventHandler showProg = null;
@@ -34,7 +33,6 @@ namespace DB.UI
                 helpFile = new Uri("https://sites.google.com/view/ufinder/home");
 
                 IO.ProcessWebsite(helpFile);
-
             };
 
             saveHandler += delegate
@@ -90,7 +88,8 @@ namespace DB.UI
             XCom.Reporter = Interface.IReport.Msg;
             XCom.ExceptionAdder = Interface.IStore.AddException;
 
-            ucPicNav1.Set(path, "*", XCOM.PictureExtension, "FULL");
+            ucPicNav1.Set(path, "*", XCOM.RSX.PIC_EXT, "FULL");
+          
 
             EventHandler changed = delegate
             {
@@ -118,8 +117,8 @@ namespace DB.UI
                 this.Validate(true);
                 Interface.IBS.IsCalculating = true;
                 Application.DoEvents();
-                 //salva primero, ok
-                 saveHandler?.Invoke(null, EventArgs.Empty);
+                //salva primero, ok
+                saveHandler?.Invoke(null, EventArgs.Empty);
 
                 Application.DoEvents();
                 XCom.Preferences = Interface.IPreferences.CurrentXCOMPref;
@@ -158,7 +157,6 @@ namespace DB.UI
                 ucPicNav1.RefreshList(m.MatrixID.ToString(), ".*", "N");
             }
         }
-
 
         /// <summary>
         /// Method to execute after a sample is calculated

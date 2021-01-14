@@ -34,13 +34,13 @@ namespace k0X
 
             ucSamples ucSamples = null;
             //find last control with that project name
-            ucSamples = Util.FindLastControl<ucSamples>(project);
+            ucSamples = Creator.Util.FindLastControl<ucSamples>(project);
 
             if (ucSamples == null || ucSamples.IsDisposed || todopanel)
             {
                 DB.UI.ucSubSamples ISS = null;
                 //find subsample control
-                ISS = Util.FindLastControl<ucSubSamples>(project);
+                ISS = Creator.Util.FindLastControl<ucSubSamples>(project);
                 if (ISS == null)
                 {
                     UserControl control = DB.UI.LIMSUI.CreateUI(ControlNames.SubSamples);
@@ -139,7 +139,7 @@ namespace k0X
 
                     LIMSUI.Interface.IReport.Msg("I'm loading it", "Found... " + ProjectOrOrder);
 
-                    if (fromFile) LIMSUI.Linaa.Read(possiblefile);
+                    if (fromFile) LIMSUI.Linaa.ReadLIMS(possiblefile);
 
                     Application.DoEvents();
 
@@ -360,7 +360,7 @@ namespace k0X
 
                 IucSQLConnection IConn = new VTools.ucSQLConnection();
                 // dynamic connectionControl = IConn;
-                bool ok = UtilSQL.SQLPrepare(false);
+                bool ok = Creator.UtilSQL.SQLPrepare(false);
                 // bool ok = Creator.PrepareSQL();
                 LIMSUI.Interface.IPreferences
                  .CurrentPref.IsSQL = ok;

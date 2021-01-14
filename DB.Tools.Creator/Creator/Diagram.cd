@@ -1,45 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
-  <Class Name="DB.Tools.Util">
-    <Position X="1.25" Y="0.5" Width="2.5" />
+  <Class Name="DB.Tools.Creator">
+    <Position X="1.25" Y="0.5" Width="3.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Class Name="DB.Tools.Util.Strings">
+      <Class Name="DB.Tools.Creator.RSX">
         <TypeIdentifier>
-          <NewMemberFileName>Creator\Util.cs</NewMemberFileName>
+          <NewMemberFileName>Creator\Creator.RSX.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AEAAAEACACACBAAAQABAAABAAAAAAIAAAAAEAAAAAAA=</HashCode>
-      <FileName>Creator\Util.cs</FileName>
-      <NewMemberFileName>Creator\Creator.cs</NewMemberFileName>
+      <HashCode>AAAAAAAAABAQBEAiAABAAAQAAAEQAIIAAAAAAACAAAI=</HashCode>
+      <FileName>Creator\Creator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DB.Tools.UtilSQL">
-    <Position X="4" Y="0.5" Width="2.5" />
+  <Class Name="DB.Tools.Util">
+    <Position X="5.5" Y="1.25" Width="5.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Class Name="DB.Tools.UtilSQL.Strings">
+      <Class Name="DB.Tools.Util.Strings" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Creator\Util.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="DB.Tools.Util.UtilSQL">
+        <Compartments>
+          <Compartment Name="Nested Types" Collapsed="false" />
+        </Compartments>
+        <NestedTypes>
+          <Class Name="DB.Tools.Util.UtilSQL.Strings">
+            <TypeIdentifier>
+              <NewMemberFileName>Creator\UtilSQL.cs</NewMemberFileName>
+            </TypeIdentifier>
+          </Class>
+        </NestedTypes>
         <TypeIdentifier>
           <NewMemberFileName>Creator\UtilSQL.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAABBEAAAgBAAAAABABAAAAAAQAAIAAAAIAAAAAAA=</HashCode>
-      <FileName>Creator\UtilSQL.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DB.Tools.Creator">
-    <Position X="7" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAEAABAYBEEqQABAAAQAAAkQAIIACAAAEACAECI=</HashCode>
-      <FileName>Creator\Creator.cs</FileName>
+      <HashCode>AEAAAEACACACBAAAQEBAAABAAAAAAIAAAAAEAAAAAAA=</HashCode>
+      <FileName>Creator\Util.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

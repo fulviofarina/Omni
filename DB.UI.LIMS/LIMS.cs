@@ -1,10 +1,9 @@
-﻿using System;
+﻿using DB.Tools;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using DB.Tools;
-using Rsx.DGV;
 
 namespace DB.UI
 {
@@ -177,11 +176,9 @@ namespace DB.UI
         public LIMS()
         {
             InitializeComponent();
-
         }
 
         private Interface Interface;
-     
 
         public LIMS(ref Interface inter)
         {
@@ -190,13 +187,11 @@ namespace DB.UI
             Opacity = 0;
             Interface = inter;
 
-
             setItems();
 
             setTags();
 
             setHandlers();
-
         }
 
         private void setHandlers()

@@ -178,6 +178,8 @@ namespace Rsx.DGV
         DataRow r = Caster.Cast<DataRow>(dgvr);
         if (r == null) return;
 
+      if (this.usrControl == null) return;
+
         UserControl con = this.usrControl as UserControl;
         con.Validate();
 

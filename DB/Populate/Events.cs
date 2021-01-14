@@ -7,7 +7,7 @@ namespace DB
 {
     public partial class LINAA
     {
-        protected internal void addCompositionsEvent(object sender, EventArgs e)
+        protected internal void loadCompositionsEvent(object sender, EventArgs e)
         {
             try
             {
@@ -16,8 +16,10 @@ namespace DB
                 if (m.IsCompositionTableNull())
                 {
                     //averiguar argumentos...
-                    IEnumerable<CompositionsRow> compos = null;
+                    IList<CompositionsRow> compos = null;
                     AddCompositions(ref m, ref compos, null, false);
+
+
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache) + "\\";
 
                     CompositionsDataTable dt = new CompositionsDataTable(false);
@@ -68,7 +70,8 @@ namespace DB
         {
             // MatrixRow m = sender as MatrixRow;
             IEnumerable<CompositionsRow> compos = sender as IEnumerable<CompositionsRow>;
-            CleanCompositions(ref compos);
+            Delete(ref compos);
+            this.Compositions.AcceptChanges();
         }
     }
 

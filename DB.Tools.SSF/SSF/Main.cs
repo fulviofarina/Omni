@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Rsx.Dumb;
 using static DB.LINAA;
-
+using static Rsx.Dumb.CalculateBase.TXT;
 namespace DB.Tools
 {
     public partial class MatSSF : CalculateBase

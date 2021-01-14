@@ -9,6 +9,19 @@ namespace Rsx.Dumb
 {
     public static partial class Hash
     {
+        public static IList<string> YearsList(int years)
+        {
+            IList<string> hs = new List<string>();
+            int year = DateTime.Now.Year;
+            for (int i = 0; i < years; i++)
+            {
+                hs.Add((year - i).ToString());
+
+            }
+            return hs;
+        }
+
+
         public static String[] ArrayFromColum(DataColumn Column)
         {
             System.Converter<DataRow, String> convi = delegate (DataRow row) { return Convert.ToString(row[Column.ColumnName]); };

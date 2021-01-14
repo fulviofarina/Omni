@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Rsx.Dumb;
 using static DB.LINAA;
+using static Rsx.Dumb.CalculateBase.TXT;
 
 namespace DB.Tools
 {

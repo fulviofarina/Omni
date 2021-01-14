@@ -78,10 +78,9 @@
     <Compile Include="UI\Connections.Designer.cs">
       <DependentUpon>Connections.cs</DependentUpon>
     </Compile>
-    <Compile Include="Creator\Creator.PopulateResources.cs" />
+    <Compile Include="Creator\Creator.RSX.cs" />
     <Compile Include="Creator\Util.cs" />
     <Compile Include="Creator\Creator.cs" />
-    <Compile Include="Creator\Creator.Public.cs" />
     <Compile Include="Creator\UtilSQL.cs" />
     <Compile Include="UI\DBForm.cs">
       <SubType>Form</SubType>

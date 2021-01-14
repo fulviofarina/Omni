@@ -62,7 +62,7 @@ namespace k0X
 
         private void Help_Click(object sender, EventArgs e)
         {
-            Creator.Help();
+            //Creator.Help();
         }
 
         private void releaseMemory_Click(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace k0X
 
         protected internal void Connections_Click(object sender, EventArgs e)
         {
-            UtilSQL.ConnectionsUI();
+            Util.UtilSQL.ConnectionsUI();
 
            // if (!restart) return;
 

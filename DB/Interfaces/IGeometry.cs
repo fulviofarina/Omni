@@ -29,7 +29,7 @@ namespace DB
 
         void PopulateMUESList();
 
-        void AddCompositions(ref MatrixRow m, ref IEnumerable<CompositionsRow> compos, IList<string[]> ls = null, bool code = true);
+        void AddCompositions(ref MatrixRow m, ref IList<CompositionsRow> compos, IList<string[]> ls = null, bool code = true);
 
         // void AddMUES(ref MUESDataTable mu, ref MatrixRow m);
         MUESDataTable GetMUES(ref MatrixRow m, bool sql = true);

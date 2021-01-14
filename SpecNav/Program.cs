@@ -30,9 +30,11 @@ namespace SpecNav
                 IAboutBox about = new AboutBox();
                 about.AssemblyToProvide = Assembly.GetExecutingAssembly();
 
-                LIMSUI.Start(ref about, offline, adv, string.Empty);
+                Creator.RSX.MainLIMSResource = string.Empty;
 
-                UtilSQL.CheckConnectionsRoutine(mmqs, lims, hyperLab);
+                LIMSUI.Start(ref about, offline, adv);
+
+                Util.UtilSQL.CheckConnectionsRoutine(mmqs, lims, hyperLab);
 
                 UserControl hl = LIMSUI.CreateUI(ControlNames.SpecNavigator, noDGVCtrl);
 

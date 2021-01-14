@@ -2,46 +2,54 @@
 using DB.Tools;
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using VTools;
+
+using DB.UI;
 
 namespace DB.UI
 {
     public partial class LIMSUI
     {
-        public static Form createSSFApplication()
+        public static UserControl createSSFApplication()
         {
-            Bitmap icon = Resources.Logo;
+          //  Bitmap icon = Resources.Logo;
 
-            Form form = DBForm.CreateForm(ref icon);
+         //   Form form = DBForm.CreateForm(ref icon);
 
             IPreferences preferences = Util.GetPreferences<IPreferences>();
+         
+            
+            
             bool advEditor = Interface.IPreferences.CurrentPref.AdvancedEditor;
             bool connections = Interface.IPreferences.CurrentPref.Offline;
+         
+            
             IOptions options = setOptions(0, advEditor, true, true, connections);
 
             options.HelpClick += delegate
             {
                 string helpFile = string.Empty;
                 string HELP_FILE_SSF_PDF = "UserGuide.pdf";
-                helpFile = Interface.IStore.FolderPath + Resources.DevFiles + HELP_FILE_SSF_PDF;
+                helpFile = Interface.IStore.DevPath + HELP_FILE_SSF_PDF;
                 System.Diagnostics.Process.Start(Rsx.Dumb.IO.EXPLORER_EXE, helpFile);
             };
+
             //DEVELOPER MODE
             //      options.SetDeveloperMode(false);
 
             //1
             UserControl control = CreateUI(ControlNames.SubSamples);
             Creator.CreateAppForm("Samples", ref control, false);
+          
+            
             ucSubSamples ucSubSamples = control as ucSubSamples;
             ucSubSamples.ucContent.Set(ref Interface);
 
             //2
             IGenericBox ucProjectBox = Util.GetProjectBox();
 
-            //3
-            BindingNavigator aBindingNavigator = ucSubSamples.BN;
+           
 
             //4
             IPop msn = Interface.IReport.Msn;
@@ -52,8 +60,7 @@ namespace DB.UI
 
             (ucSSF as UserControl).AutoSizeMode = AutoSizeMode.GrowOnly;
 
-            EventHandler midCallBack;
-            midCallBack = delegate
+            EventHandler midCallBack = delegate
             {
                 Interface.IBS.ShowErrors = false;
 
@@ -65,6 +72,10 @@ namespace DB.UI
                 ucSSF.Set(ref options);
 
                 ucSSF.Set(ref ucProjectBox);
+
+                //3
+                BindingNavigator aBindingNavigator = ucSubSamples.BN;
+
                 ucSSF.IPanel.Set(ref aBindingNavigator);
 
                 //si esto se dispara después,
@@ -78,11 +89,10 @@ namespace DB.UI
                 pr.Loop = true;
                 pr.CalcDensity = true;
                 Interface.IPreferences.CurrentPref.AutoLoad = true;
-                // ARREGLAR ESTO
+               
             };
 
-            EventHandler lastCallBack;
-            lastCallBack = delegate
+            EventHandler lastCallBack=  delegate
             {
                 //load last porject
                 bool autoload = Interface.IPreferences.CurrentPref.AutoLoad;
@@ -99,8 +109,8 @@ namespace DB.UI
                 }
                 else ucProjectBox.TextContent = lastProject;
 
-                form.Controls.Add(ucSSF as UserControl);
-                form.FormClosing += formClosing;
+             //  form.Controls.Add(ucSSF as UserControl);
+               // form.FormClosing += formClosing;
 
                 Interface.IBS.ShowErrors = true;
 
@@ -111,7 +121,7 @@ namespace DB.UI
 
                 ucSSF.SetTimer();
 
-                form.Opacity = 100;
+               //form.Opacity = 100;
 
                 //CleanSigmas();
             };
@@ -120,7 +130,7 @@ namespace DB.UI
 
             Creator.CallBack = midCallBack;
 
-            return form;
+            return (ucSSF as UserControl);
         }
 
         private static UserControl createMatrixApplication(out EventHandler refresher)
@@ -133,7 +143,6 @@ namespace DB.UI
             bool connections = true;
 
             IOptions options = setOptions(1, advEditor, save, restore, connections);
-
 
             ucMatrix mat = new ucMatrix();
             mat.Set(ref Interface);
@@ -150,7 +159,7 @@ namespace DB.UI
                 bool offline = Interface.IPreferences.CurrentPref.Offline;
                 if (offline)
                 {
-                    Creator.LoadFromFile();
+                    Interface.IStore.ReadDefaultLIMS();
                     Application.DoEvents();
                     Interface.IDB.MUES.Clear();
                     Application.DoEvents();
@@ -184,8 +193,6 @@ namespace DB.UI
             return mat;
         }
 
-       
-
         private static UserControl createSpecNavApplication()
         {
             ucHyperLab hl = new ucHyperLab();
@@ -204,45 +211,35 @@ namespace DB.UI
 
             hl.Set(ref options);
 
-      
-
-
             hl.Set(ref prefes);
 
             return hl;
         }
 
-
-
-
         private static IOptions setOptions(int type, bool advancedEdtior = false, bool save = true, bool restore = true, bool connections = true)
         {
-         
             IOptions options = Util.GetOptions(type, advancedEdtior, save, restore, connections);
 
+            //start BINDING
+            options.AboutClick += delegate
+            {
+                aboutBox?.Show();
+            };
+            //EXPLORER
+            options.ExplorerClick += delegate
+            {
+                Explore();
+            };
+            //LIMS
+            options.DatabaseInterfaceClick += delegate
+            {
+                Form.Visible = true;
+                Form.Opacity = 100;
+                Form.BringToFront();
+            };
 
-
-                //start BINDING
-                options.AboutClick += delegate
-                {
-                    aboutBox?.Show();
-                };
-                //EXPLORER
-                options.ExplorerClick += delegate
-                {
-                    Explore();
-                };
-                //LIMS
-                options.DatabaseInterfaceClick += delegate
-                {
-                    Form.Visible = true;
-                    Form.Opacity = 100;
-                    Form.BringToFront();
-                };
-         
             return options;
         }
-
 
         /*
         public static IXCOMPreferences GetXCOMPreferences(bool show = false)
@@ -277,8 +274,6 @@ namespace DB.UI
             return c;
         }
 */
-
-
 
         private static void formClosing(object sender, FormClosingEventArgs e)
         {

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Rsx.Dumb;
+using static Rsx.Dumb.CalculateBase.TXT;
 using static DB.LINAA;
 
 namespace DB.Tools

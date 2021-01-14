@@ -19,9 +19,11 @@
         public const string SubSamplesContent = "SubSamples Content";
         public const string Preferences = "Preferences";
 
-      //  public const string XCOMPreferences = "XCOMPreferences";
-     //   public const string SpecPreferences = "SpecPreferences";
+        //  public const string XCOMPreferences = "XCOMPreferences";
+        //   public const string SpecPreferences = "SpecPreferences";
         public const string SpecNavigator = "SpecNavigator";
+        public const string SSF = "SSF Panel";
+
         // public const string Units = "Units";
     }
 }
