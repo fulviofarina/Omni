@@ -27,7 +27,7 @@ namespace uFinder
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-             
+             //DB.
              
                 //create aboutBox
                 IAboutBox about = new AboutBox();
